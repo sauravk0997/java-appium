@@ -794,43 +794,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private List<ContentSet> getAvatarSets(DisneyAccount account) {
-        List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
-        if (avatarSets.isEmpty()) {
-            throw new SkipException("Skipping test, no avatar sets were found.");
-        } else {
-            return avatarSets;
-        }
-    }
-
-    private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        editProfile.clickMoreTab();
-        whoIsWatching.clickEditProfile();
-        editProfile.clickEditModeProfile(profile);
-        sa.assertTrue(editProfile.getAutoplayState().equals(autoPlayState), "autoplay state wasn't saved for profile" + profile + ":" + autoPlayState);
-    }
-
-    private void createKidsProfile() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        addProfile.enterProfileName(JUNIOR_PROFILE);
-        addProfile.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
-        addProfile.tapJuniorModeToggle();
-        addProfile.clickSaveProfileButton();
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            parentalConsent.scrollConsentContent(4);
-        }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67787"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyMoreMenuSimplifiedJuniorProfile() {
@@ -873,28 +836,66 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyKidProofExitJuniorProfileCloseButton() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfileIOSPageBase = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
                 profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
                 kidsModeEnabled(true).isStarOnboarded(true).build());
 
-        configureKidsProfileProofExit(moreMenu);
+        configureKidsProfileProofExit();
 
         moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        Assert.assertTrue(editProfileIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
-        moreMenu.getCloseButton().click();
+        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
+        kidProofExitIOSPageBase.getCloseButton().click();
         // Validates that Kid Proof Exit Screen has been closed
         Assert.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
                 "Junior Profile screen was not open");
     }
 
-    private void configureKidsProfileProofExit(DisneyPlusMoreMenuIOSPageBase moreMenu)
+    private List<ContentSet> getAvatarSets(DisneyAccount account) {
+        List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
+        if (avatarSets.isEmpty()) {
+            throw new SkipException("Skipping test, no avatar sets were found.");
+        } else {
+            return avatarSets;
+        }
+    }
+
+    private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        editProfile.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(profile);
+        sa.assertTrue(editProfile.getAutoplayState().equals(autoPlayState), "autoplay state wasn't saved for profile" + profile + ":" + autoPlayState);
+    }
+
+    private void createKidsProfile() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        addProfile.enterProfileName(JUNIOR_PROFILE);
+        addProfile.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        addProfile.tapJuniorModeToggle();
+        addProfile.clickSaveProfileButton();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            parentalConsent.scrollConsentContent(4);
+        }
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+    }
+
+    private void configureKidsProfileProofExit()
     {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
 
