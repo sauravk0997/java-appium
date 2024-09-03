@@ -5,7 +5,7 @@
     <parameter name="jenkinsBuild" value="3.7.0.72276"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="ios_handset_regression_dev"/>
+    <parameter name="jenkinsJobName" value="jenkins_test"/>
     <parameter name="jenkinsEmail" value="Eric.Liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
