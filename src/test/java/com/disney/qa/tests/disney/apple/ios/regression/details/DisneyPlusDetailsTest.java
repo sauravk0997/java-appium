@@ -115,7 +115,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68648"})
-    @Test(description = "Series/Movies Detail Page > Negative Stereotype Advisory Expansion", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyNegativeStereotypeAdvisoryExpansion() {
         DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -128,9 +128,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(THE_LION_KINGS_TIMON_AND_PUUMBA);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
+        sa.assertTrue(details.isContentDetailsPagePresent(),
+                "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Negative Stereotype Advisory text was not found on details page");
 
         //movie
         home.clickSearchIcon();
@@ -138,9 +140,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(THE_ARISTOCATS);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
+        sa.assertTrue(details.isContentDetailsPagePresent(),
+                "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Negative Stereotype Advisory text was not found on details page");
 
         sa.assertAll();
     }
