@@ -70,12 +70,14 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         launchDeeplink(deepLink);
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(),
+                WATCHLIST_DEEP_LINK_ERROR);
 
         terminateApp(BuildType.ENTERPRISE.getDisneyBundle());
         launchDeeplink(deepLink);
         homePage.dismissAppTrackingPopUp(10);
-        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
+        sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(),
+                WATCHLIST_DEEP_LINK_ERROR);
 
         sa.assertAll();
     }
