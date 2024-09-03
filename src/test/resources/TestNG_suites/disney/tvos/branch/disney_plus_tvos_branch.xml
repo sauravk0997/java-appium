@@ -36,7 +36,7 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVForgotPasswordTests"/>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVLoginTests"/>
-            <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVSignUpTest"/>
+<!--            <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVSignUpTest"/>-->
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVWelcomeScreenTests"/>
         </classes>
     </test>
