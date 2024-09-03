@@ -112,7 +112,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         BufferedImage avatarProfileAfterClickingBackBtn = getElementImage(disneyPlusEditProfileIOSPageBase
                 .getAddProfileAvatar());
-        LOGGER.info("Comparing Both avatars in 'Edit Profiles' display are same...");
+        LOGGER.info("Comparing the avatars in 'Edit Profiles' display are same, before and after clicking Back Btn...");
         sa.assertTrue(areImagesTheSame(avatarProfileBeforeClickingBackBtn,
                         avatarProfileAfterClickingBackBtn,10),
                 " Avatar displayed in the Edit Profiles display was not same " );
