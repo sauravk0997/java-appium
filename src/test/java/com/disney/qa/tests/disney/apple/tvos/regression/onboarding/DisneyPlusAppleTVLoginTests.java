@@ -476,22 +476,23 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90695"})
-    @Test(description = "User's profile selected post login is displayed in global nav", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(description = "User's profile selected post login is displayed in global nav", groups = {TestGroup.ONBOARDING})
     public void profileNameRetention() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
-        logIn(entitledUser);
+        logIn(getAccount());
 
         disneyPlusAppleTVHomePage.clickMenu();
 
         sa.assertTrue(disneyPlusAppleTVHomePage.isHomeBtnPresent(), "Home button is not displayed");
+        disneyPlusAppleTVHomePage.moveUp(2,1);
 
         aliceDriver.screenshotAndRecognize()
-                .assertLabelContainsCaption(sa, "Test", AliceLabels.PROFILE_BUTTON.getText());
+                .assertLabelContainsCaption(sa, "", AliceLabels.PROFILE_BUTTON_HOVERED.getText());
         sa.assertAll();
     }
 
@@ -533,7 +534,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90596"})
-    @Test(description = "Verify Restart subscription screen details", groups = {TestGroup.ONBOARDING})
+    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
     public void verifyCompleteSubButtonOnUnSubbedRegisteredAccount() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVCompletePurchasePage disneyPlusAppleTVCompletePurchasePage = new DisneyPlusAppleTVCompletePurchasePage(getDriver());

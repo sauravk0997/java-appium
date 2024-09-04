@@ -23,7 +23,7 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return getSignupButton().isPresent();
+        return getLoginButton().isPresent();
     }
 
     @Override
