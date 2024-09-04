@@ -482,7 +482,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
         Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(GRIMCUTTY, WANDA_VISION), "Titles were not added to the Watchlist");
 
-        // Revoke subscription
+        // Revoke HULU subscription
         String huluSubscriptionId = getHuluSubscriptionId();
         getSubscriptionApi().revokeSubscription(getAccount(), huluSubscriptionId);
 
