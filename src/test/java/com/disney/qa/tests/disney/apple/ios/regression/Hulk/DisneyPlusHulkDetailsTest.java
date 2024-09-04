@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -16,6 +17,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -455,6 +458,47 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
+    public void verifyExpiredHuluWatchlistDisplay() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        String GRIMCUTTY = "Grimcutty";
+        String WANDA_VISION = "WandaVision";
+        DisneyAccount account = getAccount();
+        try {
+            getSubscriptionApi().addEntitlementBySku(account, DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, "V2");
+        } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+
+        // Search for Disney Plus and HULU content and adding it to Watchlist
+        addContentToWatchlist(GRIMCUTTY);
+        addContentToWatchlist(WANDA_VISION);
+
+        // Verify content on watchlist
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(GRIMCUTTY, WANDA_VISION), "Titles were not added to the Watchlist");
+
+        // Revoke subscription
+        String huluSubscriptionId = getHuluSubscriptionId();
+        getSubscriptionApi().revokeSubscription(getAccount(), huluSubscriptionId);
+
+        // Terminate app and relaunch
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        // Verify content on watchlist after revoke HULU entitlement
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        Assert.assertFalse(moreMenu.getTypeCellLabelContains(GRIMCUTTY).isPresent(),
+                "HULU title was present in the Watchlist");
+        Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),
+                "Disney Plus title was not present in the Watchlist");
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
@@ -520,37 +564,23 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
     }
 
+    private void addContentToWatchlist(String content) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
-    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
-    public void verifyExpiredHuluWatchlistDisplay() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().
-                getLocale(), getLocalizationUtils().getUserLanguage()));
-
-      //  getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Test2").
-              //  language(getLanguage()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
-
-        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
-
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-
-        String huluSubscriptionId = getHuluSubscriptionId();
-        System.out.println(" *** huluSubscriptionId " + huluSubscriptionId.toString());
-
-        getSubscriptionApi().revokeSubscription(getAccount(), huluSubscriptionId);
-        getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
-
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
-        sa.assertAll();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(content);
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), "Details Page did not open");
+        detailsPage.addToWatchlist();
+        detailsPage.clickCloseButton();
     }
-
 
     private String getHuluSubscriptionId() {
         try {
             JsonNode activeSubscriptions = getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
-            System.out.println("** activeSubscriptions: " + activeSubscriptions.toString());
             int huluSubscriptionIndex = activeSubscriptions.get(0).get("product")
                     .get("sku").textValue()
                     .equals(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE.getValue()) ? 0 : 1;
