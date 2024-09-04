@@ -1,0 +1,119 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite verbose="1" name="dmgzios_tablet_reg_dev" annotations="JDK" configfailurepolicy="continue" thread-count="5" parallel="tests">
+    <parameter name="suiteOwner" value="apple-automation"/>
+    <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.7.0-fc"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-77094"/>
+    <parameter name="jenkinsBuild" value="3.7.0.72276"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
+    <parameter name="jenkinsJobType" value="ios"/>
+    <parameter name="jenkinsJobName" value="dmgzios_tablet_reg_dev"/>
+    <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
+    <parameter name="jenkinsEnvironments" value="Prod"/>
+    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
+    <parameter name="provider" value="mcloud"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_Air_4_Gen,iPad_Gen_9,iPad_Pro_Gen_3,iPad_8_Gen_1;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="jenkinsDefaultRetryCount" value="0"/>
+    <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
+    <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
+    <parameter name="jenkinsJobExecutionOrder" value="1"/>
+    <parameter name="jenkinsJobExecutionMode" value="continue"/>
+    <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
+    <parameter name="scheduling" value="H 7 * * 1-5"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Ariel,Ariel-More Menu,Deeplinks,DetailsPage,Home,Hulk,More Menu,NonUS-More Menu,Onboarding,Profiles,Search,Smoke,VideoPlayer,VideoPlayerAds"/>
+
+    <test verbose="1" name="DisneyPlus iOS Tablet Onboarding1" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusWelcomeScreenTabletTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Onboarding2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielLoginTest"/>
+<!--            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>-->
+<!--            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>-->
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet More Menu1" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuSettingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuAppSettingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuWatchlistTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet More Menu2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuAccountSettingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuProfilesTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuLegalTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet More Menu3" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuArielProfilesTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet More Menu Non US" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusNonUSMoreMenuProfilesTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Deep Links" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.deeplinks.DisneyPlusDeepLinksTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Details" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsSeriesTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsMovieTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Video Player" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Video Player2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Search" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Home" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusBrandsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDetailsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkProfilesTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Hulk2" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkDownloadsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Anthology" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
+        </classes>
+    </test>
+</suite>
