@@ -148,6 +148,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.getSearchBar().click();
         Assert.assertTrue(searchPage.getCancelButton().isPresent(), "Cancel button was not present on search page");
+        Assert.assertTrue(searchPage.getMagnifyingGlassImage().isPresent(),
+                "Magnifying glass image was not present on search page");
         Assert.assertTrue(searchPage.getKeyboardSearchButton().isPresent(),
                 "Keyboard was not shown when entering the search term");
         Assert.assertEquals(searchPage.getSearchBar().getText(),
