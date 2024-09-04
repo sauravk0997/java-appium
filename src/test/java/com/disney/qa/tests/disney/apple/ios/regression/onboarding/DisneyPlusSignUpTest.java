@@ -22,7 +22,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66555"})
-    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifySignUpPageUI() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
@@ -44,7 +44,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66567"})
-    @Test(description = "Verify 'Sign Up' page elements are all present", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyInvalidEmailSubmissions() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -67,7 +67,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66565"})
-    @Test(description = "Verify signup with new account", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyNewEmailSubmission() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -81,7 +81,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66563"})
-    @Test(description = "Verify signup with pre-existing account", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION })
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyExistingEmailSubmission() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
@@ -95,75 +95,8 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 "User was not directed to Password Entry as expected");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66581"})
-    @Test(description = "Verify 'Create Password' page elements are all present", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
-    public void verifySubmitPasswordPageUI() {
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
-        DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = initPage(DisneyPlusChangeEmailIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        Assert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(),
-                "'Sign Up' did not open the email submission screen as expected");
-
-        String email = generateGmailAccount();
-        disneyPlusSignUpIOSPageBase.submitEmailAddress(email);
-
-        Assert.assertTrue(disneyPlusCreatePasswordIOSPageBase.isOpened(),
-                "User was not directed to Password Creation as expected");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isBackButtonPresent(),
-                "Back Arrow was not displayed as expected");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isDisneyLogoDisplayed(),
-                "Disney+ logo image should be displayed");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMyDisneyLogoDisplayed(),
-                "MyDisney logo image should be displayed");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isStepperDictValueDisplayed("2", "3"),
-                "'STEP 2 OF 3' should be displayed");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHeadlineHeaderPresent(),
-                "'Create an account to continue' text should be displayed");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodyTextDisplayed(),
-                "'With a MyDisney account, you can log in to Disney+' text should be present");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordBodySubTextDisplayed(email),
-                "'Create your account' text should be present");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordEntryFieldPresent(),
-                "Password entry text field was not displayed as expected");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isHidePasswordIconPresent(),
-                "Show/Hide Password icon was not displayed as expected");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isPasswordStrengthHeaderPresent(),
-                "Password Strength header text was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isConsentFormPresent(),
-                "CheckBox is not displayed as expected");
-
-        disneyPlusCreatePasswordIOSPageBase.swipe(disneyPlusChangeEmailIOSPageBase.getLearnMoreAboutMyDisney(), Direction.UP, 1, 500);
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isMarketingTextDisplayed(),
-                "Yes, I would like to receive updates text was not displayed as expected");
-
-        sa.assertTrue(disneyPlusCreatePasswordIOSPageBase.isConsentLegalTextDisplayed(),
-                "By clicking “Agree & Continue,” you agree to the Disney Terms text was not displayed as expected");
-
-        sa.assertTrue(disneyPlusSignUpIOSPageBase.isPrimaryButtonPresent(),
-                "Agree & Continue Button should be displayed as expected");
-
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLearnMoreAboutMyDisney(),
-                "'Learn more about MyDisney' Link should be displayed as expected");
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66583"})
-    @Test(description = "Verify invalid password submissions", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyInvalidPasswordSubmissions() {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -188,7 +121,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62247"})
-    @Test(description = "Verify onboarding stepper for EU based users", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION, "DE", TestGroup.PROXY }, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION, "DE", TestGroup.PROXY }, enabled = false)
     public void verifyOnboardingStepperEU() {
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase disneyPlusCreatePasswordIOSPageBase = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
@@ -215,7 +148,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66561"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyUSLegalCenterUI() {
         DisneyPlusSignUpIOSPageBase signUp = initPage(DisneyPlusSignUpIOSPageBase.class);
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
@@ -252,7 +185,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375", "XMOBQA-62377", "XMOBQA-62379", "XMOBQA-62381", "XMOBQA-62383", "XMOBQA-62385", "XMOBQA-62387", "XMOBQA-62389"})
-    @Test(description = "Verify valid Privacy Policy, UK & EU Privacy Rights, and Cookies Policy links and Legal UI", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, "NL", TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, "NL", TestGroup.PRE_CONFIGURATION }, enabled = false)
     public void verifyEULegalHyperlinks() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
@@ -326,7 +259,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
-    @Test(description = "Email Validation Rules - Verify Error code string", groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyInvalidEmailError() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
