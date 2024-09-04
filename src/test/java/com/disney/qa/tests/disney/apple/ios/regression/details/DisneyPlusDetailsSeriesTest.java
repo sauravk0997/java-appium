@@ -660,7 +660,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
         exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
-        if (visualsResponse.getPromoLabel().getHeader() != null) {
+        if (visualsResponse.getPromoLabel() != null) {
             exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
         }
 
