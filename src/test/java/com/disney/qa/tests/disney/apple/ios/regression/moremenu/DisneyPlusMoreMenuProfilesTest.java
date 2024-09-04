@@ -854,6 +854,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Validates that Kid Proof Exit Screen has been closed
         Assert.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
                 "Junior Profile screen was not open");
+        Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
+                "Exit Junior Mode option is not present");
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
