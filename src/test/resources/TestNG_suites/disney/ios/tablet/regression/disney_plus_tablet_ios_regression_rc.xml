@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="ios_tablet_regression_rc" annotations="JDK" configfailurepolicy="continue" thread-count="6" parallel="tests">
+<suite verbose="1" name="ios_tablet_regression_rc" annotations="JDK" configfailurepolicy="continue" thread-count="5" parallel="tests">
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-76980"/>
@@ -29,8 +29,9 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding2" parallel="methods">
     <classes>
-        <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>
-        <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
+        <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielLoginTest"/>
+<!--        <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>-->
+<!--        <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>-->
     </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet More Menu1" parallel="methods">
