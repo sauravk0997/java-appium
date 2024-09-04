@@ -828,6 +828,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         // Toggle ON Junior Mode option
         editProfile.toggleJuniorMode();
+        editProfile.waitForUpdatedToastToDisappear();
         // Toggle OFF Kid-Proof-Exit option
         editProfile.toggleKidsProofExit();
         passwordPage.enterPassword(getAccount());
