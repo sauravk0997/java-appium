@@ -1013,4 +1013,27 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabelContains(String.format("%s %s %s %s", seasonRatingSplit[0],
                 seasonRatingSplit[1], expectedLastWord, seasonRatingSplit[3])).isPresent();
     }
+
+    //Download Modal Elements
+    public ExtendedWebElement getDownloadModalPlayButton() {
+        String play = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_PLAY_ALERT.getText());
+        return dynamicBtnFindByLabel.format(play);
+    }
+
+    public boolean isDownloadModalPlayButtonDisplayed() {
+        return getDownloadModalPlayButton().isPresent();
+    }
+
+    public boolean isDownloadModalRenewButtonDisplayed() {
+        String renew = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_RENEW_DOWNLOAD.getText());
+        return dynamicBtnFindByLabel.format(renew).isPresent();
+    }
+
+    public boolean isDownloadModalRemoveButtonDisplayed() {
+        String remove = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_REMOVE_DOWNLOAD.getText());
+        return dynamicBtnFindByLabel.format(remove).isPresent();
+    }
  }
