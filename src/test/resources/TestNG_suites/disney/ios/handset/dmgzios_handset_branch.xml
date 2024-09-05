@@ -6,7 +6,7 @@
                value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Dominguez-Editorial-Preview-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_handset_branch"/>
-    <parameter name="choiceParam::env::Test ENV" value="Prod,Preview"/>
+    <parameter name="choiceParam::jenkinsEnvironments::Test ENV" value="Prod,Preview"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
