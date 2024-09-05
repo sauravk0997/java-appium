@@ -709,10 +709,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     private List<String> getGenreMetadataLabels(Visuals visualsResponse) {
         List<String> metadataArray = new ArrayList();
-            var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
+        List<String> genreList = visualsResponse.getMetastringParts().getGenres().getValues();
             //get only first two values of genre
             if (genreList.size() > 2) {
-                genreList = (ArrayList<String>) genreList.subList(0, 2);
+                genreList = genreList.subList(0, 2);
             }
             genreList.forEach(genre -> metadataArray.add(genre));
         return metadataArray;
