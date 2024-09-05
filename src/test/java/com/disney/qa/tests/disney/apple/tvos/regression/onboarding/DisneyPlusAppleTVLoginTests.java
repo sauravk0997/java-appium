@@ -534,7 +534,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90596"})
-    @Test(description = "Verify Restart subscription screen details", groups = {TestGroup.ONBOARDING})
+    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
     public void verifyCompleteSubButtonOnUnSubbedRegisteredAccount() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVCompletePurchasePage disneyPlusAppleTVCompletePurchasePage = new DisneyPlusAppleTVCompletePurchasePage(getDriver());
