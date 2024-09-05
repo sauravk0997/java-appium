@@ -13,7 +13,7 @@
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Alice,Details,Onboarding,Home,Smoke,Watchlist,Profile"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
-    <parameter name="jenkinsBuild" value="3.7.0.72276"/>
+    <parameter name="jenkinsBuild" value="3.7.0.72330"/>
 
     <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
         <classes>
