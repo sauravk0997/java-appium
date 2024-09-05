@@ -696,7 +696,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isDownloadModalRenewButtonDisplayed(),
                 "Renew button was not displayed on download modal");
         sa.assertTrue(detailsPage.isDownloadModalRemoveButtonDisplayed(),
-                "Renew button was not displayed on download modal");
+                "Remove button was not displayed on download modal");
         sa.assertTrue(detailsPage.isAlertDismissBtnPresent(),
                 "Dismiss button was not displayed on download modal");
 
@@ -704,7 +704,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getDownloadModalPlayButton().click();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeOneTitle),
-        "Playback of Download Content didn't begin");
+                "Playback of Download Content didn't begin");
         videoPlayer.clickBackButton();
 
         //Verify dismiss button to close the modal
@@ -716,11 +716,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Verify remove download button
         detailsPage.getHuluSeriesDownloadCompleteButton().click();
         detailsPage.getSystemAlertDestructiveButton().click();
-        Assert.assertTrue(detailsPage.getHuluSeriesDownloadCompleteButton().isElementNotPresent(SHORT_TIMEOUT)
-        ,"Content is not removed from the Device");
+        Assert.assertTrue(detailsPage.getHuluSeriesDownloadCompleteButton().isElementNotPresent(SHORT_TIMEOUT),
+                "Content is not removed from the Device");
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isElementNotPresent(SHORT_TIMEOUT),
-                "Series content title is not present");
+                "Series content title is present");
         sa.assertAll();
     }
 }
