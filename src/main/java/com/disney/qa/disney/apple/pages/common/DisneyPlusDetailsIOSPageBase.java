@@ -940,7 +940,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getEpisodeTitle(String season, String episode) {
-        return episodeContainer.format(season, episode);
+        return findExtendedWebElement(AppiumBy.iOSClassChain(String.format("**/XCUIElementTypeStaticText[`label CONTAINS \"Season %s Episode %s\"`]", season, episode)));
     }
 
     public void isDolbyVisionPresentOrNot(SoftAssert sa) {
@@ -1014,5 +1014,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String expectedLastWord = convertToTitleCase(seasonRatingSplit[2], " ");
         return getStaticTextByLabelContains(String.format("%s %s %s %s", seasonRatingSplit[0],
                 seasonRatingSplit[1], expectedLastWord, seasonRatingSplit[3])).isPresent();
+    }
+
+    public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episode) {
+        return episodeContainer.format(season, episode);
     }
  }

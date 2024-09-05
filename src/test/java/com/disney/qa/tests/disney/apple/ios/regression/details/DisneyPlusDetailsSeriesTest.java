@@ -639,7 +639,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
-        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains("Seasons"), "Season label not displayed on " +
+        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains("Season"), "Season label not displayed on " +
                 "metadata label");
 
         //Verify if "Genre" value matches with api, if api has returned any value
@@ -654,12 +654,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
         //Verify if ratings value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RATING)) {
-            sa.assertTrue(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString()).isPresent(),
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
                     "Rating value is not present on details page featured area");
         }
         //Verify if release year value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
-            sa.assertTrue(detailsPage.getStaticTextByLabel(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
                     "Release year value is not present on details page featured area");
         }
 
@@ -669,7 +669,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
         sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
         sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Series download icon was not found");
-        sa.assertTrue(detailsPage.getEpisodeTitle("1","1").isPresent(), "Episode Number and Name was not found");
+        sa.assertTrue(detailsPage.getEpisodeTitleFromEpisodsTab("1","1").isPresent(), "Episode Number and Name was not found");
         sa.assertTrue(detailsPage.isContentImageViewPresent(), "Content Image View not found on Episode container");
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Play Icon not found on Episodes container");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title was not found");
