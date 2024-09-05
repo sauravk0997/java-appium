@@ -132,6 +132,37 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67319"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    public void verifySearchBarUI() {
+        String title = "Simpson";
+        String placeholderError = "Placeholder text is not as expected";
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        searchPage.clickSearchIcon();
+
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+        Assert.assertTrue(searchPage.getMagnifyingGlassImage().isPresent(),
+                "Magnifying glass image was not present on search page");
+
+        searchPage.getSearchBar().click();
+        Assert.assertTrue(searchPage.getCancelButton().isPresent(), "Cancel button was not present on search page");
+        Assert.assertTrue(searchPage.getMagnifyingGlassImage().isPresent(),
+                "Magnifying glass image was not present on search page");
+        Assert.assertTrue(searchPage.getKeyboardSearchButton().isPresent(),
+                "Keyboard was not shown when entering the search term");
+        Assert.assertEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+        searchPage.searchForMedia(title);
+        Assert.assertNotEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+    }
+    
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
     @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifyRecentSearchInitiatesValidSearch() {

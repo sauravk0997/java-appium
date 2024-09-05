@@ -25,7 +25,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     private static final String TEST_USER = "Test User";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67276"})
-    @Test(description = "Verify: More Menu Page UI", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify: More Menu Page UI", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION,
+            TestGroup.SMOKE})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -170,7 +171,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67290"})
-    @Test(description = "User taps on Log Out", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "User taps on Log Out", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION,
+            TestGroup.SMOKE})
     public void verifyLogOut() {
         onboard(getAccount().getFirstName());
         initPage(DisneyPlusMoreMenuIOSPageBase.class).getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
