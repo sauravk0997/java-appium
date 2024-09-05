@@ -141,6 +141,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement durationTimeLabel;
     @ExtendedFindBy(accessibilityId = "contentAdvisory")
     private ExtendedWebElement contentAdvisory;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Season %s Episode %s\"`]")
+    private ExtendedWebElement episodeContainer;
 
     //FUNCTIONS
 
@@ -938,7 +940,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getEpisodeTitle(String season, String episode) {
-        return findExtendedWebElement(AppiumBy.iOSClassChain(String.format("**/XCUIElementTypeStaticText[`label CONTAINS \"Season %s Episode %s\"`]", season, episode)));
+        return episodeContainer.format(season, episode);
     }
 
     public void isDolbyVisionPresentOrNot(SoftAssert sa) {
