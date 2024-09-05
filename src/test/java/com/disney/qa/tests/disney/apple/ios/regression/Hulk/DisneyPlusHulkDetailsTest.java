@@ -466,7 +466,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         String GRIMCUTTY = "Grimcutty";
         String WANDA_VISION = "WandaVision";
         try {
-            getSubscriptionApi().addEntitlementBySku(getAccount(), DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, SUBSCRIPTION_V2);
+            getSubscriptionApi().addEntitlementBySku(getAccount(),
+                    DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, SUBSCRIPTION_V2);
         } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
             throw new RuntimeException(e);
         }
