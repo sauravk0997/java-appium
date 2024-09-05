@@ -255,10 +255,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         clickElementAtLocation(doneBtn, 50, 50);
     }
 
-    public void clickDoneBtnByDictionaryKey() { dynamicBtnFindByNameContains.format(getDictionary().
-            getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.BTN_PROFILE_SETTINGS_DONE.getText())).click();
-    }
-
     public boolean isEditTextFieldPresent() {
         return textEntryField.isElementPresent();
     }
