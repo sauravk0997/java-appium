@@ -707,8 +707,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         return exploreAPIMetadata;
     }
 
-    private ArrayList<String> getGenreMetadataLabels(Visuals visualsResponse) {
-        ArrayList<String> metadataArray = new ArrayList();
+    private List<String> getGenreMetadataLabels(Visuals visualsResponse) {
+        List<String> metadataArray = new ArrayList();
             var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
             //get only first two values of genre
             if (genreList.size() > 2) {
