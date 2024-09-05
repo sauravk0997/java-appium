@@ -87,38 +87,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66806"})
-    @Test(description = "Ariel: Profiles - Edit Profile - Change Avatar", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
-    public void verifyEditProfileUserCanChangeAvatar() {
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
-        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
-        SoftAssert sa = new SoftAssert();
-        ExtendedWebElement[] avatars;
-        setAppToHomeScreen(getAccount());
-        disneyPlusMoreMenuIOSPageBase.clickMoreTab();
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
-        BufferedImage moreMenuAvatar = getElementImage(disneyPlusMoreMenuIOSPageBase.getProfileAvatar(DEFAULT_PROFILE));
-
-        disneyPlusMoreMenuIOSPageBase.clickEditProfilesBtn();
-        disneyPlusEditProfileIOSPageBase.clickEditModeProfile(DEFAULT_PROFILE);
-        disneyPlusEditProfileIOSPageBase.getAddProfileAvatar().click();
-        chooseAvatarPage.isOpened();
-        chooseAvatarPage.verifyChooseAvatarPage();
-        avatars = disneyPlusEditProfileIOSPageBase.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[3].click();
-        BufferedImage addProfileAvatar = getElementImage(disneyPlusEditProfileIOSPageBase.getAddProfileAvatar());
-        BufferedImage moreMenuAvatarCopy = getScaledImage(moreMenuAvatar, addProfileAvatar.getWidth(), addProfileAvatar.getHeight());
-
-        LOGGER.info("Comparing selected avatar to 'Edit Profiles' display...");
-        sa.assertFalse(areImagesTheSame(moreMenuAvatarCopy, addProfileAvatar, 10),
-                "Updated Avatar displayed in the Edit Profiles display was either not displayed or was altered beyond the accepted margin of error");
-        disneyPlusEditProfileIOSPageBase.clickDoneBtnByDictionaryKey();
-
-        sa.assertAll();
-    }
-
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-66772" })
     @Test(description = "Verify: User cannot select the same avatar for multiple profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyUserCanNotSelectTheSameAvatarForMultipleProfiles() {

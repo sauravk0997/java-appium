@@ -32,6 +32,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
+    String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
@@ -674,7 +675,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
                 profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
@@ -695,5 +695,60 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66706"})
+    @Test(groups = {TestGroup.SMOKE, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyTapPlayRemoveDismissOnDownloadsScreen() {
+        String episodeOneTitle = "Check Mate";
+        int pollingInSeconds = 5;
+        int timeoutInSeconds = 90;
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        SoftAssert sa = new SoftAssert();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_tangled_short_deeplink"));
+        detailsPage.isOpened();
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeUp(2500);
+        }
+        detailsPage.getEpisodeToDownload("1", "1").click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
+        detailsPage.getHuluSeriesDownloadCompleteButton().click();
+
+        //Verify download complete modal UI
+        sa.assertTrue(detailsPage.getStaticTextByLabel(episodeOneTitle).isPresent(),
+                "Episode title was not displayed on download modal");
+        sa.assertTrue(detailsPage.isDownloadModalPlayButtonDisplayed(),
+                "Play button was not displayed on download modal");
+        sa.assertTrue(detailsPage.isDownloadModalRenewButtonDisplayed(),
+                "Renew button was not displayed on download modal");
+        sa.assertTrue(detailsPage.isDownloadModalRemoveButtonDisplayed(),
+                "Remove button was not displayed on download modal");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(),
+                "Dismiss button was not displayed on download modal");
+
+        //Verify play button alert
+        detailsPage.getDownloadModalPlayButton().click();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeOneTitle),
+                "Playback of Download Content didn't begin");
+        videoPlayer.clickBackButton();
+
+        //Verify dismiss button to close the modal
+        detailsPage.getHuluSeriesDownloadCompleteButton().click();
+        detailsPage.clickAlertDismissBtn();
+        Assert.assertFalse(detailsPage.isViewAlertPresent(),
+                "Download alert modal was not closed after clicking the dismiss button");
+
+        //Verify remove download button
+        detailsPage.getHuluSeriesDownloadCompleteButton().click();
+        detailsPage.getSystemAlertDestructiveButton().click();
+        Assert.assertTrue(detailsPage.getHuluSeriesDownloadCompleteButton().isElementNotPresent(SHORT_TIMEOUT),
+                "Content is not removed from the Device");
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isElementNotPresent(SHORT_TIMEOUT),
+                "Series content title is present");
+        sa.assertAll();
     }
 }
