@@ -612,7 +612,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Download Season One button not found");
         sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found");
         detailsPage.clickAlertDismissBtn();
-        sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Download Alert was not dismissed");
+        Assert.assertFalse(detailsPage.isAlertTitleDisplayed(), "Download Alert was not dismissed");
 
         //verify pause and remove download
         detailsPage.downloadAllOfSeason();
@@ -630,7 +630,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(), "Series content title is not present");
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(), "Downloaded Series " +
+                "was not present in downloads page");
         sa.assertAll();
     }
 
@@ -664,11 +665,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Download in Progress status not displayed on alert");
         sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on alert");
         detailsPage.clickAlertDismissBtn();
-        sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
+        Assert.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(),
-                "Series content title is not present");
+                "Downloaded Series was not present in downloads page");
         sa.assertAll();
     }
 

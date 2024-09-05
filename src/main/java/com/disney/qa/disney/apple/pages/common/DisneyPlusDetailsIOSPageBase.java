@@ -1018,9 +1018,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isStopOrPauseDownloadIconDisplayed() {
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Download not started")
+        return fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Download not started")
                 .until(it -> stopOrPauseDownloadButton.isPresent());
-        return stopOrPauseDownloadButton.isPresent();
     }
 
     public void clickStopOrPauseDownload() {
