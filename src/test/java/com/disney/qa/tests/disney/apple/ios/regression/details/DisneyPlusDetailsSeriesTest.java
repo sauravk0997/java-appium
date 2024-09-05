@@ -639,7 +639,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
-        sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "One or more season not displayed.");
+        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains("Seasons"), "Season label not displayed on " +
+                "metadata label");
 
         //Verify if "Genre" value matches with api, if api has returned any value
         String metadataString = detailsPage.getMetaDataLabel().getText();
