@@ -586,6 +586,30 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75418"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageTrailerButton() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
+        searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer button not displayed");
+        detailsPage.getTrailerButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForTrailerToEnd(75, 5);
+        Assert.assertTrue(detailsPage.isOpened(), "After trailer ended, not returned to Details page");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76972"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileDetailsPageSeriesDownload() {
@@ -672,30 +696,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(),
                 "Downloaded Series was not present in downloads page");
         sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75418"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileDetailsPageTrailerButton() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
-
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
-        searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer button not displayed");
-        detailsPage.getTrailerButton().click();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
-        videoPlayer.waitForTrailerToEnd(75, 5);
-        Assert.assertTrue(detailsPage.isOpened(), "After trailer ended, not returned to Details page");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66706"})
