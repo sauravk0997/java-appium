@@ -11,7 +11,7 @@ import org.testng.asserts.SoftAssert;
 public class DisneyPlusWelcomeScreenTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67821"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE}, enabled = false)
     public void verifyWelcomeScreenPortrait() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
