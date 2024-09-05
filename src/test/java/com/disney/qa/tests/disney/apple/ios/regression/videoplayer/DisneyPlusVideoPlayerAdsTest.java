@@ -337,6 +337,23 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), "User did not land on video player after foregrounding the app");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72214"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    public void verifyVideoPlayerPausingWhilePlayingAd() {
+        int uiLatency = 15;
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        loginAndStartPlayback(THE_MARVELS);
+        videoPlayer.waitForVideoToStart(5, 1);
+
+        int adDurationBeforePause = videoPlayer.getAdRemainingTimeInSeconds();
+        videoPlayer.clickPauseButton();
+        int adDurationAfterPause = videoPlayer.getAdRemainingTimeInSeconds();
+        int adDurationDelta = (adDurationBeforePause - adDurationAfterPause);
+        ValueRange range = ValueRange.of(0, uiLatency);
+        Assert.assertTrue(range.isValidIntValue(adDurationDelta),
+                "Ad badge countdown didn't pause");
+    }
+
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
