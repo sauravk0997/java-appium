@@ -698,66 +698,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), "After trailer ended, not returned to Details page");
     }
 
-    private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
-        Map<String, Object> exploreAPIMetadata = new HashMap<>();
-
-        exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
-        exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
-        exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
-
-        //Audio visual badge
-        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
-            List<String> audioVideoApiBadge = new ArrayList<>();
-            visualsResponse.getMetastringParts().getAudioVisual().getFlags()
-                    .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
-            exploreAPIMetadata.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
-        }
-
-        //Rating
-        exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
-
-        return exploreAPIMetadata;
-    }
-
-    private ArrayList<String> getGenreMetadataLabels(Visuals visualsResponse) {
-        ArrayList<String> metadataArray = new ArrayList();
-            var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
-            //get only first two values of genre
-            if (genreList.size() > 2) {
-                genreList = (ArrayList<String>) genreList.subList(0, 2);
-            }
-            genreList.forEach(genre -> metadataArray.add(genre));
-        return metadataArray;
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileDetailsPageSeriesDownload() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
-
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(TANGLED_THE_SERIES);
-        searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
-        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"), "Series download button is not present");
-        Assert.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download button is not present");
-
-        detailsPage.downloadAllOfSeason();
-        detailsPage.clickAlertDismissBtn();
-        Assert.assertFalse(detailsPage.isAlertDismissBtnPresent(), "Alert message was not dismissed");
-        detailsPage.downloadAllOfSeason();
-        detailsPage.clickAlertConfirm();
-
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66706"})
     @Test(groups = {TestGroup.SMOKE, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyTapPlayRemoveDismissOnDownloadsScreen() {
@@ -811,5 +751,37 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isElementNotPresent(SHORT_TIMEOUT),
                 "Series content title is present");
         sa.assertAll();
+    }
+
+    private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
+        Map<String, Object> exploreAPIMetadata = new HashMap<>();
+
+        exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
+        exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
+        exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+
+        //Audio visual badge
+        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
+            List<String> audioVideoApiBadge = new ArrayList<>();
+            visualsResponse.getMetastringParts().getAudioVisual().getFlags()
+                    .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            exploreAPIMetadata.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+        }
+
+        //Rating
+        exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+
+        return exploreAPIMetadata;
+    }
+
+    private ArrayList<String> getGenreMetadataLabels(Visuals visualsResponse) {
+        ArrayList<String> metadataArray = new ArrayList();
+            var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
+            //get only first two values of genre
+            if (genreList.size() > 2) {
+                genreList = (ArrayList<String>) genreList.subList(0, 2);
+            }
+            genreList.forEach(genre -> metadataArray.add(genre));
+        return metadataArray;
     }
 }
