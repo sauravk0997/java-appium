@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.config.*;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
@@ -12,14 +13,16 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.*;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
-import java.util.List;
+import java.util.*;
 
 public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
 
@@ -200,6 +203,53 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
                 "video not paused when autoplay is OFF");*/
         sa.assertTrue(disneyPlusUpNextIOSPageBase.getNextEpisodeInfo().equalsIgnoreCase("S1:E2 Hospital"), "Next season title is not as expected");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72685"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    public void verifyUpNextEpisodeIsDownloadedWifiOn() {
+        int first = 1;
+        int second = 2;
+        int pollingInSeconds = 5;
+        int timeoutInSeconds = 90;
+        String three = "3";
+        String two = "2";
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        //Enable autoplay
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfile.toggleAutoplay(getAccount().getFirstName(), "ON");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        detailsPage.isOpened();
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeUp(2500);
+        }
+        //Download episode
+        detailsPage.getEpisodeToDownload(three, two).click();
+        String secondEpisodeTitle = detailsPage.getEpisodeTitleLabel(second)
+                .getText().split("\\.")[1];
+        detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
+
+        //Play Bluey season 1
+        detailsPage.getEpisodeTitleLabel(first).click();
+        videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.getSkipIntroButton().click();
+        videoPlayerPage.scrubPlaybackWithAdsPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+
+        //Wait for upnext UI to disappear
+        upNextPage.waitForUpNextUIToDisappear();
+        //Verify that the next episode has started playing
+        videoPlayerPage.waitForVideoToStart();
+        String secondSubtitle = videoPlayerPage.getSubTitleLabel();
+        Assert.assertTrue(secondSubtitle.contains(secondEpisodeTitle), "Second episode for series didn't play");
     }
 
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
