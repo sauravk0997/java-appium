@@ -103,6 +103,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement tabBar;
     @FindBy(name = "titleLabel_0")
     private ExtendedWebElement firstTitleLabel;
+    @ExtendedFindBy(accessibilityId = "titleLabel_%s")
+    private ExtendedWebElement episodeTitleLabel;
     @ExtendedFindBy(accessibilityId = "infoInactive24")
     private ExtendedWebElement infoView;
     @FindBy(id = "itemPickerClose")
@@ -602,6 +604,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      */
     public List<String> getTabCells() {
         return getContentItems(6);
+    }
+
+    public ExtendedWebElement getEpisodeTitleLabel(int episode) {
+        return episodeTitleLabel.format(--episode);
     }
 
     public void clickFirstTabCell() {
