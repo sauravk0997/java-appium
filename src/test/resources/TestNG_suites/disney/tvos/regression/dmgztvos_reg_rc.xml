@@ -8,7 +8,7 @@
     <parameter name="reporting.notification.slack-channels" value="lrqa-auto-jenkins,ios-tvos-test-automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_reg_rc"/>
-    <parameter name="choiceParam::jenkinsEnvironments::Test ENV" value="PROD,Preview"/>
+    <parameter name="choiceParam::env::Test ENV" value="PROD,Preview"/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="deviceName=ATV_4_Gen_2,ATV_4_Gen_5,ATV_4_Gen_10,ATV_4_Gen_12,ATV_4_Gen_13;platformName=iOS;deviceType=tvOS"/>
