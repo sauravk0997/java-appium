@@ -845,6 +845,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
         // Toggle ON Kid-Proof-Exit option
         editProfile.toggleKidsProofExit();
+        passwordPage.enterPassword(getAccount());
         Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
         passwordPage.enterPassword(getAccount());
         editProfile.waitForUpdatedToastToDisappear();
