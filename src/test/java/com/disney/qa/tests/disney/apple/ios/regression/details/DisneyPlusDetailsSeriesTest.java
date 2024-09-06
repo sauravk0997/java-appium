@@ -619,9 +619,14 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
@@ -655,8 +660,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(), "Downloaded Series " +
-                "was not present in downloads page");
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(),
+                "Downloaded Series was not present in downloads page");
         sa.assertAll();
     }
 
@@ -668,9 +673,14 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();

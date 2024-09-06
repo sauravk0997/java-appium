@@ -1068,12 +1068,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getDictionary().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
-        while (!pauseDownloadButton.isPresent() && count >= 0) {
+        while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
             clickAlertDismissBtn();
             clickStopOrPauseDownload();
             count--;
         }
-        return pauseDownloadButton.isPresent();
+        return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
     }
 
     public boolean isRemoveDownloadButtonDisplayed() {
