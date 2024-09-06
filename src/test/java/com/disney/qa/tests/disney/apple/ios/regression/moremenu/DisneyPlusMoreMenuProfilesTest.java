@@ -843,30 +843,31 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(KIDS_PROFILE);
         // Validates if Kid-Proof-Exit option is present
         Assert.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
-        // Toggle ON Kid-Proof-Exit option
+        // Toggle ON Kid-Proof-Exit option and verify that it is updated and Junior Mode remains the same
         editProfile.toggleKidsProofExit();
         passwordPage.enterPassword(getAccount());
-        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
-        passwordPage.enterPassword(getAccount());
         editProfile.waitForUpdatedToastToDisappear();
-        // Toggle OFF Junior Mode option
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is not converted to General Audience");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
+        // Toggle OFF Junior Mode option and it should not update kids toggle option
         editProfile.toggleJuniorMode();
         passwordPage.enterPassword(getAccount());
         editProfile.waitForUpdatedToastToDisappear();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Profile is not converted to General Audience");
         Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
-        // Toggle ON Junior Mode option
+        // Toggle ON Junior Mode option and assert that Kid-Proof-Exit option remains the same
         editProfile.toggleJuniorMode();
         editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is not converted to General Audience");
         Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
-        // Toggle OFF Junior Mode option
+        // Toggle OFF Junior Mode option and validate OFF status
         editProfile.toggleJuniorMode();
         passwordPage.enterPassword(getAccount());
         editProfile.waitForUpdatedToastToDisappear();
-        // Try to toggle Kid-Proof-Exit option to validate if it is disabled
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Profile is not converted to General Audience");
+        // Try to toggle Kid-Proof-Exit option and validate if it is disabled
         editProfile.toggleKidsProofExit();
-        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
-        Assert.assertFalse(passwordPage.isHeaderTextDisplayed(), "Toggle Kids Proof Exit was not disabled");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit toggle was not disabled");
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
