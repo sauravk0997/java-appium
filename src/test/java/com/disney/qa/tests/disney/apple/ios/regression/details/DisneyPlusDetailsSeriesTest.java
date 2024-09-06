@@ -837,7 +837,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "Episode description was not found");
         sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1","1"), "Episode download icon was not found");
         sa.assertAll();
-
     }
 
     private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
