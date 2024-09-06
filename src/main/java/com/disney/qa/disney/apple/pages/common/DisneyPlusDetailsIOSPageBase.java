@@ -143,6 +143,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement durationTimeLabel;
     @ExtendedFindBy(accessibilityId = "contentAdvisory")
     private ExtendedWebElement contentAdvisory;
+    private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
+            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                    DictionaryKeys.DOWNLOAD_STOP.getText()), 1);
 
     //FUNCTIONS
 
@@ -319,7 +322,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAlertTitleDisplayed() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return getStaticTextByLabel(getMediaTitle()).format().isElementPresent();
+        return getStaticTextByLabel(getMediaTitle()).format().isElementPresent(FIVE_SEC_TIMEOUT);
     }
 
     public boolean isTwentyDownloadsTextDisplayed() {
@@ -1041,5 +1044,46 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String remove = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_REMOVE_DOWNLOAD.getText());
         return dynamicBtnFindByLabel.format(remove).isPresent();
+    }
+
+    public boolean isStopOrPauseDownloadIconDisplayed() {
+        return fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Download not started")
+                .until(it -> stopOrPauseDownloadButton.isPresent());
+    }
+
+    public void clickStopOrPauseDownload() {
+        stopOrPauseDownloadButton.click();
+    }
+
+    public boolean isDownloadSeasonButtonDisplayed(String seasonNumber) {
+        return getTypeButtonByLabel(getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_SEASON_NUMBER_BTN.getText()), Map.of("seasonNumber",
+                        Integer.parseInt(seasonNumber)))).isPresent();
+    }
+
+    public boolean isDownloadInProgressStatusDisplayed() {
+        String downLoadInProgress = getDictionary().getValuesBetweenPlaceholders(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_IN_PROGRESS_PERCENT.getText())).get(0);
+        return getStaticTextByLabelContains(downLoadInProgress).isPresent();
+    }
+
+    public boolean isPauseDownloadButtonDisplayed() {
+        int count = 5;
+        ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+        while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+            clickAlertDismissBtn();
+            clickStopOrPauseDownload();
+            count--;
+        }
+        return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
+    }
+
+    public boolean isRemoveDownloadButtonDisplayed() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText())).isPresent();
     }
  }
