@@ -148,9 +148,9 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    //TODO this test will be fix when new flows are updated QAA-14789
+    //TODO this test is not enabled due to Bookworm QAA-16228
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90106"})
-    @Test(description = "Verify that user is brought to login with your email screen after pressing try again from unknown email screen", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
     public void verifyTryAgainBringsBackToEmailEntry() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
