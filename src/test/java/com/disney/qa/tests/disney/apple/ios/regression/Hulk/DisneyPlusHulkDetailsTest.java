@@ -477,7 +477,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         // Add Disney Plus and HULU content to Watchlist
         getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
-                "entity-c13c6ee6-0307-40ae-8a6a-5c6d48996323", CONTENT_ENTITLEMENT_HULU);
+                R.TESTDATA.get("hulu_movie_grimcutty_entity_id"), CONTENT_ENTITLEMENT_HULU);
         getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
                 DisneyEntityIds.WANDA_VISION.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
 
