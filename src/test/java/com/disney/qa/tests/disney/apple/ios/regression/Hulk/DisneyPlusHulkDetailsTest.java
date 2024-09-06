@@ -478,7 +478,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
                 "entity-c13c6ee6-0307-40ae-8a6a-5c6d48996323", CONTENT_ENTITLEMENT_HULU);
         getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
-                "entity-90affd1f-0851-48bc-9cab-c142d5c9c20c", CONTENT_ENTITLEMENT_DISNEY);
+                DisneyEntityIds.WANDA_VISION.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
 
         // Verify content on Watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
