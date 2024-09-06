@@ -148,6 +148,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return seekBar.isPresent();
     }
 
+    public ExtendedWebElement getSkipIntroButton() {
+        return skipIntroButton;
+    }
+
     public boolean isServiceAttributionLabelVisible() {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
                 .until(it -> getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent(SIXTY_SEC_TIMEOUT)));
@@ -323,10 +327,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase scrubPlaybackWithAdsPercentage(double playbackPercent) {
         LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
         displayVideoController();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
         int seekBarWidth = seekBar.getSize().getWidth();
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
         scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
