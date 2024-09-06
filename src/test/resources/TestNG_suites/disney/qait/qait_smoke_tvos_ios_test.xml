@@ -13,7 +13,7 @@
     <parameter name="jenkinsDefaultRetryCount" value="1"/>
     <parameter name="reporting.notification.slack-channels" value="qualityplatform-alerts"/>
     <parameter name="stringParam::group::Test Group selection. Only 'QAIT' group to run" value="qait"/>
-    <parameter name="scheduling" value="30 0 * * *"/>
+<!--    <parameter name="scheduling" value="30 0 * * *"/>-->
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::appcenter_app_name::app center app name" value="Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
 

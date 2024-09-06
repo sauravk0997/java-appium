@@ -64,8 +64,9 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForUpNextUIToDisappear() {
+        LOGGER.info("Waiting for up next UI to disappear");
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to start autoplay, check your autoplay settings in more menu")
-                .until(it -> playButton.isElementNotPresent(SIXTY_SEC_TIMEOUT));
+                .until(it -> playButton.isElementNotPresent(ONE_SEC_TIMEOUT));
     }
 
     public boolean waitForUpNextUIToAppear() {
