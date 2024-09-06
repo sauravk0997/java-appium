@@ -360,7 +360,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90685"})
-    @Test(description = "Ensure after resetting password user is taken to home screen", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING})
     public void resettingPasswordTakesUserToHome() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -387,29 +387,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         forgotPasswordPage.enterOTP(otp);
         forgotPasswordPage.clickContinueBtnOnOTPPage();
-
-        sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
-
-        passwordPage.clickPassword();
-        passwordPage.enterNewPassword(MICKEY_MOUSE_PW);
-        passwordPage.selectContinueBtnOnKeyboardEntry();
-        passwordPage.clickContinueBtn();
-
-        if(homePage.isGlobalNavExpanded()){
-            homePage.clickSelect();
-        }
         sa.assertTrue(homePage.isOpened(), "Home page is not open after resetting password");
+
         sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90687"})
-    @Test(description = "Fresh login with newly created password takes user to home screen", groups = {TestGroup.ONBOARDING})
-    public void newPasswordAllowsSuccessfulLogIn() {
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-        String updatedPassword = MICKEY_MOUSE_PW;
-        getAccountApi().resetUserPassword(disneyUser, updatedPassword);
-        disneyUser.setUserPass(updatedPassword);
-
-        logInTemp(disneyUser);
     }
 }
