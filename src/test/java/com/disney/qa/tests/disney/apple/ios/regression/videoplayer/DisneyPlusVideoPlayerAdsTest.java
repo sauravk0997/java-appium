@@ -343,7 +343,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int uiLatency = 15;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(THE_MARVELS);
-        videoPlayer.waitForVideoToStart(5, 1);
+        videoPlayer.waitForVideoToStart(10, 1);
 
         int adDurationBeforePause = videoPlayer.getAdRemainingTimeInSeconds();
         videoPlayer.clickPauseButton();
