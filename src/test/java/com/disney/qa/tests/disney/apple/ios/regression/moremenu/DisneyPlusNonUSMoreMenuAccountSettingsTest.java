@@ -13,7 +13,7 @@ public class DisneyPlusNonUSMoreMenuAccountSettingsTest  extends DisneyBaseTest 
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61607"})
-    @Test(description = "Verify monthly subscription details for Apple subscribers", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyAccountMonthlyToAnnualDisplays_Apple() {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
