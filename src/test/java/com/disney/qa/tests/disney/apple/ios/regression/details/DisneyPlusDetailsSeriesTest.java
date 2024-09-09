@@ -36,6 +36,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
+    private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open";
     private static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
     private static final String RATING = "Rating";
     private static final String CONTENT_DESCRIPTION = "Content_Description";
@@ -585,6 +586,39 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75416"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageWatchListButton() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
+        searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist button not displayed");
+        detailsPage.clickWatchlistButton();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+                "remove from watchlist button wasn't displayed");
+        detailsPage.clickMoreTab();
+        detailsPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(DISNEY_JUNIOR_ARIEL).isPresent(),
+                "Title was not added to the watchlist");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75418"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileDetailsPageTrailerButton() {
@@ -593,9 +627,14 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
@@ -609,64 +648,102 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), "After trailer ended, not returned to Details page");
     }
 
-    private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
-        Map<String, Object> exploreAPIMetadata = new HashMap<>();
-
-        exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
-        exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
-        exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
-
-        //Audio visual badge
-        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
-            List<String> audioVideoApiBadge = new ArrayList<>();
-            visualsResponse.getMetastringParts().getAudioVisual().getFlags()
-                    .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
-            exploreAPIMetadata.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
-        }
-
-        //Rating
-        exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
-
-        return exploreAPIMetadata;
-    }
-
-    private ArrayList<String> getGenreMetadataLabels(Visuals visualsResponse) {
-        ArrayList<String> metadataArray = new ArrayList();
-            var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
-            //get only first two values of genre
-            if (genreList.size() > 2) {
-                genreList = (ArrayList<String>) genreList.subList(0, 2);
-            }
-            genreList.forEach(genre -> metadataArray.add(genre));
-        return metadataArray;
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76972"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileDetailsPageSeriesDownload() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(TANGLED_THE_SERIES);
-        searchPage.getDynamicAccessibilityId(TANGLED_THE_SERIES).click();
-        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"), "Series download button is not present");
+        searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
+        searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download button is not present");
 
+        //Start season download
         detailsPage.downloadAllOfSeason();
+        sa.assertTrue(detailsPage.isAlertTitleDisplayed(), "Download alert title not found");
+        sa.assertTrue(detailsPage.isDownloadSeasonButtonDisplayed("1"),
+                "Download Season One button not found");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found");
         detailsPage.clickAlertDismissBtn();
-        Assert.assertFalse(detailsPage.isAlertDismissBtnPresent(), "Alert message was not dismissed");
+        Assert.assertFalse(detailsPage.isAlertTitleDisplayed(), "Download Alert was not dismissed");
+
+        //verify pause and remove download
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
+        sa.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
+                "Download not started, Stop or Pause Download button not displayed");
+        detailsPage.clickStopOrPauseDownload();
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(), "Pause Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(), "Remove Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
+                "Download in Progress status not displayed on alert");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on alert");
+        detailsPage.clickAlertDismissBtn();
+        sa.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
 
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isPresent(), "Series content title is not present");
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(),
+                "Downloaded Series was not present in downloads page");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageSeriesEpisodeDownload() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
+        searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1", "1"),
+                "Series download button is not present");
+
+        detailsPage.getEpisodeToDownload("1","1").click();
+        sa.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
+                "Download not started, Stop or Pause Download button not displayed");
+        detailsPage.clickStopOrPauseDownload();
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(), "Pause Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(), "Remove Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
+                "Download in Progress status not displayed on alert");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on alert");
+        detailsPage.clickAlertDismissBtn();
+        Assert.assertFalse(detailsPage.isAlertTitleDisplayed(), "Pause or Remove Alert was not dismissed");
+
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(DISNEY_JUNIOR_ARIEL).isPresent(),
+                "Downloaded Series was not present in downloads page");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66706"})
@@ -722,5 +799,37 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isElementNotPresent(SHORT_TIMEOUT),
                 "Series content title is present");
         sa.assertAll();
+    }
+
+    private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
+        Map<String, Object> exploreAPIMetadata = new HashMap<>();
+
+        exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
+        exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
+        exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+
+        //Audio visual badge
+        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
+            List<String> audioVideoApiBadge = new ArrayList<>();
+            visualsResponse.getMetastringParts().getAudioVisual().getFlags()
+                    .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            exploreAPIMetadata.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+        }
+
+        //Rating
+        exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+
+        return exploreAPIMetadata;
+    }
+
+    private ArrayList<String> getGenreMetadataLabels(Visuals visualsResponse) {
+        ArrayList<String> metadataArray = new ArrayList();
+            var genreList = visualsResponse.getMetastringParts().getGenres().getValues();
+            //get only first two values of genre
+            if (genreList.size() > 2) {
+                genreList = (ArrayList<String>) genreList.subList(0, 2);
+            }
+            genreList.forEach(genre -> metadataArray.add(genre));
+        return metadataArray;
     }
 }
