@@ -258,21 +258,6 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyInvalidEmailError() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
-
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickSignUpButton();
-        disneyPlusSignUpIOSPageBase.enterEmailAddress("abc");
-        disneyPlusSignUpIOSPageBase.clickContinueBtn();
-
-        sa.assertTrue(disneyPlusLoginIOSPageBase.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
-        sa.assertAll();
-    }
-
     private void verifyLegalPageUI(SoftAssert sa, String locale) {
         //TODO: IOS-6072 & IOS-6073: alternative validation above
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
