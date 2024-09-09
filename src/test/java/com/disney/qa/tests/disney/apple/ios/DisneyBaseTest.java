@@ -622,4 +622,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new IndexOutOfBoundsException(e.getMessage());
         }
     }
+
+    public String convertMinutesIntoStringWithHourAndMinutes(int timeInMinutes) {
+        long hours = timeInMinutes / 60;
+        long minutes = timeInMinutes % 60;
+        return String.format("%dh %dm", hours, minutes);
+    }
 }

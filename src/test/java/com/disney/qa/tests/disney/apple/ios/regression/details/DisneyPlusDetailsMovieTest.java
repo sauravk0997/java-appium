@@ -412,9 +412,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67781"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION})
     public void verifyJuniorProfileMovieDetailsPage() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
@@ -508,7 +506,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         }
 
         if (visualsResponse.getMetastringParts().getRuntime() != null) {
-            metadataArray.add(String.valueOf((visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
+            metadataArray.add(convertMinutesIntoStringWithHourAndMinutes(
+                    (visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
         }
 
         if (visualsResponse.getMetastringParts().getGenres() != null) {
