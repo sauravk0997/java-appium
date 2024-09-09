@@ -826,6 +826,50 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Exit Junior Mode option is not present");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75396"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyKidProofExitJuniorProfileUpdateSettings() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(KIDS_PROFILE);
+        // Validates if Kid-Proof-Exit option is present
+        Assert.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
+        // Toggle ON Kid-Proof-Exit option and verify that it is updated and Junior Mode remains the same
+        editProfile.toggleKidsProofExit();
+        passwordPage.enterPassword(getAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is not converted to General Audience");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
+        // Toggle OFF Junior Mode option and it should not update kids toggle option
+        editProfile.toggleJuniorMode();
+        passwordPage.enterPassword(getAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
+        // Toggle ON Junior Mode option and assert that Kid-Proof-Exit option remains the same
+        editProfile.toggleJuniorMode();
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is not converted to General Audience");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
+        // Toggle OFF Junior Mode option and validate OFF status
+        editProfile.toggleJuniorMode();
+        passwordPage.enterPassword(getAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+        // Try to toggle Kid-Proof-Exit option and validate if it is disabled
+        editProfile.toggleKidsProofExit();
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit toggle was not disabled");
+    }
+
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         if (avatarSets.isEmpty()) {
@@ -863,8 +907,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
     }
 
-    private void configureKidsProfileProofExit()
-    {
+    private void configureKidsProfileProofExit() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
