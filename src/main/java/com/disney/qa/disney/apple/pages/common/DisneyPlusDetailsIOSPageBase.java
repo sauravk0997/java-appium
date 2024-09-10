@@ -146,8 +146,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                     DictionaryKeys.DOWNLOAD_STOP.getText()), 1);
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Season %s Episode %s\"`]")
-    private ExtendedWebElement episodeContainer;
 
     //FUNCTIONS
 
