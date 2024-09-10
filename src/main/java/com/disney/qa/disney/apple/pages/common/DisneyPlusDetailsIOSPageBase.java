@@ -78,8 +78,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement trailerButton;
     @ExtendedFindBy(accessibilityId = "downloadButton")
     protected ExtendedWebElement movieDownloadButton;
-    @ExtendedFindBy(accessibilityId = "downloadEpisodeList")
-    private ExtendedWebElement downloadEpisodeButton;
     @ExtendedFindBy(accessibilityId = "watch")
     protected ExtendedWebElement watchButton;
     @ExtendedFindBy(accessibilityId = "SHOP")
@@ -844,12 +842,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isImaxEnhancedPresentsInFormats() {
         return formats.getText().contains(IMAX_ENHANCED);
-    }
-
-    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFormats() {
-        String availableFormats = formats.getText();
-        String[] formatsDetails = availableFormats.split(":, ");
-        return formatsDetails[1].startsWith(IMAX_ENHANCED);
     }
 
     public boolean isNegativeStereotypeAdvisoryLabelPresent() {
