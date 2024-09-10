@@ -804,7 +804,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75415"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileSeriesDetailsPage() {
+    public void verifyJuniorProfileSeriesDetailsPage() throws URISyntaxException, JsonProcessingException {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -828,6 +828,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         String entityID = R.TESTDATA.get("disney_prod_series_disney_junior_ariel_entity_id");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
+
+        ExploreContent seriesApiContent = getDisneyApiSeries(entityID);
+        String firstEpisodeTitle =
+                seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals().getEpisodeTitle();
 
         //Verify main details page UI elements
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
@@ -867,7 +871,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
         sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
         sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Series download icon was not found");
-        sa.assertTrue(detailsPage.getEpisodeTitleFromEpisodsTab("1","1").isPresent(), "Episode Number and Name was not found");
+        sa.assertTrue(detailsPage.getEpisodeTitleFromEpisodsTab("1", firstEpisodeTitle).isPresent(),
+                "Episode Number and Name was not found");
         sa.assertTrue(detailsPage.isContentImageViewPresent(), "Content Image View not found on Episode container");
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Play Icon not found on Episodes container");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title was not found");

@@ -1089,12 +1089,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText())).isPresent();
     }
 
-    public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episode) {
-        String episodeTitle = getDictionary().formatPlaceholderString(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                                EPISODE_TITLE.getText()),
-                Map.of("season_number", Integer.parseInt(season), "episode_number", Integer.parseInt(episode),
-                        "episode_title", ""));
-        return getTypeCellLabelContains(episodeTitle.replace(".", ""));
+    public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episodeTitle) {
+        String seasonEpisodeTitle = getDictionary().formatPlaceholderString(getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                SERIES_EPISODE_TITLE.getText()),
+                Map.of("episodeNumber", Integer.parseInt(season), "title", episodeTitle));
+        return getStaticTextByLabel(seasonEpisodeTitle);
     }
  }
