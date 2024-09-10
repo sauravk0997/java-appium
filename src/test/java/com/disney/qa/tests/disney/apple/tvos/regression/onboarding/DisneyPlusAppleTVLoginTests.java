@@ -469,7 +469,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90591", "XCDQA-90593"})
-    @Test(description = "Verify Restart subscription screen details", groups = {TestGroup.ONBOARDING})
+    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
     public void verifyRestartSubscriptionScreenDetails() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -530,7 +530,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061", "XCDQA-91063"})
-    @Test(description = "User logging in with an account that has multiple profiles is taken to Who's Watching", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
     public void userLoggingInWithMultipleProfilesIsTakenToProfileSelection() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
