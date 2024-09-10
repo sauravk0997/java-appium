@@ -959,5 +959,4 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
     }
-
 }
