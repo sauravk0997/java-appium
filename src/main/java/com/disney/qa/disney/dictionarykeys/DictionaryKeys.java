@@ -201,6 +201,7 @@ public enum DictionaryKeys {
     ENTER_NEW_PASSWORD("enter_new_password"),
     ENTER_YOUR_PASSWORD("enter_your_password"),
     EPISODE_PLACEHOLDER("episode_placeholder"),
+    EPISODE_TITLE("episode_title"),
     ERROR_COLLECTION_UNAVAILABLE("error_collection_unavailable"),
     ERROR_DUPLICATE_PROFILE_NAME("error_duplicate_profile_name"),
     EU_PRIVACY("footer_eup_login_eu_privacy_rights"),
