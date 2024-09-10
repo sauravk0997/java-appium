@@ -826,6 +826,42 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Exit Junior Mode option is not present");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75397"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyKidProofExitJuniorProfileScreenUI() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+        String INCORRECT_CHAR= "e";
+        configureKidsProfileProofExit();
+
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.tapExitKidsProfileButton();
+        // Validates title text from Kid Proof Exit Screen
+        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
+
+        // Enter 4 char digits to get error message incorrect code
+        kidProofExitIOSPageBase.getFirstTextValue().click();
+        kidProofExitIOSPageBase.getFirstTextValue().type(INCORRECT_CHAR);
+
+        kidProofExitIOSPageBase.getSecondCharTextField().click();
+        kidProofExitIOSPageBase.getSecondCharTextField().type(INCORRECT_CHAR);
+
+        kidProofExitIOSPageBase.getThirdCharTextField().click();
+        kidProofExitIOSPageBase.getThirdCharTextField().type(INCORRECT_CHAR);
+
+        kidProofExitIOSPageBase.getFourthCharTextField().click();
+        kidProofExitIOSPageBase.getFourthCharTextField().type(INCORRECT_CHAR);
+
+        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogIncorrectCode(), "Kid Proof Exit error not displayed");
+    }
+
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         if (avatarSets.isEmpty()) {
@@ -863,8 +899,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
     }
 
-    private void configureKidsProfileProofExit()
-    {
+    private void configureKidsProfileProofExit() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -880,4 +915,5 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
     }
+
 }
