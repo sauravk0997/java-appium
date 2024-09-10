@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.qa.api.account.*;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.email.*;
 import com.disney.qa.api.pojos.*;
@@ -85,16 +86,17 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67749"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void testForgotPasswordOTPPage() {
+        EmailApi emailApi = new EmailApi();
+        Date startTime = emailApi.getStartTime();
         DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
-        EmailApi emailApi = new EmailApi();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
 
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        Date startTime = emailApi.getStartTime();
+
         loginPage.submitEmail(otpAccount.getEmail());
         Assert.assertTrue(passwordPage.isPasswordPagePresent(), "Password page did not open");
         passwordPage.clickHavingTroubleLoggingButton();
