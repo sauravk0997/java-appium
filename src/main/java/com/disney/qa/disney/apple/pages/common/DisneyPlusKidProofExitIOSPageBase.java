@@ -15,13 +15,13 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\". Text field.\"`][1]")
     private ExtendedWebElement firstDigitTextField;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e. Text field.\"`][2]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e. Text field.\"`][1]")
     private ExtendedWebElement secondCharTextField;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e e. Text field.\"`][3]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e e. Text field.\"`][1]")
     private ExtendedWebElement thirdCharTextField;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e e e. Text field.\"`][3]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e e e. Text field.\"`][1]")
     private ExtendedWebElement fourthCharTextField;
 
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
