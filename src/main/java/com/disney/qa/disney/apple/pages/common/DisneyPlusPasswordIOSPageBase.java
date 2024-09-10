@@ -38,6 +38,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "labelErrorMessage")
     protected ExtendedWebElement labelError;
 
+    private static final String havingTroubleLoggingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+            MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText());
+
     public DisneyPlusPasswordIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -179,7 +182,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isForgotPasswordButtonPresent() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText())).isPresent();
+        return getDynamicAccessibilityId(havingTroubleLoggingText).isPresent();
+    }
+
+    public void clickHavingTroubleLoggingButton() {
+        dynamicBtnFindByLabel.format(havingTroubleLoggingText).click();
     }
 }
