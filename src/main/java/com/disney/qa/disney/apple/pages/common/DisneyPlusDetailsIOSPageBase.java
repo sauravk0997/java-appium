@@ -1081,7 +1081,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episodeTitle) {
         return getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, SERIES_EPISODE_TITLE.getText()),
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                SERIES_EPISODE_TITLE.getText()),
                 Map.of("episodeNumber", Integer.parseInt(season), "title", episodeTitle)));
     }
  }
