@@ -12,12 +12,6 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
     private ExtendedWebElement closeButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \",\"`]")
-    protected ExtendedWebElement staticTextNameContainsComma;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\". Text field.\"`]")
-    private ExtendedWebElement emptyDigit;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\". Text field.\"`][1]")
     private ExtendedWebElement firstDigitTextField;
 

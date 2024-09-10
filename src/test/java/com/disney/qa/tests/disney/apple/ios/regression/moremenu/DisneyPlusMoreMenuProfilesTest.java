@@ -905,6 +905,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogIncorrectCode(), "Kid Proof Exit error message not displayed");
     }
+
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         if (avatarSets.isEmpty()) {
