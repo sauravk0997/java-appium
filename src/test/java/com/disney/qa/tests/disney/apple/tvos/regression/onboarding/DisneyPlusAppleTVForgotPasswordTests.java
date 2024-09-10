@@ -2,13 +2,11 @@ package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.*;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -23,8 +21,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseTest {
-
-    private static final String MICKEY_MOUSE_PW = "M1ck3yM0us3#$$";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90618"})
     @Test(description = "Pressing menu from forgot password page brings the user back to enter password screen", groups = {"Onboarding"})
@@ -305,50 +301,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOtpIncorrectErrorPresent());
 
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90634"})
-    @Test(description = "Verify create password navigation", groups = {TestGroup.ONBOARDING}, enabled = false)
-    public void createPasswordScreenNavigation() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        EmailApi verifyEmail = new EmailApi();
-        Date startTime = verifyEmail.getStartTime();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-        String createPasswordScreenFieldText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_NEW_PASSWORD.getText());
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
-
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
-        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(), "Create new password field was not focus when page opened");
-
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, createPasswordScreenFieldText, AliceLabels.BUTTON_HOVERED.getText());
-
-        disneyPlusAppleTVForgotPasswordPage.moveDown(1, 1);
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isContinueButtonFocused(), "Continue button was not focused after moving down from create new password field");
         sa.assertAll();
     }
 
