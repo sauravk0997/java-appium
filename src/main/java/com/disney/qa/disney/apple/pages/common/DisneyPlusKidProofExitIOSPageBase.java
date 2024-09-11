@@ -42,11 +42,11 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String parseExitDigitsCode() {
-        String exitCode = staticTextNumbers.getText();
-        List<String> values = Arrays.asList(exitCode.split("[,、]"));
+        String exitCodeNumber = staticTextNumbers.getText();
+        List<String> values = Arrays.asList(exitCodeNumber.split("[,、]"));
         StringBuilder stringBuilder = new StringBuilder();
 
-        Map<String, String> kidProofDigits = Map.of(
+        Map<String, String> kidProofExitCodeDigits = Map.of(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_ZERO.getText()), "0",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_ONE.getText()), "1",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_TWO.getText()), "2",
@@ -61,7 +61,7 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
 
         values.forEach(value -> {
             value = value.trim();
-            stringBuilder.append(kidProofDigits.get(value));
+            stringBuilder.append(kidProofExitCodeDigits.get(value));
         });
         return stringBuilder.toString();
     }
