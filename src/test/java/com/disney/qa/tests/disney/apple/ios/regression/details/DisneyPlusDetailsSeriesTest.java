@@ -901,7 +901,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
 
         //Rating
-        if (visualsResponse.getMetastringParts().getRatingInfo().getRating() != null) {
+        if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
             exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
         }
 
