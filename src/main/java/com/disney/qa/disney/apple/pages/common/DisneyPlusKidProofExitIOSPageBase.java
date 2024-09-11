@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
+@SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
