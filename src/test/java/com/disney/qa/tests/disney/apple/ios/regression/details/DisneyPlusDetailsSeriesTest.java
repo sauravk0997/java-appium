@@ -834,9 +834,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals().getEpisodeTitle();
 
         //Verify main details page UI elements
-        sa.assertTrue(detailsPage.isKidThemeBackgroudUIDisplayed(), "UI on detail page is not in kid mode theme");
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
+        sa.assertTrue(detailsPage.isKidThemeBackgroudUIDisplayed(), "UI on detail page is not in kid mode theme");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
