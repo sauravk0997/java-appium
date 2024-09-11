@@ -23,6 +23,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String ALL_METADATA_MOVIE = "Turning Red";
     private static final String WORLDS_BEST = "World's Best";
     private static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
+    private static final String RATING = "Rating";
     private static final String CONTENT_DESCRIPTION = "Content_Description";
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
     private static final String CONTENT_TITLE = "Content_Title";
@@ -382,18 +383,120 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75417"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileDetailsPageMovieDownload() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        String THE_TIGGER_MOVIE = "The Tigger Movie";
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(THE_TIGGER_MOVIE);
+        searchPage.getDynamicAccessibilityId(THE_TIGGER_MOVIE).click();
+        detailsPage.startDownload();
+        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(THE_TIGGER_MOVIE).isPresent(), "Movie title is not present in downloads");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67781"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION})
+    public void verifyJuniorProfileMovieDetailsPage() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+
+        String entityID = R.TESTDATA.get("disney_prod_movie_the_tigger_movie_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_the_tigger_movie_deeplink");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
+
+        launchDeeplink(deeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        //Verify main details page UI elements
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
+        sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
+        sa.assertTrue(detailsPage.getBackArrow().isPresent(), "Back button not found on details page");
+        sa.assertTrue(detailsPage.isKidThemeBackgroudUIDisplayed(), "UI on detail page is not in kid mode theme");
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
+        sa.assertEquals(detailsPage.getMediaTitle(), exploreAPIData.get(CONTENT_TITLE),
+                "Content title didn't match with api content title");
+        sa.assertEquals(detailsPage.getContentDescriptionText(), exploreAPIData.get(CONTENT_DESCRIPTION),
+                "Description didn't match with api description value");
+
+        //Verify if ratings value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area");
+        }
+
+        //Audio/Video/Format Quality
+        ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
+                sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                        String.format("Audio video badge %s is not present on details page", badge)));
+
+        //Featured Metadata
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getMetaDataLabelValuesFromAPI(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        //Verify if CTA buttons are present
+        sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
+        sa.assertTrue(detailsPage.getTrailerActionButton().isPresent(),
+                "Trailer button is not present on detail page");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(),
+                "Watchlist button is not present on detail page");
+        sa.assertTrue(detailsPage.isMovieDownloadButtonDisplayed(),
+                "Details page download button not present");
+
+        //Verify if tabs are present
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(),
+                "Details tab is not present on detail page");
+        sa.assertTrue(detailsPage.getExtrasTab().isPresent(),
+                "Extra tab is not present on detail page");
+        sa.assertTrue(detailsPage.getSuggestedTab().isPresent(),
+                "Suggested tab is not present on detail page");
+        sa.assertAll();
+    }
+
     private Map<String, Object> getMoviesMetaDataFromAPI(Visuals visualsResponse) {
         Map<String, Object> exploreAPIMetaData = new HashMap<>();
 
         exploreAPIMetaData.put(CONTENT_TITLE, visualsResponse.getTitle());
         exploreAPIMetaData.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
-        exploreAPIMetaData.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+        if (visualsResponse.getPromoLabel() != null) {
+            exploreAPIMetaData.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+        }
 
         //Audio visual badge
         if (visualsResponse.getMetastringParts().getAudioVisual().getFlags() != null) {
             List<String> audioVideoApiBadge = new ArrayList<>();
             visualsResponse.getMetastringParts().getAudioVisual().getFlags().forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
             exploreAPIMetaData.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+        }
+
+        //Rating
+        if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
+            exploreAPIMetaData.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
         }
 
         return exploreAPIMetaData;
@@ -406,7 +509,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         }
 
         if (visualsResponse.getMetastringParts().getRuntime() != null) {
-            metadataArray.add(String.valueOf((visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
+            metadataArray.add(convertMinutesIntoStringWithHourAndMinutes(
+                    (visualsResponse.getMetastringParts().getRuntime().getRuntimeMs() / 1000) / 60));
         }
 
         if (visualsResponse.getMetastringParts().getGenres() != null) {
@@ -415,26 +519,5 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
             genreList.subList(0, 2).forEach(genre -> metadataArray.add(genre));
         }
         return metadataArray;
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75417"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileDetailsPageMovieDownload() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        String THE_TIGGER_MOVIE = "The Tigger Movie";
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
-
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(THE_TIGGER_MOVIE);
-        searchPage.getDynamicAccessibilityId(THE_TIGGER_MOVIE).click();
-        detailsPage.startDownload();
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(THE_TIGGER_MOVIE).isPresent(), "Movie title is not present in downloads");
     }
 }
