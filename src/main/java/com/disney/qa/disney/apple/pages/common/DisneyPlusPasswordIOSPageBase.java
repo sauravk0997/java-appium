@@ -7,7 +7,6 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 
@@ -142,6 +141,11 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return textEntryField.getText();
     }
 
+    public String getHavingTroubleLoggingText() {
+        return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText());
+    }
+
     public void clickShowPasswordIcon() {
         showHidePasswordIndicator.click();
     }
@@ -179,7 +183,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isForgotPasswordButtonPresent() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_OTP_BTN.getText())).isPresent();
+        return getDynamicAccessibilityId(getHavingTroubleLoggingText()).isPresent();
+    }
+
+    public void clickHavingTroubleLoggingButton() {
+        dynamicBtnFindByLabel.format(getHavingTroubleLoggingText()).click();
     }
 }
