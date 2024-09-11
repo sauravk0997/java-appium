@@ -10,8 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.KIDPROOF_DIALOG_TITLE;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
+@SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
@@ -19,7 +20,7 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type = " +
                     "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
-    private ExtendedWebElement digitsElement;
+    private ExtendedWebElement codeInputField;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \",\"`][2]")
     protected ExtendedWebElement staticTextNumbers;
@@ -28,17 +29,22 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    public boolean getKidProofDialogTitle() {
+    public boolean isKidProofDialogTitleDisplayed() {
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 KIDPROOF_DIALOG_TITLE.getText())).isPresent();
+    }
+
+    public boolean isKidProofIncorrectCodeErrorMessageDisplayed() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                KIDPROOF_INCORRECT_CODE_ERROR_MESSAGE.getText())).isPresent();
     }
 
     public ExtendedWebElement getCloseButton() {
         return closeButton;
     }
 
-    public ExtendedWebElement getDigitsElement() {
-        return digitsElement;
+    public ExtendedWebElement getCodeInputField() {
+        return codeInputField;
     }
 
     public String parseExitDigitsCode() {
