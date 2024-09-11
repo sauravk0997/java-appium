@@ -889,23 +889,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
         Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
-        String correctCode = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitCode()));
-        System.out.println("** exit code: " + correctCode.toString());
+        String correctCode = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
 
-        kidProofExitIOSPageBase.getFirstTextValue().click();
-        kidProofExitIOSPageBase.getFirstTextValue().type(Character.toString(correctCode.charAt(0)));
-      //  getFirstTextValue()
+        kidProofExitIOSPageBase.getDigitsElement().click();
 
-      //  sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(),
-       //         "'Recommend For You' collection was not found");
-        kidProofExitIOSPageBase.getSecondCharTextField().click();
-        kidProofExitIOSPageBase.getSecondCharTextField().type(Character.toString(correctCode.charAt(1)));
-
-        kidProofExitIOSPageBase.getThirdCharTextField().click();
-        kidProofExitIOSPageBase.getThirdCharTextField().type(Character.toString(correctCode.charAt(2)));
-
-        kidProofExitIOSPageBase.getFourthCharTextField().click();
-        kidProofExitIOSPageBase.getFourthCharTextField().type(Character.toString(correctCode.charAt(3)));
+        IntStream.range(0, 4).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(Character.toString(correctCode.charAt(i))));
+        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {

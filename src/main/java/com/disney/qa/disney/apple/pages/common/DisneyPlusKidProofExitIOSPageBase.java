@@ -17,24 +17,17 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
     private ExtendedWebElement closeButton;
 
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeScrollView[$type='XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
+    private ExtendedWebElement digitsElement;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \",\"`][2]")
-    protected ExtendedWebElement staticTextNameContainsComma;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\". Text field.\"`][1]")
-    private ExtendedWebElement firstDigitTextField;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e. Text field.\"`][1]")
-    private ExtendedWebElement secondCharTextField;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e e. Text field.\"`][1]")
-    private ExtendedWebElement thirdCharTextField;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e e e. Text field.\"`][1]")
-    private ExtendedWebElement fourthCharTextField;
+    protected ExtendedWebElement staticTextNumbers;
 
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
         super(driver);
     }
+
     public boolean getKidProofDialogTitle() {
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 KIDPROOF_DIALOG_TITLE.getText())).isPresent();
@@ -44,10 +37,13 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
         return closeButton;
     }
 
-    public String parseExitCode() {
-        String exitCode = staticTextNameContainsComma.getText();
+    public ExtendedWebElement getDigitsElement() {
+        return digitsElement;
+    }
+
+    public String parseExitDigitsCode() {
+        String exitCode = staticTextNumbers.getText();
         List<String> values = Arrays.asList(exitCode.split("[,、]"));
-        System.out.println("*** values: " + values.toString());
         StringBuilder stringBuilder = new StringBuilder();
 
         Map<String, String> kidProofDigits = Map.of(
@@ -67,23 +63,6 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
             value = value.trim();
             stringBuilder.append(kidProofDigits.get(value));
         });
-     //   LOGGER.info("Found String: '{}' parsed value is '{}'", exitCode, stringBuilder);
         return stringBuilder.toString();
-    }
-
-    public ExtendedWebElement getFirstTextValue() {
-        return dynamicOtherFindByNameContains.format(firstDigitTextField);
-    }
-
-    public ExtendedWebElement getSecondCharTextField() {
-        return secondCharTextField;
-    }
-
-    public ExtendedWebElement getThirdCharTextField() {
-        return thirdCharTextField;
-    }
-
-    public ExtendedWebElement getFourthCharTextField() {
-        return fourthCharTextField;
     }
 }
