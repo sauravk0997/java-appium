@@ -870,6 +870,44 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit toggle was not disabled");
     }
 
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75399"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyKidProofExitJuniorProfileCorrectCode() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
+                kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        configureKidsProfileProofExit();
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.tapExitKidsProfileButton();
+        // Validates title text from Kid Proof Exit Screen
+        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
+        String correctCode = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitCode()));
+        System.out.println("** exit code: " + correctCode.toString());
+
+        kidProofExitIOSPageBase.getFirstTextValue().click();
+        kidProofExitIOSPageBase.getFirstTextValue().type(Character.toString(correctCode.charAt(0)));
+      //  getFirstTextValue()
+
+      //  sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(),
+       //         "'Recommend For You' collection was not found");
+        kidProofExitIOSPageBase.getSecondCharTextField().click();
+        kidProofExitIOSPageBase.getSecondCharTextField().type(Character.toString(correctCode.charAt(1)));
+
+        kidProofExitIOSPageBase.getThirdCharTextField().click();
+        kidProofExitIOSPageBase.getThirdCharTextField().type(Character.toString(correctCode.charAt(2)));
+
+        kidProofExitIOSPageBase.getFourthCharTextField().click();
+        kidProofExitIOSPageBase.getFourthCharTextField().type(Character.toString(correctCode.charAt(3)));
+    }
+
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         if (avatarSets.isEmpty()) {
