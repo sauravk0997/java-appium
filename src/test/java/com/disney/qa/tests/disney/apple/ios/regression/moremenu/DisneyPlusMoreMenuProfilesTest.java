@@ -893,7 +893,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         kidProofExitIOSPageBase.getDigitsElement().click();
 
-        IntStream.range(0, 4).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(Character.toString(correctCode.charAt(i))));
+        IntStream.range(0, correctCode.length()).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(Character.toString(correctCode.charAt(i))));
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
     }
 
