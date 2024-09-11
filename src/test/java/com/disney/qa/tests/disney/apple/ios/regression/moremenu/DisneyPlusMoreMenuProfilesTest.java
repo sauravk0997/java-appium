@@ -913,8 +913,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Validates title text from Kid Proof Exit Screen
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
         // Enter correct code and validates screen expected
-        String correctCode = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
-        kidProofExitIOSPageBase.getCodeInputField().type(correctCode);
+        String code = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
+        kidProofExitIOSPageBase.getCodeInputField().type(code);
 
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching screen did not open");
     }

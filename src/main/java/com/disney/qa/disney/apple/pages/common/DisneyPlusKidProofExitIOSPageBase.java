@@ -22,6 +22,7 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
             "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private ExtendedWebElement codeInputField;
 
+    //TODO: Update to accessibility ID when bug IOS-12731 is attended
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \",\"`][2]")
     protected ExtendedWebElement codeText;
 
@@ -51,7 +52,14 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
         String exitCodeNumber = codeText.getText();
         List<String> values = Arrays.asList(exitCodeNumber.split("[,、]"));
         StringBuilder stringBuilder = new StringBuilder();
-        Map<String, String> kidProofExitCodeDigits = Map.of(
+        values.forEach(value -> {
+            stringBuilder.append(getKidProofExitCodeDigits().get(value.trim()));
+        });
+        return stringBuilder.toString();
+    }
+
+    private Map<String, String> getKidProofExitCodeDigits() {
+       return Map.of(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_ZERO.getText()), "0",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -73,10 +81,5 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_NINE.getText()), "9"
         );
-        values.forEach(value -> {
-            value = value.trim();
-            stringBuilder.append(kidProofExitCodeDigits.get(value));
-        });
-        return stringBuilder.toString();
     }
 }
