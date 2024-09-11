@@ -52,9 +52,7 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
         String exitCodeNumber = codeText.getText();
         List<String> values = Arrays.asList(exitCodeNumber.split("[,、]"));
         StringBuilder stringBuilder = new StringBuilder();
-        values.forEach(value -> {
-            stringBuilder.append(getKidProofExitCodeDigits().get(value.trim()));
-        });
+        values.forEach(value -> stringBuilder.append(getKidProofExitCodeDigits().get(value.trim())));
         return stringBuilder.toString();
     }
 
