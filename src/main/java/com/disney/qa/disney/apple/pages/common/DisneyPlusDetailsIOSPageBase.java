@@ -144,6 +144,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                     DictionaryKeys.DOWNLOAD_STOP.getText()), 1);
+    private final ExtendedWebElement watchlistRemoveButton =
+            getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                    DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText()));
 
     //FUNCTIONS
 
@@ -337,14 +340,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickRemoveFromWatchlistButton() {
-        String watchlistRemoveLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText());
-        getTypeButtonByLabel(watchlistRemoveLabel).format().click();
+        watchlistRemoveButton.click();
         LOGGER.info("'Remove from watchlist' button clicked");
     }
 
     public ExtendedWebElement getRemoveFromWatchListButton() {
-        String watchlistRemoveLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText());
-        return getTypeButtonByLabel(watchlistRemoveLabel);
+        return watchlistRemoveButton;
     }
 
     public void swipeTabBar(Direction direction, int duration) {

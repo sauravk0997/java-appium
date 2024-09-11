@@ -93,29 +93,38 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71632"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyRemoveSeriesFromWatchlist() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    public void verifyAddAndRemoveSeriesFromWatchlist() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.clickSeriesTab();
-        disneyPlusSearchIOSPageBase.selectRandomTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(SECRET_INVASION);
+        searchPage.getDynamicAccessibilityId(SECRET_INVASION).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String seriesTitle = detailsPage.getMediaTitle();
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Add to watchList button not displayed");
+        detailsPage.addToWatchlist();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+                "Remove from watchlist button not displayed after adding content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        List<ExtendedWebElement> watchlist = disneyPlusMoreMenuIOSPageBase.getDisplayedTitles();
-        watchlist.get(0).click();
-        disneyPlusDetailsIOSPageBase.clickRemoveFromWatchlistButton();
-        pause(10); //wait for refresh rate
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        Assert.assertTrue(moreMenuPage.areWatchlistTitlesDisplayed(seriesTitle));
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isWatchlistEmptyBackgroundDisplayed(), "Empty Watchlist text/logo was not properly displayed");
+        List<ExtendedWebElement> watchlist = moreMenuPage.getDisplayedTitles();
+        watchlist.get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickRemoveFromWatchlistButton();
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(),
+                "Add to watchList button not displayed after removing content");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        Assert.assertTrue(moreMenuPage.isWatchlistEmptyBackgroundDisplayed(),
+                "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
     }
 
