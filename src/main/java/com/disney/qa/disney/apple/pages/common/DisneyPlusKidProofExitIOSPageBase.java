@@ -12,17 +12,8 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
     private ExtendedWebElement closeButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\". Text field.\"`][1]")
-    private ExtendedWebElement firstDigitTextField;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e. Text field.\"`][1]")
-    private ExtendedWebElement secondCharTextField;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e e. Text field.\"`][1]")
-    private ExtendedWebElement thirdCharTextField;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name ==\"e e e. Text field.\"`][1]")
-    private ExtendedWebElement fourthCharTextField;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type = 'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
+    private ExtendedWebElement digitsElement;
 
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
         super(driver);
@@ -41,19 +32,7 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
         return closeButton;
     }
 
-    public ExtendedWebElement getFirstTextValue() {
-        return firstDigitTextField;
-    }
-
-    public ExtendedWebElement getSecondCharTextField() {
-        return secondCharTextField;
-    }
-
-    public ExtendedWebElement getThirdCharTextField() {
-        return thirdCharTextField;
-    }
-
-    public ExtendedWebElement getFourthCharTextField() {
-        return fourthCharTextField;
+    public ExtendedWebElement getDigitsElement() {
+        return digitsElement;
     }
 }

@@ -891,17 +891,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
 
         // Enter 4 char digits to get error message incorrect code
-        kidProofExitIOSPageBase.getFirstTextValue().click();
-        kidProofExitIOSPageBase.getFirstTextValue().type(INCORRECT_CHAR);
+        kidProofExitIOSPageBase.getDigitsElement().click();
 
-        kidProofExitIOSPageBase.getSecondCharTextField().click();
-        kidProofExitIOSPageBase.getSecondCharTextField().type(INCORRECT_CHAR);
-
-        kidProofExitIOSPageBase.getThirdCharTextField().click();
-        kidProofExitIOSPageBase.getThirdCharTextField().type(INCORRECT_CHAR);
-
-        kidProofExitIOSPageBase.getFourthCharTextField().click();
-        kidProofExitIOSPageBase.getFourthCharTextField().type(INCORRECT_CHAR);
+        IntStream.range(0, 4).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(INCORRECT_CHAR));
 
         Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogIncorrectCode(), "Kid Proof Exit error message not displayed");
     }
