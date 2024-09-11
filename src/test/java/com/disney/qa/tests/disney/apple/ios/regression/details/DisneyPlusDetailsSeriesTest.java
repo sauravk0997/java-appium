@@ -106,24 +106,25 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.searchForMedia(SECRET_INVASION);
         searchPage.getDynamicAccessibilityId(SECRET_INVASION).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        String seriesTitle = detailsPage.getMediaTitle();
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Add to watchList button not displayed");
         detailsPage.addToWatchlist();
         sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "Remove from watchlist button not displayed after adding content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        Assert.assertTrue(moreMenuPage.areWatchlistTitlesDisplayed(seriesTitle));
+        sa.assertTrue(moreMenuPage.getTypeCellLabelContains(SECRET_INVASION).isPresent(),
+                "Series title was not added to the watchlist");
 
-        List<ExtendedWebElement> watchlist = moreMenuPage.getDisplayedTitles();
-        watchlist.get(0).click();
+        moreMenuPage.getTypeCellLabelContains(SECRET_INVASION).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickRemoveFromWatchlistButton();
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(),
                 "Add to watchList button not displayed after removing content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        Assert.assertTrue(moreMenuPage.isWatchlistEmptyBackgroundDisplayed(),
+        sa.assertFalse(moreMenuPage.getTypeCellLabelContains(SECRET_INVASION).isPresent(),
+                "Series title was not removed from watchlist");
+        sa.assertTrue(moreMenuPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
     }
