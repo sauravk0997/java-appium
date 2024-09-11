@@ -19,7 +19,7 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement closeButton;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type = " +
-                    "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
+                "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private ExtendedWebElement codeInputField;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \",\"`][2]")
@@ -53,16 +53,26 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
         StringBuilder stringBuilder = new StringBuilder();
 
         Map<String, String> kidProofExitCodeDigits = Map.of(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_ZERO.getText()), "0",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_ONE.getText()), "1",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_TWO.getText()), "2",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_THREE.getText()), "3",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_FOUR.getText()), "4",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_FIVE.getText()), "5",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_SIX.getText()), "6",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_SEVEN.getText()), "7",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_EIGHT.getText()), "8",
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.KIDPROOF_DIGIT_NINE.getText()), "9"
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_ZERO.getText()), "0",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_ONE.getText()), "1",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_TWO.getText()), "2",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_THREE.getText()), "3",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_FOUR.getText()), "4",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_FIVE.getText()), "5",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_SIX.getText()), "6",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_SEVEN.getText()), "7",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_EIGHT.getText()), "8",
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.KIDPROOF_DIGIT_NINE.getText()), "9"
         );
 
         values.forEach(value -> {
