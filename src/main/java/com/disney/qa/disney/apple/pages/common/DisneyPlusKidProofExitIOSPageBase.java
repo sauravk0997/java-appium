@@ -5,22 +5,36 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.KIDPROOF_DIALOG_TITLE;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
+@SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
     private ExtendedWebElement closeButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type = " +
+            "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
+    private ExtendedWebElement codeInputField;
+
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
         super(driver);
     }
-    public boolean getKidProofDialogTitle() {
+    public boolean isKidProofDialogTitleDisplayed() {
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 KIDPROOF_DIALOG_TITLE.getText())).isPresent();
     }
 
+    public boolean isKidProofIncorrectCodeErrorMessageDisplayed() {
+        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                KIDPROOF_INCORRECT_CODE_ERROR_MESSAGE.getText())).isPresent();
+    }
+
     public ExtendedWebElement getCloseButton() {
         return closeButton;
+    }
+
+    public ExtendedWebElement getCodeInputField() {
+        return codeInputField;
     }
 }
