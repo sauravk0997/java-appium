@@ -889,10 +889,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
-
-        // Enter 4 char digits to get error message incorrect code
+        // Enter 4 digits to get error message incorrect code
         kidProofExitIOSPageBase.getCodeInputField().type(incorrectCode);
-
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofIncorrectCodeErrorMessageDisplayed(), "Incorrect code error message not displayed");
     }
 
