@@ -495,7 +495,9 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         }
 
         //Rating
-        exploreAPIMetaData.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        if (visualsResponse.getMetastringParts().getRatingInfo().getRating() != null) {
+            exploreAPIMetaData.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        }
 
         return exploreAPIMetaData;
     }

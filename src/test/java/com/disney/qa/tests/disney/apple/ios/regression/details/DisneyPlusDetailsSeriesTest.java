@@ -901,7 +901,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
 
         //Rating
-        exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        if (visualsResponse.getMetastringParts().getRatingInfo().getRating() != null) {
+            exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        }
 
         //Release Year
         if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
