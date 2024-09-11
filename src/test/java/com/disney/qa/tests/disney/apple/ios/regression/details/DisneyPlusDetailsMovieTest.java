@@ -57,8 +57,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         List<ExtendedWebElement> watchlist = moreMenu.getDisplayedTitles();
         watchlist.get(0).click();
         detailsPage.clickRemoveFromWatchlistButton();
-        Assert.assertTrue(detailsPage.getWatchlistButton().isPresent(),
-                "Add to watchlist button wasn't displayed");
+        detailsPage.waitForWatchlistButtonToAppear();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
