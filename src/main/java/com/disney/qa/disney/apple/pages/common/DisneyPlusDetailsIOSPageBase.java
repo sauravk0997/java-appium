@@ -78,8 +78,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement trailerButton;
     @ExtendedFindBy(accessibilityId = "downloadButton")
     protected ExtendedWebElement movieDownloadButton;
-    @ExtendedFindBy(accessibilityId = "downloadEpisodeList")
-    private ExtendedWebElement downloadEpisodeButton;
     @ExtendedFindBy(accessibilityId = "watch")
     protected ExtendedWebElement watchButton;
     @ExtendedFindBy(accessibilityId = "SHOP")
@@ -846,12 +844,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return formats.getText().contains(IMAX_ENHANCED);
     }
 
-    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFormats() {
-        String availableFormats = formats.getText();
-        String[] formatsDetails = availableFormats.split(":, ");
-        return formatsDetails[1].startsWith(IMAX_ENHANCED);
-    }
-
     public boolean isNegativeStereotypeAdvisoryLabelPresent() {
         String contentAdvisoryText = String.format("%s, %s ",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
@@ -1085,5 +1077,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isRemoveDownloadButtonDisplayed() {
         return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episodeTitle) {
+        return getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                SERIES_EPISODE_TITLE.getText()),
+                Map.of("episodeNumber", Integer.parseInt(season), "title", episodeTitle)));
     }
  }
