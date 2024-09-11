@@ -13,7 +13,8 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"iconNavClose24LightActive\"`]")
     private ExtendedWebElement closeButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type = 'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type = " +
+            "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private ExtendedWebElement digitsElement;
 
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
