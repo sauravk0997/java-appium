@@ -19,11 +19,11 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement closeButton;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type = " +
-                "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
+            "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private ExtendedWebElement codeInputField;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \",\"`][2]")
-    protected ExtendedWebElement staticTextNumbers;
+    protected ExtendedWebElement codeText;
 
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
         super(driver);
@@ -48,10 +48,9 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String parseExitDigitsCode() {
-        String exitCodeNumber = staticTextNumbers.getText();
+        String exitCodeNumber = codeText.getText();
         List<String> values = Arrays.asList(exitCodeNumber.split("[,、]"));
         StringBuilder stringBuilder = new StringBuilder();
-
         Map<String, String> kidProofExitCodeDigits = Map.of(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_ZERO.getText()), "0",
@@ -74,7 +73,6 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_NINE.getText()), "9"
         );
-
         values.forEach(value -> {
             value = value.trim();
             stringBuilder.append(kidProofExitCodeDigits.get(value));

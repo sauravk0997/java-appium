@@ -912,12 +912,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        // Enter correct code and validates screen expected
         String correctCode = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
-
-        kidProofExitIOSPageBase.getCodeInputField().click();
-
         IntStream.range(0, correctCode.length()).forEach(i -> kidProofExitIOSPageBase.getCodeInputField().type(Character.toString(correctCode.charAt(i))));
-        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
+
+        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching screen did not open");
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
