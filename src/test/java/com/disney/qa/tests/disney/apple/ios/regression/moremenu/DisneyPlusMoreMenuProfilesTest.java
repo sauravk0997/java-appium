@@ -880,7 +880,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
                 profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
                 kidsModeEnabled(true).isStarOnboarded(true).build());
-
         configureKidsProfileProofExit();
 
         moreMenu.clickMoreTab();
@@ -899,7 +898,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String correctCode = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
         Assert.assertTrue(kidProofExitIOSPageBase.getDigitsElement().isPresent(), "Digits text field are not present");
         kidProofExitIOSPageBase.getDigitsElement().click();
-        IntStream.range(0, 4).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(Character.toString(correctCode.charAt(i))));
+        IntStream.range(0, correctCode.length()).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(Character.toString(correctCode.charAt(i))));
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
 
     }
