@@ -32,11 +32,11 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void verifyRemoveMovieFromWatchlist() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
@@ -44,19 +44,26 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         disneyPlusHomeIOSPageBase.clickSearchIcon();
         disneyPlusSearchIOSPageBase.clickMoviesTab();
         disneyPlusSearchIOSPageBase.selectRandomTitle();
-        disneyPlusDetailsIOSPageBase.addToWatchlist();
+        String contentTitle = detailsPage.getMediaTitle();
+        //Add to watchlist
+        detailsPage.addToWatchlist();
+        Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+                "remove from watchlist button wasn't displayed");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(
+        moreMenu.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        List<ExtendedWebElement> watchlist = disneyPlusMoreMenuIOSPageBase.getDisplayedTitles();
+        sa.assertTrue(moreMenu.getTypeCellLabelContains(contentTitle).isPresent(), "D+ Media title was not added to the watchlist");
+        //Remove from watchlist
+        List<ExtendedWebElement> watchlist = moreMenu.getDisplayedTitles();
         watchlist.get(0).click();
-        disneyPlusDetailsIOSPageBase.clickRemoveFromWatchlistButton();
-        pause(10); //wait for refresh rate
+        detailsPage.clickRemoveFromWatchlistButton();
+        Assert.assertTrue(detailsPage.getWatchlistButton().isPresent(),
+                "Add to watchlist button wasn't displayed");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(
+        moreMenu.getDynamicCellByLabel(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isWatchlistEmptyBackgroundDisplayed(),
+        sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
     }
