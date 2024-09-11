@@ -347,7 +347,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement checkboxChecked;
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
-    @ExtendedFindBy(accessibilityId = "kidsBackgroundGradient")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"kidsBackgroundGradient\"`]")
     private ExtendedWebElement kidThemeBackgroundUI;
 
 
