@@ -877,9 +877,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                        .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
+                        .kidsModeEnabled(true).isStarOnboarded(true).build());
         configureKidsProfileProofExit();
 
         moreMenu.clickMoreTab();
@@ -900,7 +900,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         kidProofExitIOSPageBase.getDigitsElement().click();
         IntStream.range(0, correctCode.length()).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(Character.toString(correctCode.charAt(i))));
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
-
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {

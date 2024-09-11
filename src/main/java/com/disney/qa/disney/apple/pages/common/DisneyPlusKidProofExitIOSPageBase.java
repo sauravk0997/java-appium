@@ -18,7 +18,8 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement closeButton;
 
     @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeScrollView[$type='XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
+            "**/XCUIElementTypeScrollView[$type = " +
+                    "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
     private ExtendedWebElement digitsElement;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \",\"`][2]")
