@@ -817,7 +817,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
         kidProofExitIOSPageBase.getCloseButton().click();
         // Validates that Kid Proof Exit Screen has been closed
         Assert.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
@@ -880,7 +880,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
                         .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
                         .kidsModeEnabled(true).isStarOnboarded(true).build());
-        String INCORRECT_CHAR = "e";
+        String incorrectCode = "1234";
         configureKidsProfileProofExit();
 
         moreMenu.clickMoreTab();
@@ -888,14 +888,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
 
         // Enter 4 char digits to get error message incorrect code
-        kidProofExitIOSPageBase.getDigitsElement().click();
+        kidProofExitIOSPageBase.getCodeInputField().type(incorrectCode);
 
-        IntStream.range(0, 4).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(INCORRECT_CHAR));
-
-        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogIncorrectCode(), "Kid Proof Exit error message not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofIncorrectCodeErrorMessageDisplayed(), "Incorrect code error message not displayed");
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {

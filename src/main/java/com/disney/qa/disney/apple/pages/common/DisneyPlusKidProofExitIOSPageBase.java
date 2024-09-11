@@ -15,26 +15,26 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type = " +
             "'XCUIElementTypeStaticText'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther")
-    private ExtendedWebElement digitsElement;
+    private ExtendedWebElement codeInputField;
 
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
         super(driver);
     }
-    public boolean getKidProofDialogTitle() {
+    public boolean isKidProofDialogTitleDisplayed() {
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 KIDPROOF_DIALOG_TITLE.getText())).isPresent();
     }
 
-    public boolean getKidProofDialogIncorrectCode() {
+    public boolean isKidProofIncorrectCodeErrorMessageDisplayed() {
         return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                KIDPROOF_DIALOG_ERROR_INCORRECT_CODE_1.getText())).isPresent();
+                KIDPROOF_INCORRECT_CODE_ERROR_MESSAGE.getText())).isPresent();
     }
 
     public ExtendedWebElement getCloseButton() {
         return closeButton;
     }
 
-    public ExtendedWebElement getDigitsElement() {
-        return digitsElement;
+    public ExtendedWebElement getCodeInputField() {
+        return codeInputField;
     }
 }
