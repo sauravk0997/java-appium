@@ -48,40 +48,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         };
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448","XMOBQA-71632"})
-    @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
-    public void verifyAddSeriesAndMovieToWatchlist() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        //search movies
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(HOCUS_POCUS);
-        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
-        movies.get(0).click();
-        String firstMovieTitle = detailsPage.getMediaTitle();
-        detailsPage.addToWatchlist();
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
-
-        //search series
-        searchPage.clearText();
-        searchPage.searchForMedia(HIGH_SCHOOL_MUSICAL);
-        List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
-        series.get(0).click();
-        String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
-        detailsPage.addToWatchlist();
-
-        //titles added to watchlist
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71130"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyIMAXEnhancedBadges() {
