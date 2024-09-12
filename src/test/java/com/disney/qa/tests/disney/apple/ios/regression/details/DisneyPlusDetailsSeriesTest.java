@@ -103,26 +103,29 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(SECRET_INVASION);
-        searchPage.getDynamicAccessibilityId(SECRET_INVASION).click();
+        searchPage.clickSeriesTab();
+        searchPage.selectRandomTitle();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String contentTitle = detailsPage.getMediaTitle();
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Add to watchList button not displayed");
         detailsPage.addToWatchlist();
         sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "Remove from watchlist button not displayed after adding content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenuPage.getTypeCellLabelContains(SECRET_INVASION).isPresent(),
+        sa.assertTrue(moreMenuPage.getTypeCellLabelContains(contentTitle).isPresent(),
                 "Series title was not added to the watchlist");
 
-        moreMenuPage.getTypeCellLabelContains(SECRET_INVASION).click();
+        //Remove from watchList
+        moreMenuPage.getTypeCellLabelContains(contentTitle).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickRemoveFromWatchlistButton();
+        detailsPage.waitForWatchlistButtonToAppear();
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(),
                 "Add to watchList button not displayed after removing content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertFalse(moreMenuPage.getTypeCellLabelContains(SECRET_INVASION).isPresent(),
+        sa.assertFalse(moreMenuPage.getTypeCellLabelContains(contentTitle).isPresent(),
                 "Series title was not removed from watchlist");
         sa.assertTrue(moreMenuPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
