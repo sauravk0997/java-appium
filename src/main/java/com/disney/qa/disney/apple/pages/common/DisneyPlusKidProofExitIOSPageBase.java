@@ -29,8 +29,7 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     //TODO: Update to accessibility ID when bug IOS-12731 is attended
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]")
     private ExtendedWebElement doorIcon;
-
-
+    
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
         super(driver);
     }

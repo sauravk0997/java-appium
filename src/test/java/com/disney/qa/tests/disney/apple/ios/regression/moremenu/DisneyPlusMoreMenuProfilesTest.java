@@ -48,6 +48,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
     private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR = "Kid Proof Exit screen was not displayed";
+
     private void onboard() {
         setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -935,7 +936,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
-        // Click on Exit Kids Profile and validates that screen has been opened
+        // Click on Exit Kids Profile and validates that screen elements
         moreMenu.tapExitKidsProfileButton();
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR);
         Assert.assertTrue(kidProofExitIOSPageBase.getCloseButton().isPresent(), "Close button is not present");
