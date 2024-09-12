@@ -921,7 +921,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66832"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
-    public void verifyKidProofExitJuniorProfileScreenUI() {
+    public void verifyKidProofExitJuniorProfileScreenUINavigation() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
@@ -934,17 +934,18 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
+        // Click on Exit Kids Profile and validates that screen has been opened
         moreMenu.tapExitKidsProfileButton();
-        // Validates header text from Kid Proof Exit Screen
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        // Click on close button and validates that Kid Proof Exit Screen has been closed
         kidProofExitIOSPageBase.getCloseButton().click();
-        // Validates that Kid Proof Exit Screen has been closed
         Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
                 "Exit Junior Mode option is not present");
-        // Tap on Exit Kids Profile button and enter correct code
+        // Click on Exit Kids Profile and validates screen elements
         moreMenu.tapExitKidsProfileButton();
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
         Assert.assertTrue(kidProofExitIOSPageBase.getCodeInputField().isPresent(), "Digits text field is not present");
+        // Enter correct code and validates screen expected
         String code = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
         kidProofExitIOSPageBase.getCodeInputField().type(code);
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
