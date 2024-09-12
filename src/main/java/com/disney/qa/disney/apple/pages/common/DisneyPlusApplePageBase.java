@@ -345,9 +345,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement checkboxUnchecked;
     @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxChecked")
     private ExtendedWebElement checkboxChecked;
-
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"kidsBackgroundGradient\"`]")
+    private ExtendedWebElement kidThemeBackgroundUI;
+
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1563,5 +1565,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isLogoutAllDevicesUnchecked() {
         return checkboxUnchecked.isPresent();
+    }
+
+    public boolean isKidThemeBackgroudUIDisplayed() {
+        return kidThemeBackgroundUI.isPresent();
     }
 }

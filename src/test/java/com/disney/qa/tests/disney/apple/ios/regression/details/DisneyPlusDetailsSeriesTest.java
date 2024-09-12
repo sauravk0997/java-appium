@@ -846,6 +846,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Verify main details page UI elements
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
+        sa.assertTrue(detailsPage.isKidThemeBackgroudUIDisplayed(), "UI on detail page is not in kid mode theme");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
@@ -910,7 +911,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
 
         //Rating
-        exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
+            exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        }
 
         //Release Year
         if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
