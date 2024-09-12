@@ -817,7 +817,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
         kidProofExitIOSPageBase.getCloseButton().click();
         // Validates that Kid Proof Exit Screen has been closed
         Assert.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
@@ -870,6 +870,56 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit toggle was not disabled");
     }
 
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75397"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyKidProofExitJuniorProfileScreenIncorrectCode() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = initPage(DisneyPlusKidProofExitIOSPageBase.class);
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true).isStarOnboarded(true).build());
+        String incorrectCode = "1234";
+        configureKidsProfileProofExit();
+
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.tapExitKidsProfileButton();
+        // Validates title text from Kid Proof Exit Screen
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        // Enter 4 digits to get error message incorrect code
+        kidProofExitIOSPageBase.getCodeInputField().type(incorrectCode);
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofIncorrectCodeErrorMessageDisplayed(), "Incorrect code error message not displayed");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75398"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyKidProofExitJuniorProfileCorrectCode() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = initPage(DisneyPlusKidProofExitIOSPageBase.class);
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        configureKidsProfileProofExit();
+        moreMenu.clickMoreTab();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.tapExitKidsProfileButton();
+        // Validates title text from Kid Proof Exit Screen
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        // Enter correct code and validates screen expected
+        String code = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
+        kidProofExitIOSPageBase.getCodeInputField().type(code);
+
+        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching screen did not open");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66832"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
     public void verifyKidProofExitJuniorProfileScreenUI() {
@@ -878,8 +928,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                        .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
-                        .kidsModeEnabled(true).isStarOnboarded(true).build());
+                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true).isStarOnboarded(true).build());
         configureKidsProfileProofExit();
 
         moreMenu.clickMoreTab();
@@ -887,18 +937,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates header text from Kid Proof Exit Screen
-        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
         kidProofExitIOSPageBase.getCloseButton().click();
         // Validates that Kid Proof Exit Screen has been closed
         Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
                 "Exit Junior Mode option is not present");
-        // Tap again on Exit Kids Profile button and enter correct code
+        // Tap on Exit Kids Profile button and enter correct code
         moreMenu.tapExitKidsProfileButton();
-        Assert.assertTrue(kidProofExitIOSPageBase.getKidProofDialogTitle(), "Kid Proof Exit screen was not displayed");
-        String correctCode = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
-        Assert.assertTrue(kidProofExitIOSPageBase.getDigitsElement().isPresent(), "Digits text field are not present");
-        kidProofExitIOSPageBase.getDigitsElement().click();
-        IntStream.range(0, correctCode.length()).forEach(i -> kidProofExitIOSPageBase.getDigitsElement().type(Character.toString(correctCode.charAt(i))));
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.getCodeInputField().isPresent(), "Digits text field is not present");
+        String code = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
+        kidProofExitIOSPageBase.getCodeInputField().type(code);
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
     }
 
