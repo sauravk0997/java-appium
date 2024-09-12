@@ -925,6 +925,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
+        DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
                 .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
@@ -937,6 +938,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Click on Exit Kids Profile and validates that screen has been opened
         moreMenu.tapExitKidsProfileButton();
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR);
+        Assert.assertTrue(kidProofExitIOSPageBase.getCloseButton().isPresent(), "Close button is not present");
+        Assert.assertTrue(kidProofExitIOSPageBase.getDoorIcon().isPresent(), "Door Icon was not present");
+        Assert.assertTrue(kidProofExitIOSPageBase.getCodeText().isPresent(), "Code of 4 digit was not generated");
+        Assert.assertTrue(pinPage.getKeyboardByPredicate().isPresent(), "Keyboard did not pop up");
+        Assert.assertTrue(kidProofExitIOSPageBase.getCodeInputField().isPresent(), "Digits text field is not present");
+
         // Navigate back and validates that Kid Proof Exit Screen has been closed
         kidProofExitIOSPageBase.getCloseButton().click();
         Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",

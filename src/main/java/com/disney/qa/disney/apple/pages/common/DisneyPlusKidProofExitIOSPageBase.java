@@ -26,6 +26,11 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \",\"`][2]")
     protected ExtendedWebElement codeText;
 
+    //TODO: Update to accessibility ID when bug IOS-12731 is attended
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]")
+    private ExtendedWebElement doorIcon;
+
+
     public DisneyPlusKidProofExitIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -46,6 +51,14 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getCodeInputField() {
         return codeInputField;
+    }
+
+    public ExtendedWebElement getCodeText() {
+        return codeText;
+    }
+
+    public ExtendedWebElement getDoorIcon() {
+        return doorIcon;
     }
 
     public String parseExitDigitsCode() {
