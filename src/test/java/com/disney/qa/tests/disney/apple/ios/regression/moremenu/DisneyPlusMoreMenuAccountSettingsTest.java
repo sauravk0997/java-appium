@@ -288,7 +288,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67144", "XMOBQA-75514", "XMOBQA-67150", "XMOBQA-75512"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67144", "XMOBQA-67150", "XMOBQA-75512"})
     @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void testChangePasswordUI() {
         SoftAssert sa = new SoftAssert();
@@ -366,7 +366,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User was not directed back to 'Account Settings' after changing their password");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67134", "XMOBQA-75513", "XMOBQA-70695"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67134", "XMOBQA-70695"})
     @Test(description = "Verify the UI elements for the Change Password screen from Account Settings", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void testChangeEmailUI() {
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
