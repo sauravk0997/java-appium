@@ -47,7 +47,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String ESPAÑOL = "Español";
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
     private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
-
+    private static final String KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR = "Kid Proof Exit screen was not displayed";
     private void onboard() {
         setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -817,7 +817,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR);
         kidProofExitIOSPageBase.getCloseButton().click();
         // Validates that Kid Proof Exit Screen has been closed
         Assert.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
@@ -888,7 +888,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR);
         // Enter 4 digits to get error message incorrect code
         kidProofExitIOSPageBase.getCodeInputField().type(incorrectCode);
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofIncorrectCodeErrorMessageDisplayed(), "Incorrect code error message not displayed");
@@ -911,7 +911,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
         // Validates title text from Kid Proof Exit Screen
-        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR);
         // Enter correct code and validates screen expected
         String code = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
         kidProofExitIOSPageBase.getCodeInputField().type(code);
@@ -936,14 +936,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         // Click on Exit Kids Profile and validates that screen has been opened
         moreMenu.tapExitKidsProfileButton();
-        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR);
         // Navigate back and validates that Kid Proof Exit Screen has been closed
         kidProofExitIOSPageBase.getCloseButton().click();
         Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
                 "Exit Junior Mode option is not present");
         // Click on Exit Kids Profile and validates screen elements
         moreMenu.tapExitKidsProfileButton();
-        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
+        Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_NOT_DISPLAYED_ERROR);
         Assert.assertTrue(kidProofExitIOSPageBase.getCodeInputField().isPresent(), "Digits text field is not present");
         // Enter correct code and validates screen expected
         String code = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
