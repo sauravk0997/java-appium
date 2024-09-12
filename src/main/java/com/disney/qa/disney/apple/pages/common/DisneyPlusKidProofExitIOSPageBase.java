@@ -57,7 +57,7 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     private Map<String, String> getKidProofExitCodeDigits() {
-        return Map.of(
+       return Map.of(
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_ZERO.getText()), "0",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -81,4 +81,3 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
         );
     }
 }
-
