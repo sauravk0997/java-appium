@@ -921,7 +921,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66832"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
-    public void verifyKidProofExitJuniorProfileScreenUINavigation() {
+    public void verifyKidProofExitJuniorProfileScreenUI() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
@@ -937,7 +937,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Click on Exit Kids Profile and validates that screen has been opened
         moreMenu.tapExitKidsProfileButton();
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), "Kid Proof Exit screen was not displayed");
-        // Click on close button and validates that Kid Proof Exit Screen has been closed
+        // Navigate back and validates that Kid Proof Exit Screen has been closed
         kidProofExitIOSPageBase.getCloseButton().click();
         Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
                 "Exit Junior Mode option is not present");
