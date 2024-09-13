@@ -918,7 +918,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
 
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            scrollDown();
+            swipeUp(1500);
         }
 
         //Download season 1 & 2
