@@ -898,7 +898,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66736"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
-    public void verifyDownloadScreenForSeries() throws URISyntaxException, JsonProcessingException {
+    public void verifyDownloadScreenForSeriesViewUI() throws URISyntaxException, JsonProcessingException {
         String season1 = "Season 1";
         String season2 = "Season 2";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -916,6 +916,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Get season1 episode details from API
         ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_loki_entity_id"));
         Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            scrollDown();
+        }
 
         //Download season 1 & 2
         detailsPage.downloadAllOfSeason();
