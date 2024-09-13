@@ -134,4 +134,11 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	public void clickSeriesMoreInfoButton() {
 		getImageLabelContains("Double tap for more info").click();
 	}
+
+	public boolean isEpisodeNumberDisplayed(String episodeNumber) {
+		return getStaticTextByLabelContains(getDictionary().formatPlaceholderString(
+				getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.EPISODE_PLACEHOLDER.getText()),
+				Map.of("E", Integer.parseInt(episodeNumber)))).isPresent();
+	}
 }

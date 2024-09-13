@@ -947,9 +947,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 season2 + " title not found");
         sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(),
                 "Episode Title was not found");
-        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getRatingInfo().getRating().getText()).isPresent(),
+        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getMetastringParts().getRatingInfo().getRating().getText()).isPresent(),
                 "Episode rating detail was not found");
-        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeNumber()).isPresent(),
+        sa.assertTrue(downloads.isEpisodeNumberDisplayed(seasonDetails.getEpisodeNumber()),
                 "Episode Number was not found");
         sa.assertTrue(downloads.getStaticTextByLabelContains("MB").isPresent(),
                 "Size of episode was not found");
@@ -961,11 +961,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getDownloadedAssetImage(DETAILS_TAB_METADATA_SERIES).isPresent(),
                 "Episode artwork and play button was not found");
         downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
-        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getDescription().toString()).isPresent(),
+        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getDescription().getBrief()).isPresent(),
                 "Episode Description detail was not found");
 
         downloads.getTypeButtonByLabel(season1).click();
-        sa.assertFalse(downloads.getStaticTextByLabel(seasonDetails.getDescription().toString()).isPresent(),
+        sa.assertFalse(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(),
                 season1 + " not collapsed");
         sa.assertAll();
     }
