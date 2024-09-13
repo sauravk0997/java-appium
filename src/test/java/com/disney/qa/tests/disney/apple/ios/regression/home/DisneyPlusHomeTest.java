@@ -1,14 +1,21 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.config.Configuration;
+import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
+import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import io.appium.java_client.remote.options.SupportsAppOption;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -153,5 +160,41 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickCloseButton();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67617"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    public void verifyAppUpgrade() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
+
+       // String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+           //     .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));;
+
+        String appVersion = Configuration.getRequired(DisneyConfiguration.Parameter.APP_VERSION);
+        String appData = AppCenterManager.getInstance()
+                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
+                .getDirectLink();
+        System.out.println("*** app data: " + appData.toString());
+        setAppToHomeScreen(getAccount());
+        homePage.clickMoreTab();
+
+        terminateApp(sessionBundles.get(DISNEY));
+        // Install application update
+
+        installApp(AppCenterManager.getInstance()
+                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
+                .getDirectLink());
+        startApp(sessionBundles.get(DISNEY));
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DisneyEntityIds.WANDA_VISION.getTitle());
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        detailsPage.clickPlayButton(SHORT_TIMEOUT);
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
     }
 }
