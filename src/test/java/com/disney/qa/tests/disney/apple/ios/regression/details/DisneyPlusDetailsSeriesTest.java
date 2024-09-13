@@ -896,6 +896,74 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66736"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    public void verifyDownloadScreenForSeries() throws URISyntaxException, JsonProcessingException {
+        String season1 = "Season 1";
+        String season2 = "Season 2";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDynamicAccessibilityId(DETAILS_TAB_METADATA_SERIES).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        //Get season1 episode details from API
+        ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_loki_entity_id"));
+        Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+
+        //Download season 1 & 2
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(season2).click();
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+        detailsPage.waitForSeriesDownloadToComplete(120, 6);
+
+        //Navigate to Download page
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        downloads.clickSeriesMoreInfoButton();
+
+        sa.assertTrue(downloads.getBackArrow().isPresent(), "Back button not present");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(DETAILS_TAB_METADATA_SERIES).isPresent(),
+                DETAILS_TAB_METADATA_SERIES + " title was not found on downloads screen");
+        sa.assertTrue(downloads.getEditButton().isPresent(), "Edit button not found on download screen");
+        sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
+                season1 + " title not found");
+        sa.assertTrue(downloads.getStaticTextByLabel(season2).isPresent(),
+                season2 + " title not found");
+        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(),
+                "Episode Title was not found");
+        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getRatingInfo().getRating().getText()).isPresent(),
+                "Episode rating detail was not found");
+        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeNumber()).isPresent(),
+                "Episode Number was not found");
+        sa.assertTrue(downloads.getStaticTextByLabelContains("MB").isPresent(),
+                "Size of episode was not found");
+        long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seasonDetails.getDurationMs());
+        sa.assertTrue(downloads.getStaticTextByLabelContains(String.valueOf(durationFromApi)).isPresent(),
+                "Duration of episode was not found");
+        sa.assertTrue(downloads.getDownloadCompleteButton().isPresent(),
+                "Download state button was not found");
+        sa.assertTrue(downloads.getDownloadedAssetImage(DETAILS_TAB_METADATA_SERIES).isPresent(),
+                "Episode artwork and play button was not found");
+        downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
+        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getDescription().toString()).isPresent(),
+                "Episode Description detail was not found");
+
+        downloads.getTypeButtonByLabel(season1).click();
+        sa.assertFalse(downloads.getStaticTextByLabel(seasonDetails.getDescription().toString()).isPresent(),
+                season1 + " not collapsed");
+        sa.assertAll();
+    }
+
     private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
         Map<String, Object> exploreAPIMetadata = new HashMap<>();
 
