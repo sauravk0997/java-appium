@@ -539,17 +539,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
         sa.assertTrue(getBeginningTime() < 60,
-                "Video is not playing from the beginning.");
+                "Video is not playing from the beginning");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public ExtendedWebElement getNextEpisodeButton() {
-        return dynamicBtnFindByName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_NEXT_EPISODE.getText()));
     }
 
     public ExtendedWebElement getRestartButton() {
-        return dynamicBtnFindByName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return dynamicBtnFindByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_ACTION_START_FROM_BEGINNING.getText()));
     }
 
@@ -685,7 +685,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
         detailsPage.getPlayButton().click();
-        sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player.");
+        sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player");
         waitForVideoToStart();
         scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         waitForVideoToStart();
