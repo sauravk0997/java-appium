@@ -11,16 +11,21 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.options.SupportsAppOption;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
@@ -166,35 +171,27 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void verifyAppUpgrade() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
+        String APP_LATEST_VERSION =  "latest";
 
-       // String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-           //     .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));;
-
-        String appVersion = Configuration.getRequired(DisneyConfiguration.Parameter.APP_VERSION);
-        String appData = AppCenterManager.getInstance()
-                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
-                .getDirectLink();
-        System.out.println("*** app data: " + appData.toString());
         setAppToHomeScreen(getAccount());
-        homePage.clickMoreTab();
-
+        // Terminate app to update application
         terminateApp(sessionBundles.get(DISNEY));
-        // Install application update
-
+        // Install latest application
         installApp(AppCenterManager.getInstance()
-                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
+                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", APP_LATEST_VERSION))
                 .getDirectLink());
         startApp(sessionBundles.get(DISNEY));
 
+        // Verify some navigation options
         homePage.clickSearchIcon();
         searchPage.searchForMedia(DisneyEntityIds.WANDA_VISION.getTitle());
         searchPage.getDisplayedTitles().get(0).click();
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        Assert.assertFalse(detailsPage.isMovieDownloadButtonDisplayed(), "Movie download button is not displayed");
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player Page did not opened");
     }
 }
