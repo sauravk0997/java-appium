@@ -930,7 +930,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickAlertConfirm();
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(season1).click();
-        detailsPage.waitForSeriesDownloadToComplete(120, 6);
+        detailsPage.waitForOneEpisodeDownloadToComplete(120, 6);
 
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
