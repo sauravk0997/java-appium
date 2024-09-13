@@ -928,6 +928,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getStaticTextByLabel(season2).click();
         detailsPage.downloadAllOfSeason();
         detailsPage.clickAlertConfirm();
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(season1).click();
         detailsPage.waitForSeriesDownloadToComplete(120, 6);
 
         //Navigate to Download page
