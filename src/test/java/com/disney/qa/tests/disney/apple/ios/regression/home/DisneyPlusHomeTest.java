@@ -2,7 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
