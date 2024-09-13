@@ -38,6 +38,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(getAccount().getFirstName());
         editProfile.toggleAutoplayButton("OFF");
         Assert.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
 
         // Verify navigation options and series play video
