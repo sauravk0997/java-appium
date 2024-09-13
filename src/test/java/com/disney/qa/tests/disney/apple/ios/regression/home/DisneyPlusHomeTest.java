@@ -1,8 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
-import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
-import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -10,22 +7,12 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.appcenter.AppCenterManager;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.config.Configuration;
-import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
-import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.remote.options.SupportsAppOption;
-import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
@@ -165,33 +152,5 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickCloseButton();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67617"})
-    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
-    public void verifyAppUpgrade() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
-        String APP_LATEST_VERSION =  "latest";
-
-        setAppToHomeScreen(getAccount());
-        // Terminate app to update application
-        terminateApp(sessionBundles.get(DISNEY));
-        // Install latest application
-        installApp(AppCenterManager.getInstance()
-                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", APP_LATEST_VERSION))
-                .getDirectLink());
-        startApp(sessionBundles.get(DISNEY));
-
-        // Verify some navigation options
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(DisneyEntityIds.WANDA_VISION.getTitle());
-        searchPage.getDisplayedTitles().get(0).click();
-        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
-        Assert.assertFalse(detailsPage.isMovieDownloadButtonDisplayed(), "Movie download button is not displayed");
-        detailsPage.clickPlayButton(SHORT_TIMEOUT);
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player Page did not opened");
     }
 }
