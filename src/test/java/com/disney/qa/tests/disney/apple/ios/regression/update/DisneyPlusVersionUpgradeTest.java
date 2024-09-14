@@ -6,6 +6,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -23,8 +24,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        String appCurrentFCVersion =  "3.7.0.72533";
-        String appPreviousFCVersion =  "3.7.0.72383";
+        String appCurrentFCVersion =  R.TESTDATA.get("disney_app_current_fc_version");
+        String appPreviousFCVersion =  R.TESTDATA.get("disney_app_previous_fc_version");
 
         // Install previous FC Version and log in
         installApplication(appPreviousFCVersion);
