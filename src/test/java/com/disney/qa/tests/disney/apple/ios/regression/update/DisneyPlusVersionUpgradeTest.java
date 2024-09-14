@@ -11,6 +11,9 @@ import org.testng.annotations.Test;
 
 public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
+    /* This test case installs the previous FC build (appPreviousFCVersion) that was tested previous the current version
+       and upgrades against the latest FC approved (appCurrentFCVersion) it is in the current FC XML
+     */
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67617"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void verifyAppUpgrade() {
@@ -20,20 +23,28 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        String appCurrentFCVersion =  "3.7.0.72533";
+        String appPreviousFCVersion =  "3.7.0.72383";
 
-        String APP_LATEST_VERSION =  "latest";
-
+        // Install previous FC Version and log in
+        installApplication(appPreviousFCVersion);
         setAppToHomeScreen(getAccount());
-        // Terminate app to update application
-        terminateApp(sessionBundles.get(DISNEY));
-        // Install latest application
-        installApp(AppCenterManager.getInstance()
-                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", APP_LATEST_VERSION))
-                .getDirectLink());
-        startApp(sessionBundles.get(DISNEY));
-
-        // Verify the edit profile option of user
         moreMenu.clickMoreTab();
+        // Assert that version installed it is the previous FC Version
+        Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
+                "App Version was not displayed");
+        Assert.assertEquals(appPreviousFCVersion, moreMenu.getAppVersion(), "Version is not the previous expected");
+
+        // Terminate app and upgrade application to current version
+        terminateApp(sessionBundles.get(DISNEY));
+        installApplication(appCurrentFCVersion);
+        startApp(sessionBundles.get(DISNEY));
+        moreMenu.clickMoreTab();
+        // Verify version is current FC Version
+        Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
+                "App Version was not displayed");
+        Assert.assertEquals(appCurrentFCVersion, moreMenu.getAppVersion(), "Version is not the current expected");
+        // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getAccount().getFirstName());
         editProfile.toggleAutoplayButton("OFF");
@@ -50,5 +61,11 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 "Series episode download button is not displayed");
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         Assert.assertTrue(videoPlayer.isOpened(), "Video player Page did not opened");
+    }
+
+    private void installApplication(String version) {
+        installApp(AppCenterManager.getInstance()
+                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", version))
+                .getDirectLink());
     }
 }
