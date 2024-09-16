@@ -21,7 +21,7 @@
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
     <!-- TODO: This needs to be update to not collide with iOS Tablet regression schedule -->
     <parameter name="scheduling" value="H 7 * * 6,0"/>
-    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings">
         <classes>
