@@ -675,12 +675,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         BACK,
         CHROMECAST,
         FAST_FORWARD,
+        LOCK_ICON,
         NEXT_EPISODE,
         PLAY,
         PAUSE,
         RESTART,
-        REWIND,
-        LOCK_ICON
+        REWIND
     }
 
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
