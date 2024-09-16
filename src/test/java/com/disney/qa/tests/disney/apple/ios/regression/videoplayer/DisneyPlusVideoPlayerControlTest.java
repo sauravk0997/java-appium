@@ -140,23 +140,46 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66505"})
-    @Test(description = "Video Player > Player Controls UI", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyPlayerControlUI() {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SHORT_SERIES);
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE), "Pause button is not visible on player overlay");
-        videoPlayer.clickPauseButton();
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.REWIND), "Rewind button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.FAST_FORWARD), "Forward button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.BACK), "Back button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AIRPLAY), "Airplay Button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AUDIO_SUBTITLE_BUTTON), "Audio subtitle Menu Button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isTitleLabelVisible(), "Title label is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Current time label is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Remaining time label is not visible on player overlay");
-        sa.assertAll();
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    public void verifyVideoPlayerControlsUIMovies() {
+            DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+            DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+            SoftAssert sa = new SoftAssert();
+
+            setAppToHomeScreen(getAccount());
+            launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
+            Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+            String contentTitle = detailsPage.getContentTitle();
+
+            Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+
+            sa.assertTrue(videoPlayer.getTitleLabel().contains(contentTitle),
+                    "Content title doesn't match from the detail's content title");
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.BACK), "Back button is not visible on player overlay");
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AIRPLAY),
+                    "Airplay Button is not visible on player overlay");
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.LOCK_ICON),
+                    "Lock Button is not visible on player overlay");
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AUDIO_SUBTITLE_BUTTON),
+                    "Audio subtitle Menu Button is not visible on player overlay");
+
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE), "Pause button is not visible on player overlay");
+            videoPlayer.clickPauseButton();
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.REWIND), "Rewind button is not visible on player overlay");
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.FAST_FORWARD), "Forward button is not visible on player overlay");
+
+            sa.assertTrue(videoPlayer.isCurrentTimeMarkerVisible(),
+                    "Current time marker is not visible on player overlay");
+            sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(),
+                    "Current time label is not visible on player overlay");
+            sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(),
+                    "Remaining time label is not visible on player overlay");
+
+            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.RESTART),
+                    "Restart button is not visible on player overlay");
+            sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74457"})
