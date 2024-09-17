@@ -17,7 +17,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpButton;
 
-    @ExtendedFindBy(accessibilityId = "buttonSignUp")
+    @ExtendedFindBy(accessibilityId = "loginButton")
     protected ExtendedWebElement loginButton;
 
     @ExtendedFindBy(accessibilityId = "dismissButton")
@@ -55,7 +55,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     @Override
     public boolean isOpened() {
-        return signUpButton.isPresent();
+        return loginButton.isPresent();
     }
 
     public boolean isBackgroundDisplayed() {
