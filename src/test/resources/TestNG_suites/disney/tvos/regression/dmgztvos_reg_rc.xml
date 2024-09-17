@@ -16,7 +16,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression." value=",Smoke,Onboarding,Home,Details,Watchlist,Profile"/>
-    <parameter name="overrideFields" value="init_retry_count=0,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="init_retry_count=0,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
 
     <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
