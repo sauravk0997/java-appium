@@ -12,6 +12,8 @@ import org.testng.annotations.Test;
 
 public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
+    String APP_URL = "appcenter://Disney-Prod-Enterprise/ios/enterprise/%s";
+
     /* This test case installs the previous FC build (appPreviousFCVersion) that was tested previous the current version
        and upgrades against the latest FC approved (appCurrentFCVersion) it is in the current FC XML
      */
@@ -66,7 +68,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
     private void installApplication(String version) {
         installApp(AppCenterManager.getInstance()
-                .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", version))
+                .getAppInfo(String.format(APP_URL, version))
                 .getDirectLink());
     }
 }
