@@ -22,8 +22,8 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Originals Appearance", groups = {TestGroup.SMOKE, TestGroup.DETAILS})
     public void originalsAppearance() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+//        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+//        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVOriginalsPage disneyPlusAppleTVOriginalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
 
