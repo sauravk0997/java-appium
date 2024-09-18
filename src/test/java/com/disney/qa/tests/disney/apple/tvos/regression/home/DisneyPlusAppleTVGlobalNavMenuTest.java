@@ -68,9 +68,10 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = { TestGroup.HOME, TestGroup.SMOKE })
     public void globalNavAppearance() {
         SoftAssert sa = new SoftAssert();
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
