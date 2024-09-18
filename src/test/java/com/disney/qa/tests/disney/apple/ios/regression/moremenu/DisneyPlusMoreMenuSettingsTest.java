@@ -171,14 +171,13 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67290"})
-    @Test(description = "User taps on Log Out", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION,
-            TestGroup.SMOKE})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void verifyLogOut() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         onboard(getAccount().getFirstName());
-        initPage(DisneyPlusMoreMenuIOSPageBase.class).getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
-
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isSignUpButtonDisplayed(),
+        initPage(DisneyPlusMoreMenuIOSPageBase.class)
+                .getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
+        Assert.assertTrue(welcomePage.isLogInButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
     }
 
