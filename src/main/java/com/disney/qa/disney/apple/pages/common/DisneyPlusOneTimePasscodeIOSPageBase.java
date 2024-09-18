@@ -55,7 +55,7 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
         otpInputField.type(value);
     }
 
-    public void clickLoginWithPassword() {
+    public void clickLoginWithPasswordButton() {
         loginWithPassword.click();
     }
 }
