@@ -89,8 +89,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67654"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER,
-            TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE })
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void verifyAutoPlayOnPlayerView() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
