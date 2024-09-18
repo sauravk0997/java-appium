@@ -61,7 +61,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1","1"),
                 "Series episode download button is not displayed");
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player Page did not opened");
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player Page did not open");
     }
 
     private void installApplication(String version) {
