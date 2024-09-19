@@ -1,0 +1,74 @@
+package com.disney.qa.tests.disney.apple.ios.regression.update;
+
+import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.util.TestGroup;
+import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
+
+    String APP_URL = "appcenter://Disney-Prod-Enterprise/ios/enterprise/%s";
+
+    /* This test case installs the previous FC build (appPreviousFCVersion) that was tested previous the current version
+       and upgrades against the latest FC approved (appCurrentFCVersion) it is in the current FC XML
+     */
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67617"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    public void verifyAppUpgrade() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        String appCurrentFCVersion =  R.TESTDATA.get("disney_app_current_fc_version");
+        String appPreviousFCVersion =  R.TESTDATA.get("disney_app_previous_fc_version");
+
+        // Install previous FC Version and log in
+        installApplication(appPreviousFCVersion);
+        setAppToHomeScreen(getAccount());
+        moreMenu.clickMoreTab();
+        // Assert that version installed it is the previous FC Version
+        Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
+                "App Version was not displayed");
+        Assert.assertEquals(appPreviousFCVersion, moreMenu.getAppVersion(), "Version is not the previous expected");
+
+        // Terminate app and upgrade application to current version
+        terminateApp(sessionBundles.get(DISNEY));
+        installApplication(appCurrentFCVersion);
+        startApp(sessionBundles.get(DISNEY));
+        moreMenu.clickMoreTab();
+        // Verify version is current FC Version
+        Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
+                "App Version was not displayed");
+        Assert.assertEquals(appCurrentFCVersion, moreMenu.getAppVersion(), "Version is not the current expected");
+        // Verify edit profile option of user
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.toggleAutoplayButton("OFF");
+        Assert.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        editProfile.waitForUpdatedToastToDisappear();
+        editProfile.clickDoneBtn();
+
+        // Verify navigation options and series play video
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DisneyEntityIds.WANDA_VISION.getTitle());
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1","1"),
+                "Series episode download button is not displayed");
+        detailsPage.clickPlayButton(SHORT_TIMEOUT);
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player Page did not open");
+    }
+
+    private void installApplication(String version) {
+        installApp(AppCenterManager.getInstance()
+                .getAppInfo(String.format(APP_URL, version))
+                .getDirectLink());
+    }
+}
