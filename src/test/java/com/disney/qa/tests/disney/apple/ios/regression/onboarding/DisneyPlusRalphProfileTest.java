@@ -172,7 +172,17 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testRalphAddProfileJuniorModeDOBDisabled() {
         setupForRalph();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
 
+        SoftAssert sa = new SoftAssert();
+
+        sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
+        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(),"Customized choices button is not present on one trust banner");
+        oneTrustPage.tapCustomizedChoices();
+        sa.assertTrue(oneTrustPage.isPrivacyPreferenceCenterOpen(), "Privacy Preference page is not opened");
+        oneTrustPage.tapConfirmMyChoiceButton();
+        sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
     }
 
     private void  setupForRalph(String... DOB) {
