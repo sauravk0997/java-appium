@@ -24,11 +24,8 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     //Test constants
-    private static final String UPCOMING = "UPCOMING";
     private static final String DANCING_WITH_THE_STARS = "Dancing with the Stars";
-    private static final String LIVE = "LIVE";
     private static final String PLAY = "PLAY";
-    private static final String WATCH_LIVE = "Watch Live";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72640"})
     @Test(description = "Verify Anthology Series - Search", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION}, enabled = false)
