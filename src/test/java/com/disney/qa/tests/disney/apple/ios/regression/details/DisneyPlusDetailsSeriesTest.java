@@ -901,6 +901,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     public void verifyDownloadScreenForSeriesViewUI() throws URISyntaxException, JsonProcessingException {
         String season1 = "Season 1";
         String season2 = "Season 2";
+        int pollingInSeconds = 6;
+        int timeoutInSeconds = 120;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -930,13 +932,14 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickAlertConfirm();
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(season1).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(120, 6);
+        detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
 
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         downloads.clickSeriesMoreInfoButton();
 
+        //verify Download detail view
         sa.assertTrue(downloads.getBackArrow().isPresent(), "Back button not present");
         sa.assertTrue(downloads.getStaticTextByLabelContains(DETAILS_TAB_METADATA_SERIES).isPresent(),
                 DETAILS_TAB_METADATA_SERIES + " title was not found on downloads screen");
@@ -962,11 +965,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Episode artwork and play button was not found");
         downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
         LOGGER.info("Description:- " +seasonDetails.getDescription().getBrief());
-        sa.assertTrue(downloads.getStaticTextByLabelContains(seasonDetails.getDescription().getBrief()).isPresent(),
-                "Episode Description detail was not found");
+        sa.assertTrue(downloads.getEpisodeDescription("1", "1")
+                .getText().equals(seasonDetails.getDescription().getFull()),
+                "Episode description detail was not found after episode expanded");
 
         downloads.getTypeButtonByLabel(season1).click();
-        sa.assertFalse(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(SHORT_TIMEOUT),
+        sa.assertFalse(downloads.isEpisodeCellDisplayed("1", "1"),
                 season1 + " not collapsed");
         sa.assertAll();
     }
