@@ -48,40 +48,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         };
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448","XMOBQA-71632"})
-    @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
-    public void verifyAddSeriesAndMovieToWatchlist() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        //search movies
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(HOCUS_POCUS);
-        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
-        movies.get(0).click();
-        String firstMovieTitle = detailsPage.getMediaTitle();
-        detailsPage.addToWatchlist();
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
-
-        //search series
-        searchPage.clearText();
-        searchPage.searchForMedia(HIGH_SCHOOL_MUSICAL);
-        List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
-        series.get(0).click();
-        String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
-        detailsPage.addToWatchlist();
-
-        //titles added to watchlist
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71130"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyIMAXEnhancedBadges() {
@@ -115,7 +81,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68648"})
-    @Test(description = "Series/Movies Detail Page > Negative Stereotype Advisory Expansion", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyNegativeStereotypeAdvisoryExpansion() {
         DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -128,9 +94,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(THE_LION_KINGS_TIMON_AND_PUUMBA);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
+        sa.assertTrue(details.isContentDetailsPagePresent(),
+                "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Negative Stereotype Advisory text was not found on details page");
 
         //movie
         home.clickSearchIcon();
@@ -138,9 +106,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(THE_ARISTOCATS);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
+        sa.assertTrue(details.isContentDetailsPagePresent(),
+                "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Negative Stereotype Advisory text was not found on details page");
 
         sa.assertAll();
     }
@@ -278,7 +248,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68171"})
-    @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyProgressBarAfterUserWatchesContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -302,20 +272,26 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         videoPlayerPage.clickBackButton();
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getProgressBar());
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button not present after exiting playback");
-        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present after exiting playback");
-        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(), "Continue watching - time remaining is not present");
-        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(durationTime), "Correct remaining time is not reflecting in progress bar");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(),
+                "Continue button not present after exiting playback");
+        sa.assertTrue(detailsPage.isProgressBarPresent(),
+                "Progress bar is not present after exiting playback");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(),
+                "Continue watching - time remaining is not present");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(durationTime),
+                "Correct remaining time is not reflecting in progress bar");
 
         detailsPage.clickContinueButton();
         sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
-        videoPlayerPage.scrubToPlaybackPercentage(99);
+        videoPlayerPage.scrubToPlaybackPercentage(99.5);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
         videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button on detail page is present after completing playback");
-        sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar on detail page is present after completing playback");
+        sa.assertFalse(detailsPage.isContinueButtonPresent(),
+                "Continue button on detail page is present after completing playback");
+        sa.assertFalse(detailsPage.isProgressBarPresent(),
+                "Progress bar on detail page is present after completing playback");
         sa.assertAll();
     }
 

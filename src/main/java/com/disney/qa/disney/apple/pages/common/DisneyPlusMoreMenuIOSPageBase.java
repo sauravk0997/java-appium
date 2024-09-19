@@ -32,7 +32,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	@FindBy(xpath = "//XCUIElementTypeApplication[@name=\"Disney+\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther")
 	private ExtendedWebElement exitJuniorModePin;
-	@FindBy(xpath = "//XCUIElementTypeStaticText[@name=\"%s\"]/preceding-sibling::*")
+
+	@ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeCell[`label == \"Access %s's profile\"`]")
 	private ExtendedWebElement profileAvatar;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access %s's pin protected profile\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
@@ -41,7 +42,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"EDIT PROFILES\"`]/preceding-sibling::*")
 	private ExtendedWebElement profilesTray;
 
-	@FindBy(xpath = "//*[contains(@name, 'Version')]")
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Version\"`]")
 	private ExtendedWebElement appVersion;
 
 	@FindBy(xpath = "//XCUIElementTypeCell[@name='accountTab']//XCUIElementTypeOther[2]/*/XCUIElementTypeImage")
@@ -196,12 +197,15 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return addressbar.getText().contains("help.disneyplus.com");
 	}
 
-	public boolean isAppVersionDisplayed() {
-		return getTypeCellLabelContains("Version").isPresent();
+	public String getAppVersion() {
+		String[] versionNum = appVersion.getText().split(": ");
+		return versionNum[1];
 	}
 
-	public String getAppVersionText() {
-		return appVersion.getText();
+	public boolean isAppVersionDisplayed() {
+		String appVersionKey = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.APP_VERSION_NUMBER.getText()), Map.of("app_version_number_build_number", getAppVersion()));
+		return getTypeCellLabelContains(appVersionKey).isPresent();
 	}
 
 	public void toggleStreamOverWifiOnly(IOSUtils.ButtonStatus status) {

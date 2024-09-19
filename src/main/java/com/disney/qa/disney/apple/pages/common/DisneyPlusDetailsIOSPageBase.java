@@ -78,8 +78,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement trailerButton;
     @ExtendedFindBy(accessibilityId = "downloadButton")
     protected ExtendedWebElement movieDownloadButton;
-    @ExtendedFindBy(accessibilityId = "downloadEpisodeList")
-    private ExtendedWebElement downloadEpisodeButton;
     @ExtendedFindBy(accessibilityId = "watch")
     protected ExtendedWebElement watchButton;
     @ExtendedFindBy(accessibilityId = "SHOP")
@@ -103,6 +101,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement tabBar;
     @FindBy(name = "titleLabel_0")
     private ExtendedWebElement firstTitleLabel;
+    @ExtendedFindBy(accessibilityId = "titleLabel_%s")
+    private ExtendedWebElement episodeTitleLabel;
     @ExtendedFindBy(accessibilityId = "infoInactive24")
     private ExtendedWebElement infoView;
     @FindBy(id = "itemPickerClose")
@@ -141,7 +141,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement durationTimeLabel;
     @ExtendedFindBy(accessibilityId = "contentAdvisory")
     private ExtendedWebElement contentAdvisory;
-
+    private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
+            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                    DictionaryKeys.DOWNLOAD_STOP.getText()), 1);
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -317,7 +319,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAlertTitleDisplayed() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return getStaticTextByLabel(getMediaTitle()).format().isElementPresent();
+        return getStaticTextByLabel(getMediaTitle()).format().isElementPresent(FIVE_SEC_TIMEOUT);
     }
 
     public boolean isTwentyDownloadsTextDisplayed() {
@@ -334,14 +336,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickRemoveFromWatchlistButton() {
-        String watchlistRemoveLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText());
-        getTypeButtonByLabel(watchlistRemoveLabel).format().click();
+        getRemoveFromWatchListButton().click();
         LOGGER.info("'Remove from watchlist' button clicked");
     }
 
     public ExtendedWebElement getRemoveFromWatchListButton() {
-        String watchlistRemoveLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText());
-        return getTypeButtonByLabel(watchlistRemoveLabel);
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN.getText()));
     }
 
     public void swipeTabBar(Direction direction, int duration) {
@@ -604,6 +605,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getContentItems(6);
     }
 
+    public ExtendedWebElement getEpisodeTitleLabel(int episode) {
+        return episodeTitleLabel.format(--episode);
+    }
+
     public void clickFirstTabCell() {
         String firstTabCell = getTabCells().get(0);
         getDynamicCellByLabel(firstTabCell).click();
@@ -837,12 +842,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return formats.getText().contains(IMAX_ENHANCED);
     }
 
-    public boolean isImaxEnhancedPresentBeforeQualityDetailsInFormats() {
-        String availableFormats = formats.getText();
-        String[] formatsDetails = availableFormats.split(":, ");
-        return formatsDetails[1].startsWith(IMAX_ENHANCED);
-    }
-
     public boolean isNegativeStereotypeAdvisoryLabelPresent() {
         String contentAdvisoryText = String.format("%s, %s ",
                 getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
@@ -1012,5 +1011,76 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String expectedLastWord = convertToTitleCase(seasonRatingSplit[2], " ");
         return getStaticTextByLabelContains(String.format("%s %s %s %s", seasonRatingSplit[0],
                 seasonRatingSplit[1], expectedLastWord, seasonRatingSplit[3])).isPresent();
+    }
+
+    //Download Modal Elements
+    public ExtendedWebElement getDownloadModalPlayButton() {
+        String play = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_PLAY_ALERT.getText());
+        return dynamicBtnFindByLabel.format(play);
+    }
+
+    public boolean isDownloadModalPlayButtonDisplayed() {
+        return getDownloadModalPlayButton().isPresent();
+    }
+
+    public boolean isDownloadModalRenewButtonDisplayed() {
+        String renew = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_RENEW_DOWNLOAD.getText());
+        return dynamicBtnFindByLabel.format(renew).isPresent();
+    }
+
+    public boolean isDownloadModalRemoveButtonDisplayed() {
+        String remove = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_REMOVE_DOWNLOAD.getText());
+        return dynamicBtnFindByLabel.format(remove).isPresent();
+    }
+
+    public boolean isStopOrPauseDownloadIconDisplayed() {
+        return fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Download not started")
+                .until(it -> stopOrPauseDownloadButton.isPresent());
+    }
+
+    public void clickStopOrPauseDownload() {
+        stopOrPauseDownloadButton.click();
+    }
+
+    public boolean isDownloadSeasonButtonDisplayed(String seasonNumber) {
+        return getTypeButtonByLabel(getDictionary().formatPlaceholderString(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_SEASON_NUMBER_BTN.getText()), Map.of("seasonNumber",
+                        Integer.parseInt(seasonNumber)))).isPresent();
+    }
+
+    public boolean isDownloadInProgressStatusDisplayed() {
+        String downLoadInProgress = getDictionary().getValuesBetweenPlaceholders(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_IN_PROGRESS_PERCENT.getText())).get(0);
+        return getStaticTextByLabelContains(downLoadInProgress).isPresent();
+    }
+
+    public boolean isPauseDownloadButtonDisplayed() {
+        int count = 5;
+        ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getDictionary().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+        while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+            clickAlertDismissBtn();
+            clickStopOrPauseDownload();
+            count--;
+        }
+        return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
+    }
+
+    public boolean isRemoveDownloadButtonDisplayed() {
+        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episodeTitle) {
+        return getStaticTextByLabel(getDictionary().formatPlaceholderString(getDictionary()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                SERIES_EPISODE_TITLE.getText()),
+                Map.of("episodeNumber", Integer.parseInt(season), "title", episodeTitle)));
     }
  }

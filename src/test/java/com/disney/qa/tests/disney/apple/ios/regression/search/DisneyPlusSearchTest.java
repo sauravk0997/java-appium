@@ -60,6 +60,35 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67325"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, TestGroup.SEARCH})
+    public void verifyMaintainSearchQuery() {
+        String content = "The Simpsons";
+        List<String> firstResultList = new ArrayList<>();
+        List<String> secondResultList = new ArrayList<>();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(content);
+        searchPage.getDisplayedTitles().forEach(searchResult -> firstResultList.add(searchResult.getText()));
+
+        searchPage.getDynamicAccessibilityId(content).click();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+        detailsPage.getBackArrow().click();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.getDisplayedTitles()
+                .subList(0, firstResultList.size())
+                .forEach(searchResult -> secondResultList.add(searchResult.getText()));
+
+        Assert.assertTrue(firstResultList.containsAll(secondResultList),
+                "Search Result list doesn't match with the previous navigation");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
     @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void clearRecentSearches() {
@@ -103,6 +132,37 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67319"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    public void verifySearchBarUI() {
+        String title = "Simpson";
+        String placeholderError = "Placeholder text is not as expected";
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        searchPage.clickSearchIcon();
+
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+        Assert.assertTrue(searchPage.getMagnifyingGlassImage().isPresent(),
+                "Magnifying glass image was not present on search page");
+
+        searchPage.getSearchBar().click();
+        Assert.assertTrue(searchPage.getCancelButton().isPresent(), "Cancel button was not present on search page");
+        Assert.assertTrue(searchPage.getMagnifyingGlassImage().isPresent(),
+                "Magnifying glass image was not present on search page");
+        Assert.assertTrue(searchPage.getKeyboardSearchButton().isPresent(),
+                "Keyboard was not shown when entering the search term");
+        Assert.assertEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+        searchPage.searchForMedia(title);
+        Assert.assertNotEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+    }
+    
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
     @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifyRecentSearchInitiatesValidSearch() {
@@ -357,9 +417,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
-    @Test(description = "Search - Search Results Contains Rating And Released Year details (Handset Only)", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifySearchResultContainsRatingAndYearDetails() throws URISyntaxException, JsonProcessingException {
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             String media = "M";
             String movie = "The Marvels";
             String series = "The Simpsons";
@@ -377,21 +436,22 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
             //User made search with one letter
             String contentTitle = getFirstSearchResults(media);
-            sa.assertTrue(contentTitle.startsWith(media), "Result dosent start with letter " + media);
+            sa.assertTrue(contentTitle.startsWith(media), "Result doesnt start with letter " + media);
 
             //User made search with movie name
             contentTitle = getFirstSearchResults(movie);
             sa.assertTrue(contentTitle.equals(movie), movie + " was not displayed in search results");
             //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiMovieRatingDetails(movieApiContent), getApiContentReleasedYearDetails(movieApiContent));
+            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiMovieRatingDetails(movieApiContent),
+                    getApiContentReleasedYearDetails(movieApiContent));
 
             //User made search with series name
             contentTitle = getFirstSearchResults(series);
             sa.assertTrue(contentTitle.equals(series), series + " was not displayed in search results");
             //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiSeriesRatingDetails(seriesApiContent), getApiContentReleasedYearDetails(seriesApiContent));
+            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiSeriesRatingDetails(seriesApiContent),
+                    getApiContentReleasedYearDetails(seriesApiContent));
             sa.assertAll();
-        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67379"})

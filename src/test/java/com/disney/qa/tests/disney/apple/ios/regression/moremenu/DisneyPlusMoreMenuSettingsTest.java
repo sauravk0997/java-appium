@@ -25,7 +25,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     private static final String TEST_USER = "Test User";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67276"})
-    @Test(description = "Verify: More Menu Page UI", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify: More Menu Page UI", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION,
+            TestGroup.SMOKE})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -170,7 +171,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67290"})
-    @Test(description = "User taps on Log Out", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "User taps on Log Out", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION,
+            TestGroup.SMOKE})
     public void verifyLogOut() {
         onboard(getAccount().getFirstName());
         initPage(DisneyPlusMoreMenuIOSPageBase.class).getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
@@ -181,18 +183,18 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61667"})
-    @Test(description = "More Menu View - App Version Number", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyAppVersionNumber() {
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAppVersionDisplayed(),
                 "App Version was not displayed");
-
-        Assert.assertEquals(disneyPlusMoreMenuIOSPageBase.getAppVersionText(), "Version: " + "2.23.0.59750",
+        String[] capabilitiesAppVersion =  R.CONFIG.get("capabilities.app").split("/");
+        Assert.assertEquals(disneyPlusMoreMenuIOSPageBase.getAppVersion(), capabilitiesAppVersion[5],
                 "Displayed App Version was not correct");
     }
-    
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66835"})
     @Test(description = "Verify: Simplified Kids More Menu", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifySimplifiedKidsMoreMenu() {

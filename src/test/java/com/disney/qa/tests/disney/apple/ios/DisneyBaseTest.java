@@ -14,6 +14,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
@@ -607,5 +608,24 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
         setOverrideValue(String.valueOf(newPauseTime));
         terminateJarvisInstallDisney();
+    }
+
+    public String getHuluSubscriptionId() {
+        try {
+            JsonNode activeSubscriptions = getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
+            int huluSubscriptionIndex = activeSubscriptions.get(0).get("product")
+                    .get("sku").textValue()
+                    .equals(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE.getValue()) ? 0 : 1;
+            return activeSubscriptions.get(huluSubscriptionIndex).get("id").textValue();
+
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException(e.getMessage());
+        }
+    }
+
+    public String convertMinutesIntoStringWithHourAndMinutes(int timeInMinutes) {
+        long hours = timeInMinutes / 60;
+        long minutes = timeInMinutes % 60;
+        return String.format("%dh %dm", hours, minutes);
     }
 }

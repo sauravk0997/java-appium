@@ -22,6 +22,7 @@ import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -310,7 +311,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]")
     protected ExtendedWebElement collectionCell;
 
-    @ExtendedFindBy(accessibilityId = "brandLandingView")
+    @ExtendedFindBy(accessibilityId = "highEmphasisView")
     protected ExtendedWebElement brandLandingView;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24Dark\"`]")
@@ -344,9 +345,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement checkboxUnchecked;
     @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxChecked")
     private ExtendedWebElement checkboxChecked;
-
     @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"kidsBackgroundGradient\"`]")
+    private ExtendedWebElement kidThemeBackgroundUI;
+
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1470,6 +1473,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getStaticTextByLabelContains(rating).isPresent();
     }
 
+    public boolean isRatingPresent(DictionaryKeys rating) {
+            return waitUntil(ExpectedConditions.visibilityOfElementLocated(getStaticTextByLabelContains(getDictionary()
+                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS,
+                            rating.getText())).getBy()), TEN_SEC_TIMEOUT);
+    }
+
     public ExtendedWebElement getNavBackArrow() {
         return navBackButton;
     }
@@ -1556,5 +1565,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isLogoutAllDevicesUnchecked() {
         return checkboxUnchecked.isPresent();
+    }
+
+    public boolean isKidThemeBackgroudUIDisplayed() {
+        return kidThemeBackgroundUI.isPresent();
     }
 }

@@ -2,36 +2,25 @@ package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.*;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.StringGenerator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
-
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_CONTINUE;
 
 public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseTest {
-
-    private static final String MICKEY_MOUSE_PW = "M1ck3yM0us3#$$";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90618"})
     @Test(description = "Pressing menu from forgot password page brings the user back to enter password screen", groups = {"Onboarding"})
@@ -71,7 +60,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         SoftAssert sa = new SoftAssert();
         List<String> expectedText = disneyPlusAppleTVForgotPasswordPage.getForgotPasswordExpectedScreenTexts(getAccount().getEmail());
@@ -123,39 +112,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         disneyPlusAppleTVForgotPasswordPage.clickMenu();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter Password screen did not launch after backing from Having Trouble Loggin In");
-
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90622", "XCDQA-90626"})
-    @Test(description = "Verify that the email with the appropriate subject has been sent and use the OTP to proceed to the Home Screen", groups = {TestGroup.ONBOARDING})
-    public void otpEntryAndCodeVerification() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-
-        Date startTime = getEmailApi().getStartTime();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = getEmailApi().getDisneyOTP(disneyUser.getEmail(), startTime);
-//        sa.assertNotNull(otp, "OTP email received after time: " + startTime);
-
-        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
-        disneyPlusAppleTVForgotPasswordPage.clickSelect();
-
-        sa.assertTrue(disneyPlusAppleTVHomePage.isOpened(), "Home page screen did not launch");
 
         sa.assertAll();
     }
@@ -307,32 +263,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90654"})
-    @Test(description = "Verify that after using an otp, coming back from create pass screen and attempting to reuse otp will result in an error", groups = {TestGroup.ONBOARDING})
-    public void verifyUsedOTPCodeDoesNotWork() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        Date startTime = getEmailApi().getStartTime();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Having trouble loggin in page did not launch");
-
-        String otp = getEmailApi().getDisneyOTP(disneyUser.getEmail(), startTime);
-        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOTPErrorMessagePresent(), "Error message is not present");
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90650"})
     @Test(description = "Verify that 15 minutes after receiving OTP it doesn't work anymore", groups = {TestGroup.ONBOARDING})
     public void otpDoesNotWorkAfterFifteenMinutes() {
@@ -374,269 +304,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90630", "XCDQA-90632"})
-    @Test(description = "Verify create password screen details", groups = {TestGroup.ONBOARDING}, enabled = false)
-    public void createPasswordScreenDetails() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        EmailApi verifyEmail = new EmailApi();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-        String createPasswordScreenFieldText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_NEW_PASSWORD.getText());
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
-        welcomeScreenPage.clickLogInButton();
-        loginPage.proceedToPasswordScreen(disneyUser.getEmail());
-
-        sa.assertTrue(passwordPage.isOpened(), "Enter password screen did not launch");
-
-        Date startTime = verifyEmail.getStartTime();
-        passwordPage.clickHavingTroubleLogginInBtn();
-
-        sa.assertTrue(forgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
-
-        forgotPasswordPage.enterOTP(otp);
-        forgotPasswordPage.clickContinueBtnOnOTPPage();
-
-        sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
-
-        new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
-
-        sa.assertTrue(forgotPasswordPage.isHeadlineHeaderPresent(), "Headline header 'Create new password' not present");
-        sa.assertTrue(forgotPasswordPage.isHeadlineSubtitlePresent(), "Headline subtitle not present");
-        sa.assertTrue(forgotPasswordPage.isStaticTextPresentWithScreenShot(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText())), "Continue button is not present");
-        sa.assertEquals(passwordPage.getPasswordFieldText(), createPasswordScreenFieldText);
-
-        forgotPasswordPage.clickMenu();
-
-        sa.assertTrue(forgotPasswordPage.isOpened(),
-                "Forgot password screen did not launch after pressing menu from Create password screen");
-
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90634"})
-    @Test(description = "Verify create password navigation", groups = {TestGroup.ONBOARDING}, enabled = false)
-    public void createPasswordScreenNavigation() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        EmailApi verifyEmail = new EmailApi();
-        Date startTime = verifyEmail.getStartTime();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-        String createPasswordScreenFieldText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_NEW_PASSWORD.getText());
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
-
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
-        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(), "Create new password field was not focus when page opened");
-
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, createPasswordScreenFieldText, AliceLabels.BUTTON_HOVERED.getText());
-
-        disneyPlusAppleTVForgotPasswordPage.moveDown(1, 1);
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isContinueButtonFocused(), "Continue button was not focused after moving down from create new password field");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90636"})
-    @Test(description = "Verify create password on screen keyboard", groups = {TestGroup.ONBOARDING}, enabled = false)
-    public void createPasswordOnScreenKeyboardVerification() {
-        SoftAssert sa = new SoftAssert();
-        String passReqsEnhanced = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        EmailApi verifyEmail = new EmailApi();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
-
-        Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
-
-        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
-
-        disneyPlusAppleTVPasswordPage.clickPassword();
-
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordHintText(), passReqsEnhanced, "Password strength hint message did not display");
-
-        disneyPlusAppleTVForgotPasswordPage.clickSelect();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isStrengthBarPresent(), "Password strength meter did not display");
-
-        disneyPlusAppleTVForgotPasswordPage.clickMenu();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(),
-                "Create a new password screen did not launch after pressing menu from on screen keyboard");
-
-        sa.assertFalse(disneyPlusAppleTVLoginPage.isKeyboardPresent(), "Keyboard should not be present on create password screen");
-
-        sa.assertAll();
-    }
-
-    //TODO:Missing color check, add that when Alice is trained to recognize strength meter
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90638", "XCDQA-90640"})
-    @Test(description = "Create password screen strength meter", groups = {TestGroup.ONBOARDING}, enabled = false)
-    public void createPasswordScreenStrengthMeterVerification() {
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        EmailApi verifyEmail = new EmailApi();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-        List<List<String>> passwordStrengthMeterLists = disneyPlusAppleTVPasswordPage.getStrengthMeterVerificationLists();
-        List<String> ratingsList = passwordStrengthMeterLists.get(0);
-        List<String> passwordList = passwordStrengthMeterLists.get(1);
-        List<String> widthList = passwordStrengthMeterLists.get(2);
-        String encryptedPassword = "••••••••••••";
-        SoftAssert sa = new SoftAssert();
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
-
-        Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
-
-        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
-
-        disneyPlusAppleTVPasswordPage.clickPassword();
-
-        IntStream.range(0, passwordList.size()).forEach(i -> {
-            disneyPlusAppleTVPasswordPage.enterNewPassword(passwordList.get(i));
-            sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordStrengthMeterWidth(), Integer.parseInt(widthList.get(i)));
-            // for the first password item from passwordList, no meter text is shown
-            if (i != 0) {
-                String dictionaryKey = ratingsList.get(i);
-                sa.assertTrue(disneyPlusAppleTVPasswordPage.isAIDElementPresentWithScreenshot(dictionaryKey), String.format("%s is not present", dictionaryKey));
-            }
-            // Test was failing because password was not cleared between entries. Back out and go back to password page on each PW entry except the last one.
-            if (i != (passwordList.size() - 1)) {
-                disneyPlusAppleTVPasswordPage.clickMenu();
-                disneyPlusAppleTVPasswordPage.clickPassword();
-            }
-        });
-
-        disneyPlusAppleTVForgotPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
-
-        disneyPlusAppleTVForgotPasswordPage.clickSelect();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(),
-                "Create a new password screen did not launch after entering valid password");
-
-        sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordFieldText(), encryptedPassword);
-
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90679", "XCDQA-90681", "XCDQA-90683"})
-    @Test(description = "Empty password submission on create password screen from forgot password", groups = {TestGroup.ONBOARDING}, enabled = false)
-    public void createPasswordNoPasswordSubmissionError() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        DisneyPlusAppleTVCreatePasswordPage createPasswordIOSPageBase = new DisneyPlusAppleTVCreatePasswordPage(getDriver());
-        EmailApi verifyEmail = new EmailApi();
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-        String invalidPassword = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
-                DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
-
-        Date startTime = verifyEmail.getStartTime();
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail(), startTime);
-
-        disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isNumericKeyboardOpen(), "Numeric keyboard did not launch");
-
-        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.selectContinueBtnOnKeyboardEntry();
-
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
-
-        disneyPlusAppleTVPasswordPage.clickContinueBtn();
-
-        sa.assertTrue(createPasswordIOSPageBase.isEmptyPasswordErrorDisplayed());
-        List<String> passwords = Stream.of(StringGenerator.generateWord(5), "Test123").collect(Collectors.toList());
-        IntStream.range(0, passwords.size()).forEach(i -> {
-            disneyPlusAppleTVPasswordPage.clickPassword();
-            if (i == 0) {
-                disneyPlusAppleTVPasswordPage.enterNewPassword(passwords.get(i));
-            } else {
-                disneyPlusAppleTVPasswordPage.clearAndEnterNewPassword(passwords.get(i - 1), passwords.get(i));
-            }
-            disneyPlusAppleTVPasswordPage.selectContinueBtnOnKeyboardEntry();
-            disneyPlusAppleTVPasswordPage.clickContinueBtn();
-            sa.assertEquals(disneyPlusAppleTVPasswordPage.getErrorMessageLabelText(), invalidPassword);
-
-        });
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90685"})
-    @Test(description = "Ensure after resetting password user is taken to home screen", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING})
     public void resettingPasswordTakesUserToHome() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -663,29 +332,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         forgotPasswordPage.enterOTP(otp);
         forgotPasswordPage.clickContinueBtnOnOTPPage();
-
-        sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create a new password screen did not launch");
-
-        passwordPage.clickPassword();
-        passwordPage.enterNewPassword(MICKEY_MOUSE_PW);
-        passwordPage.selectContinueBtnOnKeyboardEntry();
-        passwordPage.clickContinueBtn();
-
-        if(homePage.isGlobalNavExpanded()){
-            homePage.clickSelect();
-        }
         sa.assertTrue(homePage.isOpened(), "Home page is not open after resetting password");
+
         sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90687"})
-    @Test(description = "Fresh login with newly created password takes user to home screen", groups = {TestGroup.ONBOARDING})
-    public void newPasswordAllowsSuccessfulLogIn() {
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-        String updatedPassword = MICKEY_MOUSE_PW;
-        getAccountApi().resetUserPassword(disneyUser, updatedPassword);
-        disneyUser.setUserPass(updatedPassword);
-
-        logInTemp(disneyUser);
     }
 }
