@@ -1,6 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_handset_smoke" annotations="JDK" configfailurepolicy="continue" thread-count="4"
-       parallel="tests">
+<suite verbose="1" name="dmgzios_handset_smoke" annotations="JDK" configfailurepolicy="continue" thread-count="4" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
@@ -21,7 +20,7 @@
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Handset-Pipeline"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=300,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=300,capabilities.newCommandTimeout=240,init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding1" parallel="methods">
         <classes>
