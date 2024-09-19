@@ -19,7 +19,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.zebrunner.agent.core.annotation.Maintainer;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
@@ -281,6 +280,24 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         videoPlayer.waitForTrailerToEnd(75, 5);
         sa.assertTrue(details.isOpened(), "After trailer ended, not returned to Details page.");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74155"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION})
+    public void verifyAnthologyDeepLinkDetailPage() {
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertTrue(details.isOpened(), "Details page did not open");
+        Assert.assertTrue(details.getMediaTitle().equals(DANCING_WITH_THE_STARS),
+                "Media title of detail page does not match " + DANCING_WITH_THE_STARS);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(DANCING_WITH_THE_STARS),
+                "Content title doesn't match with the anthology title");
     }
 
     private void searchAndOpenDWTSDetails() {
