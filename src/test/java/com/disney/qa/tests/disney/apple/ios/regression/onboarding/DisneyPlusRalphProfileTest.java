@@ -5,11 +5,14 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -129,7 +132,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74084"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testSuppressGenderOnEditProfileOnSecondaryProfile() {
         setupForRalph();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -152,7 +155,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .setCountry(getLocalizationUtils().getLocale())
                 .setLanguage(getLocalizationUtils().getUserLanguage());
         getAccountApi().addProfile(createDisneyProfileRequest);
-
+        oneTrustPage.tapAcceptAllButton();
         oneTrustPage.tapRejectAllButton();
         loginPage.dismissAppTrackingPopUp();
         welcomePage.clickLogInButton();
@@ -170,19 +173,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75282"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION })
-    public void testRalphAddProfileJuniorModeDOBDisabled() {
-        setupForRalph();
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+    public void testRalphAddProfileJuniorModeDOBIsDisabled() {
+        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
+        setAccount(getAccountApi().createAccount(offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
 
-        SoftAssert sa = new SoftAssert();
+        getAccountApi().overrideLocations(getAccount(), "DE");
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        setAppToHomeScreen(getAccount());
 
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
-        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(),"Customized choices button is not present on one trust banner");
-        oneTrustPage.tapCustomizedChoices();
-        sa.assertTrue(oneTrustPage.isPrivacyPreferenceCenterOpen(), "Privacy Preference page is not opened");
-        oneTrustPage.tapConfirmMyChoiceButton();
-        sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
     }
 
     private void  setupForRalph(String... DOB) {
