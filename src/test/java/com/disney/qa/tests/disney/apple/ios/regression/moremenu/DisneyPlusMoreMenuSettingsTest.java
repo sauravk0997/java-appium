@@ -175,8 +175,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     public void verifyLogOut() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         onboard(getAccount().getFirstName());
-        initPage(DisneyPlusMoreMenuIOSPageBase.class)
-                .getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
+        welcomePage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
         Assert.assertTrue(welcomePage.isLogInButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
     }
