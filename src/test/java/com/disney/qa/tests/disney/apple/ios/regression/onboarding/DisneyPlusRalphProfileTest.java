@@ -183,7 +183,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         DisneyOffer offer = getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         System.out.println("** 3offer: " + offer.toString());
-        setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        setAccount(getAccountApi().createAccount( offer1, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
 
         getAccountApi().overrideLocations(getAccount(), "DE");
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
