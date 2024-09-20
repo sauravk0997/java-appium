@@ -266,6 +266,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
         disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
+        disneyPlusVideoPlayerIOSPageBase.waitForVideoToStart();
         disneyPlusVideoPlayerIOSPageBase.clickPauseButton();
         disneyPlusVideoPlayerIOSPageBase.scrubToPlaybackPercentage(percentage);
         disneyPlusVideoPlayerIOSPageBase.clickPlayButton();
