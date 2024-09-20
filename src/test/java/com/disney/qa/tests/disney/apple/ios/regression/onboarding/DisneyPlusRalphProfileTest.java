@@ -17,6 +17,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.api.utils.DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY;
+
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
@@ -174,8 +176,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75282"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testRalphAddProfileJuniorModeDOBIsDisabled() {
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        setAccount(getAccountApi().createAccount(offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), "Disney Plus Standard W Ads Monthly - DE - Web");
+        System.out.println("** 1offer: " + disneyOffer.toString());
+        DisneyOffer offer1 = getAccountApi().lookupOfferToUse("DE", "Disney Plus Standard W Ads Monthly - DE - Web");
+        System.out.println("** 2offer: " + offer1.toString());
+
+        DisneyOffer offer = getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        System.out.println("** 3offer: " + offer.toString());
+        setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
 
         getAccountApi().overrideLocations(getAccount(), "DE");
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
@@ -201,6 +209,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
             createDisneyAccountRequest.setDateOfBirth(null);
         }
         DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Disney Plus Standard W Ads Monthly - DE - Web");
+        System.out.println("** disneyOffer: " + disneyOffer.toString());
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         createDisneyAccountRequest.addEntitlement(entitlement);
         DisneyAccount testAccount = getAccountApi().createAccount(createDisneyAccountRequest);
