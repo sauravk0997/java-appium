@@ -12,6 +12,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.lang3.StringUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -176,19 +177,27 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75282"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testRalphAddProfileJuniorModeDOBIsDisabled() {
-        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), "Disney Plus Standard W Ads Monthly - DE - Web");
-        System.out.println("** 1offer: " + disneyOffer.toString());
-        DisneyOffer offer1 = getAccountApi().lookupOfferToUse("DE", "Disney Plus Standard W Ads Monthly - DE - Web");
-        System.out.println("** 2offer: " + offer1.toString());
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
 
         DisneyOffer offer = getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         System.out.println("** 3offer: " + offer.toString());
-        setAccount(getAccountApi().createAccount( offer1, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
 
         getAccountApi().overrideLocations(getAccount(), "DE");
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
-
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        moreMenu.clickAddProfile();
+        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened");
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        pause(5);
     }
 
     private void  setupForRalph(String... DOB) {
