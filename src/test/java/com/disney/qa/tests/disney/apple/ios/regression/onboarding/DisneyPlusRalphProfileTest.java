@@ -181,25 +181,31 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        // Set offer to ads tier monthly and override location to Germany
         DisneyOffer offer = getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        System.out.println("** 3offer: " + offer.toString());
         setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-
         getAccountApi().overrideLocations(getAccount(), "DE");
+        // Onboarding to application and accept one trust page if appears
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        //
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
-        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened");
+        Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         addProfile.tapJuniorModeToggle();
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
+
+        // Validate Content Rating and Birthdate are disabled
+
 
         pause(5);
     }
