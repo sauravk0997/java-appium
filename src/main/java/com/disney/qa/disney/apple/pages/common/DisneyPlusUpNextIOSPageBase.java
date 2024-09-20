@@ -60,7 +60,10 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getNextEpisodeInfo() {
-        return contentTitleLabel.getText();
+        String separator = ".";
+        return contentTitleLabel.getText()
+                .split("\\d")[2]
+                .replace(separator, "");
     }
 
     public void waitForUpNextUIToDisappear() {
