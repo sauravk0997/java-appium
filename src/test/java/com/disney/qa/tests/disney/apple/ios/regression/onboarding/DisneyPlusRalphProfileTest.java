@@ -192,6 +192,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
