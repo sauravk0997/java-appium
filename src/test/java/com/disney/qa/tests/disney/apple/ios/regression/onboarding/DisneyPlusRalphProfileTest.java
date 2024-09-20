@@ -189,7 +189,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         getAccountApi().overrideLocations(getAccount(), "DE");
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
-        setAppToHomeScreen(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
