@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
+import com.disney.qa.api.VaultApi;
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.account.DisneySubscriptionApi;
@@ -65,7 +66,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final int SHORT_TIMEOUT = 5;
-    public static final int ONE_SEC_TIMEOUT = 1;
     protected static final String CHECKED = "Checked";
     protected static final String UNCHECKED = "Unchecked";
     protected static final String TRUE = "true";
@@ -73,17 +73,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public static final String APPLE = "apple";
     public static final String DISNEY = "disney";
     public static final String LANGUAGE = "language";
-    public static final String LOCALE = "locale";
-    public static final String PROD = "prod";
-    public static final String IOS_PLATFORM = "ios";
     public static final String APP = "app";
     //Keeping this not to a specific plan name to support localization tests
     //Plan names in non-us countries might differ from that in us.
     public static final String BUNDLE_PREMIUM = "Yearly";
-    public static final String MONTHLY_OFFER = "monthly";
     public static final String SUBSCRIPTION_V2 = "V2";
-    public static final String SUBSCRIPTION_V3 = "V3";
-    public static final String SUBSCRIPTION_V2_ORDER = "V2-ORDER";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
 
     private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
@@ -191,10 +185,31 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     };
 
     private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(EmailApi::new);
-
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
-
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
+
+
+    @BeforeSuite(alwaysRun = true)
+    public final void initAPI() {
+        ApiConfiguration apiConfiguration = new ApiConfiguration();
+        String vaultEnvironment = getVaultEnvironment(DisneyParameters.getEnv().toUpperCase());
+        LOGGER.info("Setting vault env api config to : {}", DisneyParameters.getEnv().toUpperCase());
+        apiConfiguration.setEnvironment(DisneyParameters.getEnv().toUpperCase());
+        VaultApi.getInstance(vaultEnvironment);
+    }
+
+    public String getVaultEnvironment(String environment) {
+        switch (environment.toUpperCase().trim()) {
+            case "QA":
+                return "staging";
+            case "EDITORIAL":
+            case "PREVIEW":
+            case "PROD":
+                return "prod";
+            default:
+                throw new IllegalArgumentException("Unsupported environment: " + environment);
+        }
+    }
 
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
