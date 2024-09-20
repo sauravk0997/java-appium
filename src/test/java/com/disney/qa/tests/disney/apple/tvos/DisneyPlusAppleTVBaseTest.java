@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.carina.utils.config.Configuration;
 import org.slf4j.Logger;
@@ -23,11 +24,6 @@ import com.disney.config.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
-import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 
@@ -68,9 +64,11 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
         Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
+        disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPasswordButton();
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
     }
 
