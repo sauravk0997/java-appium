@@ -305,8 +305,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Audio subtitle Menu Button is not visible on player overlay");
 
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE), "Pause button is not visible on player overlay");
-        videoPlayer.clickPauseButton();
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.REWIND), "Rewind button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.FAST_FORWARD), "Forward button is not visible on player overlay");
 
@@ -321,6 +319,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Restart button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.NEXT_EPISODE),
                 "Next episode button is not visible on player overlay");
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
         sa.assertAll();
     }
 
