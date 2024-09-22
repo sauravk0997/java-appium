@@ -188,29 +188,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
 
-
-    @BeforeSuite(alwaysRun = true)
-    public final void initAPI() {
-        ApiConfiguration apiConfiguration = new ApiConfiguration();
-        String vaultEnvironment = getVaultEnvironment(DisneyParameters.getEnv().toUpperCase());
-        LOGGER.info("Setting vault env api config to : {}", DisneyParameters.getEnv().toUpperCase());
-        apiConfiguration.setEnvironment(DisneyParameters.getEnv().toUpperCase());
-        VaultApi.getInstance(vaultEnvironment);
-    }
-
-    public String getVaultEnvironment(String environment) {
-        switch (environment.toUpperCase().trim()) {
-            case "QA":
-                return "staging";
-            case "EDITORIAL":
-            case "PREVIEW":
-            case "PROD":
-                return "prod";
-            default:
-                throw new IllegalArgumentException("Unsupported environment: " + environment);
-        }
-    }
-
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
         WebDriverConfiguration.addIgnoredNewSessionErrorMessages(Stream.concat(
