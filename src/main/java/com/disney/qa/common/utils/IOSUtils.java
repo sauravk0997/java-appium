@@ -341,28 +341,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
-     * Drag and Drop an element to a given position
-     *
-     * @param startX X coord of the element
-     * @param startY Y coord of the element
-     * @param endX   X coord of element's destination
-     * @param endY   Y coord of element's destination
-     * @param wait   seconds
-     */
-
-    default boolean dragAndDropElement(int startX, int startY, int endX, int endY, long wait) {
-        try {
-            TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
-            touchActions.longPress(PointOption.point(startX, startY)).moveTo(PointOption.point(endX, endY))
-                    .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(wait))).perform();
-            return true;
-        } catch (Exception e) {
-            IOS_UTILS_LOGGER.error("Error occurred during drag and drop", e);
-            return false;
-        }
-    }
-
-    /**
      * Checks if a system alert is present
      *
      * @return foundAlert
