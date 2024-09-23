@@ -183,7 +183,9 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         // Set offer to ads tier monthly and override location to Germany
-        DisneyOffer offer = getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+       // DisneyOffer offer = getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+    //    DisneyOffer offer = getAccountApi().fetchOffer("Disney Plus Standard W Ads Monthly - DE - Web");
+        DisneyOffer offer = getAccountApi().lookupOfferToUse("DE", "Disney Plus Standard W Ads Monthly - DE - Web");
         setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), "DE");
         // Onboarding to application and accept one trust page if appears
@@ -224,7 +226,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
       /*  DisneyOffer offer = getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), "DE"); */
-        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse("DE", DISNEY_US_WEB_ADS_MONTHLY.getValue());
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         createDisneyAccountRequest.addEntitlement(entitlement);
         // Onboarding to application and accept one trust page if appears
