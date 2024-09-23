@@ -66,6 +66,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
     private static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
 
+    private ExtendedWebElement travelingAlert = getDynamicAccessibilityId(getDictionary()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.BTN_TRAVEL_MESSAGE_OK.getText()));
+
     //Functions
     public DisneyPlusAddProfileIOSPageBase(WebDriver driver) {
         super(driver);
@@ -273,5 +276,11 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         String maturityRatingInfo = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
         return staticTextByLabel.format(getDictionary().formatPlaceholderString(
                 maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
+    }
+
+    public void dismissTravelingAlert() {
+        if (travelingAlert.isPresent()) {
+            travelingAlert.click();
+        }
     }
 }
