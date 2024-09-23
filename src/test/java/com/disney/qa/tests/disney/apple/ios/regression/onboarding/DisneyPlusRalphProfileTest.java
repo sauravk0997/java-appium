@@ -224,7 +224,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
       /*  DisneyOffer offer = getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
         setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), "DE"); */
-        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse("DE", DISNEY_US_WEB_ADS_MONTHLY);
+        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse("DE", DISNEY_US_WEB_ADS_MONTHLY.getValue());
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         createDisneyAccountRequest.addEntitlement(entitlement);
         // Onboarding to application and accept one trust page if appears
