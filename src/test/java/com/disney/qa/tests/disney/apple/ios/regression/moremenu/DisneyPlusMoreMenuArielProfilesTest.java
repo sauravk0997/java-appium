@@ -962,6 +962,57 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75275"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION })
+    public void  verifyAddProfileU13MinorConsentAgree() {
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        createKidsProfile();
+        //Consent screen validation
+        sa.assertTrue(parentalConsent.isConsentHeaderPresent(),
+                "Consent header was not present after minor auth");
+        sa.assertTrue(parentalConsent.validateConsentHeader(),
+                "Consent header text doesn't match with the expected dict values");
+        sa.assertTrue(parentalConsent.validateConsentText(),
+                "Consent text doesn't match with the expected dict values");
+        sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(),
+                "Privacy Policy Link is not present on Consent screen");
+        sa.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(),
+                "Children's Privacy Policy Link is not present on Consent screen");
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            sa.assertTrue(parentalConsent.validateScrollPopup(),
+                    "Alert verbiage doesn't match with the expected dict value");
+            parentalConsent.clickAlertConfirm();
+            parentalConsent.scrollConsentContent(4);
+            //Accept parental consent
+            clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        }
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                        DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75274"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyAddProfileU13MinorConsentDecline() {
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        createKidsProfile();
+        Assert.assertTrue(parentalConsent.isConsentHeaderPresent(),
+                "Consent header was not present after minor auth");
+        //Decline consent
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
+                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                        DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
+    }
+
     private void setAppToAccountSettings() {
         setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -983,7 +1034,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         addProfile.clickSaveProfileButton();
     }
 
