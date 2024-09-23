@@ -236,6 +236,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         createDisneyAccountRequest.addEntitlement(entitlement);
         DisneyAccount testAccount = getAccountApi().createAccount(createDisneyAccountRequest);
+        getAccountApi().overrideLocations(testAccount, "DE");
+
         setAccount(testAccount);
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
