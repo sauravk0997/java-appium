@@ -200,7 +200,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
-        Dimension size = getDriver().manage().window().getSize();
         clickElementAtLocation(playerView, 35, 50);
         fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
@@ -314,23 +313,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
         scrollFromTo(currentTimeMarker.getLocation().getX(),
                 currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    /**
-     * Scrubs on the seek bar to the given percentage for playback with ads. Returns the object of
-     * DisneyPlusVideoPlayerIOSPageBase.
-     *
-     * @param playbackPercent
-     */
-    public DisneyPlusVideoPlayerIOSPageBase scrubPlaybackWithAdsPercentage(double playbackPercent) {
-        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
-        displayVideoController();
-        int seekBarWidth = seekBar.getSize().getWidth();
-        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
-        displayVideoController();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
-        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
