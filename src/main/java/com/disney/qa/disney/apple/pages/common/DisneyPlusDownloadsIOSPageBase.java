@@ -43,6 +43,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(accessibilityId = "downloadDelete24")
 	private ExtendedWebElement downloadDelete24Button;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]")
+	private ExtendedWebElement progressBarOnDownload;
+
 	//FUNCTIONS
 	@Override
 	public boolean isOpened() {
@@ -133,5 +137,9 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void clickSeriesMoreInfoButton() {
 		getImageLabelContains("Double tap for more info").click();
+	}
+
+	public boolean isProgressbarDisplayedOnDownloads(String seasonNumber, String episodeNumber) {
+		return progressBarOnDownload.format(seasonNumber, episodeNumber).isPresent();
 	}
 }
