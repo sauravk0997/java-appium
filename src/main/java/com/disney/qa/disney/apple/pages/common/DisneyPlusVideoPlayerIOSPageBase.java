@@ -307,11 +307,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
         LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
         displayVideoController();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
         int seekBarWidth = seekBar.getSize().getWidth();
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
-        dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(), 3);
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+        scrollFromTo(currentTimeMarker.getLocation().getX(),
+                currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 

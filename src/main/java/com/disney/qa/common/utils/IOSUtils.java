@@ -229,23 +229,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
-     * Press element for a number of seconds
-     *
-     * @param @element
-     * @param @seconds
-     */
-    default void pressByElement(ExtendedWebElement element, long seconds) {
-        Dimension dimension = element.getSize();
-        Point location = element.getLocation();
-        int x = (int) Math.round(dimension.getWidth() * Double.parseDouble("." + 50));
-        int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + 50));
-        IOS_UTILS_LOGGER.info("Press {} for {}..", element, seconds);
-        TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
-        touchActions.press(new PointOption().withCoordinates(location.getX() + x, location.getY() + y)).
-                waitAction(WaitOptions.waitOptions(Duration.ofSeconds(seconds))).release().perform();
-    }
-
-    /**
      * Press screen using coordinates
      *
      * @param x x-coordinate
@@ -338,28 +321,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     default void tapAboveElement(ExtendedWebElement element) {
         Point point = element.getLocation();
         tap(point.getX() + 10, point.getY() - 10, 0);
-    }
-
-    /**
-     * Drag and Drop an element to a given position
-     *
-     * @param startX X coord of the element
-     * @param startY Y coord of the element
-     * @param endX   X coord of element's destination
-     * @param endY   Y coord of element's destination
-     * @param wait   seconds
-     */
-
-    default boolean dragAndDropElement(int startX, int startY, int endX, int endY, long wait) {
-        try {
-            TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
-            touchActions.longPress(PointOption.point(startX, startY)).moveTo(PointOption.point(endX, endY))
-                    .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(wait))).perform();
-            return true;
-        } catch (Exception e) {
-            IOS_UTILS_LOGGER.error("Error occurred during drag and drop", e);
-            return false;
-        }
     }
 
     /**
