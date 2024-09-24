@@ -20,9 +20,7 @@ import io.appium.java_client.touch.offset.PointOption;
 import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.interactions.Interactive;
-import org.openqa.selenium.interactions.PointerInput;
-import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.interactions.*;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
@@ -40,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.stream.*;
 
 import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 
@@ -326,9 +324,29 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
      * @param numOfTaps tap count
      */
     default void tapAtCoordinateNoOfTimes(int xOffset, int yOffset, int numOfTaps) {
-        TouchAction<?> touchActions = new TouchAction<>((PerformsTouchActions) getDriver());
-        touchActions.tap(TapOptions.tapOptions().withPosition(PointOption.point(xOffset, yOffset))
-                .withTapsCount(numOfTaps)).perform();
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+        Sequence doubleTap = new Sequence(finger, 1);
+        doubleTap.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), xOffset,
+                yOffset));
+        IntStream.range(0, numOfTaps).forEach(i -> addPointerInputAction(finger, doubleTap));
+
+        try {
+            Interactive driver = (Interactive) this.getDriver();
+            driver.perform(List.of(doubleTap));
+        } catch (ClassCastException var1) {
+            IOS_UTILS_LOGGER.error(var1.getMessage());
+            throw new UnsupportedOperationException("Driver does not support tap method", var1);
+        } catch (WebDriverException var2) {
+            IOS_UTILS_LOGGER.error(var2.getMessage());
+            throw var2;
+        }
+    }
+
+    default void addPointerInputAction(PointerInput finger, Sequence tap) {
+        tap.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+        tap.addAction(new Pause(finger, Duration.ofMillis(100)));
+        tap.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+        tap.addAction(new Pause(finger, Duration.ofMillis(50)));
     }
 
     /**
