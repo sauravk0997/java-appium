@@ -177,7 +177,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
         validateUSLegalPageUI(sa, SUBSCRIBER_AGREEMENT);
         validateUSLegalPageUI(sa, US_STATE_PRIVACY_RIGHTS);
 
-        pressByElement(legal.getBackArrow(), 1); //click() is flaky on legal
+        legal.getBackArrow().click();
         //For small device like iPhone_8 need to scroll back on Top again
         swipeInContainerTillElementIsPresent(null, createPasswordPage.getCreateNewPasswordPageHeader(), 2, Direction.DOWN);
         Assert.assertTrue(createPasswordPage.isCreateNewPasswordPageOpened(), "Legal model not closed");
@@ -292,7 +292,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     private void validateUSLegalPageUI(SoftAssert sa, String legalHeader) {
         DisneyplusLegalIOSPageBase legal = initPage(DisneyplusLegalIOSPageBase.class);
 
-        pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //expand
+        legal.getTypeButtonByLabel(legalHeader).click(); //expand
         sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED),
                 legalHeader + " was not expanded");
 
@@ -301,7 +301,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
                 DO_NOT_SELL_MY_PERSONAL_INFORMATION + " is not visible");
 
         swipePageTillElementPresent(legal.getTypeButtonByLabel(DISNEY_TERMS_OF_USE), 8, null, Direction.DOWN, 25);
-        pressByElement(legal.getTypeButtonByLabel(legalHeader), 1); //collapse
+        legal.getTypeButtonByLabel(legalHeader).click(); //collapse
 
         sa.assertTrue(legal.getTypeButtonByLabel(legalHeader).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED),
                 legalHeader + " was not collapsed");
