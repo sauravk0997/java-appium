@@ -317,23 +317,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     /**
-     * Scrubs on the seek bar to the given percentage for playback with ads. Returns the object of
-     * DisneyPlusVideoPlayerIOSPageBase.
-     *
-     * @param playbackPercent
-     */
-    public DisneyPlusVideoPlayerIOSPageBase scrubPlaybackWithAdsPercentage(double playbackPercent) {
-        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
-        displayVideoController();
-        int seekBarWidth = seekBar.getSize().getWidth();
-        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
-        displayVideoController();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
-        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    /**
      * Verifies if the given episode title is playing
      *
      * @param episodeName
