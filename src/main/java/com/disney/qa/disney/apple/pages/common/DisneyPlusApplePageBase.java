@@ -1062,9 +1062,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             LOGGER.info("tapping on the left corner of the phone to go back to the Disney app");
             pause(1);
-            tapAtCoordinateNoOfTimes((int) (size.width * 0.2), (int) (size.height * 0.04), 1);
+            tap((int) (size.width * 0.2), (int) (size.height * 0.04));
         } else {
-            tapAtCoordinateNoOfTimes((int) (size.width * 0.04), (int) (size.height * 0.01), 1);
+            tap((int) (size.width * 0.04), (int) (size.height * 0.01));
         }
     }
 
