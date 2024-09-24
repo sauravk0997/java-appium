@@ -327,6 +327,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .until(it -> isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS)));
     }
 
+    public void removeAndInstallJarvis() {
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        removeApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        installJarvis();
+    }
+
     public void rotateScreen(ScreenOrientation orientation) {
         try {
             rotate(orientation);
