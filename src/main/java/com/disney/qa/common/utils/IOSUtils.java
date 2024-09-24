@@ -333,12 +333,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         try {
             Interactive driver = (Interactive) this.getDriver();
             driver.perform(List.of(doubleTap));
-        } catch (ClassCastException var1) {
-            IOS_UTILS_LOGGER.error(var1.getMessage());
-            throw new UnsupportedOperationException("Driver does not support tap method", var1);
-        } catch (WebDriverException var2) {
-            IOS_UTILS_LOGGER.error(var2.getMessage());
-            throw var2;
+        } catch (ClassCastException | WebDriverException e) {
+            throw new UnsupportedOperationException("Driver does not support tap method", e);
         }
     }
 
