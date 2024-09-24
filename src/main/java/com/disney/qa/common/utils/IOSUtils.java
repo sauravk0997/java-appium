@@ -229,23 +229,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
-     * Press element for a number of seconds
-     *
-     * @param @element
-     * @param @seconds
-     */
-    default void pressByElement(ExtendedWebElement element, long seconds) {
-        Dimension dimension = element.getSize();
-        Point location = element.getLocation();
-        int x = (int) Math.round(dimension.getWidth() * Double.parseDouble("." + 50));
-        int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + 50));
-        IOS_UTILS_LOGGER.info("Press {} for {}..", element, seconds);
-        TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
-        touchActions.press(new PointOption().withCoordinates(location.getX() + x, location.getY() + y)).
-                waitAction(WaitOptions.waitOptions(Duration.ofSeconds(seconds))).release().perform();
-    }
-
-    /**
      * Press screen using coordinates
      *
      * @param x x-coordinate
