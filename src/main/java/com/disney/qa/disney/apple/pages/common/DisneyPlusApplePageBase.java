@@ -1281,41 +1281,15 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getTypeAlertByLabel(String label){
         return typeAlertByLabel.format(label);
     }
-    /**
-     * Select random tile, scroll to specific collection, then selects random tile
-     *
-     * @param collection gets collection name from enum Collection
-     * @param count      swipe collection for number of times
-     * @param direction  Up or Down homeContentView
-     */
-    public void clickRandomCollectionTile(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
-        swipeTillCollectionPresent(collection, count, container, direction);
-        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size())).click();
-    }
 
     public List<ExtendedWebElement> getAllCollectionCells(CollectionConstant.Collection collection) {
         return findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
     }
 
-
-    /**
-     * Navigate to collection and clicks a tile in collection.
-     *
-     * @param collection gets collection name from enum Collection
-     * @param count      number of times to swipe
-     * @param container  container view - input 'null' if desire to be left empty.
-     * @param direction  Up or Down
-     */
-    public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
-        while (collectionCell.format(CollectionConstant.getCollectionName(collection)).isElementNotPresent(THREE_SEC_TIMEOUT) && count >= 0) {
-            swipeInContainer(container, direction, 1, 1200);
-            count--;
-        }
-    }
-
     public void swipeTillCollectionPresent
-            (CollectionConstant.Collection collection, ExtendedWebElement container, int count) {
-        swipeTillCollectionPresent(collection, count, container, Direction.UP);
+            (CollectionConstant.Collection collection, ExtendedWebElement container, Direction direction, int count) {
+        ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
+        swipePageTillElementTappable(element, count, container, direction, 900);
     }
 
     /**
