@@ -470,8 +470,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     //Explore API methods
-    public ExploreContent getDisneyApiSeries(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getDisneyApiSeries(String entityID) {
+        try {
+            return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ExploreContent getDisneyApiMovie(String entityID) throws URISyntaxException, JsonProcessingException {

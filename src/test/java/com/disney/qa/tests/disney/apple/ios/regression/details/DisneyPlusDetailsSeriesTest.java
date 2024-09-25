@@ -817,7 +817,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75415"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileSeriesDetailsPage() throws URISyntaxException, JsonProcessingException {
+    public void verifyJuniorProfileSeriesDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -898,9 +898,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66736"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
-    public void verifyDownloadScreenForSeriesViewUI() throws URISyntaxException, JsonProcessingException {
+    public void verifyDownloadScreenForSeriesViewUI() {
         String season1 = "Season 1";
         String season2 = "Season 2";
+        String one = "1";
+        String titleErrorMessage = "title not found";
+        String sizeIdentifier = "MB";
         int pollingInSeconds = 6;
         int timeoutInSeconds = 120;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -918,10 +921,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Get season1 episode details from API
         ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_loki_entity_id"));
         Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
-
-        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            swipeUp(1500);
-        }
 
         //Download season 1 & 2
         detailsPage.downloadAllOfSeason();
@@ -945,16 +944,16 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 DETAILS_TAB_METADATA_SERIES + " title was not found on downloads screen");
         sa.assertTrue(downloads.getEditButton().isPresent(), "Edit button not found on download screen");
         sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
-                season1 + " title not found");
+                season1 + " " + titleErrorMessage);
         sa.assertTrue(downloads.getStaticTextByLabel(season2).isPresent(),
-                season2 + " title not found");
+                season2 + " " + titleErrorMessage);
         sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(),
-                "Episode Title was not found");
+                "Episode " + titleErrorMessage);
         sa.assertTrue(downloads.getStaticTextByLabelContains(seasonDetails.getMetastringParts().getRatingInfo().getRating().getText()).isPresent(),
                 "Episode rating detail was not found");
         sa.assertTrue(downloads.isEpisodeNumberDisplayed(seasonDetails.getEpisodeNumber()),
                 "Episode Number was not found");
-        sa.assertTrue(downloads.getStaticTextByLabelContains("MB").isPresent(),
+        sa.assertTrue(downloads.getStaticTextByLabelContains(sizeIdentifier).isPresent(),
                 "Size of episode was not found");
         long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seasonDetails.getDurationMs());
         sa.assertTrue(downloads.getStaticTextByLabelContains(String.valueOf(durationFromApi)).isPresent(),
@@ -965,13 +964,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Episode artwork and play button was not found");
         downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
         LOGGER.info("Description:- " +seasonDetails.getDescription().getBrief());
-        sa.assertTrue(downloads.getEpisodeDescription("1", "1")
+        sa.assertTrue(downloads.getEpisodeDescription(one, one)
                 .getText().equals(seasonDetails.getDescription().getFull()),
                 "Episode description detail was not found after episode expanded");
 
         downloads.getTypeButtonByLabel(season1).click();
-        sa.assertFalse(downloads.isEpisodeCellDisplayed("1", "1"),
-                season1 + " not collapsed");
+        sa.assertFalse(downloads.isEpisodeCellDisplayed(one, one), season1 + " not collapsed");
         sa.assertAll();
     }
 

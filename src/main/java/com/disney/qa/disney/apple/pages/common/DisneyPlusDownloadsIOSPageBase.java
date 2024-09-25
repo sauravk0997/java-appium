@@ -144,7 +144,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return getStaticTextByLabelContains(getDictionary().formatPlaceholderString(
 				getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 						DictionaryKeys.EPISODE_PLACEHOLDER.getText()),
-				Map.of("E", Integer.parseInt(episodeNumber)))).isPresent();
+				Map.of(PLACEHOLDER_E, Integer.parseInt(episodeNumber)))).isPresent();
 	}
 
 	public ExtendedWebElement getEpisodeDescription(String seasonNumber, String episodeNumber) {
