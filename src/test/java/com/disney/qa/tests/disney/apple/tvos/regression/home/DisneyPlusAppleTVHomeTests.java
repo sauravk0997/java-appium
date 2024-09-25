@@ -22,7 +22,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     private static final String PERSONALIZED_COLLECTION = "PersonalizedCollection";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521", "XCDQA-89523"})
-    @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME}, enabled = false)
+    @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
