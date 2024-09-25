@@ -407,8 +407,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         welcomeScreenPage.clickLogInButton();
-        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
+        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         passwordPage.logInWithPassword(RandomStringUtils.randomAlphabetic(6));
         sa.assertTrue(passwordPage.isInvalidCredentialsDisplayed(), "Invalid Password error not displayed.");
         sa.assertAll();
