@@ -68,9 +68,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
-        LOGGER.info("** Trying to see log in button");
-        Assert.assertTrue(disneyPlusAppleTVOneTimePasscodePage.getLoginButtonWithPassword().isPresent(), "Log in option is not present in screen");
-        clickElementAtLocation(disneyPlusAppleTVOneTimePasscodePage.getLoginButtonWithPassword(), 0, 0);
         disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPasswordButton();
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
     }
