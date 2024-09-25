@@ -23,7 +23,8 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
     protected ExtendedWebElement otpInputField;
 
    // @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Log in with password\"`]")
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"buttonLoginWithPassword\"`]")
+   // @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"buttonLoginWithPassword\"`]")
+    @ExtendedFindBy(accessibilityId = "buttonLoginWithPassword")
     private ExtendedWebElement loginWithPassword;
 
     private ExtendedWebElement resendButton = xpathNameOrName.format(getDictionary()
