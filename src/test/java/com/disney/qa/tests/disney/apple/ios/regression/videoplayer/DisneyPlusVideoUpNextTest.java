@@ -89,7 +89,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67654"})
-    @Test(description = "User allows autoplay to occur", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void verifyAutoPlayOnPlayerView() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -110,8 +110,10 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         //Wait for upnext UI to disappear
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToDisappear();
         //Verify that the next episode has started playing
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.doesTitleExists(nextEpisodesTitle),"Next episode didn't play");
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isElementPresent(PlayerControl.PAUSE),"Pause button is not visible on player view");
+        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.getSubTitleLabel().contains(nextEpisodesTitle),
+                "Next episode didn't play");
+        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isElementPresent(PlayerControl.PAUSE),
+                "Pause button is not visible on player view");
         sa.assertAll();
     }
 
@@ -242,7 +244,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         detailsPage.getEpisodeTitleLabel(first).click();
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.getSkipIntroButton().click();
-        videoPlayerPage.scrubPlaybackWithAdsPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+        videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
 
         //Wait for upnext UI to disappear
         upNextPage.waitForUpNextUIToDisappear();
@@ -264,6 +266,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
         disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
+        disneyPlusVideoPlayerIOSPageBase.waitForVideoToStart();
         disneyPlusVideoPlayerIOSPageBase.clickPauseButton();
         disneyPlusVideoPlayerIOSPageBase.scrubToPlaybackPercentage(percentage);
         disneyPlusVideoPlayerIOSPageBase.clickPlayButton();
