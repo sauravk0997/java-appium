@@ -18,6 +18,7 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -562,6 +563,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_PLAY.getText()));
     }
+
+    public void waitForPlayBTNPresent() {
+        waitUntil(ExpectedConditions.elementToBeClickable(getStaticTextByLabel(getDictionary()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        BTN_PLAY.getText())).getBy()), TEN_SEC_TIMEOUT);
+    }
+
     public ExtendedWebElement getContinueButton() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_CONTINUE.getText()));
