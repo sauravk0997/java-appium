@@ -171,7 +171,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             swipe(homePage.getDynamicAccessibilityId(collectionID));
             homePage.getElementTypeCellByLabel(contentTitle).click();
         } catch (URISyntaxException | JsonProcessingException | IndexOutOfBoundsException e) {
-            Assert.fail(String.format("Not able to get the Home page data from the api, exception occurred: %s", e));
+            throw new RuntimeException(String.format("Not able to get the Home page data from the api, exception occurred: %s", e));
         }
     }
 }
