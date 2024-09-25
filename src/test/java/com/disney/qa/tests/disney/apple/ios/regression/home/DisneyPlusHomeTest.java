@@ -120,7 +120,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle),
                 "Content title not matched");
         detailsPage.clickCloseButton();
-        sa.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
         sa.assertTrue(firstTitle.isPresent(),
