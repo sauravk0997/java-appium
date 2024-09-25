@@ -945,8 +945,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getEditButton().isPresent(), "Edit button not found on download screen");
         sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
                 season1 + " " + titleErrorMessage);
-        sa.assertTrue(downloads.getStaticTextByLabel(season2).isPresent(),
-                season2 + " " + titleErrorMessage);
         sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(),
                 "Episode " + titleErrorMessage);
         sa.assertTrue(downloads.getStaticTextByLabelContains(seasonDetails.getMetastringParts().getRatingInfo().getRating().getText()).isPresent(),
@@ -970,6 +968,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         downloads.getTypeButtonByLabel(season1).click();
         sa.assertFalse(downloads.isEpisodeCellDisplayed(one, one), season1 + " not collapsed");
+        sa.assertTrue(downloads.getStaticTextByLabel(season2).isPresent(),
+                season2 + " " + titleErrorMessage);
+        sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
+                season1 + " " + titleErrorMessage);
         sa.assertAll();
     }
 
