@@ -1313,8 +1313,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count) {
-        swipeTillCollectionPresent(collection, count, brandLandingView, Direction.UP);
+    public void swipeTillCollectionPresent
+            (CollectionConstant.Collection collection, ExtendedWebElement container, int count) {
+        swipeTillCollectionPresent(collection, count, container, Direction.UP);
     }
 
     /**
