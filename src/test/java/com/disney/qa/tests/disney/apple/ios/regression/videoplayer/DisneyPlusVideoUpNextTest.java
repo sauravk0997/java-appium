@@ -260,6 +260,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
+        disneyPlusHomeIOSPageBase.waitForHomePageToOpen();
         disneyPlusHomeIOSPageBase.clickSearchIcon();
         disneyPlusHomeIOSPageBase.getSearchNav().click();
         disneyPlusSearchIOSPageBase.searchForMedia(content);
