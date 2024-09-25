@@ -276,7 +276,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
 
-        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
+        Assert.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(), "Password field is not focused on landing");
         sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordText(), passwordGhost);
@@ -308,7 +308,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
         disneyPlusAppleTVLoginPage.moveDown(1,1);
 
-        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
+        Assert.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVPasswordPage.clickPassword();
 
@@ -339,7 +339,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         welcomeScreen.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
-        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
+        Assert.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
 
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();;
         passwordPage.clickPassword();
