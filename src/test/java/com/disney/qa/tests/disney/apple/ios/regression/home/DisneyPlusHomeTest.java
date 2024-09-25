@@ -150,10 +150,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67375"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HOME, TestGroup.SMOKE})
     public void verifyUserTapsOnHomeContent() {
-        String collectionID, contentTitle;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
+        goToFirstCollectionTitle(homePage);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickCloseButton();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
+    }
+
+    private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
+        String collectionID, contentTitle;
         try {
             ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
@@ -163,10 +170,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             swipe(homePage.getDynamicAccessibilityId(collectionID));
             homePage.getElementTypeCellByLabel(contentTitle).click();
         } catch (URISyntaxException | JsonProcessingException | IndexOutOfBoundsException e) {
-            Assert.fail("Not able to get the Home page data from the api");
+            Assert.fail(String.format("Not able to get the Home page data from the api, exception occurred: %s", e));
         }
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        detailsPage.clickCloseButton();
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
     }
 }
