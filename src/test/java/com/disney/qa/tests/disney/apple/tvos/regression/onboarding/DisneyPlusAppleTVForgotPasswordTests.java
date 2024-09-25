@@ -30,13 +30,15 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
         SoftAssert sa = new SoftAssert();
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
+        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(entitledUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Password page did not launch");
@@ -73,7 +75,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "One time code screen did not open");
 
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
@@ -189,12 +191,14 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
+        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
