@@ -56,7 +56,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         sa.assertAll();
     }
-// this
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90620"})
     @Test(description = "Verify forgot password screen details", groups = {TestGroup.ONBOARDING})
     public void forgotPasswordScreenDetails() {
