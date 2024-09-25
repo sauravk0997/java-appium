@@ -62,5 +62,4 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
     public ExtendedWebElement getLoginButtonWithPassword() {
         return loginWithPassword;
     }
-
 }
