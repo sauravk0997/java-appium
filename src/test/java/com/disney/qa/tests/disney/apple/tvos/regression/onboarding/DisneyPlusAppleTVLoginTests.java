@@ -190,11 +190,13 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPageBase = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
+        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(uniqueUserEmail);
         disneyPlusAppleTVPasswordPage.clickPassword();
         disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(R.TESTDATA.getDecrypted("disney_qa_web_d23password"));
@@ -275,7 +277,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(), "Password field is not focused on landing");
         sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordText(), passwordGhost);
@@ -338,7 +340,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         welcomeScreen.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
-        sa.assertTrue(passwordPage.isOpened(), "Log In password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
 
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();;
         passwordPage.clickPassword();
