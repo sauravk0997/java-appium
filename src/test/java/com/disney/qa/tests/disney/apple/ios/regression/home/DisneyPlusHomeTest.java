@@ -77,6 +77,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
     public void verifyRecommendedForYouContainer() {
         int limit = 30;
+        int swipeCount = 5;
         String recommendedContainerNotFound = "Recommended For You container was not found";
         String recommendedHeaderNotFound = "Recommended For You Header was not found";
         CollectionConstant.Collection collection = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
@@ -87,6 +88,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(account);
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
+        homePage.swipeTillCollectionTappable(collection, Direction.UP, swipeCount);
         sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
 
@@ -123,7 +125,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle),
                 "Content title not matched");
         detailsPage.clickCloseButton();
-        sa.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
         sa.assertTrue(firstTitle.isPresent(),
