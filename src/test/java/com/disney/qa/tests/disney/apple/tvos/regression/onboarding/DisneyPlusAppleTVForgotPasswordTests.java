@@ -22,6 +22,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
 public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseTest {
+    private static final String ONE_TIME_CODE_SCREEN_DID_NOT_OPEN = "One time code screen did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90618"})
     @Test(description = "Pressing menu from forgot password page brings the user back to enter password screen", groups = {"Onboarding"})
@@ -76,7 +77,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
 
-        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "One time code screen did not open");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
@@ -111,7 +112,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyOTPAccount.getEmail());
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Having Trouble Loggin In page did not launch");
@@ -133,6 +134,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
@@ -141,8 +144,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         welcomeScreen.clickLogInButton();
         loginPage.proceedToPasswordScreen(disneyUser.getEmail());
-        Assert.assertTrue(passwordPage.isOpened(), "Enter password screen did not launch");
-
+        Assert.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
+        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         passwordPage.clickHavingTroubleLogginInBtn();
         Assert.assertTrue(forgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
@@ -175,7 +178,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
@@ -207,7 +210,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
@@ -296,7 +299,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Enter password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
         Date startTime = getEmailApi().getStartTime();
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
@@ -341,7 +344,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(disneyUser.getEmail());
 
-        sa.assertTrue(passwordPage.isOpened(), "Enter password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
         Date startTime = verifyEmail.getStartTime();
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
