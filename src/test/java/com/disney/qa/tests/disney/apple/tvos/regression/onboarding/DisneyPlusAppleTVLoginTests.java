@@ -309,7 +309,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
         disneyPlusAppleTVLoginPage.moveDown(1,1);
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
+        sa.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
         disneyPlusAppleTVPasswordPage.clickPassword();
 
