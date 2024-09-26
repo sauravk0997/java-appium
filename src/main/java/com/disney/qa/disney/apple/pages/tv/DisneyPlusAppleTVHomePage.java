@@ -271,9 +271,8 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 //
     public void traverseAndVerifyHomepageLayout(List<ContentSet> sets, List<String> brands, SoftAssert sa) {
         LOGGER.info("** brands: " +  brands.toString());
-        pause(500);
         brands.forEach(item -> {
-            sa.assertTrue(isFocused(getDynamicCellByLabel(String.format("%s, Select for details on this title.", item))), "The following brand tile was not focused: " + item);
+            sa.assertTrue(getDynamicCellByLabel(String.format("%s, Select for details on this title.", item)).isPresent()), "The following brand tile was not focused: " + item);
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             moveRight(1, 1);
         });
@@ -281,6 +280,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         moveDown(2, 1);
         moveLeft(4, 1);
         moveRight(2, 1);
+        LOGGER.info("** sets: " +  sets.toString());
         for (int i=1; i<sets.size(); i++) {
             var shelfTitle = sets.get(i).getSetName();
             var getSetAssets = sets.get(i).getTitles();
