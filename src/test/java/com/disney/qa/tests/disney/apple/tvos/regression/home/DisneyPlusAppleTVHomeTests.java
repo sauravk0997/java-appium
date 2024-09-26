@@ -11,6 +11,8 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -52,8 +54,18 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(titles.get(i)).isElementPresent(),
                     String.format("%s asset of %s not found on first row", titles, titles.get(i)));
         });
-        sa.assertTrue(disneyPlusAppleTVHomePage.getStaticTextByLabelContains("RECOMMENDED FOR YOU").isPresent(),
-                "Recommended for you collection is not present");
+       sa.assertTrue(disneyPlusAppleTVHomePage.getStaticTextByLabelContains("Recommended For You").isPresent(),
+              "Recommended for you collection is not present");
+
+        List<String> recommendationTitlesFromApi = getContainerTitlesFromApi
+                (CollectionConstant.getCollectionName(collectionRecommended), 10);
+
+        String firstCellTitle = disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionRecommended).split(",")[0];
+       // ExtendedWebElement firstTitle = disneyPlusAppleTVHomePage.getCellElementFromContainer(
+           //     collectionRecommended,
+            //    recommendationTitlesFromApi.get(0));
+        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)),
+                "UI title value not matched with API title value");
 
         sa.assertAll();
     }
