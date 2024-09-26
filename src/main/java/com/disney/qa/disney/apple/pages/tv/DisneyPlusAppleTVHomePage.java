@@ -272,7 +272,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     public void traverseAndVerifyHomepageLayout(List<ContentSet> sets, List<String> brands, SoftAssert sa) {
         LOGGER.info("** brands: " +  brands.toString());
         brands.forEach(item -> {
-            sa.assertTrue(getDynamicCellByLabel(String.format("%s, Select for details on this title.", item)).isPresent()), "The following brand tile was not focused: " + item);
+            sa.assertTrue(getDynamicCellByLabel(String.format("%s, Select for details on this title.", item)).isPresent(), "The following brand tile was not focused: " + item);
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             moveRight(1, 1);
         });
