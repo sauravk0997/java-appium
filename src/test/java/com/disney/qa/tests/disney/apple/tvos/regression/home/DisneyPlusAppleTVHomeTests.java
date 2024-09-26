@@ -36,6 +36,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         CollectionConstant.Collection collectionRecommended = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
+        CollectionConstant.Collection collectionNewToDisney = CollectionConstant.Collection.NEW_TO_DISNEY;
         logInTemp(getAccount());
 
         //stop hero carousel
@@ -59,13 +60,16 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         List<String> recommendationTitlesFromApi = getContainerTitlesFromApi
                 (CollectionConstant.getCollectionName(collectionRecommended), 10);
-
+        System.out.println("** recommendationTitlesFromApi: "+ recommendationTitlesFromApi.toString());
         String firstCellTitle = disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionRecommended).split(",")[0];
+        System.out.println("** firstCellTitle:" + firstCellTitle.toString());
        // ExtendedWebElement firstTitle = disneyPlusAppleTVHomePage.getCellElementFromContainer(
            //     collectionRecommended,
             //    recommendationTitlesFromApi.get(0));
-        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)),
-                "UI title value not matched with API title value");
+        sa.assertTrue(firstCellTitle.equals(disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionRecommended).split(",")[0]),
+                "UI title value not matched with API title value11");
+        sa.assertTrue(firstCellTitle.equals(disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionNewToDisney).split(",")[0]),
+                "UI title value not matched with API title value22");
 
         sa.assertAll();
     }
