@@ -52,24 +52,16 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         aliceDriver.screenshotAndRecognize().isLabelNotPresent(sa, AliceLabels.HOME_BUTTON_IS_SELECTED.getText())
                 .isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
         disneyPlusAppleTVHomePage.clickDown();
-       // CollectionRequest collectionRequest = CollectionRequest.builder().region(getCountry()).collectionType(PERSONALIZED_COLLECTION)
-         //       .account(getAccount()).language(getLanguage()).slug(DisneyStandardCollection.HOME.getSlug())
-          //      .contentClass(DisneyStandardCollection.HOME.getSlug()).build();
-     //   ContentCollection collection = getSearchApi().getCollection(collectionRequest);
-     //   List<String> brands = DisneySearchApi.parseValueFromJson(collection.getJsonNode().toString(), "$..[?(@.type == 'GridContainer')]..items..text..full..content");
         ArrayList<Container> collectionsHome = disneyBaseTest.getDisneyAPIPage(HOME_PAGE.getEntityId());
 
         List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(1).getId(), 50);
         System.out.println("** titles: " + titles.toString());
         disneyPlusAppleTVHomePage.moveDown(2,1);
         // Only first five items of the first shelf container are visible on the screen
-        IntStream.range(0, 5).forEach(i -> {
-            String item = titles.get(i);
-            sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(item).isElementPresent(),
-                    String.format("%s asset of %s not found on first row", titles, item));
+        IntStream.range(0, titles.size()).forEach(i -> {
+            sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(titles.get(i)).isElementPresent(),
+                    String.format("%s asset of %s not found on first row", titles, titles.get(i)));
         });
-
-      //  disneyPlusAppleTVHomePage.traverseAndVerifyHomepageLayout(brands, sa);
 
         sa.assertAll();
     }
