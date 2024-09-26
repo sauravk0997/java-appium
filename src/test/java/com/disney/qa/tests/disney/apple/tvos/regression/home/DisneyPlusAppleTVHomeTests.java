@@ -9,8 +9,10 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.qa.api.search.assets.DisneyStandardCollection;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
+import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -27,13 +29,15 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521", "XCDQA-89523"})
     @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() {
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         CollectionConstant.Collection collectionRecommended = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
-        logInTemp(entitledUser);
+        logInTemp(getAccount());
 
         //stop hero carousel
         disneyPlusAppleTVHomePage.moveRight(2, 2);
@@ -41,7 +45,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         aliceDriver.screenshotAndRecognize().isLabelNotPresent(sa, AliceLabels.HOME_BUTTON_IS_SELECTED.getText())
                 .isLabelPresent(sa, AliceLabels.BANNER_HOVERED.getText());
         disneyPlusAppleTVHomePage.clickDown();
-        CollectionRequest collectionRequest = CollectionRequest.builder().region(getCountry()).collectionType(PERSONALIZED_COLLECTION).account(entitledUser).language(getLanguage()).slug(DisneyStandardCollection.HOME.getSlug()).contentClass(DisneyStandardCollection.HOME.getSlug()).build();
+        CollectionRequest collectionRequest = CollectionRequest.builder().region(getCountry()).collectionType(PERSONALIZED_COLLECTION)
+                .account(getAccount()).language(getLanguage()).slug(DisneyStandardCollection.HOME.getSlug())
+                .contentClass(DisneyStandardCollection.HOME.getSlug()).build();
         ContentCollection collection = getSearchApi().getCollection(collectionRequest);
         List<String> brands = DisneySearchApi.parseValueFromJson(collection.getJsonNode().toString(), "$..[?(@.type == 'GridContainer')]..items..text..full..content");
 
