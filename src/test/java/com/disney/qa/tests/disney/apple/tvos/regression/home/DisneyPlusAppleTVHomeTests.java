@@ -52,7 +52,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(titles.get(i)).isElementPresent(),
                     String.format("%s asset of %s not found on first row", titles, titles.get(i)));
         });
-        sa.assertTrue(disneyPlusAppleTVHomePage.getStaticTextByLabelContains(CollectionConstant.Collection.RECOMMENDED_FOR_YOU.name()).isPresent(),
+        sa.assertTrue(disneyPlusAppleTVHomePage.getStaticTextByLabelContains("RECOMMENDED FOR YOU").isPresent(),
                 "Recommended for you collection is not present");
 
         sa.assertAll();
