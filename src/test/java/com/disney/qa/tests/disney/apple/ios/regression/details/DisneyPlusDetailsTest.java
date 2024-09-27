@@ -2,10 +2,8 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusUpNextIOSPageBase;
@@ -30,14 +28,12 @@ import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
-    private static final String HIGH_SCHOOL_MUSICAL = "High School Musical: The Musical: The Series";
-    private static final String HOCUS_POCUS = "Hocus Pocus";
     private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String SHOP = "Shop";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
-    private static final String SHOP_TAB_SERIES = "Bluey";
+    private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
@@ -206,7 +202,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72725"})
-    @Test(description = "Details Page - ShopDisney - Feature Area of Details Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
     public void verifyShopPromoLabelInFeatureAreaOfDetailPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -214,7 +210,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         //Verify Shop Promo for Series
         validateShopPromoLabelHeaderAndSubHeader(sa, SHOP_TAB_SERIES);
@@ -295,16 +291,19 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName){
+    private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         searchPage.searchForMedia(titleName);
-        List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
-        sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
-        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
-        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(),
+                String.format("Shop Promo Label header was not found for: %s", titleName));
+        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(),
+                String.format("Shop Promo Label Sub-header was not found for: %s", titleName));
+        sa.assertTrue(detailsPage.getShopBtn().isPresent(),
+                String.format("Shop Tab was not found for:%s", titleName));
     }
 
     private void validateShopTabButton(SoftAssert sa, String titleName){
