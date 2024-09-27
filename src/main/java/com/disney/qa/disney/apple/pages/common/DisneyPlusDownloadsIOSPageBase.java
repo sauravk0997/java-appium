@@ -42,6 +42,11 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	@ExtendedFindBy(accessibilityId = "downloadDelete24")
 	private ExtendedWebElement downloadDelete24Button;
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeStaticText[3]")
+	private ExtendedWebElement episodeDescription;
+	@ExtendedFindBy(accessibilityId = "offlineContentCell[%s, %s]")
+	private ExtendedWebElement episodeDownloadCell;
 
 	//FUNCTIONS
 	@Override
@@ -133,5 +138,20 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void clickSeriesMoreInfoButton() {
 		getImageLabelContains("Double tap for more info").click();
+	}
+
+	public boolean isEpisodeNumberDisplayed(String episodeNumber) {
+		return getStaticTextByLabelContains(getDictionary().formatPlaceholderString(
+				getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.EPISODE_PLACEHOLDER.getText()),
+				Map.of(PLACEHOLDER_E, Integer.parseInt(episodeNumber)))).isPresent();
+	}
+
+	public ExtendedWebElement getEpisodeDescription(String seasonNumber, String episodeNumber) {
+		return episodeDescription.format(seasonNumber, episodeNumber);
+	}
+
+	public boolean isEpisodeCellDisplayed(String seasonNumber, String episodeNumber) {
+		return episodeDownloadCell.format(seasonNumber, episodeNumber).isPresent();
 	}
 }

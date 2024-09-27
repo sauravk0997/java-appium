@@ -72,6 +72,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String APAC = "apac";
     private static final String KMRB = "kmrb";
     private static final String MPAA_AND_TVPG = "mpaaandtvpg";
+    protected static final String PLACEHOLDER_E = "E";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
@@ -1281,40 +1282,22 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getTypeAlertByLabel(String label){
         return typeAlertByLabel.format(label);
     }
-    /**
-     * Select random tile, scroll to specific collection, then selects random tile
-     *
-     * @param collection gets collection name from enum Collection
-     * @param count      swipe collection for number of times
-     * @param direction  Up or Down homeContentView
-     */
-    public void clickRandomCollectionTile(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
-        swipeTillCollectionPresent(collection, count, container, direction);
-        getAllCollectionCells(collection).get(new SecureRandom().nextInt(getAllCollectionCells(collection).size())).click();
-    }
 
     public List<ExtendedWebElement> getAllCollectionCells(CollectionConstant.Collection collection) {
         return findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
     }
 
+    public void swipeTillCollectionTappable
+            (CollectionConstant.Collection collection, Direction direction, int count) {
+        ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
 
-    /**
-     * Navigate to collection and clicks a tile in collection.
-     *
-     * @param collection gets collection name from enum Collection
-     * @param count      number of times to swipe
-     * @param container  container view - input 'null' if desire to be left empty.
-     * @param direction  Up or Down
-     */
-    public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count, ExtendedWebElement container, Direction direction) {
-        while (collectionCell.format(CollectionConstant.getCollectionName(collection)).isElementNotPresent(THREE_SEC_TIMEOUT) && count >= 0) {
-            swipeInContainer(container, direction, 1, 1200);
-            count--;
+        swipe(element, direction, count, 900);
+
+        int maxHeight = getDriver().manage().window().getSize().getHeight();
+        int threshold = (int) (maxHeight - maxHeight * .25);
+        if (element.getLocation().getY() > threshold) {
+            swipeUp(1, 1000);
         }
-    }
-
-    public void swipeTillCollectionPresent(CollectionConstant.Collection collection, int count) {
-        swipeTillCollectionPresent(collection, count, brandLandingView, Direction.UP);
     }
 
     /**
