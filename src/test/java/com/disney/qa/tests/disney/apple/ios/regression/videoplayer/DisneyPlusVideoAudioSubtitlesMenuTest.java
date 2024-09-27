@@ -181,12 +181,13 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     }
 
     private List<String> getAudioLanguage() {
-        List<String> contentList = List.of("Chinese (中文)", "Chinese (粵語)", "Dansk", "Deutsch", "English", "Español");
+        List<String> contentList = List.of("Chinese (中文)", "Chinese (粵語)", "Dansk", "Deutsch", "English",
+                "English [Audio Description]");
         return contentList;
     }
 
     private List<String> getSubTitlesLanguage() {
-        List<String> contentList = List.of("Chinese (粵語)", "Chinese (繁體)", "English [CC]", "Español (Latinoamérica) [CC]", "Magyar");
+        List<String> contentList = List.of("Chinese (简体)", "Chinese (粵語)", "Chinese (繁體)", "Dansk", "Deutsch");
         return contentList;
     }
 }
