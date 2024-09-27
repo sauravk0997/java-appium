@@ -205,7 +205,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
 
         // Validate Content Rating and Birthdate are disabled
-        Assert.assertTrue(addProfile.getStaticTextByLabel("MM/DD/YYYY").isPresent(), "Date of birth is not disabled");
+        addProfile.getDynamicTextEntryFieldByName("birthdateTextFieldIdentifier").click();
+        Assert.assertFalse(editProfile.getTypeButtonByLabel("Done").isPresent(), "Date of birth is not disabled");
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
     }
 
