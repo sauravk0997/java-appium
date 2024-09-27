@@ -525,7 +525,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(pinPage.getForgotPinButton().isPresent(), "Forgot Pin button was not found.");
 
         //Verify existing profile - no profile pin
-        pressByElement(pinPage.getPinCancelButton(), 1);
+        pinPage.getPinCancelButton().click();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         editProfile.swipeUp(500);
@@ -534,7 +534,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         //Verify clicking pin checkbox
         sa.assertTrue(pinPage.getPinCheckBox().isPresent(), "Checked checkbox was not found.");
-        pressByElement(pinPage.getPinCheckBox(), 1);
+        pinPage.getPinCheckBox().click();
         sa.assertTrue(pinPage.getLimitAccessMessaging(SECONDARY_PROFILE).isPresent(), "Profile pin limit access messaging not found.");
         sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
         sa.assertTrue(pinPage.getKeyboardByPredicate().isPresent(), "Keyboard did not pop up.");
@@ -553,7 +553,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
 
         //Validate save after only three numbers entered
-        pressByElement(pinPage.getSaveButton(), 1);
+        pinPage.getSaveButton().click();
         sa.assertTrue(pinPage.getProfilePinMissingErrorMessage().isPresent(), "Profile PIN missing error message was not found");
         sa.assertTrue(pinPage.getPinInputField().isPresent(), "Pin input field was not found.");
 
@@ -562,7 +562,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(pinPage.getProfilePinMissingErrorMessage().isElementNotPresent(SHORT_TIMEOUT), "Profile PIN missing error message was found");
 
         //Validate clicking cancel button
-        pressByElement(pinPage.getCancelButton(), 1);
+        pinPage.getCancelButton().click();
         sa.assertTrue(editProfile.getEditProfilePinSettingLabel().isPresent(), "Did not return to Edit Profile screen, Profile pin setting label not present");
         sa.assertAll();
     }
