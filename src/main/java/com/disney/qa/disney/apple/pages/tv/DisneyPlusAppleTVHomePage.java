@@ -20,7 +20,6 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CDNAV_HOME;
