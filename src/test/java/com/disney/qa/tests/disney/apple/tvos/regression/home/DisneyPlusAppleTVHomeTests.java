@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -12,8 +11,6 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -29,17 +26,16 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521", "XCDQA-89523"})
     @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() throws URISyntaxException, JsonProcessingException {
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-
-        SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+        AliceDriver aliceDriver = new AliceDriver(getDriver());
+        SoftAssert sa = new SoftAssert();
+
         CollectionConstant.Collection collectionRecommended = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
         CollectionConstant.Collection collectionOriginals = CollectionConstant.Collection.ORIGINALS;
         CollectionConstant.Collection collectionDocumentaries = CollectionConstant.Collection.DOCUMENTARIES_AND_REALITY;
+
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         logInTemp(getAccount());
 
