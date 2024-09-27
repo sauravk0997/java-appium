@@ -205,7 +205,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         // Validate Content Rating and Birthdate are disabled
         Assert.assertTrue(addProfile.getStaticTextByLabel("MM/DD/YYYY").isPresent(), "Date of birth is not disabled");
-        Assert.assertTrue(addProfile.getChooseContent().isPresent(), "Choose content is not disabled");
+        Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
     }
 
     private void  setupForRalph(String... DOB) {

@@ -8,7 +8,6 @@ import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.Map;
 
@@ -58,7 +57,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement genderFormButtonCellIdentifier;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Choose content rating\"`]")
-    private ExtendedWebElement chooseContent;
+    private ExtendedWebElement chooseContentRating;
 
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
 
@@ -278,7 +277,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
                 maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
     }
 
-    public ExtendedWebElement getChooseContent() {
-        return chooseContent;
+    public ExtendedWebElement getChooseContentRating() {
+        return chooseContentRating;
     }
 }
