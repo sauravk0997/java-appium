@@ -1047,6 +1047,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.enterPassword(getAccount());
         sa.assertTrue(editProfilePage.isUpdatedToastPresent(), UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE);
         sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
+        editProfilePage.waitForUpdatedToastToDisappear();
         editProfilePage.getDoneButton().click();
         homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();
