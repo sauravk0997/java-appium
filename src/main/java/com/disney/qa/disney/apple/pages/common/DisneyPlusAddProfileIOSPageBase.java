@@ -57,6 +57,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
     private ExtendedWebElement genderFormButtonCellIdentifier;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Choose content rating\"`]")
+    private ExtendedWebElement chooseContent;
+
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
 
     private String genderWoman = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
@@ -273,5 +276,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         String maturityRatingInfo = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
         return staticTextByLabel.format(getDictionary().formatPlaceholderString(
                 maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
+    }
+
+    public ExtendedWebElement getChooseContent() {
+        return chooseContent;
     }
 }

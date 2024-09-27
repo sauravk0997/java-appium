@@ -180,6 +180,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         DisneyOffer offer = getAccountApi().lookupOfferToUse("DE", "Disney Plus Standard W Ads Monthly - DE - Web");
         setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+
         getAccountApi().overrideLocations(getAccount(), "DE");
         // Onboarding to application and accept one trust page if appears
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
@@ -203,8 +204,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
 
         // Validate Content Rating and Birthdate are disabled
-        Assert.assertTrue(editProfile.getStaticTextByLabel("MM/DD/YYYY").isPresent(), "Date of birth is not disabled");
-        Assert.assertTrue(editProfile.getChooseContent().isPresent(), "Choose content is not disabled");
+        Assert.assertTrue(addProfile.getStaticTextByLabel("MM/DD/YYYY").isPresent(), "Date of birth is not disabled");
+        Assert.assertTrue(addProfile.getChooseContent().isPresent(), "Choose content is not disabled");
     }
 
     private void  setupForRalph(String... DOB) {
