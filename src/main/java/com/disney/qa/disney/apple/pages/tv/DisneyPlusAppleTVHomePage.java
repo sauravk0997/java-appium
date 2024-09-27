@@ -20,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CDNAV_HOME;
@@ -269,16 +270,31 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         }
     }
 
-    public void traverseAndVerifyHomepageLayout(List<String> brands, SoftAssert sa) {
-        LOGGER.info("brands to verify: " +  brands.toString());
+    public void traverseAndVerifyHomepageLayout(List<ContentSet> sets, List<String> brands, SoftAssert sa) {
         brands.forEach(item -> {
-            sa.assertTrue(getDynamicCellByLabel(String.format("%s, Select for details on this title.", item)).isPresent(), "The following brand tile was not focused: " + item);
+            sa.assertTrue(isFocused(getDynamicCellByLabel(item)), "The following brand tile was not focused: " + item);
             Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             moveRight(1, 1);
         });
+
         moveDown(2, 1);
         moveLeft(4, 1);
         moveRight(2, 1);
+        for (int i=1; i<sets.size(); i++) {
+            var shelfTitle = sets.get(i).getSetName();
+            var getSetAssets = sets.get(i).getTitles();
+
+            sa.assertTrue(isAIDElementPresentWithScreenshot(shelfTitle), "Following shelf container not found " + shelfTitle);
+
+            String item = getSetAssets.get(2);
+
+            boolean isPresent = dynamicCellByLabel.format(item).isPresent();
+            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+
+            sa.assertTrue(isPresent, "The following content was not found " + item);
+
+            moveDown(1, 1);
+        }
     }
 
     public DisneyPlusAppleTVHomePage checkIfElementAttributeFound(ExtendedWebElement element, String name) {

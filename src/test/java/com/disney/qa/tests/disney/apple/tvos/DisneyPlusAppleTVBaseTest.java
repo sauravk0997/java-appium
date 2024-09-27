@@ -151,7 +151,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
-        LOGGER.info("** user: " + user.getEmail());
         //Wait to handle the expanded validation
         pause(5);
         collapseGlobalNav();

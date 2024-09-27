@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
+import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -29,6 +30,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() throws URISyntaxException, JsonProcessingException {
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
@@ -36,7 +38,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         CollectionConstant.Collection collectionRecommended = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
-        CollectionConstant.Collection collectionNewToDisney = CollectionConstant.Collection.NEW_TO_DISNEY;
+        CollectionConstant.Collection collectionOriginals = CollectionConstant.Collection.ORIGINALS;
+        CollectionConstant.Collection collectionDocumentaries = CollectionConstant.Collection.DOCUMENTARIES_AND_REALITY;
+
         logInTemp(getAccount());
 
         //stop hero carousel
@@ -48,7 +52,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         ArrayList<Container> collectionsHome = disneyBaseTest.getDisneyAPIPage(HOME_PAGE.getEntityId());
 
         List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(1).getId(), 50);
-        System.out.println("** titles: " + titles.toString());
         disneyPlusAppleTVHomePage.moveDown(2,1);
         // Only first five items of the first shelf container are visible on the screen
         IntStream.range(0, titles.size()).forEach(i -> {
@@ -60,17 +63,15 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         List<String> recommendationTitlesFromApi = getContainerTitlesFromApi
                 (CollectionConstant.getCollectionName(collectionRecommended), 10);
-        System.out.println("** recommendationTitlesFromApi: "+ recommendationTitlesFromApi.toString());
         String firstCellTitle = disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionRecommended).split(",")[0];
-        System.out.println("** firstCellTitle:" + firstCellTitle.toString());
-       // ExtendedWebElement firstTitle = disneyPlusAppleTVHomePage.getCellElementFromContainer(
-           //     collectionRecommended,
-            //    recommendationTitlesFromApi.get(0));
-        sa.assertTrue(firstCellTitle.equals(disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionRecommended).split(",")[0]),
-                "UI title value not matched with API title value11");
-        sa.assertTrue(firstCellTitle.equals(disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionNewToDisney).split(",")[0]),
-                "UI title value not matched with API title value22");
 
+        sa.assertTrue(firstCellTitle.equals(disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionRecommended).split(",")[0]),
+                "UI title value was not found");
+        sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(collectionDocumentaries.name()).isPresent(),
+                "UI title value was not found");
+        disneyPlusAppleTVHomePage.moveDown(1,1);
+        sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(collectionOriginals.name()).isPresent(),
+                "UI title value was not found");
         sa.assertAll();
     }
 }
