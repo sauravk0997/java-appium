@@ -154,6 +154,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .setCountry(getLocalizationUtils().getLocale())
                 .setLanguage(getLocalizationUtils().getUserLanguage());
         getAccountApi().addProfile(createDisneyProfileRequest);
+
         oneTrustPage.tapRejectAllButton();
         loginPage.dismissAppTrackingPopUp();
         welcomePage.clickLogInButton();
