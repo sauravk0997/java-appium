@@ -198,14 +198,15 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         avatars[0].click();
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+
+        // Validate Junior Mode toggle
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         addProfile.tapJuniorModeToggle();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
 
         // Validate Content Rating and Birthdate are disabled
-
-
-        pause(5);
+        Assert.assertTrue(editProfile.getStaticTextByLabel("MM/DD/YYYY").isPresent(), "Date of birth is not disabled");
+        Assert.assertTrue(editProfile.getChooseContent().isPresent(), "Choose content is not disabled");
     }
 
     private void  setupForRalph(String... DOB) {
