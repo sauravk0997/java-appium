@@ -277,7 +277,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void downloadAllOfSeason() {
-        downloadSeasonButton.click();
+        if(swipe(downloadSeasonButton)){
+            downloadSeasonButton.click();
+        } else {
+            throw new NoSuchElementException("Download all season button was not found");
+        }
     }
 
     public ExtendedWebElement getDownloadAllSeasonButton() {
