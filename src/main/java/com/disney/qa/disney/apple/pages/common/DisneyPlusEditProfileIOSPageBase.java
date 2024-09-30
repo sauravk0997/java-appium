@@ -230,7 +230,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getLearnMoreLink() {
-        String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
+        String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                JUNIOR_MODE_LEARN_MORE.getText());
         return customHyperlinkByLabel.format(learnMoreText);
     }
 
@@ -241,10 +242,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void clickJuniorModeLearnMoreLink() {
-        ExtendedWebElement learnMoreLink = getLearnMoreLink();
-        swipe(learnMoreLink);
-        waitForPresenceOfAnElement(learnMoreLink);
-        learnMoreLink.click(THREE_SEC_TIMEOUT);
+        waitForPresenceOfAnElement(getLearnMoreLink());
+        getLearnMoreLink().click(THREE_SEC_TIMEOUT);
     }
 
     public DisneyPlusMoreMenuIOSPageBase clickBackBtn() {
