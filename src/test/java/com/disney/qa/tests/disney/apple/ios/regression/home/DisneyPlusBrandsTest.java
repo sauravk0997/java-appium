@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -11,6 +12,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 
 public class DisneyPlusBrandsTest extends DisneyBaseTest {
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67373"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
     public void verifyBrandUI() {
@@ -34,7 +36,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         //Capture top of brand page
         BufferedImage topOfBrandPage = getCurrentScreenView();
 
-        brandPage.validateBrand(brand, sa);
+        brandPage.validateSwipeNavigation(CollectionConstant.Collection.BRANDS_DISNEY_ORIGINALS, sa);
 
         //Capture end of brand page
         swipeInContainer(null, Direction.UP, 5, 500);
