@@ -74,8 +74,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement duration;
     @ExtendedFindBy(accessibilityId = "metaDataLabel")
     protected ExtendedWebElement metaDataLabel;
-    @ExtendedFindBy(accessibilityId = "trailerButton")
-    protected ExtendedWebElement trailerButton;
     @ExtendedFindBy(accessibilityId = "downloadButton")
     protected ExtendedWebElement movieDownloadButton;
     @ExtendedFindBy(accessibilityId = "watch")
