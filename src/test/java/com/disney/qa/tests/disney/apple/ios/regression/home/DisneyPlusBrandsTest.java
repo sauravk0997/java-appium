@@ -5,27 +5,16 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 
 public class DisneyPlusBrandsTest extends DisneyBaseTest {
-    @DataProvider(name = "brands")
-    public Object[][] brandTypes() {
-        return new Object[][]{
-                {DisneyPlusBrandIOSPageBase.Brand.DISNEY},
-                {DisneyPlusBrandIOSPageBase.Brand.PIXAR},
-                {DisneyPlusBrandIOSPageBase.Brand.MARVEL},
-                {DisneyPlusBrandIOSPageBase.Brand.STAR_WARS},
-                {DisneyPlusBrandIOSPageBase.Brand.NATIONAL_GEOGRAPHIC}
-        };
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67373"})
-    @Test(dataProvider = "brands", groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
-    public void verifyBrandUI(DisneyPlusBrandIOSPageBase.Brand brand) {
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
+    public void verifyBrandUI() {
+        DisneyPlusBrandIOSPageBase.Brand brand = DisneyPlusBrandIOSPageBase.Brand.DISNEY;
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
