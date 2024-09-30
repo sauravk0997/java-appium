@@ -448,11 +448,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isTrailerButtonDisplayed() {
-        return trailerButton.isPresent();
+        return getTrailerButton().isPresent();
     }
 
     public ExtendedWebElement getTrailerButton() {
-        return trailerButton;
+        return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACTION_BTN_TRAILER.getText()));
     }
 
     public boolean isMovieDownloadButtonDisplayed() {
