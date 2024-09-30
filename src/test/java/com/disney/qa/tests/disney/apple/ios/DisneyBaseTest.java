@@ -607,7 +607,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void setR21PauseTimeOut(int newPauseTime) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        launchJarvis(true);
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PARENTAL_CONTROLS_CONFIG);
         try {
