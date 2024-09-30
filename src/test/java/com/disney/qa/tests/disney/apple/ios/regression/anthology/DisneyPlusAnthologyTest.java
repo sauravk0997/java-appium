@@ -273,7 +273,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
 
-        System.out.println(getDriver().getPageSource());
         details.getTrailerButton().click();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
