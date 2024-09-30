@@ -137,7 +137,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67286"})
-    @Test(description = "Help Center > Open in New Browser", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
     public void verifyHelpCenter() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
