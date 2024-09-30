@@ -183,6 +183,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicOtherFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement dynamicOtherFindByNameContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label CONTAINS \"%s\"`]")
+    protected ExtendedWebElement linkFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]")
     private ExtendedWebElement dynamicOtherFindByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
@@ -1553,4 +1555,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
     }
+
+    public ExtendedWebElement getLinkFindByLabelContains(String label) { return linkFindByLabelContains.format(label); }
 }

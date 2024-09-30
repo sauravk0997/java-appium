@@ -1,6 +1,5 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -36,7 +35,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Address\"`]")
     protected ExtendedWebElement iabOptOutListPage;
 
-    @ExtendedFindBy(accessibilityId = "document")
+    @ExtendedFindBy(accessibilityId = "Do Not Sell or Share My Personal Information")
     private ExtendedWebElement doNotSellOrShareRightsPage;
 
     public DisneyplusSellingLegalIOSPageBase(WebDriver driver) {
@@ -96,8 +95,8 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
         learnMoreTextLink.format(learnMoreText).click();
     }
 
-    public boolean isTargatedAdvertisingOptOutRightsLinkPageOpened(int timeout){
-        return doNotSellOrShareRightsPage.isPresent(timeout);
+    public boolean isTargetedAdvertisingOptOutRightsLinkPageOpened(int timeout){
+        return getLinkFindByLabelContains("Do Not Sell or Share My Personal Information").isPresent(timeout);
     }
 
     public void clickBackbutton(){
