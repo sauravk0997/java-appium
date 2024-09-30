@@ -597,7 +597,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void setPictureInPictureConfig(String value) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        launchJarvis(true);
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PLAYER);
         jarvis.openOverrideSection(PICTURE_IN_PICTURE);
