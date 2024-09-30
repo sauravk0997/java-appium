@@ -35,9 +35,6 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Address\"`]")
     protected ExtendedWebElement iabOptOutListPage;
 
-    @ExtendedFindBy(accessibilityId = "Do Not Sell or Share My Personal Information")
-    private ExtendedWebElement doNotSellOrShareRightsPage;
-
     public DisneyplusSellingLegalIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -91,12 +88,12 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
         return learnMoreTextLink.format(learnMoreText).isPresent();
     }
 
-    public void clickTargatedAdvertisingOptOutRightsLink(){
+    public void clickTargetedAdvertisingOptOutRightsLink(){
         learnMoreTextLink.format(learnMoreText).click();
     }
 
     public boolean isTargetedAdvertisingOptOutRightsLinkPageOpened(int timeout){
-        return getLinkFindByLabelContains("Do Not Sell or Share My Personal Information").isPresent(timeout);
+        return getStaticTextByLabelContains("DNSSMI").isPresent(timeout);
     }
 
     public void clickBackbutton(){

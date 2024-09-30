@@ -1555,6 +1555,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
     }
-
-    public ExtendedWebElement getLinkFindByLabelContains(String label) { return linkFindByLabelContains.format(label); }
 }
