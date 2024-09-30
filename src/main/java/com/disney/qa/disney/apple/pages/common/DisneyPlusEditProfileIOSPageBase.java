@@ -110,6 +110,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeLink[`label == \"Learn More\"`]")
+    private ExtendedWebElement learnMoreLink;
+
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
@@ -229,21 +232,13 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
     }
 
-    public ExtendedWebElement getLearnMoreLink() {
-        String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                JUNIOR_MODE_LEARN_MORE.getText());
-        return customHyperlinkByLabel.format(learnMoreText);
-    }
-
     public boolean isLearnMoreLinkPresent() {
-        ExtendedWebElement learnMoreLink = getLearnMoreLink();
-        swipe(learnMoreLink);
         return learnMoreLink.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void clickJuniorModeLearnMoreLink() {
-        waitForPresenceOfAnElement(getLearnMoreLink());
-        getLearnMoreLink().click(THREE_SEC_TIMEOUT);
+        waitForPresenceOfAnElement(learnMoreLink);
+        learnMoreLink.click(THREE_SEC_TIMEOUT);
     }
 
     public DisneyPlusMoreMenuIOSPageBase clickBackBtn() {
