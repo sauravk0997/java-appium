@@ -303,7 +303,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(),
                 String.format("Shop Promo Label Sub-header was not found for: %s", titleName));
         sa.assertTrue(detailsPage.getShopBtn().isPresent(),
-                String.format("Shop Tab was not found for:%s", titleName));
+                String.format("Shop Tab was not found for: %s", titleName));
     }
 
     private void validateShopTabButton(SoftAssert sa, String titleName){
