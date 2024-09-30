@@ -41,11 +41,11 @@ public class CollectionConstant {
             case BRANDS_DISNEY_ORIGINALS:
                 return "33b99ab4-5306-4099-9c4b-0845876a0834";
             case BRANDS_PIXAR_FEATURED:
-                return "4431005d-f571-4f7c-b686-13d3afa97681";
+                return "dd6dda68-2634-4f3d-90ba-af5f99a070f4";
             case BRANDS_NATIONAL_GEOGRAPHIC_FEATURED:
                 return "de643056-8009-418c-8833-7dc0c331a5cc";
             case BRANDS_MARVEL_FEATURED:
-                return "80e689a1-df89-49b6-9caa-857bcee40811";
+                return "df6c1d07-c9fa-4532-b487-faa57287570e";
             case BRANDS_STAR_WARS_ORIGINALS:
                 return "887acd70-a8bd-45df-94b5-477e31f905b4";
             case CAROUSEL:
