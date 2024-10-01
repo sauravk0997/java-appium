@@ -75,8 +75,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement duration;
     @ExtendedFindBy(accessibilityId = "metaDataLabel")
     protected ExtendedWebElement metaDataLabel;
-    @ExtendedFindBy(accessibilityId = "trailerButton")
-    protected ExtendedWebElement trailerButton;
     @ExtendedFindBy(accessibilityId = "downloadButton")
     protected ExtendedWebElement movieDownloadButton;
     @ExtendedFindBy(accessibilityId = "watch")
@@ -449,11 +447,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isTrailerButtonDisplayed() {
-        return trailerButton.isPresent();
+        return getTrailerButton().isPresent();
     }
 
     public ExtendedWebElement getTrailerButton() {
-        return trailerButton;
+        return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACTION_BTN_TRAILER.getText()));
     }
 
     public boolean isMovieDownloadButtonDisplayed() {

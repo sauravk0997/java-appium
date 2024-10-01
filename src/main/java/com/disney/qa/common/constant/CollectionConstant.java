@@ -41,11 +41,11 @@ public class CollectionConstant {
             case BRANDS_DISNEY_ORIGINALS:
                 return "33b99ab4-5306-4099-9c4b-0845876a0834";
             case BRANDS_PIXAR_FEATURED:
-                return "4431005d-f571-4f7c-b686-13d3afa97681";
+                return "dd6dda68-2634-4f3d-90ba-af5f99a070f4";
             case BRANDS_NATIONAL_GEOGRAPHIC_FEATURED:
                 return "de643056-8009-418c-8833-7dc0c331a5cc";
             case BRANDS_MARVEL_FEATURED:
-                return "80e689a1-df89-49b6-9caa-857bcee40811";
+                return "df6c1d07-c9fa-4532-b487-faa57287570e";
             case BRANDS_STAR_WARS_ORIGINALS:
                 return "887acd70-a8bd-45df-94b5-477e31f905b4";
             case CAROUSEL:
@@ -73,7 +73,7 @@ public class CollectionConstant {
             case HULU_FEATURED:
                 return "a4af2864-302e-499e-adf5-88ed1735976f";
             case HULU_ORIGINALS:
-                return "1674fb06-6368-4d07-aa41-46f8ad93a61f";
+                return "ea18c18c-b695-47dc-86ee-cc250c3acdeb";
             case KIDS_CAROUSEL:
                 return "2821d7a3-1146-4ca5-8333-e2c565edf79d";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
