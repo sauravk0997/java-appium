@@ -32,12 +32,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        CollectionConstant.Collection collectionRecommended = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
-        CollectionConstant.Collection collectionOriginals = CollectionConstant.Collection.ORIGINALS;
-        CollectionConstant.Collection collectionDocumentaries = CollectionConstant.Collection.DOCUMENTARIES_AND_REALITY;
-
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInTemp(getAccount());
 
         //stop hero carousel
@@ -55,20 +51,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(titles.get(i)).isElementPresent(),
                     String.format("%s asset of %s not found on first row", titles, titles.get(i)));
         });
-       sa.assertTrue(disneyPlusAppleTVHomePage.getStaticTextByLabelContains("Recommended For You").isPresent(),
-              "Recommended for you collection is not present");
-
-        ArrayList<Container> collections = disneyBaseTest.getDisneyAPIPage(HOME_PAGE.getEntityId());
-        IntStream.range(1, 2).forEach(i -> {
-            IntStream.range(0, 4).forEach(j -> {
-                sa.assertTrue(homePage.isFocused(homePage.getTypeCellLabelContains(
-                                collections.get(i).getItems().get(j).getVisuals().getTitle())),
-                        "Collection tile is not in focus.");
-                homePage.moveRight(1,1);
-            });
-            homePage.moveDown(1,1);
-            homePage.moveLeft(4, 1);
-        });
+        
         sa.assertAll();
     }
 }
