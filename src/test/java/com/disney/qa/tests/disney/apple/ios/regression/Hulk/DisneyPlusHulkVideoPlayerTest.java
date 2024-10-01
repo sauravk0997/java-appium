@@ -13,7 +13,8 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
     static final String NETWORK = "FX";
     static final String NETWORK_CONTENT = "Pose";
     static final int SPLIT_TIME = 15;
-
+    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
+    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74451"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
@@ -32,10 +33,10 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton().isOpened();
 
-        sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
@@ -49,10 +50,10 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getContinueButton());
-        sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         detailsPage.clickOnHuluContinueButton();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
 
@@ -91,10 +92,10 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         searchPage.searchForMedia(NETWORK_CONTENT);
         searchPage.getDisplayedTitles().get(0).click();
 
-        sa.assertTrue(detailsPage.isOpened(), "Details Page is not opened");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton().isOpened();
 
-        sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.skipPromoIfPresent();
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
@@ -114,7 +115,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Video player was not closed");
         detailsPage.clickContinueButton();
-        sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 2);
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
