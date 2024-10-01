@@ -648,6 +648,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
             return secondOTP;
         } else {
+            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
             return firstOTP;
         }
     }
