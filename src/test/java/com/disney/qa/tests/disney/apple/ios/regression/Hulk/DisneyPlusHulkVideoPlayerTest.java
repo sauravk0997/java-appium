@@ -81,9 +81,11 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(
+                DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(NETWORK_CONTENT);
@@ -96,27 +98,34 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.skipPromoIfPresent();
 
-        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present", NETWORK));
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
+                String.format("Network (%s) Watermark logo is not present", NETWORK));
         int maxDelay = videoPlayer.getRemainingTimeThreeIntegers() / 100;
 
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD, 2);
-        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
+                String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
         pause(maxDelay - SPLIT_TIME);
-        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
+                String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
         pause(SPLIT_TIME);
-        sa.assertTrue(videoPlayer.isNetworkWatermarkIsNotLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is present after rewind the video", NETWORK));
+        sa.assertTrue(videoPlayer.isNetworkWatermarkIsNotLogoPresent(NETWORK),
+                String.format("Network (%s) Watermark logo is present after rewind the video", NETWORK));
 
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed.");
+        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed");
         detailsPage.clickContinueButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
 
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 2);
-        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
+                String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
         pause(maxDelay - SPLIT_TIME);
-        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
+                String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
         pause(SPLIT_TIME);
-        sa.assertTrue(videoPlayer.isNetworkWatermarkIsNotLogoPresent(NETWORK), String.format("Network (%s) Watermark logo is present after rewind the video", NETWORK));
+        sa.assertTrue(videoPlayer.isNetworkWatermarkIsNotLogoPresent(NETWORK),
+                String.format("Network (%s) Watermark logo is present after rewind the video", NETWORK));
         sa.assertAll();
     }
 }
