@@ -27,6 +27,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() throws URISyntaxException, JsonProcessingException {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -57,17 +58,17 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
        sa.assertTrue(disneyPlusAppleTVHomePage.getStaticTextByLabelContains("Recommended For You").isPresent(),
               "Recommended for you collection is not present");
 
-        List<String> recommendationTitlesFromApi = getContainerTitlesFromApi
-                (CollectionConstant.getCollectionName(collectionRecommended), 10);
-        String firstCellTitle = disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionRecommended).split(",")[0];
-
-        sa.assertTrue(firstCellTitle.equals(disneyPlusAppleTVHomePage.getFirstCellTitleFromContainer(collectionRecommended).split(",")[0]),
-                "UI title value was not found");
-        sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(collectionDocumentaries.name()).isPresent(),
-                "UI title value was not found");
-        disneyPlusAppleTVHomePage.moveDown(1,1);
-        sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(collectionOriginals.name()).isPresent(),
-                "UI title value was not found");
+        ArrayList<Container> collections = disneyBaseTest.getDisneyAPIPage(HOME_PAGE.getEntityId());
+        IntStream.range(1, 2).forEach(i -> {
+            IntStream.range(0, 4).forEach(j -> {
+                sa.assertTrue(homePage.isFocused(homePage.getTypeCellLabelContains(
+                                collections.get(i).getItems().get(j).getVisuals().getTitle())),
+                        "Collection tile is not in focus.");
+                homePage.moveRight(1,1);
+            });
+            homePage.moveDown(1,1);
+            homePage.moveLeft(4, 1);
+        });
         sa.assertAll();
     }
 }
