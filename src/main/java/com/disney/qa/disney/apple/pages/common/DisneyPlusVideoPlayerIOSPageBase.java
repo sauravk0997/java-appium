@@ -311,9 +311,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         displayVideoController();
         Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
         int seekBarWidth = seekBar.getSize().getWidth();
-        if (!seekBar.isElementPresent()){ displayVideoController(); }
-        int destinationX = seekBar.getLocation().getX() + (int) (seekBarWidth * Double.parseDouble("." + (int)(playbackPercent*100)));
-        if (!seekBar.isElementPresent()){ displayVideoController(); }
+        int seekBarX = seekBar.getLocation().getX();
+        int destinationX = seekBarX + (int) (seekBarWidth * Double.parseDouble("." + (int)(playbackPercent*100)));
+        displayVideoController();
         scrollFromTo(currentTimeMarker.getLocation().getX(),
                 currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
