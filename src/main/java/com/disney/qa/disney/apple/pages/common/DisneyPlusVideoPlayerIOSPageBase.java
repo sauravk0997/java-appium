@@ -538,7 +538,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public String getRestartButtonStatus() {
         displayVideoController();
-        return getRestartButton().getAttribute(Attributes.ENABLED.getAttribute());
+        return getRestartButton().getAttribute(Attributes.ACCESSIBLE.getAttribute());
     }
 
     public void clickRestartButton() {
@@ -582,7 +582,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForAdToCompleteIfPresent(int polling) {
         ExtendedWebElement adTimeBadge = getAdRemainingTime();
-        if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
+        if (isAdBadgeLabelPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
             fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent(ONE_SEC_TIMEOUT));
         } else {
