@@ -107,7 +107,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         pause(SPLIT_TIME);
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
                 String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
-        pause(maxDelay - SPLIT_TIME);
+        pause(maxDelay);
         sa.assertTrue(videoPlayer.isNetworkWatermarkIsNotLogoPresent(NETWORK),
                 String.format("Network (%s) Watermark logo is present after forward the video", NETWORK));
 
@@ -122,7 +122,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         pause(SPLIT_TIME);
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
                 String.format("Network (%s) Watermark logo is not present after forward the video", NETWORK));
-        pause(maxDelay  - SPLIT_TIME);
+        pause(maxDelay);
         sa.assertTrue(videoPlayer.isNetworkWatermarkIsNotLogoPresent(NETWORK),
                 String.format("Network (%s) Watermark logo is present after rewind the video", NETWORK));
         sa.assertAll();
