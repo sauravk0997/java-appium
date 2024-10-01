@@ -597,7 +597,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void setPictureInPictureConfig(String value) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        launchJarvis(true);
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PLAYER);
         jarvis.openOverrideSection(PICTURE_IN_PICTURE);
@@ -607,7 +607,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void setR21PauseTimeOut(int newPauseTime) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        launchJarvis(true);
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PARENTAL_CONTROLS_CONFIG);
         try {
