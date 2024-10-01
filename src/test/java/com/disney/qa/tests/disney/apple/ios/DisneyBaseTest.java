@@ -639,7 +639,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public String getOTPFromApi(Date startTime, DisneyAccount testAccount) {
-        int emailAPILatency = 20;
+        int emailAPILatency = 10;
         String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
         pause(emailAPILatency);
         String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
