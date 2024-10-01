@@ -95,7 +95,6 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         detailsPage.clickPlayButton().isOpened();
 
         sa.assertTrue(videoPlayer.isOpened(), "Video player Page is not opened");
-        videoPlayer.waitForVideoToStart();
         videoPlayer.skipPromoIfPresent();
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(NETWORK),
