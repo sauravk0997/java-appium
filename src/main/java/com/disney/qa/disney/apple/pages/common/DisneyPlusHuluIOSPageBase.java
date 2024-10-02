@@ -9,7 +9,8 @@ import org.openqa.selenium.support.FindBy;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"brandLandingView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/" +
+            "XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement huluBrandImageExpanded;
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name=\"buttonBack\"]/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeImage")
