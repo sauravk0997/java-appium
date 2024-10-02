@@ -50,6 +50,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String BRADESCO_NEXT_URL = "next.me";
     private static final String DETELEKOM_URL = "telekom.de";
     private DisneyEntitlement disneyEntitlements;
+    private static String EDIT_ICON = "editIcon";
 
     @BeforeMethod
     public void handleAlert() {
@@ -300,7 +301,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Date startTime = getEmailApi().getStartTime();
         accountPage.clickManageWithMyDisneyButton();
-        accountPage.getDynamicRowButtonLabel("editIcon", 2).click();
+        accountPage.getDynamicRowButtonLabel(EDIT_ICON, 2).click();
         String otp = getOTPFromApi(startTime, otpAccount);
 
         sa.assertTrue(oneTimePasscodePage.isOpened(),
@@ -363,7 +364,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Date startTime = getEmailApi().getStartTime();
         accountPage.clickChangePasswordCell();
-        accountPage.getDynamicRowButtonLabel("editIcon", 2).click();
+        accountPage.getDynamicRowButtonLabel(EDIT_ICON, 2).click();
 
         String otp = getOTPFromApi(startTime, otpAccount);
 
