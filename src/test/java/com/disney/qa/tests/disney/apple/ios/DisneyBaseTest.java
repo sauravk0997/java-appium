@@ -637,4 +637,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         long minutes = timeInMinutes % 60;
         return String.format("%dh %dm", hours, minutes);
     }
+
+    public String getOTPFromApi(Date startTime, DisneyAccount testAccount) {
+        int emailAPILatency = 10;
+        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+        pause(emailAPILatency);
+        String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+
+        if (!secondOTP.equals(firstOTP)) {
+            LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+            return secondOTP;
+        } else {
+            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+            return firstOTP;
+        }
+    }
 }
