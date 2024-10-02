@@ -26,7 +26,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() throws URISyntaxException, JsonProcessingException {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -46,19 +45,17 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(1).getId(), 50);
         disneyPlusAppleTVHomePage.moveDown(2,1);
-        // Only first five items of the first shelf container are visible on the screen
+        // Items related to brands are visible on the screen
         IntStream.range(0, titles.size()).forEach(i -> {
             sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(titles.get(i)).isElementPresent(),
                     String.format("%s asset of %s not found", titles, titles.get(i)));
         });
         disneyPlusAppleTVHomePage.moveDown(1,1);
 
-        // Validate containers
+        // Validate first containers
         IntStream.range(2, 4).forEach(i -> {
             List<String> container = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(i).getId(), 5);
-            System.out.println("** container: " + container.get(i).toString());
             IntStream.range(0, 5).forEach(j -> {
-                System.out.println("*** container int: " + container.get(j).toString());
                 sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(container.get(j)).isElementPresent(),
                         "Title not found");});
             if(i == 3) { disneyPlusAppleTVHomePage.moveDown(1, 1); }
