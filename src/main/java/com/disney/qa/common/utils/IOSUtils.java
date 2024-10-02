@@ -380,6 +380,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         Wait<WebDriver> wait = new WebDriverWait(drv, Duration.ofSeconds(8), Duration.ofMillis(1));
         try {
             wait.until((Function<WebDriver, Object>) dr -> isAlertPresent());
+            IOS_UTILS_LOGGER.info("Alert is present, canceling it");
             drv.switchTo().alert().dismiss();
             Messager.ALERT_CANCELED.info("");
         } catch (Exception e) {
