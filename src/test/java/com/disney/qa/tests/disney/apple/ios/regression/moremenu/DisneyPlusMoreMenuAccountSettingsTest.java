@@ -50,7 +50,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String BRADESCO_NEXT_URL = "next.me";
     private static final String DETELEKOM_URL = "telekom.de";
     private DisneyEntitlement disneyEntitlements;
-    private static String EDIT_ICON = "editIcon";
+    private static final String EDIT_ICON = "editIcon";
 
     @BeforeMethod
     public void handleAlert() {
