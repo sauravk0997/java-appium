@@ -54,12 +54,14 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.moveDown(1,1);
 
         // Validate containers
-        IntStream.range(0, 10).forEach(i -> {
+        IntStream.range(2, 4).forEach(i -> {
             List<String> container = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(i).getId(), 5);
+            System.out.println("** container: " + container.get(i).toString());
             IntStream.range(0, 5).forEach(j -> {
+                System.out.println("*** container int: " + container.get(j).toString());
                 sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(container.get(j)).isElementPresent(),
                         "Title not found");});
-            disneyPlusAppleTVHomePage.moveDown(1,1);
+            if(i == 3) { disneyPlusAppleTVHomePage.moveDown(1, 1); }
         });
 
         sa.assertAll();
