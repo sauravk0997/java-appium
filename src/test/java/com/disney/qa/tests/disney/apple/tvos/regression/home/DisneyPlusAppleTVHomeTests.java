@@ -23,7 +23,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521"})
-    @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME})
+    @Test(groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() throws URISyntaxException, JsonProcessingException {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
