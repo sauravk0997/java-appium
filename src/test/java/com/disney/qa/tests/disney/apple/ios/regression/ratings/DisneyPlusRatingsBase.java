@@ -249,7 +249,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         if (!detailsPage.getDownloadAllSeasonButton().isPresent()) {
             swipe(detailsPage.getDownloadAllSeasonButton());
         }
-        pressByElement(detailsPage.getDownloadAllSeasonButton(), 1);
+        detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDefaultAlertBtn();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(contentTitle).click();

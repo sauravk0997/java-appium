@@ -818,7 +818,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(appLanguage.getBackButton().isElementPresent(), "Back button is not present");
         sa.assertTrue(appLanguage.isLanguageSelected(ENGLISH_US), "Language selected doesn't have the check mark");
         sa.assertTrue(appLanguage.isLanguageListShownInAlphabeticalOrder(), "Languages are not present in alphabetical order");
-        pressByElement(appLanguage.getBackArrow(), 1);
+        appLanguage.getBackArrow().click();
 
         sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile page is not opened");
         editProfile.clickAppLanguage();
@@ -1047,6 +1047,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.enterPassword(getAccount());
         sa.assertTrue(editProfilePage.isUpdatedToastPresent(), UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE);
         sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
+        editProfilePage.waitForUpdatedToastToDisappear();
         editProfilePage.getDoneButton().click();
         homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();

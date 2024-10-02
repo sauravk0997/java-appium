@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.qa.api.account.*;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.email.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -51,7 +49,7 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         moreMenu.goBackToDisneyAppFromSafari();
 
         disneyPlusAccountIsMinorIOSPageBase.clickDismissButton();
-        Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isSignUpButtonDisplayed(),
+        Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isLogInButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
         softAssert.assertAll();
     }
@@ -86,22 +84,21 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67749"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
     public void testForgotPasswordOTPPage() {
-        EmailApi emailApi = new EmailApi();
-        Date startTime = emailApi.getStartTime();
-        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage());
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
 
+        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
 
         loginPage.submitEmail(otpAccount.getEmail());
         Assert.assertTrue(passwordPage.isPasswordPagePresent(), "Password page did not open");
+        Date startTime = getEmailApi().getStartTime();
         passwordPage.clickHavingTroubleLoggingButton();
 
-        String otp = emailApi.getDisneyOTP(otpAccount.getEmail(), startTime);
+        String otp = getOTPFromApi(startTime, otpAccount);
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(homePage.isOpened(), "Home page is not open after entering otp");

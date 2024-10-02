@@ -244,7 +244,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         detailsPage.getEpisodeTitleLabel(first).click();
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.getSkipIntroButton().click();
-        videoPlayerPage.scrubPlaybackWithAdsPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+        videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
 
         //Wait for upnext UI to disappear
         upNextPage.waitForUpNextUIToDisappear();
@@ -267,6 +267,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
         disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
+        disneyPlusVideoPlayerIOSPageBase.waitForVideoToStart();
         disneyPlusVideoPlayerIOSPageBase.clickPauseButton();
         disneyPlusVideoPlayerIOSPageBase.scrubToPlaybackPercentage(percentage);
         disneyPlusVideoPlayerIOSPageBase.clickPlayButton();

@@ -327,6 +327,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .until(it -> isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS)));
     }
 
+    public void removeJarvis() {
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        removeApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+    }
+
     public void rotateScreen(ScreenOrientation orientation) {
         try {
             rotate(orientation);
@@ -465,8 +470,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     //Explore API methods
-    public ExploreContent getDisneyApiSeries(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getDisneyApiSeries(String entityID) {
+        try {
+            return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ExploreContent getDisneyApiMovie(String entityID) throws URISyntaxException, JsonProcessingException {
@@ -588,7 +597,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void setPictureInPictureConfig(String value) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        launchJarvis(true);
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PLAYER);
         jarvis.openOverrideSection(PICTURE_IN_PICTURE);
@@ -598,7 +607,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void setR21PauseTimeOut(int newPauseTime) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        launchJarvis(true);
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PARENTAL_CONTROLS_CONFIG);
         try {
@@ -627,5 +636,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         long hours = timeInMinutes / 60;
         long minutes = timeInMinutes % 60;
         return String.format("%dh %dm", hours, minutes);
+    }
+
+    public String getOTPFromApi(Date startTime, DisneyAccount testAccount) {
+        int emailAPILatency = 10;
+        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+        pause(emailAPILatency);
+        String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+
+        if (!secondOTP.equals(firstOTP)) {
+            LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+            return secondOTP;
+        } else {
+            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+            return firstOTP;
+        }
     }
 }
