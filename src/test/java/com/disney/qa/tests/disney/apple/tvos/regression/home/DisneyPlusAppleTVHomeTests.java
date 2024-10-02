@@ -43,7 +43,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.clickDown();
         ArrayList<Container> collectionsHome = disneyBaseTest.getDisneyAPIPage(HOME_PAGE.getEntityId());
 
-       List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(1).getId(), 50);
+        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(1).getId(), 50);
         disneyPlusAppleTVHomePage.moveDown(2,1);
         // Items related to brands are visible on the screen
         IntStream.range(0, titles.size()).forEach(i -> {
