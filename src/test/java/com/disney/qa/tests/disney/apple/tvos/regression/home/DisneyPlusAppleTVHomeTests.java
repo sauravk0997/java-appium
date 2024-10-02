@@ -33,6 +33,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
         logInTemp(getAccount());
 
         //stop hero carousel
@@ -43,7 +44,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.clickDown();
         ArrayList<Container> collectionsHome = disneyBaseTest.getDisneyAPIPage(HOME_PAGE.getEntityId());
 
-        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(1).getId(), 50);
+       List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(1).getId(), 50);
         disneyPlusAppleTVHomePage.moveDown(2,1);
         // Only first five items of the first shelf container are visible on the screen
         IntStream.range(0, titles.size()).forEach(i -> {
@@ -51,7 +52,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                     String.format("%s asset of %s not found", titles, titles.get(i)));
         });
         disneyPlusAppleTVHomePage.moveDown(2,1);
-
+        disneyPlusAppleTVHomePage.moveDown(2,1);
         sa.assertAll();
     }
 }
