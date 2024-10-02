@@ -51,8 +51,17 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(titles.get(i)).isElementPresent(),
                     String.format("%s asset of %s not found", titles, titles.get(i)));
         });
-        disneyPlusAppleTVHomePage.moveDown(2,1);
-        disneyPlusAppleTVHomePage.moveDown(2,1);
+        disneyPlusAppleTVHomePage.moveDown(1,1);
+
+        // Validate containers
+        IntStream.range(0, 10).forEach(i -> {
+            List<String> container = disneyBaseTest.getContainerTitlesFromApi(collectionsHome.get(i).getId(), 5);
+            IntStream.range(0, 5).forEach(j -> {
+                sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(container.get(j)).isElementPresent(),
+                        "Title not found");});
+            disneyPlusAppleTVHomePage.moveDown(1,1);
+        });
+
         sa.assertAll();
     }
 }
