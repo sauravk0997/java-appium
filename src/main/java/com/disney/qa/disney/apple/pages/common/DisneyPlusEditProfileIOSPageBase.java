@@ -24,6 +24,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     protected static final String USER_RATING_KEY = "profile_rating_restriction";
     protected static final String EMPTY_PROFILE_NAME_ERROR = "Enter profile name";
     private static final String R21 = "R21";
+    private static final String LEARN_MORE = "Learn more";
 
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
@@ -233,13 +234,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isLearnMoreLinkPresent() {
-        return learnMoreLink.isPresent(THREE_SEC_TIMEOUT);
+        return getTextViewByLabelContains(LEARN_MORE).isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void clickJuniorModeLearnMoreLink() {
-//        waitForPresenceOfAnElement(learnMoreLink);
-        System.out.println(getDriver().getPageSource());
-        learnMoreLink.click(THREE_SEC_TIMEOUT);
+        getTextViewByLabelContains(LEARN_MORE).click(THREE_SEC_TIMEOUT);
     }
 
     public DisneyPlusMoreMenuIOSPageBase clickBackBtn() {
