@@ -33,7 +33,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@FindBy(xpath = "//XCUIElementTypeApplication[@name=\"Disney+\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther")
 	private ExtendedWebElement exitJuniorModePin;
 
-	@ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeCell[`label == \"Access %s's profile\"`]")
+	@ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeCell[`label == \"Access %s's profile\"`]/**/XCUIElementTypeImage")
 	private ExtendedWebElement profileAvatar;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access %s's pin protected profile\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
