@@ -4,7 +4,6 @@ import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -23,7 +22,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521", "XCDQA-89523"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521"})
     @Test(description = "Verify focus and home screen layout upon landing", groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() throws URISyntaxException, JsonProcessingException {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -49,9 +48,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         // Only first five items of the first shelf container are visible on the screen
         IntStream.range(0, titles.size()).forEach(i -> {
             sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(titles.get(i)).isElementPresent(),
-                    String.format("%s asset of %s not found on first row", titles, titles.get(i)));
+                    String.format("%s asset of %s not found", titles, titles.get(i)));
         });
-        
+        disneyPlusAppleTVHomePage.moveDown(2,1);
+
         sa.assertAll();
     }
 }
