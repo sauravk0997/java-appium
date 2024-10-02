@@ -203,7 +203,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         Dimension size = getDriver().manage().window().getSize();
         tap((int)(size.width * Double.parseDouble("." + 35)), (int)(size.height * Double.parseDouble("." + 50)));
         fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present")
-                .until(it -> !seekBar.isElementPresent(ONE_SEC_TIMEOUT));
+                .until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
             waitForPresenceOfAnElement(playerView);
