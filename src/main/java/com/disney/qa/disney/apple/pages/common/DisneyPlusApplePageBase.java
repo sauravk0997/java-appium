@@ -835,6 +835,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         clickSelect();
     }
 
+    public ExtendedWebElement getKeyboardDoneButton() {
+        return keyboardDone;
+    }
+
     public String[] getTabs() {
         return new String[]{FooterTabs.HOME.tabName, FooterTabs.SEARCH.tabName, FooterTabs.DOWNLOADS.tabName, FooterTabs.MORE_MENU.tabName};
     }
