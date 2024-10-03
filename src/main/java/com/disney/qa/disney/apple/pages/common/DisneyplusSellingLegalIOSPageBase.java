@@ -13,7 +13,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     private static String iabOptOutListLink = "IAB opt-out list";
     private static String learnMoreText = "Do Not Sell or Share My Personal Information\\\" and \\\"Targeted Advertising\\\" Opt-Out Rights";
     private static String iabOptOutPageURL = "iabprivacy.com";
-    private static String dnssmiTitle = "DNSSMI";
+    private static final String DNSSMI_TITLE = "DNSSMI";
 
     @ExtendedFindBy(accessibilityId = "purposeDetailsConsentLabel")
     private ExtendedWebElement pageHeader;
@@ -94,7 +94,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isTargetedAdvertisingOptOutRightsLinkPageOpened(int timeout){
-        return getStaticTextByLabelContains(dnssmiTitle).isPresent(timeout);
+        return getStaticTextByLabelContains(DNSSMI_TITLE).isPresent(timeout);
     }
 
     public void clickBackbutton(){
