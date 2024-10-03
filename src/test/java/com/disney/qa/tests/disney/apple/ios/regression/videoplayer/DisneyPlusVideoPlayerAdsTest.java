@@ -222,7 +222,11 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
-        videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
+        if (content.equalsIgnoreCase(MS_MARVEL)) {
+            videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
+        } else {
+            videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
+        }
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_EIGHTY);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
