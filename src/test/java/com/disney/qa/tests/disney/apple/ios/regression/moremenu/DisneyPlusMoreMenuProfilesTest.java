@@ -783,8 +783,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
                 "Exit Junior Mode text is not present");
         sa.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version is not present");
-        sa.assertTrue(moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isPresent(SHORT_TIMEOUT),
+        sa.assertTrue(moreMenu.getDynamicCellByLabel(
+                DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isPresent(SHORT_TIMEOUT),
                 "Watchlist Menu is not present");
+        sa.assertTrue(moreMenu.getDynamicCellByLabel(
+                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL.getMenuOption()).isPresent(SHORT_TIMEOUT),
+                "Legal Menu is present");
 
         // Elements that should not be present on screen
         sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
@@ -793,8 +797,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Account Menu is present");
         sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP),
                 "Help Menu is present");
-        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
-                "Legal Menu is present");
         sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
                 "Log Out Menu is present");
         sa.assertAll();
