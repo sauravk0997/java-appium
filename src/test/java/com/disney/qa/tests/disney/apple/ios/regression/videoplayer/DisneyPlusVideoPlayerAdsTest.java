@@ -37,7 +37,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final double SCRUB_PERCENTAGE_SIXTY = 60;
+    private static final double SCRUB_PERCENTAGE_EIGHTY = 80;
     private static final int UI_LATENCY = 25;
     private static final String FRANCAIS = "Français";
     private static final String DURING_SECOND_AD_POD = "During second ad pod,";
@@ -47,6 +47,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
     private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
+
+    @DataProvider(name = "content")
+    public Object[][] content() {
+        return new Object[][]{{MS_MARVEL},
+                {SPIDERMAN_THREE}
+        };
+    }
 
     @DataProvider(name = "tapAction")
     public Object[][] tapAction() {
@@ -197,13 +204,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
-    public void verifyLeavePlayerDuringAd() {
+    @Test(dataProvider = "content", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    public void verifyLeavePlayerDuringAd(String content) {
         String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        loginAndStartPlayback(SPIDERMAN_THREE);
+        loginAndStartPlayback(content);
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
                 String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
@@ -216,7 +223,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_EIGHTY);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
                 String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
@@ -242,7 +249,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found after scrubbing forward after an ad grace period");
 
         videoPlayer.waitForAdToCompleteIfPresent(6);
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_EIGHTY);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing during grace period");
         sa.assertAll();
     }
