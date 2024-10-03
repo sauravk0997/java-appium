@@ -45,6 +45,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     public void submitNewEmailAddress(String value) {
         enterNewEmailAddress(value + "\n");
+        getKeyboardDoneButton().clickIfPresent(SHORT_TIMEOUT);
         getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText())).click();
     }
 
