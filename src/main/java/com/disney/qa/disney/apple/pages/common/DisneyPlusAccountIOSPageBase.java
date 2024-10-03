@@ -37,7 +37,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement directBillingMonthlyPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+ Basic Monthly", getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
     private ExtendedWebElement disneyPlusPremiumSubscription = getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.DISNEYPLUS_PREMIUM.getText()));
 
-    @ExtendedFindBy(accessibilityId = "changePasswordCell")
+    @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
     private ExtendedWebElement changePasswordCell;
 
     @ExtendedFindBy(accessibilityId = "subscriptionChange")

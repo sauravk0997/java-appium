@@ -32,7 +32,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String SHOP = "Shop";
-    private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
+    private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 40;
     private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
