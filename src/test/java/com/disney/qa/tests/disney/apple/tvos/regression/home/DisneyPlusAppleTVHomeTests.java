@@ -50,7 +50,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             throw new RuntimeException(e);
         }
 
-      //  verifyBrandDetails(homeCollections.get(1).getId(), sa);
+        verifyBrandDetails(homeCollections.get(1).getId(), sa);
 
         homePage.moveDown(1, 1);
         homePage.moveLeft(4, 1);
