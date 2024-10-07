@@ -178,7 +178,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74457"})
-    @Test(description = "Hulk - Hulu Video Player - Service Attribution", dataProvider = "userType", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "userType", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
     public void verifyVideoPlayerServiceAttribution(String userType) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -186,16 +186,20 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAccount(createAccountWithSku(DisneySkuParameters.valueOf(userType), getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.valueOf(userType),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.waitForPlayBTNPresent();
         detailsPage.getPlayButton().click();
-        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(), "service attribution wasn't visible when video started");
-        sa.assertFalse(videoPlayer.isSeekbarVisible(), "player controls were displayed when video started");
-        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(), "service attribution wasn't visible along with controls");
+        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
+                "service attribution wasn't visible when video started");
+        sa.assertFalse(videoPlayer.isSeekbarVisible(),
+                "player controls were displayed when video started");
+        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(),
+                "service attribution wasn't visible along with controls");
         sa.assertAll();
     }
 
