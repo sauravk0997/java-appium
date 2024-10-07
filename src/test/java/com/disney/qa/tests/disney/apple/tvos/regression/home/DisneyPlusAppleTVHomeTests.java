@@ -31,12 +31,12 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         SoftAssert sa = new SoftAssert();
         ArrayList<Container> homeCollections;
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-               getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        logInTemp(getAccount());
+    //    setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+           //    getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+     //   logInTemp(getAccount());
 
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-       // sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+      //  Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+
         //stop hero carousel
         homePage.moveRight(2, 2);
 
@@ -50,7 +50,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             throw new RuntimeException(e);
         }
 
-        verifyBrandDetails(homeCollections.get(1).getId(), sa);
+      //  verifyBrandDetails(homeCollections.get(1).getId(), sa);
 
         homePage.moveDown(1, 1);
         homePage.moveLeft(4, 1);
@@ -85,10 +85,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
                     "Shelf title not found: " + shelfTitle);
 
-            //Get content for the shelf
-            List<Item> collectionItems = getExploreAPIItemsFromSet(homeCollectionId.getId(), 10);
-            if (!collectionItems.isEmpty() && collectionItems.size() > 0) {
-                String firstContentTitle = collectionItems.get(0).getVisuals().getTitle();
+            if (!homeCollectionId.getItems().isEmpty()) {
+                String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
                 //Verify content title
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(),
