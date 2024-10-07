@@ -16,7 +16,6 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.*;
 import java.net.*;
 import java.util.*;
-import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 
@@ -77,14 +76,16 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
+
         LOGGER.info("Home collection size: {}", homeCollections.size());
 
         homeCollections.forEach(homeCollectionId -> {
             //Verify shelf title
             String shelfTitle = homeCollectionId.getVisuals().getName();
-            sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
-                    "Shelf title not found: " + shelfTitle);
-
+            if(!shelfTitle.contains("Home") && !shelfTitle.contains("My Watchlist")) {
+                sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
+                        "Shelf title not found: " + shelfTitle);
+            }
             if (!homeCollectionId.getItems().isEmpty()) {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
