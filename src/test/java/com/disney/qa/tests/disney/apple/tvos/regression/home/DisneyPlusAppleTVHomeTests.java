@@ -82,7 +82,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homeCollections.forEach(homeCollectionId -> {
             //Verify shelf title
             String shelfTitle = homeCollectionId.getVisuals().getName();
-            if(!shelfTitle.contains("Home") && !shelfTitle.contains("My Watchlist")) {
+            if(!Arrays.asList("Home","My Watchlist").contains(shelfTitle)) {
                 sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
                         "Shelf title not found: " + shelfTitle);
             }
