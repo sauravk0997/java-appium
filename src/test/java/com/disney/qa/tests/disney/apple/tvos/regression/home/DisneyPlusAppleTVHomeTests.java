@@ -75,7 +75,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     private void verifyHomeCollectionsAndContent(ArrayList<Container> homeCollections, SoftAssert sa) {
-        DisneyPlusAppleTVHomePage homePage = initPage(DisneyPlusAppleTVHomePage.class);
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
