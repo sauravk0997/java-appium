@@ -98,7 +98,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
     @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void verifySubscriptionDetails_DisneyPlus() {
+    public void verifySubscriptionDetailsDisneyPlus() {
         setAppToAccountSettings(getAccount());
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
