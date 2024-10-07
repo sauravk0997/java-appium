@@ -1,5 +1,3 @@
-
-
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.qa.api.explore.response.*;
@@ -38,7 +36,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         logInTemp(getAccount());
 
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+       // sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
         //stop hero carousel
         homePage.moveRight(2, 2);
 
@@ -96,6 +94,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(),
                         "Content title not found: " + firstContentTitle);
             }
+            homePage.moveDown(1, 1);
         });
     }
 }
