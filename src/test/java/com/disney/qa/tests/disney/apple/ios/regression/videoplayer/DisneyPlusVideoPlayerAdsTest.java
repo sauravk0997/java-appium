@@ -37,7 +37,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_THIRTY = 30;
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final double SCRUB_PERCENTAGE_EIGHTY = 80;
+    private static final double SCRUB_PERCENTAGE_SIXTY = 60;
     private static final int UI_LATENCY = 25;
     private static final String FRANCAIS = "Français";
     private static final String DURING_SECOND_AD_POD = "During second ad pod,";
@@ -216,7 +216,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_EIGHTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
                 String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
@@ -231,7 +231,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyPlayerScrubForwardAfterAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SPIDERMAN_THREE);
+        loginAndStartPlayback(MS_MARVEL);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent(6);
@@ -242,7 +242,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found after scrubbing forward after an ad grace period");
 
         videoPlayer.waitForAdToCompleteIfPresent(6);
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_EIGHTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing during grace period");
         sa.assertAll();
     }
