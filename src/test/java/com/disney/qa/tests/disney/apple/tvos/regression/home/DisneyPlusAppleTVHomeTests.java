@@ -31,11 +31,11 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         SoftAssert sa = new SoftAssert();
         ArrayList<Container> homeCollections;
-    //    setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-           //    getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-     //   logInTemp(getAccount());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        logInTemp(getAccount());
 
-      //  Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         //stop hero carousel
         homePage.moveRight(2, 2);
