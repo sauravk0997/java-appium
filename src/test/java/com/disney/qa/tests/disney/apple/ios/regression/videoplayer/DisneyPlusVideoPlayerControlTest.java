@@ -193,6 +193,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(5);
+        videoPlayer.waitForVideoToStart();
         if(videoPlayer.isSkipIntroButtonPresent())
         {
             videoPlayer.getSkipIntroButton().click();
