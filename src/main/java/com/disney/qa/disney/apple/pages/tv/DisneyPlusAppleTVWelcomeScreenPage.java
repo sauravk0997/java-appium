@@ -32,7 +32,7 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     }
 
     public ExtendedWebElement getLoginButton() {
-        return dynamicBtnFindByName.format("loginButton");
+        return loginButton;
     }
 
     public void waitForWelcomePageToLoad() {
@@ -53,7 +53,6 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     public void clickLogInButton() {
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 1, "Login Button was not focused")
                 .until(it -> {
-                    clickDown();
                     return isFocused(getLoginButton());
                 });
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);

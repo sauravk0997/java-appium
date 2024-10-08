@@ -27,9 +27,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.HOME})
     public void verifyHomeScreenLayout() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        ArrayList<Container> homeCollections;
+
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInTemp(getAccount());
@@ -41,13 +40,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         homePage.clickDown();
 
-        try {
-            homeCollections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
-                    getLocalizationUtils().getLocale(),
-                    getLocalizationUtils().getUserLanguage());
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        ArrayList<Container> homeCollections = getCollectionsHome();
 
         verifyBrandDetails(homeCollections.get(1).getId(), sa);
 
@@ -59,6 +52,17 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    private ArrayList<Container> getCollectionsHome() {
+        ArrayList<Container> homeCollections;
+        try {
+            homeCollections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage());
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        return homeCollections;
+    }
 
     private void verifyBrandDetails(String brandCollectionID, SoftAssert sa) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
