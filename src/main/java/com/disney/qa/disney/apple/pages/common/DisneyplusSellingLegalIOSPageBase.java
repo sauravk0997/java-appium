@@ -1,6 +1,5 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +13,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     private static String iabOptOutListLink = "IAB opt-out list";
     private static String learnMoreText = "Do Not Sell or Share My Personal Information\\\" and \\\"Targeted Advertising\\\" Opt-Out Rights";
     private static String iabOptOutPageURL = "iabprivacy.com";
+    private static final String DNSSMI_TITLE = "DNSSMI";
 
     @ExtendedFindBy(accessibilityId = "purposeDetailsConsentLabel")
     private ExtendedWebElement pageHeader;
@@ -35,9 +35,6 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Address\"`]")
     protected ExtendedWebElement iabOptOutListPage;
-
-    @ExtendedFindBy(accessibilityId = "document")
-    private ExtendedWebElement doNotSellOrShareRightsPage;
 
     public DisneyplusSellingLegalIOSPageBase(WebDriver driver) {
         super(driver);
@@ -92,12 +89,12 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
         return learnMoreTextLink.format(learnMoreText).isPresent();
     }
 
-    public void clickTargatedAdvertisingOptOutRightsLink(){
+    public void clickTargetedAdvertisingOptOutRightsLink(){
         learnMoreTextLink.format(learnMoreText).click();
     }
 
-    public boolean isTargatedAdvertisingOptOutRightsLinkPageOpened(int timeout){
-        return doNotSellOrShareRightsPage.isPresent(timeout);
+    public boolean isTargetedAdvertisingOptOutRightsLinkPageOpened(int timeout){
+        return getStaticTextByLabelContains(DNSSMI_TITLE).isPresent(timeout);
     }
 
     public void clickBackbutton(){
