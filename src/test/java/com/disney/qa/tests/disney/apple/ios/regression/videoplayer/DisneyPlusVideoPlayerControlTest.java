@@ -192,8 +192,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.waitForPlayBTNPresent();
-        detailsPage.getPlayButton().click();
+        detailsPage.clickPlayButton(5);
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
                 "service attribution wasn't visible when video started");
         sa.assertFalse(videoPlayer.isSeekbarVisible(),

@@ -567,12 +567,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 BTN_PLAY.getText()));
     }
 
-    public void waitForPlayBTNPresent() {
-        waitUntil(ExpectedConditions.elementToBeClickable(getStaticTextByLabel(getDictionary()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        BTN_PLAY.getText())).getBy()), FIVE_SEC_TIMEOUT);
-    }
-
     public ExtendedWebElement getContinueButton() {
         return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_CONTINUE.getText()));
