@@ -5,6 +5,7 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -15,6 +16,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import static com.disney.qa.common.constant.RatingConstant.GERMANY;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
@@ -179,10 +182,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
-        DisneyOffer offer = getAccountApi().lookupOfferToUse("DE", "Disney Plus Standard W Ads Monthly - DE - Web");
-        setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
+                GERMANY, getLocalizationUtils().getUserLanguage()));
 
-        getAccountApi().overrideLocations(getAccount(), "DE");
+        getAccountApi().overrideLocations(getAccount(), GERMANY);
         // Onboarding to application and accept one trust page if appears
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
 
