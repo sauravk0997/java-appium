@@ -205,7 +205,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         // Validate Junior Mode toggle
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         addProfile.tapJuniorModeToggle();
-        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
 
         // Validate Content Rating and Birthdate are disabled
         addProfile.getDynamicTextEntryFieldByName("birthdateTextFieldIdentifier").click();
