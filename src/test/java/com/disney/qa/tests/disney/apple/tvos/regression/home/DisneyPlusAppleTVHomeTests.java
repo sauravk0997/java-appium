@@ -41,9 +41,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.moveRight(2, 2);
         homePage.clickDown();
 
-        ArrayList<Container> homeCollections = getCollectionsHome();
+        List<Container> homeCollections = getCollectionsHome();
 
-        verifyBrandDetails(homeCollections.get(1).getId(), sa);
+        verifyBrandDetails(homeCollections.get(1).getId(), homePage, sa);
 
         homePage.moveDown(1, 1);
         homePage.moveLeft(4, 1);
@@ -53,20 +53,17 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    private ArrayList<Container> getCollectionsHome() {
-        ArrayList<Container> homeCollections;
+    private List<Container> getCollectionsHome() {
         try {
-            homeCollections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
+            return getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
                     getLocalizationUtils().getUserLanguage());
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-        return homeCollections;
     }
 
-    private void verifyBrandDetails(String brandCollectionID, SoftAssert sa) {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+    private void verifyBrandDetails(String brandCollectionID, DisneyPlusAppleTVHomePage homePage, SoftAssert sa) {
         List<Item> brandsCollection = getExploreAPIItemsFromSet(brandCollectionID, 10);
         brandsCollection.forEach(item -> {
             sa.assertTrue(homePage.isFocused(homePage.getTypeCellNameContains(item.getVisuals().getTitle())),
@@ -75,7 +72,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         });
     }
 
-    private void verifyHomeCollectionsAndContent(ArrayList<Container> homeCollections, SoftAssert sa) {
+    private void verifyHomeCollectionsAndContent(List<Container> homeCollections, SoftAssert sa) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
         //This removes first 2 collections from the home collection
