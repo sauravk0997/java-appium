@@ -10,6 +10,7 @@ import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.*;
 import org.slf4j.*;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -32,12 +33,14 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInWithoutHomeCheck(getAccount());
+        collapseGlobalNav();
 
+        Assert.assertTrue(homePage.isOpened(),
+                "Home page did not launch for single profile user after logging in");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         //stop hero carousel
         homePage.moveRight(2, 2);
-
         homePage.clickDown();
 
         ArrayList<Container> homeCollections = getCollectionsHome();
