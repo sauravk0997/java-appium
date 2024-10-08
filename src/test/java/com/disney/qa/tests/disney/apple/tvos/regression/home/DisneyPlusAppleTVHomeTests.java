@@ -71,7 +71,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         brandsCollection.forEach(item -> {
             sa.assertTrue(homePage.isFocused(homePage.getTypeCellNameContains(item.getVisuals().getTitle())),
                     "The following brand tile was not focused: " + item);
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             homePage.moveRight(1, 1);
         });
     }
