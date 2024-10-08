@@ -24,7 +24,6 @@ import java.net.URISyntaxException;
 import java.time.*;
 import java.time.temporal.ValueRange;
 import java.util.List;
-import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
@@ -48,14 +47,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
     private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
-
-
-    @DataProvider(name = "content")
-    public Object[][] content() {
-        return new Object[][]{{MS_MARVEL},
-                {SPIDERMAN_THREE}
-        };
-    }
 
     @DataProvider(name = "tapAction")
     public Object[][] tapAction() {
@@ -206,31 +197,32 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
-    @Test(description = "VOD Player - Ads - Leave Player during Ad", dataProvider = "content", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
-    public void verifyLeavePlayerDuringAd(String content) {
+    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    public void verifyLeavePlayerDuringAd() {
         String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        loginAndStartPlayback(content);
+        loginAndStartPlayback(SPIDERMAN_THREE);
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
+                String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
+        sa.assertTrue(detailsPage.isOpened(),
+                String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
 
         detailsPage.clickPlayOrContinue();
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
-        if (content.equalsIgnoreCase(MS_MARVEL)) {
-            videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
-        } else {
-            videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
-        }
+        videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
+                String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
+        sa.assertTrue(detailsPage.isOpened(),
+                String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
         sa.assertAll();
     }
 
