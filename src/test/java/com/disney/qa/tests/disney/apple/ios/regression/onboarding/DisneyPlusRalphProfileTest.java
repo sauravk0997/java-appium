@@ -203,7 +203,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
         // Validate Junior Mode toggle
-        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         addProfile.tapJuniorModeToggle();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
 
