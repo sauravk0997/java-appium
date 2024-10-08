@@ -31,7 +31,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        logInTemp(getAccount());
+        logInWithoutHomeCheck(getAccount());
 
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
