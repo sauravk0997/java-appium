@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_tablet_reg_ratings_fc" annotations="JDK" configfailurepolicy="continue" thread-count="2">
+<suite verbose="1" name="dmgzios_tablet_reg_ratings_split_fc" annotations="JDK" configfailurepolicy="continue" thread-count="2">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.8.0-fc"/>
@@ -7,7 +7,7 @@
     <parameter name="jenkinsBuild" value="3.8.0.73224"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
-    <parameter name="jenkinsJobName" value="dmgzios_tablet_reg_ratings_fc"/>
+    <parameter name="jenkinsJobName" value="dmgzios_tablet_reg_ratings_split_fc"/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
@@ -22,45 +22,45 @@
     <parameter name="scheduling" value="H 7 * * 6,0"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet FSK-FSF-E Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAPACRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusFSKandFSFandERatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet KCC Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet Netherlands Kijwijzer Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKCCRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKijwijzerRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet KMRB Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet LATAM Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKMRBRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusLATAMRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet AI Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet Singapore MDA Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAIRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMDARatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet OFLC Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet US MPAA/TVPG Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusOFLCRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMPAAandTVPGRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet DJCTQ Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet Australia NCS Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusDJCTQRatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNCSRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet EMEA Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet Singapore R21 Ratings">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusEMEARatingsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21Test"/>
         </classes>
     </test>
 </suite>
