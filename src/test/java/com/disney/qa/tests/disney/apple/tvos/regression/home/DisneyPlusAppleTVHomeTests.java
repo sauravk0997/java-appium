@@ -36,7 +36,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         //stop hero carousel
         homePage.moveRight(2, 2);
