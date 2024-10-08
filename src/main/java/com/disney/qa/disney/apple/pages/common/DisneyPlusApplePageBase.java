@@ -72,7 +72,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String APAC = "apac";
     private static final String KMRB = "kmrb";
     private static final String MPAA_AND_TVPG = "mpaaandtvpg";
-    private static final String DONE = "Done";
     protected static final String PLACEHOLDER_E = "E";
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -1079,12 +1078,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissPickerWheelKeyboard() {
+        String editProfilesDone = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, EDIT_PROFILE_DONE_BUTTON.getText());
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
-            hideKeyboard();
-            getStaticTextByLabel(DONE).click();
-        } else {
-            getTypeButtonByLabel(DONE).click();
+            hideKeyboard();;
         }
+        getTypeButtonByLabel(editProfilesDone).click();
     }
 
     public void clickSystemAlertSecondaryBtn() {
