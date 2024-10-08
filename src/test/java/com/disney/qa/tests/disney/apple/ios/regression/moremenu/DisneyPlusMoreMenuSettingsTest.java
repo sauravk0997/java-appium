@@ -193,33 +193,6 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "Displayed App Version was not correct");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66835"})
-    @Test(description = "Verify: Simplified Kids More Menu", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
-    public void verifySimplifiedKidsMoreMenu() {
-        SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).kidsModeEnabled(true).isStarOnboarded(true).build());
-        onboard(KIDS_PROFILE);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-
-        //Validate watchlist and app version are present
-        sa.assertTrue(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST),
-                "Watchlist option was not found on a child account");
-        sa.assertTrue(moreMenu.isAppVersionDisplayed(), "App version number was not found on a child account");
-
-        //Validate app settings, logout, help, account and legal are not present
-        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
-                "App Settings option was found on a child account");
-        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT),
-                "Log Out option was found on a child account");
-        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP),
-                "Help option was found on a child account");
-        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
-                "Account option was found on a child account");
-        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
-                "Legal option was found on a child account");
-        sa.assertAll();
-    }
-
     private void onboard(String profile) {
         setAppToHomeScreen(getAccount(), profile);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);

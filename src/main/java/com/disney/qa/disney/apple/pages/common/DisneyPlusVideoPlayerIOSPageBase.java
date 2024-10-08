@@ -311,6 +311,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
         Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+        clickElementAtLocation(playerView, 35, 50);
         scrollFromTo(currentTimeMarker.getLocation().getX(),
                 currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -581,8 +582,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForAdToCompleteIfPresent(int polling) {
-        ExtendedWebElement adTimeBadge = getAdRemainingTime();
-        if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
+        if (isAdBadgeLabelPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
             fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent(ONE_SEC_TIMEOUT));
         } else {
