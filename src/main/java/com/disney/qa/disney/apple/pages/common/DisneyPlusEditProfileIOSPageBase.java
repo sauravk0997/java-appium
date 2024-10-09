@@ -242,7 +242,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void clickJuniorModeLearnMoreLink() {
-        getLearnMoreLink().click(THREE_SEC_TIMEOUT);
+        ExtendedWebElement learnMoreLink = getLearnMoreLink();
+        swipe(learnMoreLink);
+        learnMoreLink.click(THREE_SEC_TIMEOUT);
     }
 
     public DisneyPlusMoreMenuIOSPageBase clickBackBtn() {
