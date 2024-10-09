@@ -194,10 +194,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(5);
         videoPlayer.waitForVideoToStart();
-        if(videoPlayer.isSkipIntroButtonPresent())
-        {
-            videoPlayer.getSkipIntroButton().click();
-        }
+        videoPlayer.skipPromoIfPresent();
+        videoPlayer.getSkipIntroButton().click();
+
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
                 "service attribution wasn't visible when video started");
         sa.assertFalse(videoPlayer.isSeekbarVisible(),
