@@ -553,6 +553,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             return getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setId)
                     .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                    .setDisneyAccount(getAccount())
                     .setProfileId(getAccount().getProfileId())
                     .setLimit(limit)).getData().getSet().getItems();
         } catch (URISyntaxException e) {
