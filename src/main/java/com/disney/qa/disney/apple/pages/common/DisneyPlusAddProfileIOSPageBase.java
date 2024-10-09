@@ -59,6 +59,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Choose content rating\"`]")
     private ExtendedWebElement chooseContentRating;
 
+    @ExtendedFindBy(iosPredicate = "name == \"birthdateTextFieldIdentifier\" AND value == \"MM/DD/YYYY\"\n")
+    protected ExtendedWebElement birthDateValue;
+
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
 
     private String genderWoman = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
@@ -66,7 +69,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     private String genderNonBinary = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText());
     private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
-    public static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
+    private static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
 
     //Functions
     public DisneyPlusAddProfileIOSPageBase(WebDriver driver) {
@@ -280,4 +283,13 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getChooseContentRating() {
         return chooseContentRating;
     }
+
+    public String getBirthdateTextField(){
+        return BIRTHDATE_TEXT_FIELD;
+    }
+
+    public ExtendedWebElement getValueFromDOB() {
+        return birthDateValue;
+    }
+
 }

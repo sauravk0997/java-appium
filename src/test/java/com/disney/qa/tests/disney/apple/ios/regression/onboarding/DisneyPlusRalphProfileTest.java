@@ -12,13 +12,11 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase.BIRTHDATE_TEXT_FIELD;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
@@ -175,6 +173,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75282"})
+ //   @BeforeMethod(alwaysRun = false)
+ //   @BeforeClass(alwaysRun = true)
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION })
     public void testRalphAddProfileJuniorModeDOBIsDisabled() {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
@@ -182,6 +182,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPageBase = initPage(DisneyPlusDOBCollectionPageBase.class);
         SoftAssert sa = new SoftAssert();
        // disableOneTrust();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
@@ -210,14 +211,18 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
 
         // Validate Content Rating and Birthdate are disabled
-        addProfile.getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).click();
+        sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), "DOB field is not present");
+        addProfile.getDynamicTextEntryFieldByName(addProfile.getBirthdateTextField()).click();
         Assert.assertFalse(editProfile.getTypeButtonByLabel("Done").isPresent(), "Date of birth is not disabled");
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
 
         // Toggle Junior Mode OFF and validate content
         addProfile.tapJuniorModeToggle();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
-        Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content did not get empty");
+        Assert.assertTrue(addProfile.getValueFromDOB().isPresent(),
+                "Date Of Birth field did not get empty after toggle Junior Mode OFF");
+        Assert.assertTrue(addProfile.getChooseContentRating().isPresent(),
+                "Choose Content Rating did not get empty after toggle Junior Mode OFF");
     }
 
     private void  setupForRalph(String... DOB) {
