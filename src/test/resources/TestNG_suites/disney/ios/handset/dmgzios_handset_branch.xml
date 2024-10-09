@@ -22,7 +22,6 @@
                value=",Smoke,Anthology,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,VideoPlayer,VideoPlayerAds,Welch"/>
     <parameter name="jenkinsBuild" value="3.8.0.73229"/>
 
-
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
