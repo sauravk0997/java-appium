@@ -88,9 +88,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"toggleView\"`]/XCUIElementTypeOther[2]")
-    private ExtendedWebElement toggleJarvisOneTrust;
-
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
         R.CONFIG.put("capabilities." + SupportsNoResetOption.NO_RESET_OPTION, "true", true);
