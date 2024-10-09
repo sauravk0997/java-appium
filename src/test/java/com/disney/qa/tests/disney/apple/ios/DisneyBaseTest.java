@@ -18,8 +18,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.remote.options.SupportsAppOption;
 import io.appium.java_client.remote.options.SupportsFullResetOption;
 import io.appium.java_client.remote.options.SupportsNoResetOption;
