@@ -18,6 +18,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.remote.options.SupportsAppOption;
 import io.appium.java_client.remote.options.SupportsFullResetOption;
 import io.appium.java_client.remote.options.SupportsNoResetOption;
@@ -85,6 +87,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"toggleView\"`]/XCUIElementTypeOther[2]")
+    private ExtendedWebElement toggleJarvisOneTrust;
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -652,5 +657,26 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
             return firstOTP;
         }
+    }
+
+    public void disableOneTrustBanner() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        String NO_OVERRIDE_IN_USE = "Override in use! Set to: false";
+        installAndLaunchJarvis();
+        applePageBase.scrollToItem("App Config").click();
+        applePageBase.scrollToItem("Edit Config").click();
+        applePageBase.scrollToItem("platformConfig").click();
+        applePageBase.scrollToItem("oneTrustConfig").click();
+        applePageBase.scrollToItem("isEnabled").click();
+        if (applePageBase.getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("oneTrustConfig is not enabled");
+        } else {
+            LOGGER.info("Disabling oneTrustConfig");
+            applePageBase.clickToggleView();
+        }
+        // Terminate Jarvis and relaunch Disney app
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
     }
 }
