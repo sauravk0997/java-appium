@@ -1078,7 +1078,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissPickerWheelKeyboard() {
-        String editProfilesDone = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, EDIT_PROFILE_DONE_BUTTON.getText());
+        String editProfilesDone = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                EDIT_PROFILE_DONE_BUTTON.getText());
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             hideKeyboard();
         }
