@@ -183,7 +183,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String toggleOff = "Off";
         SoftAssert sa = new SoftAssert();
         // Disable one trust banner Jarvis config and set account
-        disableOneTrustBanner();
+        jarvisDisableOneTrustBanner();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), GERMANY);
@@ -198,7 +198,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
-        // Validate Junior Mode toggle
+        // Validate Junior Mode toggle and toggled it ON
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOff, "Junior Mode is not toggled OFF");
         addProfile.tapJuniorModeToggle();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOn, "Profile is converted to General Audience");

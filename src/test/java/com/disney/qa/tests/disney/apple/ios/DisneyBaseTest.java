@@ -48,6 +48,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
 import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 
@@ -85,6 +86,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
+    public static final String NO_OVERRIDE_IN_USE = "Override in use! Set to: false";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
     public void enableNoTestReset() {
@@ -654,24 +656,38 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public void disableOneTrustBanner() {
+    public void jarvisDisableOneTrustBanner() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        String NO_OVERRIDE_IN_USE = "Override in use! Set to: false";
+        removeJarvis();
         installAndLaunchJarvis();
-        applePageBase.scrollToItem("App Config").click();
-        applePageBase.scrollToItem("Edit Config").click();
-        applePageBase.scrollToItem("platformConfig").click();
-        applePageBase.scrollToItem("oneTrustConfig").click();
-        applePageBase.scrollToItem("isEnabled").click();
+        // Validate Jarvis Config
+        try {
+            oneTrustJarvisConfigNavigationAndToggle();
+            if (!applePageBase.getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+                terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                installAndLaunchJarvis();
+                oneTrustJarvisConfigNavigationAndToggle();
+            }
+        } catch(Exception e) {
+            throw new RuntimeException("Jarvis oneTrustConfig has not been set " + e);
+        }
+        // Relaunch Disney app
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+    }
+
+    private void oneTrustJarvisConfigNavigationAndToggle() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_PLATFORM_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_ONE_TRUST_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_IS_ENABLED).click();
         if (applePageBase.getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
             LOGGER.info("oneTrustConfig is not enabled");
         } else {
             LOGGER.info("Disabling oneTrustConfig");
             applePageBase.clickToggleView();
         }
-        // Terminate Jarvis and relaunch Disney app
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        terminateApp(sessionBundles.get(DISNEY));
-        launchApp(sessionBundles.get(DISNEY));
     }
 }
