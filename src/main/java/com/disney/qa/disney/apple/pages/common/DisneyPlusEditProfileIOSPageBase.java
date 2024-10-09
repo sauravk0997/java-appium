@@ -24,7 +24,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     protected static final String USER_RATING_KEY = "profile_rating_restriction";
     protected static final String EMPTY_PROFILE_NAME_ERROR = "Enter profile name";
     private static final String R21 = "R21";
-    private static final String LEARN_MORE = "Learn more";
 
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
