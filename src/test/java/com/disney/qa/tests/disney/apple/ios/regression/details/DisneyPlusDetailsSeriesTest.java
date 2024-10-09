@@ -489,8 +489,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_agatha_all_along_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_deeplink");
 
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
@@ -534,7 +534,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for coming soon series %s is not as expected", contentTitle));
         sa.assertAll();
@@ -548,8 +548,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_agatha_all_along_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
