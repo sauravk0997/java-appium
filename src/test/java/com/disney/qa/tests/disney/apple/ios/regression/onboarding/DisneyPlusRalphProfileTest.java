@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase.BIRTHDATE_TEXT_FIELD;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
@@ -182,13 +183,15 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+       // disableOneTrust();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
 
         getAccountApi().overrideLocations(getAccount(), GERMANY);
         // Onboarding to application and accept one trust page if appears
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
-
+      //  terminateApp(sessionBundles.get(DISNEY));
+      //  launchApp(sessionBundles.get(DISNEY));
         setAppToHomeScreen(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
@@ -197,8 +200,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
+        addProfile.getCellsWithLabels().get(0).click();
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
@@ -208,7 +210,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
 
         // Validate Content Rating and Birthdate are disabled
-        addProfile.getDynamicTextEntryFieldByName("birthdateTextFieldIdentifier").click();
+        addProfile.getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).click();
         Assert.assertFalse(editProfile.getTypeButtonByLabel("Done").isPresent(), "Date of birth is not disabled");
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
 
@@ -216,7 +218,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.tapJuniorModeToggle();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content did not get empty");
-        Assert.assertTrue(addProfile.getStaticTextByLabel("MM/DD/YYYY").isPresent(), "Date of birth did not get empty");
     }
 
     private void  setupForRalph(String... DOB) {

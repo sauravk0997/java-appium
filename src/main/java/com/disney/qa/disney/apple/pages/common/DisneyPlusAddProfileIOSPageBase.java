@@ -66,7 +66,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     private String genderNonBinary = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText());
     private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
-    private static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
+    public static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
 
     //Functions
     public DisneyPlusAddProfileIOSPageBase(WebDriver driver) {
