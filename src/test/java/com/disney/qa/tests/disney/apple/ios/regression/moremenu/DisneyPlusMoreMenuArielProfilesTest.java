@@ -281,36 +281,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 "Profile created after submitting credentials was not saved");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
-    @Test(description = "Profiles - Add Profile - Kids Profile / Junior Mode UI", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyAddProfileJuniorProfileUI() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        sa.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode text was not present on add profile page");
-        sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), "Profile sub copy is not present");
-        sa.assertTrue(editProfilePage.isLearnMoreLinkPresent(), "learn more hyper link is not found");
-        addProfile.tapJuniorModeToggle();
-        addProfile.clickSaveProfileButton();
-        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            parentalConsent.scrollConsentContent(4);
-        }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
-        sa.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "Newly created profile is not seen on screen");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73220"})
     @Test(description = "U13 profile, Password action grant for Welch with RES ON", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyU13RestrictionOnWelchActionGrant() {
