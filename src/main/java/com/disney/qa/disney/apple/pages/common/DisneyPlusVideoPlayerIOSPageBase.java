@@ -71,6 +71,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"adPod\"`]")
     private ExtendedWebElement adPod;
 
+    @ExtendedFindBy(accessibilityId = "adCountdownLabel")
+    private ExtendedWebElement adTimeBadge;
+
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -548,37 +551,21 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getAdRemainingTime() {
-        ExtendedWebElement adRemainingTime = staticTextLabelContains.format(":");
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed").until(it -> adRemainingTime.isPresent());
-        if (!adRemainingTime.getText().contains("-")) {
-            return adRemainingTime;
+        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed").until(it -> adTimeBadge.isPresent());
+        if (adTimeBadge.isPresent()) {
+            return adTimeBadge;
         } else {
             throw new NoSuchElementException("Ad remaining time was not found");
         }
     }
 
     public boolean isAdTimeDurationPresent() {
-        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
         return adTimeBadge.isPresent();
     }
 
-    /**
-     * There are two timers on screen when video controls are up
-     * One-remaining time for ad and second - time remaining for the content
-     * remaining time for content has a negative sign, this method utilizes this check to rule out the content remaining playback time.
-     * @return true if ad timer is displayed on screen when video overlay is up.
-     */
     public boolean isAdTimeDurationPresentWithVideoControls() {
         displayVideoController();
-        List<ExtendedWebElement> remainingTimes = findExtendedWebElements(staticTextLabelContains.format(":").getBy());
-        if (!remainingTimes.isEmpty()) {
-            for (ExtendedWebElement remainingTime : remainingTimes) {
-                if (!remainingTime.getText().contains("-")) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return adTimeBadge.isPresent();
     }
 
     public void waitForAdToCompleteIfPresent(int polling) {
