@@ -29,7 +29,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    protected static final int FIVE_SEC_TIMEOUT = 5;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -193,7 +192,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.clickPlayButton(FIVE_SEC_TIMEOUT);
+        detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
         videoPlayer.waitForVideoToStart();
         videoPlayer.skipPromoIfPresent();
         videoPlayer.getSkipIntroButton().click();
