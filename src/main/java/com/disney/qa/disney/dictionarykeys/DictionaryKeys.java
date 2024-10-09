@@ -549,6 +549,7 @@ public enum DictionaryKeys {
     UI_LANGUAGE_SETTING("ui_language_setting"),
     VERIFY_ACCOUNT_CTA("verify_account_cta"),
     VERIFY_ACCOUNT_HEADER("verify_account_banner"),
+    VIDEOPLAYER_RESTART("videoplayer_restart"),
     VIDEO_PLAYBACK_TITLE("video_playback_title"),
     VIDEO_PLAYER_RATING("videoplayer_rating"),
     VIDEO_QUALITY_TITLE("video_quality_label"),

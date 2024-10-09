@@ -534,12 +534,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getRestartButton() {
         return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_ACTION_START_FROM_BEGINNING.getText()));
+                DictionaryKeys.VIDEOPLAYER_RESTART.getText()));
     }
 
     public String getRestartButtonStatus() {
         displayVideoController();
-        System.out.println("Attribut status - ACCESSIBLE " + getRestartButton().getAttribute(Attributes.ACCESSIBLE.getAttribute()));
         return getRestartButton().getAttribute(Attributes.ACCESSIBLE.getAttribute());
     }
 

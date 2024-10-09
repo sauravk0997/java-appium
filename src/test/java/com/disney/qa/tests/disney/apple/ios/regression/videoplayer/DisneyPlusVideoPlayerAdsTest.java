@@ -119,19 +119,18 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(MS_MARVEL);
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
-        System.out.println("videoPlayer.getRestartButtonStatus() " + videoPlayer.getRestartButtonStatus());
-        Assert.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
+        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
-        Assert.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE), "Restart button is not enabled on video player");
+        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE), "Restart button is not enabled on video player");
         int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTime();
         videoPlayer.clickRestartButton();
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad not started again after clicking restart button");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad not started again after clicking restart button");
         int remainingTimeAfterRestartClick = videoPlayer.getRemainingTime();
-        Assert.assertTrue(remainingTimeBeforeRestartClick < remainingTimeAfterRestartClick,
+        sa.assertTrue(remainingTimeBeforeRestartClick < remainingTimeAfterRestartClick,
                 "Remaining time after restart click" + remainingTimeAfterRestartClick +
                         " is not greater than remaining time before restart click" + remainingTimeBeforeRestartClick);
         sa.assertAll();
