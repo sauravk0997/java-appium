@@ -74,7 +74,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     private void verifyHomeCollectionsAndContent(List<Container> homeCollections, SoftAssert sa) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-
+        String homeShelf = "Home";
+        String watchlistShelf = "My Watchlist";
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
 
@@ -83,7 +84,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homeCollections.forEach(homeCollectionId -> {
             //Verify shelf title
             String shelfTitle = homeCollectionId.getVisuals().getName();
-            if(!Arrays.asList("Home","My Watchlist").contains(shelfTitle)) {
+            if(!Arrays.asList(homeShelf,watchlistShelf).contains(shelfTitle)) {
                 sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
                         "Shelf title not found: " + shelfTitle);
             }
