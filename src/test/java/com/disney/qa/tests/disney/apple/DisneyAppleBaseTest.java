@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
-import com.disney.qa.api.VaultApi;
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.account.DisneySubscriptionApi;
@@ -237,6 +236,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
     public void initPageDictionary() {
         //todo remove this configuration method
         DisneyPlusApplePageBase.setDictionary(getLocalizationUtils());
+    }
+    
+    @BeforeSuite(alwaysRun = true)
+    public final void cleanAppInstall() {
+        R.CONFIG.put("capabilities.fullReset", "true");
     }
 
     @BeforeMethod(onlyForGroups = TestGroup.PROXY, alwaysRun = true)
@@ -484,5 +488,4 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
                 throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
         }
     }
-
 }
