@@ -669,13 +669,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         applePageBase.scrollToItem(JARVIS_APP_PLATFORM_CONFIG).click();
         applePageBase.scrollToItem(JARVIS_APP_ONE_TRUST_CONFIG).click();
         applePageBase.scrollToItem(JARVIS_APP_IS_ENABLED).click();
-        if (applePageBase.getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
             LOGGER.info("oneTrustConfig is not enabled");
             return true;
         } else {
             LOGGER.info("Disabling oneTrustConfig");
             applePageBase.clickToggleView();
-            return applePageBase.getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
+            return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
         }
     }
 }
