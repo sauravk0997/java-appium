@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -18,6 +17,7 @@ import java.lang.invoke.MethodHandles;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusSearchIOSPageBase.class)
 public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final String RATED = ", Rated";
     @ExtendedFindBy(accessibilityId = "searchBar")
     private ExtendedWebElement searchField;
 
@@ -37,11 +37,8 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     }
 
     public void clickSearchResult(String assetName) {
-        if (R.CONFIG.get("capabilities.platformVersion").contains("18")) {
-            getTypeCellLabelContainsRow(assetName, "2").click();
-        } else {
-            getTypeCellLabelContains(assetName).click();
-        }
+        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        getTypeCellLabelContains(assetName + RATED).click();
     }
 
     public void clickLocalizedSearchResult(String assetName) {
