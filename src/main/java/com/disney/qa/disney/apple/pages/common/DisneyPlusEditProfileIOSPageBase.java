@@ -230,10 +230,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getLearnMoreLink() {
-        String separator = " ";
         String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
-        return customHyperlinkByLabel.format(convertToTitleCase(learnMoreText, separator));
+        return getTextViewByLabelContains(learnMoreText);
     }
+
 
     public boolean isLearnMoreLinkPresent() {
         ExtendedWebElement learnMoreLink = getLearnMoreLink();
