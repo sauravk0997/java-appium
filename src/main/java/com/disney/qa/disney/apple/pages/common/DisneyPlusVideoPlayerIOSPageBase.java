@@ -442,6 +442,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(adLabel).isElementPresent();
     }
 
+    public ExtendedWebElement getAdBadgeLabel() {
+        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        return getStaticTextByLabel(adLabel);
+    }
+
     public ExtendedWebElement getNetworkWatermarkLogo(String network) {
         return format(networkWatermarkLogo, network);
     }
