@@ -166,7 +166,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         @Override
         protected ExploreApi initialize() {
             ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).partner(DisneyConfiguration.getPartner())
-                    .environment(DisneyParameters.getEnv()).build();
+            .environment(DisneyParameters.getEnv()).build();
             return new ExploreApi(apiConfiguration);
         }
     };
@@ -231,7 +231,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             // Xray.enableRealTimeSync();
         });
     }
-
     @BeforeSuite(alwaysRun = true)
     public void initPageDictionary() {
         //todo remove this configuration method
