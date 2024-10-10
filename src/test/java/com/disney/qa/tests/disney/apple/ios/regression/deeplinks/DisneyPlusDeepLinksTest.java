@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
