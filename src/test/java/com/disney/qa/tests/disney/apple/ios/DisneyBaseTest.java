@@ -19,8 +19,6 @@ import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.options.SupportsAppOption;
-import io.appium.java_client.remote.options.SupportsFullResetOption;
-import io.appium.java_client.remote.options.SupportsNoResetOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -87,13 +85,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
-    public void enableNoTestReset() {
-        R.CONFIG.put("capabilities." + SupportsNoResetOption.NO_RESET_OPTION, "true", true);
-        R.CONFIG.put("capabilities." + SupportsFullResetOption.FULL_RESET_OPTION, "false", true);
-    }
-
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "enableNoTestReset")
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             localContext.set(context);
@@ -444,20 +436,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     return isRunning;
                 });
     }
-
-    //TODO: uncomment it after moving the Subscription test to a separate XML
-
-    //    public void clearDSSSandboxAccountFor(String accountName) {
-    //        LOGGER.info("Clearing purchase history for '{}' account", accountName);
-    //        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
-    //        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
-    //            if (account.getAttributes().getAcAccountName().contains(accountName)) {
-    //                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
-    //                                .is2xxSuccessful(),
-    //                        "Clear account purchase history for" + accountName + "was not successful!");
-    //            }
-    //        }
-    //    }
 
     public String buildS3BucketPath(String title, String feature) {
         String deviceName = R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
