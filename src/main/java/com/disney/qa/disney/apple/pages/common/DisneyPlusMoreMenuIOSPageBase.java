@@ -192,6 +192,11 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
 	}
 
+	public void swipeProfile(String profile, int swipes, Direction direction) {
+//		swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
+		swipeInContainerTillElementIsPresent(null, getProfileCell(profile, false), swipes, direction);
+	}
+
 	public boolean isHelpWebviewOpen() {
 		ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
 		return addressbar.getText().contains("help.disneyplus.com");
