@@ -46,7 +46,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_home_deeplink"));
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         Assert.assertTrue(homePage.isOpened(), "Home page did not open via deeplink");
     }
 
