@@ -350,8 +350,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement cancelButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"kidsBackgroundGradient\"`]")
     private ExtendedWebElement kidThemeBackgroundUI;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`][%s]")
-    protected ExtendedWebElement typeCellLabelContainsRow;
 
 
     public DisneyPlusApplePageBase(WebDriver driver) {
@@ -1559,9 +1557,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
-    }
-
-    public ExtendedWebElement getTypeCellLabelContainsRow(String label, String row) {
-        return typeCellLabelContainsRow.format(label, row);
     }
 }
