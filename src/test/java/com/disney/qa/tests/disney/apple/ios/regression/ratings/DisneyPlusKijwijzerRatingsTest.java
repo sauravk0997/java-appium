@@ -13,6 +13,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyNetherlandsKijwijzerRatingAL() {
         ratingsSetup(AL.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(AL.getContentRating());
     }
 
@@ -20,6 +21,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyNetherlandsKijwijzerRating6() {
         ratingsSetup(SIX.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIX.getContentRating());
     }
 
@@ -27,6 +29,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyNetherlandsKijwijzerRating9() {
         ratingsSetup(NINE.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(NINE.getContentRating());
     }
 
@@ -34,6 +37,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyNetherlandsKijwijzerRating12() {
         ratingsSetup(TWELVE.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TWELVE.getContentRating());
     }
 
@@ -41,6 +45,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyNetherlandsKijwijzerRating16() {
         ratingsSetup(SIXTEEN.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
     }
 
@@ -48,6 +53,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER})
     public void verifyNetherlandsKijwijzerRating18() {
         ratingsSetup(EIGHTEEN.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
     }
 }

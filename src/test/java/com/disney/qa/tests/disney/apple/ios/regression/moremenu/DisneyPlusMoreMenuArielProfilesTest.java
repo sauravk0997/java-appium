@@ -479,8 +479,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
-    @Test(description = " Profiles > Kids Profile new copy", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
-    public void verifyLearnMoreLinkForKidsProfile() {
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION})
+    public void verifyArielAddProfileJuniorModeUI() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
         setAppToHomeScreen(getAccount());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -496,7 +496,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
-
         //verify Learn More hyperlink on add profile page
         sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), "Kid Profile sub copy was not present");
         editProfilePage.clickJuniorModeLearnMoreLink();
@@ -506,7 +505,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.goBackToDisneyAppFromSafari();
         moreMenu.dismissNotificationsPopUp();
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not returned to the add profile page after navigating back from safari");
-        addProfile.clickSaveProfileButton();
+        moreMenu.clickSaveProfileButton();
         //minor consent is shown
         if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");

@@ -107,7 +107,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void handleOneTrustPopUp() {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        LOGGER.info("Checking for one trust poup");
+        LOGGER.info("Checking for one trust popup");
         if (oneTrustPage.isOpened())
             oneTrustPage.tapAcceptAllButton();
     }
