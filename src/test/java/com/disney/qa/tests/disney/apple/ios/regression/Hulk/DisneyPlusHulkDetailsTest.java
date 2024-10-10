@@ -28,13 +28,10 @@ import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
-    public static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String PREY = "Prey";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
     private static final String HULU = "Hulu";
-    private static final String SPIDERMAN_THREE = "SpiderMan 3";
-    private static final String ADULT_DOB = "1980-10-23";
     
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
