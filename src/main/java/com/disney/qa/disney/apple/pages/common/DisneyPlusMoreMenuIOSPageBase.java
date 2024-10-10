@@ -194,7 +194,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void swipeProfile(String Container, String profile, int swipes, Direction direction) {
 //		swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
-		swipeInContainerTillElementIsPresent(getProfileCell(profile, false), getProfileCell(profile, false), swipes, direction);
+		swipeInContainerTillElementIsPresent(getProfileCell(Container, false), getProfileCell(profile, false), swipes, direction);
 	}
 
 	public boolean isHelpWebviewOpen() {
