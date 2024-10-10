@@ -231,6 +231,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             // Xray.enableRealTimeSync();
         });
     }
+
     @BeforeSuite(alwaysRun = true)
     public void initPageDictionary() {
         //todo remove this configuration method
