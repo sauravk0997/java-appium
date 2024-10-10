@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -81,10 +82,14 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"accountView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView")
 	private ExtendedWebElement profileSelectionCollectionView;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeCell' and name = 'unlockedProfileCell'$]")
+	private ExtendedWebElement profileContainer;
+
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
 
+	public ExtendedWebElement getProfileContainer() { return profileContainer; }
 
 	public ExtendedWebElement getExitKidsProfile() {
 		return exitKidsProfileButton;
@@ -190,11 +195,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void swipeCells(String profile, int swipes, Direction direction) {
 		swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
-	}
-
-	public void swipeProfile(String Container, String profile, int swipes, Direction direction) {
-//		swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
-		swipeInContainerTillElementIsPresent(getProfileCell(Container, false), getProfileCell(profile, false), swipes, direction);
 	}
 
 	public boolean isHelpWebviewOpen() {

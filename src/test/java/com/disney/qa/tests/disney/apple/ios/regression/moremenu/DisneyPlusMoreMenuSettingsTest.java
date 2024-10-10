@@ -78,8 +78,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-//        disneyPlusMoreMenuIOSPageBase.swipeCells("Profile 3", 12, Direction.LEFT);
-        disneyPlusMoreMenuIOSPageBase.swipeProfile("Profile 3","Profile 6", 20,  Direction.LEFT);
+        swipeInContainerTillElementIsPresent(disneyPlusMoreMenuIOSPageBase.getProfileContainer(), disneyPlusWhoseWatchingIOSPageBase.getAddProfile(), 12, Direction.LEFT);
         Assert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAddProfileBtnPresent());
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed("Profile 6"),
                 "Profile Tray did not swipe");
