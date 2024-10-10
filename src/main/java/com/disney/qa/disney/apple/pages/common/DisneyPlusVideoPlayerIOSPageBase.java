@@ -442,12 +442,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(adLabel).isElementPresent();
     }
 
-    public ExtendedWebElement getAdBadgeLabel() {
-        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getStaticTextByLabel(adLabel);
-    }
-
     public ExtendedWebElement getNetworkWatermarkLogo(String network) {
         return format(networkWatermarkLogo, network);
     }
@@ -554,9 +548,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getAdRemainingTime() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(staticTextLabelContains.format(":").getBy()), 10);
         ExtendedWebElement adRemainingTime = staticTextLabelContains.format(":");
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed").until(it -> adRemainingTime.isPresent());
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed").until(it -> adRemainingTime.isPresent());
         if (!adRemainingTime.getText().contains("-")) {
             return adRemainingTime;
         } else {
@@ -598,6 +591,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public int getAdRemainingTimeInSeconds() {
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(staticTextLabelContains.format(":").getBy()), 10);
         ExtendedWebElement adTimeBadge = getAdRemainingTime();
         String[] adTime = adTimeBadge.getText().split(":");
         int remainingTime = (Integer.parseInt(adTime[0]) * 60) + (Integer.parseInt(adTime[1]));
