@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -36,8 +37,11 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     }
 
     public void clickSearchResult(String assetName) {
-        keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        getTypeCellLabelContains(assetName).click();
+        if (R.CONFIG.get("capabilities.platformVersion").contains("18")) {
+            getTypeCellLabelContainsRow(assetName, "2").click();
+        } else {
+            getTypeCellLabelContains(assetName).click();
+        }
     }
 
     public void clickLocalizedSearchResult(String assetName) {
