@@ -46,6 +46,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
 import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 
@@ -629,6 +630,52 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         } else {
             LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
             return firstOTP;
+        }
+    }
+
+    public void jarvisDisableOneTrustBanner() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        boolean isOneTrustEnabled = true;
+        int jarvisAttempt = 1;
+        removeJarvis();
+        installAndLaunchJarvis();
+        // Validate Jarvis Config
+        while (isOneTrustEnabled && jarvisAttempt < 3)
+            try {
+                LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
+                if (isJarvisOneTrustDisabled(applePageBase)) {
+                    isOneTrustEnabled = false;
+                    LOGGER.info("Successfully disabled One Trust");
+                } else {
+                    terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                    launchJarvis(false);
+                    jarvisAttempt++;
+                }
+            } catch (Exception e) {
+                LOGGER.info("Exception occurred attempting to disable One Trust");
+                terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                launchJarvis(false);
+                jarvisAttempt++;
+            }
+
+        // Relaunch Disney app
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+    }
+    
+    private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {
+        applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_PLATFORM_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_ONE_TRUST_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_IS_ENABLED).click();
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("oneTrustConfig is not enabled");
+            return true;
+        } else {
+            LOGGER.info("Disabling oneTrustConfig");
+            applePageBase.clickToggleView();
+            return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
         }
     }
 }
