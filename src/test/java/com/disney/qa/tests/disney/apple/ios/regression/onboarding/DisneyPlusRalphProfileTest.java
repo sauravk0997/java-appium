@@ -5,6 +5,8 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -13,6 +15,8 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import static com.disney.qa.common.constant.RatingConstant.GERMANY;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
@@ -166,6 +170,52 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         // verify that Gender field is not present
         Assert.assertFalse(editProfilePage.isGenderButtonPresent(), "Gender Field is shown on edit profile page");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75282"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION })
+    public void testRalphAddProfileJuniorModeDOBIsDisabled() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        String toggleOn = "On";
+        String toggleOff = "Off";
+        SoftAssert sa = new SoftAssert();
+        // Disable one trust banner Jarvis config and set account
+        jarvisDisableOneTrustBanner();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
+                GERMANY, getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), GERMANY);
+
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        setAppToHomeScreen(getAccount());
+        // Add profile
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
+        addProfile.getCellsWithLabels().get(0).click();
+        addProfile.enterProfileName(JUNIOR_PROFILE);
+        addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+
+        // Validate Junior Mode toggle and toggled it ON
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOff, "Junior Mode is not toggled OFF");
+        addProfile.tapJuniorModeToggle();
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOn, "Profile is converted to General Audience");
+
+        // Validate Content Rating and Birthdate are disabled
+        sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), "DOB field is not present");
+        addProfile.getDynamicTextEntryFieldByName(addProfile.getBirthdateTextField()).click();
+        Assert.assertFalse(editProfile.getTypeButtonByLabel("Done").isPresent(), "Date of birth is not disabled");
+        Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
+
+        // Toggle Junior Mode OFF and validate content
+        addProfile.tapJuniorModeToggle();
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOff, "Junior Mode is not toggled OFF");
+        Assert.assertTrue(addProfile.getValueFromDOB().isPresent(),
+                "Date Of Birth field did not get empty after toggle Junior Mode OFF");
+        Assert.assertTrue(addProfile.getChooseContentRating().isPresent(),
+                "Choose Content Rating did not get empty after toggle Junior Mode OFF");
     }
 
     private void  setupForRalph(String... DOB) {
