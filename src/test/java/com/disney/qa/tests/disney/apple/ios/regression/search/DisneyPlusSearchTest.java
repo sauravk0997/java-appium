@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
+import com.disney.qa.api.client.requests.*;
+import com.disney.qa.api.client.responses.profile.*;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -27,6 +29,10 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+
+import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MPAA_AND_TVPG;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
@@ -498,6 +504,33 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.getBackArrow().click();
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75718"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    public void verifyHideRestrictedTitlesInSearchResults() {
+        String contentTitle = "Deadpool & Wolverine";
+        String keyBoardSearch = "search";
+
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RATING_TV14);
+        
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getTypeButtonByLabel(keyBoardSearch).click();
+        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message present for TV-MA " +
+                "profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle), "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
     }
 
