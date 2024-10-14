@@ -552,7 +552,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getAdRemainingTime() {
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed").until(it -> adTimeBadge.isPresent());
+        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed")
+                .until(it -> adTimeBadge.isPresent());
         if (adTimeBadge.isPresent()) {
             return adTimeBadge;
         } else {
