@@ -35,7 +35,7 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         searchField.type(text);
     }
 
-    public void clickSearchResult(String assetName) {
+    public void clickSearchResult() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         if (localizedKeyboard.getSize().getWidth() > 1000) {
             moveRight(1, 1);
