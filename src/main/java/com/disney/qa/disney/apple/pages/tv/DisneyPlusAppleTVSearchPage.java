@@ -17,7 +17,6 @@ import java.lang.invoke.MethodHandles;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusSearchIOSPageBase.class)
 public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String RATED = ", Rated";
     @ExtendedFindBy(accessibilityId = "searchBar")
     private ExtendedWebElement searchField;
 
