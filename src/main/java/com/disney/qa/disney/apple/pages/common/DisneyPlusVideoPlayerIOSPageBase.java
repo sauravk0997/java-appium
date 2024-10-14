@@ -550,7 +550,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getAdRemainingTime() {
         ExtendedWebElement adRemainingTime = staticTextLabelContains.format(":");
-        fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, FIVE_SEC_TIMEOUT,
+        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
                 "Ad not displayed").until(it -> adRemainingTime.isPresent());
         if (!adRemainingTime.getText().contains("-")) {
             return adRemainingTime;
