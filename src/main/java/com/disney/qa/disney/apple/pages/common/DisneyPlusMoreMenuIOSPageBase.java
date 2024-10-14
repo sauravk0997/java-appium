@@ -81,10 +81,13 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"accountView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView")
 	private ExtendedWebElement profileSelectionCollectionView;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeCell' and " +
+			"name = 'unlockedProfileCell'$]")
+	private ExtendedWebElement profileContainer;
+
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
-
 
 	public ExtendedWebElement getExitKidsProfile() {
 		return exitKidsProfileButton;
@@ -128,6 +131,14 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@Override
 	public boolean isOpened() {
 		return editProfilesBtn.isPresent();
+	}
+
+	public ExtendedWebElement getAddProfileBtn() {
+		return addProfileBtn;
+	}
+
+	public ExtendedWebElement getProfileContainer() {
+		return profileContainer;
 	}
 
 	public By getEditProfilesBtnBy() {
