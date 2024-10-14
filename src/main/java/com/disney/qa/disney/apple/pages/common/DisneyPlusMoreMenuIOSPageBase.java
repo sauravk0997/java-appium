@@ -50,6 +50,10 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	private ExtendedWebElement addProfileBtn = getDynamicCellByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
 
+	public ExtendedWebElement getAddProfileBtn() {
+		return addProfileBtn;
+	}
+
 	@ExtendedFindBy(accessibilityId = "emptyView")
 	private ExtendedWebElement watchlistEmpty;
 
@@ -85,11 +89,11 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 			"name = 'unlockedProfileCell'$]")
 	private ExtendedWebElement profileContainer;
 
+	public ExtendedWebElement getProfileContainer() { return profileContainer; }
+
 	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
-
-	public ExtendedWebElement getProfileContainer() { return profileContainer; }
 
 	public ExtendedWebElement getExitKidsProfile() {
 		return exitKidsProfileButton;
@@ -97,10 +101,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getExitJuniorModePin() {
 		return exitJuniorModePin;
-	}
-
-	public ExtendedWebElement getAddProfileBtn() {
-		return addProfileBtn;
 	}
 
 	public enum MoreMenu {

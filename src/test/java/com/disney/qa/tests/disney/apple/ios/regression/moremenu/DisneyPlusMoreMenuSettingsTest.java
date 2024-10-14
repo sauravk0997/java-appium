@@ -77,7 +77,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         profiles.forEach(profile -> getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(profile).language(getAccount().getProfileLang()).avatarId("5").kidsModeEnabled(false).dateOfBirth(null).build()));
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        swipeInContainerTillElementIsPresent(disneyPlusMoreMenuIOSPageBase.getProfileContainer(), disneyPlusMoreMenuIOSPageBase.getAddProfileBtn(), 12, Direction.LEFT);
+        swipeInContainerTillElementIsPresent(disneyPlusMoreMenuIOSPageBase.getProfileContainer(),
+                disneyPlusMoreMenuIOSPageBase.getAddProfileBtn(), 12, Direction.LEFT);
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAddProfileButtonPresent());
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isProfileSwitchDisplayed("Profile 6"),
                 "Profile Tray did not swipe");
