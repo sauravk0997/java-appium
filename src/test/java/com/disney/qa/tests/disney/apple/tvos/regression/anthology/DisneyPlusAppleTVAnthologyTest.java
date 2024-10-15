@@ -238,7 +238,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         searchPage.isOpened();
         searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
-        searchPage.clickSearchResult();
+        searchPage.clickSearchResult(DANCING_WITH_THE_STARS.getTitle());
         detailsPage.isOpened();
     }
 }

@@ -85,7 +85,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(disneyPlusAppleTVSearchPage.isOpened(), "Search page didn't launch");
 
         disneyPlusAppleTVSearchPage.typeInSearchField("endgame");
-        disneyPlusAppleTVSearchPage.clickSearchResult();
+        disneyPlusAppleTVSearchPage.clickSearchResult(END_GAME.getTitle());
 
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), "Details page did not launch");
 
@@ -133,7 +133,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(disneyPlusAppleTVSearchPage.isOpened(), "Search page didn't launch");
 
         disneyPlusAppleTVSearchPage.typeInSearchField("endgame");
-        disneyPlusAppleTVSearchPage.clickSearchResult();
+        disneyPlusAppleTVSearchPage.clickSearchResult(END_GAME.getTitle());
 
         sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), "Details page did not launch");
 
