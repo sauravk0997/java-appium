@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -48,13 +49,14 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement firstCollectionTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS 'Rated' AND label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    private ExtendedWebElement moviesTile = staticCellByLabel.format(getDictionary()
+    IAPIHelper apiHelper = new IAPIHelper();
+    private ExtendedWebElement moviesTile = staticCellByLabel.format(apiHelper.getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_MOVIES_TITLE.getText()));
-    private ExtendedWebElement originalsTile = staticCellByLabel.format(getDictionary()
+    private ExtendedWebElement originalsTile = staticCellByLabel.format(apiHelper.getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_ORIGINALS_TITLE.getText()));
-    private ExtendedWebElement seriesTile = staticCellByLabel.format(getDictionary()
+    private ExtendedWebElement seriesTile = staticCellByLabel.format(apiHelper.getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_SERIES_TITLE.getText()));
     private String ratingImage = "current_rating_value_image";
@@ -62,6 +64,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
         super(driver);
     }
+
 
     @Override
     public boolean isOpened() {
@@ -79,6 +82,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public void clickSeriesTab() {
         seriesTile.click();
     }
+
 
     public List<ExtendedWebElement> getDisplayedTitles() {
         int tries = 0;
@@ -116,7 +120,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getCancelButton() {
-        String cancelButtonText = getDictionary()
+        String cancelButtonText = apiHelper.getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.CANCEL.getText());
         return getTypeButtonByLabel(cancelButtonText);
@@ -157,7 +161,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isPCONRestrictedTitlePresent() {
-        String dictVal = getDictionary().
+        String dictVal =apiHelper.getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BROWSE_CONTENT_HIDDEN_BODY.getText())
                 .replace(ratingImage, " ")
@@ -166,7 +170,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isKIDSPCONRestrictedTitlePresent() {
-        String dictVal = getDictionary().
+        String dictVal = apiHelper.getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BROWSE_CONTENT_HIDDEN_BODY_KIDS.getText())
                 .replace(ratingImage, " ")
@@ -226,7 +230,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getPlaceholderText() {
-        return getDictionary().
+        return apiHelper.getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.SEARCH_PLACEHOLDER.getText());
     }
@@ -237,7 +241,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickFirstCollection() {
         firstCollectionTitle.format(
-                getDictionary().getDictionaryItem(
+                apiHelper.getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                         DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
     }

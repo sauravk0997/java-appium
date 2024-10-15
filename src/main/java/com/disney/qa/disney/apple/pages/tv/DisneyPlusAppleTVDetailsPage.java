@@ -60,14 +60,14 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
-        getTypeButtonByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        getTypeButtonByName(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_PLAY.getText())).click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
     @Override
     public DisneyPlusAppleTVVideoPlayerPage clickContinueButton() {
-        getTypeButtonByName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        getTypeButtonByName(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_CONTINUE_DETAILS.getText())).click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }

@@ -74,21 +74,21 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'OK'`]")
     protected ExtendedWebElement sandboxOkButton;
 
-    private ExtendedWebElement restartSubscriptionHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.RESTART_TITLE.getText()));
+    private ExtendedWebElement restartSubscriptionHeader = getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.RESTART_TITLE.getText()));
 
-    private ExtendedWebElement restartSubscriptionSubHeader = getTextViewByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUBSCRIBE_EXPIRED_COPY.getText()));
+    private ExtendedWebElement restartSubscriptionSubHeader = getTextViewByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUBSCRIBE_EXPIRED_COPY.getText()));
 
-    private ExtendedWebElement paywallCancelBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText()));
+    private ExtendedWebElement paywallCancelBtn = getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText()));
 
-    private ExtendedWebElement startStreamingText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.BILLING_INFO_TITLE.getText()));
+    private ExtendedWebElement startStreamingText = getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.BILLING_INFO_TITLE.getText()));
 
-    private ExtendedWebElement cancelAnytimeText = getTextViewByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_CANCEL_ANYTIME.getText()));
+    private ExtendedWebElement cancelAnytimeText = getTextViewByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_CANCEL_ANYTIME.getText()));
 
-    private ExtendedWebElement annualSwitchHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_SWITCH_ANNUAL_TITLE.getText()));
+    private ExtendedWebElement annualSwitchHeader = getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_SWITCH_ANNUAL_TITLE.getText()));
 
-    private ExtendedWebElement alertFinishLaterHeader = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.INTERRUPT_SUBSCRIPTION_TITLE.getText()));
+    private ExtendedWebElement alertFinishLaterHeader = getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.INTERRUPT_SUBSCRIPTION_TITLE.getText()));
 
-    private ExtendedWebElement alertFinishLaterText = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.INTERRUPT_SUBSCRIPTION.getText()));
+    private ExtendedWebElement alertFinishLaterText = getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.INTERRUPT_SUBSCRIPTION.getText()));
 
 
     public DisneyPlusPaywallIOSPageBase(WebDriver driver) {
@@ -106,8 +106,8 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSwitchToAnnualCopyDisplayed() {
-        return staticTypeTextViewValue.format(getDictionary()
-                        .formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_SWITCH_ANNUAL_PRICE.getText()), Map.of("PRICE", "---", "DURATION", "---")))
+        return staticTypeTextViewValue.format(iapiHelper.getLocalizationUtils()
+                        .formatPlaceholderString(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PAYWALL_SWITCH_ANNUAL_PRICE.getText()), Map.of("PRICE", "---", "DURATION", "---")))
                 .isElementPresent();
     }
 
@@ -178,13 +178,13 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
             case BASIC:
                 return "Disney+ Basic";
             case BUNDLE_TRIO_BASIC:
-                return getDictionary()
+                return iapiHelper.getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_ADS_BUNDLE.getText());
             case BUNDLE_TRIO_PREMIUM:
-                return getDictionary()
+                return iapiHelper.getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_NOADS_BUNDLE.getText());
             case LEGACY_BUNDLE:
-                return getDictionary()
+                return iapiHelper.getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
             case PREMIUM_MONTHLY:
                 return "Disney+ Premium";
@@ -209,18 +209,18 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isChooseYourPlanHeaderPresent() {
-        String chooseYourPlanHeaderText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_TITLE.getText());
+        String chooseYourPlanHeaderText = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_TITLE.getText());
         return chooseYourPlanHeader.getText().toLowerCase().contains(chooseYourPlanHeaderText.toLowerCase());
     }
 
     public boolean isChooseYourPlanSubHeaderPresent() {
-        String subHeaderLabel = getDictionary().
+        String subHeaderLabel = iapiHelper.getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_SUBCOPY.getText()).trim();
         return chooseYourPlanSubHeader.getText().contains(subHeaderLabel.replace(".",""));
     }
 
     public boolean isFooterLabelPresent() {
-        String footerLabelText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_CANCEL_ANYTIME_DISCLAIMER.getText());
+        String footerLabelText = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_CANCEL_ANYTIME_DISCLAIMER.getText());
         return staticTextLabelContains.format(footerLabelText).isPresent();
     }
 
@@ -234,12 +234,12 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickBasicPlan() {
-        purchasePlanBtn.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()),
+        purchasePlanBtn.format(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()),
                 DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE.getText()).click();
     }
 
     public void clickPremiumPlan() {
-        purchasePlanBtn.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NO_ADS_CARD_TITLE.getText()),
+        purchasePlanBtn.format(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NO_ADS_CARD_TITLE.getText()),
                 DictionaryKeys.SUB_SELECTOR_STANDALONE_NO_ADS_CARD_TITLE.getText()).click();
     }
 
@@ -291,7 +291,7 @@ public class DisneyPlusPaywallIOSPageBase extends DisneyPlusApplePageBase {
         dynamicBtnFindByNameContains.format("Basic").click();
     }
     public void clickPremiumYearlyRowButton() {
-        getDynamicRowButtonLabel(getDictionary()
+        getDynamicRowButtonLabel(iapiHelper.getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.PLAN_SWITCH_IAP_ANNUAL.getText()),2).click();
     }
 }

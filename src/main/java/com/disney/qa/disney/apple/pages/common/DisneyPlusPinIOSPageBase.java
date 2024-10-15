@@ -44,7 +44,7 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getForgotPinButton() {
-        return dynamicBtnFindByLabel.format(getDictionary()
+        return dynamicBtnFindByLabel.format(iapiHelper.getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.PROFILE_ENTRY_PIN_FORGOT_PIN.getText()));
     }
@@ -55,12 +55,12 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getPinInputField() {
         return getTypeOtherContainsLabel(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText()));
+                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESSIBILITY_PROFILEPIN_INPUT_EMPTY.getText()));
     }
 
     public ExtendedWebElement getProfilePinInvalidErrorMessage() {
         return getStaticTextByLabel(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.PROFILE_PIN_INVALID.getText()));
+                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.PROFILE_PIN_INVALID.getText()));
     }
 
     public void clickProfilePin() {
@@ -76,36 +76,36 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getCancelButton() {
-        return getDynamicAccessibilityId(getDictionary()
+        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BTN_CANCEL_SET_PROFILE_ENTRY_PIN.getText()));
     }
 
     public ExtendedWebElement getSaveButton() {
-        return getDynamicAccessibilityId(getDictionary()
+        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BTN_SET_PROFILE_ENTRY_PIN.getText()));
     }
 
     public ExtendedWebElement getR21SetPinButton() {
-        return getDynamicAccessibilityId(getDictionary()
+        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.R21_CREATE_PIN_SET_PIN.getText()));
     }
 
     public ExtendedWebElement getAccountPasswordRequiredMessaging() {
-        return getDynamicAccessibilityId(getDictionary()
+        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.PCON_FORGOT_PIN_AUTH_PASSWORD_BODY.getText()));
     }
 
     public ExtendedWebElement getLimitAccessMessaging(String profileName) {
-        String profilePinDescription = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.SET_PROFILE_ENTRY_PIN_BODY.getText()), Map.of("profile_name", profileName));
+        String profilePinDescription = iapiHelper.getLocalizationUtils().formatPlaceholderString(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.SET_PROFILE_ENTRY_PIN_BODY.getText()), Map.of("profile_name", profileName));
         return getDynamicAccessibilityId(profilePinDescription);
     }
 
     public ExtendedWebElement getProfilePinMissingErrorMessage() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.SDK_ERROR_PROFILE_PIN_MISSING.getText()));
     }
 
@@ -114,17 +114,17 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isR21PinPageOpen() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_CREATE_PIN_CREATE_PIN.getText())).isPresent();
     }
 
     public boolean isR21PinPageModalHeaderDisplayed() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_HEADER.getText())).isPresent();
     }
 
     public boolean isR21PinPageModalMessageDisplayed() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_MESSAGE.getText())).isPresent();
     }
 
@@ -133,12 +133,12 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContinueButtonOnCancelModalDisplayed() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_CONTINUE_BUTTON.getText())).isPresent();
     }
 
     public boolean isNotNowButtonOnCancelModalDisplayed() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_NOT_NOW_BUTTON.getText())).isPresent();
     }
 

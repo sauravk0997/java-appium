@@ -2,9 +2,7 @@ package com.disney.qa.tests.disney.apple;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -51,6 +49,7 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -124,7 +123,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             return disneyLocalizationUtils;
         }
     };
-
+// todo review
     private static final LazyInitializer<DisneySubscriptionApi> SUBSCRIPTION_API = new LazyInitializer<>() {
         @Override
         protected DisneySubscriptionApi initialize() {
@@ -138,6 +137,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             return new DisneySubscriptionApi(apiConfiguration);
         }
     };
+
 
     private static final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
@@ -231,11 +231,24 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             // Xray.enableRealTimeSync();
         });
     }
-
+/*
     @BeforeSuite(alwaysRun = true)
     public void initPageDictionary() {
         //todo remove this configuration method
         DisneyPlusApplePageBase.setDictionary(getLocalizationUtils());
+    }
+*/
+// todo review location override DE
+    @BeforeMethod(alwaysRun = true)
+    public final void overrideLocaleConfig(ITestResult result) {
+        List<String> groups = Arrays.asList(result.getMethod().getGroups());
+        if (groups.contains(US)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+        } else if (groups.contains(DE)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), DE, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "de", true);
+        }
     }
 
     @BeforeSuite(alwaysRun = true)

@@ -159,7 +159,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         editProfile.clickAppLanguage();
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
         appLanguage.selectLanguage(FRANCAIS);
-
+// todo review
         getLocalizationUtils().setLanguageCode(frenchLanguageCode);
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),

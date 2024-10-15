@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 import java.util.Date;
 import java.util.List;

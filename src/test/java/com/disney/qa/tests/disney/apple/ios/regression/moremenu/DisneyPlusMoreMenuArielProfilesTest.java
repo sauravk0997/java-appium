@@ -26,7 +26,7 @@ import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_HUNDRED_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.iapiHelper;
 
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -316,7 +316,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         //Welch Full catalog access
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
         Assert.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         passwordPage.clickSecondaryButtonByCoordinates();
@@ -427,7 +427,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         //Welch Full catalog access
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
         //minor authentication is prompted
         Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
         passwordPage.enterPassword(getAccount());
@@ -470,7 +470,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.clickSaveBtn();
 
         //Welch Full catalog access
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
         sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was displayed after selecting full catalog");
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
         passwordPage.clickSecondaryButtonByCoordinates();
@@ -514,7 +514,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         //Welch Full catalog access
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
         //minor authentication is prompted
         Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
         passwordPage.enterPassword(getAccount());
@@ -961,7 +961,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                         DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
         sa.assertAll();
     }
@@ -978,7 +978,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                         DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
     }
 

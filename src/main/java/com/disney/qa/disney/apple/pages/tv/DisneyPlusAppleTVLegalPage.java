@@ -78,12 +78,12 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
         String lineFeed = "[\\r\\n]+";
         Set<String> legalButtons = new LinkedHashSet<>();
         Set<String> legalDocuments = new LinkedHashSet<>();
-        String legalTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LEGAL_TITLE.getText());
-        JsonNode allDocuments = getDictionary().getLegalItems(siteConfig, allLegalDocuments);
+        String legalTitle = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LEGAL_TITLE.getText());
+        JsonNode allDocuments = iapiHelper.getLocalizationUtils().getLegalItems(siteConfig, allLegalDocuments);
 
         IntStream.range(0, allDocuments.size()).forEach(i -> {
             legalButtons.add(apiChecker.queryResponse(allDocuments, getAllLabels).get(i));
-            String document = getDictionary().getLegalDocumentBody(apiChecker.queryResponse(allDocuments, getAllLabels).get(i));
+            String document = iapiHelper.getLocalizationUtils().getLegalDocumentBody(apiChecker.queryResponse(allDocuments, getAllLabels).get(i));
             legalDocuments.add(document);
         });
         List<String> labels = new ArrayList<>(legalButtons);

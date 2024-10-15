@@ -13,7 +13,7 @@ public class DisneyPlusAppSettingsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     private ExtendedWebElement deleteAllDownloadsButton = getStaticTextByLabel(
-            getDictionary()
+            iapiHelper.getLocalizationUtils()
                     .getDictionaryItem(
                             DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             DictionaryKeys.BTN_DELETE_ALL_DOWNLOADS.getText()));

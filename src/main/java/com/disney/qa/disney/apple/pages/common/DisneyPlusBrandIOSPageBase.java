@@ -98,7 +98,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
     public boolean isCollectionTitleDisplayed() {
         return getTypeCellLabelContains(
-                getDictionary().getDictionaryItem(
+                iapiHelper.getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                         DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
     }

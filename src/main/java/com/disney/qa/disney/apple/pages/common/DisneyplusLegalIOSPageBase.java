@@ -35,7 +35,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        if(getDictionary().isSelectedLanguageSupported()) {
+        if(iapiHelper.getLocalizationUtils().isSelectedLanguageSupported()) {
             return legalHeader.isElementPresent() && getBackButton().isElementPresent();
         } else {
             return backupHeader.isElementPresent() && getBackButton().isElementPresent();

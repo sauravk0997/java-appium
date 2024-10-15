@@ -39,12 +39,12 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isR21MustBe21YearOlderModalDisplayed() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(
+        return getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_HEADER.getText())).isPresent();
     }
 
     public boolean isBrowseOtherTitlesButtonDisplayed() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(
+        return getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_BUTTON.getText())).isPresent();
     }
 }

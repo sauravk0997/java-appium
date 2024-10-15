@@ -18,11 +18,11 @@ public class DisneyPlusTabletMoreMenuIOSPage extends DisneyPlusMoreMenuIOSPage {
 
 	@Override
 	public boolean isDeviceStorageCorrectlyDisplayed() {
-		ExtendedWebElement storageText = getDynamicXpathContainsName(String.format("iPad %s", getDictionary().getValuesBetweenPlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText())).get(0)));
+		ExtendedWebElement storageText = getDynamicXpathContainsName(String.format("iPad %s", iapiHelper.getLocalizationUtils().getValuesBetweenPlaceholders(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText())).get(0)));
 		if(storageText.isElementPresent()) {
-			return storageText.getText().contains(getDictionary().getValuesBetweenPlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())).get(0))
-					&& storageText.getText().contains(getDictionary().getValuesBetweenPlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())).get(0))
-					&& storageText.getText().contains(getDictionary().getValuesBetweenPlaceholders(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())).get(0));
+			return storageText.getText().contains(iapiHelper.getLocalizationUtils().getValuesBetweenPlaceholders(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())).get(0))
+					&& storageText.getText().contains(iapiHelper.getLocalizationUtils().getValuesBetweenPlaceholders(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())).get(0))
+					&& storageText.getText().contains(iapiHelper.getLocalizationUtils().getValuesBetweenPlaceholders(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())).get(0));
 		} else {
 			return false;
 		}

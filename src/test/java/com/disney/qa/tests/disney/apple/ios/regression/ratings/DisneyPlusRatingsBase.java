@@ -142,7 +142,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-        DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
+       // DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {

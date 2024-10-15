@@ -130,8 +130,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNetworkLogoImage(String item) {
-        return imageLabelContains.format(getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+        return imageLabelContains.format(iapiHelper.getLocalizationUtils().formatPlaceholderString(
+                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
                         false), Map.of(BRAND_NAME, item)));
     }
 
@@ -149,7 +149,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void swipeTillContinueWatchingCarouselPresent() {
         String wordSeparator = " ";
-        String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
+        String continueWatchingText = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
         String expectedTitle = convertToTitleCase(continueWatchingText, wordSeparator);
         ExtendedWebElement continueWatchingHeader = getDynamicAccessibilityId(expectedTitle);
         Assert.assertTrue(swipe(continueWatchingHeader, Direction.UP, 3, 400), "Couldn't scroll to continue watching carousel");
