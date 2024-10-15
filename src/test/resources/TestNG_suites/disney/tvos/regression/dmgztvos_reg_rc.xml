@@ -2,9 +2,9 @@
 <suite verbose="1" name="dmgztvos_reg_rc" annotations="JDK" configfailurepolicy="continue" thread-count="2" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.6.5-rc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-77175"/>
-    <parameter name="jenkinsBuild" value="3.6.5.71683"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.8.0-rc"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-77462"/>
+    <parameter name="jenkinsBuild" value="3.8.0.73278"/>
     <parameter name="reporting.notification.slack-channels" value="lrqa-auto-jenkins,ios-tvos-test-automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_reg_rc"/>
