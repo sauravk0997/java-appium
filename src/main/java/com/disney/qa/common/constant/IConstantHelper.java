@@ -19,5 +19,7 @@ public interface IConstantHelper {
     //country codes
     String US = "US";
     String DE = "DE";
+    String AT = "AT";
+    String CH = "CH";
 
 }

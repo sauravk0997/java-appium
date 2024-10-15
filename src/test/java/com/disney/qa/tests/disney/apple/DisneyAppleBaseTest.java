@@ -231,14 +231,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             // Xray.enableRealTimeSync();
         });
     }
-/*
-    @BeforeSuite(alwaysRun = true)
-    public void initPageDictionary() {
-        //todo remove this configuration method
-        DisneyPlusApplePageBase.setDictionary(getLocalizationUtils());
-    }
-*/
-// todo review location override DE
+
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
         List<String> groups = Arrays.asList(result.getMethod().getGroups());
@@ -248,6 +241,17 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         } else if (groups.contains(DE)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), DE, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "de", true);
+        } else if (groups.contains(AT)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AT, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+        } else if (groups.contains(CH)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CH, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+        }
+
+
+        private Object[] impressumCountries() {
+            return new String[]{"TUID: DE", "TUID: AT", "TUID: CH"};
         }
     }
 
