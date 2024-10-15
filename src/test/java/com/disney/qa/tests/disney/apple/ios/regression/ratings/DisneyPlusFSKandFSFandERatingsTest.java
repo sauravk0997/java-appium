@@ -4,6 +4,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
+import static com.disney.qa.common.constant.IConstantHelper.DE;
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
@@ -42,7 +43,7 @@ public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73156"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK, DE})
     public void verifyGermanyFSKRating18() {
         ratingsSetup(EIGHTEEN.getContentRating(), GERMANY_LANG, GERMANY);
         handleOneTrustPopUp();
