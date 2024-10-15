@@ -1,7 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
-import com.disney.qa.api.client.requests.*;
-import com.disney.qa.api.client.responses.profile.*;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -29,10 +27,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-
-import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MPAA_AND_TVPG;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
@@ -528,9 +522,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.getSearchNav().click();
         searchPage.searchForMedia(contentTitle);
         searchPage.getTypeButtonByLabel(keyBoardSearch).click();
-        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message present for TV-MA " +
-                "profile");
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle), "No results found message was not as expected for TV-MA profile");
+        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(),
+                "PCON restricted title message present for TV-MA profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle),
+                "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
     }
 
