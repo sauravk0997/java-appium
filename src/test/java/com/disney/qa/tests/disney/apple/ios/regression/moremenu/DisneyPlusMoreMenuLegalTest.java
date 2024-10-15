@@ -26,6 +26,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -103,7 +105,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68063"})
     @Test(description = "Verify Legal and return to More Menu", groups = {TestGroup.MORE_MENU,
-            TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+            TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void testMoreMenuLegalDisplay() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -137,7 +139,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
-    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyImpressumTab(String TUID) {
         SoftAssert sa = new SoftAssert();
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
