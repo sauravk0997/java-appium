@@ -248,11 +248,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CH, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
         }
-
-
-        private Object[] impressumCountries() {
-            return new String[]{"TUID: DE", "TUID: AT", "TUID: CH"};
-        }
     }
 
     @BeforeSuite(alwaysRun = true)
