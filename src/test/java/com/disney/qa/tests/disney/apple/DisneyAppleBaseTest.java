@@ -249,11 +249,29 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
         } else if (groups.contains(NL)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NL, true);
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "nl", true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en-GB", true);
         } else if (groups.contains(TR)) {
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "tr", true);
-    }
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "tr", true);
+        } else if (groups.contains(JP)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), JP, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "ja", true);
+        } else if (groups.contains(BR)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), BR, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "pt-BR", true);
+        } else if (groups.contains(KR)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "ko", true);
+        } else if (groups.contains(SG)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), SG, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+        } else if (groups.contains(AU)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AU, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en-GB", true);
+        } else if (groups.contains(NZ)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NZ, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+        }
     }
 
     @BeforeSuite(alwaysRun = true)

@@ -23,5 +23,10 @@ public interface IConstantHelper {
     String CH = "CH";
     String NL = "NL";
     String TR = "TR";
-
+    String JP = "JP";
+    String BR = "BR";
+    String KR = "KR";
+    String SG = "SG";
+    String AU = "AU";
+    String NZ = "NZ";
 }

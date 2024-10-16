@@ -11,7 +11,7 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68353"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK, DE})
     public void verifyGermanyFSKRating0() {
         ratingsSetup(ZERO.getContentRating(), GERMANY_LANG, GERMANY);
         handleOneTrustPopUp();
