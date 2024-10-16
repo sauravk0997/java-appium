@@ -21,6 +21,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final String customAppSettingLabel = "%s, %s ";
@@ -35,7 +37,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75249"})
-    @Test(description = "Cellular Data Usage Page UI test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Cellular Data Usage Page UI test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyCellularDataUsagePageUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -75,7 +77,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66623"})
-    @Test(description = "Wi-Fi Data Usage Page UI test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Wi-Fi Data Usage Page UI test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyWiFiDataUsageUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -108,7 +110,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66627"})
-    @Test(description = "Verify that the user can only stream on Wi-Fi when Wi-Fi Only is selected", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Verify that the user can only stream on Wi-Fi when Wi-Fi Only is selected", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyWiFiOnlyVideoPlayback() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -184,7 +186,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
     
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66641", "XMOBQA-66647"})
-    @Test(description = "Download Quality Settings UI Elements and Navigation test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Download Quality Settings UI Elements and Navigation test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadQualitySettingsUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -233,7 +235,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284","XMOBQA-75466"})
-    @Test(description = "App Settings Page UI test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "App Settings Page UI test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAppSettingsDefaultUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -281,7 +283,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61233"})
-    @Test(description = "App Settings Page UI updates for Downloads test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "App Settings Page UI updates for Downloads test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAppSettingsUIDownloadsUpdates() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

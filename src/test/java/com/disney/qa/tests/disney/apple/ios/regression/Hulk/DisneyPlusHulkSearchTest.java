@@ -13,12 +13,14 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String DISNEY_CONTENT = "Percy Jackson";
     static final String HULU_CONTENT = "Only Murders in the Building";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
-    @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchHuluContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -44,7 +46,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69570"})
-    @Test(description = "Search > Empty Page State- Hide Restricted Title for TV-14 and Kids", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search > Empty Page State- Hide Restricted Title for TV-14 and Kids", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

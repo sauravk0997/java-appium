@@ -48,7 +48,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68278"})
-    @Test(description = "'Recent Searches' is not shown when user has made no Recent Searches", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(description = "'Recent Searches' is not shown when user has made no Recent Searches", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyRecentSearchWhenNoSearchMade() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -94,7 +94,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
-    @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void clearRecentSearches() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -137,7 +137,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67319"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifySearchBarUI() {
         String title = "Simpson";
         String placeholderError = "Placeholder text is not as expected";
@@ -168,7 +168,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
     
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
-    @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecentSearchInitiatesValidSearch() {
         String media = "Turning Red";
         SoftAssert sa = new SoftAssert();
@@ -211,7 +211,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68280"})
-    @Test(description = "Search - Recent Searches - Show 10 Results Max with the Ability to Scroll Up and Down", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search - Recent Searches - Show 10 Results Max with the Ability to Scroll Up and Down", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecentSearchShowsMaxTenResults() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -252,7 +252,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67956"})
-    @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames", enabled = false)
+    @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collectionNames", enabled = false)
     public void verifyScrollAndDropdownForSearchContentLandingPage(@NotNull String collectionName) {
         String filterValue = "Comedy";
         SoftAssert sa = new SoftAssert();
@@ -297,7 +297,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67958"})
-    @Test(description = "Search - Originals Landing Page - UI Elements", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search - Originals Landing Page - UI Elements", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyOriginalsLandingPageUI() throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -344,7 +344,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67950"})
-    @Test(description = "Search - Content Type Landing Pages - UI Elements & Filtering", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames", enabled = false)
+    @Test(description = "Search - Content Type Landing Pages - UI Elements & Filtering", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collectionNames", enabled = false)
     public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
@@ -421,7 +421,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchResultContainsRatingAndYearDetails() throws URISyntaxException, JsonProcessingException {
             String media = "M";
             String movie = "The Marvels";
@@ -459,7 +459,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67379"})
-    @Test(description = "Search - Explore - Editorials & Collections", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search - Explore - Editorials & Collections", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchExploreEditorialsAndCollections() {
         String collectionPageDidNotOpen = "User did not land on the collection page";
         String collectionLogoNotExpanded = "Collection brand logo is not expanded";

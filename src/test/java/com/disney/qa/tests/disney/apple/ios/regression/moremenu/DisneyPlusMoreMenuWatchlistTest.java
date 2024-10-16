@@ -8,6 +8,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
     public void onboard() {
@@ -15,7 +17,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
-    @Test(description = "Verify empty Watchlist display", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Verify empty Watchlist display", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEmptyWatchlistDisplay() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
@@ -33,7 +35,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68440"})
-    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPopulatedWatchlistDisplay() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

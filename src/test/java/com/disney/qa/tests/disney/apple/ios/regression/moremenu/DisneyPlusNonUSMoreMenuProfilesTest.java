@@ -11,6 +11,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.JAPAN;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -19,7 +20,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66766"})
-    @Test(groups = {TestGroup.MORE_MENU, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.SMOKE, US})
     public void verifyAddProfileFlow() {
         initialSetup();
         handleAlert();
@@ -78,7 +79,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66792"})
-    @Test(description = "Edit Profile - UI Elements - Primary Profile (NOT ARIEL)", groups = {TestGroup.MORE_MENU})
+    @Test(description = "Edit Profile - UI Elements - Primary Profile (NOT ARIEL)", groups = {TestGroup.MORE_MENU, US})
     public void verifyEditProfileUIPrimaryProfile() {
         initialSetup();
         handleAlert();
@@ -109,7 +110,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73708"})
-    @Test(description = "Edit Profile - UI Elements - (Legacy) - Kids Mode Profile", groups = {TestGroup.MORE_MENU})
+    @Test(description = "Edit Profile - UI Elements - (Legacy) - Kids Mode Profile", groups = {TestGroup.MORE_MENU, US})
     public void verifyEditProfileUIKidsProfile() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -138,7 +139,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66776"})
-    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {TestGroup.MORE_MENU}, enabled = false)
+    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {TestGroup.MORE_MENU, US}, enabled = false)
     public void verifyAddProfilePageUI() {
         initialSetup();
         handleAlert();
