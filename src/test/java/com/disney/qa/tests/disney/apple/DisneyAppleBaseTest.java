@@ -123,7 +123,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             return disneyLocalizationUtils;
         }
     };
-// todo review
+
     private static final LazyInitializer<DisneySubscriptionApi> SUBSCRIPTION_API = new LazyInitializer<>() {
         @Override
         protected DisneySubscriptionApi initialize() {
