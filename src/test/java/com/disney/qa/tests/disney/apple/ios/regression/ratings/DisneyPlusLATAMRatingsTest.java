@@ -8,6 +8,7 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.ARGENTINA;
 import static com.disney.qa.common.constant.RatingConstant.BOLIVIA;
 import static com.disney.qa.common.constant.RatingConstant.CHILE;
@@ -35,7 +36,7 @@ import static com.disney.qa.common.constant.RatingConstant.URUGUAY;
 public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68362"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, "LATAM", US})
     public void verifyRatingSystemLATAM0() {
         String locale = getLATAMCountryCode();
         ratingsSetup(ZERO_PLUS.getContentRating(), LATAM_LANG, locale);
