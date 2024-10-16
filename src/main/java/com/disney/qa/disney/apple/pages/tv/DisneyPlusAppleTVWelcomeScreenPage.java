@@ -20,7 +20,7 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     public DisneyPlusAppleTVWelcomeScreenPage(WebDriver driver) {
         super(driver);
     }
-    private IAPIHelper iapiHelper = new IAPIHelper();
+
     @Override
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);

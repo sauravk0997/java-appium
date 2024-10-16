@@ -23,7 +23,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
-    private IAPIHelper iapiHelper = new IAPIHelper();
 
     private ExtendedWebElement accountDetailsSection = getDynamicAccessibilityId(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()));
 

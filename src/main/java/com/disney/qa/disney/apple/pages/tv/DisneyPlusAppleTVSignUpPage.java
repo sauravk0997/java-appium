@@ -21,7 +21,7 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
     
     @ExtendedFindBy(accessibilityId = "legalDisclosureView")
     private ExtendedWebElement legalDisclosure;
-    private IAPIHelper iapiHelper =  new IAPIHelper();
+
     @Override
     public boolean isOpened() {
         return getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).isElementPresent();

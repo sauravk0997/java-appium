@@ -17,7 +17,6 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
-    private IAPIHelper iapiHelper = new IAPIHelper();
     protected ExtendedWebElement signUpHeader = getStaticTextByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
 
     @ExtendedFindBy(accessibilityId = "marketingCheckbox")
