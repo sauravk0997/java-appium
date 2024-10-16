@@ -88,7 +88,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement dynamicClassChain;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == '%s'`]")
     protected ExtendedWebElement staticCellByLabel;
-    private static DisneyLocalizationUtils disneyLanguageUtils = null;
     @ExtendedFindBy(accessibilityId = "Clear")
     public ExtendedWebElement keyboardClear;
     @ExtendedFindBy(accessibilityId = "unlockedProfileCell")
@@ -513,11 +512,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement findByAccessibilityId(DisneyDictionaryApi.ResourceKeys resourceKey, DictionaryKeys key) {
-        return dynamicAccessibilityId.format(disneyLanguageUtils.getDictionaryItem(resourceKey, key.getText()));
+        return dynamicAccessibilityId.format(iapiHelper.getLocalizationUtils().getDictionaryItem(resourceKey, key.getText()));
     }
 
     public ExtendedWebElement findByFallbackAccessibilityId(DisneyDictionaryApi.ResourceKeys resourceKey, DictionaryKeys key) {
-        return dynamicAccessibilityId.format(disneyLanguageUtils.getDictionaryItem(resourceKey, key.getText(), false));
+        return dynamicAccessibilityId.format(iapiHelper.getLocalizationUtils().getDictionaryItem(resourceKey, key.getText(), false));
     }
 
     public static List<String> getEnumValues(DictionaryKeys... dictionaryValues) {
@@ -558,7 +557,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isHeadlineSubtitlePresent() {
-        return getDynamicAccessibilityId(disneyLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_BODY.getText())).isElementPresent();
+        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_BODY.getText())).isElementPresent();
     }
 
     public String getActionableAlertMessage() {
@@ -599,7 +598,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getOkButton() {
-        return dynamicBtnFindByLabel.format(disneyLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.OK_BTN.getText()));
+        return dynamicBtnFindByLabel.format(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.OK_BTN.getText()));
     }
 
     public void enterText(String text) {
@@ -611,7 +610,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isHeadlineHeaderTextPresent(){
-        return getStaticTextByLabelContains(disneyLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent();
+        return getStaticTextByLabelContains(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent();
     }
 
     public String getErrorMessageLabelText() {
