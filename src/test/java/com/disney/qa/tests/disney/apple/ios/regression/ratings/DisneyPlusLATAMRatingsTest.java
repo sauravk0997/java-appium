@@ -36,7 +36,7 @@ import static com.disney.qa.common.constant.RatingConstant.URUGUAY;
 public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68362"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, US})
     public void verifyRatingSystemLATAM0() {
         String locale = getLATAMCountryCode();
         ratingsSetup(ZERO_PLUS.getContentRating(), LATAM_LANG, locale);
@@ -44,7 +44,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73172"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, US})
     public void verifyRatingSystemLATAM7() {
         String locale = getLATAMCountryCode();
         ratingsSetup(SEVEN_PLUS.getContentRating(), LATAM_LANG, locale);
@@ -52,7 +52,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73173"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, US})
     public void verifyRatingSystemLATAM10() {
         String locale = getLATAMCountryCode();
         ratingsSetup(TEN_PLUS.getContentRating(), LATAM_LANG, locale);
@@ -60,7 +60,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73174"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, US})
     public void verifyRatingSystemLATAM12() {
         String locale = getLATAMCountryCode();
         ratingsSetup(TWELVE_PLUS.getContentRating(), LATAM_LANG, locale);
@@ -68,7 +68,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73175"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, US})
     public void verifyRatingSystemLATAM13() {
         String locale = getLATAMCountryCode();
         ratingsSetup(THIRTEEN_PLUS.getContentRating(), LATAM_LANG, locale);
@@ -76,7 +76,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73176"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, US})
     public void verifyRatingSystemLATAM14() {
         String locale = getLATAMCountryCode();
         ratingsSetup(FOURTEEN_PLUS.getContentRating(), LATAM_LANG, locale);
@@ -84,7 +84,7 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73177"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, US})
     public void verifyRatingSystemLATAM16() {
         String locale = getLATAMCountryCode();
         ratingsSetup(SIXTEEN_PLUS.getContentRating(), LATAM_LANG, locale);

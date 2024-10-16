@@ -61,7 +61,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
         getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
@@ -133,7 +132,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 LOCALIZATION_UTILS.get().getRatingSystem(),
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
-// todo review DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
+
     private void setDictionary(String lang, String locale) {
         getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
@@ -145,7 +144,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-      //  DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
+        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
