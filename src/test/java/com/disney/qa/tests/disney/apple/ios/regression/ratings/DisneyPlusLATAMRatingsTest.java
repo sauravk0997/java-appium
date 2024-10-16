@@ -36,7 +36,7 @@ import static com.disney.qa.common.constant.RatingConstant.URUGUAY;
 public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68362"})
-    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, "LATAM", US})
+    @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM})
     public void verifyRatingSystemLATAM0() {
         String locale = getLATAMCountryCode();
         ratingsSetup(ZERO_PLUS.getContentRating(), LATAM_LANG, locale);

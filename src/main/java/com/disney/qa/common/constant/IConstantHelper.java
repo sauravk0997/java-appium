@@ -21,5 +21,7 @@ public interface IConstantHelper {
     String DE = "DE";
     String AT = "AT";
     String CH = "CH";
+    String NL = "NL";
+    String TR = "TR";
 
 }
