@@ -271,6 +271,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         } else if (groups.contains(NZ)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NZ, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+        } else if (groups.contains("LATAM")) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "es", true);
         }
     }
 
