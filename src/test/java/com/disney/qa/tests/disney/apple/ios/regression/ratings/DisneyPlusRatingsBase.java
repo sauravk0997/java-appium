@@ -9,6 +9,8 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
@@ -59,6 +61,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
+        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
         getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
@@ -130,7 +133,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 LOCALIZATION_UTILS.get().getRatingSystem(),
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
-
+// todo review DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
     private void setDictionary(String lang, String locale) {
         getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
@@ -142,7 +145,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-       // DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
+      //  DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
