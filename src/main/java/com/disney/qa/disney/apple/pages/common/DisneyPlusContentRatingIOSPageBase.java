@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -18,10 +17,8 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "saveButton")
     protected ExtendedWebElement saveButton;
 
-    private IAPIHelper apiHelper = new IAPIHelper();
-
     private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
-            apiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
+            getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     public DisneyPlusContentRatingIOSPageBase(WebDriver driver) {
         super(driver);
@@ -32,7 +29,7 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
         return contentRatingHeader.isPresent(THREE_SEC_TIMEOUT);
     }
 
-    private ExtendedWebElement gotItButton = xpathNameOrName.format(apiHelper.getLocalizationUtils()
+    private ExtendedWebElement gotItButton = xpathNameOrName.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                     DictionaryKeys.BTN_GOT_IT.getText()), DictionaryKeys.BTN_GOT_IT.getText());
 

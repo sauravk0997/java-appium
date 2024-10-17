@@ -18,22 +18,22 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     @FindBy(id = "labelErrorMessage")
     private ExtendedWebElement invalidPassword;
 
-    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(iapiHelper.getLocalizationUtils()
+    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
             DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
 
-    private ExtendedWebElement logoutAllDevicesPasswordCopy = staticTextByLabel.format(iapiHelper.getLocalizationUtils()
+    private ExtendedWebElement logoutAllDevicesPasswordCopy = staticTextByLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText()),
             DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText());
 
-    private ExtendedWebElement changePasswordCancelBtn = staticTextByLabel.format(iapiHelper.getLocalizationUtils()
+    private ExtendedWebElement changePasswordCancelBtn = staticTextByLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
                             DictionaryKeys.CANCEL_LABEL.getText()),
             DictionaryKeys.CANCEL_LABEL.getText());
 
-    protected ExtendedWebElement newPasswordSaveBtn = staticTextByLabel.format(iapiHelper.getLocalizationUtils()
+    protected ExtendedWebElement newPasswordSaveBtn = staticTextByLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             DictionaryKeys.BTN_SAVE.getText()),
             DictionaryKeys.BTN_SAVE.getText());
@@ -81,7 +81,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     }
 
     public void clickCancelButton() {
-        String cancelButton = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.CANCEL_LABEL.getText());
+        String cancelButton = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.CANCEL_LABEL.getText());
         dynamicBtnFindByLabel.format(cancelButton).click();
     }
 
@@ -95,7 +95,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     }
 
     public boolean isPasswordDescriptionPresent() {
-        String expectedString = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_MINOR_PASSWORD.getText());
+        String expectedString = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_MINOR_PASSWORD.getText());
         LOGGER.info("Expected auth headline: {}", expectedString);
         waitForPresenceOfAnElement(headlineSubtitle);
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);

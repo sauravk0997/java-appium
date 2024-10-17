@@ -43,7 +43,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     @ExtendedFindBy(accessibilityId = "showPasswordDisneyAuth")
     private ExtendedWebElement showPasswordDisneyAuth;
 
-    private ExtendedWebElement havingTroubleLogginInBtn = getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGIN_HELP.getText()));
+    private ExtendedWebElement havingTroubleLogginInBtn = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGIN_HELP.getText()));
 
     public DisneyPlusAppleTVPasswordPage(WebDriver driver) {
         super(driver);
@@ -85,7 +85,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isLogInBtnFocused() {
-       return isFocused(getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+       return isFocused(getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                MY_DISNEY_LOGIN_BTN.getText())));
     }
 
@@ -120,28 +120,28 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isCreatePasswordScreenOpen() {
-        boolean isPresent = getStaticTextByLabelContains(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CREATE_PASSWORD_HEADER.getText())).isElementPresent();
+        boolean isPresent = getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CREATE_PASSWORD_HEADER.getText())).isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
     public boolean isEnterYourPasswordHeaderPresent() {
-        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_PASSWORD_HEADER.getText())).isPresent();
     }
 
     public boolean isEnterYourPasswordHintPresent() {
-        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_PASSWORD_HINT.getText())).isPresent();
     }
 
     public boolean isLearnMoreAboutMyDisneyButtonPresent() {
-        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_LEARN_MORE_BTN.getText())).isPresent();
     }
 
     public boolean isLoginNavigationButtonPresent() {
-        return getDynamicAccessibilityId(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).isPresent();
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).isPresent();
     }
 
     public String getShowHidePasswordBtnState() {
@@ -160,9 +160,9 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     public void logInWithPassword(String password) {
         passwordEntry(password);
         Assert.assertTrue(isOpened(), "Password entry page did not open");
-        Assert.assertTrue(isFocused(getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))),
+        Assert.assertTrue(isFocused(getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))),
                 "Login button is not focused");
-        getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
+        getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
     }
 
     public void logInWithPasswordLocalized(String password) {
@@ -171,9 +171,9 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
         isOpened();
-        Assert.assertTrue(isFocused(getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))),
+        Assert.assertTrue(isFocused(getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText()))),
                 "Login button is not focused");
-        getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
+        getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
     }
 
     public void submitSandboxPassword(String password) {
@@ -201,7 +201,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isCreateNewPasswordScreenOpen() {
-        return staticTextByLabel.format(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText())).isPresent();
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText())).isPresent();
     }
 
     public boolean isStrengthBarPresent() {
@@ -212,7 +212,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         var dictionaryList = new LinkedList<String>();
         String widthListName = getDevice().getName().contains("4K") ? "disney_password_meter_width_4K" : "disney_password_meter_width";
         Stream.of(MY_DISNEY_CREATE_PASSWORD_STRENGTH_FAIR, MY_DISNEY_CREATE_PASSWORD_STRENGTH_FAIR, MY_DISNEY_CREATE_PASSWORD_STRENGTH_FAIR, MY_DISNEY_CREATE_PASSWORD_STRENGTH_GOOD, MY_DISNEY_CREATE_PASSWORD_STRENGTH_GREAT, MY_DISNEY_CREATE_PASSWORD_STRENGTH_GREAT)
-                .collect(Collectors.toList()).forEach(item -> dictionaryList.add(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText())));
+                .collect(Collectors.toList()).forEach(item -> dictionaryList.add(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText())));
         return Stream.of(dictionaryList,
                         Stream.of(R.TESTDATA.get("disney_password_list").split(",")).collect(Collectors.toList()),
                         Stream.of(R.TESTDATA.get(widthListName).split(",")).collect(Collectors.toList()),
@@ -233,7 +233,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public void enterNewPassword(String text) {
-        getDynamicAccessibilityId(iapiHelper.getLocalizationUtils()
+        getDynamicAccessibilityId(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText()))
                 .type(text);
     }
@@ -266,7 +266,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
     }
 
     public boolean isInvalidCredentialsDisplayed() {
-        String invalidCredentialsError = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
+        String invalidCredentialsError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
         return getDynamicAccessibilityId(invalidCredentialsError).isPresent();
     }
 }

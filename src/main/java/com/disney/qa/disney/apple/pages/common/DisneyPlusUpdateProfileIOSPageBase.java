@@ -19,8 +19,8 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
     @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
     private ExtendedWebElement genderFormButtonCellIdentifier;
 
-    private String updateProfileTitle = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_PROFILE_TITLE.getText());
-    private String completeProfileDescription = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_PROFILE_DESCRIPTION.getText());
+    private String updateProfileTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_PROFILE_TITLE.getText());
+    private String completeProfileDescription = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_PROFILE_DESCRIPTION.getText());
 
     //FUNCTIONS
     public DisneyPlusUpdateProfileIOSPageBase(WebDriver driver) {

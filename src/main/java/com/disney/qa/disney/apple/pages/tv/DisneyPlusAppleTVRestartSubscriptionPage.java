@@ -24,7 +24,7 @@ public class DisneyPlusAppleTVRestartSubscriptionPage extends DisneyPlusRestartS
     @ExtendedFindBy(accessibilityId = "restoreButton")
     private ExtendedWebElement restartSubscriptionLocalizedButton;
 
-    private String restartSubscription = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.RESTART_SUBSCRIPTION.getText());
+    private String restartSubscription = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.RESTART_SUBSCRIPTION.getText());
 
     public DisneyPlusAppleTVRestartSubscriptionPage(WebDriver driver) {
         super(driver);
@@ -41,14 +41,14 @@ public class DisneyPlusAppleTVRestartSubscriptionPage extends DisneyPlusRestartS
         return Stream.of(RESTART_SUB_COPY, RESTART_SUB_COPY_2, RESTARTSUBSCRIPTION_CTA, RESTARTSUBSCRIPTION_LOGOUT)
                 .map(item -> {
                     if (item == RESTARTSUBSCRIPTION_CTA || item == RESTARTSUBSCRIPTION_LOGOUT) {
-                        return iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, item.getText()).toUpperCase();
+                        return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, item.getText()).toUpperCase();
                     }
-                    return iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, item.getText());
+                    return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, item.getText());
                 }).collect(Collectors.toList());
     }
 
     public ExtendedWebElement getLogoutHeader() {
-        String label = iapiHelper.getLocalizationUtils()
+        String label = getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOG_OUT_CONFIRMATION_TITLE.getText());
         String cellFormatLocator = "type == 'XCUIElementTypeAlert' and label == '%s'";
         return findExtendedWebElement(AppiumBy.iOSNsPredicateString(String.format(cellFormatLocator, label)));

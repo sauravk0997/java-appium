@@ -14,16 +14,16 @@ import java.util.List;
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBase {
 
-    private String consentText = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+    private String consentText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
             DictionaryKeys.CONSENT_MINOR_BODY.getText());
 
-    private String  consentHeaderText = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+    private String  consentHeaderText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
             DictionaryKeys.CONSENT_MINOR_HEADER.getText());
 
-    private String consentMinorScrollBody = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+    private String consentMinorScrollBody = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
             DictionaryKeys.CONSENT_MINOR_MOBILE_SCROLL_BODY.getText());
 
-    private String consentMinorScrollHeader = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+    private String consentMinorScrollHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
             DictionaryKeys.CONSENT_MINOR_MOBILE_SCROLL_HEADER.getText());
 
     @ExtendedFindBy(accessibilityId = "titleLabel")

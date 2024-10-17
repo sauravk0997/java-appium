@@ -20,7 +20,7 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
      */
     @Override
     public boolean isOpened() {
-        String enforceDateOfBirthPageTitle = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
+        String enforceDateOfBirthPageTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
         return staticTextByLabel.format(enforceDateOfBirthPageTitle).isPresent();
     }
 
@@ -28,7 +28,7 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
      * @return - true/false, to verify Enforce DOB Description is displayed or not
      */
     public boolean isDateOfBirthDescriptionPresent() {
-        String enforceDateOfBirthPageDescription = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
+        String enforceDateOfBirthPageDescription = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
         return staticTextByLabel.format(enforceDateOfBirthPageDescription).isPresent();
     }
 
@@ -36,7 +36,7 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
      * Click Log Out button
      */
     public void tapLogOutButton() {
-        String enforceDateOfBirthLogOutButton = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DATE_OF_BIRTH_LOG_OUT.getText());
+        String enforceDateOfBirthLogOutButton = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DATE_OF_BIRTH_LOG_OUT.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
     }
 }

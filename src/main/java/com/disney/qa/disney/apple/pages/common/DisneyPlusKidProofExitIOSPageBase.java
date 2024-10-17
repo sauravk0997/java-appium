@@ -35,12 +35,12 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isKidProofDialogTitleDisplayed() {
-        return staticTextByLabel.format(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 KIDPROOF_DIALOG_TITLE.getText())).isPresent();
     }
 
     public boolean isKidProofIncorrectCodeErrorMessageDisplayed() {
-        return staticTextByLabel.format(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 KIDPROOF_INCORRECT_CODE_ERROR_MESSAGE.getText())).isPresent();
     }
 
@@ -70,25 +70,25 @@ public class DisneyPlusKidProofExitIOSPageBase extends DisneyPlusApplePageBase {
 
     private Map<String, String> getKidProofExitCodeDigits() {
        return Map.of(
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_ZERO.getText()), "0",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_ONE.getText()), "1",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_TWO.getText()), "2",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_THREE.getText()), "3",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_FOUR.getText()), "4",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_FIVE.getText()), "5",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_SIX.getText()), "6",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_SEVEN.getText()), "7",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_EIGHT.getText()), "8",
-                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.KIDPROOF_DIGIT_NINE.getText()), "9"
         );
     }

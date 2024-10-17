@@ -15,13 +15,13 @@ public class DisneyPlusAddProfileBannerIOSPageBase extends DisneyPlusApplePageBa
     }
 
     public boolean isProfileHeaderPresent() {
-        return staticTextByLabel.format(iapiHelper.getLocalizationUtils()
+        return staticTextByLabel.format(getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_HEADER.getText()))
                 .isPresent();
     }
 
     public boolean isProfileSubcopyPresent() {
-        return staticTextByLabel.format(iapiHelper.getLocalizationUtils()
+        return staticTextByLabel.format(getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_SUB.getText()))
                 .isPresent(THREE_SEC_TIMEOUT);
     }

@@ -22,8 +22,6 @@ import java.lang.invoke.MethodHandles;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.iapiHelper;
-
 public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocalizationBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -332,13 +330,13 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         getScreenshots("chooseYourPlanPage");
 
         //S1.9
-        paywallPage.getDynamicRowButtonLabel(iapiHelper.getLocalizationUtils()
+        paywallPage.getDynamicRowButtonLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CTA.getText()),1).click();
         pause(2);
         getScreenshots("basicPlan");
 
         paywallPage.getBackArrow().click();
-        paywallPage.getDynamicRowButtonLabel(iapiHelper.getLocalizationUtils()
+        paywallPage.getDynamicRowButtonLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_NOADS_CTA.getText()),2).click();
         pause(2);
         getScreenshots("premiumPlan");
@@ -361,7 +359,7 @@ public class DisneyPlusAppleLocalizationCaptures extends DisneyPlusAppleLocaliza
         setBirthDate(Person.ADULT.getMonth().getText(), Person.ADULT.getDay(), Person.ADULT.getYear());
         signUpIOSPageBase.clickAgreeAndContinue();
 
-        paywallPage.getDynamicRowButtonLabel(iapiHelper.getLocalizationUtils()
+        paywallPage.getDynamicRowButtonLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.SUB_SELECTOR_STANDALONE_ADS_CTA.getText()),1).click();
 
         paywallPage.isOpened();

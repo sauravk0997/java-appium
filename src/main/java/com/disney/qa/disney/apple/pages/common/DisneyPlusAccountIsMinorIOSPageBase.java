@@ -39,7 +39,7 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
     }
 
     public ExtendedWebElement getNotEligibleSubText() {
-        String subscribeText = iapiHelper.getLocalizationUtils().formatPlaceholderString(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_BODY.getText()), Map.of("link_1", "here"));
+        String subscribeText = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_BODY.getText()), Map.of("link_1", "here"));
         return staticTextByLabel.format(subscribeText);
     }
 }

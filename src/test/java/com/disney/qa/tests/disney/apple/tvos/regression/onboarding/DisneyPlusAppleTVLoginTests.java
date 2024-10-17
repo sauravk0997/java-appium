@@ -30,7 +30,6 @@ import java.util.stream.IntStream;
 
 import static com.disney.alice.labels.AliceLabels.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.iapiHelper;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 
@@ -388,7 +387,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(passwordPage.isOpened(), "Log In password screen did not launch");
 
         passwordPage.moveDown(1, 1);
-        passwordPage.getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
+        passwordPage.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NAVIGATION_BTN_LOG_IN.getText())).click();
         Assert.assertTrue(passwordPage.isAttributeValidationErrorMessagePresent(), "Empty password error did not display");
     }
 

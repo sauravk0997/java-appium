@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.iapiHelper;
 
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -67,7 +66,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String incorrectPasswordError = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
@@ -247,7 +246,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, US})
     public void verifyR21CreatePINDateOfBirthFormat() {
         ratingsSetup(ENGLISH_LANG, SINGAPORE);
-        String r21Format = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        String r21Format = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
@@ -568,7 +567,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, US})
     public void verifyR21HasPINDateOfBirthFormat() {
         ratingsSetupWithPINNew(ENGLISH_LANG, SINGAPORE);
-        String r21Format = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        String r21Format = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_BIRTHDAY_FORMAT.getText()).toUpperCase();
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
@@ -661,7 +660,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         ratingsSetupWithPINNew(ENGLISH_LANG, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        String incorrectPasswordError = iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+        String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();

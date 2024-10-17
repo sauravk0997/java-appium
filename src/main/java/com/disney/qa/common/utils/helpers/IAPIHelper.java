@@ -20,7 +20,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class IAPIHelper {
+public interface IAPIHelper {
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
@@ -41,7 +41,7 @@ public class IAPIHelper {
      * Get localization utils<br>
      * @return {@link DisneyLocalizationUtils}
      */
-    public DisneyLocalizationUtils getLocalizationUtils() {
+    default DisneyLocalizationUtils getLocalizationUtils() {
         return LOCALIZATION_UTILS.computeIfAbsent(new ImmutablePair<>(WebDriverConfiguration.getLocale()
                 .getCountry(), WebDriverConfiguration.getLocale()
                 .getLanguage()), pair -> {
@@ -54,7 +54,7 @@ public class IAPIHelper {
         });
     }
 
-    DisneyMobileConfigApi getMobileConfigApi() {
+    default DisneyMobileConfigApi getMobileConfigApi() {
         try {
             return MOBILE_CONFIG_API.get();
         } catch (ConcurrentException e) {

@@ -74,14 +74,14 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         ExtendedWebElement profileIcon;
         if(onboarding) {
             profileIcon = dynamicAccessProfileIcon.format(
-                    iapiHelper.getLocalizationUtils().formatPlaceholderString(
-                            iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of(USER_PROFILE, name)));
+                    getLocalizationUtils().formatPlaceholderString(
+                            getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of(USER_PROFILE, name)));
             waitForPresenceOfAnElement(profileIcon);
             profileIcon.click();
         } else {
             profileIcon = dynamicAccessProfileIcon.format(
-                    iapiHelper.getLocalizationUtils().formatPlaceholderString(
-                            iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, name)));
+                    getLocalizationUtils().formatPlaceholderString(
+                            getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, name)));
             waitForPresenceOfAnElement(profileIcon);
             profileIcon.click();
         }
@@ -90,8 +90,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     public boolean isProfileIconPresent(String profileName) {
         ExtendedWebElement profileIcon;
         profileIcon = dynamicAccessProfileIcon.format(
-                iapiHelper.getLocalizationUtils().formatPlaceholderString(
-                        iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of(USER_PROFILE, profileName)));
+                getLocalizationUtils().formatPlaceholderString(
+                        getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText(), false), Map.of(USER_PROFILE, profileName)));
         return profileIcon.isPresent();
 
     }
@@ -102,16 +102,16 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
 
     public void clickPinProtectedProfile(String name) {
         dynamicAccessProfileIcon.format(
-                        iapiHelper.getLocalizationUtils().formatPlaceholderString(
-                                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)))
+                        getLocalizationUtils().formatPlaceholderString(
+                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)))
                 .click();
     }
 
     public boolean isAccessModeProfileIconPresent(String username) {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return dynamicAccessProfileIcon.format(
-                        iapiHelper.getLocalizationUtils().formatPlaceholderString(
-                                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
+                        getLocalizationUtils().formatPlaceholderString(
+                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
                 .isPresent();
     }
 
@@ -119,8 +119,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         LOGGER.info("Waiting for loading of profile button");
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Profile button is not present")
                 .until(it -> dynamicAccessProfileIcon.format(
-                        iapiHelper.getLocalizationUtils().formatPlaceholderString(
-                                iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
+                        getLocalizationUtils().formatPlaceholderString(
+                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 }

@@ -16,8 +16,8 @@ public class DisneyPlusAccountOnHoldIOSPageBase extends DisneyPlusApplePageBase 
 
     private ExtendedWebElement accountHoldTitle = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_HOLD_TITLE);
     private ExtendedWebElement accountHoldSubText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_HOLD_BAMTECH_DISNEY);
-    private ExtendedWebElement updatePaymentButton = getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ACCOUNT_HOLD_UPDATE_PAYMENT.getText()));
-    private ExtendedWebElement refreshButton = getTypeButtonByLabel(iapiHelper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_REFRESH.getText()));
+    private ExtendedWebElement updatePaymentButton = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ACCOUNT_HOLD_UPDATE_PAYMENT.getText()));
+    private ExtendedWebElement refreshButton = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_REFRESH.getText()));
 
     public ExtendedWebElement getLogoutButton() { return dismissBtn; }
 
