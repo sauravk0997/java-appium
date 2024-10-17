@@ -375,11 +375,11 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         // verify all gender option
         for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
-            sa.assertTrue(editGenderPage.isGenderOptionPresent(genderItem),
+            sa.assertTrue(editGenderPage.getTypeButtonByLabel(editGenderPage.selectGender(genderItem)).isPresent(),
                     "Expected: " + genderItem + " option should be present");
         }
 
-        editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN.getGenderOption());
+        editGenderPage.getTypeButtonByLabel(editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN)).click();
         editGenderPage.tapSaveButton();
 
         sa.assertTrue(editProfilePage.isUpdatedToastPresent(), "Gender is not updated for user");
@@ -569,11 +569,11 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         // verify all gender option and user able to select gender value from dropdown
         addProfile.clickGenderDropDown();
         for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
-            sa.assertTrue(editGenderPage.isGenderOptionPresent(genderItem),
+            sa.assertTrue(editGenderPage.getTypeButtonByLabel(editGenderPage.selectGender(genderItem)).isPresent(),
                     "Expected: " + genderItem + " option should be present");
         }
 
-        editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_WOMEN.getGenderOption());
+        editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_WOMEN);
 
         addProfile.clickSaveBtn();
 
