@@ -643,4 +643,46 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     public void clickChangePasswordCell() {
         changePasswordCell.click();
     }
+
+    public boolean isBackButtonPresent() {
+        return getBackArrow().isElementPresent();
+    }
+
+    public DisneyPlusMoreMenuIOSPageBase clickBackButton() {
+        getBackArrow().click();
+        return initPage(DisneyPlusMoreMenuIOSPageBase.class);
+    }
+
+    public boolean isSubscriptionCellPresent() {
+        return subscriptionChange.isElementPresent();
+    }
+
+    public boolean isAccessAndSecurityTextPresent() {
+        return accessAndSecurityText.isElementPresent();
+    }
+
+    public boolean isManageDevicesTextPresent() {
+        return manageDevicesText.isElementPresent();
+    }
+
+    public boolean isAccountManagementLinkPresent() {
+        String dictValOfAccountManagement = getDictionary().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
+        String expectedHyperLinkText = dictValOfAccountManagement.substring(
+                dictValOfAccountManagement.indexOf('[')+1,dictValOfAccountManagement.indexOf(']'));
+        return customHyperlinkByLabel.format(expectedHyperLinkText).isElementPresent();
+    }
+
+    public ExtendedWebElement getAccountManagementTextElement() {
+        String dictValOfAccountManagement = getDictionary().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
+        String editProfileText = dictValOfAccountManagement.
+                replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
+        return textViewByLabel.format(editProfileText);
+    }
+
+    public boolean isAccountManagementTextPresent() {
+        return getAccountManagementTextElement().isElementPresent();
+    }
+
 }
