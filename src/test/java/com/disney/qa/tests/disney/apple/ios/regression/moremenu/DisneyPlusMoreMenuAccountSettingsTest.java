@@ -312,13 +312,13 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(changePasswordPage.isOpened(),
                 "XMOBQA-61559 - 'Change Password' screen was not opened");
 
-        sa.assertTrue(changePasswordPage.isHeadlineSubtitlePresent(),
+        sa.assertTrue(changePasswordPage.isPasswordSubtitlePresent(),
                 "XMOBQA-61559 - 'Change Password' subtitle was not displayed");
 
         sa.assertTrue(changePasswordPage.isLogoutAllDevicesTitlePresent(),
                 "XMOBQA-61559 - 'Logout All Devices' title was not displayed");
 
-        sa.assertTrue(changePasswordPage.isSaveBtnPresent(),
+        sa.assertTrue(changePasswordPage.isSaveAndContinueBtnPresent(),
                 "XMOBQA-61559 - 'Save' button was not displayed");
 
         sa.assertTrue(changePasswordPage.isCancelBtnPresent(),

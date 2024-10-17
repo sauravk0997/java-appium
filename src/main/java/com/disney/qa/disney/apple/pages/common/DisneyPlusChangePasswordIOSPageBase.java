@@ -38,6 +38,11 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
                             DictionaryKeys.BTN_SAVE.getText()),
             DictionaryKeys.BTN_SAVE.getText());
 
+    protected ExtendedWebElement saveAndContinueBtn = staticTextByLabel.format(getDictionary()
+                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                            DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText()),
+            DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText());
+
     public DisneyPlusChangePasswordIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -62,6 +67,10 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     @Override
     public boolean isSaveBtnPresent() {
         return newPasswordSaveBtn.isPresent();
+    }
+
+    public boolean isSaveAndContinueBtnPresent() {
+        return saveAndContinueBtn.isPresent();
     }
 
     @Override
