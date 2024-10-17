@@ -640,7 +640,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         isOpened();
         String[] title = params.get(SUGGESTED_CELL_TITLE).split(",");
         clickDetailsTab();
-//        sa.assertTrue(title[0].toLowerCase().contains(detailsTabTitle.getText().toLowerCase()), "Suggested title is not the same as details tab title");
         sa.assertTrue(detailsTabTitle.getText().toLowerCase().contains(title[0].toLowerCase()), "Suggested title is not the same as details tab title");
         params.clear();
     }
