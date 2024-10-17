@@ -7,6 +7,7 @@ import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEditGenderIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -47,9 +48,9 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         GLOBAL_NAV.set(Stream.of(DisneyPlusAppleTVHomePage.globalNavigationMenu.values())
                 .map(DisneyPlusAppleTVHomePage.globalNavigationMenu::getText)
                 .collect(Collectors.toList()));
-        GLOBAL_NAV_TEXT.set(Stream.of(DisneyPlusAppleTVHomePage.globalNavigationMenuText.values())
-                .map(DisneyPlusAppleTVHomePage.globalNavigationMenuText::getText)
-                .collect(Collectors.toList()));
+       // GLOBAL_NAV_TEXT.set(Stream.of(DisneyPlusAppleTVHomePage.globalNavigationMenuText.values())
+         //       .map(DisneyPlusAppleTVHomePage.globalNavigationMenuText::getText)
+           //     .collect(Collectors.toList()));
         GLOBAL_NAV_ALICE_LABELS.set(
                 Stream.of(AliceLabels.PROFILE_BUTTON.getText(), AliceLabels.HOME_BUTTON_IS_SELECTED.getText(), AliceLabels.SEARCH_ICON.getText(),
                                 AliceLabels.WATCHLIST_ICON.getText(), AliceLabels.MOVIES_ICON.getText(), AliceLabels.ORIGINALS_ICON.getText(),
@@ -86,7 +87,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
                 "Home is not focused by default -1");
         aliceDriver.screenshotAndRecognize()
-                .assertLabelContainsCaption(sa, DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME.getText().toUpperCase(),
+                .assertLabelContainsCaption(sa, disneyPlusAppleTVHomePage.selectMenu(DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME).toUpperCase(),
                         AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
 
         disneyPlusAppleTVHomePage.clickSelect();
