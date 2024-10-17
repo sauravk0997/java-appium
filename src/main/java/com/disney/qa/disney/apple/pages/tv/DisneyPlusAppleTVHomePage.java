@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -33,7 +34,12 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_WATCHLIST_T
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusHomeIOSPageBase.class)
 public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    public static IAPIHelper helper;
+    public static final IAPIHelper helper = new IAPIHelper() {
+        @Override
+        public DisneyLocalizationUtils getLocalizationUtils() {
+            return IAPIHelper.super.getLocalizationUtils();
+        }
+    } ;
     @ExtendedFindBy(accessibilityId = "profileTab")
     private ExtendedWebElement profileBtnGlobalNav;
 

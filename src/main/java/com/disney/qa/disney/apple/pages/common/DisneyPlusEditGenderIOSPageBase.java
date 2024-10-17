@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -17,7 +18,12 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
     private String saveButton = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SETTINGS_GENDER_SAVE.getText());
     @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
     private ExtendedWebElement genderOptionValue;
-    public static IAPIHelper helper;
+    public static final IAPIHelper helper = new IAPIHelper() {
+        @Override
+        public DisneyLocalizationUtils getLocalizationUtils() {
+            return IAPIHelper.super.getLocalizationUtils();
+        }
+    };
     //FUNCTIONS
 
     public DisneyPlusEditGenderIOSPageBase(WebDriver driver) {

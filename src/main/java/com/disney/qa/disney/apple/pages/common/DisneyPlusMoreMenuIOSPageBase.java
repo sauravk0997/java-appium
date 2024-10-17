@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
@@ -97,7 +98,12 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public ExtendedWebElement getExitJuniorModePin() {
 		return exitJuniorModePin;
 	}
-	public static IAPIHelper helper;
+	public static final IAPIHelper helper = new IAPIHelper() {
+		@Override
+		public DisneyLocalizationUtils getLocalizationUtils() {
+			return IAPIHelper.super.getLocalizationUtils();
+		}
+	} ;
 // TODOVIC test this!
 	public enum MoreMenu {
 		WATCHLIST(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText()), 1),
