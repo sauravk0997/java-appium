@@ -30,7 +30,6 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-// TODOVIC test this!
     /**
      * For gender option validation
      */

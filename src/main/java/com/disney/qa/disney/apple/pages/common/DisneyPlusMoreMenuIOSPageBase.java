@@ -104,7 +104,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 			return IAPIHelper.super.getLocalizationUtils();
 		}
 	} ;
-// TODOVIC test this!
+
 	public enum MoreMenu {
 		WATCHLIST(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText()), 1),
 		APP_SETTINGS(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()), 2),

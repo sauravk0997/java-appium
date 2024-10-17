@@ -197,7 +197,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
             return this.menu;
         }
     }
-// TODOVIC test this!
+
     // For Alice text validation
     public enum globalNavigationMenuText {
         PROFILE("Test"),
