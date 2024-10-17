@@ -505,7 +505,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
     public void verifyHideRestrictedTitlesInSearchResults() {
         String contentTitle = "Deadpool & Wolverine";
-        String keyBoardSearch = "search";
 
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -521,9 +520,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
         searchPage.searchForMedia(contentTitle);
-        searchPage.getTypeButtonByLabel(keyBoardSearch).click();
         sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(),
-                "PCON restricted title message present for TV-MA profile");
+                "PCON restricted title message not present for TV-MA profile");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle),
                 "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
