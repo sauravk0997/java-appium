@@ -644,6 +644,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         changePasswordCell.click();
     }
 
+    @Override
     public boolean isBackButtonPresent() {
         return getBackArrow().isElementPresent();
     }
