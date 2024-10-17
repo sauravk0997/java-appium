@@ -43,6 +43,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
 
+    private final ExtendedWebElement accessAndSecurityText =
+            getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                    DictionaryKeys.ACCESS_SECURITY_HEADER.getText()));
+    private final ExtendedWebElement manageDevicesText =
+            getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                    DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText()));
+
     public boolean isMovistarSubscriptionTitlePresent() {
         String title = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MOVISTAR.getText());
         return getStaticTextByLabel(title.concat(" " + MONTHLY)).isPresent();
