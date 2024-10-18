@@ -108,7 +108,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 "Global Nav menu is not collapsed after moving right from expanded global nav");
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        IntStream.range(0, GLOBAL_NAV_TEXT.get(0).length()).forEach(i -> {
+        IntStream.range(0, GLOBAL_NAV_TEXT.size()).forEach(i -> {
             String menu = GLOBAL_NAV.get(i);
             String menuText = GLOBAL_NAV_TEXT.get(0);
             disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(menu);
@@ -152,7 +152,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        IntStream.range(0, GLOBAL_NAV.get(0).length()).forEach(i -> {
+        IntStream.range(0, GLOBAL_NAV.size()).forEach(i -> {
             String menu = GLOBAL_NAV.get(i);
             if (i != 0) {
                 sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(menu),
