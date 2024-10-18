@@ -19,17 +19,13 @@ import org.slf4j.LoggerFactory;
 import org.testng.SkipException;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CDNAV_HOME;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CDNAV_SEARCH;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_MOVIES_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_ORIGINALS_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_SERIES_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_SETTINGS_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_WATCHLIST_TITLE;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusHomeIOSPageBase.class)
@@ -194,32 +190,56 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         }
     }
 
-    public static final IAPIHelper helper = new IAPIHelper() {
-        public DisneyLocalizationUtils getLocalizationUtils() {
-            return IAPIHelper.super.getLocalizationUtils();
-        }
-    } ;
-
     // For Alice text validation
     public enum globalNavigationMenuText {
-        PROFILE("Test"),
-        SEARCH(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, CDNAV_SEARCH.getText())),
-        HOME(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, CDNAV_HOME.getText())),
-        WATCHLIST(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_WATCHLIST_TITLE.getText())),
-        MOVIES(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_MOVIES_TITLE.getText())),
-        SERIES(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_SERIES_TITLE.getText())),
-        ORIGINALS(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText())),
-        SETTINGS(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, NAV_SETTINGS_TITLE.getText()));
+        PROFILE,
+        SEARCH,
+        HOME,
+        WATCHLIST,
+        MOVIES,
+        SERIES,
+        ORIGINALS,
+        SETTINGS
+    }
 
-        private final String menu;
+    public List<String> getEnumMenu() {
+        var list = new ArrayList<String>();
+        Arrays.stream(globalNavigationMenuText.values()).forEach(
+                item -> list.add(getNavigationMenuValue(item)));
+        return list;
+    }
 
-        globalNavigationMenuText(String menu) {
-            this.menu = menu;
+    public String getNavigationMenuValue(globalNavigationMenuText option) {
+        String selection;
+        switch (option) {
+            case PROFILE:
+                selection = "Test";
+                break;
+            case SEARCH:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, CDNAV_SEARCH.getText());
+                break;
+            case HOME:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, CDNAV_HOME.getText());
+                break;
+            case WATCHLIST:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_WATCHLIST_TITLE.getText());
+                break;
+            case MOVIES:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_MOVIES_TITLE.getText());
+                break;
+            case SERIES:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_SERIES_TITLE.getText());
+                break;
+            case ORIGINALS:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText());
+                break;
+            case SETTINGS:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, NAV_SETTINGS_TITLE.getText());
+                break;
+            default:
+                throw new InvalidArgumentException("Invalid selection made");
         }
-
-        public String getText() {
-            return this.menu;
-        }
+        return selection;
     }
 
     public boolean isProfileBtnFocused() {

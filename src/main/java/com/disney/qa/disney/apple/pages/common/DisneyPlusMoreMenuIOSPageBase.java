@@ -101,31 +101,12 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	};
 
 	public enum MoreMenu {
-		WATCHLIST, //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText()), 1),
-		APP_SETTINGS, // (getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()), 2),
-		ACCOUNT, //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()), 3),
-		LEGAL, //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText()), 4),
-		HELP, //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_HELP.getText()), 5),
-		LOG_OUT //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.LOGOUT_BTN.getText()), 6);
-/*
-		private final String menuOption;
-		private final int index;
-
-		MoreMenu(String menuOption, int index) {
-			this.menuOption = menuOption;
-			this.index = index;
-		}
-
-		public String getMenuOption() {
-			return menuOption;
-		}
-
-		public int getIndex() {
-			return index;
-		}
-		*
-
- */
+		WATCHLIST,
+		APP_SETTINGS,
+		ACCOUNT,
+		LEGAL,
+		HELP,
+		LOG_OUT
 	}
 
 	//FUNCTIONS
