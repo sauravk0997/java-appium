@@ -59,9 +59,9 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
     @AfterMethod(alwaysRun = true)
     public void clearDisneyPlusAppleTVGlobalNavMenuTest() {
-        GLOBAL_NAV.remove(0);
-        GLOBAL_NAV_TEXT.remove(0);
-        GLOBAL_NAV_ALICE_LABELS.remove(0);
+        GLOBAL_NAV.clear();
+        GLOBAL_NAV_TEXT.clear();
+        GLOBAL_NAV_ALICE_LABELS.clear();
 
     }
 
