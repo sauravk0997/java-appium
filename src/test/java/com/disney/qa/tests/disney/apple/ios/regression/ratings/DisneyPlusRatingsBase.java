@@ -254,6 +254,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         }
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDefaultAlertBtn();
+        detailsPage.waitUntilDownloadsTabNotificationBadgeIsPresent();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(contentTitle).click();
         sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
@@ -277,6 +278,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
             swipe(detailsPage.getMovieDownloadButton(), 3, 500);
         }
         detailsPage.getMovieDownloadButton().click();
+        detailsPage.waitUntilDownloadsTabNotificationBadgeIsPresent();
         detailsPage.getDownloadNav().click();
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
