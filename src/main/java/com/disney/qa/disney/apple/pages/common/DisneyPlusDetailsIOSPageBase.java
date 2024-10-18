@@ -451,7 +451,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getTrailerButton() {
         return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACTION_BTN_TRAILER.getText()));
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PLAY_TRAILER.getText()));
     }
 
     public boolean isMovieDownloadButtonDisplayed() {
