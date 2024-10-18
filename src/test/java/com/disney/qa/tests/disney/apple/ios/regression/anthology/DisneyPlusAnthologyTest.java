@@ -60,7 +60,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         String mediaTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added.");
         moreMenu.getDynamicCellByLabel(mediaTitle).click();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);

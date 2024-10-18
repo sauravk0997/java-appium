@@ -785,10 +785,10 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Exit Junior Mode text is not present");
         sa.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version is not present");
         sa.assertTrue(moreMenu.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).isPresent(SHORT_TIMEOUT),
+                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).isPresent(SHORT_TIMEOUT),
                 "Watchlist Menu is not present");
         sa.assertTrue(moreMenu.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL.getMenuOption()).isPresent(SHORT_TIMEOUT),
+                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).isPresent(SHORT_TIMEOUT),
                 "Legal Menu is present");
 
         // Elements that should not be present on screen

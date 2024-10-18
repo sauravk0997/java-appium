@@ -127,9 +127,9 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     public void verifyAppSettings() {
         onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
 
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicAccessibilityId(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).isElementPresent()
+        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicAccessibilityId(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).isElementPresent()
                         && disneyPlusMoreMenuIOSPageBase.getBackArrow().isElementPresent(),
                 "App Settings was not opened");
 
@@ -150,7 +150,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         moreMenu.clickMoreTab();
         //Scenario: Verify Help hyperlink
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP)).click();
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' webview was not opened");
         moreMenu.goBackToDisneyAppFromSafari();
         moreMenu.dismissNotificationsPopUp();
@@ -177,8 +177,9 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyLogOut() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard(getAccount().getFirstName());
-        welcomePage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
+        welcomePage.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT)).click();
         Assert.assertTrue(welcomePage.isLogInButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
     }

@@ -109,7 +109,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
 
         // watchlist validation
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenu.getTypeCellLabelContains(contentTitle).isPresent(), "Media content title was not added to the watchlist");
 
         sa.assertAll();

@@ -13,6 +13,7 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -97,22 +98,16 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getExitJuniorModePin() {
 		return exitJuniorModePin;
-	}
-	public static final IAPIHelper helper = new IAPIHelper() {
-		@Override
-		public DisneyLocalizationUtils getLocalizationUtils() {
-			return IAPIHelper.super.getLocalizationUtils();
-		}
-	} ;
+	};
 
 	public enum MoreMenu {
-		WATCHLIST(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText()), 1),
-		APP_SETTINGS(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()), 2),
-		ACCOUNT(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()), 3),
-		LEGAL(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText()), 4),
-		HELP(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_HELP.getText()), 5),
-		LOG_OUT(helper.getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.LOGOUT_BTN.getText()), 6);
-
+		WATCHLIST, //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText()), 1),
+		APP_SETTINGS, // (getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()), 2),
+		ACCOUNT, //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()), 3),
+		LEGAL, //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText()), 4),
+		HELP, //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_HELP.getText()), 5),
+		LOG_OUT //(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.LOGOUT_BTN.getText()), 6);
+/*
 		private final String menuOption;
 		private final int index;
 
@@ -128,9 +123,39 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		public int getIndex() {
 			return index;
 		}
+		*
+
+ */
 	}
 
 	//FUNCTIONS
+
+	public String selectMoreMenu(MoreMenu option) {
+		String selection;
+		switch (option) {
+			case WATCHLIST:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText());
+				break;
+			case APP_SETTINGS:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText());
+				break;
+			case ACCOUNT:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText());
+				break;
+			case LEGAL:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText());
+				break;
+			case HELP:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_HELP.getText());
+				break;
+			case LOG_OUT:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.LOGOUT_BTN.getText());
+				break;
+			default:
+				throw new InvalidArgumentException("Invalid selection made");
+		}
+		return selection;
+	}
 
 	public DisneyPlusMoreMenuIOSPageBase(WebDriver driver) {
 		super(driver);
@@ -158,24 +183,24 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isMenuOptionPresent(MoreMenu option) {
-		return getDynamicCellByLabel(option.getMenuOption()).isElementPresent();
+		return dynamicCellByLabel.format(selectMoreMenu(option)).isElementPresent();
 	}
 
 	public boolean isMenuOptionNotPresent(MoreMenu option) {
-		return getDynamicCellByLabel(option.getMenuOption()).isElementNotPresent(THREE_SEC_TIMEOUT);
+		return dynamicCellByLabel.format(selectMoreMenu(option)).isElementNotPresent(THREE_SEC_TIMEOUT);
 	}
 
 	public void clickMenuOption(MoreMenu option) {
 		try {
-			getDynamicCellByLabel(option.getMenuOption()).click();
+			dynamicCellByLabel.format(selectMoreMenu(option)).click();
 		} catch (NoSuchElementException e) {
 			LOGGER.debug("ElementTypeCell located by Label Equals value not found. Falling back to Xpath");
-			getDynamicXpathContainsName(option.getMenuOption()).click();
+			dynamicXpathContainsName.format(selectMoreMenu(option)).click();
 		}
 	}
 
 	public void  clickMenuOptionByIndex(MoreMenu option) {
-		moreMenuItemByIndex.format(option.getIndex()).click();
+		moreMenuItemByIndex.format(selectMoreMenu(option)).click();
 	}
 
 	public ExtendedWebElement getDeleteAccountButton() {

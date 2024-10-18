@@ -33,7 +33,8 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(
+                disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75249"})
@@ -298,7 +299,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.startDownload();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
 
         sa.assertFalse(moreMenu.isDownloadOverWifiEnabled(),
                 "XMOBQA-61233 - 'Download Over Wi-Fi Only' was not disabled during download");

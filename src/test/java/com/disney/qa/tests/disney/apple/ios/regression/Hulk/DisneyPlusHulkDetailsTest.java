@@ -479,7 +479,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         // Verify content on Watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(GRIMCUTTY, WANDA_VISION),
                 "Titles were not added to the Watchlist");
 
@@ -493,7 +493,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
         // Verify content on watchlist after revoke HULU entitlement
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertFalse(moreMenu.getTypeCellLabelContains(GRIMCUTTY).isPresent(),
                 "HULU title was present in the Watchlist");
         Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),

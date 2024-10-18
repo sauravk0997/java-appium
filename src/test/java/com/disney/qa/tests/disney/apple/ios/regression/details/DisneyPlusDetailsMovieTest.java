@@ -53,7 +53,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 "remove from watchlist button wasn't displayed");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenu.getTypeCellLabelContains(contentTitle).isPresent(), "D+ Media title was not added to the watchlist");
         //Remove from watchlist
         List<ExtendedWebElement> watchlist = moreMenu.getDisplayedTitles();
@@ -62,7 +62,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         detailsPage.waitForWatchlistButtonToAppear();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
 
         sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
@@ -311,7 +311,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         //Subscriber can add title to Watchlist
         detailsPage.clickWatchlistButton();
         detailsPage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(contentTitle),
                 "Titles were not added to the Watchlist");
         moreMenu.clickHomeIcon();

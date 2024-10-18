@@ -23,7 +23,8 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         onboard();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(
+                disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isWatchlistHeaderDisplayed(),
                 "'Watchlist' header was not properly displayed");
@@ -66,7 +67,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         detailsPage.addToWatchlist();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
 
         Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstTitle, secondTitle, thirdTitle),
                 "Titles were not added to the Watchlist");

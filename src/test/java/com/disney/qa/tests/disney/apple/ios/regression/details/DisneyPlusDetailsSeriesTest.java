@@ -113,7 +113,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "Remove from watchlist button not displayed after adding content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenuPage.getTypeCellLabelContains(contentTitle).isPresent(),
                 "Series title was not added to the watchlist");
 
@@ -125,7 +125,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(),
                 "Add to watchList button not displayed after removing content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertFalse(moreMenuPage.getTypeCellLabelContains(contentTitle).isPresent(),
                 "Series title was not removed from watchlist");
         sa.assertTrue(moreMenuPage.isWatchlistEmptyBackgroundDisplayed(),
@@ -511,7 +511,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Subscriber can add title to Watchlist
         detailsPage.clickWatchlistButton();
         detailsPage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(contentTitle),
                 "Titles were not added to the Watchlist");
         moreMenu.clickHomeIcon();
@@ -607,6 +607,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
@@ -628,7 +630,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "remove from watchlist button wasn't displayed");
         detailsPage.clickMoreTab();
-        detailsPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        detailsPage.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(detailsPage.getTypeCellLabelContains(DISNEY_JUNIOR_ARIEL).isPresent(),
                 "Title was not added to the watchlist");
         sa.assertAll();

@@ -113,7 +113,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         homePage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         //verify empty watch list
         sa.assertTrue(moreMenu.isWatchlistHeaderDisplayed(),
                 "'Watchlist' header was not displayed");
@@ -136,7 +136,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         detailsPage.addToWatchlist();
         //Verify watchlist is populated with the added titles
         homePage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenu.getTypeCellLabelContains(DISNEY_CONTENT).isPresent(), "D+ Media title was not added to the watchlist");
         sa.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),"Hulu Media title was not added to the watchlist");
         sa.assertAll();
@@ -164,7 +164,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
         //Verify watchlist is populated with the added titles
         homePage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),"Hulu media title was not added to the watchlist");
         moreMenu.clickBackArrowFromWatchlist();
         //Remove title from the watchlist
@@ -172,7 +172,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         detailsPage.getRemoveFromWatchListButton().click();
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "add to watchlist button wasn't displayed");
         homePage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         //verify empty watch list
         sa.assertTrue(moreMenu.isWatchlistHeaderDisplayed(),
                 "'Watchlist' header was not displayed");
