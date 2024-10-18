@@ -281,11 +281,12 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72188"})
     @Test(description = "Ariel - VOD Player - Ads - Ad Content Time Display", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyAdContentTimeDisplayUI() {
+        int timeout = 20;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(timeout), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad remaining time was not found");
         verifyAdRemainingTimeFormat(sa);
