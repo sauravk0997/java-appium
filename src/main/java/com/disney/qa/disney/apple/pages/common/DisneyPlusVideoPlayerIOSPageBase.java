@@ -541,6 +541,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 DictionaryKeys.BTN_ACTION_START_FROM_BEGINNING.getText()));
     }
 
+    public boolean isRestartButtonClickable() {
+        return getRestartButton().isClickable(5);
+    }
+
     public String getRestartButtonStatus() {
         displayVideoController();
         return getRestartButton().getAttribute(Attributes.ENABLED.getAttribute());
