@@ -58,6 +58,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_SERIES_TITLE.getText()));
     private String ratingImage = "current_rating_value_image";
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS 'Rated %s' AND label CONTAINS '%s'`]")
+    private ExtendedWebElement titleContainerBasedAlsoOnRatingAndReleaseYear;
 
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
         super(driver);
@@ -245,5 +248,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isRatingPresentInSearchResults(String rating) {
         LOGGER.info("Verifying Ratings in search results");
         return searchResults.format(rating).isPresent();
+    }
+
+    public ExtendedWebElement getTitleContainer(String titleName, String titleRating, String titleYearOfRelease) {
+        return titleContainerBasedAlsoOnRatingAndReleaseYear.format(titleName, titleRating, titleYearOfRelease);
     }
 }
