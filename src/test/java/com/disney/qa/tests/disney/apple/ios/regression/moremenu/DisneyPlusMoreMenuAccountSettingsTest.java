@@ -319,7 +319,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "XMOBQA-61559 - 'Logout All Devices' title was not displayed");
 
         sa.assertTrue(changePasswordPage.isSaveAndContinueBtnPresent(),
-                "XMOBQA-61559 - 'Save' button was not displayed");
+                "XMOBQA-61559 - 'Save & Continue' button was not displayed");
 
         sa.assertTrue(changePasswordPage.isCancelBtnPresent(),
                 "XMOBQA-61559 - 'Cancel' button was not displayed");

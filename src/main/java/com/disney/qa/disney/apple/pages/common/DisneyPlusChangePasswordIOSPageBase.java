@@ -19,9 +19,9 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     private ExtendedWebElement invalidPassword;
 
     private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText()),
-            DictionaryKeys.LOGOUT_ALL_DEVICES_TITLE.getText());
+                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                            DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText()),
+            DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText());
 
     private ExtendedWebElement logoutAllDevicesPasswordCopy = staticTextByLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
