@@ -43,7 +43,7 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
 
     public List<ExtendedWebElement> getSearchResults(String assetName) {
         List<ExtendedWebElement> searchResults = findExtendedWebElements(getTypeCellLabelContains(assetName).getBy());
-        if (searchResults.size() >= 1) {
+        if (!searchResults.isEmpty()) {
             return searchResults;
         } else {
             throw new IllegalArgumentException("No search results found");
