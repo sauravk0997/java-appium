@@ -202,7 +202,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         SETTINGS
     }
 
-    public List<String> getEnumMenu() {
+    public List<String> getEnumMenuText() {
         var list = new ArrayList<String>();
         Arrays.stream(globalNavigationMenuText.values()).forEach(
                 item -> list.add(getNavigationMenuValue(item)));

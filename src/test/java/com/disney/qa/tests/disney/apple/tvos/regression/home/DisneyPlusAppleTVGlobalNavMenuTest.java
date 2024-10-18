@@ -21,6 +21,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -32,9 +33,9 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    private static final ThreadLocal<List<String>> GLOBAL_NAV = new ThreadLocal<>();
-    private static final ThreadLocal<List<String>> GLOBAL_NAV_TEXT = new ThreadLocal<>();
-    private static final ThreadLocal<List<String>> GLOBAL_NAV_ALICE_LABELS = new ThreadLocal<>();
+    private List<String> GLOBAL_NAV = new ArrayList<String>();
+    private List<String> GLOBAL_NAV_TEXT = new ArrayList<String>();
+    private List<String> GLOBAL_NAV_ALICE_LABELS = new ArrayList<String>();
 
     private static final String KIDS_DOB = "2018-01-01";
     private static final String KIDS = "Kids";
@@ -42,22 +43,33 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
     public void initDisneyPlusAppleTVGlobalNavMenuTest() {
         DisneyPlusAppleTVHomePage appleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        GLOBAL_NAV.set(Stream.of(DisneyPlusAppleTVHomePage.globalNavigationMenu.values())
-                .map(DisneyPlusAppleTVHomePage.globalNavigationMenu::getText)
-                .collect(Collectors.toList()));
-        GLOBAL_NAV_TEXT.set(appleTVHomePage.getEnumMenu());
-        GLOBAL_NAV_ALICE_LABELS.set(
-                Stream.of(AliceLabels.PROFILE_BUTTON.getText(), AliceLabels.HOME_BUTTON_IS_SELECTED.getText(), AliceLabels.SEARCH_ICON.getText(),
-                                AliceLabels.WATCHLIST_ICON.getText(), AliceLabels.MOVIES_ICON.getText(), AliceLabels.ORIGINALS_ICON.getText(),
-                                AliceLabels.SERIES_ICON.getText(), AliceLabels.SETTINGS_ICON.getText(), AliceLabels.DISNEY_LOGO.getText())
-                        .collect(Collectors.toList()));
+        GLOBAL_NAV.add(DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE.getText());
+        GLOBAL_NAV.add(DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText());
+        GLOBAL_NAV.add(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
+        GLOBAL_NAV.add(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
+        GLOBAL_NAV.add(DisneyPlusAppleTVHomePage.globalNavigationMenu.MOVIES.getText());
+        GLOBAL_NAV.add(DisneyPlusAppleTVHomePage.globalNavigationMenu.SERIES.getText());
+        GLOBAL_NAV.add(DisneyPlusAppleTVHomePage.globalNavigationMenu.ORIGINALS.getText());
+        GLOBAL_NAV.add(DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS.getText());
+        GLOBAL_NAV_TEXT = appleTVHomePage.getEnumMenuText();
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.PROFILE_BUTTON.getText());
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.HOME_BUTTON_IS_SELECTED.getText());
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.SEARCH_ICON.getText());
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.WATCHLIST_ICON.getText());
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.MOVIES_ICON.getText());
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.ORIGINALS_ICON.getText());
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.SERIES_ICON.getText());
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.SETTINGS_ICON.getText());
+        GLOBAL_NAV_ALICE_LABELS.add(AliceLabels.DISNEY_LOGO.getText());
+
+        IntStream.range(0, GLOBAL_NAV.size()).forEach(i -> {System.out.println("**GLOBAL_NAV " + GLOBAL_NAV.get(i));});
     }
 
     @AfterMethod(alwaysRun = true)
     public void clearDisneyPlusAppleTVGlobalNavMenuTest() {
-        GLOBAL_NAV.remove();
-        GLOBAL_NAV_TEXT.remove();
-        GLOBAL_NAV_ALICE_LABELS.remove();
+        GLOBAL_NAV.clear();
+        GLOBAL_NAV_TEXT.clear();
+        GLOBAL_NAV_ALICE_LABELS.clear();
 
     }
 
@@ -104,9 +116,10 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 "Global Nav menu is not collapsed after moving right from expanded global nav");
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        IntStream.range(0, GLOBAL_NAV_TEXT.get().size()).forEach(i -> {
-            String menu = GLOBAL_NAV.get().get(i);
-            String menuText = GLOBAL_NAV_TEXT.get().get(i);
+        IntStream.range(0, GLOBAL_NAV_TEXT.size()).forEach(i -> {
+            LOGGER.info("** GLOBAL_NAV_TEXT size: " + GLOBAL_NAV_TEXT.size());
+            String menu = GLOBAL_NAV.get(i);
+            String menuText = GLOBAL_NAV_TEXT.get(i);
             disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(menu);
             if (i != 0) {
                 LOGGER.info(String.format("checking for %s global nav menu focus", menu));
@@ -121,7 +134,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnFocused());
             }
         });
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.toArray(String[]::new));
 
         sa.assertAll();
     }
@@ -138,6 +151,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
+        initDisneyPlusAppleTVGlobalNavMenuTest();
         selectAppleUpdateLaterAndDismissAppTracking();
         logInWithoutHomeCheck(getAccount());
 
@@ -147,8 +161,10 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        IntStream.range(0, GLOBAL_NAV.get().size()).forEach(i -> {
-            String menu = GLOBAL_NAV.get().get(i);
+        IntStream.range(0, GLOBAL_NAV.size()).forEach(i -> {
+            LOGGER.info("** GLOBAL_NAV size: " + GLOBAL_NAV.size());
+            String menu = GLOBAL_NAV.get(i);
+            LOGGER.info("** GLOBAL_NAV menu value: " + menu);
             if (i != 0) {
                 sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(menu),
                         String.format("%s is not found on expanded global nav", menu));
@@ -158,7 +174,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnPresent());
             }
         });
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
+        LOGGER.info("** GLOBAL_NAV_ALICE_LABELS size: " + GLOBAL_NAV_ALICE_LABELS.size());
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.toArray(String[]::new));
         sa.assertTrue(disneyPlusAppleTVHomePage.isFocused(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(
                 DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText())), "HOME Nav bar selection is not focused/hovered");
 
@@ -166,7 +183,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(),
                 "Global Nav menu is not collapsed after clicking select from expanded global nav");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.toArray(String[]::new));
         sa.assertAll();
     }
 
