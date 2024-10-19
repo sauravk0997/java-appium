@@ -505,6 +505,32 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75718"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    public void verifyHideRestrictedTitlesInSearchResults() {
+        String contentTitle = "Deadpool & Wolverine";
+
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RATING_TV14);
+        
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(contentTitle);
+        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(),
+                "PCON restricted title message not present for TV-MA profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle),
+                "No results found message was not as expected for TV-MA profile");
+        sa.assertAll();
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add("Bluey");

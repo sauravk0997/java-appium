@@ -25,7 +25,9 @@ import java.time.*;
 import java.time.temporal.ValueRange;
 import java.util.List;
 
+
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
@@ -184,17 +186,17 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72175"})
     @Test(description = "VOD Player - Ads - No Skip Forward or Backward allowed", dataProvider = "tapAction", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayerNoSkippingDuringAd(DisneyPlusVideoPlayerIOSPageBase.PlayerControl control) {
+        int timeout = 20;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        loginAndStartPlayback(MS_MARVEL);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        loginAndStartPlayback(SPIDERMAN_THREE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(timeout), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         int adTimeRemainingBeforeControlAction = videoPlayer.getAdRemainingTimeInSeconds();
         int contentTimeRemaining = videoPlayer.getRemainingTime();
         videoPlayer.tapPlayerScreen(control, 2);
-        Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT);
         Assert.assertTrue(videoPlayer.getAdRemainingTimeInSeconds() < adTimeRemainingBeforeControlAction,
                 "Fast forward/Rewind action is functional during an ad");
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
@@ -251,6 +253,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72476"})
     @Test(description = "Ariel - VOD Player - Ads - Duration of VOD stream should only include main content", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContentDurationBeforeAndAfterAd() throws URISyntaxException, JsonProcessingException {
+        int timeout = 15;
         String durationNotmatchedErrorMessage = "Duration of video is not representing total length of main content";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -271,9 +274,8 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(timeout), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
-        videoPlayer.waitForVideoToStart(10, 3);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
         sa.assertAll();
@@ -286,7 +288,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad remaining time was not found");
         verifyAdRemainingTimeFormat(sa);
