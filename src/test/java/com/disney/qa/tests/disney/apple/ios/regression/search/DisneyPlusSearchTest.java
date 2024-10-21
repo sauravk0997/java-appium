@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.IConstantHelper.DE;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
