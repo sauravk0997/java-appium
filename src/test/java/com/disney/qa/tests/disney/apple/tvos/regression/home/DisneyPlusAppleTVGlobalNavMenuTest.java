@@ -286,4 +286,3 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertAll();
     }
 }
-
