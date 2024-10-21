@@ -22,6 +22,7 @@ import java.util.stream.IntStream;
 
 public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseTest {
     private static final String ONE_TIME_CODE_SCREEN_DID_NOT_OPEN = "One time code screen did not open";
+    private static final String WELCOME_SCREEN_DID_NOT_OPEN = "Welcome screen did not launch";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90618"})
     @Test(groups = {TestGroup.ONBOARDING})
@@ -30,10 +31,10 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomePage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         welcomePage.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
@@ -63,7 +64,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         SoftAssert sa = new SoftAssert();
         List<String> expectedText = disneyPlusAppleTVForgotPasswordPage.getForgotPasswordExpectedScreenTexts(getAccount().getEmail());
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
@@ -99,7 +100,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyOTPAccount = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyOTPAccount.getEmail());
@@ -131,7 +132,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreen.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         welcomeScreen.clickLogInButton();
         loginPage.proceedToPasswordScreen(disneyUser.getEmail());
@@ -164,7 +165,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
@@ -196,7 +197,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
@@ -230,7 +231,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         String otpErrorMessage = disneyPlusAppleTVForgotPasswordPage.getOTPErrorMessage();
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
@@ -286,7 +287,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
@@ -331,7 +332,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(disneyUser.getEmail());
