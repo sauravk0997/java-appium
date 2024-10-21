@@ -14,7 +14,7 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
 
     @Override
     public boolean isOpened() {
-        return secureTextEntryField.isPresent();
+        return getLoginButtonWithPassword().isPresent();
     }
 
     //TODO: QAA-11329 - Move OneTimePasscode identifiers and elements from ForgotPasswordPage
