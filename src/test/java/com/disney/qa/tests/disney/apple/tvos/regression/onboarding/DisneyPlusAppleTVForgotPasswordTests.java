@@ -30,30 +30,27 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        DisneyPlusAppleTVOneTimePasscodePage oneTimePasscode =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+//        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+
 
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        SoftAssert sa = new SoftAssert();
+
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomePage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomePage.isOpened(), "Welcome screen did not launch");
 
         welcomePage.clickLogInButton();
         loginPage.proceedToPasswordScreen(entitledUser.getEmail());
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
-        Assert.assertTrue(oneTimePasscode.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
-        oneTimePasscode.getLoginButtonWithPassword().click();
-
+        oneTimePasscodePage.getLoginButtonWithPassword().click();
         passwordPage.clickHavingTroubleLogginInBtn();
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
-        sa.assertTrue(forgotPasswordPage.isOpened(), "Forgot password page did not launch");
-
-        forgotPasswordPage.clickMenu();
-
-        sa.assertTrue(loginPage.isOpened(), "Pressing menu back did not take user back to Step 1 'Enter your email to continue'");
-
-        sa.assertAll();
+        oneTimePasscodePage.clickMenu();
+        Assert.assertTrue(loginPage.isOpened(),
+                "Pressing menu from one time passcode page did not take user back to login page");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90620"})
