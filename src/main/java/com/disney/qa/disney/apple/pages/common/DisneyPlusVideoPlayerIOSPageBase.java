@@ -537,8 +537,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getRestartButton() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_ACTION_START_FROM_BEGINNING.getText()));
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.VIDEO_PLAYER_RESTART_BUTTON.getText()));
     }
 
     public String getRestartButtonStatus() {
