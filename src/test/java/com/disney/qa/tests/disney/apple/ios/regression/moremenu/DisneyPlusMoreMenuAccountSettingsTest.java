@@ -120,7 +120,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Account Management text was not displayed");
         sa.assertAll();
 
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = accountPage.clickBackArrow();
+        accountPage.clickBackArrow();
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         Assert.assertTrue(moreMenuPage.isOpened(), "More Menu page was not displayed");
     }
 

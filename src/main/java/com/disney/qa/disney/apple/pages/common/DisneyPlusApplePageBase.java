@@ -1563,8 +1563,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getBackArrow().isElementPresent();
     }
 
-    public DisneyPlusMoreMenuIOSPageBase clickBackArrow() {
-        getBackArrow().click();
-        return initPage(DisneyPlusMoreMenuIOSPageBase.class);
-    }
+    public void clickBackArrow() { getBackArrow().click(); }
 }
