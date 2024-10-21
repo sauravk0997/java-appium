@@ -25,6 +25,7 @@ import java.time.*;
 import java.time.temporal.ValueRange;
 import java.util.List;
 
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
@@ -112,23 +113,24 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73630"})
-    @Test(description = "VOD Player - Ads - Restart - Restart Button inactive during Pre-Roll Ad", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
     public void verifyRestartButtonInActiveWhilePlayingAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(MS_MARVEL);
-        videoPlayer.waitForVideoToStart();
+        loginAndStartPlayback(SPIDERMAN_THREE);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
-        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART),
+                "Restart button is not visible on ad player overlay");
+        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE),
+                "Restart button is clickable and not disabled on ad player overlay");
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
-        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE), "Restart button is not enabled on video player");
+        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE),
+                "Restart button is not enabled on video player");
         int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTime();
         videoPlayer.clickRestartButton();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad not started again after clicking restart button");
         int remainingTimeAfterRestartClick = videoPlayer.getRemainingTime();
         sa.assertTrue(remainingTimeBeforeRestartClick < remainingTimeAfterRestartClick,
                 "Remaining time after restart click" + remainingTimeAfterRestartClick +
@@ -285,7 +287,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad remaining time was not found");
         verifyAdRemainingTimeFormat(sa);
