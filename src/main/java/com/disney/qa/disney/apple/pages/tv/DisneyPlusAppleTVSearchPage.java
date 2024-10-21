@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusSearchIOSPageBase.class)
@@ -37,7 +38,16 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
 
     public void clickSearchResult(String assetName) {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        getTypeCellLabelContains(assetName).click();
+        getSearchResults(assetName).get(1).click();
+    }
+
+    public List<ExtendedWebElement> getSearchResults(String assetName) {
+        List<ExtendedWebElement> searchResults = findExtendedWebElements(getTypeCellLabelContains(assetName).getBy());
+        if (!searchResults.isEmpty()) {
+            return searchResults;
+        } else {
+            throw new IllegalArgumentException("No search results found");
+        }
     }
 
     public void clickLocalizedSearchResult(String assetName) {
