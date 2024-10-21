@@ -109,7 +109,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		LOG_OUT
 	}
 
-	//FUNCTIONS
 
 	public String selectMoreMenu(MoreMenu option) {
 		String selection;
