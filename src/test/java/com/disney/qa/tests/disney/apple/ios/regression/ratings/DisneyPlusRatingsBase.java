@@ -275,6 +275,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         }
         detailsPage.getMovieDownloadButton().click();
         detailsPage.getDownloadNav().click();
+        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(contentTitle));
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
