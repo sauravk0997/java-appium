@@ -86,6 +86,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     //Need to remove below method once we replace it from all steps with clickCancelButton method
     @Override
     public void clickCancelBtn() {
+        clickHeadlineGeader();
         changePasswordCancelBtn.click();
     }
 
@@ -100,6 +101,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
 
     public void submitNewPasswordValue(String value) {
         enterLogInPassword(value);
+        hideKeyboard();
         clickSaveBtn();
     }
 
@@ -108,5 +110,9 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
         LOGGER.info("Expected auth headline: {}", expectedString);
         waitForPresenceOfAnElement(headlineSubtitle);
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);
+    }
+
+    public void clickHeadlineGeader() {
+        headlineHeader.click();
     }
 }
