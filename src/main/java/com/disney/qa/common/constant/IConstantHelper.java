@@ -15,6 +15,8 @@ public interface IConstantHelper {
     public static final String JARVIS_APP_ONE_TRUST_CONFIG = "oneTrustConfig";
     public static final String JARVIS_APP_IS_ENABLED = "isEnabled";
     public static final String JARVIS_NO_OVERRIDE_IN_USE = "Override in use! Set to: false";
+    public static final String JARVIS_OVERRIDE_IN_USE = "Override in use! Set to: true";
+    public static final String JARVIS_NO_OVERRIDE_IN_USE_TEXT = "NO override in use!";
 
     //country codes
     String AT = "AT";
