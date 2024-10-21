@@ -4,7 +4,6 @@ import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -38,14 +37,10 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         welcomePage.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
-        pause(5);
-        System.out.println(getDriver().getPageSource());
         Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
         oneTimePasscodePage.getLoginButtonWithPassword().click();
         passwordPage.clickHavingTroubleLogginInBtn();
-        pause(5);
-        System.out.println(getDriver().getPageSource());
         Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
         oneTimePasscodePage.clickMenu();
