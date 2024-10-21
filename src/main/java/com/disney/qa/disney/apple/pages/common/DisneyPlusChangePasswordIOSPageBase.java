@@ -69,10 +69,6 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
         return newPasswordSaveBtn.isPresent();
     }
 
-    public boolean isSaveAndContinueBtnPresent() {
-        return saveAndContinueBtn.isPresent();
-    }
-
     @Override
     public void clickSaveBtn() {
         primaryButton.click();
@@ -86,7 +82,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     //Need to remove below method once we replace it from all steps with clickCancelButton method
     @Override
     public void clickCancelBtn() {
-        clickHeadlineGeader();
+        clickHeadlineHeader();
         changePasswordCancelBtn.click();
     }
 
@@ -112,7 +108,12 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);
     }
 
-    public void clickHeadlineGeader() {
+
+    public boolean isSaveAndContinueBtnPresent() {
+        return saveAndContinueBtn.isPresent();
+    }
+
+    public void clickHeadlineHeader() {
         headlineHeader.click();
     }
 }
