@@ -107,7 +107,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		WATCHLIST
 	}
 
-
 	public String selectMoreMenu(MoreMenu option) {
 		String selection;
 		switch (option) {
