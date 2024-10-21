@@ -98,7 +98,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getExitJuniorModePin() {
 		return exitJuniorModePin;
-	};
+	}
 
 	public enum MoreMenu {
 		WATCHLIST,

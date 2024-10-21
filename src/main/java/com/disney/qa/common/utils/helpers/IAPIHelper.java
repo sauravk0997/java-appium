@@ -37,7 +37,7 @@ public interface IAPIHelper {
         }
     };
 
-        /**
+    /**
      * Get localization utils<br>
      * @return {@link DisneyLocalizationUtils}
      */
