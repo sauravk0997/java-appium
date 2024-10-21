@@ -1558,4 +1558,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
     }
+
+    public boolean isBackArrowPresent() {
+        return getBackArrow().isElementPresent();
+    }
+
+    public DisneyPlusMoreMenuIOSPageBase clickBackArrow() {
+        getBackArrow().click();
+        return initPage(DisneyPlusMoreMenuIOSPageBase.class);
+    }
 }
