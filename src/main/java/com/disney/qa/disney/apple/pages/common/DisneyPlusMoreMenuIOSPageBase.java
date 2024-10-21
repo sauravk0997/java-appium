@@ -101,12 +101,12 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public enum MoreMenu {
-		WATCHLIST,
-		APP_SETTINGS,
 		ACCOUNT,
-		LEGAL,
+		APP_SETTINGS,
 		HELP,
-		LOG_OUT
+		LEGAL,
+		LOG_OUT,
+		WATCHLIST
 	}
 
 
