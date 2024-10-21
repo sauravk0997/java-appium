@@ -187,7 +187,7 @@ public class DisneyPlusSignUpTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62375", "XMOBQA-62377", "XMOBQA-62379", "XMOBQA-62381", "XMOBQA-62383", "XMOBQA-62385", "XMOBQA-62387", "XMOBQA-62389"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, "NL", TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, US, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyEULegalHyperlinks() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = initPage(DisneyPlusSignUpIOSPageBase.class);
