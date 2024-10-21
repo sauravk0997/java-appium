@@ -192,14 +192,14 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     // For Alice text validation
     public enum globalNavigationMenuText {
+        HOME,
+        MOVIES,
+        ORIGINALS,
         PROFILE,
         SEARCH,
-        HOME,
-        WATCHLIST,
-        MOVIES,
         SERIES,
-        ORIGINALS,
-        SETTINGS
+        SETTINGS,
+        WATCHLIST
     }
 
     public List<String> getEnumMenuText() {
