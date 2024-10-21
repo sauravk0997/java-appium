@@ -1,8 +1,6 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -192,14 +190,14 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     // For Alice text validation
     public enum globalNavigationMenuText {
-        HOME,
-        MOVIES,
-        ORIGINALS,
         PROFILE,
         SEARCH,
+        HOME,
+        WATCHLIST,
+        MOVIES,
         SERIES,
-        SETTINGS,
-        WATCHLIST
+        ORIGINALS,
+        SETTINGS
     }
 
     public List<String> getEnumMenuText() {
