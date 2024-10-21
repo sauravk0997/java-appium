@@ -38,10 +38,12 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
 
     public static final String SUB_VERSION = "V1";
     public static final String ENTITLEMENT_LOOKUP = "Yearly";
-
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         setBuildType();
+        jarvisOverrideDisableCompanionConfig();
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        startApp(sessionBundles.get(DISNEY));
     }
 
     public void jarvisOverrideDisableCompanionConfig() {
@@ -50,7 +52,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         String isEnabled = "isEnabled";
         JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
         DisneyPlusApplePageBase appleBase = new DisneyPlusApplePageBase(getDriver());
-
         while (!isJarvisConfigured && jarvisAttempt < 4) {
             try {
                 LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
