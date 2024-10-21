@@ -80,7 +80,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         seriesTile.click();
     }
 
-
     public List<ExtendedWebElement> getDisplayedTitles() {
         int tries = 0;
         List<ExtendedWebElement> titles;
