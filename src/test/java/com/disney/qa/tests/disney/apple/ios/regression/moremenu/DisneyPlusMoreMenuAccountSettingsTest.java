@@ -83,7 +83,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         accountPage.waitForAccountPageToOpen();
-        sa.assertTrue(accountPage.isBackButtonPresent(), "Back button was not displayed");
+        sa.assertTrue(accountPage.isBackArrowPresent(), "Back arrow was not displayed");
         sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(), "User Email address was not displayed");
         sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(), "Manage with MyDisney link was not displayed");
         sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(), "User Password (hidden) was not displayed");
@@ -102,7 +102,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Account Management text was not displayed");
         sa.assertAll();
 
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = accountPage.clickBackButton();
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = accountPage.clickBackArrow();
         Assert.assertTrue(moreMenuPage.isOpened(), "More Menu page was not displayed");
     }
 
