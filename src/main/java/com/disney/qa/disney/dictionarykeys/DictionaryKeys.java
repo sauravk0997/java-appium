@@ -552,6 +552,7 @@ public enum DictionaryKeys {
     VERIFY_ACCOUNT_HEADER("verify_account_banner"),
     VIDEO_PLAYBACK_TITLE("video_playback_title"),
     VIDEO_PLAYER_RATING("videoplayer_rating"),
+    VIDEO_PLAYER_RESTART_BUTTON("video_player_start_from_beginning_button"),
     VIDEO_QUALITY_TITLE("video_quality_label"),
     WATCHLIST_BTN("details_watchlist"),
     WATCHLIST_COPY("watchlist_copy"),
