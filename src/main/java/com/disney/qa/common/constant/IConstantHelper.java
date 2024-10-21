@@ -17,16 +17,16 @@ public interface IConstantHelper {
     public static final String JARVIS_NO_OVERRIDE_IN_USE = "Override in use! Set to: false";
 
     //country codes
-    String US = "US";
-    String DE = "DE";
     String AT = "AT";
-    String CH = "CH";
-    String NL = "NL";
-    String TR = "TR";
-    String JP = "JP";
-    String BR = "BR";
-    String KR = "KR";
-    String SG = "SG";
     String AU = "AU";
+    String BR = "BR";
+    String CH = "CH";
+    String DE = "DE";
+    String JP = "JP";
+    String KR = "KR";
+    String NL = "NL";
     String NZ = "NZ";
+    String SG = "SG";
+    String TR = "TR";
+    String US = "US";
 }
