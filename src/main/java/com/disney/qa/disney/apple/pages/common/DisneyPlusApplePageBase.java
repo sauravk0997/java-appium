@@ -1558,9 +1558,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
     }
-
-    public boolean isPasswordSubtitlePresent() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                DictionaryKeys.MY_DISNEY_CHANGE_PASSWORD_BODY.getText())).isElementPresent();
-    }
 }

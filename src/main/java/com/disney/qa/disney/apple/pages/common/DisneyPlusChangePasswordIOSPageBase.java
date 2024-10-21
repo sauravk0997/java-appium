@@ -20,8 +20,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
 
     private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                            DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText()),
-            DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText());
+                            DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText()));
 
     private ExtendedWebElement logoutAllDevicesPasswordCopy = staticTextByLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -82,7 +81,6 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     //Need to remove below method once we replace it from all steps with clickCancelButton method
     @Override
     public void clickCancelBtn() {
-        clickHeadlineHeader();
         changePasswordCancelBtn.click();
     }
 
@@ -97,7 +95,6 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
 
     public void submitNewPasswordValue(String value) {
         enterLogInPassword(value);
-        hideKeyboard();
         clickSaveBtn();
     }
 
@@ -113,7 +110,12 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
         return saveAndContinueBtn.isPresent();
     }
 
-    public void clickHeadlineHeader() {
+    public void clickHeader() {
         headlineHeader.click();
+    }
+
+    public boolean isPasswordSubtitlePresent() {
+        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_CHANGE_PASSWORD_BODY.getText())).isElementPresent();
     }
 }

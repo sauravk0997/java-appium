@@ -335,11 +335,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(changePasswordPage.isLogoutAllDevicesPasswordCopyDisplayed(),
                 "XMOBQA-61559 - 'Logout All Devices' password text was not displayed");
 
-        changePasswordPage.submitNewPasswordValue("invalid");
+        changePasswordPage.submitNewPasswordValue("invalid" + "\n");
 
         sa.assertTrue(changePasswordPage.isInvalidPasswordErrorDisplayed(),
                 "XMOBQA-61565 - 'Invalid Password' error was not displayed");
 
+        changePasswordPage.clickHeader();
         changePasswordPage.clickCancelBtn();
 
         sa.assertTrue(accountPage.isOpened(),
