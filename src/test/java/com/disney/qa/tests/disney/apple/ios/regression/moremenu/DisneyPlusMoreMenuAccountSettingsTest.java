@@ -84,15 +84,33 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         accountPage.waitForAccountPageToOpen();
         sa.assertTrue(accountPage.isBackArrowPresent(), "Back arrow was not displayed");
-        sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(), "User Email address was not displayed");
-        sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(), "Manage with MyDisney link was not displayed");
-        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(), "User Password (hidden) was not displayed");
-        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE.getText())).isPresent(), "Billing Details (Subscriptions) header not displayed");
+        sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
+                "User Email address was not displayed");
+        sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(),
+                "Manage with MyDisney link was not displayed");
+        sa.assertTrue(
+                accountPage.getStaticTextByLabel(
+                        getLocalizationUtils().getDictionaryItem(
+                                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.HIDDEN_PASSWORD.getText()
+                        )).isPresent(), "User Password (hidden) was not displayed");
+        sa.assertTrue(
+                accountPage.getStaticTextByLabel(
+                        getLocalizationUtils().getDictionaryItem(
+                                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.SUBSCRIPTIONS_TITLE.getText()
+                        )).isPresent(), "Subscriptions header not displayed");
         sa.assertTrue(accountPage.isSubscriptionCellPresent(), "Subscription cell was not displayed");
         sa.assertTrue(accountPage.isAccessAndSecurityTextPresent(), "Access & Security text was not displayed");
         sa.assertTrue(accountPage.isManageDevicesTextPresent(), "Manage Devices text was not displayed");
-        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SETTINGS_HEADER.getText())).isPresent(), "Settings header not displayed");
-        sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(), "Restrict Profile Creation container was not displayed");
+        sa.assertTrue(
+                accountPage.getStaticTextByLabel(
+                        getLocalizationUtils().getDictionaryItem(
+                                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.ACCOUNT_SETTINGS_HEADER.getText()
+                        )).isPresent(), "Settings header not displayed");
+        sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(),
+                "Restrict Profile Creation container was not displayed");
         sa.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
         sa.assertTrue(accountPage.isEditProfilesTextPresent(), "Edit Profiles text was not displayed");
         accountPage.swipe(accountPage.getAccountManagementTextElement());
