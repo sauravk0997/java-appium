@@ -63,7 +63,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-
     @Override
     public boolean isOpened() {
         return searchBar.isPresent();
