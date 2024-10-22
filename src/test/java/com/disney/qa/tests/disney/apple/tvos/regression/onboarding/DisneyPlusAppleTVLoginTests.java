@@ -208,24 +208,23 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90598"})
-    @Test(description = "Given user enters a valid registered email then user is taken Log In password screen", groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void registeredEmailTakenToLoginPassword() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount disneyAccount = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-
+        DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        sa.assertTrue(welcomePage.isOpened(), "Welcome screen did not launch");
 
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyAccount.getEmail());
+        welcomePage.clickLogInButton();
+        loginPage.proceedToPasswordScreen(getAccount().getEmail());
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode page did not launch");
 
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isOpened(), "Log In password screen did not launch");
-
-        sa.assertAll();
+        oneTimePasscodePage.clickLoginWithPasswordButton();
+        Assert.assertTrue(passwordPage.isOpened(), "Log In password screen did not launch");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90701"})
