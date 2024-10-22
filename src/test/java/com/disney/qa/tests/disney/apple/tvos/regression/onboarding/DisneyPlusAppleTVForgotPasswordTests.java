@@ -109,7 +109,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
         String otp = getEmailApi().getDisneyOTP(disneyOTPAccount.getEmail(), startTime);
-        oneTimePasscodePage.enterOTP(otp);
+        oneTimePasscodePage.enterOTPValue(otp);
         oneTimePasscodePage.clickMenu();
         Assert.assertTrue(loginPage.isOpened(), LOG_IN_SCREEN_DID_NOT_LAUNCH);
     }
