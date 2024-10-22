@@ -216,7 +216,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         selectAppleUpdateLaterAndDismissAppTracking();
 
         Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
