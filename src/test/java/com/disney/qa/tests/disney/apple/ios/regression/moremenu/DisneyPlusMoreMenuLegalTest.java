@@ -4,7 +4,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
@@ -28,7 +27,6 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.common.constant.RatingConstant.GERMANY;
 
 public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -150,9 +148,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter(TUID, "TUID: ");
 
-        setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));getAccountApi().overrideLocations(getAccount(), country);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY,
-                country, getLocalizationUtils().getUserLanguage()));
+        setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), country);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
