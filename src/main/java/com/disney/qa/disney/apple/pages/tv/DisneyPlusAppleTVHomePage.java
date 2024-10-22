@@ -9,6 +9,7 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
@@ -16,17 +17,13 @@ import org.slf4j.LoggerFactory;
 import org.testng.SkipException;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CDNAV_HOME;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CDNAV_SEARCH;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_MOVIES_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_ORIGINALS_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_SERIES_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_SETTINGS_TITLE;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_WATCHLIST_TITLE;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusHomeIOSPageBase.class)
@@ -76,7 +73,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     @FindBy(xpath = "//XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]")
     private ExtendedWebElement carouselFocusedElement;
 
-    private ExtendedWebElement travelingAlertOkBtn = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.BTN_TRAVEL_MESSAGE_OK.getText()));
+    private ExtendedWebElement travelingAlertOkBtn = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.BTN_TRAVEL_MESSAGE_OK.getText()));
 
     public DisneyPlusAppleTVHomePage(WebDriver driver) {
         super(driver);
@@ -193,24 +190,54 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     // For Alice text validation
     public enum globalNavigationMenuText {
-        PROFILE("Test"),
-        SEARCH(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, CDNAV_SEARCH.getText())),
-        HOME(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, CDNAV_HOME.getText())),
-        WATCHLIST(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_WATCHLIST_TITLE.getText())),
-        MOVIES(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_MOVIES_TITLE.getText())),
-        SERIES(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_SERIES_TITLE.getText())),
-        ORIGINALS(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText())),
-        SETTINGS(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, NAV_SETTINGS_TITLE.getText()));
+        PROFILE,
+        SEARCH,
+        HOME,
+        WATCHLIST,
+        MOVIES,
+        SERIES,
+        ORIGINALS,
+        SETTINGS
+    }
 
-        private final String menu;
+    public List<String> getEnumMenuText() {
+        var list = new ArrayList<String>();
+        Arrays.stream(globalNavigationMenuText.values()).forEach(
+                item -> list.add(getNavigationMenuValue(item)));
+        return list;
+    }
 
-        globalNavigationMenuText(String menu) {
-            this.menu = menu;
+    public String getNavigationMenuValue(globalNavigationMenuText option) {
+        String selection;
+        switch (option) {
+            case PROFILE:
+                selection = "Test";
+                break;
+            case SEARCH:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, CDNAV_SEARCH.getText());
+                break;
+            case HOME:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, CDNAV_HOME.getText());
+                break;
+            case WATCHLIST:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_WATCHLIST_TITLE.getText());
+                break;
+            case MOVIES:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_MOVIES_TITLE.getText());
+                break;
+            case SERIES:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_SERIES_TITLE.getText());
+                break;
+            case ORIGINALS:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText());
+                break;
+            case SETTINGS:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, NAV_SETTINGS_TITLE.getText());
+                break;
+            default:
+                throw new InvalidArgumentException("Invalid selection made");
         }
-
-        public String getText() {
-            return this.menu;
-        }
+        return selection;
     }
 
     public boolean isProfileBtnFocused() {

@@ -20,7 +20,7 @@ public class DisneyPlusAppleTVMoviesPage extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return getStaticTextByLabelContains(getDictionary()
+        return getStaticTextByLabelContains(getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 DictionaryKeys.NAV_MOVIES_TITLE.getText())).isPresent();
     }
