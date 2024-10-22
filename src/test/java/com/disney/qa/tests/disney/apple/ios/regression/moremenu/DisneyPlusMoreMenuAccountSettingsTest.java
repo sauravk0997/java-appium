@@ -84,8 +84,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getAccount());
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         accountPage.waitForAccountPageToOpen();
-        sa.assertTrue(accountPage.isBackArrowPresent(), "Back arrow was not displayed");
+        sa.assertTrue(accountPage.getBackArrow().isElementPresent(), "Back arrow was not displayed");
         sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
                 "User Email address was not displayed");
         sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(),
@@ -120,11 +121,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Account Management link was not displayed");
         sa.assertTrue(accountPage.isAccountManagementTextPresent(),
                 "Account Management text was not displayed");
-        sa.assertAll();
 
-        accountPage.clickBackArrow();
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        Assert.assertTrue(moreMenuPage.isOpened(), "More Menu page was not displayed");
+        accountPage.getBackArrow().click();
+        sa.assertTrue(moreMenuPage.isOpened(), "More Menu page was not displayed");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
