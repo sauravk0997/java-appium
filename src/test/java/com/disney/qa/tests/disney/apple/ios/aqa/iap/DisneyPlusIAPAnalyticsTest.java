@@ -22,13 +22,15 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 
 import java.lang.invoke.MethodHandles;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 
 public class DisneyPlusIAPAnalyticsTest extends DisneyBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XAQA-2910"})
-    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {TestGroup.PRE_CONFIGURATION })
+    @Test(description = "Standard purchase with a new account for Premium monthly sku", groups = {TestGroup.PRE_CONFIGURATION, US})
     public void testPurchaseFlowAnalytics() {
         setBuildType();
         if (buildType != BuildType.IAP) {
