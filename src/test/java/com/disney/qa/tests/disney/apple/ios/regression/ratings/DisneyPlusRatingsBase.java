@@ -22,6 +22,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.common.constant.IConstantHelper.US;
 
 /**
  * Base ratings setup class
@@ -135,6 +136,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     private void setDictionary(String lang, String locale) {
         R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
+        R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), locale, true);
         getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
