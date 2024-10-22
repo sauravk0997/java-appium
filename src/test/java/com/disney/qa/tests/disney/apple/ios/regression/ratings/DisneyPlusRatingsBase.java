@@ -144,7 +144,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         disneyLocalizationUtils.setLanguageCode(lang);
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
