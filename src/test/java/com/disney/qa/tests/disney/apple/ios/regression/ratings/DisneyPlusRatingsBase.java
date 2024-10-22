@@ -14,6 +14,7 @@ import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
+import org.testng.annotations.AfterMethod;
 import org.testng.asserts.SoftAssert;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 
@@ -134,14 +135,13 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private void setDictionary(String lang, String locale) {
-        getLocalizationUtils().setCountryDataByCode(locale);
-        getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
                 new DisneyLocalizationUtils(
                         locale, lang, MobilePlatform.IOS,
                         DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+        disneyLocalizationUtils.setCountryDataByCode(locale);
+        disneyLocalizationUtils.setLanguageCode(lang);
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
         R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
@@ -285,5 +285,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
+    }
+
+    @AfterMethod
+    public void tearDown() {
+        LOCALIZATION_UTILS.remove();
     }
 }
