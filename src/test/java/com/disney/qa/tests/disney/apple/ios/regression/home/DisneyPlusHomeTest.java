@@ -21,6 +21,7 @@ import java.net.*;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
@@ -29,7 +30,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
-    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHomeUIElements() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -74,7 +75,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
-    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecommendedForYouContainer() {
         int limit = 30;
         int swipeCount = 5;
@@ -133,7 +134,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
-    @Test(groups = {TestGroup.HOME})
+    @Test(groups = {TestGroup.HOME, US})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SINGAPORE, ENGLISH_LANG));
@@ -149,7 +150,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67375"})
-    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HOME, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HOME, TestGroup.SMOKE, US})
     public void verifyUserTapsOnHomeContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

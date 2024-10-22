@@ -11,10 +11,12 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusBrandsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67373"})
-    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyBrandUI() {
         DisneyPlusBrandIOSPageBase.Brand brand = DisneyPlusBrandIOSPageBase.Brand.DISNEY;
         SoftAssert sa = new SoftAssert();

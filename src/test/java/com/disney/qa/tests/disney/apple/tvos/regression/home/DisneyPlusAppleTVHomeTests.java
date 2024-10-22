@@ -18,13 +18,14 @@ import java.net.*;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521"})
-    @Test(groups = {TestGroup.HOME})
+    @Test(groups = {TestGroup.HOME, US})
     public void verifyHomeScreenLayout() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
