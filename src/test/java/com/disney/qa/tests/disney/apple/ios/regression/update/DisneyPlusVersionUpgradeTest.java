@@ -10,6 +10,8 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
     String APP_URL = "appcenter://Disney-Prod-Enterprise/ios/enterprise/%s";
@@ -18,7 +20,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
        and upgrades against the latest FC approved (appCurrentFCVersion) it is in the current FC XML
      */
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67617"})
-    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyAppUpgrade() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

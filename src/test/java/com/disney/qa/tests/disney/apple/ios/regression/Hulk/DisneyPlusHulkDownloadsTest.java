@@ -12,6 +12,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
 
@@ -19,7 +20,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
     private static final String SET = "set";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75169", "XMOBQA-74449"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyHuluSeriesPremiumDownloadActions() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
