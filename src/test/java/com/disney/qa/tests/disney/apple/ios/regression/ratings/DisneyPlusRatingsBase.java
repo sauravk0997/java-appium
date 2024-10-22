@@ -9,8 +9,6 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
@@ -50,7 +48,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
@@ -59,17 +57,17 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        getDesiredRatingContent(ratingValue, LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage());
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
     public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
         setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -85,7 +83,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+                LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -100,7 +98,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void ratingsSetupForOTPAccount(String lang, String locale) {
         setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
