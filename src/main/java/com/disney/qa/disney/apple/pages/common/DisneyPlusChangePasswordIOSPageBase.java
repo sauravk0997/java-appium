@@ -111,7 +111,8 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     }
 
     public boolean isPasswordSubtitlePresent() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.
+                        ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_CHANGE_PASSWORD_BODY.getText())).isElementPresent();
     }
 }
