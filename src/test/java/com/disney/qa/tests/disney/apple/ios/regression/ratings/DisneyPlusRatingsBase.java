@@ -22,7 +22,6 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
-import static com.disney.qa.common.constant.IConstantHelper.US;
 
 /**
  * Base ratings setup class
@@ -37,12 +36,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
-    static final String AUSTRALIA_LANG = "en";
-    static final String BRAZIL_LANG = "pt";
+    static final String AUSTRALIA_LANG = "en-GB";
+    static final String BRAZIL_LANG = "pt-BR";
     static final String GERMANY_LANG = "de";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
-    static final String NETHERLANDS_LANG = "en";
+    static final String NETHERLANDS_LANG = "en-GB";
     static final String NEW_ZEALAND_LANG = "en";
     public static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
@@ -135,17 +134,17 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private void setDictionary(String lang, String locale) {
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), locale, true);
         getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
                 new DisneyLocalizationUtils(
                         locale, lang, MobilePlatform.IOS,
                         DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
+
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
+        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
