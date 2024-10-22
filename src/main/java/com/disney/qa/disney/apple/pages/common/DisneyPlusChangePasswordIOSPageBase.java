@@ -18,7 +18,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
     @FindBy(id = "labelErrorMessage")
     private ExtendedWebElement invalidPassword;
 
-    private ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
+    final ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                             DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText()));
 
@@ -27,7 +27,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
                             DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText()),
             DictionaryKeys.LOGOUT_ALL_DEVICES_PASSWORD_COPY.getText());
 
-    private ExtendedWebElement changePasswordCancelBtn = staticTextByLabel.format(getDictionary()
+    final ExtendedWebElement changePasswordCancelBtn = staticTextByLabel.format(getDictionary()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
                             DictionaryKeys.CANCEL_LABEL.getText()),
             DictionaryKeys.CANCEL_LABEL.getText());
@@ -104,7 +104,6 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
         waitForPresenceOfAnElement(headlineSubtitle);
         return headlineSubtitle.getText().equalsIgnoreCase(expectedString);
     }
-
 
     public boolean isSaveAndContinueBtnPresent() {
         return saveAndContinueBtn.isPresent();
