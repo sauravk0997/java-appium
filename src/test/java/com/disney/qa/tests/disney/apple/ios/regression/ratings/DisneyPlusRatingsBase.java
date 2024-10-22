@@ -284,7 +284,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         LOCALIZATION_UTILS.remove();
     }
