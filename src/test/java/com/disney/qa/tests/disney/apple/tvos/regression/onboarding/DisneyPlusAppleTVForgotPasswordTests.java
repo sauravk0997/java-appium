@@ -25,6 +25,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseTest {
     private static final String ONE_TIME_CODE_SCREEN_DID_NOT_OPEN = "One time code screen did not open";
     private static final String WELCOME_SCREEN_DID_NOT_OPEN = "Welcome screen did not launch";
+    private static final String LOG_IN_SCREEN_DID_NOT_LAUNCH = "Log In screen did not launch";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90618"})
     @Test(groups = {TestGroup.ONBOARDING, US})
@@ -91,7 +92,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90624"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void onScreenNumericKeyboardVerification() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
@@ -99,9 +99,8 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         Date startTime = getEmailApi().getStartTime();
         DisneyAccount disneyOTPAccount = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
-
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
+        Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
         welcomePage.clickLogInButton();
         loginPage.proceedToPasswordScreen(disneyOTPAccount.getEmail());
@@ -112,10 +111,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         String otp = getEmailApi().getDisneyOTP(disneyOTPAccount.getEmail(), startTime);
         oneTimePasscodePage.enterOTP(otp);
         oneTimePasscodePage.clickMenu();
-        //email screen
-//        sa.assertTrue(passwordPage.isOpened(), "Enter Password screen did not launch after backing from Having Trouble Loggin In");
-
-        sa.assertAll();
+        Assert.assertTrue(loginPage.isOpened(), LOG_IN_SCREEN_DID_NOT_LAUNCH);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90628"})
