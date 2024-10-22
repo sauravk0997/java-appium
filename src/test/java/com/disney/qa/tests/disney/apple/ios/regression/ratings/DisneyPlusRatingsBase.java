@@ -31,7 +31,6 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
     private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     protected String contentTitle;
-    protected String contentYearOfRelease;
     private boolean isMovie;
     String episodicRating;
     static final String PAGE_IDENTIFIER = "page-";
@@ -204,8 +203,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                         if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                             LOGGER.info("Title returned: " + item.getVisuals().getTitle());
                             contentTitle = item.getVisuals().getTitle();
-                            contentYearOfRelease =
-                                    item.getVisuals().getMetastringParts().getReleaseYearRange().getStartYear();
                             Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
@@ -240,7 +237,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getTitleContainer(contentTitle, rating, contentYearOfRelease).click();
+        searchPage.getTitleContainer(contentTitle, rating).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
@@ -273,7 +270,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getTitleContainer(contentTitle, rating, contentYearOfRelease).click();
+        searchPage.getTitleContainer(contentTitle, rating).click();
 
         //ratings are shown on downloaded content
         if (!detailsPage.getMovieDownloadButton().isPresent()) {
