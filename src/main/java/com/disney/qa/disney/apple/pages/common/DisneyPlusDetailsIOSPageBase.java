@@ -1088,4 +1088,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                                 SERIES_EPISODE_TITLE.getText()),
                 Map.of("episodeNumber", Integer.parseInt(season), "title", episodeTitle)));
     }
+
+    public void waitForDownloadToStart() {
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+                "Stop/Pause download button was not present")
+                .until(it -> stopOrPauseDownloadButton.isPresent(ONE_SEC_TIMEOUT));
+    }
  }
