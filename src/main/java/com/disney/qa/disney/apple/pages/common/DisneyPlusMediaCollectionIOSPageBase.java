@@ -15,12 +15,12 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
     @FindBy(id = "selectorButton")
     private ExtendedWebElement mediaCategoryDropdown;
 
-    private final ExtendedWebElement seriesHeader = xpathNameOrName.format(getDictionary().
+    private final ExtendedWebElement seriesHeader = xpathNameOrName.format(getLocalizationUtils().
                     getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             DictionaryKeys.NAV_SERIES_TITLE.getText()),
             DictionaryKeys.NAV_SERIES_TITLE.getText());
 
-    private final ExtendedWebElement moviesHeader = xpathNameOrName.format(getDictionary().
+    private final ExtendedWebElement moviesHeader = xpathNameOrName.format(getLocalizationUtils().
                     getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             DictionaryKeys.NAV_MOVIES_TITLE.getText()),
             DictionaryKeys.NAV_MOVIES_TITLE.getText());

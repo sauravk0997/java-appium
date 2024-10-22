@@ -21,9 +21,9 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isOriginalPageLoadPresent() {
-        String originalLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText());
-        return getStaticTextByLabel(getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+        String originalLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText());
+        return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
                         false), Map.of(BRAND_NAME, originalLabel))).isPresent();
     }
 
