@@ -233,8 +233,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
-        try {
-            List<String> groups = Arrays.asList(result.getMethod().getGroups());
+        List<String> groups = Arrays.asList(result.getMethod().getGroups());
             if (groups.contains(US)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
@@ -271,9 +270,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
             } else if (groups.contains(TR)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "tr", true);
-            }
-        } catch(RuntimeException ex) {
-            throw new RuntimeException("There is no valid information for the Locale provided {}", ex);
+            } else {
+                throw new RuntimeException("No associated Locale and Language was found.");
         }
     }
 
