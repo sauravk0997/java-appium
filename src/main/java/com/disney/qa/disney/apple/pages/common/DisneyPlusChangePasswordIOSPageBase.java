@@ -34,7 +34,7 @@ public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPa
                             DictionaryKeys.BTN_SAVE.getText()),
             DictionaryKeys.BTN_SAVE.getText());
 
-    protected ExtendedWebElement saveAndContinueBtn = staticTextByLabel.format(getLocalizationUtils()
+    private final ExtendedWebElement saveAndContinueBtn = staticTextByLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                             DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText()),
             DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText());
