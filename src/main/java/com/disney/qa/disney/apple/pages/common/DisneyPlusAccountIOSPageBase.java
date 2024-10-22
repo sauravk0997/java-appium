@@ -44,10 +44,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement subscriptionChange;
 
     private final ExtendedWebElement accessAndSecurityText =
-            getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+            getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                     DictionaryKeys.ACCESS_SECURITY_HEADER.getText()));
     private final ExtendedWebElement manageDevicesText =
-            getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+            getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                     DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText()));
 
     public boolean isMovistarSubscriptionTitlePresent() {
@@ -657,7 +657,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isAccountManagementLinkPresent() {
-        String dictValOfAccountManagement = getDictionary().getDictionaryItem(
+        String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
         String expectedHyperLinkText = dictValOfAccountManagement.substring(
                 dictValOfAccountManagement.indexOf('[')+1,dictValOfAccountManagement.indexOf(']'));
@@ -665,7 +665,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getAccountManagementTextElement() {
-        String dictValOfAccountManagement = getDictionary().getDictionaryItem(
+        String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
         String editProfileText = dictValOfAccountManagement.
                 replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
