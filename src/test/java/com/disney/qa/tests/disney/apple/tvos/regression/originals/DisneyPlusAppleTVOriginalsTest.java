@@ -14,10 +14,12 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90978", "XCDQA-90980", "XCDQA-90982"})
-    @Test(description = "Originals Appearance", groups = {TestGroup.SMOKE, TestGroup.DETAILS})
+    @Test(description = "Originals Appearance", groups = {TestGroup.SMOKE, TestGroup.DETAILS, US})
     public void originalsAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();

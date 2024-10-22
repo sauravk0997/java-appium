@@ -37,6 +37,8 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.ZipUtils;
 import com.zebrunner.carina.utils.R;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusAppleTVBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -52,7 +54,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         }
     }
 
-    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = { TestGroup.ONBOARDING, TestGroup.ARIEL, TestGroup.PROXY })
+    @Test(description = "Onboarding Flow From Sign Up To Log Out Capture Screenshots", groups = { TestGroup.ONBOARDING, TestGroup.ARIEL, TestGroup.PROXY, US})
     public void captureFullOnboardingFlowFromSignUpToLogOut() {
         String baseDirectory = String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage());
 
@@ -237,7 +239,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 String.format("Onboarding_Background_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
     }
 
-    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = { TestGroup.ONBOARDING, TestGroup.PROXY })
+    @Test(description = "Onboarding Flow Expired Account Capture Screenshots", groups = { TestGroup.ONBOARDING, TestGroup.PROXY, US})
     public void captureFullOnboardingFlowToExpiredAccount() {
         String baseDirectory = "Screenshots-Onboarding-PartTwo/";
         DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
@@ -286,7 +288,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
     }
 
-    @Test(description = "Onboarding flows Background Images Check", groups = { TestGroup.BG_IMAGE, TestGroup.PROXY })
+    @Test(description = "Onboarding flows Background Images Check", groups = { TestGroup.BG_IMAGE, TestGroup.PROXY, US})
     public void backgroundImage() {
         String baseDirectory = "Screenshots-BGImage/";
         CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().addDefaultEntitlement(true)
@@ -366,7 +368,7 @@ public class DisneyPlusAppleTVOnboardingLocalizationCaptures extends DisneyPlusA
                 String.format("Onboarding_Background_Images_%s_%s_%s.zip", getLanguage().toUpperCase(), getCountry(), getDate()));
     }
 
-    @Test(description = "Basic IAP flow", groups = TestGroup.PROXY, enabled = false)
+    @Test(description = "Basic IAP flow", groups = {TestGroup.PROXY, US}, enabled = false)
     public void capturePurchaseFlow() {
         if (false) {
             skipExecution("Test run is not against IAP compatible build.");

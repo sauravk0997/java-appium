@@ -15,11 +15,13 @@ import org.testng.ITestContext;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusAppleTVHoraSmokeTest extends DisneyPlusAppleTVBaseTest {
 
     private static final int playbackDuration = 10;
 
-    @Test(description = "Hora Smoke test - performs login, playback, and logout. DUST events are validated", groups = TestGroup.HORA_SMOKE)
+    @Test(description = "Hora Smoke test - performs login, playback, and logout. DUST events are validated", groups = {TestGroup.HORA_SMOKE, US})
     @Maintainer("jwang4")
     public void horaSmokeTvos(ITestContext context) {
         SoftAssert sa = new SoftAssert();
