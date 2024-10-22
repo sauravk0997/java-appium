@@ -18,6 +18,8 @@ import org.testng.asserts.SoftAssert;
 import java.io.File;
 import java.util.*;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
 
     private static final String S3_BASE_PATH = "bamtech-qa-alice/disney/recognition/alice/";
@@ -33,7 +35,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
                     "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
-    @Test(description = "Validate of the UI and functional items of the Collection and Network page", groups = {TestGroup.HULK, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Validate of the UI and functional items of the Collection and Network page", groups = {TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyHulkCollectionPagesNetworkPageUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

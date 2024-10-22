@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
+import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
@@ -35,7 +36,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74564"})
-    @Test(description = "Brand Row Set includes Hulu Tile", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Brand Row Set includes Hulu Tile", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluBrandTileOnHome() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -50,7 +51,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74829"})
-    @Test(description = "Validate of the UI and functional items of the Hulu brand page", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Validate of the UI and functional items of the Hulu brand page", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluBrandPage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -84,7 +85,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74642"})
-    @Test(description = "Hulk - Hulu Hub Page - Collections", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulk - Hulu Hub Page - Collections", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluPageContent() throws URISyntaxException, JsonProcessingException {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -110,7 +111,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
-    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
+    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
     public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

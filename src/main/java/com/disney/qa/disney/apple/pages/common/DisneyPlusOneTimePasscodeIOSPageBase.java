@@ -25,7 +25,7 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
     @ExtendedFindBy(accessibilityId = "buttonLoginWithPassword")
     private ExtendedWebElement loginWithPassword;
 
-    private ExtendedWebElement resendButton = xpathNameOrName.format(getDictionary()
+    private ExtendedWebElement resendButton = xpathNameOrName.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             RESEND_EMAIL_COPY_2.getText()),
             RESEND_EMAIL_COPY_2.getText());
@@ -42,13 +42,13 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
 
     public void enterOtpValue(String value) {
         otpInputField.type(value);
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
+        getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public void enterOtpValueDismissKeys(String value) {
         otpInputField.type(value);
         dismissKeyboardForPhone();
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
+        getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public void enterOtp(String value) {

@@ -8,6 +8,8 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
 
     static final String NETWORK = "FX";
@@ -17,7 +19,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74451"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluVideoPlayerNetworkWatermark() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 import java.util.Date;
 import java.util.List;
@@ -182,14 +180,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(3);
         getScreenshots("ProfilePage");
 
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         pause(3);
         getScreenshots("EmptyWatchlist");
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
         pause(3);
         getScreenshots("AppSettings");
 
@@ -383,8 +379,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         passwordPage.clickPrimaryButton();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
         pause(3);
         getScreenshots("LegalLandingPage");
 
@@ -398,8 +393,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         legalPage.getBackArrow().click();
 
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP)).click();
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Help page did not open.")
                 .until(it -> moreMenuPage.isHelpWebviewOpen());
         pause(10);
@@ -647,8 +641,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         contentRatingPage.clickSaveProfileButton();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT)).click();
         welcomePage.clickLogInButton();
         loginPage.fillOutEmailField(testAccountTwoProfiles.getEmail());
         loginPage.clickPrimaryButton();
