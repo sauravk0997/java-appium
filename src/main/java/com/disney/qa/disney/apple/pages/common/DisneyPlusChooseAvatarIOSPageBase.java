@@ -16,7 +16,7 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
     ExtendedWebElement avatarSelectionScreenView;
 
     private ExtendedWebElement skipButton = getDynamicAccessibilityId(
-            getDictionary().getDictionaryItem(
+            getLocalizationUtils().getDictionaryItem(
                     DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.CHOOSE_PROFILE_ICON_SKIP.getText()));
 
@@ -43,7 +43,7 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getChooseAvatarTitle() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
     }
 

@@ -32,12 +32,12 @@ public class DisneyPlusAppLanguageIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isOpened() { return appLanguageView.isElementPresent(); }
 
     public boolean isAppLanguageHeaderPresent() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 UI_LANGUAGE_SETTING.getText())).isPresent();
     }
 
     public boolean isAppLanguageCopyPresent() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 UI_LANGUAGE_COPY.getText())).isPresent();
     }
 

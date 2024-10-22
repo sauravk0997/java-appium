@@ -37,7 +37,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public ExtendedWebElement getOTPHeader() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_OTP_HEADER.getText()));
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_OTP_HEADER.getText()));
     }
 
     public DisneyPlusAppleTVForgotPasswordPage(WebDriver driver) {
@@ -50,9 +50,9 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
         Stream.of(MY_DISNEY_OTP_HEADER, MY_DISNEY_OTP_BODY, MY_DISNEY_OTP_LOGIN_RESEND_BTN, MY_DISNEY_CONTINUE_BTN).collect(Collectors.toList())
                 .forEach(item -> {
                     if (item == MY_DISNEY_OTP_BODY) {
-                        expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText()).replace(EMAIL_PLACEHOLDER, email));
+                        expectedList.add(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText()).replace(EMAIL_PLACEHOLDER, email));
                     } else {
-                        expectedList.add(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText()));
+                        expectedList.add(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, item.getText()));
                     }
                 });
         return expectedList;
@@ -63,7 +63,7 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public boolean isNumericKeyboardOpen() {
-        boolean isPresent = isAIDElementPresentWithScreenshot(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, EMAIL_CODE_TITLE.getText()));
+        boolean isPresent = isAIDElementPresentWithScreenshot(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, EMAIL_CODE_TITLE.getText()));
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
@@ -97,15 +97,15 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public String getCheckYourEmailScreenTitle() {
-        return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_RESEND_TITLE.getText());
+        return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_RESEND_TITLE.getText());
     }
 
     public String getOTPErrorMessage() {
-        return getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSCODE.getText());
+        return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSCODE.getText());
     }
 
     public boolean isOTPErrorMessagePresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_INCORRECT_ERROR.getText())).isPresent();
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_INCORRECT_ERROR.getText())).isPresent();
     }
 
     public void clickContinueBtnOnOTPPage() {
@@ -113,16 +113,16 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     }
 
     public boolean isResentEmailHeaderPresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_OTP_RESENT_HEADER.getText())).isPresent();
     }
 
     public boolean isResentEmailBodyPresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_OTP_RESENT_BODY.getText())).isPresent();
     }
 
     public boolean isOtpIncorrectErrorPresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_INCORRECT_ERROR.getText())).isPresent();
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_INCORRECT_ERROR.getText())).isPresent();
     }
 }

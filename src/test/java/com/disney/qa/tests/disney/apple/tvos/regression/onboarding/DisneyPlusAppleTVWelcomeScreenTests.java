@@ -15,12 +15,13 @@ import org.testng.asserts.SoftAssert;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89345", "XCDQA-89341"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void welcomeScreenNavigation() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -43,7 +44,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89343"})
-    @Test(groups = {TestGroup.SMOKE, TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.SMOKE, TestGroup.ONBOARDING, US}, enabled = false)
     public void welcomeScreenAppearance() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
