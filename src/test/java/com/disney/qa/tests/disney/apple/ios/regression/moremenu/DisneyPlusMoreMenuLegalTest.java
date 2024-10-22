@@ -150,9 +150,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter(TUID, "TUID: ");
 
-        jarvisDisableOneTrustBanner();
-      //  setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-      //  getAccountApi().overrideLocations(getAccount(), country);
+        setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));getAccountApi().overrideLocations(getAccount(), country);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY,
                 country, getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), country);
