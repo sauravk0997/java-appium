@@ -134,17 +134,16 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private void setDictionary(String lang, String locale) {
+        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
         getLocalizationUtils().setCountryDataByCode(locale);
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
                 new DisneyLocalizationUtils(
                         locale, lang, MobilePlatform.IOS,
                         DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
