@@ -43,14 +43,13 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
 
         onboard();
         //Adding a Pixar item to Watchlist
         homePage.clickPixarTile();
         brandPage.isOpened();
         brandPage.clickFirstCarouselPoster();
-        sa.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
         String firstTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
         //Adding a Disney item to Watchlist
@@ -58,7 +57,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         homePage.clickDisneyTile();
         brandPage.isOpened();
         brandPage.clickFirstCarouselPoster();
-        sa.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
         String secondTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
         //Adding a Marvel item to Watchlist
@@ -66,7 +65,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         homePage.clickMarvelTile();
         brandPage.isOpened();
         brandPage.clickFirstCarouselPoster();
-        sa.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
         String thirdTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
 
@@ -78,7 +77,6 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
         Assert.assertTrue(moreMenu.areWatchlistTitlesProperlyOrdered(thirdTitle, secondTitle, firstTitle),
                 "Titles were not placed in the correct order");
-        sa.assertAll();
     }
 
 }
