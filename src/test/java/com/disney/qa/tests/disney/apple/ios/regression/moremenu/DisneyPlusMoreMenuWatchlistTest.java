@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
@@ -38,7 +39,6 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68440"})
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPopulatedWatchlistDisplay() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -49,6 +49,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         homePage.clickPixarTile();
         brandPage.isOpened();
         brandPage.clickFirstCarouselPoster();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
         String firstTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
         //Adding a Disney item to Watchlist
@@ -56,6 +57,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         homePage.clickDisneyTile();
         brandPage.isOpened();
         brandPage.clickFirstCarouselPoster();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
         String secondTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
         //Adding a Marvel item to Watchlist
@@ -63,6 +65,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         homePage.clickMarvelTile();
         brandPage.isOpened();
         brandPage.clickFirstCarouselPoster();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
         String thirdTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
 

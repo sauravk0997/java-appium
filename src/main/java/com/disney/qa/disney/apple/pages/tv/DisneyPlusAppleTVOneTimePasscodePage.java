@@ -2,6 +2,8 @@ package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.Screenshot;
+import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -17,5 +19,13 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
         return getLoginButtonWithPassword().isPresent();
     }
 
-    //TODO: QAA-11329 - Move OneTimePasscode identifiers and elements from ForgotPasswordPage
+    //TODO: QAA-16993 - Move OneTimePasscode identifiers and elements from ForgotPasswordPage
+
+    public void enterOTPCode(String otp) {
+        char[] otpArray = otp.toCharArray();
+        for (char otpChar : otpArray) {
+            dynamicBtnFindByLabel.format(otpChar).click();
+        }
+        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+    }
 }
