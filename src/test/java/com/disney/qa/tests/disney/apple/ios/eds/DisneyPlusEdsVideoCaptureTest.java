@@ -8,9 +8,11 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import org.testng.annotations.Test;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
 
-    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Back", groups = TestGroup.PRE_CONFIGURATION)
+    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Back", groups = {TestGroup.PRE_CONFIGURATION, US})
     public void capturePauseResume() {
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = detailsIOSPageBase.clickPlayButton().waitForVideoToStart();
@@ -23,7 +25,7 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
         harValidation();
     }
 
-    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Scrub -> Back", groups = TestGroup.PRE_CONFIGURATION)
+    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Resume -> Scrub -> Back", groups = {TestGroup.PRE_CONFIGURATION, US})
     public void capturePauseResumeScrub() {
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         detailsIOSPageBase.clickPlayButton();
@@ -37,7 +39,7 @@ public class DisneyPlusEdsVideoCaptureTest extends DisneyBaseTest {
         harValidation();
     }
 
-    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Scrub -> Resume -> Back", groups = {TestGroup.PRE_CONFIGURATION, TestGroup.PROXY})
+    @Test(description = "Capture data for the following video sequence: Play -> Pause -> Scrub -> Resume -> Back", groups = {TestGroup.PRE_CONFIGURATION, TestGroup.PROXY, US})
     public void capturePauseScrubResume() {
         DisneyPlusDetailsIOSPageBase detailsIOSPageBase = onboardAndOpenMedia();
         detailsIOSPageBase.clickPlayButton();

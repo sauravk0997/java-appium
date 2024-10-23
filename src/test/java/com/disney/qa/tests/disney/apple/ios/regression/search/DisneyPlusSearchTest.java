@@ -505,7 +505,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75718"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHideRestrictedTitlesInSearchResults() {
         String contentTitle = "Deadpool & Wolverine";
 
