@@ -141,6 +141,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         disneyLocalizationUtils.setCountryDataByCode(locale);
         disneyLocalizationUtils.setLanguageCode(lang);
         disneyLocalizationUtils.setLegalDocuments();
+        // set object or override
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
     }
 

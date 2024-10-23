@@ -24,6 +24,7 @@ import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
@@ -60,7 +61,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
  * Base class for both DisneyBaseTest (mobile) and DisneyPlusAppleTVBaseTest (TVOS)
  */
 @SuppressWarnings("squid:S2187")
-public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
+public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIHelper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final int SHORT_TIMEOUT = 5;
@@ -138,7 +139,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     };
 
-    private static final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
+    private final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
     });
@@ -338,14 +339,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         }
     }
 
-    public static DisneyLocalizationUtils getLocalizationUtils() {
-        try {
-            return LOCALIZATION_UTILS.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
-    }
-
     public static DisneyAccountApi getAccountApi() {
         return ACCOUNT_API.get();
     }
@@ -368,11 +361,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
      *
      * @return {@link DisneyAccount}
      */
-    public static DisneyAccount getAccount() {
+    public DisneyAccount getAccount() {
         return DISNEY_ACCOUNT.get();
     }
 
-    public static void setAccount(DisneyAccount account) {
+    public void setAccount(DisneyAccount account) {
         DISNEY_ACCOUNT.set(account);
     }
 
