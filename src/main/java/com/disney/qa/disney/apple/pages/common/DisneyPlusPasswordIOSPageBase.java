@@ -34,9 +34,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "CONTINUE")
     protected ExtendedWebElement continueButton;
 
-    @ExtendedFindBy(accessibilityId = "labelErrorMessage")
-    protected ExtendedWebElement labelError;
-
     public DisneyPlusPasswordIOSPageBase(WebDriver driver) {
         super(driver);
     }
