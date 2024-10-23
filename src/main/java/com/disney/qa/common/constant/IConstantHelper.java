@@ -12,10 +12,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public interface IConstantHelper {
-    EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_DISNEY =
-            EnumSet.of(ExploreSearchRequest.ContentEntitlement.DISNEY_PLUS_BASE);
-    EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_HULU =
-            EnumSet.of(ExploreSearchRequest.ContentEntitlement.HULU_BASE);
     public static final String JARVIS_APP_CONFIG = "App Config";
     public static final String JARVIS_APP_EDIT_CONFIG = "Edit Config";
     public static final String JARVIS_APP_PLATFORM_CONFIG = "platformConfig";
@@ -40,6 +36,5 @@ public interface IConstantHelper {
     String EMEA = "EMEA";
     String MPAA = "MPAA";
 
-    Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
-    Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
 }
