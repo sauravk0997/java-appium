@@ -11,12 +11,10 @@ public final class TestGroup {
 
     //Feature Groups
     public static final String SMOKE = "Smoke";
-    public static final String ALICE = "Alice";
     public static final String ANTHOLOGY = "Anthology";
     public static final String ARIEL = "Ariel";
     public static final String BG_IMAGE = "BGImage";
     public static final String DEEPLINKS = "Deeplinks";
-    public static final String DETAILS = "Details";
     public static final String DETAILS_PAGE = "DetailsPage";
     public static final String DOWNLOADS = "Downloads";
     public static final String HOME = "Home";
@@ -25,6 +23,7 @@ public final class TestGroup {
     public static final String LOG_IN = "LogIn";
     public static final String MORE_MENU = "MoreMenu";
     public static final String MOVIES = "Movies";
+    public static final String NAVIGATION = "Navigation";
     public static final String ONBOARDING = "Onboarding";
     public static final String PROFILES = "Profiles";
     public static final String R21 = "R21";
@@ -34,9 +33,14 @@ public final class TestGroup {
     public static final String SERIES = "Series";
     public static final String SIGN_UP = "SignUp";
     public static final String SUB_UI = "SubUI";
+    public static final String UP_NEXT = "UpNext";
+    public static final String UPGRADE = "Upgrade";
     public static final String VIDEO_PLAYER = "VideoPlayer";
+    public static final String VIDEO_PLAYER_ADS = "VideoPlayerAds";
     public static final String WATCHLIST = "Watchlist";
+    public static final String WELCH = "Welch";
 
+    //Localization Captures
     public static final String SUBSCRIBER_LOGIN_FLOW = "SubscriberLoginFlow";
     public static final String SUBSCRIBER_FLOW_NAV_SEARCH_WATCHLIST = "SubscriberFlowNavSearchWatchlist";
     public static final String SUBSCRIBER_FLOW_PROFILES = "SubscriberFlowProfiles";
@@ -44,7 +48,7 @@ public final class TestGroup {
     public static final String SUBSCRIBER_FLOW_SETTINGS = "SubscriberFlowSettings";
     public static final String SUBSCRIBER_FLOW_PLAYER = "SubscriberFlowPlayer";
     public static final String SUBSCRIBER_FLOW_SETTINGS_PCON = "SubscriberFlowSettingsPCON";
-    public static final String VIDEO_PLAYER_ADS = "VideoPlayerAds";
+
 
     //Rating Systems
     public static final String RATING_SYSTEM_AI = "AI";
