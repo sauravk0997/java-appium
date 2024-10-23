@@ -4,14 +4,12 @@ import com.disney.config.*;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.*;
-import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.search.assets.DisneyMovies;
 import com.disney.qa.api.utils.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
-import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.*;
+import com.disney.util.TestGroup;;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -19,11 +17,7 @@ import org.testng.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.*;
 import java.util.*;
-import java.util.concurrent.*;
-
-import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
