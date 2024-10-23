@@ -1,13 +1,17 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
+import com.disney.config.*;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.search.assets.DisneyMovies;
+import com.disney.qa.api.utils.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.*;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -15,8 +19,11 @@ import org.testng.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.*;
 import java.util.*;
+import java.util.concurrent.*;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
@@ -483,6 +490,40 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 "Extra tab is not present on detail page");
         sa.assertTrue(detailsPage.getSuggestedTab().isPresent(),
                 "Suggested tab is not present on detail page");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72423"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMoviesExtrasTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(HOCUS_POCUS);
+        searchPage.getDynamicAccessibilityId(HOCUS_POCUS).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found");
+
+        detailsPage.clickExtrasTab();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            detailsPage.swipeUp(1500);
+        }
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
+        sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
+        detailsPage.getPlayIcon().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.clickBackButton();
         sa.assertAll();
     }
 
