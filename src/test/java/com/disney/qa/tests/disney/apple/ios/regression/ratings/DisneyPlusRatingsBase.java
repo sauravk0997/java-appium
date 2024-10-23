@@ -31,7 +31,6 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running locally: set lang/locale on config level
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
-   // private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     protected String contentTitle;
     private boolean isMovie;
     String episodicRating;
@@ -50,7 +49,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     static final String LATAM_LANG = "es";
 
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -59,7 +57,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getAccount());
     }
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -69,7 +66,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getAccount());
     }
     public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
@@ -84,7 +80,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
@@ -100,7 +95,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     public void ratingsSetupForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -133,19 +127,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         getAccountApi().editContentRatingProfileSetting(account,
                 getLocalizationUtils().getRatingSystem(),
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
-    }
-
-    private void setDictionary(String lang, String locale) {
-        DisneyLocalizationUtils disneyLocalizationUtils =
-                new DisneyLocalizationUtils(
-                        locale, lang, MobilePlatform.IOS,
-                        DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setCountryDataByCode(locale);
-        disneyLocalizationUtils.setLanguageCode(lang);
-        disneyLocalizationUtils.setLegalDocuments();
-        // set object or override
-      //  LOCALIZATION_UTILS.set(disneyLocalizationUtils);
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {

@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple;
 
 import java.lang.invoke.MethodHandles;
+import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -56,6 +57,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.common.constant.RatingConstant.*;
+import static com.disney.qa.common.constant.RatingConstant.URUGUAY;
 
 /**
  * Base class for both DisneyBaseTest (mobile) and DisneyPlusAppleTVBaseTest (TVOS)
@@ -271,9 +274,19 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             } else if (groups.contains(TR)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "tr", true);
+            } else if (groups.contains(LATAM)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "es", true);
             } else {
                 throw new RuntimeException("No associated Locale and Language was found.");
         }
+    }
+
+    private String getLATAMCountryCode() {
+        List<String> countryCodeList = Arrays.asList(ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC,
+                ECUADOR, EL_SALVADOR, GUATEMALA, HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
     @BeforeSuite(alwaysRun = true)
@@ -312,7 +325,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         EMAIL_API.remove();
         ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
-        getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
+        Utils().setLanguageCode(R.CONFIG.get(LANGUAGE));
     }
 
     public static String getCountry() {
