@@ -325,7 +325,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         EMAIL_API.remove();
         ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
-        Utils().setLanguageCode(R.CONFIG.get(LANGUAGE));
+        getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
     }
 
     public static String getCountry() {
