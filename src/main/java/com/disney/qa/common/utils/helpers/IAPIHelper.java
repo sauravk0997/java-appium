@@ -20,17 +20,14 @@ import java.lang.invoke.MethodHandles;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.disney.qa.common.constant.IConstantHelper.I_API_HELPER_LOGGER;
+import static com.disney.qa.common.constant.IConstantHelper.LOCALIZATION_UTILS;
+
 public interface IAPIHelper {
-    Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
-    Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = AppCenterManager.getInstance()
-                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                            .orElseThrow(
-                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
-                    .getVersion();
+            String version = "3.8.0";
             I_API_HELPER_LOGGER.info("App version: {}", version);
             return new DisneyMobileConfigApi("iOS", Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
                     version);
