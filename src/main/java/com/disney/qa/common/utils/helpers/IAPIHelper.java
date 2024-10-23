@@ -12,6 +12,7 @@ import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import com.disney.qa.common.utils.helpers.DateHelper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,8 +21,9 @@ import java.lang.invoke.MethodHandles;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.disney.qa.common.constant.IConstantHelper.I_API_HELPER_LOGGER;
-import static com.disney.qa.common.constant.IConstantHelper.LOCALIZATION_UTILS;
+import static com.disney.qa.common.utils.helpers.DateHelper.I_API_HELPER_LOGGER;
+import static com.disney.qa.common.utils.helpers.DateHelper.LOCALIZATION_UTILS;
+
 
 public interface IAPIHelper {
     LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
