@@ -73,6 +73,7 @@ public enum DictionaryKeys {
     BTN_PLAYBACK_MODAL_DETAILS("btn_playback_modal_details"),
     BTN_PLAYBACK_MODAL_LIVE("btn_playback_modal_live"),
     BTN_PLAY_ALERT("btn_play1"),
+    BTN_PLAY_TRAILER("btn_play_trailer"),
     BTN_PROFILE_SETTINGS_DONE("btn_profile_settings_done"),
     BTN_REFRESH("btn_refresh"),
     BTN_REMIND_ME_LATER("btn_remindmelater"),
