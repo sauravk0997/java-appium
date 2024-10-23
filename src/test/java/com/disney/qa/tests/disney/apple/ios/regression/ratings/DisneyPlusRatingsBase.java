@@ -6,9 +6,12 @@ import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
@@ -27,8 +30,8 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running on CI as a single class level: set lang/locale on Jenkins
  * IF running locally: set lang/locale on config level
  */
-public class DisneyPlusRatingsBase extends DisneyBaseTest {
-    private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
+public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
+   // private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     protected String contentTitle;
     private boolean isMovie;
     String episodicRating;
@@ -48,7 +51,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage(), ageVerified));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
@@ -57,17 +60,17 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage(), ageVerified));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage());
+        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
     public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
         setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -83,7 +86,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
         setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage(), ageVerified));
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -98,7 +101,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void ratingsSetupForOTPAccount(String lang, String locale) {
         setDictionary(lang, locale);
-        setAccount(getAccountApi().createAccountForOTP(LOCALIZATION_UTILS.get().getLocale(), LOCALIZATION_UTILS.get().getUserLanguage()));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
@@ -128,7 +131,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 .getRatingSystemValues();
         LOGGER.info("Rating values: " + ratingSystemValues);
         getAccountApi().editContentRatingProfileSetting(account,
-                LOCALIZATION_UTILS.get().getRatingSystem(),
+                getLocalizationUtils().getRatingSystem(),
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
@@ -142,7 +145,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         disneyLocalizationUtils.setLanguageCode(lang);
         disneyLocalizationUtils.setLegalDocuments();
         // set object or override
-        LOCALIZATION_UTILS.set(disneyLocalizationUtils);
+      //  LOCALIZATION_UTILS.set(disneyLocalizationUtils);
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
@@ -284,9 +287,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
     }
-
+/*
     @AfterMethod(alwaysRun = true)
     public void tearDown() {
         LOCALIZATION_UTILS.remove();
     }
+    */
+
 }
