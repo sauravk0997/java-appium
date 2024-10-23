@@ -84,17 +84,46 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getAccount());
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         accountPage.waitForAccountPageToOpen();
-        sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(), "User Email address was not displayed");
-        sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(), "Manage with MyDisney link was not displayed");
-        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())).isPresent(), "User Password (hidden) was not displayed");
-        sa.assertTrue(accountPage.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText())), "Change Password link was not displayed");
-        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE.getText())).isPresent(), "Billing Details (Subscriptions) header not displayed");
-        sa.assertTrue(accountPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_SETTINGS_HEADER.getText())).isPresent(), "Settings header not displayed");
-        sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(), "Restrict Profile Creation container was not displayed");
+        sa.assertTrue(accountPage.getBackArrow().isElementPresent(), "Back arrow was not displayed");
+        sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
+                "User Email address was not displayed");
+        sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(),
+                "Manage with MyDisney link was not displayed");
+        sa.assertTrue(
+                accountPage.getStaticTextByLabel(
+                        getLocalizationUtils().getDictionaryItem(
+                                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.HIDDEN_PASSWORD.getText()
+                        )).isPresent(), "User Password (hidden) was not displayed");
+        sa.assertTrue(
+                accountPage.getStaticTextByLabel(
+                        getLocalizationUtils().getDictionaryItem(
+                                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.SUBSCRIPTIONS_TITLE.getText()
+                        )).isPresent(), "Subscriptions header not displayed");
+        sa.assertTrue(accountPage.isSubscriptionCellPresent(), "Subscription cell was not displayed");
+        sa.assertTrue(accountPage.isAccessAndSecurityTextPresent(), "Access & Security text was not displayed");
+        sa.assertTrue(accountPage.isManageDevicesTextPresent(), "Manage Devices text was not displayed");
+        sa.assertTrue(
+                accountPage.getStaticTextByLabel(
+                        getLocalizationUtils().getDictionaryItem(
+                                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.ACCOUNT_SETTINGS_HEADER.getText()
+                        )).isPresent(), "Settings header not displayed");
+        sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(),
+                "Restrict Profile Creation container was not displayed");
         sa.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
         sa.assertTrue(accountPage.isEditProfilesTextPresent(), "Edit Profiles text was not displayed");
-        sa.assertTrue(accountPage.isPrivacyChoicesLinkPresent(), "Privacy Choices link was not displayed");
+        accountPage.swipe(accountPage.getAccountManagementTextElement());
+        sa.assertTrue(accountPage.isAccountManagementLinkPresent(),
+                "Account Management link was not displayed");
+        sa.assertTrue(accountPage.isAccountManagementTextPresent(),
+                "Account Management text was not displayed");
+
+        accountPage.getBackArrow().click();
+        sa.assertTrue(moreMenuPage.isOpened(), "More Menu page was not displayed");
         sa.assertAll();
     }
 
@@ -307,45 +336,46 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         String otp = getOTPFromApi(startTime, otpAccount);
 
         sa.assertTrue(oneTimePasscodePage.isOpened(),
-                "XMOBQA-61559 - OTP entry page was not opened");
+                "OTP entry page was not opened");
 
         oneTimePasscodePage.enterOtpValue(otp);
 
         sa.assertTrue(changePasswordPage.isOpened(),
-                "XMOBQA-61559 - 'Change Password' screen was not opened");
+                "Change Password screen was not opened");
 
-        sa.assertTrue(changePasswordPage.isHeadlineSubtitlePresent(),
-                "XMOBQA-61559 - 'Change Password' subtitle was not displayed");
+        sa.assertTrue(changePasswordPage.isPasswordSubtitlePresent(),
+                "Change Password subtitle was not displayed");
 
         sa.assertTrue(changePasswordPage.isLogoutAllDevicesTitlePresent(),
-                "XMOBQA-61559 - 'Logout All Devices' title was not displayed");
+                "Logout All Devices title was not displayed");
 
-        sa.assertTrue(changePasswordPage.isSaveBtnPresent(),
-                "XMOBQA-61559 - 'Save' button was not displayed");
+        sa.assertTrue(changePasswordPage.isSaveAndContinueBtnPresent(),
+                "Save & Continue button was not displayed");
 
         sa.assertTrue(changePasswordPage.isCancelBtnPresent(),
-                "XMOBQA-61559 - 'Cancel' button was not displayed");
+                "Cancel button was not displayed");
 
         sa.assertTrue(changePasswordPage.isLogoutAllDevicesUnchecked(),
-                "XMOBQA-61559 - 'Logout All Devices' was not unchecked by default");
+                "Logout All Devices was not unchecked by default");
 
         changePasswordPage.clickLogoutAllDevices();
 
         sa.assertTrue(changePasswordPage.isLogoutAllDevicesChecked(),
-                "XMOBQA-61559 - 'Logout All Devices' was not checked");
+                "Logout All Devices was not checked");
 
         sa.assertTrue(changePasswordPage.isLogoutAllDevicesPasswordCopyDisplayed(),
-                "XMOBQA-61559 - 'Logout All Devices' password text was not displayed");
+                "Logout All Devices password text was not displayed");
 
-        changePasswordPage.submitNewPasswordValue("invalid");
+        changePasswordPage.submitNewPasswordValue("invalid" + "\n");
 
         sa.assertTrue(changePasswordPage.isInvalidPasswordErrorDisplayed(),
-                "XMOBQA-61565 - 'Invalid Password' error was not displayed");
+                "Invalid Password error was not displayed");
 
+        changePasswordPage.clickHeader();
         changePasswordPage.clickCancelBtn();
 
         sa.assertTrue(accountPage.isOpened(),
-                "XMOBQA-61561 - User was not directed back to 'Account Settings' after cancelling the password change");
+                "User was not directed back to Account Settings after cancelling the password change");
 
         sa.assertAll();
     }

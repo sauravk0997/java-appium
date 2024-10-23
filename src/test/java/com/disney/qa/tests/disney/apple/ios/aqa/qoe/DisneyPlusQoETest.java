@@ -18,12 +18,14 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusQoETest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String MOVIES = "Movies";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1578" })
-    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method", groups = TestGroup.PRE_CONFIGURATION)
+    @Test(description = "Test StartupSequence QoE event - validated by Sdp in checkAssertions method", groups = {TestGroup.PRE_CONFIGURATION, US})
     @Maintainer("isong1")
     public void testQoEStartupSequence() {
         SoftAssert sa = new SoftAssert();
@@ -58,7 +60,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1577" })
-    @Test(description = "Smoke Test Playback QoE events", groups = TestGroup.PRE_CONFIGURATION)
+    @Test(description = "Smoke Test Playback QoE events", groups = {TestGroup.PRE_CONFIGURATION, US})
     @Maintainer("isong1")
     public void testQoEPlayback() {
         SoftAssert sa = new SoftAssert();
@@ -117,7 +119,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-1094" })
-    @Test(description = "Test Pause/Resume QoE event", groups = TestGroup.PRE_CONFIGURATION)
+    @Test(description = "Test Pause/Resume QoE event", groups = {TestGroup.PRE_CONFIGURATION, US})
     @Maintainer("isong1")
     public void testQoEPauseAndResume() {
         SoftAssert sa = new SoftAssert();
@@ -155,7 +157,7 @@ public class DisneyPlusQoETest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XAQA-938" })
-    @Test(description = "Verify Hearbeat QoE Event", groups = TestGroup.PRE_CONFIGURATION)
+    @Test(description = "Verify Hearbeat QoE Event", groups = {TestGroup.PRE_CONFIGURATION, US})
     @Maintainer("isong1")
     public void testQoEHeartBeat() {
         SoftAssert sa = new SoftAssert();
