@@ -1,15 +1,7 @@
 package com.disney.qa.common.constant;
 
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.lang.invoke.MethodHandles;
 import java.util.EnumSet;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 public interface IConstantHelper {
     EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_DISNEY =
