@@ -19,6 +19,8 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.TV_Y7_FV;
 
 public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
 
+    // Countries and language of these test cases are selected in the 'overrideLocaleConfig' method
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71631"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemTV_Y() {
