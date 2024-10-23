@@ -26,7 +26,6 @@ import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
@@ -238,6 +237,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
         List<String> groups = Arrays.asList(result.getMethod().getGroups());
+        String country;
             if (groups.contains(US)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
@@ -277,6 +277,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             } else if (groups.contains(LATAM)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "es", true);
+            } else if (groups.contains(EMEA)) {
+                country = getEMEACountryCode();
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), country, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), getEMEACountryLanguage(country), true);
+            } else if (groups.contains(MPAA)) {
+                country = getMPAACountryCode();
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), country, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), getMPAACountryLanguage(country), true);
             } else {
                 throw new RuntimeException("No associated Locale and Language was found.");
         }
@@ -287,6 +295,51 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 ECUADOR, EL_SALVADOR, GUATEMALA, HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getEMEACountryCode() {
+        List<String> countryCodeList = Arrays.asList(HAITI, MAURITIUS, MAYOTTE, REUNION, UNITED_KINGDOM);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getEMEACountryLanguage(String countryCode) {
+        switch (countryCode.toUpperCase()) {
+            case MAURITIUS:
+            case MAYOTTE:
+            case REUNION:
+                return "fr";
+            case HAITI:
+            case UNITED_KINGDOM:
+                return "en";
+            default:
+                throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
+        }
+    }
+
+    private String getMPAACountryCode() {
+        List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, UNITED_STATES_VIRGIN_ISLANDS, GUAM,
+                PUERTO_RICO, AMERICAN_SAMOA, MARSHALL_ISLANDS, NORTHERN_MARINA_ISLANDS, UNITED_STATES_OUTLYING_ISLANDS);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getMPAACountryLanguage(String countryCode) {
+        switch (countryCode.toUpperCase()) {
+            case CANADA:
+            case UNITED_STATES:
+            case UNITED_STATES_VIRGIN_ISLANDS:
+            case GUAM:
+            case PUERTO_RICO:
+            case AMERICAN_SAMOA:
+            case MARSHALL_ISLANDS:
+            case UNITED_STATES_OUTLYING_ISLANDS:
+                return "en";
+            case NORTHERN_MARINA_ISLANDS:
+                return "fr";
+            default:
+                throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
+        }
     }
 
     @BeforeSuite(alwaysRun = true)

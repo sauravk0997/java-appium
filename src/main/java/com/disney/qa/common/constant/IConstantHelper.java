@@ -30,4 +30,6 @@ public interface IConstantHelper {
     String TR = "TR";
     String US = "US";
     String LATAM = "LATAM";
+    String EMEA = "EMEA";
+    String MPAA = "MPAA";
 }

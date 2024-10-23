@@ -8,7 +8,6 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 import static com.disney.qa.common.constant.IConstantHelper.BR;
-import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
