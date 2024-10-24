@@ -9,7 +9,6 @@ public interface IConstantHelper {
             EnumSet.of(ExploreSearchRequest.ContentEntitlement.DISNEY_PLUS_BASE);
     EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_HULU =
             EnumSet.of(ExploreSearchRequest.ContentEntitlement.HULU_BASE);
-
     public static final String JARVIS_APP_CONFIG = "App Config";
     public static final String JARVIS_APP_EDIT_CONFIG = "Edit Config";
     public static final String JARVIS_APP_PLATFORM_CONFIG = "platformConfig";
