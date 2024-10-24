@@ -1,14 +1,24 @@
 package com.disney.qa.common.constant;
 
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.util.EnumSet;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public interface IConstantHelper {
     EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_DISNEY =
             EnumSet.of(ExploreSearchRequest.ContentEntitlement.DISNEY_PLUS_BASE);
     EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_HULU =
             EnumSet.of(ExploreSearchRequest.ContentEntitlement.HULU_BASE);
+    Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
+    Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     public static final String JARVIS_APP_CONFIG = "App Config";
     public static final String JARVIS_APP_EDIT_CONFIG = "Edit Config";
     public static final String JARVIS_APP_PLATFORM_CONFIG = "platformConfig";
