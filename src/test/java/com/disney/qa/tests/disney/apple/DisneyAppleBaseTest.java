@@ -46,7 +46,6 @@ import org.slf4j.LoggerFactory;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
@@ -106,24 +105,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             } else {
                 return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version);
             }
-        }
-    };
-    private static final LazyInitializer<DisneyLocalizationUtils> LOCALIZATION_UTILS = new LazyInitializer<>() {
-        @Override
-        protected DisneyLocalizationUtils initialize() {
-            DisneyLocalizationUtils disneyLocalizationUtils;
-            if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLanguage(), "apple-tv", "prod",
-                        DisneyConfiguration.getPartner());
-            } else {
-                disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLanguage(), MobilePlatform.IOS,
-                        DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                        DISNEY);
-            }
-
-            disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-            disneyLocalizationUtils.setLegalDocuments();
-            return disneyLocalizationUtils;
         }
     };
 
