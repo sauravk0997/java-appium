@@ -43,6 +43,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
 
+    private final ExtendedWebElement accessAndSecurityText =
+            getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                    DictionaryKeys.ACCESS_SECURITY_HEADER.getText()));
+    private final ExtendedWebElement manageDevicesText =
+            getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                    DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText()));
+
     public boolean isMovistarSubscriptionTitlePresent() {
         String title = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MOVISTAR.getText());
         return getStaticTextByLabel(title.concat(" " + MONTHLY)).isPresent();
@@ -636,4 +643,37 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     public void clickChangePasswordCell() {
         changePasswordCell.click();
     }
+
+    public boolean isSubscriptionCellPresent() {
+        return subscriptionChange.isElementPresent();
+    }
+
+    public boolean isAccessAndSecurityTextPresent() {
+        return accessAndSecurityText.isElementPresent();
+    }
+
+    public boolean isManageDevicesTextPresent() {
+        return manageDevicesText.isElementPresent();
+    }
+
+    public boolean isAccountManagementLinkPresent() {
+        String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
+        String expectedHyperLinkText = dictValOfAccountManagement.substring(
+                dictValOfAccountManagement.indexOf('[')+1,dictValOfAccountManagement.indexOf(']'));
+        return customHyperlinkByLabel.format(expectedHyperLinkText).isElementPresent();
+    }
+
+    public ExtendedWebElement getAccountManagementTextElement() {
+        String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
+        String editProfileText = dictValOfAccountManagement.
+                replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
+        return textViewByLabel.format(editProfileText);
+    }
+
+    public boolean isAccountManagementTextPresent() {
+        return getAccountManagementTextElement().isElementPresent();
+    }
+
 }
