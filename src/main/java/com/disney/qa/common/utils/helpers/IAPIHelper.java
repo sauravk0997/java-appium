@@ -12,12 +12,17 @@ import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import static com.disney.qa.common.constant.IConstantHelper.I_API_HELPER_LOGGER;
-import static com.disney.qa.common.constant.IConstantHelper.LOCALIZATION_UTILS;
+import java.lang.invoke.MethodHandles;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public interface IAPIHelper {
+    Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
+    Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
