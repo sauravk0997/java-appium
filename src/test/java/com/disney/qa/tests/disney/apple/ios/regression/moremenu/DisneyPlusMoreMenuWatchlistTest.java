@@ -18,7 +18,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
-    @Test(description = "Verify empty Watchlist display", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEmptyWatchlistDisplay() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
