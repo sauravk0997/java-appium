@@ -436,7 +436,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         sa.assertTrue(signUpPage.isStepperDictValueDisplayed("3", "5"),
                 "'STEP 3 OF 5' should be displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "DOB Sub Copy not displayed");
-        LOGGER.info("Is Edna Birthdate label displayed? " + ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed());
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), LOG_OUT_BTN_NOT_DISPLAYED);
 

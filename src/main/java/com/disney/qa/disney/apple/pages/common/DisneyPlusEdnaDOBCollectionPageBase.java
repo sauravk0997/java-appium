@@ -31,7 +31,6 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
     public boolean isEdnaBirthdateLabelDisplayed() {
         String birthdateLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_MISSING_INFO_BIRTHDATE_HEADER.getText());
-        System.out.println(getDriver().getPageSource());
         return staticTextByLabel.format(birthdateLabel).isPresent();
     }
 
