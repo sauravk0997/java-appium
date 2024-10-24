@@ -27,7 +27,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
-    @Test(description = "No Watchlist Items", groups = {TestGroup.WATCHLIST, TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.SMOKE, US})
     public void verifyNoWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -48,7 +48,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89592", "XCDQA-89596"})
-    @Test(description = "Watchlist Items Present - UI check", groups = {TestGroup.WATCHLIST, US})
+    @Test(groups = {TestGroup.WATCHLIST, US})
     public void verifyWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -89,7 +89,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
-    @Test(description = "Verify Removing Content from Watchlist", groups = {TestGroup.WATCHLIST, US})
+    @Test(groups = {TestGroup.WATCHLIST, US})
     public void verifyRemoveWatchlistContent() {
         List<DisneyEntityIds> titles =
                 new ArrayList<>(Arrays.asList(
