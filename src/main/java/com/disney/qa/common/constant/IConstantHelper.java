@@ -29,7 +29,4 @@ public interface IConstantHelper {
     String SG = "SG";
     String TR = "TR";
     String US = "US";
-    String LATAM = "LATAM";
-    String EMEA = "EMEA";
-    String MPAA = "MPAA";
 }

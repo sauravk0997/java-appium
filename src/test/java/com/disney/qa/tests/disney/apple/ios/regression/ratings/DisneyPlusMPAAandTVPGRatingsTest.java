@@ -5,7 +5,6 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
-import static com.disney.qa.common.constant.IConstantHelper.MPAA;
 import static com.disney.qa.common.constant.RatingConstant.Rating.G;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;

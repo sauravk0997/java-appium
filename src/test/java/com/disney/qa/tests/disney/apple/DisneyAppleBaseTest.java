@@ -79,6 +79,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String SUBSCRIPTION_V2 = "V2";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
+    public static final String LATAM = "LATAM";
+    public static final String EMEA = "EMEA";
+    public static final String MPAA = "MPAA";
 
     private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
         @Override
