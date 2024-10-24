@@ -208,6 +208,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
+            waitUntil(ExpectedConditions.visibilityOfElementLocated(playerView.getBy()), 10);
             clickElementAtLocation(playerView, 35, 50);
         } while (attempts++ < 5 && !seekBar.isElementPresent(THREE_SEC_TIMEOUT));
         if (attempts == 6) {
