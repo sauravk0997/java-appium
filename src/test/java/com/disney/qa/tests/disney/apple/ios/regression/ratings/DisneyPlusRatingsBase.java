@@ -31,12 +31,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
-    static final String AUSTRALIA_LANG = "en-GB";
-    static final String BRAZIL_LANG = "pt-BR";
+    static final String AUSTRALIA_LANG = "en";
+    static final String BRAZIL_LANG = "pt";
     static final String GERMANY_LANG = "de";
     static final String JAPAN_LANG = "ja";
     static final String KOREAN_LANG = "ko";
-    static final String NETHERLANDS_LANG = "en-GB";
+    static final String NETHERLANDS_LANG = "en";
     static final String NEW_ZEALAND_LANG = "en";
     public static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
