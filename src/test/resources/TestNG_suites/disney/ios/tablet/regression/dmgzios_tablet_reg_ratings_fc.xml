@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_tablet_reg_ratings_fc" annotations="JDK" configfailurepolicy="continue" thread-count="2">
+<suite verbose="1" name="dmgzios_tablet_reg_ratings_fc" annotations="JDK" configfailurepolicy="continue" thread-count="2" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.8.0-fc"/>
@@ -22,43 +22,43 @@
 <!--    <parameter name="scheduling" value="H 7 * * 6,0"/>-->
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAPACRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet KCC Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet KCC Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKCCRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet KMRB Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet KMRB Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKMRBRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet AI Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet AI Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusAIRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet OFLC Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet OFLC Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusOFLCRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet DJCTQ Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet DJCTQ Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusDJCTQRatingsTest"/>
         </classes>
     </test>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet EMEA Ratings">
+    <test verbose="1" name="DisneyPlus iOS Tablet EMEA Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusEMEARatingsTest"/>
         </classes>
