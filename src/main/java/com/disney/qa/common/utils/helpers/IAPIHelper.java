@@ -3,8 +3,11 @@ package com.disney.qa.common.utils.helpers;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
+import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.config.Configuration;
+import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
+import io.appium.java_client.remote.options.SupportsAppOption;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -18,7 +21,11 @@ public interface IAPIHelper {
     LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = "3.8.0";
+            String version = AppCenterManager.getInstance()
+                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                            .orElseThrow(
+                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
+                    .getVersion();
             I_API_HELPER_LOGGER.info("App version: {}", version);
             return new DisneyMobileConfigApi("iOS", Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
                     version);
