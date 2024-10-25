@@ -29,7 +29,8 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
 
     //Test constants
-    protected static final String  SHORT_SERIES = "Bluey";
+    protected static final String SHORT_SERIES = "Bluey";
+    private static final String IRON_MAN = "Iron Man";
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT = 90;
     private static final double PLAYER_PERCENTAGE_FOR_AUTO_PLAY = 95;
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
@@ -121,7 +122,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67672"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
-    public void VerifyUpNextLogicForExtraContent() {
+    public void verifyUpNextLogicForExtraContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -133,7 +134,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         //Search for a series having 'Extras'
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
-        searchPage.searchForMedia("The Biggest Little Farm");
+        searchPage.searchForMedia(IRON_MAN);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
         detailsPage.clickExtrasTab();
