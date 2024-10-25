@@ -44,7 +44,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentPageFilterHeader;
     @ExtendedFindBy(accessibilityId = "itemPickerView")
     private ExtendedWebElement itemPickerView;
-   @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
     private ExtendedWebElement firstCollectionTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS 'Rated' AND label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
