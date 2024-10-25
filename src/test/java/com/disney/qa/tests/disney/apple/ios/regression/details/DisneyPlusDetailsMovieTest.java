@@ -17,6 +17,7 @@ import org.testng.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.temporal.*;
 import java.util.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
@@ -278,6 +279,45 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab is not present");
         sa.assertTrue(detailsPage.getExtrasTab().isPresent(), "Extras tab is not present");
         sa.assertTrue(detailsPage.getSuggestedTab().isPresent(), "Suggested tab is not present");
+        sa.assertAll();
+    }
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72544"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
+    public void verifyMovieResumeStateBehavior() {
+        int UI_LATENCY_IN_SEC = 60;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(HOCUS_POCUS);
+        searchPage.getDynamicAccessibilityId(HOCUS_POCUS).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        //Play Trailer
+        detailsPage.getTrailerActionButton().click();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.verifyVideoPlaying(sa);
+        videoPlayer.clickBackButton();
+
+        //Resume state
+        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(30);
+        videoPlayer.clickBackButton();
+
+        //Validate resume state
+        Assert.assertTrue(detailsPage.isContinueButtonPresent(),
+                "Continue button is not present after exiting video player");
+        int detailsPageRemainingTime = detailsPage.getRemainingTimeInSeconds(detailsPage.getRemainingTimeText());
+        detailsPage.clickContinueButton().waitForVideoToStart();
+
+        int videoPlayerRemainingTime = videoPlayer.getRemainingHourAndMinInSeconds();
+        int playDuration = (detailsPageRemainingTime - videoPlayerRemainingTime);
+        ValueRange range = ValueRange.of(0, UI_LATENCY_IN_SEC);
+        sa.assertTrue(range.isValidIntValue(playDuration),"video didn't start from the bookmark");
         sa.assertAll();
     }
 
