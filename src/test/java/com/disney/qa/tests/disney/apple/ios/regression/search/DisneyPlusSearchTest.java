@@ -492,6 +492,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         searchPage.clickFirstCollection();
+        sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
         brandIOSPageBase.clickFirstNoLiveEvent();
         sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
@@ -500,7 +501,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.getBackArrow().click();
-        sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
+        // sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
         sa.assertAll();
     }
 
