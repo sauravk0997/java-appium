@@ -8,7 +8,6 @@ import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
 
 import java.util.Map;
 
@@ -57,13 +56,19 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
     private ExtendedWebElement genderFormButtonCellIdentifier;
 
-    private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Choose content rating\"`]")
+    private ExtendedWebElement chooseContentRating;
 
-    private String genderWoman = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
-    private String genderMan = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText());
-    private String genderNonBinary = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText());
-    private String genderPreferNotToSay = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
-    private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
+    @ExtendedFindBy(iosPredicate = "name == \"birthdateTextFieldIdentifier\" AND value == \"MM/DD/YYYY\"\n")
+    protected ExtendedWebElement birthDateValue;
+
+    private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
+
+    private String genderWoman = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
+    private String genderMan = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText());
+    private String genderNonBinary = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText());
+    private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
+    private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
     private static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
 
     //Functions
@@ -88,19 +93,19 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void clickKidsOnToggleBtn() {kidsOnToggleButton.click();}
 
     public boolean isAddProfilePageOpened() {
-        String addProfileHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
+        String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
         return titleLabel.getText().equalsIgnoreCase(addProfileHeader);
     }
 
     public boolean isAddProfileHeaderPresent(){
-        String addProfileHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
+        String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
         return staticTextByLabel.format(addProfileHeader).isPresent();
     }
 
     public boolean isProfilePresent(String profileName) {
         ExtendedWebElement profileSelectionBtn = dynamicCellByLabel.format(
-                getDictionary().formatPlaceholderString(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profileName)));
+                getLocalizationUtils().formatPlaceholderString(
+                        getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profileName)));
         return profileSelectionBtn.isPresent();
     }
 
@@ -177,7 +182,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     //format: Month, day, year
     public void enterDOB(DateHelper.Month month, String day, String year) {
         getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).click();
-        setBirthDate(DateHelper.localizeMonth(month, getDictionary()), day, year);
+        setBirthDate(DateHelper.localizeMonth(month, getLocalizationUtils()), day, year);
         dismissPickerWheelKeyboard();
     }
 
@@ -199,7 +204,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickSaveByDictionaryKey() {
-        dynamicBtnFindByNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        dynamicBtnFindByNameContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_SAVE.getText())).click();
     }
 
@@ -227,7 +232,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isKidProfileSubCopyPresent() {
-        String kidProfileSubCopy = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KIDS_PROFILE_SUBCOPY.getText());
+        String kidProfileSubCopy = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KIDS_PROFILE_SUBCOPY.getText());
         return textViewByLabel.format(kidProfileSubCopy).isPresent();
     }
 
@@ -236,7 +241,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isInlineErrorForProfileFieldPresent() {
-        String inlineErrorForProfileField = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_NAME.getText());
+        String inlineErrorForProfileField = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_NAME.getText());
         return staticTextByLabel.format(inlineErrorForProfileField).isPresent();
     }
 
@@ -245,7 +250,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isInlineErrorForDOBFieldPresent() {
-        String inlineErrorForDOBField = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_DOB.getText());
+        String inlineErrorForDOBField = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_DOB.getText());
         return staticTextByLabel.format(inlineErrorForDOBField).isPresent();
     }
 
@@ -254,24 +259,37 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isInlineErrorForGenderFieldPresent() {
-        String inlineErrorForGenderField = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_GENDER.getText());
+        String inlineErrorForGenderField = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_GENDER.getText());
         return staticTextByLabel.format(inlineErrorForGenderField).isPresent();
     }
 
     public boolean verifyHeadlineHeaderText() {
-        String accessFullCatalogText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText());
+        String accessFullCatalogText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText());
         return headlineHeader.getText().equalsIgnoreCase(accessFullCatalogText);
     }
 
     public boolean isUpdateMaturityRatingActionDisplayed() {
-        String maturityRatingInfo = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_SUBTITLE.getText());
-        return staticTextByLabel.format(getDictionary().formatPlaceholderString(
+        String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_SUBTITLE.getText());
+        return staticTextByLabel.format(getLocalizationUtils().formatPlaceholderString(
                 maturityRatingInfo, Map.of("highest_rating_value_image", "TV-MA"))).isPresent();
     }
 
     public boolean isMaturityRatingNotNowInfoDisplayed() {
-        String maturityRatingInfo = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
-        return staticTextByLabel.format(getDictionary().formatPlaceholderString(
+        String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
+        return staticTextByLabel.format(getLocalizationUtils().formatPlaceholderString(
                 maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
     }
+
+    public ExtendedWebElement getChooseContentRating() {
+        return chooseContentRating;
+    }
+
+    public String getBirthdateTextField(){
+        return BIRTHDATE_TEXT_FIELD;
+    }
+
+    public ExtendedWebElement getValueFromDOB() {
+        return birthDateValue;
+    }
+
 }

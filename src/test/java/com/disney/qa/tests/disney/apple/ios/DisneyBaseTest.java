@@ -19,8 +19,6 @@ import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.options.SupportsAppOption;
-import io.appium.java_client.remote.options.SupportsFullResetOption;
-import io.appium.java_client.remote.options.SupportsNoResetOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -48,6 +46,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
 import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 
@@ -86,13 +85,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
-    public void enableNoTestReset() {
-        R.CONFIG.put("capabilities." + SupportsNoResetOption.NO_RESET_OPTION, "true", true);
-        R.CONFIG.put("capabilities." + SupportsFullResetOption.FULL_RESET_OPTION, "false", true);
-    }
-
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "enableNoTestReset")
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             localContext.set(context);
@@ -444,20 +437,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 });
     }
 
-    //TODO: uncomment it after moving the Subscription test to a separate XML
-
-    //    public void clearDSSSandboxAccountFor(String accountName) {
-    //        LOGGER.info("Clearing purchase history for '{}' account", accountName);
-    //        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
-    //        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
-    //            if (account.getAttributes().getAcAccountName().contains(accountName)) {
-    //                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
-    //                                .is2xxSuccessful(),
-    //                        "Clear account purchase history for" + accountName + "was not successful!");
-    //            }
-    //        }
-    //    }
-
     public String buildS3BucketPath(String title, String feature) {
         String deviceName = R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
@@ -553,6 +532,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             return getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setId)
                     .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                    .setDisneyAccount(getAccount())
                     .setProfileId(getAccount().getProfileId())
                     .setLimit(limit)).getData().getSet().getItems();
         } catch (URISyntaxException e) {
@@ -650,6 +630,52 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         } else {
             LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
             return firstOTP;
+        }
+    }
+
+    public void jarvisDisableOneTrustBanner() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        boolean isOneTrustEnabled = true;
+        int jarvisAttempt = 1;
+        removeJarvis();
+        installAndLaunchJarvis();
+        // Validate Jarvis Config
+        while (isOneTrustEnabled && jarvisAttempt < 3)
+            try {
+                LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
+                if (isJarvisOneTrustDisabled(applePageBase)) {
+                    isOneTrustEnabled = false;
+                    LOGGER.info("Successfully disabled One Trust");
+                } else {
+                    terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                    launchJarvis(false);
+                    jarvisAttempt++;
+                }
+            } catch (Exception e) {
+                LOGGER.info("Exception occurred attempting to disable One Trust");
+                terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                launchJarvis(false);
+                jarvisAttempt++;
+            }
+
+        // Relaunch Disney app
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+    }
+    
+    private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {
+        applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_PLATFORM_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_ONE_TRUST_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_IS_ENABLED).click();
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("oneTrustConfig is not enabled");
+            return true;
+        } else {
+            LOGGER.info("Disabling oneTrustConfig");
+            applePageBase.clickToggleView();
+            return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
         }
     }
 }

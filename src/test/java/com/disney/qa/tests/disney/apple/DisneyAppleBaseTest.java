@@ -2,16 +2,13 @@ package com.disney.qa.tests.disney.apple;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
-import com.disney.qa.api.VaultApi;
 import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.account.DisneySubscriptionApi;
@@ -52,6 +49,7 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
@@ -233,10 +231,53 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         });
     }
 
+    @BeforeMethod(alwaysRun = true)
+    public final void overrideLocaleConfig(ITestResult result) {
+        List<String> groups = Arrays.asList(result.getMethod().getGroups());
+            if (groups.contains(US)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+            } else if (groups.contains(AT)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AT, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+            } else if (groups.contains(AU)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AU, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+            } else if (groups.contains(BR)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), BR, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "pt", true);
+            } else if (groups.contains(CH)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CH, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+            } else if (groups.contains(DE)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), DE, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "de", true);
+            } else if (groups.contains(JP)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), JP, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "ja", true);
+            } else if (groups.contains(KR)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "ko", true);
+            } else if (groups.contains(NL)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NL, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+            } else if (groups.contains(NZ)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NZ, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+            } else if (groups.contains(SG)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), SG, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+            } else if (groups.contains(TR)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "tr", true);
+            } else {
+                throw new RuntimeException("No associated Locale and Language was found.");
+        }
+    }
+
     @BeforeSuite(alwaysRun = true)
-    public void initPageDictionary() {
-        //todo remove this configuration method
-        DisneyPlusApplePageBase.setDictionary(getLocalizationUtils());
+    public final void cleanAppInstall() {
+        R.CONFIG.put("capabilities.fullReset", "true");
     }
 
     @BeforeMethod(onlyForGroups = TestGroup.PROXY, alwaysRun = true)
@@ -484,5 +525,4 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
                 throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
         }
     }
-
 }

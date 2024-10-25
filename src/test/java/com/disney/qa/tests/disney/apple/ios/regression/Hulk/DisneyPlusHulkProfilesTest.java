@@ -11,13 +11,14 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
     private static final String PG_13 = "PG-13";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75082"})
-    @Test(description = "Downloads are filtered out on Junior profile ", groups = {TestGroup.PROFILES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Downloads are filtered out on Junior profile ", groups = {TestGroup.PROFILES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -28,7 +29,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74903"})
-    @Test(description = "Downloads are filtered out on adult profile with lower maturity rating", groups = {TestGroup.PROFILES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Downloads are filtered out on adult profile with lower maturity rating", groups = {TestGroup.PROFILES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPCONProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
