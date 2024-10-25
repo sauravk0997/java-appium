@@ -188,7 +188,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
         sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
-        sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
+        sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-PG rating was not found.");
         sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
         sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
         sa.assertTrue(details.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "Subtitles advisory was not found.");
