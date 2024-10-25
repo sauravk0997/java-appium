@@ -192,6 +192,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement globalNavBarView;
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backArrow;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS 'Back'`]")
+    protected ExtendedWebElement closeButton;
     @ExtendedFindBy(accessibilityId = "headlineHeader")
     protected ExtendedWebElement headlineHeader;
     @ExtendedFindBy(accessibilityId = "headlineSubtitle")
@@ -1549,5 +1551,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
+    }
+
+    public ExtendedWebElement getCloseButton() {
+        return closeButton;
     }
 }
