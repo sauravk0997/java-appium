@@ -58,7 +58,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72216"})
-    @Test(description = "VOD Player - Ads - Ad Duration Timer - Controls UP & DOWN (VOD)", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyAdDurationTimer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -80,7 +80,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
-    @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAdsPlayerAudioSubtitleButton() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusAudioSubtitleIOSPageBase audioSubtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
@@ -100,7 +100,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72879"})
-    @Test(description = "Ariel Ads Video Player > Able to scrub forward during Grace period", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayerScrubForwardDuringAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -114,7 +114,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73630"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRestartButtonInActiveWhilePlayingAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -140,7 +140,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72212"})
-    @Test(description = "VOD Player - Ads - Display of Ad Badge", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyLocalizedAdBadgeWhilePlayingAd() {
         String frenchLanguageCode = "fr";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -184,7 +184,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72175"})
-    @Test(description = "VOD Player - Ads - No Skip Forward or Backward allowed", dataProvider = "tapAction", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(dataProvider = "tapAction", groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayerNoSkippingDuringAd(DisneyPlusVideoPlayerIOSPageBase.PlayerControl control) {
         int timeout = 20;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -200,7 +200,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyLeavePlayerDuringAd() {
         String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
@@ -230,7 +230,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72177"})
-    @Test(description = "Ariel Ads Video Player > Scrub forward after grace period", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayerScrubForwardAfterAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -251,7 +251,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72476"})
-    @Test(description = "Ariel - VOD Player - Ads - Duration of VOD stream should only include main content", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContentDurationBeforeAndAfterAd() throws URISyntaxException, JsonProcessingException {
         int timeout = 15;
         String durationNotmatchedErrorMessage = "Duration of video is not representing total length of main content";
@@ -282,7 +282,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72188"})
-    @Test(description = "Ariel - VOD Player - Ads - Ad Content Time Display", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAdContentTimeDisplayUI() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -296,7 +296,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72834"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION,US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION,US})
     public void verifyContentRatingDisplayedAfterPreRoll() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(MS_MARVEL);
@@ -309,7 +309,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72187"})
-    @Test(description = "Ariel - VOD Player - Ads - Ad Pod Represented On Timeline", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAdPodOnTimeline() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(MS_MARVEL);
@@ -318,7 +318,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76660"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerBehaviorAfterBackgroundingAppForAdsUser() {
         int polling = 5;
         int backgroundDuration = 20;
@@ -333,7 +333,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72214"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyVideoPlayerPausingWhilePlayingAd() {
         int uiLatency = 15;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);

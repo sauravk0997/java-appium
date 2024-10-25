@@ -102,7 +102,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
-    @Test(description = "Watchlist Page Support Service-Driven Empty State", groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEmptyWatchlistAndAddToWatchlist() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -143,7 +143,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74651"})
-    @Test(description = "Watchlist - Adding & Removing Hulu Content from the Watchlist", groups = {TestGroup.WATCHLIST, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyWatchlistAddAndRemoveItem() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
