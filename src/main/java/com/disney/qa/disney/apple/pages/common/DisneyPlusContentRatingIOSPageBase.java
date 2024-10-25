@@ -45,7 +45,7 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
         scrollToItem((String.format(ratingDescription, rating)));
     }
 
-    public boolean isContentRatingDisplyed(String rating){
+    public boolean isContentRatingDisplayed(String rating){
         scrollToRatingValue(rating);
         return getStaticTextByLabel(String.format(ratingDescription, rating)).isPresent();
     }

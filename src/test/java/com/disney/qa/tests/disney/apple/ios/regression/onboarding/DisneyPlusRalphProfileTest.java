@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
@@ -19,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
@@ -223,40 +225,55 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75283"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testRalphAddProfileJuniorModeDateOFBirth() {
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
-        DisneyOffer offer = getAccountApi().lookupOfferToUse("DE", "Disney Plus Standard W Ads Monthly - DE - Web");
-        setAccount(getAccountApi().createAccount( offer, "DE", getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-
-        getAccountApi().overrideLocations(getAccount(), "DE");
-        // Onboarding to application and accept one trust page if appears
-        handleAlert();
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
+        String RATING_TWELVE = "12";
+        // Disable one trust banner Jarvis config and set account
+        jarvisDisableOneTrustBanner();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
+                GERMANY, getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), GERMANY);
+        /*
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE)
+                .dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA)
+                .kidsModeEnabled(false).isStarOnboarded(true).build());
+        DisneyProfile profile = getAccount().getProfile(JUNIOR_PROFILE);
+*/
         setAppToHomeScreen(getAccount());
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
 
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
+        addProfile.getCellsWithLabels().get(0).click();
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         addProfile.clickSaveProfileButton();
+
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         addProfile.tapJuniorModeToggle();
-        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is converted to General Audience");
+        passwordPage.enterPassword(getAccount());
+        dismissKeyboardForPhone();
+        passwordPage.clickPrimaryButton();
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
+                "Profile is converted to General Audience");
+        Assert.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
+                "Birthdate field did not change to 'Not Required'");
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+
+        Assert.assertTrue(contentRating.isContentRatingDisplayed(RATING_TWELVE),
+                "Content Rating is not present");
     }
 
     private void  setupForRalph(String... DOB) {

@@ -213,6 +213,7 @@ public enum DictionaryKeys {
     EXISTING_SUBS_DATE_OF_BIRTH_DESCRIPTION("existing_subs_date_of_birth_description"),
     EXISTING_SUBS_DATE_OF_BIRTH_TITLE("existing_subs_date_of_birth_title"),
     FAT_FINGER_EMAIL("fat_finger_email_copy"),
+    FIELD_NOT_REQUIRED("field_not_required"),
     FOOTER_MANAGE_PREFERENCE("footer_manage_preferences"),
     FORGOT_PASSWORD("forgot_password"),
     FORM_ERROR_FOR_DOB("formerror_date_of_birth"),
