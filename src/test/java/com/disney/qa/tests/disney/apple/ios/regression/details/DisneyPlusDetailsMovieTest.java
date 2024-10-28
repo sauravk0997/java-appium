@@ -312,9 +312,11 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isContinueButtonPresent(),
                 "Continue button is not present after exiting video player");
         int detailsPageRemainingTime = detailsPage.getRemainingTimeInSeconds(detailsPage.getRemainingTimeText());
+        System.out.println("Details duration:" + detailsPageRemainingTime);
         detailsPage.clickContinueButton().waitForVideoToStart();
 
         int videoPlayerRemainingTime = videoPlayer.getRemainingHourAndMinInSeconds();
+        System.out.println("player duration:" + videoPlayerRemainingTime);
         int playDuration = (detailsPageRemainingTime - videoPlayerRemainingTime);
         ValueRange range = ValueRange.of(0, UI_LATENCY_IN_SEC);
         sa.assertTrue(range.isValidIntValue(playDuration),"video didn't start from the bookmark");
