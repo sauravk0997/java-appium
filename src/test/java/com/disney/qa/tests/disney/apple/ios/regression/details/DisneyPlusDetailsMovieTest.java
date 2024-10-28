@@ -284,7 +284,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72544"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyMovieResumeStateBehavior() {
-        int UI_LATENCY_IN_SEC = 60;
+        int UI_LATENCY_IN_SEC = 35;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -312,14 +312,12 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isContinueButtonPresent(),
                 "Continue button is not present after exiting video player");
         int detailsPageRemainingTime = detailsPage.getRemainingTimeInSeconds(detailsPage.getRemainingTimeText());
-        System.out.println("Details duration:" + detailsPageRemainingTime);
         detailsPage.clickContinueButton().waitForVideoToStart();
 
         int videoPlayerRemainingTime = videoPlayer.getRemainingHourAndMinInSeconds();
-        System.out.println("player duration:" + videoPlayerRemainingTime);
         int playDuration = (detailsPageRemainingTime - videoPlayerRemainingTime);
         ValueRange range = ValueRange.of(0, UI_LATENCY_IN_SEC);
-        sa.assertTrue(range.isValidIntValue(playDuration),"video didn't start from the bookmark");
+        Assert.assertTrue(range.isValidIntValue(playDuration),"video didn't start from the bookmark");
         sa.assertAll();
     }
 
