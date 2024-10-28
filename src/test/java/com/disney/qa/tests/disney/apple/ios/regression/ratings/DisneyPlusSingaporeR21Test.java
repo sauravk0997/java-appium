@@ -5,6 +5,7 @@ import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -687,7 +688,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getMediaTitle().equals(OUT_TITLE), "Expected R21 Content is not opened");
-        removeJarvis();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74834"})
@@ -705,7 +705,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getMediaTitle().equals(OUT_TITLE), "Expected R21 Content is not opened");
-        removeJarvis();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74836"})
@@ -726,7 +725,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
         Assert.assertTrue(detailsPage.getMediaTitle().equals(OUT_TITLE),
                 "User is not navigated to the details page after pause timeout");
-        removeJarvis();
     }
 
     private void navigateToHomePageForPinUser() {
@@ -771,5 +769,13 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         homePage.goToDetailsPageFromContinueWatching(OUT_TITLE);
         detailsPage.clickContinueButton();
         Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void removeJarvisApp(){
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        if(isInstalled){
+            removeJarvis();
+        }
     }
 }
