@@ -57,7 +57,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
-        getDesiredRatingContent(ratingValue, locale, lang);
+        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
@@ -137,7 +137,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
             for (String brandID : brandIDList) {
                 LOGGER.info("Searching for content in brand collection: {}", brandID);
-                LOGGER.info("Searching for content for locale -language ", locale, " ", language);
                 apiContentTitle = getContentForBrand(brandID, rating, locale, language);
                 if (apiContentTitle != null && !apiContentTitle.isEmpty()) {
                     break;
@@ -210,7 +209,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     private void validateSeriesContent(String rating) {
-        LOGGER.info("* rating: {}", rating);
+        LOGGER.info("rating: {}", rating);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -243,7 +242,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     private void validateMovieContent(String rating) {
-        LOGGER.info("* rating: {}", rating);
+        LOGGER.info("rating: {}", rating);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
