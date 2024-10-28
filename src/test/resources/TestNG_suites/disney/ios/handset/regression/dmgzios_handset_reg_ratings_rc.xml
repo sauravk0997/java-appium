@@ -61,32 +61,32 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusEMEARatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset LATAM Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset LATAM Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusLATAMRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset FSK and FSF Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset FSK and FSF Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusFSKandFSFandERatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Kijwijzer Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset Kijwijzer Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusKijwijzerRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset MPAA and TVPG Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset MPAA and TVPG Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMPAAandTVPGRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset NCS Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset NCS Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusNCSRatingsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset MDA Ratings">
+    <test verbose="1" name="DisneyPlus iOS Handset MDA Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMDARatingsTest"/>
         </classes>
