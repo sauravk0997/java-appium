@@ -1,6 +1,8 @@
 package com.disney.qa.tests.disney.apple;
 
+import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,6 +27,7 @@ import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.util.JiraUtils;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
@@ -49,8 +52,10 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
@@ -312,6 +317,16 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
         ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
         getLocalizationUtils().setLanguageCode(R.CONFIG.get(LANGUAGE));
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public final void postTestResultsToJira(ITestContext context) {
+        try {
+            JiraUtils.addTestRunURLtoJiraTicketComment(context);
+        } catch (URISyntaxException | IOException e) {
+            LOGGER.info("Error attempting to post test url link to Jira ticket: {}", e.getMessage(), e);
+            e.printStackTrace();
+        }
     }
 
     public static String getCountry() {
