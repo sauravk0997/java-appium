@@ -41,9 +41,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         setBuildType();
-        jarvisOverrideDisableCompanionConfig();
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        startApp(sessionBundles.get(DISNEY));
     }
 
     public void jarvisOverrideDisableCompanionConfig() {
