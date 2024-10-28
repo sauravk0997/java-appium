@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
@@ -671,7 +672,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69900"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.R21, US})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
     public void verifyR21HasPINPlaybackPauseBehaviourAfterTimeOut() {
         int newPauseTimeOutInSeconds = 30;
         ratingsSetupWithPINNew(ENGLISH_LANG, SINGAPORE);
