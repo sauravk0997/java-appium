@@ -43,8 +43,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     static final String LATAM_LANG = "es";
 
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
-      //  setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
+        LOGGER.info("locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
@@ -53,10 +53,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        LOGGER.info("** locale and language provided: {} {} {}", ratingValue, lang, locale);
-        LOGGER.info("* locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
-      //  setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, locale, lang, ageVerified));
+        LOGGER.info("locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         getDesiredRatingContent(ratingValue, locale, lang);
@@ -68,8 +66,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
         LOGGER.info("* locale and language provided: {} {}", lang, locale);
         LOGGER.info("* locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
-       // setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAccount(getAccountApi().createAccountForOTP(locale, lang));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -83,10 +80,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
-      //  setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-      //          getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                  locale, lang, ageVerified));
+                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -100,8 +95,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     public void ratingsSetupForOTPAccount(String lang, String locale) {
-      //  setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAccount(getAccountApi().createAccountForOTP(locale, lang));
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
