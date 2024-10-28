@@ -138,7 +138,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
                 new DisneyLocalizationUtils(
-                        locale, getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
+                        locale, lang, MobilePlatform.IOS,
                         DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
 
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
