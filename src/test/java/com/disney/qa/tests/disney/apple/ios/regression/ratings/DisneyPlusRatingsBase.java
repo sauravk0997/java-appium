@@ -43,7 +43,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KOREAN_LANG = "ko";
     static final String NETHERLANDS_LANG = "en-GB";
     static final String NEW_ZEALAND_LANG = "en";
-    public static final String SINGAPORE_LANG = "en";
+    public static final String SINGAPORE_LANG = "en-GB";
     static final String TURKEY_LANG = "tr";
     static final String LATAM_LANG = "es";
 
