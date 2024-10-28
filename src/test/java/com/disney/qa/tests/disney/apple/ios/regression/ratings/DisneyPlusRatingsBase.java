@@ -43,7 +43,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String KOREAN_LANG = "ko";
     static final String NETHERLANDS_LANG = "en-GB";
     static final String NEW_ZEALAND_LANG = "en";
-    public static final String SINGAPORE_LANG = "en-GB";
+    public static final String SINGAPORE_LANG = "en";
     static final String TURKEY_LANG = "tr";
     static final String LATAM_LANG = "es";
 
@@ -138,7 +138,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         getLocalizationUtils().setLanguageCode(lang);
         DisneyLocalizationUtils disneyLocalizationUtils =
                 new DisneyLocalizationUtils(
-                        locale, lang, MobilePlatform.IOS,
+                        locale, getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
                         DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
 
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
