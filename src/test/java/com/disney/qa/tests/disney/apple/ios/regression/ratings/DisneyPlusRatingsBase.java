@@ -1,7 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.config.DisneyParameters;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -9,9 +7,6 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
-import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
 import org.testng.asserts.SoftAssert;
@@ -29,7 +24,6 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running locally: set lang/locale on config level
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest {
-    private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
     protected String contentTitle;
     private boolean isMovie;
     String episodicRating;
@@ -48,7 +42,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     static final String LATAM_LANG = "es";
 
     public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -57,7 +50,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -67,7 +59,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
     public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
@@ -82,7 +73,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
@@ -98,7 +88,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     public void ratingsSetupForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -129,22 +118,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 .getRatingSystemValues();
         LOGGER.info("Rating values: " + ratingSystemValues);
         getAccountApi().editContentRatingProfileSetting(account,
-                LOCALIZATION_UTILS.get().getRatingSystem(),
+                getLocalizationUtils().getRatingSystem(),
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
-    }
-
-    private void setDictionary(String lang, String locale) {
-        getLocalizationUtils().setCountryDataByCode(locale);
-        getLocalizationUtils().setLanguageCode(lang);
-        DisneyLocalizationUtils disneyLocalizationUtils =
-                new DisneyLocalizationUtils(
-                        locale, lang, MobilePlatform.IOS,
-                        DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setLegalDocuments();
-        LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
