@@ -28,9 +28,11 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 public class JiraUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING).setKey(com.zebrunner.carina.utils.R.CONFIG.get("crypto_key_value")).build();
+    private static final CryptoTool cryptoTool = CryptoToolBuilder.builder().chooseAlgorithm(AES_ECB_PKCS5_PADDING)
+            .setKey(com.zebrunner.carina.utils.R.CONFIG.get("crypto_key_value")).build();
     private static final String JIRA_TICKET_KEY = R.CONFIG.get("reporting.tcm.xray.test-execution-key");
-    private static final String API_COMMENT_URL = DisneyParameters.getJiraBaseUrl() + "/rest/api/2/issue/" + JIRA_TICKET_KEY + "/comment";
+    private static final String API_COMMENT_URL = DisneyParameters
+            .getJiraBaseUrl() + "/rest/api/2/issue/" + JIRA_TICKET_KEY + "/comment";
     private static final String REPORT_URL = String.valueOf(R.CONFIG.get("report_url"));
     private static final String JIRA_USER = "jira-zafira";
 
