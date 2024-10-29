@@ -26,6 +26,7 @@ import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
+import com.disney.util.JiraUtils;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
@@ -49,8 +50,10 @@ import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
@@ -363,6 +366,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
         LOCALIZATION_UTILS.clear();
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public final void postTestResultsToJira(ITestContext context) {
+        JiraUtils.addTestRunURLtoJiraTicketComment(context);
     }
 
     public static String getCountry() {
