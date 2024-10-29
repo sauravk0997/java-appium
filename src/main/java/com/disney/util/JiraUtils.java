@@ -61,48 +61,33 @@ public class JiraUtils {
             return;
         }
 
-        HttpClient httpClient = HttpClientBuilder.create().build();
-        String requestBody = "{\"body\": \"" + testRunReportMessaging(context) + "\"}";
-
-        URI uri = null;
         try {
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            String requestBody = "{\"body\": \"" + testRunReportMessaging(context) + "\"}";
+            URI uri;
             uri = new URI(API_COMMENT_URL);
-        } catch (URISyntaxException e) {
-            LOGGER.info("Error creating URI for '{}' URL: {}", API_COMMENT_URL, e.getMessage());
-            return;
-        }
-        HttpPost httpPost = new HttpPost(uri);
-        httpPost.setHeader(AUTHORIZATION, getJiraAuth());
-        httpPost.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
-        httpPost.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
-
-        LOGGER.info("Adding test run link to ticket {}", JIRA_TICKET_KEY);
-        StringEntity entity = null;
-        try {
+            HttpPost httpPost = new HttpPost(uri);
+            httpPost.setHeader(AUTHORIZATION, getJiraAuth());
+            httpPost.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
+            httpPost.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
+            LOGGER.info("Adding test run link to ticket {}", JIRA_TICKET_KEY);
+            StringEntity entity;
             entity = new StringEntity(requestBody);
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.info("Exception creating request String entity from request body string: {}", e.getMessage());
-            return;
-        }
-        httpPost.setEntity(entity);
+            httpPost.setEntity(entity);
 
-        HttpResponse httpResponse = null;
-        String responseBody = null;
-        int statusCode = 0;
-        try {
+            HttpResponse httpResponse;
+            String responseBody;
+            int statusCode;
             httpResponse = httpClient.execute(httpPost);
             statusCode = httpResponse.getStatusLine().getStatusCode();
             responseBody = httpResponse.getEntity() != null ? EntityUtils.toString(httpResponse.getEntity()) : null;
-        } catch (IOException e) {
-            LOGGER.info("Exception executing HTTP request to comment report URL in Jira ticket '{}': {}",
-                    JIRA_TICKET_KEY, e.getMessage());
-            return;
-        }
-
-        if (statusCode < 200 || statusCode >= 300) {
-            LOGGER.info("Error attempting to add test run url to {} as comment: {}", JIRA_TICKET_KEY, responseBody);
-        } else {
-            LOGGER.info("Successfully added test run url as comment to {}", JIRA_TICKET_KEY);
+            if (statusCode < 200 || statusCode >= 300) {
+                LOGGER.info("Error attempting to add test run url to {} as comment: {}", JIRA_TICKET_KEY, responseBody);
+            } else {
+                LOGGER.info("Successfully added test run url as comment to {}", JIRA_TICKET_KEY);
+            }
+        } catch (IOException | URISyntaxException e) {
+            LOGGER.warn("Error attempting to append Zafira link to XRAY execution. Error: {}", e.getMessage());
         }
 
     }
