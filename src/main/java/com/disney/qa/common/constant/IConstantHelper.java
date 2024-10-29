@@ -35,7 +35,6 @@ public interface IConstantHelper {
     String ES_LANG = "es";
     String DE_LANG = "de";
     String FR_LANG = "fr";
-
     String JA_LANG = "ja";
     String KO_LANG = "ko";
     String PT_LANG = "pt";
