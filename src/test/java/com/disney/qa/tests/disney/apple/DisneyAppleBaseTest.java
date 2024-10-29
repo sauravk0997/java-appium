@@ -59,7 +59,6 @@ import org.testng.annotations.BeforeSuite;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
-import static com.disney.qa.common.constant.RatingConstant.URUGUAY;
 
 /**
  * Base class for both DisneyBaseTest (mobile) and DisneyPlusAppleTVBaseTest (TVOS)
