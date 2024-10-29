@@ -17,7 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.testng.ITestContext;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.net.URISyntaxException;
