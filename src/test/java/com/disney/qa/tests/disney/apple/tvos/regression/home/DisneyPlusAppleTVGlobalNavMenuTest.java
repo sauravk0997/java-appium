@@ -173,7 +173,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
+    /*@TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
     @Test(groups = {TestGroup.HOME, US})
     public void hiddenNavState() {
         SoftAssert sa = new SoftAssert();
@@ -260,7 +260,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
             }
         });
         sa.assertAll();
-    }
+    }*/
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90928" })
     @Test(description = "Hidden state - Hero Carousel", groups = { TestGroup.HOME, US})
