@@ -1,4 +1,4 @@
-package com.disney.qa.tests.disney.apple.ios.downloads;
+package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
