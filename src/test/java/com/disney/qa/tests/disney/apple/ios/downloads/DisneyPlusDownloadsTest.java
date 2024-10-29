@@ -42,6 +42,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
         String movieTitle = videoPlayer.getTitleLabel();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
+        videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
         detailsPage.startDownload();
         detailsPage.waitForMovieDownloadComplete(timeoutInSeconds, pollingInSeconds);
@@ -60,6 +61,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         String episodeTitle = detailsPage.getEpisodeContentTitle();
         detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
+        videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
         swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
                 detailsPage.getContentDetailsPage(), Direction.UP, 1200);
