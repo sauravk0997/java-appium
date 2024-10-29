@@ -100,7 +100,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
-        LOGGER.info("rating: {}", rating);
+        LOGGER.info("Rating value under test: {}", rating);
         if (isMovie) {
             LOGGER.info("Testing against Movie content.");
             validateMovieContent(rating);
