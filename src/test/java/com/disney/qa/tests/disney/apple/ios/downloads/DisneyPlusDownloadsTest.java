@@ -14,7 +14,6 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
-
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
     //Test constants
