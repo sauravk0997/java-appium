@@ -30,7 +30,6 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding2" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusSignUpTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielSignUpTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusArielLoginTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusRalphProfileTest"/>

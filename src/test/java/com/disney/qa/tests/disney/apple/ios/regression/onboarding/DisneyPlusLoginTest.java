@@ -44,15 +44,15 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void testLogInScreen() {
         SoftAssert softAssert = new SoftAssert();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = new DisneyPlusSignUpIOSPageBase(getDriver());
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isBackButtonPresent(), BACK_ARROW_NOT_DISPLAYED);
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isStep1LabelDisplayed(), "STEP 1 text should be displayed");
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailHeaderDisplayed(), "'Enter your email to continue' text should be displayed");
+        softAssert.assertTrue(loginPage.isBackButtonPresent(), BACK_ARROW_NOT_DISPLAYED);
+        softAssert.assertTrue(loginPage.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
+        softAssert.assertTrue(loginPage.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
+        softAssert.assertTrue(loginPage.isStep1LabelDisplayed(), "STEP 1 text should be displayed");
+        softAssert.assertTrue(loginPage.isEnterEmailHeaderDisplayed(), "'Enter your email to continue' text should be displayed");
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(), "Email field should be present");
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailBodyDisplayed(), "Log in to Disney+ with your MyDisney account should display or Email Body should display");
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.continueButtonPresent(), "Continue (primary) button should be present");
@@ -293,51 +293,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(new DisneyPlusHomeIOSPageBase(getDriver()).isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // TODO add check that the correct profile loaded
-        softAssert.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67250"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void testNotEntitledAccount() {
-        DisneyAccount nonActiveAccount = getAccountApi().createAccount("US", "en");
-        SoftAssert softAssert = new SoftAssert();
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusCompleteSubscriptionIOSPageBase disneyPlusCompleteSubscriptionIOSPageBase = new DisneyPlusCompleteSubscriptionIOSPageBase(getDriver());
-
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        login(nonActiveAccount);
-
-        // Complete subscription page loads
-        softAssert.assertTrue(disneyPlusCompleteSubscriptionIOSPageBase.getHeroImage().isPresent(), "hero not present");
-        softAssert.assertTrue(disneyPlusCompleteSubscriptionIOSPageBase.getPrimaryText().isPresent(), "primary text not present");
-        softAssert.assertTrue(disneyPlusCompleteSubscriptionIOSPageBase.getSecondaryText().isPresent(), "secondary text not present");
-        softAssert.assertTrue(disneyPlusCompleteSubscriptionIOSPageBase.getCompleteSubscriptionButton().isPresent(), "button not present");
-        //TODO:https://jira.disneystreaming.com/browse/QCE-1253
-        //aliceDriver.screenshotAndRecognize().isLabelPresent(softAssert, "disney_logo");
-
-        softAssert.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67254"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void testExpiredAccount() {
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        SoftAssert softAssert = new SoftAssert();
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusRestartSubscriptionIOSPageBase disneyPlusRestartSubscriptionIOSPageBase = new DisneyPlusRestartSubscriptionIOSPageBase(getDriver());
-
-        DisneyAccount expired = getAccountApi().createExpiredAccount("Yearly", "US", "en", "V2");
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        login(expired);
-
-        // Restart Subscription Page loads
-        softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getHeroImage().isPresent(), "hero not present");
-        softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getPrimaryText().isPresent(), "primary text not present");
-        softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getSecondaryText().isPresent(), "secondary text not present");
-        softAssert.assertTrue(disneyPlusRestartSubscriptionIOSPageBase.getRestartSubscriptionButton().isPresent(), "button not present");
-        //TODO:https://jira.disneystreaming.com/browse/QCE-1253
-        //aliceDriver.screenshotAndRecognize().isLabelPresent(softAssert, "disney_logo");
-
         softAssert.assertAll();
     }
 

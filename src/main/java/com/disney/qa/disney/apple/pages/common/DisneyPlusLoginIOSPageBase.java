@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.lang.invoke.MethodHandles;
+import java.util.Map;
 
 /*
  * Email and password login pages
@@ -21,24 +22,18 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @ExtendedFindBy(accessibilityId = "signUpSwap")
-    protected ExtendedWebElement signUpButton;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[2]")
     private ExtendedWebElement myDisneyLogo;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert[`label == \"We couldn't find an account for that email\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView[1]/XCUIElementTypeOther[1]")
-    protected ExtendedWebElement noAccountAlert;
-
     @ExtendedFindBy(accessibilityId = "alertAction:secondaryButton")
     protected ExtendedWebElement alertSignUpBtn;
 
     @ExtendedFindBy(accessibilityId = "alertAction:defaultButton")
     protected ExtendedWebElement alertTryAgainBtn;
-    
+
     public DisneyPlusLoginIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -46,6 +41,11 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         return headlineHeader.isElementPresent();
+    }
+
+    private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
+        boolean isSupported = getLocalizationUtils().getSupportedLangs().contains(getLocalizationUtils().getUserLanguage());
+        return getLocalizationUtils().getDictionaryItem(dictionary, key.getText(), isSupported);
     }
 
     public boolean isBackArrowDisplayed() {
@@ -56,20 +56,8 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return getTextEntryField().format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())).isPresent();
     }
 
-    public boolean isSignUpButtonDisplayed() {
-        return signUpButton.isPresent();
-    }
-
     public boolean isDisneyLogoDisplayed() {
         return dPlusLogo.isPresent();
-    }
-
-    public boolean isLoginTextDisplayed() {
-        return headlineHeader.isPresent();
-    }
-
-    public boolean isNewToDPlusTextDisplayed() {
-        return getTextViewByName("signUpSwap").isElementPresent();
     }
 
     public String getEmailFieldText() {
@@ -123,5 +111,17 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isMyDisneyLogoDisplayed() {
         return myDisneyLogo.isPresent();
+    }
+
+    public boolean isStep1LabelDisplayed() {
+        String step1Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem
+                        (DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()),
+                Map.of("current_step", "1"));
+        return getStaticTextByLabel(step1Label).isPresent();
+    }
+
+    public boolean isEnterEmailHeaderDisplayed() {
+        return getStaticTextByLabel(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER)).isPresent();
     }
 }

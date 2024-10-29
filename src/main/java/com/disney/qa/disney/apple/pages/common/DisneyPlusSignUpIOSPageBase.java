@@ -16,7 +16,8 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
-    protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
+    protected ExtendedWebElement signUpHeader = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText()));
 
     @ExtendedFindBy(accessibilityId = "marketingCheckbox")
     protected ExtendedWebElement optInCheckbox;
@@ -24,14 +25,8 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     @FindBy(xpath = "//*[@name='marketingCheckbox']")
     protected ExtendedWebElement checkBoxItem;
 
-    @ExtendedFindBy(accessibilityId = "buttonContinue")
-    protected ExtendedWebElement agreeAndContinueSignUpBtn;
-
     @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxUnCheckedFoc")
     protected ExtendedWebElement checkboxUnChecked;
-
-    @ExtendedFindBy(accessibilityId = "checkboxCheckedNormal")
-    protected ExtendedWebElement checkBoxNormal;
 
     @ExtendedFindBy(accessibilityId = "disneyAuthAppCheckboxCheckedFo")
     protected ExtendedWebElement checkboxCheckedFocused;
@@ -61,20 +56,10 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isStepperDictValueDisplayed(String stepValueOne , String stepValueTwo) {
-        String text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ONBOARDING_STEPPER.getText());
-        return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(text, Map.of("current_step", stepValueOne, "total_steps", stepValueTwo))).isElementPresent();
-    }
-
-    public boolean isConsentFormPresent() {
-        return optInCheckbox.isElementPresent();
-    }
-
-    public boolean isCheckBoxUnChecked() {
-        return checkboxUnChecked.isPresent();
-    }
-
-    public boolean isCheckBoxChecked() {
-        return checkboxCheckedFocused.isPresent();
+        String text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ONBOARDING_STEPPER.getText());
+        return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(text, Map.of("current_step",
+                stepValueOne, "total_steps", stepValueTwo))).isElementPresent();
     }
 
     public boolean isEmailFieldDisplayed() {
@@ -83,10 +68,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
 
     public String getEmailFieldText() {
         return emailField.getText();
-    }
-
-    public void clearEmailAddress() {
-        textEntryField.type("");
     }
 
     public void submitEmailAddress(String email) {
@@ -108,11 +89,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
     private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
         boolean isSupported = getLocalizationUtils().getSupportedLangs().contains(getLocalizationUtils().getUserLanguage());
         return getLocalizationUtils().getDictionaryItem(dictionary, key.getText(), isSupported);
-    }
-
-    public boolean isStep1LabelDisplayed() {
-        String step1Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", "1"));
-        return getStaticTextByLabel(step1Label).isPresent();
     }
 
     public boolean isEnterEmailHeaderDisplayed() {
