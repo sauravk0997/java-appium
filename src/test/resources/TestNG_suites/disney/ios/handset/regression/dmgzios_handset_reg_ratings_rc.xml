@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_handset_reg_ratings_rc" annotations="JDK" configfailurepolicy="continue" thread-count="2" parallel="tests">
+<suite verbose="1" name="dmgzios_handset_reg_ratings_rc" annotations="JDK" configfailurepolicy="continue" thread-count="3" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.8.0-rc"/>
@@ -89,6 +89,11 @@
     <test verbose="1" name="DisneyPlus iOS Handset MDA Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusMDARatingsTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Handset Singapore R21 Ratings" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusSingaporeR21Test"/>
         </classes>
     </test>
 </suite>
