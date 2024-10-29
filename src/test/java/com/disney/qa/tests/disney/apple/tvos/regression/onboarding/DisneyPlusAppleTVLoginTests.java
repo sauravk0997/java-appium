@@ -236,6 +236,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase passcodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
@@ -244,14 +245,16 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         welcomeScreen.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
-        Assert.assertTrue(passwordPage.isOpened(), "Log In password screen did not launch");
+        Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
+        passwordPage.moveDown(1, 1);
+        passcodePage.clickLoginWithPasswordButton();
 
         new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
         sa.assertTrue(passwordPage.isEnterYourPasswordHeaderPresent(), "Enter your password header was not found.");
-        sa.assertTrue(passwordPage.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Learn more about MyDisney button was not found.");
+        sa.assertTrue(passwordPage.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Log in to Disney+ with your MyDisney account was not found.");
         sa.assertTrue(passwordPage.isEnterYourPasswordHintPresent(), "Enter your password hint was not found.");
         sa.assertTrue(passwordPage.isCaseSensitiveHintPresent(), "Case Sensitive hint was not found.");
-        sa.assertTrue(passwordPage.isForgotPasswordButtonPresent(), "Forgot password button was not found.");
+        sa.assertTrue(passwordPage.isHavingTroubleLoggingInPresent(), "Having Trouble Logging In was not found.");
         sa.assertTrue(passwordPage.isLoginNavigationButtonPresent(), "Login navigation button was not found.");
         sa.assertTrue(passwordPage.isLearnMoreAboutMyDisneyButtonPresent(), "Learn more about MyDisney button was not found.");
         sa.assertAll();

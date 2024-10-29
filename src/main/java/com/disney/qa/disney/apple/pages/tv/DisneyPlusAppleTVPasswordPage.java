@@ -269,4 +269,11 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         String invalidCredentialsError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
         return getDynamicAccessibilityId(invalidCredentialsError).isPresent();
     }
+
+    @Override
+    public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
+        String enterYourPasswordBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail, "link_1", ""));
+        return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
+    }
 }
