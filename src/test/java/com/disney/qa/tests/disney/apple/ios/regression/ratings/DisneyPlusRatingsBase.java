@@ -119,7 +119,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
-        LOGGER.info("Scanning API for title with desired rating '{} {} {}'.", rating, locale, language);
+        LOGGER.info("Scanning API for title with desired rating parameters: '{}, {}, {}'.", rating, locale, language);
         isMovie = false;
         episodicRating = null;
         String apiContentTitle = null;
