@@ -122,7 +122,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68456"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyCloseButtonForDeepLinkingContentMovie() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
