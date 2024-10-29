@@ -63,5 +63,4 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
         ratingsSetup(SIXTEEN_PLUS.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(SIXTEEN_PLUS.getContentRating());
     }
-
 }
