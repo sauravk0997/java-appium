@@ -258,5 +258,4 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
     }
-
 }
