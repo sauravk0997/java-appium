@@ -168,8 +168,8 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return progressBarBookmarkPositionOnDownload.format(seasonNumber, episodeNumber).isPresent();
 	}
 
-	public boolean isProgressBarIndicatingCorrectPosition(String seasonNumber, String episodeNumber,
-														  double scrubPercentage, int latency) {
+	public boolean isProgressBarIndicatingCorrectPosition(
+			String seasonNumber, String episodeNumber, double scrubPercentage, int latency) {
 		double expectedwidth =
 				progressBarOnDownload.format(seasonNumber, episodeNumber).getSize().getWidth() / (scrubPercentage / 100);
 		double actualWidth =
