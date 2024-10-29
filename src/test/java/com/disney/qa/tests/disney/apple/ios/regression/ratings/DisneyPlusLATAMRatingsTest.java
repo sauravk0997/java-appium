@@ -15,7 +15,6 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.ZERO_PLUS;
 public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
 
     // LATAM countries of these test cases are selected by a random function in the 'overrideLocaleConfig' method
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68362"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, LATAM})
     public void verifyRatingSystemLATAM0() {
