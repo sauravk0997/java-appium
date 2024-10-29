@@ -12,9 +12,9 @@ import java.util.Map;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
-    private ExtendedWebElement title = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHANGE_EMAIL_TITLE.getText()));
+    private ExtendedWebElement title = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CHANGE_EMAIL_TITLE.getText()));
 
-    private ExtendedWebElement newEmailHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_NEW_HEADER.getText()));
+    private ExtendedWebElement newEmailHeader = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_NEW_HEADER.getText()));
 
     @ExtendedFindBy(accessibilityId = "disneyAuthCheckboxUnchecked")
     private ExtendedWebElement logoutAllDevicesUnchecked;
@@ -28,7 +28,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     @Override
     public boolean isOpened() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_HEADER.getText())).isElementPresent();
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_HEADER.getText())).isElementPresent();
     }
 
     public boolean isCurrentEmailShown(String email) {
@@ -36,7 +36,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isNewEmailHeaderPresent() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_HINT.getText())).isElementPresent();
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_HINT.getText())).isElementPresent();
     }
 
     public void enterNewEmailAddress(String value) {
@@ -45,30 +45,31 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     public void submitNewEmailAddress(String value) {
         enterNewEmailAddress(value + "\n");
-        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText())).click();
+        getKeyboardDoneButton().clickIfPresent(SHORT_TIMEOUT);
+        getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText())).click();
     }
 
     public boolean isLearnMoreAboutMyDisney() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
     }
 
     public ExtendedWebElement getLearnMoreAboutMyDisney() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText()));
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText()));
     }
 
     public boolean isConfirmationPageOpen() {
-        return getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_HEADER.getText())).isPresent();
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_HEADER.getText())).isPresent();
     }
 
     public void clickBackToDisneyBtn() {
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_BACK_TO_SERVICE_BTN.getText())).click();
+        getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_BACK_TO_SERVICE_BTN.getText())).click();
     }
     public void clickLogoutBtn() {
-        getStaticTextByLabelContains(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.LOG_OUT_LABEL.getText())).click();
+        getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.LOG_OUT_LABEL.getText())).click();
     }
 
     @Override
     public void clickCancelBtn() {
-        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText())).click();
+        getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText())).click();
     }
 }

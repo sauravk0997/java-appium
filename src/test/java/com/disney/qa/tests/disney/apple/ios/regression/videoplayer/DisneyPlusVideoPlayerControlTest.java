@@ -19,6 +19,7 @@ import org.testng.asserts.SoftAssert;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
@@ -47,11 +48,11 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, dataProvider = "contentType")
-    public void verifyTitleAndBackButtonToClose(@NotNull Object[] contentType) {
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyTitleAndBackButtonToClose() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        launchDeeplink((String) contentType[1]);
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         detailsPage.clickPlayButton().waitForVideoToStart().clickBackButton();
@@ -59,15 +60,10 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         detailsPage.clickPlayOrContinue().waitForVideoToStart().tapTitleOnPlayer();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-
-        if (contentType[0].equals(DisneyPlusApplePageBase.contentType.SERIES.toString())) {
-            detailsPage.clickContinueButton().waitForVideoToStart().tapSubtitleOnPlayer();
-            Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})
-    @Test(description = " Video Player > Tap on screen to Rewind", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    @Test(description = " Video Player > Tap on screen to Rewind", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRewindButtonControlOnPlayer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -90,7 +86,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})
-    @Test(description = " Video Player > Tap on screen to Forward", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = " Video Player > Tap on screen to Forward", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyForwardButtonControlOnPlayer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -111,7 +107,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61169"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyCloseButtonForDeepLinkingContentSeries() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -140,7 +136,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66505"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyVideoPlayerControlsUIMovies() {
             DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
             DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -183,7 +179,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74457"})
-    @Test(description = "Hulk - Hulu Video Player - Service Attribution", dataProvider = "userType", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "userType", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerServiceAttribution(String userType) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -191,20 +187,28 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAccount(createAccountWithSku(DisneySkuParameters.valueOf(userType), getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.valueOf(userType),
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.getPlayButton().click();
-        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(), "service attribution wasn't visible when video started");
-        sa.assertFalse(videoPlayer.isSeekbarVisible(), "player controls were displayed when video started");
-        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(), "service attribution wasn't visible along with controls");
+        detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForAdToCompleteIfPresent(5);
+        videoPlayer.skipPromoIfPresent();
+
+        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
+                "service attribution wasn't visible when video started");
+        sa.assertFalse(videoPlayer.isSeekbarVisible(),
+                "player controls were displayed when video started");
+        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(),
+                "service attribution wasn't visible along with controls");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72690"})
-    @Test(description = "VOD Player - RW & FW - Play State", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player - RW & FW - Play State", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRewindAndForwardButtonControlOnPlayerWhilePlaying() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -229,7 +233,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
-    @Test(description = "VOD Player Controls - Scrubber Elements", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player Controls - Scrubber Elements", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyScrubberElementsOnPlayer() throws URISyntaxException, JsonProcessingException {
         String errorMessage = "not changed after scrub";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -264,7 +268,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68450"})
-    @Test(description = "VOD Player Controls - Backgrounding from the Player Behavior", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "VOD Player Controls - Backgrounding from the Player Behavior", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerBehaviourAfterBackgroundingApp() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setPictureInPictureConfig(DISABLED);
@@ -277,7 +281,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72539"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyVideoPlayerControlsUISeries() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);

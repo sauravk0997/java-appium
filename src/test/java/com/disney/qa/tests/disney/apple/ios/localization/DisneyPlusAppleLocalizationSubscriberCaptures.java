@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.SEASON_NUMBER;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
 
 import java.util.Date;
 import java.util.List;
@@ -182,14 +180,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(3);
         getScreenshots("ProfilePage");
 
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         pause(3);
         getScreenshots("EmptyWatchlist");
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
         pause(3);
         getScreenshots("AppSettings");
 
@@ -383,8 +379,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         passwordPage.clickPrimaryButton();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
         pause(3);
         getScreenshots("LegalLandingPage");
 
@@ -398,8 +393,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         legalPage.getBackArrow().click();
 
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.HELP)).click();
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Help page did not open.")
                 .until(it -> moreMenuPage.isHelpWebviewOpen());
         pause(10);
@@ -647,8 +641,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         contentRatingPage.clickSaveProfileButton();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT)).click();
         welcomePage.clickLogInButton();
         loginPage.fillOutEmailField(testAccountTwoProfiles.getEmail());
         loginPage.clickPrimaryButton();
@@ -775,272 +768,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("ExitKidsProfileWrongCodeError");
     }
 
-    @Test(dataProvider = "tuidGenerator", description = "iOS S7 Bottom navigation - Downloads and Search", groups = { "Subscriber - UI",
-            "Subscriber - UI - S7", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
-    public void downloadsAndSearch(String TUID) {
-        setup();
-        setZipTestName("SubscriberUI_7_downloads");
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
-        DisneyAccount testAccount = getAccount();
-
-        welcomePage.clickLogInButton();
-        loginPage.fillOutEmailField(testAccount.getEmail());
-        loginPage.clickPrimaryButton();
-        passwordPage.typePassword(testAccount.getUserPass());
-        dismissKeyboardForPhone();
-        passwordPage.clickPrimaryButton();
-
-        //S7.1
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        pause(2);
-        getScreenshots("EmptyDownloadsPage");
-
-        //S7.2
-        String movieTitle = getSearchApi().getMovie("aRbVJUb2h2Rf", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getVideoTitle();
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
-        searchPage.searchForMedia(movieTitle);
-        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
-        movies.get(0).click();
-        pause(2);
-        getScreenshots("MovieLandingPage");
-
-        swipePageTillElementTappable(detailsPage.getTabBar(), 3, null, Direction.UP, 1000);
-
-        detailsPage.clickDetailsTab();
-        pause(2);
-        getScreenshots("MovieDetailsTab");
-
-        swipePageTillElementTappable(detailsPage.getActors(), 3, null, Direction.UP, 1000);
-        pause(2);
-        getScreenshots("MovieMiscellaneousdetails");
-
-        //S7.3
-        swipePageTillElementTappable(detailsPage.getPlayButton(), 3, null, Direction.DOWN, 1000);
-
-        detailsPage.addToWatchlist();
-        detailsPage.startDownload();
-        //Need to increase this time out because we need some time for the download to start.
-        // There's no ID to check against for a smarter wait.
-        pause(10);
-
-        //S7.6
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        pause(2);
-        getScreenshots("DownloadsPage");
-
-        //S7.7
-        downloadsPage
-                .getDynamicRowButtonLabel(
-                        getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP_IOS.getText()), 1)
-                .click();
-
-        pause(2);
-        getScreenshots("MovieDownload");
-        detailsPage.clickAlertConfirm();
-
-        //S7.8
-        downloadsPage
-                .getDynamicRowButtonLabel(
-                        getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_PAUSED.getText()), 1)
-                .click();
-        pause(2);
-        getScreenshots("MoviePausedDownload");
-        detailsPage.clickAlertConfirm();
-
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
-        searchPage.searchForMedia("The Simpsons");
-        List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
-        series.get(0).click();
-        pause(5);
-        getScreenshots("SeriesLandingPage");
-
-        swipePageTillElementTappable(detailsPage.getEpisodesTab(), 3, null, Direction.UP, 1000);
-        pause(2);
-        getScreenshotsNoCountUpdate("SeriesEpisodes");
-
-        detailsPage.clickDetailsTab();
-        pause(2);
-        getScreenshotsNoCountUpdate("SeriesDetailsTab");
-
-        swipePageTillElementTappable(detailsPage.getInfoView(), 3, null, Direction.UP, 1000);
-        detailsPage.getInfoView().click();
-        pause(2);
-        getScreenshotsNoCountUpdate("SeriesInfoView");
-
-        swipePageTillElementTappable(detailsPage.getActors(), 3, null, Direction.UP, 1000);
-        pause(2);
-        getScreenshotsNoCountUpdate("SeriesMiscellaneousDetails");
-
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
-        series = searchPage.getDisplayedTitles();
-        series.get(0).click();
-        pause(5);
-
-        //S7.4
-        swipePageTillElementTappable(detailsPage.getSeasonSelectorButton(), 3, null, Direction.UP, 1000);
-        detailsPage.getSeasonSelectorButton().click();
-        pause(2);
-        getScreenshots("SeasonSelector");
-
-        //S7.5
-        detailsPage.getItemPickerClose().click();
-        pause(1);
-        detailsPage.downloadAllOfSeason();
-        pause(1);
-        getScreenshots("DownloadSeasonLessThan20");
-
-        detailsPage.clickAlertDismissBtn();
-
-        detailsPage.getSeasonSelectorButton().click();
-        String seasonsButton = getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()),
-                Map.of(SEASON_NUMBER, "3"));
-        detailsPage.getStaticTextByLabel(seasonsButton).click();
-        detailsPage.downloadAllOfSeason();
-        pause(2);
-        getScreenshotsNoCountUpdate("DownloadSeasonMoreThan20");
-        detailsPage.clickAlertConfirm();
-
-        //download a couple of seasons for download in progress button
-        detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()),
-                Map.of(SEASON_NUMBER, "4"));
-        detailsPage.getStaticTextByLabel(seasonsButton).click();
-        detailsPage.downloadAllOfSeason();
-        detailsPage.clickAlertConfirm();
-
-        detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()),
-                Map.of(SEASON_NUMBER, "5"));
-        detailsPage.getStaticTextByLabel(seasonsButton).click();
-        detailsPage.downloadAllOfSeason();
-        detailsPage.clickAlertConfirm();
-
-        detailsPage.getSeasonSelectorButton().click();
-        seasonsButton = getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()),
-                Map.of(SEASON_NUMBER, "6"));
-        detailsPage.getStaticTextByLabel(seasonsButton).click();
-        detailsPage.downloadAllOfSeason();
-        detailsPage.clickAlertConfirm();
-
-        String seriesTitle = getSearchApi().getSeries("3ZoBZ52QHb4x", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getSeriesTitle();
-
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
-        pause(2);
-        getScreenshotsNoCountUpdate("DownloadsPageWithSeries");
-
-        //S7.9
-        downloadsPage
-                .getDynamicIosClassChainElementTypeImage(
-                        getDictionary().formatPlaceholderString(
-                                getDictionary().getDictionaryItem(
-                                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                                        DictionaryKeys.DOWNLOADS_DISCLOSURE_ACCESSIBILITY_TITLE.getText()),
-                                Map.of("content_title", seriesTitle))).click();
-        pause(2);
-        getScreenshots("SeriesDownloadPage");
-
-        //S7.10
-        ExtendedWebElement lastEpisodeButton = downloadsPage
-                .getDynamicRowButtonLabel(
-                        getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP_IOS.getText()), 7);
-        swipePageTillElementTappable(lastEpisodeButton, 5, null, Direction.UP, 500);
-        lastEpisodeButton.click();
-        pause(2);
-        getScreenshots("DownloadIsQueued");
-        detailsPage.clickAlertDismissBtn();
-
-        //S7.11
-        downloadsPage.getEditButton().click();
-        pause(2);
-        getScreenshots("EditMode");
-
-        //S7.12
-        downloadsPage
-                .getDynamicRowButtonLabel(
-                        getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()), 3)
-                .click();
-
-        pause(2);
-        getScreenshots("SingleCheckbox");
-
-        downloadsPage
-                .getDynamicRowButtonLabel(
-                        getDictionary()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()), 4)
-                .click();
-
-        pause(2);
-        getScreenshotsNoCountUpdate("MultipleCheckbox");
-
-        //S7.13
-        downloadsPage.getSelectAllButton().click();
-        pause(2);
-        getScreenshots("SelectAll");
-        downloadsPage.getCancelButton().click();
-
-        //S7.14
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
-
-        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
-
-        swipePageTillElementTappable(appSettingsPage.getDeleteAllDownloadsButton(), 3, null, Direction.UP, 1000);
-        appSettingsPage.getDeleteAllDownloadsButton().click();
-        pause(2);
-        getScreenshots("DeleteAllMultipleDownloads");
-        downloadsPage.getSystemAlertDestructiveButton().click();
-
-        //Have to restart and relog here because when appium tells D+ to "restart"
-        // IOS re-installs D+.
-        restart();
-
-        movieTitle = getSearchApi().getMovie("5MpPFhS8FTXh", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                .getVideoTitle();
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.SEARCH));
-        searchPage.searchForMedia(movieTitle);
-        movies = searchPage.getDisplayedTitles();
-        movies.get(1).click();
-        detailsPage.startDownload();
-        pause(10);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        downloadsPage.waitForDownloadToComplete();
-
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
-        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS.getMenuOption()).click();
-
-        swipePageTillElementTappable(appSettingsPage.getDeleteAllDownloadsButton(), 3, null, Direction.UP, 1000);
-        appSettingsPage.getDeleteAllDownloadsButton().click();
-        pause(1);
-        getScreenshotsNoCountUpdate("DeleteAllSingleDownload");
-        downloadsPage.clickDefaultAlertBtn();
-
-        //S7.15
-        navigateToTab((DisneyPlusApplePageBase.FooterTabs.MORE_MENU));
-        moreMenuPage.waitUntil(ExpectedConditions.elementToBeClickable(moreMenuPage.getEditProfilesBtnBy()), 30);
-        moreMenuPage.getDynamicCellByLabel(
-                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT.getMenuOption()).click();
-        getScreenshots("LogOut");
-    }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S8 Bottom navigation - Search, Movies, Originals and Series", groups = {
             "Subscriber - UI", "Subscriber - UI - S8", TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })

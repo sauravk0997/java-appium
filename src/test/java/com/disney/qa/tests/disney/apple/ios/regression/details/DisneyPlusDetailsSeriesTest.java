@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
+import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
@@ -46,7 +47,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String DISNEY_JUNIOR_ARIEL = "Disney Junior Ariel";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadMessageForSeasonMoreThanTwentyEpisodes() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -70,7 +71,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73712"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesSeasonPicker() {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -93,7 +94,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71632"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyAddAndRemoveSeriesFromWatchlist() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -112,7 +113,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "Remove from watchlist button not displayed after adding content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenuPage.getTypeCellLabelContains(contentTitle).isPresent(),
                 "Series title was not added to the watchlist");
 
@@ -124,7 +125,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(),
                 "Add to watchList button not displayed after removing content");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertFalse(moreMenuPage.getTypeCellLabelContains(contentTitle).isPresent(),
                 "Series title was not removed from watchlist");
         sa.assertTrue(moreMenuPage.isWatchlistEmptyBackgroundDisplayed(),
@@ -133,7 +134,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67985"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesDetailsTabMetadata() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -160,7 +161,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71699"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesDetailsUIElements() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -188,7 +189,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67707"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesDetailsShare() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -216,7 +217,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72421"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesSuggestedTab() {
         DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -234,7 +235,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72422"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesExtrasTab() throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -280,7 +281,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75166"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyResumeStateSeriesEpisodesTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -323,7 +324,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72545"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySeriesResumeBehavior() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -349,7 +350,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71700"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyResumeStateSeries() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -406,7 +407,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72418"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesPlayBehavior() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -426,7 +427,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67981"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -478,7 +479,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72419"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyComingSoonSeriesBehavior() {
         String httpPrefix = "https://";
         SoftAssert sa = new SoftAssert();
@@ -489,8 +490,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_agatha_all_along_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_deeplink");
 
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
@@ -510,7 +511,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Subscriber can add title to Watchlist
         detailsPage.clickWatchlistButton();
         detailsPage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(contentTitle),
                 "Titles were not added to the Watchlist");
         moreMenu.clickHomeIcon();
@@ -534,22 +535,22 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for coming soon series %s is not as expected", contentTitle));
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71701"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyComingSoonSeriesUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_agatha_all_along_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_agatha_all_along_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_star_wars_skeleton_crew_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
@@ -601,11 +602,13 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75416"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileDetailsPageWatchListButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
@@ -627,14 +630,14 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "remove from watchlist button wasn't displayed");
         detailsPage.clickMoreTab();
-        detailsPage.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
+        detailsPage.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertTrue(detailsPage.getTypeCellLabelContains(DISNEY_JUNIOR_ARIEL).isPresent(),
                 "Title was not added to the watchlist");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75418"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileDetailsPageTrailerButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -663,7 +666,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76972"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileDetailsPageSeriesDownload() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -718,7 +721,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76971"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileDetailsPageSeriesEpisodeDownload() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -761,7 +764,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66706"})
-    @Test(groups = {TestGroup.SMOKE, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.SMOKE, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyTapPlayRemoveDismissOnDownloadsScreen() {
         String episodeOneTitle = "Check Mate";
         int pollingInSeconds = 5;
@@ -816,8 +819,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75415"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
-    public void verifyJuniorProfileSeriesDetailsPage() throws URISyntaxException, JsonProcessingException {
+    @Test(groups = {TestGroup.PROFILES, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyJuniorProfileSeriesDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -893,6 +896,85 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isDurationTimeLabelPresent(), "Episode duration was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "Episode description was not found");
         sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("1","1"), "Episode download icon was not found");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66736"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadScreenForSeriesViewUI() {
+        String season1 = "Season 1";
+        String season2 = "Season 2";
+        String one = "1";
+        String titleErrorMessage = "title not found";
+        String sizeIdentifier = "MB";
+        int pollingInSeconds = 6;
+        int timeoutInSeconds = 120;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDynamicAccessibilityId(DETAILS_TAB_METADATA_SERIES).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        //Get season1 episode details from API
+        ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_loki_entity_id"));
+        Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+
+        //Download season 1 & 2
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(season2).click();
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(season1).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
+
+        //Navigate to Download page
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        downloads.clickSeriesMoreInfoButton();
+
+        //verify Download detail view
+        sa.assertTrue(downloads.getBackArrow().isPresent(), "Back button not present");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(DETAILS_TAB_METADATA_SERIES).isPresent(),
+                DETAILS_TAB_METADATA_SERIES + " title was not found on downloads screen");
+        sa.assertTrue(downloads.getEditButton().isPresent(), "Edit button not found on download screen");
+        sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
+                season1 + " " + titleErrorMessage);
+        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(),
+                "Episode " + titleErrorMessage);
+        sa.assertTrue(downloads.getStaticTextByLabelContains(seasonDetails.getMetastringParts().getRatingInfo().getRating().getText()).isPresent(),
+                "Episode rating detail was not found");
+        sa.assertTrue(downloads.isEpisodeNumberDisplayed(seasonDetails.getEpisodeNumber()),
+                "Episode Number was not found");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(sizeIdentifier).isPresent(),
+                "Size of episode was not found");
+        long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seasonDetails.getDurationMs());
+        sa.assertTrue(downloads.getStaticTextByLabelContains(String.valueOf(durationFromApi)).isPresent(),
+                "Duration of episode was not found");
+        sa.assertTrue(downloads.getDownloadCompleteButton().isPresent(),
+                "Download state button was not found");
+        sa.assertTrue(downloads.getDownloadedAssetImage(DETAILS_TAB_METADATA_SERIES).isPresent(),
+                "Episode artwork and play button was not found");
+        downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
+        LOGGER.info("Description:- " +seasonDetails.getDescription().getBrief());
+        sa.assertTrue(downloads.getEpisodeDescription(one, one)
+                .getText().equals(seasonDetails.getDescription().getFull()),
+                "Episode description detail was not found after episode expanded");
+
+        downloads.getTypeButtonByLabel(season1).click();
+        sa.assertFalse(downloads.isEpisodeCellDisplayed(one, one), season1 + " not collapsed");
+        sa.assertTrue(downloads.getStaticTextByLabel(season2).isPresent(),
+                season2 + " " + titleErrorMessage);
+        sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
+                season1 + " " + titleErrorMessage);
         sa.assertAll();
     }
 

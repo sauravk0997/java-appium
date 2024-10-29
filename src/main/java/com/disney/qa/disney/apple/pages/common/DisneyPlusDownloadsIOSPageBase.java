@@ -21,15 +21,15 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@CacheLookup
 	private ExtendedWebElement downloadsHeader;
 
-	private ExtendedWebElement editButton = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT.getText()));
+	private ExtendedWebElement editButton = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT.getText()));
 
-	private ExtendedWebElement selectAllButton = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SELECT_ALL_LABEL.getText()));
+	private ExtendedWebElement selectAllButton = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SELECT_ALL_LABEL.getText()));
 
-	private ExtendedWebElement cancelButton = getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL.getText()));
+	private ExtendedWebElement cancelButton = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL.getText()));
 
-	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
+	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
 
-	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
+	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
 
 	@ExtendedFindBy(accessibilityId = "Checkbox. Checked.")
 	private ExtendedWebElement checkedCheckbox;
@@ -42,6 +42,11 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	@ExtendedFindBy(accessibilityId = "downloadDelete24")
 	private ExtendedWebElement downloadDelete24Button;
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeStaticText[3]")
+	private ExtendedWebElement episodeDescription;
+	@ExtendedFindBy(accessibilityId = "offlineContentCell[%s, %s]")
+	private ExtendedWebElement episodeDownloadCell;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
 			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]")
@@ -126,7 +131,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		String[] sizeRuntimeParts = getStaticTextByLabelContains("MB").getText().split(" ");
 		String size = sizeRuntimeParts[1] + " " + sizeRuntimeParts[2];
 		String runtime = sizeRuntimeParts[4] + " " + sizeRuntimeParts[5];
-		return getStaticTextByLabelContains(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+		return getStaticTextByLabelContains(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 				DictionaryKeys.SIZE_RUNTIME_PLACEHOLDER.getText()), Map.of("S", size, "R", runtime)));
 	}
 
@@ -137,6 +142,21 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void clickSeriesMoreInfoButton() {
 		getImageLabelContains("Double tap for more info").click();
+	}
+
+	public boolean isEpisodeNumberDisplayed(String episodeNumber) {
+		return getStaticTextByLabelContains(getLocalizationUtils().formatPlaceholderString(
+				getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.EPISODE_PLACEHOLDER.getText()),
+				Map.of(PLACEHOLDER_E, Integer.parseInt(episodeNumber)))).isPresent();
+	}
+
+	public ExtendedWebElement getEpisodeDescription(String seasonNumber, String episodeNumber) {
+		return episodeDescription.format(seasonNumber, episodeNumber);
+	}
+
+	public boolean isEpisodeCellDisplayed(String seasonNumber, String episodeNumber) {
+		return episodeDownloadCell.format(seasonNumber, episodeNumber).isPresent();
 	}
 
 	public boolean isProgressbarDisplayedOnDownloads(String seasonNumber, String episodeNumber) {

@@ -67,16 +67,16 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isMainTextDisplayed() {
-        return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
+        return staticTextLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        String subCopyDirectText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
+        String subCopyDirectText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
         return staticTextNameContains.format(subCopyDirectText).isPresent();
     }
 
     public ExtendedWebElement getSubCopyDirectText(){
-        return staticTextNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
+        return staticTextNameContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
     }
 
     public boolean isSignUpButtonDisplayed() {
@@ -112,12 +112,12 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void clickLogInButton() {
-        clickDontAllowBtn();
+        handleSystemAlert(AlertButtonCommand.DISMISS, 2);
         loginButton.click();
     }
 
     public void clickSignUpButton() {
-        clickDontAllowBtn();
+        handleSystemAlert(AlertButtonCommand.DISMISS, 2);
         signUpButton.click();
     }
 

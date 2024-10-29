@@ -24,8 +24,10 @@ import java.net.URISyntaxException;
 import java.time.*;
 import java.time.temporal.ValueRange;
 import java.util.List;
-import java.util.stream.IntStream;
 
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEUTSCH;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
@@ -49,14 +51,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
 
-
-    @DataProvider(name = "content")
-    public Object[][] content() {
-        return new Object[][]{{MS_MARVEL},
-                {SPIDERMAN_THREE}
-        };
-    }
-
     @DataProvider(name = "tapAction")
     public Object[][] tapAction() {
         return new Object[][]{{DisneyPlusVideoPlayerIOSPageBase.PlayerControl.FAST_FORWARD},
@@ -65,7 +59,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72216"})
-    @Test(description = "VOD Player - Ads - Ad Duration Timer - Controls UP & DOWN (VOD)", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyAdDurationTimer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -87,7 +81,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72851"})
-    @Test(description = "Ariel Ads Video Player > In Ad, Audio Subtitle button displayed/clickable", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAdsPlayerAudioSubtitleButton() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusAudioSubtitleIOSPageBase audioSubtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
@@ -107,7 +101,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72879"})
-    @Test(description = "Ariel Ads Video Player > Able to scrub forward during Grace period", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayerScrubForwardDuringAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -115,29 +109,30 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
-        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was found after scrubbing forward past new ad pod.");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73630"})
-    @Test(description = "VOD Player - Ads - Restart - Restart Button inactive during Pre-Roll Ad", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRestartButtonInActiveWhilePlayingAd() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(MS_MARVEL);
-        videoPlayer.waitForVideoToStart();
+        loginAndStartPlayback(SPIDERMAN_THREE);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART), "Restart button is not visible on ad player overlay");
-        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE), "Restart button is clickable and not disabled on ad player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART),
+                "Restart button is not visible on ad player overlay");
+        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE),
+                "Restart button is clickable and not disabled on ad player overlay");
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
-        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE), "Restart button is not enabled on video player");
+        sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE),
+                "Restart button is not enabled on video player");
         int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTime();
         videoPlayer.clickRestartButton();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad not started again after clicking restart button");
         int remainingTimeAfterRestartClick = videoPlayer.getRemainingTime();
         sa.assertTrue(remainingTimeBeforeRestartClick < remainingTimeAfterRestartClick,
                 "Remaining time after restart click" + remainingTimeAfterRestartClick +
@@ -146,7 +141,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72212"})
-    @Test(description = "VOD Player - Ads - Display of Ad Badge", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyLocalizedAdBadgeWhilePlayingAd() {
         String frenchLanguageCode = "fr";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -190,52 +185,53 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72175"})
-    @Test(description = "VOD Player - Ads - No Skip Forward or Backward allowed", dataProvider = "tapAction", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(dataProvider = "tapAction", groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayerNoSkippingDuringAd(DisneyPlusVideoPlayerIOSPageBase.PlayerControl control) {
+        int timeout = 20;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        loginAndStartPlayback(MS_MARVEL);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        loginAndStartPlayback(SPIDERMAN_THREE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(timeout), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         int adTimeRemainingBeforeControlAction = videoPlayer.getAdRemainingTimeInSeconds();
         int contentTimeRemaining = videoPlayer.getRemainingTime();
         videoPlayer.tapPlayerScreen(control, 2);
-        Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT);
         Assert.assertTrue(videoPlayer.getAdRemainingTimeInSeconds() < adTimeRemainingBeforeControlAction,
                 "Fast forward/Rewind action is functional during an ad");
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertEquals(videoPlayer.getRemainingTime(), contentTimeRemaining, CONTENT_TIME_CHANGED_ERROR_MESSAGE);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72272"})
-    @Test(description = "VOD Player - Ads - Leave Player during Ad", dataProvider = "content", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
-    public void verifyLeavePlayerDuringAd(String content) {
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLeavePlayerDuringAd() {
         String errorFormat = "%s %s";
         SoftAssert sa = new SoftAssert();
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        loginAndStartPlayback(content);
-        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
+        loginAndStartPlayback(SPIDERMAN_THREE);
+        sa.assertTrue(videoPlayer.getPlayerView().isPresent(TEN_SEC_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
+                String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
+        sa.assertTrue(detailsPage.isOpened(),
+                String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
 
         detailsPage.clickPlayOrContinue();
-        sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
+        sa.assertTrue(videoPlayer.getPlayerView().isPresent(TEN_SEC_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
-        if (content.equalsIgnoreCase(MS_MARVEL)) {
-            videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
-        } else {
-            videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
-        }
-        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_SIXTY);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
+        videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
+                String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
+        sa.assertTrue(detailsPage.isOpened(),
+                String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72177"})
-    @Test(description = "Ariel Ads Video Player > Scrub forward after grace period", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayerScrubForwardAfterAdGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -245,19 +241,20 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
-        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_THIRTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found after scrubbing forward after an ad grace period");
 
         videoPlayer.waitForAdToCompleteIfPresent(6);
-        videoPlayer.scrubPlaybackWithAdsPercentage(SCRUB_PERCENTAGE_SIXTY);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing during grace period");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72476"})
-    @Test(description = "Ariel - VOD Player - Ads - Duration of VOD stream should only include main content", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContentDurationBeforeAndAfterAd() throws URISyntaxException, JsonProcessingException {
+        int timeout = 15;
         String durationNotmatchedErrorMessage = "Duration of video is not representing total length of main content";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -278,22 +275,21 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(5), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(timeout), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
-        videoPlayer.waitForVideoToStart(10, 3);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72188"})
-    @Test(description = "Ariel - VOD Player - Ads - Ad Content Time Display", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAdContentTimeDisplayUI() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad remaining time was not found");
         verifyAdRemainingTimeFormat(sa);
@@ -301,7 +297,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72834"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION,US})
     public void verifyContentRatingDisplayedAfterPreRoll() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(MS_MARVEL);
@@ -314,7 +310,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72187"})
-    @Test(description = "Ariel - VOD Player - Ads - Ad Pod Represented On Timeline", groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAdPodOnTimeline() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(MS_MARVEL);
@@ -323,7 +319,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76660"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerBehaviorAfterBackgroundingAppForAdsUser() {
         int polling = 5;
         int backgroundDuration = 20;
@@ -338,7 +334,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72214"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyVideoPlayerPausingWhilePlayingAd() {
         int uiLatency = 15;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);

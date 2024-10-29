@@ -24,8 +24,8 @@ public class DisneyPlusRestartSubscriptionIOSPageBase extends DisneyPlusApplePag
     private ExtendedWebElement disneyPlusLogo;
 
     // After clicking Log Out button once. Not the same Identifier as "dismissBtn".
-    private ExtendedWebElement logOutConfirmationButton = dynamicBtnFindByName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGOUT.getText()));
-    private ExtendedWebElement logOutCancelButton = dynamicBtnFindByName.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CANCEL_BTN_CAPS.getText()));
+    private ExtendedWebElement logOutConfirmationButton = dynamicBtnFindByName.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_LOGOUT.getText()));
+    private ExtendedWebElement logOutCancelButton = dynamicBtnFindByName.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CANCEL_BTN_CAPS.getText()));
 
     private ExtendedWebElement primaryText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.RESTART_SUB_COPY);
     private ExtendedWebElement secondaryText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.RESTART_SUB_COPY_2);

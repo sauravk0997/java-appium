@@ -11,6 +11,7 @@ import java.util.Map;
 import com.disney.config.DisneyConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -28,12 +29,12 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
 	//LOCATORS
-	private ExtendedWebElement editProfilesBtn = getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_EDIT_PROFILE.getText()));
+	private ExtendedWebElement editProfilesBtn = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_EDIT_PROFILE.getText()));
 
 	@FindBy(xpath = "//XCUIElementTypeApplication[@name=\"Disney+\"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther")
 	private ExtendedWebElement exitJuniorModePin;
 
-	@ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeCell[`label == \"Access %s's profile\"`]")
+	@ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeCell[`label == \"Access %s's profile\"`]/**/XCUIElementTypeImage")
 	private ExtendedWebElement profileAvatar;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access %s's pin protected profile\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
@@ -48,7 +49,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@FindBy(xpath = "//XCUIElementTypeCell[@name='accountTab']//XCUIElementTypeOther[2]/*/XCUIElementTypeImage")
 	private ExtendedWebElement accountUnverifiedBadge;
 
-	private ExtendedWebElement addProfileBtn = getDynamicCellByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
+	private ExtendedWebElement addProfileBtn = getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
 
 	@ExtendedFindBy(accessibilityId = "emptyView")
 	private ExtendedWebElement watchlistEmpty;
@@ -81,10 +82,13 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"accountView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell/XCUIElementTypeOther/XCUIElementTypeCollectionView")
 	private ExtendedWebElement profileSelectionCollectionView;
 
-	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getDictionary()
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$type = 'XCUIElementTypeCell' and " +
+			"name = 'unlockedProfileCell'$]")
+	private ExtendedWebElement profileContainer;
+
+	private ExtendedWebElement deleteAccountButton = getDynamicAccessibilityId(getLocalizationUtils()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 					COMMUNICATION_SETTINGS_LINK_1_TEXT.getText()));
-
 
 	public ExtendedWebElement getExitKidsProfile() {
 		return exitKidsProfileButton;
@@ -95,31 +99,40 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public enum MoreMenu {
-		WATCHLIST(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText()), 1),
-		APP_SETTINGS(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()), 2),
-		ACCOUNT(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()), 3),
-		LEGAL(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText()), 4),
-		HELP(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_HELP.getText()), 5),
-		LOG_OUT(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.LOGOUT_BTN.getText()), 6);
-
-		private final String menuOption;
-		private final int index;
-
-		MoreMenu(String menuOption, int index) {
-			this.menuOption = menuOption;
-			this.index = index;
-		}
-
-		public String getMenuOption() {
-			return menuOption;
-		}
-
-		public int getIndex() {
-			return index;
-		}
+		ACCOUNT,
+		APP_SETTINGS,
+		HELP,
+		LEGAL,
+		LOG_OUT,
+		WATCHLIST
 	}
 
-	//FUNCTIONS
+	public String selectMoreMenu(MoreMenu option) {
+		String selection;
+		switch (option) {
+			case WATCHLIST:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_WATCHLIST.getText());
+				break;
+			case APP_SETTINGS:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText());
+				break;
+			case ACCOUNT:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText());
+				break;
+			case LEGAL:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText());
+				break;
+			case HELP:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_HELP.getText());
+				break;
+			case LOG_OUT:
+				selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.LOGOUT_BTN.getText());
+				break;
+			default:
+				throw new InvalidArgumentException("Invalid selection made");
+		}
+		return selection;
+	}
 
 	public DisneyPlusMoreMenuIOSPageBase(WebDriver driver) {
 		super(driver);
@@ -128,6 +141,14 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@Override
 	public boolean isOpened() {
 		return editProfilesBtn.isPresent();
+	}
+
+	public ExtendedWebElement getAddProfileBtn() {
+		return addProfileBtn;
+	}
+
+	public ExtendedWebElement getProfileContainer() {
+		return profileContainer;
 	}
 
 	public By getEditProfilesBtnBy() {
@@ -139,24 +160,24 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isMenuOptionPresent(MoreMenu option) {
-		return getDynamicCellByLabel(option.getMenuOption()).isElementPresent();
+		return dynamicCellByLabel.format(selectMoreMenu(option)).isElementPresent();
 	}
 
 	public boolean isMenuOptionNotPresent(MoreMenu option) {
-		return getDynamicCellByLabel(option.getMenuOption()).isElementNotPresent(THREE_SEC_TIMEOUT);
+		return dynamicCellByLabel.format(selectMoreMenu(option)).isElementNotPresent(THREE_SEC_TIMEOUT);
 	}
 
 	public void clickMenuOption(MoreMenu option) {
 		try {
-			getDynamicCellByLabel(option.getMenuOption()).click();
+			dynamicCellByLabel.format(selectMoreMenu(option)).click();
 		} catch (NoSuchElementException e) {
 			LOGGER.debug("ElementTypeCell located by Label Equals value not found. Falling back to Xpath");
-			getDynamicXpathContainsName(option.getMenuOption()).click();
+			dynamicXpathContainsName.format(selectMoreMenu(option)).click();
 		}
 	}
 
 	public void  clickMenuOptionByIndex(MoreMenu option) {
-		moreMenuItemByIndex.format(option.getIndex()).click();
+		moreMenuItemByIndex.format(selectMoreMenu(option)).click();
 	}
 
 	public ExtendedWebElement getDeleteAccountButton() {
@@ -174,9 +195,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getProfileCell(String profile, boolean secured) {
 		if(secured) {
-			return getDynamicCellByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
+			return getDynamicCellByLabel(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
 		} else {
-			return getDynamicCellByLabel(getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
+			return getDynamicCellByLabel(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, profile)));
 		}
 	}
 
@@ -203,31 +224,31 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isAppVersionDisplayed() {
-		String appVersionKey = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+		String appVersionKey = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 				DictionaryKeys.APP_VERSION_NUMBER.getText()), Map.of("app_version_number_build_number", getAppVersion()));
 		return getTypeCellLabelContains(appVersionKey).isPresent();
 	}
 
 	public void toggleStreamOverWifiOnly(IOSUtils.ButtonStatus status) {
-		ExtendedWebElement wifiContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText()));
+		ExtendedWebElement wifiContainer = getDynamicXpathContainsName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText()));
 		if(!wifiContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
 			clickElementAtLocation(wifiContainer, 50, 90);
 		}
 	}
 
 	public void toggleDownloadOverWifiOnly(IOSUtils.ButtonStatus status) {
-		ExtendedWebElement downloadContainer = getDynamicXpathContainsName(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText()));
+		ExtendedWebElement downloadContainer = getDynamicXpathContainsName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText()));
 		if(!downloadContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
 			clickElementAtLocation(downloadContainer, 50, 90);
 		}
 	}
 
 	public boolean isDeviceStorageCorrectlyDisplayed() {
-		ExtendedWebElement storageText = getTypeCellLabelContains(String.format("iPhone %s", getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
+		ExtendedWebElement storageText = getTypeCellLabelContains(String.format("iPhone %s", getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()))));
 		if(storageText.isElementPresent()) {
-			return storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())))
-					&& storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())))
-					&& storageText.getText().contains(getValueBeforePlaceholder(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
+			return storageText.getText().contains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())))
+					&& storageText.getText().contains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())))
+					&& storageText.getText().contains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
 		} else {
 			return false;
 		}
@@ -252,7 +273,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isDeleteDownloadsEnabled() {
-		ExtendedWebElement deleteAllDownloads = deleteAllDownloadsCell.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText()));
+		ExtendedWebElement deleteAllDownloads = deleteAllDownloadsCell.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText()));
 		if(deleteAllDownloads.isElementPresent()) {
 			return deleteAllDownloads.getAttribute(IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
 		} else {
@@ -261,18 +282,18 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void clickDeleteAllDownloads() {
-		deleteAllDownloadsCell.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).click();
+		deleteAllDownloadsCell.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).click();
 	}
 
 	public boolean areAllDeleteModalItemsPresent() {
-		return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).isElementPresent()
-				&& deleteOneDownload.format(getDeleteOneDownloadValue(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_ONE_DOWNLOAD.getText()))).isElementPresent()
-				&& getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText())).isElementPresent()
-				&& getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).isElementPresent();
+		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).isElementPresent()
+				&& deleteOneDownload.format(getDeleteOneDownloadValue(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_ONE_DOWNLOAD.getText()))).isElementPresent()
+				&& getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText())).isElementPresent()
+				&& getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).isElementPresent();
 	}
 
 	public boolean isDownloadOverWifiEnabled() {
-		return downloadOverWifiOnly.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).getAttribute(Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
+		return downloadOverWifiOnly.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).getAttribute(Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
 	}
 
 	public boolean areWatchlistTitlesDisplayed(String... titles) {
@@ -301,7 +322,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isWatchlistHeaderDisplayed() {
-		return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WATCHLIST_PAGE_HEADER.getText())).isElementPresent();
+		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WATCHLIST_PAGE_HEADER.getText())).isElementPresent();
 	}
 
 	public boolean isWatchlistEmptyBackgroundDisplayed() {

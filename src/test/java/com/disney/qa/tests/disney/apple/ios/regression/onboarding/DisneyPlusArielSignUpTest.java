@@ -8,12 +8,14 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusArielSignUpTest extends DisneyBaseTest {
 
     private static final String DOB_MINOR = "01/01/2020";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72232"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION }, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SIGN_UP, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void testSignUpDoBUnder18() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());

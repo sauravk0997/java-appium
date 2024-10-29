@@ -9,6 +9,8 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
@@ -107,7 +109,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     public void handleOneTrustPopUp() {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        LOGGER.info("Checking for one trust poup");
+        LOGGER.info("Checking for one trust popup");
         if (oneTrustPage.isOpened())
             oneTrustPage.tapAcceptAllButton();
     }
@@ -142,7 +144,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-        DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
+        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
@@ -275,6 +277,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         }
         detailsPage.getMovieDownloadButton().click();
         detailsPage.getDownloadNav().click();
+        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(contentTitle));
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);

@@ -43,8 +43,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(accessibilityId = "maturityRatingCell")
     protected ExtendedWebElement maturityRatingCell;
 
-    private final ExtendedWebElement deleteProfileButton = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_DELETE_PROFILE.getText()));
-    private final ExtendedWebElement editProfileTitle = getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE.getText()));
+    private final ExtendedWebElement deleteProfileButton = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_DELETE_PROFILE.getText()));
+    private final ExtendedWebElement editProfileTitle = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE.getText()));
 
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
     private ExtendedWebElement autoplayToggleCell;
@@ -110,13 +110,13 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
 
-    private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getDictionary()
+    private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText());
 
     private final ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
+            getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     public ExtendedWebElement getDeleteProfileButton() {
         return deleteProfileButton;
@@ -128,11 +128,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getDoneButton() {
-        String button = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, BTN_PROFILE_SETTINGS_DONE.getText());
+        String button = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, BTN_PROFILE_SETTINGS_DONE.getText());
         return dynamicBtnFindByLabel.format(button);
     }
 
-    private final String genderTitle = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_GENDER.getText());
+    private final String genderTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_GENDER.getText());
 
     //FUNCTIONS
 
@@ -154,7 +154,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getSharePlayTooltip() {
-        String toastText = getDictionary()
+        String toastText = getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.COVIEWING_ADS_TOOLTIP.getText());
         return getDynamicAccessibilityId(toastText);
@@ -170,16 +170,16 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isEditModeProfileIconPresent(String username) {
         return dynamicCellByLabel.format(
-                        getDictionary().formatPlaceholderString(
-                                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        getLocalizationUtils().formatPlaceholderString(
+                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                         DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
                                 Map.of(USER_PROFILE, username)))
                 .isElementPresent();
     }
 
     public boolean verifyProfileSettingsMaturityRating(String rating) {
-        String contentRatingText = getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        String contentRatingText = getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.MATURITY_RATING_DESCRIPTION_VALUE.getText()),
                 Map.of(USER_RATING_KEY, rating));
         swipe(staticTextByLabel.format(contentRatingText), 1);
@@ -189,15 +189,15 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public void clickEditModeProfile(String profile) {
         ExtendedWebElement profileIcon = dynamicCellByLabel.format(
-                getDictionary().formatPlaceholderString(
-                        getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                getLocalizationUtils().formatPlaceholderString(
+                        getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                                 DictionaryKeys.EDIT_PROFILE_EDIT.getText()),
                         Map.of(USER_PROFILE, profile)));
         profileIcon.click();
     }
 
     public boolean isBirthdateHeaderDisplayed() {
-        String birthdateHeader = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, SETTINGS_DATE_OF_BIRTH.getText());
+        String birthdateHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, SETTINGS_DATE_OF_BIRTH.getText());
         return staticTextByLabel.format(birthdateHeader).isPresent();
     }
 
@@ -225,14 +225,15 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void selectInfoHyperlink() {
-        sharePlayHyperLink.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        sharePlayHyperLink.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
     }
 
     public ExtendedWebElement getLearnMoreLink() {
-        String learnMoreText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
-        return customHyperlinkByLabel.format(learnMoreText);
+        String learnMoreText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
+        return getTextViewByLabelContains(learnMoreText);
     }
+
 
     public boolean isLearnMoreLinkPresent() {
         ExtendedWebElement learnMoreLink = getLearnMoreLink();
@@ -273,17 +274,17 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isProfilePinActionDisplayed() {
-        return staticTextByLabel.format(getDictionary().
+        return staticTextByLabel.format(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.SECURE_PROFILE_PIN_ACTION.getText())).isPresent();
     }
 
     public boolean isProfilePinDescriptionDisplayed() {
-        return staticTextByLabel.format(getDictionary().
+        return staticTextByLabel.format(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.SECURE_PROFILE_PIN_DESCRIPTION.getText())).isPresent();
     }
 
     public boolean isProfilePinReminderDisplayed() {
-        return staticTextByLabel.format(getDictionary().
+        return staticTextByLabel.format(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.SECURE_PROFILE_PIN_REMINDER.getText())).isPresent();
     }
 
@@ -305,11 +306,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isUpdatedToastPresent() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText())).isPresent();
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText())).isPresent();
     }
 
     public void waitForUpdatedToastToDisappear() {
-        ExtendedWebElement updatedToast = staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText()));
+        ExtendedWebElement updatedToast = staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText()));
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Download complete text is not present")
                 .until(it -> updatedToast.isElementNotPresent(THREE_SEC_TIMEOUT));
     }
@@ -408,7 +409,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public ExtendedWebElement getKidProofDescription() {
         swipeInContainer(null, Direction.UP, 2500);
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 PROFILE_SETTINGS_KIDPROOF_EXIT_DESCRIPTION.getText()));
     }
 
@@ -429,12 +430,12 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isEditTitleDisplayed() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.EDIT_PROFILE_TITLE_2.getText())).isPresent();
     }
 
     public ExtendedWebElement getPrimaryProfileExplainer() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.PRIMARY_PROFILE_EXPLAINER.getText()));
     }
 
@@ -443,41 +444,41 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isPersonalInformationSectionDisplayed() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 PROFILE_SETTINGS_PERSONAL_INFORMATION_HEADER.getText())).isPresent();
     }
 
     public boolean isPlayBackSettingsSectionDisplayed() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 PLAYBACK_LANGUAGE_HEADER.getText())).isPresent() &&
-                staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         CREATE_PROFILE_AUTOPLAY.getText())).isPresent() &&
-                staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         AUTOPLAY_SUBCOPY.getText())).isPresent() &&
-                staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         UI_LANGUAGE_SETTING.getText())).isPresent();
 
     }
 
     public boolean isFeatureSettingsSectionDisplayed() {
-        ExtendedWebElement sharePlaySubheader = textViewByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        ExtendedWebElement sharePlaySubheader = textViewByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText()));
         swipePageTillElementPresent(sharePlaySubheader, 3, null, Direction.UP, 500);
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 GROUPWATCH_FEATURE_SETTINGS.getText())).isPresent() &&
-                staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         GROUPWATCH_SHAREPLAY_SETTINGS_HEADER.getText())).isPresent() &&
                 sharePlaySubheader.isPresent();
     }
 
     public ExtendedWebElement getJuniorModeDescription() {
-        return textViewByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return textViewByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 KIDS_PROFILE_SUBCOPY.getText()));
     }
 
     public boolean isParentalControlHeadingDisplayed() {
         swipeInContainer(null, Direction.UP, 2500);
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 PROFILE_SETTINGS_HEADER.getText())).isPresent();
     }
 
@@ -492,17 +493,17 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getProfilePinHeader() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
     }
 
     public ExtendedWebElement getProfilePinDescription() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 PROFILE_SETTINGS_ENTRY_PIN_DESCRIPTION.getText()));
     }
 
     public ExtendedWebElement getMaturityRatingLabel() {
-        return staticTextByLabel.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 PROFILE_SETTINGS_MATURITY_RATING_LABEL.getText()));
     }
 
@@ -514,30 +515,30 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isErrorDuplicateProfileNamePresent() {
-        String message = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText());
+        String message = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText());
         LOGGER.info("Error Message by dictionary: {}", message);
         return staticTextLabelName.format(message).isPresent();
     }
 
     public ExtendedWebElement getDeleteProfileCancelButton() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText()));
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText()));
     }
 
     public ExtendedWebElement getDeleteProfileDeleteButton() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DELETE.getText()));
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_DELETE.getText()));
     }
 
     public ExtendedWebElement getDeleteProfileTitle(String profileName) {
-        String deleteProfileTitle = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_TITLE.getText()), Map.of("user_profile", profileName));
+        String deleteProfileTitle = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_TITLE.getText()), Map.of("user_profile", profileName));
         return getStaticTextByLabel(deleteProfileTitle);
     }
 
     public ExtendedWebElement getDeleteProfileCopy() {
-        return getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_COPY.getText()));
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_COPY.getText()));
     }
 
     public ExtendedWebElement getEditProfilePinSettingLabel(){
-        return getStaticTextByLabel(getDictionary()
+        return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
     }
@@ -548,7 +549,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isR21MaturitySliderPresent() {
         String ratingDescriptionText = getElementTypeCellByLabel(R21).getText();
-        String dictRatingDescription = getDictionary()
+        String dictRatingDescription = getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.RATING_MDA_R21_DESCRIPTION.getText());
         return ratingDescriptionText.toLowerCase().contains(dictRatingDescription.toLowerCase());

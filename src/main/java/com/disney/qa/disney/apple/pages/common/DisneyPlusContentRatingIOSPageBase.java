@@ -18,7 +18,7 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
     protected ExtendedWebElement saveButton;
 
     private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
-            getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
+            getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
     public DisneyPlusContentRatingIOSPageBase(WebDriver driver) {
         super(driver);
@@ -29,7 +29,7 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
         return contentRatingHeader.isPresent(THREE_SEC_TIMEOUT);
     }
 
-    private ExtendedWebElement gotItButton = xpathNameOrName.format(getDictionary()
+    private ExtendedWebElement gotItButton = xpathNameOrName.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                     DictionaryKeys.BTN_GOT_IT.getText()), DictionaryKeys.BTN_GOT_IT.getText());
 

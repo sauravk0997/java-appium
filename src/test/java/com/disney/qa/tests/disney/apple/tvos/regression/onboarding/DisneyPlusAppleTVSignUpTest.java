@@ -20,13 +20,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.getDictionary;
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90469", "XCDQA-90465"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US}, enabled = false)
     public void signUpEmailScreenAppearance() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -50,7 +50,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90471", "XCDQA-90467"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void signUpEmailScreenNavigation() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -72,7 +72,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90473"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void signUpEmailScreenCheckBox() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -98,7 +98,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90479", "XCDQA-90477"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US}, enabled = false)
     public void emailInputKeyboardAppearance() {
         String tempEmailText = "somethin!^&&#@gmail";
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -123,7 +123,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90475"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void emailInputPreviouslyUsedAddress() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -143,7 +143,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90443", "XCDQA-90445"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void emailInputErrorMessages() {
         String tempEmailText = "somethin!^&&#@gmail";
         SoftAssert sa = new SoftAssert();
@@ -166,7 +166,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90459", "XCDQA-90455", "XCDQA-90451", "XCDQA-90457", "XCDQA-90453", "XCDQA-90449"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void legalSignUpEmailScreenDetails() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -189,7 +189,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90461", "XCDQA-90463"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US}, enabled = false)
     public void emailSignUpKnownUserFlow() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
@@ -217,7 +217,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90441", "XCDQA-90487", "XCDQA-90489", "XCDQA-90491"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void emailSignUpValidInput() {
         String validEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -225,7 +225,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         String noPasswordInputError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, PASSWORD_REQUIRED.getText());
-        String invalidPasswordError = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+        String invalidPasswordError = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.INVALID_PASSWORD_ENHANCED.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
         String commonPassword = "Test123";
 
@@ -251,7 +251,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90485"})
-    @Test(description = "Email Sign Up: valid email takes to paywall screen Flow", groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(description = "Email Sign Up: valid email takes to paywall screen Flow", groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void emailSignUpValidInputTakesToPaywall() {
         String validEmail = DisneyApiCommon.getUniqueEmail();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -280,7 +280,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90493", "XCDQA-90495"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void passwordCreationScreenDetails() {
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         String validEmail = DisneyApiCommon.getUniqueEmail();
@@ -321,10 +321,10 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90497"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void passwordCreationOnScreenKeyboard() {
         String validEmail = DisneyApiCommon.getUniqueEmail();
-        String passReqsEnhanced = getDictionary().formatPlaceholderString(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        String passReqsEnhanced = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_CREATE_PASSWORD_STRENGTH_HINT.getText()), Map.of("minLength", Integer.parseInt("6"), "charTypes", Integer.parseInt("2")));
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -351,7 +351,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90501", "XCDQA-90503", "XCDQA-90505"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void passwordCapturedAndEncrypted() {
         String expectedPassword = "••••••";
         String randomPassword = StringGenerator.generateWord(5) + StringGenerator.generateNumeric(1);
@@ -390,7 +390,7 @@ public class DisneyPlusAppleTVSignUpTest extends DisneyPlusAppleTVBaseTest {
 
     //TODO get Alice trained for color recognition for password strength
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90499"})
-    @Test(groups = {TestGroup.ONBOARDING}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void createPasswordStrengthMeter() {
         selectAppleUpdateLaterAndDismissAppTracking();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
