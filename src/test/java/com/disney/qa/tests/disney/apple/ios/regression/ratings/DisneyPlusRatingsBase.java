@@ -100,6 +100,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
+        LOGGER.info("rating: {}", rating);
         if (isMovie) {
             LOGGER.info("Testing against Movie content.");
             validateMovieContent(rating);
@@ -199,7 +200,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     private void validateSeriesContent(String rating) {
-        LOGGER.info("rating: {}", rating);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -232,7 +232,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     private void validateMovieContent(String rating) {
-        LOGGER.info("rating: {}", rating);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

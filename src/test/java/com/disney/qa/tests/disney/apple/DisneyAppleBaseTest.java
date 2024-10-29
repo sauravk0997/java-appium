@@ -224,43 +224,43 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         String country;
             if (groups.contains(US)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
             } else if (groups.contains(AT)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AT, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
             } else if (groups.contains(AU)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AU, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
             } else if (groups.contains(BR)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), BR, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "pt", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), PT_LANG, true);
             } else if (groups.contains(CH)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CH, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
             } else if (groups.contains(DE)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), DE, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "de", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), DE_LANG, true);
             } else if (groups.contains(JP)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), JP, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "ja", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), JA_LANG, true);
             } else if (groups.contains(KR)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "ko", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), KO_LANG, true);
             } else if (groups.contains(NL)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NL, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
             } else if (groups.contains(NZ)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NZ, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
             } else if (groups.contains(SG)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), SG, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "en", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
             } else if (groups.contains(TR)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "tr", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), TR_LANG, true);
             } else if (groups.contains(LATAM)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), "es", true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), ES_LANG, true);
             } else if (groups.contains(EMEA)) {
                 country = getEMEACountryCode();
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), country, true);
@@ -292,10 +292,10 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             case MAURITIUS:
             case MAYOTTE:
             case REUNION:
-                return "fr";
+                return FR_LANG;
             case HAITI:
             case UNITED_KINGDOM:
-                return "en";
+                return EN_LANG;
             default:
                 throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
         }
@@ -318,9 +318,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             case AMERICAN_SAMOA:
             case MARSHALL_ISLANDS:
             case UNITED_STATES_OUTLYING_ISLANDS:
-                return "en";
+                return EN_LANG;
             case NORTHERN_MARINA_ISLANDS:
-                return "fr";
+                return FR_LANG;
             default:
                 throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
         }
