@@ -72,7 +72,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         downloads.clickSeriesMoreInfoButton();
-        sa.assertTrue(downloads.getStaticTextByLabel(episodeTitle).isPresent(),
+        sa.assertTrue(downloads.getStaticTextByLabelContains(episodeTitle).isPresent(),
                 "Episode Title was not found");
         sa.assertTrue(downloads.isProgressbarBookmarkDisplayedOnDownloads(one, one),
                 "Progress bar bookmark on series title not displayed");
