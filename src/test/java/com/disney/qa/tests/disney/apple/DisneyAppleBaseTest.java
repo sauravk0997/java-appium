@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
