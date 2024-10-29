@@ -149,8 +149,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), country);
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
