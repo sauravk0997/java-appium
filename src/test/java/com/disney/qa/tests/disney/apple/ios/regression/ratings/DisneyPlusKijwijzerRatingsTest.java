@@ -13,7 +13,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68349"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER, NL})
     public void verifyNetherlandsKijwijzerRatingAL() {
-        ratingsSetup(AL.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        ratingsSetup(AL.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(AL.getContentRating());
     }
@@ -21,7 +21,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73167"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER, NL})
     public void verifyNetherlandsKijwijzerRating6() {
-        ratingsSetup(SIX.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        ratingsSetup(SIX.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIX.getContentRating());
     }
@@ -29,7 +29,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73168"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER, NL})
     public void verifyNetherlandsKijwijzerRating9() {
-        ratingsSetup(NINE.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        ratingsSetup(NINE.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(NINE.getContentRating());
     }
@@ -37,7 +37,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73169"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER, NL})
     public void verifyNetherlandsKijwijzerRating12() {
-        ratingsSetup(TWELVE.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        ratingsSetup(TWELVE.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TWELVE.getContentRating());
     }
@@ -45,7 +45,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73170"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER, NL})
     public void verifyNetherlandsKijwijzerRating16() {
-        ratingsSetup(SIXTEEN.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        ratingsSetup(SIXTEEN.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
     }
@@ -53,7 +53,7 @@ public class DisneyPlusKijwijzerRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73171"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_KIJKWIJZER, NL})
     public void verifyNetherlandsKijwijzerRating18() {
-        ratingsSetup(EIGHTEEN.getContentRating(), NETHERLANDS_LANG, NETHERLANDS);
+        ratingsSetup(EIGHTEEN.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
     }

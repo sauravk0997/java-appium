@@ -12,35 +12,35 @@ public class DisneyPlusNCSRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67724"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_NCS, AU})
     public void verifyRatingSystemAustralia_NCS_G() {
-        ratingsSetup(G.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
+        ratingsSetup(G.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(G.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73183"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_NCS, AU})
     public void verifyRatingSystemAustralia_NCS_PG() {
-        ratingsSetup(PG.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
+        ratingsSetup(PG.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(PG.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73184"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_NCS, AU})
     public void verifyRatingSystemAustralia_NCS_M() {
-        ratingsSetup(M.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
+        ratingsSetup(M.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(M.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73185"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_NCS, AU})
     public void verifyRatingSystemAustralia_NCS_MA15_PLUS() {
-        ratingsSetup(MA15_PLUS.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
+        ratingsSetup(MA15_PLUS.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(MA15_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73186"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_NCS, AU})
     public void verifyRatingSystemAustralia_NCS_R18_PLUS() {
-        ratingsSetup(R18_PLUS.getContentRating(), AUSTRALIA_LANG, AUSTRALIA);
+        ratingsSetup(R18_PLUS.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(R18_PLUS.getContentRating());
     }
 }

@@ -16,42 +16,42 @@ public class DisneyPlusDJCTQRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68359"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRatingL() {
-        ratingsSetup(L.getContentRating(), BRAZIL_LANG, BRAZIL);
+        ratingsSetup(L.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(L.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73142"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating10() {
-        ratingsSetup(TEN.getContentRating(), BRAZIL_LANG, BRAZIL);
+        ratingsSetup(TEN.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(TEN.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73143"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating12() {
-        ratingsSetup(TWELVE.getContentRating(), BRAZIL_LANG, BRAZIL);
+        ratingsSetup(TWELVE.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(TWELVE.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73144"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating14() {
-        ratingsSetup(FOURTEEN.getContentRating(), BRAZIL_LANG, BRAZIL);
+        ratingsSetup(FOURTEEN.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(FOURTEEN.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73145"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating16() {
-        ratingsSetup(SIXTEEN.getContentRating(), BRAZIL_LANG, BRAZIL);
+        ratingsSetup(SIXTEEN.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73146"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating18() {
-        ratingsSetup(EIGHTEEN.getContentRating(), BRAZIL_LANG, BRAZIL);
+        ratingsSetup(EIGHTEEN.getContentRating(), getLanguage(), getCountry());
         confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
     }
 
@@ -59,7 +59,7 @@ public class DisneyPlusDJCTQRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilSeasonLevelRating() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        ratingsSetup(BRAZIL_LANG, BRAZIL);
+        ratingsSetup(getCountry());
         launchDeeplink(R.TESTDATA.get("disney_prod_brazil_12_series_deeplink"));
         Assert.assertTrue(detailsPage.isSeasonRatingPresent(), "Season rating was not found");
     }

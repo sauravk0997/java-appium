@@ -13,7 +13,7 @@ public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68353"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK, DE})
     public void verifyGermanyFSKRating0() {
-        ratingsSetup(ZERO.getContentRating(), GERMANY_LANG, GERMANY);
+        ratingsSetup(ZERO.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(ZERO.getContentRating());
     }
@@ -21,7 +21,7 @@ public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73153"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK, DE})
     public void verifyGermanyFSKRating6() {
-        ratingsSetup(SIX.getContentRating(), GERMANY_LANG, GERMANY);
+        ratingsSetup(SIX.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIX.getContentRating());
     }
@@ -29,7 +29,7 @@ public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73154"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK, DE})
     public void verifyGermanyFSKRating12() {
-        ratingsSetup(TWELVE.getContentRating(), GERMANY_LANG, GERMANY);
+        ratingsSetup(TWELVE.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TWELVE.getContentRating());
     }
@@ -37,7 +37,7 @@ public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73155"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK, DE})
     public void verifyGermanyFSKRating16() {
-        ratingsSetup(SIXTEEN.getContentRating(), GERMANY_LANG, GERMANY);
+        ratingsSetup(SIXTEEN.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
     }
@@ -45,7 +45,7 @@ public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73156"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK, DE})
     public void verifyGermanyFSKRating18() {
-        ratingsSetup(EIGHTEEN.getContentRating(), GERMANY_LANG, GERMANY);
+        ratingsSetup(EIGHTEEN.getContentRating(), getLanguage(), getCountry());
         handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
     }
