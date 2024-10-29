@@ -63,7 +63,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.clickBackButton();
         swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
-                detailsPage.getContentDetailsPage(), Direction.UP, 500);
+                detailsPage.getContentDetailsPage(), Direction.UP, 1200);
 
         //Download episode
         detailsPage.getEpisodeToDownload(one, one).click();
