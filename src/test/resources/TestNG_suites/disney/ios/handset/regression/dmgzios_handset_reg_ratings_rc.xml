@@ -49,13 +49,11 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusOFLCRatingsTest"/>
         </classes>
     </test>
-
     <test verbose="1" name="DisneyPlus iOS Handset DJCTQ Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusDJCTQRatingsTest"/>
         </classes>
     </test>
-
     <test verbose="1" name="DisneyPlus iOS Handset EMEA Ratings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusEMEARatingsTest"/>
