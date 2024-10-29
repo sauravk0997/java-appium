@@ -124,4 +124,11 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER)).isPresent();
     }
+
+    public boolean isStepperDictValueDisplayed(String stepValueOne , String stepValueTwo) {
+        String text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ONBOARDING_STEPPER.getText());
+        return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(text, Map.of("current_step",
+                stepValueOne, "total_steps", stepValueTwo))).isElementPresent();
+    }
 }

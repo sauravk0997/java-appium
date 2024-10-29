@@ -55,13 +55,6 @@ public class DisneyPlusSignUpIOSPageBase extends DisneyPlusApplePageBase {
         primaryButton.clickIfPresent(3);
     }
 
-    public boolean isStepperDictValueDisplayed(String stepValueOne , String stepValueTwo) {
-        String text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.ONBOARDING_STEPPER.getText());
-        return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(text, Map.of("current_step",
-                stepValueOne, "total_steps", stepValueTwo))).isElementPresent();
-    }
-
     public boolean isEmailFieldDisplayed() {
         return emailField.isPresent();
     }

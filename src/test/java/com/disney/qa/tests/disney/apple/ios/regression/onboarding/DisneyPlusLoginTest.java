@@ -357,7 +357,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusSignUpIOSPageBase signUpPage = new DisneyPlusSignUpIOSPageBase(getDriver());
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
                 new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
@@ -388,7 +387,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Element Validations
         sa.assertTrue(loginPage.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
         sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
-        sa.assertTrue(signUpPage.isStepperDictValueDisplayed("3", "5"),
+        sa.assertTrue(loginPage.isStepperDictValueDisplayed("3", "5"),
                 "'STEP 3 OF 5' should be displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "DOB Sub Copy not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label not displayed");
