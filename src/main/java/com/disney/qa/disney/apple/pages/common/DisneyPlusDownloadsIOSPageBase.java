@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.time.temporal.ValueRange;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -51,6 +52,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
 			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]")
 	private ExtendedWebElement progressBarOnDownload;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]/XCUIElementTypeOther")
+	private ExtendedWebElement progressBarBookmarkPositionOnDownload;
 
 	//FUNCTIONS
 	@Override
@@ -159,7 +164,17 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return episodeDownloadCell.format(seasonNumber, episodeNumber).isPresent();
 	}
 
-	public boolean isProgressbarDisplayedOnDownloads(String seasonNumber, String episodeNumber) {
-		return progressBarOnDownload.format(seasonNumber, episodeNumber).isPresent();
+	public boolean isProgressbarBookmarkDisplayedOnDownloads(String seasonNumber, String episodeNumber) {
+		return progressBarBookmarkPositionOnDownload.format(seasonNumber, episodeNumber).isPresent();
+	}
+
+	public boolean isProgressBarIndicatingCorrectPosition(String seasonNumber, String episodeNumber,
+														  double scrubPercentage, int latency) {
+		double expectedwidth =
+				progressBarOnDownload.format(seasonNumber, episodeNumber).getSize().getWidth() / (scrubPercentage/100);
+		double actualWidth =
+				progressBarBookmarkPositionOnDownload.format(seasonNumber, episodeNumber).getSize().getWidth();
+		ValueRange range = ValueRange.of(-latency, latency);
+		return range.isValidIntValue((long) (expectedwidth - actualWidth));
 	}
 }
