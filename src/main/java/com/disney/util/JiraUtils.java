@@ -35,11 +35,12 @@ public class JiraUtils {
             .getJiraBaseUrl() + "/rest/api/2/issue/" + JIRA_TICKET_KEY + "/comment";
     private static final String REPORT_URL = String.valueOf(R.CONFIG.get("report_url"));
     private static final String JIRA_USER = "jira-zafira";
+    private static final String NULL_STRING = "NULL";
 
     private JiraUtils() { }
 
     private static boolean isXrayKeySet() {
-        return !Objects.equals(R.CONFIG.get("reporting.tcm.xray.test-execution-key"), "NULL");
+        return !Objects.equals(R.CONFIG.get("reporting.tcm.xray.test-execution-key"), NULL_STRING);
     }
 
     private static String getJiraAuth() {
