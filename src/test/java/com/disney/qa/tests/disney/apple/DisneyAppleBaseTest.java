@@ -362,6 +362,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         EMAIL_API.remove();
         ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
+        LOCALIZATION_UTILS.clear();
     }
 
     public static String getCountry() {
