@@ -88,6 +88,5 @@ public class JiraUtils {
         } catch (IOException | URISyntaxException e) {
             LOGGER.warn("Error attempting to append Zafira link to XRAY execution. Error: {}", e.getMessage());
         }
-
     }
 }
