@@ -43,7 +43,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        LOGGER.info("locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
