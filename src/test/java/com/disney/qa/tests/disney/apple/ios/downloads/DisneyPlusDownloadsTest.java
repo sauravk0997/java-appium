@@ -57,8 +57,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Series
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String episodeTitle = detailsPage.getEpisodeContentTitle();
         detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
-        String episodeTitle = videoPlayer.getSubTitleLabel();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.clickBackButton();
         swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
