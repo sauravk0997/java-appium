@@ -321,12 +321,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils {
 
     @AfterSuite(alwaysRun = true)
     public final void postTestResultsToJira(ITestContext context) {
-        try {
-            JiraUtils.addTestRunURLtoJiraTicketComment(context);
-        } catch (URISyntaxException | IOException e) {
-            LOGGER.info("Error attempting to post test url link to Jira ticket: {}", e.getMessage(), e);
-            e.printStackTrace();
-        }
+        JiraUtils.addTestRunURLtoJiraTicketComment(context);
     }
 
     public static String getCountry() {

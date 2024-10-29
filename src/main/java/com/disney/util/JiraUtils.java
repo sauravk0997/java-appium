@@ -17,6 +17,7 @@ import org.springframework.http.HttpHeaders;
 import org.testng.ITestContext;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.invoke.MethodHandles;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -54,7 +55,7 @@ public class JiraUtils {
         return context.getCurrentXmlTest().getSuite().getName() + " RC results: " + REPORT_URL;
     }
 
-    public static void addTestRunURLtoJiraTicketComment(ITestContext context) throws URISyntaxException, IOException {
+    public static void addTestRunURLtoJiraTicketComment(ITestContext context){
         if (!isXrayKeySet()) {
             LOGGER.info("No Xray key set and bypassing adding test run url to Jira ticket's comment");
             return;
@@ -63,24 +64,49 @@ public class JiraUtils {
         HttpClient httpClient = HttpClientBuilder.create().build();
         String requestBody = "{\"body\": \"" + testRunReportMessaging(context) + "\"}";
 
-        URI uri = new URI(API_COMMENT_URL);
+        URI uri = null;
+        try {
+            uri = new URI(API_COMMENT_URL);
+        } catch (URISyntaxException e) {
+            LOGGER.info("Error creating URI for '{}' URL: {}", API_COMMENT_URL, e.getMessage());
+            e.printStackTrace();
+            return;
+        }
         HttpPost httpPost = new HttpPost(uri);
         httpPost.setHeader(AUTHORIZATION, getJiraAuth());
         httpPost.setHeader(HttpHeaders.ACCEPT, ContentType.APPLICATION_JSON.getMimeType());
         httpPost.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.getMimeType());
 
         LOGGER.info("Adding test run link to ticket {}", JIRA_TICKET_KEY);
-        StringEntity entity = new StringEntity(requestBody);
+        StringEntity entity = null;
+        try {
+            entity = new StringEntity(requestBody);
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.info("Exception creating request String entity from request body string: {}", e.getMessage());
+            e.printStackTrace();
+            return;
+        }
         httpPost.setEntity(entity);
 
-        HttpResponse httpResponse = httpClient.execute(httpPost);
-        int statusCode = httpResponse.getStatusLine().getStatusCode();
-        String responseBody = httpResponse.getEntity() != null ? EntityUtils.toString(httpResponse.getEntity()) : null;
+        HttpResponse httpResponse = null;
+        String responseBody = null;
+        int statusCode = 0;
+        try {
+            httpResponse = httpClient.execute(httpPost);
+            statusCode = httpResponse.getStatusLine().getStatusCode();
+            responseBody = httpResponse.getEntity() != null ? EntityUtils.toString(httpResponse.getEntity()) : null;
+        } catch (IOException e) {
+            LOGGER.info("Exception executing HTTP request to comment report URL in Jira ticket '{}': {}",
+                    JIRA_TICKET_KEY, e.getMessage());
+            e.printStackTrace();
+            return;
+        }
 
         if (statusCode < 200 || statusCode >= 300) {
             LOGGER.info("Error attempting to add test run url to {} as comment: {}", JIRA_TICKET_KEY, responseBody);
         } else {
             LOGGER.info("Successfully added test run url as comment to {}", JIRA_TICKET_KEY);
         }
+
     }
 }
