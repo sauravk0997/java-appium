@@ -69,7 +69,6 @@ public class JiraUtils {
             uri = new URI(API_COMMENT_URL);
         } catch (URISyntaxException e) {
             LOGGER.info("Error creating URI for '{}' URL: {}", API_COMMENT_URL, e.getMessage());
-            e.printStackTrace();
             return;
         }
         HttpPost httpPost = new HttpPost(uri);
@@ -83,7 +82,6 @@ public class JiraUtils {
             entity = new StringEntity(requestBody);
         } catch (UnsupportedEncodingException e) {
             LOGGER.info("Exception creating request String entity from request body string: {}", e.getMessage());
-            e.printStackTrace();
             return;
         }
         httpPost.setEntity(entity);
@@ -98,7 +96,6 @@ public class JiraUtils {
         } catch (IOException e) {
             LOGGER.info("Exception executing HTTP request to comment report URL in Jira ticket '{}': {}",
                     JIRA_TICKET_KEY, e.getMessage());
-            e.printStackTrace();
             return;
         }
 
