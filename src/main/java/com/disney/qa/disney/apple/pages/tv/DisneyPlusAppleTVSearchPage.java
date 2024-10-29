@@ -21,6 +21,10 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     @ExtendedFindBy(accessibilityId = "searchBar")
     private ExtendedWebElement searchField;
 
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeOther[`name == 'searchResults'`]/**/XCUIElementTypeCell[`label CONTAINS '%s'`]")
+    private ExtendedWebElement searchResultsContainers;
+
     public DisneyPlusAppleTVSearchPage(WebDriver driver) {
         super(driver);
     }
@@ -36,13 +40,17 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         searchField.type(text);
     }
 
+    public ExtendedWebElement getSearchResultsContainers(String label) {
+        return searchResultsContainers.format(label);
+    }
+
     public void clickSearchResult(String assetName) {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        getSearchResults(assetName).get(1).click();
+        getSearchResults(assetName).get(0).click();
     }
 
     public List<ExtendedWebElement> getSearchResults(String assetName) {
-        List<ExtendedWebElement> searchResults = findExtendedWebElements(getTypeCellLabelContains(assetName).getBy());
+        List<ExtendedWebElement> searchResults = findExtendedWebElements(getSearchResultsContainers(assetName).getBy());
         if (!searchResults.isEmpty()) {
             return searchResults;
         } else {
