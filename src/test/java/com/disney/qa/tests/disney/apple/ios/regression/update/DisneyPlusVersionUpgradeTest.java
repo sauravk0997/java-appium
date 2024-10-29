@@ -19,7 +19,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     /* This test case installs the previous FC build (appPreviousFCVersion) that was tested previous the current version
        and upgrades against the latest FC approved (appCurrentFCVersion) it is in the current FC XML
      */
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67617"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77606"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyAppUpgrade() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
