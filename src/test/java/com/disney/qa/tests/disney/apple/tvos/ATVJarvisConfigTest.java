@@ -5,13 +5,13 @@ import com.disney.qa.tests.disney.apple.*;
 import com.zebrunner.carina.core.*;
 import org.testng.annotations.*;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 
-public class ATVJarvisConfigTest extends AbstractTest {
-    @Test
+public class ATVJarvisConfigTest extends DisneyPlusAppleTVBaseTest {
+    @Test(groups = {US})
     public void disableCompanionConfig() {
-        DisneyPlusAppleTVBaseTest appleTVBaseTest = new DisneyPlusAppleTVBaseTest();
-        appleTVBaseTest.jarvisOverrideDisableCompanionConfig();
-        appleTVBaseTest.terminateApp(JarvisAppleParameters.getEnterpriseBundle());
-        appleTVBaseTest.startApp(DisneyAppleBaseTest.BuildType.ENTERPRISE.toString());
+        jarvisOverrideDisableCompanionConfig();
+        terminateApp(JarvisAppleParameters.getEnterpriseBundle());
+        startApp(DisneyAppleBaseTest.BuildType.ENTERPRISE.toString());
     }
 }
