@@ -2,8 +2,13 @@
 <suite verbose="1" name="dmgztvos-disable-jarvis-config" annotations="JDK" configfailurepolicy="continue">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos-disable-jarvis-config"/>
+    <parameter name="provider" value="mcloud"/>
+    <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
     <parameter name="scheduling" value="30 11 * * 1-5"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name"
+               value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
 
     <test verbose="1" name="DisneyPlus tvOS Disable Jarvis Config">
         <classes>
