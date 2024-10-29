@@ -15,7 +15,6 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.M18;
 import static com.disney.qa.common.constant.RatingConstant.Rating.NC16;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG13;
-import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 import static com.disney.qa.common.constant.RatingConstant.Rating.R21;
 
 public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
@@ -25,35 +24,35 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69568"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_G() {
-        ratingsSetup(G.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(G.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(G.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73178"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_PG() {
-        ratingsSetup(PG.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(PG.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(PG.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73179"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_PG13() {
-        ratingsSetup(PG13.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(PG13.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(PG13.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73180"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_NC16() {
-        ratingsSetup(NC16.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(NC16.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(NC16.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73181"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_M18() {
-        ratingsSetup(M18.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(M18.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(M18.getContentRating());
     }
 
@@ -72,7 +71,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        ratingsSetup(R21.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(R21.getContentRating(), getCountry());
         // search results validation
         homePage.clickSearchIcon();
         searchPage.searchForMedia(contentTitle);

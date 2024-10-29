@@ -8,7 +8,6 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 import static com.disney.qa.common.constant.IConstantHelper.BR;
-import static com.disney.qa.common.constant.RatingConstant.BRAZIL;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
 public class DisneyPlusDJCTQRatingsTest extends DisneyPlusRatingsBase {
@@ -16,42 +15,42 @@ public class DisneyPlusDJCTQRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68359"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRatingL() {
-        ratingsSetup(L.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(L.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(L.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73142"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating10() {
-        ratingsSetup(TEN.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(TEN.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(TEN.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73143"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating12() {
-        ratingsSetup(TWELVE.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(TWELVE.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(TWELVE.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73144"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating14() {
-        ratingsSetup(FOURTEEN.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(FOURTEEN.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(FOURTEEN.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73145"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating16() {
-        ratingsSetup(SIXTEEN.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(SIXTEEN.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(SIXTEEN.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73146"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_DJCTQ, BR})
     public void verifyBrazilRating18() {
-        ratingsSetup(EIGHTEEN.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(EIGHTEEN.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
     }
 

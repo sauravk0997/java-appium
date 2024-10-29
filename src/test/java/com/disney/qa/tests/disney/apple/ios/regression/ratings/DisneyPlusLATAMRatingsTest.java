@@ -19,49 +19,49 @@ public class DisneyPlusLATAMRatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68362"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, LATAM})
     public void verifyRatingSystemLATAM0() {
-        ratingsSetup(ZERO_PLUS.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(ZERO_PLUS.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(ZERO_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73172"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, LATAM})
     public void verifyRatingSystemLATAM7() {
-        ratingsSetup(SEVEN_PLUS.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(SEVEN_PLUS.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(SEVEN_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73173"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, LATAM})
     public void verifyRatingSystemLATAM10() {
-        ratingsSetup(TEN_PLUS.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(TEN_PLUS.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(TEN_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73174"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, LATAM})
     public void verifyRatingSystemLATAM12() {
-        ratingsSetup(TWELVE_PLUS.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(TWELVE_PLUS.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73175"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, LATAM})
     public void verifyRatingSystemLATAM13() {
-        ratingsSetup(THIRTEEN_PLUS.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(THIRTEEN_PLUS.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(THIRTEEN_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73176"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, LATAM})
     public void verifyRatingSystemLATAM14() {
-        ratingsSetup(FOURTEEN_PLUS.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(FOURTEEN_PLUS.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(FOURTEEN_PLUS.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73177"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_LATAM, LATAM})
     public void verifyRatingSystemLATAM16() {
-        ratingsSetup(SIXTEEN_PLUS.getContentRating(), getLanguage(), getCountry());
+        ratingsSetup(SIXTEEN_PLUS.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(SIXTEEN_PLUS.getContentRating());
     }
 

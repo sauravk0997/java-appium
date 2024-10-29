@@ -42,7 +42,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
+    public void ratingsSetup(String ratingValue, String locale, boolean... ageVerified) {
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
@@ -53,7 +53,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
+    public void ratingSetupWithPINForOTPAccount(String locale) {
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
@@ -68,7 +68,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
+    public void ratingsSetupWithPINNew(String locale, boolean... ageVerified) {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                  getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
@@ -83,7 +83,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupForOTPAccount(String lang, String locale) {
+    public void ratingsSetupForOTPAccount(String locale) {
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
