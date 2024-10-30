@@ -272,7 +272,8 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     @Override
     public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
-        String enterYourPasswordBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        String enterYourPasswordBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail, "link_1", ""));
         return getDynamicAccessibilityId(enterYourPasswordBody.trim()).isPresent();
     }
