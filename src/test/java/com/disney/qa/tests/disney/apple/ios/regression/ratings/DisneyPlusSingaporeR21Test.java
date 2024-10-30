@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.SG;
-import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
