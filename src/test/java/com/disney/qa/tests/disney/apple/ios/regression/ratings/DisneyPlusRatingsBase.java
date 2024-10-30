@@ -26,7 +26,8 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
     public static ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
-    private boolean isMovie;
+    public static ThreadLocal<Boolean> isMovie = new ThreadLocal<>();
+   // private boolean isMovie;
     String episodicRating;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
@@ -101,7 +102,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     public void confirmRegionalRatingsDisplays(String rating) {
         LOGGER.info("Rating value under test: {}", rating);
-        if (isMovie) {
+        LOGGER.info("** value of isMovie: {}", isMovie.get());
+        if (isMovie.get()) {
             LOGGER.info("Testing against Movie content.");
             validateMovieContent(rating);
         } else {
@@ -121,7 +123,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating parameters: '{}, {}, {}'.", rating, locale, language);
-        isMovie = false;
+        isMovie.set(false);
         episodicRating = null;
         String apiContentTitle = null;
         try {
@@ -169,7 +171,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         LOGGER.info("Rating requested: " + rating);
         LOGGER.info("log of CONTENT_TITLE: " + CONTENT_TITLE.get());
         CONTENT_TITLE.remove();
-        LOGGER.info("value of isMovie: " + isMovie);
+        LOGGER.info("value of isMovie: " + isMovie.get());
 
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
@@ -185,11 +187,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
                                     LOGGER.info("-- log of type pageContainer: " + pageContainer.getType());
-                                    isMovie = true;
-                                    LOGGER.info("value of isMovie: " + isMovie);
+                                    isMovie.set(true);
+                                    LOGGER.info("value T of isMovie: " + isMovie.get());
                                 } else {
                                     if (pageContainer.getSeasons().get(0) != null) {
-                                        isMovie = false;
+                                        isMovie.set(false);
                                         List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
                                         if (seasonItems.get(0) != null) {
                                             episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
