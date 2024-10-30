@@ -26,9 +26,8 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
     public static ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
-    public static ThreadLocal<Boolean> isMovie = new ThreadLocal<>();
-   // private boolean isMovie;
-    String episodicRating;
+    public static ThreadLocal<Boolean> IS_MOVIE = new ThreadLocal<>();
+   public static ThreadLocal<String> EPISODIC_RATING = new ThreadLocal<>();;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
@@ -102,8 +101,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     public void confirmRegionalRatingsDisplays(String rating) {
         LOGGER.info("Rating value under test: {}", rating);
-        LOGGER.info("** value of isMovie: {}", isMovie.get());
-        if (isMovie.get()) {
+        LOGGER.info("** value of isMovie: {}", IS_MOVIE.get());
+        if (IS_MOVIE.get()) {
             LOGGER.info("Testing against Movie content.");
             validateMovieContent(rating);
         } else {
@@ -123,8 +122,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating parameters: '{}, {}, {}'.", rating, locale, language);
-        isMovie.set(false);
-        episodicRating = null;
+        IS_MOVIE.set(false);
+       // EPISODIC_RATING = null;
         String apiContentTitle = null;
         try {
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
@@ -171,7 +170,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         LOGGER.info("Rating requested: " + rating);
         LOGGER.info("log of CONTENT_TITLE: " + CONTENT_TITLE.get());
         CONTENT_TITLE.remove();
-        LOGGER.info("value of isMovie: " + isMovie.get());
+        LOGGER.info("value of isMovie: " + IS_MOVIE.get());
 
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
@@ -187,14 +186,15 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
                                     LOGGER.info("-- log of type pageContainer: " + pageContainer.getType());
-                                    isMovie.set(true);
-                                    LOGGER.info("value T of isMovie: " + isMovie.get());
+                                    IS_MOVIE.set(true);
+                                    LOGGER.info("value T of isMovie: " + IS_MOVIE.get());
                                 } else {
                                     if (pageContainer.getSeasons().get(0) != null) {
-                                        isMovie.set(false);
+                                        IS_MOVIE.set(false);
                                         List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
                                         if (seasonItems.get(0) != null) {
-                                            episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+                                            EPISODIC_RATING.set(seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText());
+                                            LOGGER.info("-- log of EPISODIC_RATING: " + EPISODIC_RATING);
                                         } else {
                                             throw new NullPointerException("Episodic rating is null");
                                         }
@@ -222,7 +222,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         searchPage.getDynamicAccessibilityId(CONTENT_TITLE.get()).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
-        videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
+        videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage); //failing here
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
@@ -238,7 +238,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.clickDefaultAlertBtn();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(CONTENT_TITLE.get()).click();
-        sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
+        sa.assertTrue(downloads.isRatingPresent(EPISODIC_RATING.get()), rating + " Rating was not found on series downloads");
         sa.assertAll();
     }
 
