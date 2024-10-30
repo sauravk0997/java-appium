@@ -38,7 +38,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickFirstNoLiveEvent() {
-        clickContent(5, 1);
+        clickContent(4, 1);
     }
 
     public boolean isCollectionBrandImageExpanded() {
