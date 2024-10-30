@@ -29,4 +29,14 @@ public interface IConstantHelper {
     String SG = "SG";
     String TR = "TR";
     String US = "US";
+
+    //language codes
+    String EN_LANG = "en";
+    String ES_LANG = "es";
+    String DE_LANG = "de";
+    String FR_LANG = "fr";
+    String JA_LANG = "ja";
+    String KO_LANG = "ko";
+    String PT_LANG = "pt";
+    String TR_LANG = "tr";
 }
