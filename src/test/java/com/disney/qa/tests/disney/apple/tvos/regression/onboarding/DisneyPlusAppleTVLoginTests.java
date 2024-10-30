@@ -251,10 +251,10 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
         sa.assertTrue(passwordPage.isEnterYourPasswordHeaderPresent(), "Enter your password header was not found.");
-        sa.assertTrue(passwordPage.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Log in to Disney+ with your MyDisney account was not found.");
+        sa.assertTrue(passwordPage.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Log in to Disney+ with your MyDisney account text was not found.");
         sa.assertTrue(passwordPage.isEnterYourPasswordHintPresent(), "Enter your password hint was not found.");
         sa.assertTrue(passwordPage.isCaseSensitiveHintPresent(), "Case Sensitive hint was not found.");
-        sa.assertTrue(passwordPage.isHavingTroubleLoggingInPresent(), "Having Trouble Logging In was not found.");
+        sa.assertTrue(passwordPage.isHavingTroubleLoggingInPresent(), "Having Trouble Logging In button was not found.");
         sa.assertTrue(passwordPage.isLoginNavigationButtonPresent(), "Login navigation button was not found.");
         sa.assertTrue(passwordPage.isLearnMoreAboutMyDisneyButtonPresent(), "Learn more about MyDisney button was not found.");
         sa.assertAll();
