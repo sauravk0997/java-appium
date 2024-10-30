@@ -971,7 +971,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(true).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), KIDS_PROFILE);
-        homePage.clickFirstCarouselPoster();
+        homePage.clickDynamicCollectionOrContent(2, 2);
         Assert.assertTrue(brandPage.isOpened(), "Brand/Collection page is not open");
         Assert.assertTrue(brandPage.getBackButton().isPresent(), "Back button is not present");
         Assert.assertTrue(brandPage.isKidThemeBackgroudUIDisplayed(),
