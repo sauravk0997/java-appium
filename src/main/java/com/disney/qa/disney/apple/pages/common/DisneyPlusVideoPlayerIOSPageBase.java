@@ -654,6 +654,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
+        LOGGER.info("Rating getting nil: " + rating);
         detailsPage.getPlayButton().click();
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player");
         waitForVideoToStart();

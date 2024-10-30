@@ -168,7 +168,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
         LOGGER.info("log of CONTENT_TITLE: " + CONTENT_TITLE.get());
-      //  CONTENT_TITLE.remove();
+        CONTENT_TITLE.remove();
+        LOGGER.info("value of isMovie: " + isMovie);
+        isMovie = false;
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
@@ -177,9 +179,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                         if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                             LOGGER.info("Title returned: " + item.getVisuals().getTitle());
                             CONTENT_TITLE.set(item.getVisuals().getTitle());
+                            LOGGER.info("*** log of CONTENT_TITLE: " + CONTENT_TITLE.get());
                             Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
+                            LOGGER.info("*** log of pageContainer: " + pageContainer);
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
+                                    LOGGER.info("-- log of type pageContainer: " + pageContainer.getType());
                                     isMovie = true;
                                 } else {
                                     if (pageContainer.getSeasons().get(0) != null) {
