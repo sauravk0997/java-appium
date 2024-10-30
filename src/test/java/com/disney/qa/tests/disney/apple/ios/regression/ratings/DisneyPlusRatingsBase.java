@@ -170,7 +170,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         LOGGER.info("log of CONTENT_TITLE: " + CONTENT_TITLE.get());
         CONTENT_TITLE.remove();
         LOGGER.info("value of isMovie: " + isMovie);
-        isMovie = false;
+
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
@@ -186,8 +186,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                                 if (!pageContainer.getType().equals(EPISODES)) {
                                     LOGGER.info("-- log of type pageContainer: " + pageContainer.getType());
                                     isMovie = true;
+                                    LOGGER.info("value of isMovie: " + isMovie);
                                 } else {
                                     if (pageContainer.getSeasons().get(0) != null) {
+                                        isMovie = false;
                                         List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
                                         if (seasonItems.get(0) != null) {
                                             episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
