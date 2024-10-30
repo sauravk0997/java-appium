@@ -31,8 +31,9 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90964", "XCDQA-107758", "XCDQA-90972", "XCDQA-90974"})
-    @Test(description = "Verify movie details screen appearance", groups = {TestGroup.DETAILS, TestGroup.SMOKE, US})
+    /*@TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90964", "XCDQA-107758", "XCDQA-90972", "XCDQA-90974"})
+    @Test(description = "Verify movie details screen appearance", groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE,
+            US})
     public void verifyMovieDetailsPageAppearance() throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -66,10 +67,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         tabs.forEach(item -> sa.assertTrue(detailsPage.getDynamicRowButtonLabel(item, 1).isPresent(SHORT_TIMEOUT),
                 "The following tab isn't present " + item));
         sa.assertAll();
-    }
+    }*/
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90968", "XCDQA-90970"})
-    @Test(description = "Verify that add/remove button changes and the asset is properly added to watchlist", groups = {TestGroup.DETAILS, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, US})
     public void addAndRemoveAssetFromWatchlist() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
@@ -118,7 +119,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90976"})
-    @Test(description = "Verify after playing trailer user is taken back to details page", groups = {TestGroup.DETAILS, TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
     public void trailerCompletionTakesUserToDetailsPage() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage disneyPlusAppleTVDetailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());

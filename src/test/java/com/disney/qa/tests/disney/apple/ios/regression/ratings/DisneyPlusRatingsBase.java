@@ -1,17 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.config.DisneyParameters;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
-import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
 import org.testng.asserts.SoftAssert;
@@ -28,27 +24,16 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running on CI as a single class level: set lang/locale on Jenkins
  * IF running locally: set lang/locale on config level
  */
-public class DisneyPlusRatingsBase extends DisneyBaseTest {
-    private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
+public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
     protected String contentTitle;
     private boolean isMovie;
     String episodicRating;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
-    static final String AUSTRALIA_LANG = "en-GB";
-    static final String BRAZIL_LANG = "pt-BR";
-    static final String GERMANY_LANG = "de";
-    static final String JAPAN_LANG = "ja";
-    static final String KOREAN_LANG = "ko";
-    static final String NETHERLANDS_LANG = "en-GB";
-    static final String NEW_ZEALAND_LANG = "en";
-    public static final String SINGAPORE_LANG = "en";
-    static final String TURKEY_LANG = "tr";
-    static final String LATAM_LANG = "es";
 
-    public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
+    public void ratingsSetup(String locale, boolean... ageVerified) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -56,8 +41,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
-    public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
+
+    public void ratingsSetup(String ratingValue, String locale, boolean... ageVerified) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -66,8 +52,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
-    public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
+
+    public void ratingSetupWithPINForOTPAccount(String locale) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
@@ -81,10 +68,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
+    public void ratingsSetupWithPINNew(String locale, boolean... ageVerified) {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -97,8 +83,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupForOTPAccount(String lang, String locale) {
-        setDictionary(lang, locale);
+    public void ratingsSetupForOTPAccount(String locale) {
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -115,6 +100,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
+        LOGGER.info("Rating value under test: {}", rating);
         if (isMovie) {
             LOGGER.info("Testing against Movie content.");
             validateMovieContent(rating);
@@ -129,26 +115,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 .getRatingSystemValues();
         LOGGER.info("Rating values: " + ratingSystemValues);
         getAccountApi().editContentRatingProfileSetting(account,
-                LOCALIZATION_UTILS.get().getRatingSystem(),
+                getLocalizationUtils().getRatingSystem(),
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
-    private void setDictionary(String lang, String locale) {
-        getLocalizationUtils().setCountryDataByCode(locale);
-        getLocalizationUtils().setLanguageCode(lang);
-        DisneyLocalizationUtils disneyLocalizationUtils =
-                new DisneyLocalizationUtils(
-                        locale, lang, MobilePlatform.IOS,
-                        DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setLegalDocuments();
-        LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-        R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), lang, true);
-    }
-
     private void getDesiredRatingContent(String rating, String locale, String language) {
-        LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
+        LOGGER.info("Scanning API for title with desired rating parameters: '{}, {}, {}'.", rating, locale, language);
         isMovie = false;
         episodicRating = null;
         String apiContentTitle = null;
@@ -163,7 +135,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
             }
         } catch (Exception e) {
-            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage()));
+            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage(), locale, language));
         }
 
         if (apiContentTitle == null) {
