@@ -361,7 +361,24 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTimeThreeIntegers() {
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60 + Integer.parseInt(remainingTime[1]) * 60 + (Integer.parseInt(remainingTime[2]));
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60
+                + Integer.parseInt(remainingTime[1]) * 60
+                + (Integer.parseInt(remainingTime[2]));
+        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
+        return remainingTimeInSec;
+    }
+
+    /**
+     * Opens the player overlay, reads remaining time that has 3 integers
+     * (hours, minutes, seconds) on the seekbar and converts only hour and mins to seconds
+     * to match the details page duration
+     * @return Playback remaining time in seconds
+     */
+    public int getRemainingHourAndMinInSeconds() {
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60
+                + Integer.parseInt(remainingTime[1]) * 60;
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
@@ -470,19 +487,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         detailsPage.clickContinueButton();
         waitForVideoToStart();
         sa.assertTrue(scrubbedTimeRemaining > getRemainingTime(),
-                "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeThreeIntegerRemaining(SoftAssert sa) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        scrubToPlaybackPercentage(30);
-        int scrubbedTimeRemaining = getRemainingTimeThreeIntegers();
-        clickBackButton();
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
-        detailsPage.clickContinueButton();
-        waitForVideoToStart();
-        sa.assertTrue(scrubbedTimeRemaining > getRemainingTimeThreeIntegers(),
                 "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
