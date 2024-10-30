@@ -27,7 +27,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
     public static ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
     public static ThreadLocal<Boolean> IS_MOVIE = new ThreadLocal<>();
-   public static ThreadLocal<String> EPISODIC_RATING = new ThreadLocal<>();;
+    public static ThreadLocal<String> EPISODIC_RATING = new ThreadLocal<>();;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
@@ -101,7 +101,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     public void confirmRegionalRatingsDisplays(String rating) {
         LOGGER.info("Rating value under test: {}", rating);
-        LOGGER.info("** value of isMovie: {}", IS_MOVIE.get());
         if (IS_MOVIE.get()) {
             LOGGER.info("Testing against Movie content.");
             validateMovieContent(rating);
@@ -123,7 +122,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating parameters: '{}, {}, {}'.", rating, locale, language);
         IS_MOVIE.set(false);
-       // EPISODIC_RATING = null;
         String apiContentTitle = null;
         try {
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
@@ -168,10 +166,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
-        LOGGER.info("log of CONTENT_TITLE: " + CONTENT_TITLE.get());
         CONTENT_TITLE.remove();
-        LOGGER.info("value of isMovie: " + IS_MOVIE.get());
-
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
@@ -180,12 +175,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                         if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                             LOGGER.info("Title returned: " + item.getVisuals().getTitle());
                             CONTENT_TITLE.set(item.getVisuals().getTitle());
-                            LOGGER.info("*** log of CONTENT_TITLE: " + CONTENT_TITLE.get());
                             Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
-                            LOGGER.info("*** log of pageContainer: " + pageContainer);
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
-                                    LOGGER.info("-- log of type pageContainer: " + pageContainer.getType());
                                     IS_MOVIE.set(true);
                                     LOGGER.info("value T of isMovie: " + IS_MOVIE.get());
                                 } else {
@@ -194,7 +186,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                                         List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
                                         if (seasonItems.get(0) != null) {
                                             EPISODIC_RATING.set(seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText());
-                                            LOGGER.info("-- log of EPISODIC_RATING: " + EPISODIC_RATING);
                                         } else {
                                             throw new NullPointerException("Episodic rating is null");
                                         }
