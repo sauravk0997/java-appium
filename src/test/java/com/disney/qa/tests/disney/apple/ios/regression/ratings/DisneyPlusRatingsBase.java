@@ -213,7 +213,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         searchPage.getDynamicAccessibilityId(CONTENT_TITLE.get()).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
-        videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage); //failing here
+        videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
