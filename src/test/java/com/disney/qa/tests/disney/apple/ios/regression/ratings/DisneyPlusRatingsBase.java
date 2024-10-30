@@ -4,6 +4,7 @@ import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -23,25 +24,16 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running on CI as a single class level: set lang/locale on Jenkins
  * IF running locally: set lang/locale on config level
  */
-public class DisneyPlusRatingsBase extends DisneyBaseTest {
+public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
     protected String contentTitle;
     private boolean isMovie;
     String episodicRating;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
-    static final String AUSTRALIA_LANG = "en-GB";
-    static final String BRAZIL_LANG = "pt-BR";
-    static final String GERMANY_LANG = "de";
-    static final String JAPAN_LANG = "ja";
-    static final String KOREAN_LANG = "ko";
-    static final String NETHERLANDS_LANG = "en-GB";
-    static final String NEW_ZEALAND_LANG = "en";
-    public static final String SINGAPORE_LANG = "en";
-    static final String TURKEY_LANG = "tr";
-    static final String LATAM_LANG = "es";
 
-    public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
+    public void ratingsSetup(String locale, boolean... ageVerified) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -49,7 +41,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
-    public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
+
+    public void ratingsSetup(String ratingValue, String locale, boolean... ageVerified) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -58,7 +52,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         handleAlert();
         setAppToHomeScreen(getAccount());
     }
-    public void ratingSetupWithPINForOTPAccount(String lang, String locale) {
+
+    public void ratingSetupWithPINForOTPAccount(String locale) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
@@ -72,9 +68,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupWithPINNew(String lang, String locale, boolean... ageVerified) {
+    public void ratingsSetupWithPINNew(String locale, boolean... ageVerified) {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         try {
             getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
@@ -87,7 +83,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetupForOTPAccount(String lang, String locale) {
+    public void ratingsSetupForOTPAccount(String locale) {
         setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -104,6 +100,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
+        LOGGER.info("Rating value under test: {}", rating);
         if (isMovie) {
             LOGGER.info("Testing against Movie content.");
             validateMovieContent(rating);
@@ -123,7 +120,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
     }
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
-        LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
+        LOGGER.info("Scanning API for title with desired rating parameters: '{}, {}, {}'.", rating, locale, language);
         isMovie = false;
         episodicRating = null;
         String apiContentTitle = null;
@@ -138,7 +135,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
             }
         } catch (Exception e) {
-            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage()));
+            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage(), locale, language));
         }
 
         if (apiContentTitle == null) {

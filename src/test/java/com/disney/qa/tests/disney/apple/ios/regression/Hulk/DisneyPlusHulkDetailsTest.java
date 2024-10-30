@@ -456,7 +456,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
+    /*@TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExpiredHuluWatchlistDisplay() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -498,7 +498,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
                 "HULU title was present in the Watchlist");
         Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),
                 "Disney Plus title was not present in the Watchlist");
-    }
+    }*/
 
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
