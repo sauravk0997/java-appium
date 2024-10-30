@@ -108,16 +108,19 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                 new ArrayList<>(Arrays.asList(
                         DisneyEntityIds.LUCA,
                         DisneyEntityIds.IRONMAN));
+
+       List<String> infoBlockList = new ArrayList<>();
+       titles.forEach(title ->
+               infoBlockList.add(getWatchlistInfoBlock(title.getEntityId())));
+
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi()
-        .addContentToWatchlist(getAccount().getAccountId(),
-                getAccount().getAccountToken(),
-                getAccount().getProfileId(),
-                getWatchlistInfoBlock(DisneyEntityIds.SOUL.getEntityId())));
+
+       IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(),
+               getAccount().getAccountToken(),getAccount().getProfileId(), infoBlockList.get(i)));
 
         logInTemp(getAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
