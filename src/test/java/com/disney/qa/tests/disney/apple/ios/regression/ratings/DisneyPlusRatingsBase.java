@@ -179,7 +179,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
                                     IS_MOVIE.set(true);
-                                    LOGGER.info("value T of isMovie: " + IS_MOVIE.get());
                                 } else {
                                     if (pageContainer.getSeasons().get(0) != null) {
                                         IS_MOVIE.set(false);
