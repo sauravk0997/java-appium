@@ -24,7 +24,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66730"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() {
-        int latency = 15;
+        int latency = 20;
         int pollingInSeconds = 5;
         int timeoutInSeconds = 120;
         String zero = "0";
