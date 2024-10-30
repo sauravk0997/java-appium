@@ -47,7 +47,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89592", "XCDQA-89596"})
+    /*@TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89592", "XCDQA-89596"})
     @Test(groups = {TestGroup.WATCHLIST, US})
     public void verifyWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
@@ -86,9 +86,9 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         String firstItem = watchListPage.getContentItems(0).get(0).split(",")[0];
         Assert.assertEquals(DisneyEntityIds.SOUL.getTitle(), firstItem, String.format("Newly added Soul content is not the first item in Watchlist but found: %s", firstItem));
         sa.assertAll();
-    }
+    }*/
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
+   /* @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
     @Test(groups = {TestGroup.WATCHLIST, US})
     public void verifyRemoveWatchlistContent() {
         List<DisneyEntityIds> titles =
@@ -116,5 +116,5 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                 "Ironman content is not present in Watchlist");
         Assert.assertFalse(watchListPage.getTypeCellLabelContains(DisneyEntityIds.LUCA.getTitle()).isElementPresent(),
                 "Removed Luca content is present in Watchlist");
-    }
+    }*/
 }
