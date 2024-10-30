@@ -25,7 +25,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running locally: set lang/locale on config level
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
-    protected String contentTitle;
+    protected ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
     private boolean isMovie;
     String episodicRating;
     static final String PAGE_IDENTIFIER = "page-";
@@ -174,7 +174,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                     if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
                         if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                             LOGGER.info("Title returned: " + item.getVisuals().getTitle());
-                            contentTitle = item.getVisuals().getTitle();
+                            CONTENT_TITLE.set(item.getVisuals().getTitle());
                             Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
@@ -189,7 +189,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                                         }
                                     }
                                 }
-                                return contentTitle;
+                                return CONTENT_TITLE.get();
                             }
                         }
                     }
@@ -207,9 +207,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
+        searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        searchPage.getDynamicAccessibilityId(CONTENT_TITLE.get()).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
@@ -226,7 +226,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDefaultAlertBtn();
         detailsPage.getDownloadNav().click();
-        downloads.getStaticTextByLabelContains(contentTitle).click();
+        downloads.getStaticTextByLabelContains(CONTENT_TITLE.get()).click();
         sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
         sa.assertAll();
     }
@@ -239,9 +239,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
+        searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        searchPage.getDynamicAccessibilityId(CONTENT_TITLE.get()).click();
 
         //ratings are shown on downloaded content
         if (!detailsPage.getMovieDownloadButton().isPresent()) {
@@ -249,7 +249,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         }
         detailsPage.getMovieDownloadButton().click();
         detailsPage.getDownloadNav().click();
-        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(contentTitle));
+        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(CONTENT_TITLE.get()));
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
