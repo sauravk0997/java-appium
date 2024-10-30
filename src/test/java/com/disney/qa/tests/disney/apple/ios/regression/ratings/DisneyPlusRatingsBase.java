@@ -25,7 +25,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running locally: set lang/locale on config level
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
-    protected ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
+    public static ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
     private boolean isMovie;
     String episodicRating;
     static final String PAGE_IDENTIFIER = "page-";
@@ -167,6 +167,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
+        LOGGER.info("log of CONTENT_TITLE: " + CONTENT_TITLE.get());
+      //  CONTENT_TITLE.remove();
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
