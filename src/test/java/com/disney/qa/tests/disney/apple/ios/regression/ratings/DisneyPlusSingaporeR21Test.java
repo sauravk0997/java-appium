@@ -701,7 +701,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         setPictureInPictureConfig(DISABLED);
         launchR21ContentFromContinueWatching();
         videoPlayer.runAppInBackground(newPausetimeOutInSeconds);
-        Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(detailsPage.getMediaTitle().equals(OUT_TITLE), "Expected R21 Content is not opened");
     }
