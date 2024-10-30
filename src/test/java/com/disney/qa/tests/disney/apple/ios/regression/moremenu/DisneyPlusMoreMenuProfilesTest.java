@@ -961,6 +961,23 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67783"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyJuniorModeProfileKidsCollection() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), KIDS_PROFILE);
+        homePage.clickFirstCarouselPoster();
+        Assert.assertTrue(brandPage.isOpened(), "Brand/Collection page is not open");
+        Assert.assertTrue(brandPage.getBackButton().isPresent(), "Back button is not present");
+        Assert.assertTrue(brandPage.isKidThemeBackgroudUIDisplayed(),
+                "UI on collection page is not in kid mode theme");
+    }
+
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         if (avatarSets.isEmpty()) {
