@@ -226,7 +226,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         }
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDefaultAlertBtn();
-        detailsPage.waitForDownloadToStart();
+        downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(CONTENT_TITLE.get()).click();
         sa.assertTrue(downloads.isRatingPresent(EPISODIC_RATING.get()), rating + " Rating was not found on series downloads");
@@ -250,7 +250,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
             swipe(detailsPage.getMovieDownloadButton(), 3, 500);
         }
         detailsPage.getMovieDownloadButton().click();
-        detailsPage.waitForDownloadToStart();
+        downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
         detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(CONTENT_TITLE.get()));
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");

@@ -353,7 +353,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement kidThemeBackgroundUI;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCell[`name == 'downloadsTab'`]/**/XCUIElementTypeButton[`name MATCHES '\\\\d+'`]")
-    private ExtendedWebElement downloadsTabNotificationBadge;
+    protected ExtendedWebElement downloadsTabNotificationBadge;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1552,11 +1552,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
-    }
-
-    public void waitForDownloadToStart() {
-        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-                "Download tab notification badge was not present")
-                .until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
     }
 }
