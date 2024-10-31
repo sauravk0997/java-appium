@@ -210,7 +210,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(CONTENT_TITLE.get()).click();
+        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
@@ -226,6 +226,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         }
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDefaultAlertBtn();
+        downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
         downloads.getStaticTextByLabelContains(CONTENT_TITLE.get()).click();
         sa.assertTrue(downloads.isRatingPresent(EPISODIC_RATING.get()), rating + " Rating was not found on series downloads");
@@ -242,13 +243,14 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(CONTENT_TITLE.get()).click();
+        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
 
         //ratings are shown on downloaded content
         if (!detailsPage.getMovieDownloadButton().isPresent()) {
             swipe(detailsPage.getMovieDownloadButton(), 3, 500);
         }
         detailsPage.getMovieDownloadButton().click();
+        downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
         detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(CONTENT_TITLE.get()));
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
