@@ -262,8 +262,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         addProfile.tapJuniorModeToggle();
         passwordPage.enterPassword(getAccount());
-        dismissKeyboardForPhone();
-        passwordPage.clickPrimaryButton();
+       // dismissKeyboardForPhone();
+       // passwordPage.clickPrimaryButton();
         editProfile.waitForUpdatedToastToDisappear();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
                 "Profile is converted to General Audience");
