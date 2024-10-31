@@ -1553,4 +1553,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
     }
+
+    public void waitForDownloadToStart() {
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+                "Download tab notification badge was not present")
+                .until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
+    }
 }
