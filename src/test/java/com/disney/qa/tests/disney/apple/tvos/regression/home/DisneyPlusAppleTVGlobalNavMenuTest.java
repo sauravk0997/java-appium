@@ -173,7 +173,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertAll();
     }
 
-    /*@TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90916", "XCDQA-90918" })
     @Test(groups = {TestGroup.HOME, US})
     public void hiddenNavState() {
         SoftAssert sa = new SoftAssert();
@@ -191,8 +191,11 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         initDisneyPlusAppleTVGlobalNavMenuTest();
-        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
-                DisneyEntityIds.END_GAME.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
+
+        getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(), getAccount().getAccountToken(),
+                getAccount().getProfileId(),
+                getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
+
         List<String> innerPages = Stream.of(
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText(),
@@ -260,7 +263,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
             }
         });
         sa.assertAll();
-    }*/
+    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90928" })
     @Test(description = "Hidden state - Hero Carousel", groups = { TestGroup.HOME, US})
