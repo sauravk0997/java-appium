@@ -232,24 +232,19 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-
+        SoftAssert sa =  new SoftAssert();
         String RATING_TWELVE = "12";
         // Disable one trust banner Jarvis config and set account
         jarvisDisableOneTrustBanner();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), GERMANY);
-        /*
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE)
-                .dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA)
-                .kidsModeEnabled(false).isStarOnboarded(true).build());
-        DisneyProfile profile = getAccount().getProfile(JUNIOR_PROFILE);
-*/
+
         setAppToHomeScreen(getAccount());
 
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
-        Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
+        sa.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
         addProfile.getCellsWithLabels().get(0).click();
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
@@ -259,28 +254,25 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
-        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
-       //
-       // sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("Off"), "Profile is not converted to General Audience(non-primary)");
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
 
         editProfile.scrollToItem(editProfile.getJuniorModeToggleValue());
         editProfile.toggleJuniorMode();
-      //  passwordPage.enterPassword(getAccount());
-       // dismissKeyboardForPhone();
-       // passwordPage.clickPrimaryButton();
+
         editProfile.waitForUpdatedToastToDisappear();
-        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
                 "Profile is converted to General Audience");
 
-       // editProfile.scrollToItem("Birthdate");
         scrollUp();
-        Assert.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
+        sa.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
                 "Birthdate field did not change to 'Not Required'");
-        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
-        Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
-
-        Assert.assertTrue(contentRating.isContentRatingDisplayed(RATING_TWELVE),
+        editProfile.scrollToItem(editProfile.getJuniorModeToggleValue());
+        editProfile.toggleJuniorMode();passwordPage.enterPassword(getAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+        sa.assertTrue(contentRating.isContentRatingDisplayed(RATING_TWELVE),
                 "Content Rating is not present");
+        sa.assertAll();
     }
 
     private void  setupForRalph(String... DOB) {
