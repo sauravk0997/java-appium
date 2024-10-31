@@ -235,7 +235,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         String RATING_TWELVE = "12";
         // Disable one trust banner Jarvis config and set account
-        jarvisDisableOneTrustBanner();
+    //    jarvisDisableOneTrustBanner();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), GERMANY);
@@ -260,13 +260,20 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
-        addProfile.tapJuniorModeToggle();
-        passwordPage.enterPassword(getAccount());
+       //
+       // sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("Off"), "Profile is not converted to General Audience(non-primary)");
+
+        editProfile.scrollToItem(editProfile.getJuniorModeToggleValue());
+        editProfile.toggleJuniorMode();
+      //  passwordPage.enterPassword(getAccount());
        // dismissKeyboardForPhone();
        // passwordPage.clickPrimaryButton();
         editProfile.waitForUpdatedToastToDisappear();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
                 "Profile is converted to General Audience");
+
+       // editProfile.scrollToItem("Birthdate");
+        scrollUp();
         Assert.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
                 "Birthdate field did not change to 'Not Required'");
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
