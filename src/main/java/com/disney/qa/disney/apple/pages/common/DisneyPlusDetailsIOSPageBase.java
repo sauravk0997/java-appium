@@ -1112,10 +1112,4 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             return minutes * 60;
         }
     }
-
-    public void waitForDownloadToStart() {
-        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-                "Stop/Pause download button was not present")
-                .until(it -> stopOrPauseDownloadButton.isPresent(ONE_SEC_TIMEOUT));
-    }
  }
