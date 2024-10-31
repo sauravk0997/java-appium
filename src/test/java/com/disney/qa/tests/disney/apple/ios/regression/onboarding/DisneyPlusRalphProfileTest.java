@@ -264,11 +264,12 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
                 "Birthdate field did not change to 'Not Required'");
         editProfile.scrollToItem(editProfile.getJuniorModeToggleValue());
-        editProfile.toggleJuniorMode();passwordPage.enterPassword(getAccount());
+        editProfile.toggleJuniorMode();
+        passwordPage.enterPassword(getAccount());
         editProfile.waitForUpdatedToastToDisappear();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
-        sa.assertTrue(contentRating.isContentRatingDisplayed(RATING_SIX),
-                "Content Rating is not present");
+        scrollDown();
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_SIX), "Profile rating is not as expected");
         sa.assertAll();
     }
 
