@@ -254,15 +254,12 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
-        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
-
         editProfile.scrollToItem(editProfile.getJuniorModeToggleValue());
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         editProfile.toggleJuniorMode();
-
         editProfile.waitForUpdatedToastToDisappear();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
                 "Profile is converted to General Audience");
-
         scrollUp();
         sa.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
                 "Birthdate field did not change to 'Not Required'");
