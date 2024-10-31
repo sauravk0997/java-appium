@@ -74,9 +74,9 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         ratingsSetup(R21.getContentRating(), getCountry());
         // search results validation
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
+        searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(R21.getContentRating()), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        searchPage.getDynamicAccessibilityId(CONTENT_TITLE.get()).click();
         // adding title to watchlist and details page validation
         detailsPage.verifyRatingsInDetailsFeaturedArea(R21.getContentRating(), sa);
         detailsPage.addToWatchlist();
@@ -109,7 +109,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         // watchlist validation
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(moreMenu.getTypeCellLabelContains(contentTitle).isPresent(), "Media content title was not added to the watchlist");
+        sa.assertTrue(moreMenu.getTypeCellLabelContains(CONTENT_TITLE.get()).isPresent(), "Media content title was not added to the watchlist");
 
         sa.assertAll();
     }

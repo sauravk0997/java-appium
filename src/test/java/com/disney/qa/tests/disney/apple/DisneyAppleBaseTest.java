@@ -450,6 +450,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
+    public String getWatchlistInfoBlock(String entityId) {
+        ExploreSearchRequest pageRequest = ExploreSearchRequest.builder()
+                .disneyAccount(getAccount())
+                .entityId(entityId.toString())
+                .build();
+        return getExploreApi().getWatchlistActionInfoBlock(pageRequest);
+    }
+    
     public static ExploreSearchRequest getDisneyExploreSearchRequest() {
         return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY);
     }

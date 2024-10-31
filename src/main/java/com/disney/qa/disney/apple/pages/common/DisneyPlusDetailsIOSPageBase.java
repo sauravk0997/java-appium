@@ -42,6 +42,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DOLBY_VISION = "Dolby Vision";
     private static final String SHOP_PROMO_LABEL_HEADER = "Enjoy access to merchandise";
     private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the SHOP tab to learn more.";
+    private static final String DETAILS_DURATION_SUFFIX = "remaining";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
@@ -917,13 +918,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return tabButton.getAttribute("value").equals("1");
     }
 
+    public String getRemainingTimeText() {
+        return getStaticTextByLabelContains(DETAILS_DURATION_SUFFIX).getText();
+    }
+
     public String getContinueWatchingHours() {
-        String[] time = getStaticTextByLabelContains("remaining").getText().split(" ");
+        String[] time = getStaticTextByLabelContains(DETAILS_DURATION_SUFFIX).getText().split(" ");
         return time[0].split("h")[0];
     }
 
     public String getContinueWatchingMinutes() {
-        String[] time = getStaticTextByLabelContains("remaining").getText().split(" ");
+        String[] time = getStaticTextByLabelContains(DETAILS_DURATION_SUFFIX).getText().split(" ");
         return time[1].split("m")[0];
     }
 
@@ -1088,6 +1093,24 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 SERIES_EPISODE_TITLE.getText()),
                 Map.of("episodeNumber", Integer.parseInt(season), "title", episodeTitle)));
+    }
+
+    public int getRemainingTimeInSeconds(String duration) {
+        int hours;
+        int minutes;
+        String[] time = duration
+                .split(DETAILS_DURATION_SUFFIX)[0]
+                .trim()
+                .split(" ");
+
+        if (time.length == 2) {
+            hours = Integer.parseInt(time[0].split("h")[0]);
+            minutes = Integer.parseInt(time[1].split("m")[0]);
+            return hours * 3600 + minutes * 60;
+        } else {
+            minutes = Integer.parseInt(time[0].split("m")[0]);
+            return minutes * 60;
+        }
     }
 
     public void waitForDownloadToStart() {
