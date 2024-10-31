@@ -351,6 +351,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement cancelButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"kidsBackgroundGradient\"`]")
     private ExtendedWebElement kidThemeBackgroundUI;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCell[`name == 'downloadsTab'`]/**/XCUIElementTypeButton[`name MATCHES '\\\\d+'`]")
+    protected ExtendedWebElement downloadsTabNotificationBadge;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
