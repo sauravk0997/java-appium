@@ -6,7 +6,7 @@
     <parameter name="jenkinsJobName" value="dmgztvos_branch"/>
     <parameter name="choiceParam::env::Test ENV" value="PROD,Preview"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="deviceName=ATV_4_Gen_12,ATV_4_Gen_2;platformName=iOS;deviceType=tvOS"/>
+    <parameter name="capabilities" value="deviceName=ATV_4_Gen_12;platformName=iOS;deviceType=tvOS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name"
                value="Disney-Non-IAP-Prod-Enterprise-tvOS,Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS,Dominguez-Non-IAP-Editorial-Preview-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
@@ -14,7 +14,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression. Some Groups may not have associated tests at this time."
                value=",Smoke,Anthology,Ariel,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
-    <parameter name="jenkinsBuild" value="3.8.0.73336"/>
+    <parameter name="jenkinsBuild" value="3.9.0.73891"/>
 
     <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
         <classes>

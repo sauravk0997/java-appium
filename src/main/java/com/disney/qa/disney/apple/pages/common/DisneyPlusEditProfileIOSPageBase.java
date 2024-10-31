@@ -231,7 +231,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public ExtendedWebElement getLearnMoreLink() {
         String learnMoreText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, JUNIOR_MODE_LEARN_MORE.getText());
-        return getTextViewByLabelContains(learnMoreText);
+        return customHyperlinkByLabel.format(learnMoreText);
     }
 
 

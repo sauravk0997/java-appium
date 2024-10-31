@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.watchlist;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.request.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
@@ -11,6 +12,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.*;
 import org.apache.commons.collections4.set.ListOrderedSet;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -58,10 +60,18 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                         DisneyEntityIds.INCREDIBLES_2,
                         DisneyEntityIds.LUCA,
                         DisneyEntityIds.WANDA_VISION));
+
+        List<String> infoBlockList = new ArrayList<>();
+        titles.forEach(title ->
+            infoBlockList.add(getWatchlistInfoBlock(title.getEntityId())));
+
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
-        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId(), CONTENT_ENTITLEMENT_DISNEY));
+
+        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(),
+                getAccount().getAccountToken(),getAccount().getProfileId(), infoBlockList.get(i)));
+
         logInTemp(getAccount());
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
@@ -76,7 +86,10 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         });
         sa.assertTrue(watchListPage.isContentShownCertainNumberPerRow(0, 3), "watchlist items are not arranged 4 per row");
 
-        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.SOUL.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
+        getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(), getAccount().getAccountToken(),
+                getAccount().getProfileId(),
+                getWatchlistInfoBlock(DisneyEntityIds.SOUL.getEntityId()));
+
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
         Assert.assertTrue(homePage.isOpened(), "Home page is not open");
 
@@ -88,19 +101,26 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
+   @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89598"})
     @Test(groups = {TestGroup.WATCHLIST, US})
     public void verifyRemoveWatchlistContent() {
         List<DisneyEntityIds> titles =
                 new ArrayList<>(Arrays.asList(
                         DisneyEntityIds.LUCA,
                         DisneyEntityIds.IRONMAN));
+
+       List<String> infoBlockList = new ArrayList<>();
+       titles.forEach(title ->
+               infoBlockList.add(getWatchlistInfoBlock(title.getEntityId())));
+
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), titles.get(i).getEntityId(), CONTENT_ENTITLEMENT_DISNEY));
+
+       IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(),
+               getAccount().getAccountToken(),getAccount().getProfileId(), infoBlockList.get(i)));
 
         logInTemp(getAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());

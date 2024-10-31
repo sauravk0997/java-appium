@@ -42,7 +42,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(), DisneyEntityIds.END_GAME.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
+        getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(), getAccount().getAccountToken(),
+                getAccount().getProfileId(),
+                getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
+
         ExploreContent movieApiContent = getDisneyApiMovie(END_GAME.getEntityId());
         String description = movieApiContent.getDescription().getBrief();
         String ratingsValue = movieApiContent.getRating();
