@@ -233,7 +233,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa =  new SoftAssert();
-        String RATING_TWELVE = "12";
+        String RATING_SIX = "12";
         // Disable one trust banner Jarvis config and set account
         jarvisDisableOneTrustBanner();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
@@ -267,7 +267,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.toggleJuniorMode();passwordPage.enterPassword(getAccount());
         editProfile.waitForUpdatedToastToDisappear();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
-        sa.assertTrue(contentRating.isContentRatingDisplayed(RATING_TWELVE),
+        sa.assertTrue(contentRating.isContentRatingDisplayed(RATING_SIX),
                 "Content Rating is not present");
         sa.assertAll();
     }
