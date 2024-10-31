@@ -235,7 +235,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         String RATING_TWELVE = "12";
         // Disable one trust banner Jarvis config and set account
-    //    jarvisDisableOneTrustBanner();
+        jarvisDisableOneTrustBanner();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), GERMANY);
