@@ -44,7 +44,8 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
-        boolean isSupported = getLocalizationUtils().getSupportedLangs().contains(getLocalizationUtils().getUserLanguage());
+        boolean isSupported = getLocalizationUtils().getSupportedLangs().
+                contains(getLocalizationUtils().getUserLanguage());
         return getLocalizationUtils().getDictionaryItem(dictionary, key.getText(), isSupported);
     }
 
