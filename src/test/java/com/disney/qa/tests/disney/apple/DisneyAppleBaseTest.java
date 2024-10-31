@@ -216,7 +216,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         Configuration.get(DisneyConfiguration.Parameter.REPORTING_TCM_XRAY_TEST_EXECUTION_KEY).ifPresent(key -> {
             LOGGER.info("{} {} will be assigned to run", "reporting.tcm.xray.test-execution-key", key);
             Xray.setExecutionKey(key);
-            // Xray.enableRealTimeSync();
         });
     }
 
@@ -357,6 +356,22 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         builder.useExtendedProxy();
         PROXY.set(builder);
         builder.build(true);
+    }
+
+    @BeforeMethod(alwaysRun = true)
+    public void configureTVOSDeviceNameForJarvis(ITestContext context) {
+        String xmlTVOSDeviceName = "tvOSDeviceName";
+
+        if (!StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), DEVICE_TYPE_TVOS)) {
+            return;
+        }
+
+        String tvOSDeviceName = context.getCurrentXmlTest().getParameter(xmlTVOSDeviceName);
+
+        if (tvOSDeviceName != null && !tvOSDeviceName.isEmpty()) {
+            LOGGER.info("Disabling Jarvis Companion Config");
+            R.CONFIG.put(CAPABILITIES_DEVICE_NAME, tvOSDeviceName);
+        }
     }
 
     @AfterMethod(alwaysRun = true)

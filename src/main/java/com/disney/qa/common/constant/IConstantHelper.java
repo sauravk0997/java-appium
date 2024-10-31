@@ -9,14 +9,14 @@ public interface IConstantHelper {
             EnumSet.of(ExploreSearchRequest.ContentEntitlement.DISNEY_PLUS_BASE);
     EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_HULU =
             EnumSet.of(ExploreSearchRequest.ContentEntitlement.HULU_BASE);
-    public static final String JARVIS_APP_CONFIG = "App Config";
-    public static final String JARVIS_APP_EDIT_CONFIG = "Edit Config";
-    public static final String JARVIS_APP_PLATFORM_CONFIG = "platformConfig";
-    public static final String JARVIS_APP_ONE_TRUST_CONFIG = "oneTrustConfig";
-    public static final String JARVIS_APP_IS_ENABLED = "isEnabled";
-    public static final String JARVIS_NO_OVERRIDE_IN_USE = "Override in use! Set to: false";
-    public static final String JARVIS_OVERRIDE_IN_USE = "Override in use! Set to: true";
-    public static final String JARVIS_NO_OVERRIDE_IN_USE_TEXT = "NO override in use!";
+    String JARVIS_APP_CONFIG = "App Config";
+    String JARVIS_APP_EDIT_CONFIG = "Edit Config";
+    String JARVIS_APP_PLATFORM_CONFIG = "platformConfig";
+    String JARVIS_APP_ONE_TRUST_CONFIG = "oneTrustConfig";
+    String JARVIS_APP_IS_ENABLED = "isEnabled";
+    String JARVIS_NO_OVERRIDE_IN_USE = "Override in use! Set to: false";
+    String JARVIS_OVERRIDE_IN_USE = "Override in use! Set to: true";
+    String JARVIS_NO_OVERRIDE_IN_USE_TEXT = "NO override in use!";
 
     //country codes
     String AT = "AT";
@@ -41,4 +41,10 @@ public interface IConstantHelper {
     String KO_LANG = "ko";
     String PT_LANG = "pt";
     String TR_LANG = "tr";
+
+    //device
+    String DEVICE_TYPE_TVOS = "tvOS";
+
+    //capabilities
+    String CAPABILITIES_DEVICE_NAME = "capabilities.deviceName";
 }
