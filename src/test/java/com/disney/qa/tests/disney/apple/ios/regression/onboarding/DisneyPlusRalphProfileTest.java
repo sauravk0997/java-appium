@@ -232,16 +232,19 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
         SoftAssert sa =  new SoftAssert();
-        String RATING_SIX = "12";
-        // Disable one trust banner Jarvis config and set account
-        jarvisDisableOneTrustBanner();
+        String RATING_SIX = "6";
+
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), GERMANY);
 
         setAppToHomeScreen(getAccount());
-
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
         sa.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
@@ -254,7 +257,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
-        editProfile.scrollToItem(editProfile.getJuniorModeToggleValue());
+        scrollDown();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         editProfile.toggleJuniorMode();
         editProfile.waitForUpdatedToastToDisappear();
@@ -263,7 +266,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         scrollUp();
         sa.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
                 "Birthdate field did not change to 'Not Required'");
-        editProfile.scrollToItem(editProfile.getJuniorModeToggleValue());
+        scrollDown();
         editProfile.toggleJuniorMode();
         passwordPage.enterPassword(getAccount());
         editProfile.waitForUpdatedToastToDisappear();
