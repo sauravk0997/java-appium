@@ -480,8 +480,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.getContentRatingHeader().click();
         passwordPage.enterPassword(getAccount());
         sa.assertTrue(contentRatingPage.isOpened(), "Content rating page was not opened");
-        sa.assertTrue(contentRatingPage.isContentRatingDisplayed(RATING_R), RATING_R + " rating was not displayed");
-        sa.assertTrue(contentRatingPage.isContentRatingDisplayed(RATING_MATURE), RATING_MATURE + " rating was not displayed");
+        sa.assertTrue(contentRatingPage.isContentRatingDisplyed(RATING_R), RATING_R + " rating was not displayed");
+        sa.assertTrue(contentRatingPage.isContentRatingDisplyed(RATING_MATURE), RATING_MATURE + " rating was not displayed");
         sa.assertTrue(contentRatingPage.verifyLastContentRating(RATING_MATURE), RATING_MATURE + " rating was not displayed at last");
 
         //User select Rating R
