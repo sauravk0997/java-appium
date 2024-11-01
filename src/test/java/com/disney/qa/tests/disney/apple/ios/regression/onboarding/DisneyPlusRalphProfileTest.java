@@ -231,7 +231,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
 
         SoftAssert sa =  new SoftAssert();
-        String RATING_SIX = "6";
+        String EXPECTED_RATING = "6";
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
@@ -268,7 +268,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.waitForUpdatedToastToDisappear();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         swipeInContainer(null, Direction.UP, 1, 500);
-        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_SIX), "Profile rating is not as expected");
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(EXPECTED_RATING), "Profile rating is not as expected");
         sa.assertAll();
     }
 
