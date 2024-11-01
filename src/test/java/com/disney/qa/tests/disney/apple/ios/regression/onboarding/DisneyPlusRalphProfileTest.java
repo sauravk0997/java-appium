@@ -264,13 +264,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.waitForUpdatedToastToDisappear();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
                 "Profile is converted to General Audience");
-        // scrollUp();
-        /*
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            editProfile.swipeUp(FIFTEEN_HUNDRED_SEC_TIMEOUT);
-        }
-        *
-         */
         swipeInContainer(null, Direction.DOWN, 2, 500);
         sa.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
                 "Birthdate field did not change to 'Not Required'");
