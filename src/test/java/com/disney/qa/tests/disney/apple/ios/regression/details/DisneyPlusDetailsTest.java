@@ -266,6 +266,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.clickPauseButton();
         String durationTime = videoPlayerPage.getRemainingTimeInStringWithHourAndMinutes();
+        videoPlayerPage.clickBackButton();
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getProgressBar());
         sa.assertTrue(detailsPage.isContinueButtonPresent(),
