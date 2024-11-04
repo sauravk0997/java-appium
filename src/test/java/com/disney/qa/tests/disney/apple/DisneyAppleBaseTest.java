@@ -358,7 +358,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         builder.build(true);
     }
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.ATV_JARVIS_CONFIGURATION)
     public void configureTVOSDeviceNameForJarvis(ITestContext context) {
         String xmlTVOSDeviceName = "tvOSDeviceName";
         String tvOSDeviceName = context.getCurrentXmlTest().getParameter(xmlTVOSDeviceName);

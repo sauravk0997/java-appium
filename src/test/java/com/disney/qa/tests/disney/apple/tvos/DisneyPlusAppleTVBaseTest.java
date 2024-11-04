@@ -37,7 +37,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
     public static final String SUB_VERSION = "V1";
     public static final String ENTITLEMENT_LOOKUP = "Yearly";
 
-
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         setBuildType();
@@ -70,9 +69,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
     }
 
     public void installJarvis() {
-//        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-//        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
-//        disneyPlusAppleTVWelcomeScreenPage.isOpened();
         super.installJarvis();
     }
 
