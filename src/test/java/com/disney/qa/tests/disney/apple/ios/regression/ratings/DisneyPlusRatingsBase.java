@@ -25,9 +25,9 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running locally: set lang/locale on config level
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
-    protected String contentTitle;
-    private boolean isMovie;
-    String episodicRating;
+    public static ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
+    public static ThreadLocal<Boolean> IS_MOVIE = new ThreadLocal<>();
+    public static ThreadLocal<String> EPISODIC_RATING = new ThreadLocal<>();;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
@@ -101,7 +101,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     public void confirmRegionalRatingsDisplays(String rating) {
         LOGGER.info("Rating value under test: {}", rating);
-        if (isMovie) {
+        if (IS_MOVIE.get()) {
             LOGGER.info("Testing against Movie content.");
             validateMovieContent(rating);
         } else {
@@ -121,8 +121,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     private void getDesiredRatingContent(String rating, String locale, String language) {
         LOGGER.info("Scanning API for title with desired rating parameters: '{}, {}, {}'.", rating, locale, language);
-        isMovie = false;
-        episodicRating = null;
+        IS_MOVIE.set(false);
         String apiContentTitle = null;
         try {
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
@@ -167,6 +166,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
+        CONTENT_TITLE.remove();
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
@@ -174,22 +174,23 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                     if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
                         if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                             LOGGER.info("Title returned: " + item.getVisuals().getTitle());
-                            contentTitle = item.getVisuals().getTitle();
+                            CONTENT_TITLE.set(item.getVisuals().getTitle());
                             Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
-                                    isMovie = true;
+                                    IS_MOVIE.set(true);
                                 } else {
                                     if (pageContainer.getSeasons().get(0) != null) {
+                                        IS_MOVIE.set(false);
                                         List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
                                         if (seasonItems.get(0) != null) {
-                                            episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+                                            EPISODIC_RATING.set(seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText());
                                         } else {
                                             throw new NullPointerException("Episodic rating is null");
                                         }
                                     }
                                 }
-                                return contentTitle;
+                                return CONTENT_TITLE.get();
                             }
                         }
                     }
@@ -207,11 +208,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
+        searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
-        videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
+        videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
@@ -225,9 +226,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         }
         detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDefaultAlertBtn();
+        downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
-        downloads.getStaticTextByLabelContains(contentTitle).click();
-        sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
+        downloads.getStaticTextByLabelContains(CONTENT_TITLE.get()).click();
+        sa.assertTrue(downloads.isRatingPresent(EPISODIC_RATING.get()), rating + " Rating was not found on series downloads");
         sa.assertAll();
     }
 
@@ -239,17 +241,18 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
+        searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
 
         //ratings are shown on downloaded content
         if (!detailsPage.getMovieDownloadButton().isPresent()) {
             swipe(detailsPage.getMovieDownloadButton(), 3, 500);
         }
         detailsPage.getMovieDownloadButton().click();
+        downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
-        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(contentTitle));
+        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(CONTENT_TITLE.get()));
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);

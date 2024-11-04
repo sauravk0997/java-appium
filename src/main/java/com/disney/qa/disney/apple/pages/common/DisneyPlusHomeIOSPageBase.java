@@ -62,6 +62,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         pause(5);
     }
 
+    public void clickDynamicCollectionOrContent(int collectionViewColumn, int cellRow) {
+        clickContent(collectionViewColumn, cellRow);
+    }
+
     public List<ExtendedWebElement> getKidsCarousels() {
         return getAllCollectionCells(CollectionConstant.Collection.KIDS_CAROUSEL);
     }

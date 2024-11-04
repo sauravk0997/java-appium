@@ -154,4 +154,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	public boolean isEpisodeCellDisplayed(String seasonNumber, String episodeNumber) {
 		return episodeDownloadCell.format(seasonNumber, episodeNumber).isPresent();
 	}
+
+	public void waitForDownloadToStart() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download tab notification badge was not present")
+				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
+	}
 }
