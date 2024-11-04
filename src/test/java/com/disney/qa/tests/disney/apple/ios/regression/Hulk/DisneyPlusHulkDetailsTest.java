@@ -493,7 +493,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         //TODO: https://jira.disney.com/browse/QP-3626
         //https://jira.disney.com/browse/QP-3626
         // Revoke HULU subscription
-
         String huluSubscriptionId = getHuluSubscriptionId();
         getSubscriptionApi().revokeSubscription(getAccount(), huluSubscriptionId);
 
