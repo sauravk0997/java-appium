@@ -353,12 +353,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickDetailsTab() {
-        if (!detailsTab.isPresent()) {
+        if (!getDetailsTab().isPresent()) {
             swipeInContainer(null, Direction.UP, 1200);
             pause(2); //transition
             swipeTabBar(Direction.LEFT, 1000);
         }
-        detailsTab.click();
+        getDetailsTab().click();
     }
 
     public String getContentDescriptionText() {
@@ -1005,7 +1005,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         if (!getDetailsTab().isPresent()) {
             swipe(getDetailsTab(), 2);
         }
-        getDetailsTab().click();
+        clickDetailsTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(getTypeOtherByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText())), 2);
         }

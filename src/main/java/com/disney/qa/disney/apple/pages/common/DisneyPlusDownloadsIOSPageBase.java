@@ -178,5 +178,11 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				.getWidth();
 		ValueRange range = ValueRange.of(-latency, latency);
 		return range.isValidIntValue((long) (expectedWidth - actualWidth));
+  }
+  
+	public void waitForDownloadToStart() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download tab notification badge was not present")
+				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
 	}
 }
