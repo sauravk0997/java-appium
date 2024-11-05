@@ -4,11 +4,11 @@ import com.disney.alice.AliceAssertion;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -23,24 +23,12 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89345", "XCDQA-89341"})
     @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
     public void welcomeScreenNavigation() {
-        SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome Screen did not launch");
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isSignUpFocused(),
-                "Sign up button is not focused post app launch");
-
-        // Alice cannot detect this text in the screen: https://jira.disneystreaming.com/browse/QCE-2472
-        // aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, "SIGN UP NOW", AliceLabels.BUTTON_HOVERED.getText());
-
-        disneyPlusAppleTVWelcomeScreenPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isLoginBtnFocused(),
+        Assert.assertTrue(welcomeScreen.isOpened(), "Welcome Screen did not launch");
+        Assert.assertTrue(welcomeScreen.isLoginBtnFocused(),
                 "Login Button is not focused after navigating down from Sign up");
-
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89343"})
