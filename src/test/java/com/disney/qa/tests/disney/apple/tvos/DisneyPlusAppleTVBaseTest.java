@@ -3,6 +3,8 @@ package com.disney.qa.tests.disney.apple.tvos;
 import static com.disney.jarvisutils.pages.apple.JarvisAppleBase.*;
 import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.Configs.*;
 import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.DictionaryResourceKeys.*;
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 import java.lang.invoke.MethodHandles;
@@ -52,10 +54,15 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         jarvis.navigateToConfig(EDIT_CONFIG.getText(), Direction.DOWN);
         jarvis.navigateToConfig(COMPANION_CONFIG.getText(), Direction.DOWN);
         jarvis.navigateToConfig(isEnabled, Direction.DOWN);
-        if(appleBase.getStaticTextByLabelContains(JARVIS_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT) ||
+        if (appleBase.getStaticTextByLabelContains(JARVIS_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT) ||
                 appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
-            appleBase.moveUp(1,1);
-            appleBase.clickSelect();
+            appleBase.moveUp(1, 1);
+            fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Unable to set IsEnabled flag to 'false'")
+                    .until(it -> {
+                        appleBase.clickSelect();
+                        return appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(THREE_SEC_TIMEOUT);
+                    });
+
         }
     }
     public void addHoraValidationSku(DisneyAccount accountToEntitle) {
