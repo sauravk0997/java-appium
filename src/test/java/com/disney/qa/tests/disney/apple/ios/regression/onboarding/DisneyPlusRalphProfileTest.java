@@ -9,6 +9,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
+import com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusRatingsBase;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
@@ -16,6 +17,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.DE_LANG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
 
@@ -219,6 +221,48 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 "Choose Content Rating did not get empty after toggle Junior Mode OFF");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74004"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
+    public void testRalphContentSliderMaturityGermany() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+
+        configureeRalphSecondaryProfile(GERMANY, ENGLISH_LANG);
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+
+    }
+
+    private void configureeRalphSecondaryProfile(String locale, String language) {
+        String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
+        DisneyPlusRatingsBase ratingsBase = new DisneyPlusRatingsBase();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
+                locale, language));
+        getAccountApi().overrideLocations(getAccount(), locale);
+
+       // getAccountApi().clearProfileGender(getAccount(), getAccount().getProfileId());
+
+        getAccountApi().addProfile(
+                CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                        .profileName(JUNIOR_PROFILE)
+                        .gender(null)
+                        .language(getAccount().getProfileLang())
+                        .avatarId(DARTH_MAUL)
+                        .dateOfBirth(null)
+                        .kidsModeEnabled(false)
+                        .isStarOnboarded(false)
+                        .build());
+
+        //ratingsBase.setAccountRatingsMax(getAccount().getProfileId());
+    }
     private void  setupForRalph(String... DOB) {
         String locale = getLocalizationUtils().getLocale();
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
