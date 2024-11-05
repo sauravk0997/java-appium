@@ -12,7 +12,7 @@ import com.zebrunner.carina.utils.R;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
+import org.testng.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -456,10 +456,12 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    /*@TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExpiredHuluWatchlistDisplay() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        throw new RuntimeException("This test is failing due to QP-3626, please run this manually");
+        /*DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String GRIMCUTTY = "Grimcutty";
         String WANDA_VISION = "WandaVision";
         try {
@@ -470,7 +472,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         }
 
         setAppToHomeScreen(getAccount());
-
+        //TODO:use api to add the titles once QP ticket is resolved
+        // https://jira.disney.com/browse/QP-3616
         // Add Disney Plus and HULU content to Watchlist
         getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
                 R.TESTDATA.get("hulu_movie_grimcutty_entity_id"), CONTENT_ENTITLEMENT_HULU);
@@ -482,7 +485,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(GRIMCUTTY, WANDA_VISION),
                 "Titles were not added to the Watchlist");
-
+        //TODO: https://jira.disney.com/browse/QP-3626
+        //https://jira.disney.com/browse/QP-3626
         // Revoke HULU subscription
         String huluSubscriptionId = getHuluSubscriptionId();
         getSubscriptionApi().revokeSubscription(getAccount(), huluSubscriptionId);
@@ -497,8 +501,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         Assert.assertFalse(moreMenu.getTypeCellLabelContains(GRIMCUTTY).isPresent(),
                 "HULU title was present in the Watchlist");
         Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),
-                "Disney Plus title was not present in the Watchlist");
-    }*/
+                "Disney Plus title was not present in the Watchlist");*/
+    }
 
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
