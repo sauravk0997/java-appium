@@ -328,6 +328,27 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66834"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, TestGroup.VIDEO_PLAYER, US})
+    public void testDeeplinkContentMaturityRestriction() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        // Assign PG-13 content maturity rating
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                "PG-13");
+
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(homePage.isOpened(), "Home page is not displayed");
+        // Launch deeplink Dead Pool rated R
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_error_message_deeplink"));
+        Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), "Message Error is not present");
+        homePage.clickAlertConfirm();
+        Assert.assertTrue(homePage.isOpened(), "Home page is not displayed");
+    }
+
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
