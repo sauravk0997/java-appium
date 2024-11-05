@@ -459,7 +459,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyExpiredHuluWatchlistDisplay() {
-        throw new RuntimeException("This test is failing due to QP-3626, please run this manually");
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String GRIMCUTTY = "Grimcutty";
@@ -475,10 +474,10 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         //TODO:use api to add the titles once QP ticket is resolved
         // https://jira.disney.com/browse/QP-3616
         // Add Disney Plus and HULU content to Watchlist
-        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
-                R.TESTDATA.get("hulu_movie_grimcutty_entity_id"), CONTENT_ENTITLEMENT_HULU);
-        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
-                DisneyEntityIds.WANDA_VISION.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
+//        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
+//                R.TESTDATA.get("hulu_movie_grimcutty_entity_id"), CONTENT_ENTITLEMENT_HULU);
+//        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
+//                DisneyEntityIds.WANDA_VISION.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
 
         // Verify content on Watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
