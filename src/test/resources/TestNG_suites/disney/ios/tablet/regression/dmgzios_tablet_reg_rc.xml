@@ -12,7 +12,7 @@
     <parameter name="choiceParam::env::Test ENV" value="Prod,Preview"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Mini_5_Gen,iPad_Pro_Gen_3,iPad_Pro_Gen_3_1;deviceType=Tablet;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Pro_Gen_3,iPad_Pro_Gen_3_1,iPad_8_Gen_1,iPad_8_Gen;deviceType=Tablet;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="ios-tvos-test-automation"/>
@@ -113,6 +113,11 @@
     <test verbose="1" name="DisneyPlus iOS Tablet Anthology" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus iOS Tablet Downloads" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.downloads.DisneyPlusDownloadsTest"/>
         </classes>
     </test>
 </suite>

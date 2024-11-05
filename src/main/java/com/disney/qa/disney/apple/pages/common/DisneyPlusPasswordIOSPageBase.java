@@ -186,4 +186,13 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public void clickHavingTroubleLoggingButton() {
         dynamicBtnFindByLabel.format(getHavingTroubleLoggingText()).click();
     }
+
+    public String getHavingTroubleLoggingInText() {
+        return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_LOGIN_HELP.getText());
+    }
+
+    public boolean isHavingTroubleLoggingInPresent() {
+        return getDynamicAccessibilityId(getHavingTroubleLoggingInText()).isPresent();
+    }
 }
