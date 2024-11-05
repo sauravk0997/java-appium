@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.time.temporal.ValueRange;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -47,6 +48,14 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement episodeDescription;
 	@ExtendedFindBy(accessibilityId = "offlineContentCell[%s, %s]")
 	private ExtendedWebElement episodeDownloadCell;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]")
+	private ExtendedWebElement progressBarOnDownload;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]/XCUIElementTypeOther")
+	private ExtendedWebElement progressBarBookmarkPositionOnDownload;
 
 	//FUNCTIONS
 	@Override
@@ -155,6 +164,22 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return episodeDownloadCell.format(seasonNumber, episodeNumber).isPresent();
 	}
 
+	public boolean isProgressbarBookmarkDisplayedOnDownloads(String seasonNumber, String episodeNumber) {
+		return progressBarBookmarkPositionOnDownload.format(seasonNumber, episodeNumber).isPresent();
+	}
+
+	public boolean isProgressBarIndicatingCorrectPosition(
+			String seasonNumber, String episodeNumber, double scrubPercentage, int latency) {
+		double expectedWidth = progressBarOnDownload.format(seasonNumber, episodeNumber)
+				.getSize()
+				.getWidth() / (100 / scrubPercentage);
+		double actualWidth = progressBarBookmarkPositionOnDownload.format(seasonNumber, episodeNumber)
+				.getSize()
+				.getWidth();
+		ValueRange range = ValueRange.of(-latency, latency);
+		return range.isValidIntValue((long) (expectedWidth - actualWidth));
+  }
+  
 	public void waitForDownloadToStart() {
 		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
 				"Download tab notification badge was not present")
