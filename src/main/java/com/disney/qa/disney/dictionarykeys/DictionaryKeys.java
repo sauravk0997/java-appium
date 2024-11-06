@@ -438,6 +438,7 @@ public enum DictionaryKeys {
     RATING_MPAA_AND_TVPG_PG_13("rating_mpaaandtvpg_pg-13"),
     RATING_R21_FORGOT_PASSSWORD_LINK("r21_password_forgot"),
     RATING_RESTRICTION_DETAIL_MESSAGE("rating_restriction_detail_message"),
+    RATING_RESTRICTION_PLAYBACK_MESSAGE("rating_restriction_playback_message"),
     RATING_TVPG_TV_PG("rating_tvpg_tv-pg"),
     REMOVE_DOWNLOAD_BTN("btn_remove_download"),
     RESEND_EMAIL_COPY("resend_email_copy"),
