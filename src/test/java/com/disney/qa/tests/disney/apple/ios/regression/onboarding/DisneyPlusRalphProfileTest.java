@@ -2,12 +2,14 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.ios.regression.ratings.DisneyPlusRatingsBase;
 import com.disney.util.TestGroup;
@@ -17,12 +19,19 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Map;
+
 import static com.disney.qa.common.constant.IConstantHelper.DE_LANG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
+    private static final String RATING_G = "G, TV-G";
+    private static final String RATING_PG = "PG, TV-PG";
+    private static final String TV_14_RATING = "TV-14";
+    private static final String RATING_TV_MA = "TV-MA";
+    private static final int NINE_YEARS_AGE = 9;
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void testConditionalOneTrustInitializationAcceptAll() {
@@ -232,7 +241,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-        configureeRalphSecondaryProfile(GERMANY, ENGLISH_LANG);
+        String recommendedContentRating = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.RECOMMENDED_RATING.getText());
+        recommendedContentRating = getLocalizationUtils().formatPlaceholderString(recommendedContentRating,
+                Map.of("content_rating", getRecommendedContentRatingInGermanyForGivenAge(NINE_YEARS_AGE)));
+
+        configureRalphSecondaryProfile(GERMANY, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
@@ -241,7 +256,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     }
 
-    private void configureeRalphSecondaryProfile(String locale, String language) {
+    private void configureRalphSecondaryProfile(String locale, String language) {
         String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
         DisneyPlusRatingsBase ratingsBase = new DisneyPlusRatingsBase();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
@@ -263,6 +278,37 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         //ratingsBase.setAccountRatingsMax(getAccount().getProfileId());
     }
+
+    public String getRecommendedContentRatingInGermanyForGivenAge(int age) {
+        int[] ageRanges = {5, 11, 15, 17};
+        String[] ratings = {"0", "6", "12", "16", "18"};
+        return getRecommendedContentRating(age, ageRanges, ratings);
+    }
+
+    public String getRecommendedEMEAContentRatingForGivenAge(int age) {
+        int[] ageRanges = {5, 8, 11, 13, 15, 17};
+        String[] ratings = {"AL", "6+", "9+", "12+", "14+", "16+", "18+"};
+        return getRecommendedContentRating(age, ageRanges, ratings);
+    }
+
+    public String getRecommendedContentRatingInCanadaForGivenAge(int age) {
+        int[] ageRanges = {5, 8, 11, 13, 15, 17};
+        String[] ratings = {RATING_G, RATING_PG, RATING_PG, TV_14_RATING, TV_14_RATING, TV_14_RATING, RATING_TV_MA};
+        return getRecommendedContentRating(age, ageRanges, ratings);
+    }
+
+    private String getRecommendedContentRating(int age, int[] ageRanges, String[] ratings) {
+        if (age <= 0) {
+            throw new IllegalArgumentException("Invalid Age");
+        }
+        for (int i = 0; i < ageRanges.length; i++) {
+            if (age <= ageRanges[i]) {
+                return ratings[i];
+            }
+        }
+        return ratings[ratings.length - 1];
+    }
+
     private void  setupForRalph(String... DOB) {
         String locale = getLocalizationUtils().getLocale();
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
