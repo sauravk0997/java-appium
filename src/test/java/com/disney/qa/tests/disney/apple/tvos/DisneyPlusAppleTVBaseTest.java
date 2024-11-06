@@ -79,6 +79,10 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 jarvisAttempt++;
             }
         }
+
+        if(!isJarvisConfigured) {
+            throw new RuntimeException("Couldn't configure Jarvis companion flag");
+        }
     }
     public void addHoraValidationSku(DisneyAccount accountToEntitle) {
         if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {

@@ -9,7 +9,7 @@
     <parameter name="capabilities" value="platformName=iOS;deviceType=tvOS"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
-    <parameter name="scheduling" value="30 11 * * 1-5"/>
+    <parameter name="scheduling" value="H 11 * * 1-5"/>
     <parameter name="stringParam::appcenter_app_name::app center app name"
                value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
 
