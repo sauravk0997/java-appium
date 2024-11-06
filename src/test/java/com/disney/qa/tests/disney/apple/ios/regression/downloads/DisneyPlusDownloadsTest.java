@@ -85,4 +85,40 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66742"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySeriesDownloadsInProgressText() {
+        String one = "1";
+        String two = "2";
+        String three = "3";
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
+                detailsPage.getContentDetailsPage(), Direction.UP, 1200);
+
+        //Download one episode
+        detailsPage.getEpisodeToDownload(one, one).click();
+
+        //Navigate to Download page
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(downloads.isDownloadInProgressTextPresent(),
+                "Download text for one download was not as expected");
+        downloads.clickHomeIcon();
+        //Start download of 2 episodes
+        detailsPage.getEpisodeToDownload(one, two).click();
+        detailsPage.getEpisodeToDownload(one, three).click();
+
+        //Navigate to Download page
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(downloads.isDownloadInProgressPluralTextPresent(),
+                "Download text for multiple downloads was not as expected");
+    }
 }

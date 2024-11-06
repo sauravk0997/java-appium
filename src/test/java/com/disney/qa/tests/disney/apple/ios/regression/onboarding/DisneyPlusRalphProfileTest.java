@@ -24,6 +24,7 @@ import java.util.Map;
 import static com.disney.qa.common.constant.IConstantHelper.DE_LANG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
@@ -32,6 +33,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     private static final String TV_14_RATING = "TV-14";
     private static final String RATING_TV_MA = "TV-MA";
     private static final int NINE_YEARS_AGE = 9;
+    
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void testConditionalOneTrustInitializationAcceptAll() {
@@ -230,6 +232,53 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 "Choose Content Rating did not get empty after toggle Junior Mode OFF");
     }
 
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75283"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
+    public void testRalphAddProfileJuniorModeDateOfBirth() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
+        SoftAssert sa =  new SoftAssert();
+        String EXPECTED_RATING = "12";
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
+                GERMANY, getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), GERMANY);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        swipeUp(2, 500);
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+        editProfile.toggleJuniorMode();
+        editProfile.waitForUpdatedToastToDisappear();
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
+                "Profile is converted to General Audience");
+        swipeDown(2, 500);
+        sa.assertTrue(editProfile.isDateFieldNotRequiredLabelPresent(),
+                "Birthdate field did not change to 'Not Required'");
+        swipeUp(2, 500);
+        editProfile.toggleJuniorMode();
+        passwordPage.enterPassword(getAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+        swipeUp(2, 500);
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(EXPECTED_RATING), "Profile rating is not as expected");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74004"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testRalphContentSliderMaturityGermany() {
@@ -263,7 +312,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 locale, language));
         getAccountApi().overrideLocations(getAccount(), locale);
 
-       // getAccountApi().clearProfileGender(getAccount(), getAccount().getProfileId());
+        // getAccountApi().clearProfileGender(getAccount(), getAccount().getProfileId());
 
         getAccountApi().addProfile(
                 CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
@@ -308,7 +357,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         }
         return ratings[ratings.length - 1];
     }
-
     private void  setupForRalph(String... DOB) {
         String locale = getLocalizationUtils().getLocale();
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
