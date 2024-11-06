@@ -120,6 +120,5 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(downloads.isDownloadInProgressPluralTextPresent(),
                 "Download text for multiple downloads was not as expected");
-
     }
 }
