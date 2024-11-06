@@ -346,7 +346,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         // Launch deeplink Dead Pool rated R
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"));
         Assert.assertTrue(homePage.getRatingRestrictionPlaybackMessage().isPresent(),
-                "Rating playback message error is not present BUG related IOS-13416");
+                "Rating playback message error is not present");
         homePage.clickAlertConfirm();
         Assert.assertTrue(homePage.isOpened(), HOME_NOT_DISPLAYED_ERROR_MESSAGE);
     }
