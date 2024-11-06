@@ -180,6 +180,8 @@ public enum DictionaryKeys {
     DOWNLOADS_SETTINGS_TITLE("downloads_settings_title"),
     DOWNLOADS_TITLE("downloads_title"),
     DOWNLOAD_COMPLETE("download_complete"),
+    DOWNLOAD_IN_PROGRESS("download_inprogress"),
+    DOWNLOAD_IN_PROGRESS_PLURAL("download_inprogress_plural"),
     DOWNLOAD_IN_PROGRESS_PERCENT("download_inprogress_percent"),
     DOWNLOAD_IN_PROGRESS_SINGLE("mobilenav_offlinedownloads_single"),
     DOWNLOAD_MOVIE("details_download"),
