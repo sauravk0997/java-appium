@@ -332,21 +332,23 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, TestGroup.VIDEO_PLAYER, US})
     public void testDeeplinkContentMaturityRestriction() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-
+        String RATING_PG_13 = "PG-13";
+        String HOME_NOT_DISPLAYED_ERROR_MESSAGE = "Home page is not displayed";
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         // Assign PG-13 content maturity rating
         getAccountApi().editContentRatingProfileSetting(getAccount(),
                 getLocalizationUtils().getRatingSystem(),
-                "PG-13");
+                RATING_PG_13);
 
         setAppToHomeScreen(getAccount());
-        Assert.assertTrue(homePage.isOpened(), "Home page is not displayed");
+        Assert.assertTrue(homePage.isOpened(), HOME_NOT_DISPLAYED_ERROR_MESSAGE);
         // Launch deeplink Dead Pool rated R
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_error_message_deeplink"));
-        Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), "Message Error is not present");
+        Assert.assertTrue(homePage.getRatingRestrictionPlaybackMessage().isPresent(),
+                "Rating playback message error is not present BUG related IOS-13416");
         homePage.clickAlertConfirm();
-        Assert.assertTrue(homePage.isOpened(), "Home page is not displayed");
+        Assert.assertTrue(homePage.isOpened(), HOME_NOT_DISPLAYED_ERROR_MESSAGE);
     }
 
     private void loginAndStartPlayback(String content) {
