@@ -1280,7 +1280,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public ExtendedWebElement getRatingRestrictionPlaybackMessage() {
-        return typeAlertByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RATING_RESTRICTION_PLAYBACK_MESSAGE.getText()));
+        return typeAlertByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.RATING_RESTRICTION_PLAYBACK_MESSAGE.getText()));
     }
 
     public ExtendedWebElement getTypeAlertByLabel(String label){
