@@ -242,7 +242,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
-        moreMenu.clickMoreTab();
 
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
