@@ -18,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.GERMANY;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
@@ -221,33 +222,27 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75283"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
-    public void testRalphAddProfileJuniorModeDateOFBirth() {
+    public void testRalphAddProfileJuniorModeDateOfBirth() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
 
         SoftAssert sa =  new SoftAssert();
-        String EXPECTED_RATING = "6";
+        String EXPECTED_RATING = "12";
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), GERMANY);
-
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
         moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        sa.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
-        addProfile.getCellsWithLabels().get(0).click();
-        addProfile.enterProfileName(JUNIOR_PROFILE);
-        addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
-        addProfile.clickSaveProfileButton();
 
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
@@ -260,7 +255,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
                 "Profile is converted to General Audience");
         swipeInContainer(null, Direction.DOWN, 2, 500);
-        sa.assertTrue(editProfile.isDateFieldNotRequiredPresent(),
+        sa.assertTrue(editProfile.isDateFieldNotRequiredLabelPresent(),
                 "Birthdate field did not change to 'Not Required'");
         swipeInContainer(null, Direction.UP, 1, 500);
         editProfile.toggleJuniorMode();

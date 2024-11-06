@@ -559,7 +559,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return editProfileImage.isPresent();
     }
 
-    public boolean isDateFieldNotRequiredPresent() {
+    public boolean isDateFieldNotRequiredLabelPresent() {
         String fieldNotRequired = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, FIELD_NOT_REQUIRED.getText());
         return staticTextByLabel.format(fieldNotRequired).isPresent();
