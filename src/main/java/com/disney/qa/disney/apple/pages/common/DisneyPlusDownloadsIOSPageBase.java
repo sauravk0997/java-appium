@@ -63,12 +63,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return downloadsHeader.isPresent();
 	}
 
-	public void waitForDownloadToComplete() {
-		waitUntil(ExpectedConditions.elementToBeClickable(downloadCompleteButton.getBy()), THREE_HUNDRED_SEC_TIMEOUT);
-	}
-
-	public void tapDownloadedAssetFromListView(String downloadedAsset) {
-		staticTextByLabel.format(downloadedAsset).click();
+	public void waitForDownloadToStart() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download tab notification badge was not present")
+				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
 	}
 
 	public ExtendedWebElement getDownloadAssetFromListView(String downloadAsset) {
@@ -83,28 +81,12 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return dynamicBtnFindByLabelContains.format("Play " + downloadedAsset);
 	}
 
-	public void tapDownloadedAssetText(String downloadedAsset) {
-		staticTextLabelContains.format(downloadedAsset).click();
-	}
-
 	public boolean isDownloadsEmptyHeaderPresent() {
 		return downloadsEmptyHeader.isPresent();
 	}
 
-	public boolean isContentHeaderPresent(String downloadedAsset) {
-		return dynamicBtnFindByLabelContains.format(downloadedAsset).isElementPresent();
-	}
-
 	public ExtendedWebElement getEditButton() {
 		return editButton;
-	}
-
-	public ExtendedWebElement getSelectAllButton() {
-		return selectAllButton;
-	}
-
-	public ExtendedWebElement getCancelButton() {
-		return cancelButton;
 	}
 
 	public ExtendedWebElement getDownloadCompleteButton() {
@@ -179,10 +161,18 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		ValueRange range = ValueRange.of(-latency, latency);
 		return range.isValidIntValue((long) (expectedWidth - actualWidth));
   }
-  
-	public void waitForDownloadToStart() {
-		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-				"Download tab notification badge was not present")
-				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
+
+	public boolean isDownloadInProgressTextPresent() {
+		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+					DisneyDictionaryApi.ResourceKeys.APPLICATION,
+					DictionaryKeys.DOWNLOAD_IN_PROGRESS.getText()))
+				.isPresent();
+	}
+
+	public boolean isDownloadInProgressPluralTextPresent() {
+		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+					DisneyDictionaryApi.ResourceKeys.APPLICATION,
+					DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText()))
+				.isPresent();
 	}
 }
