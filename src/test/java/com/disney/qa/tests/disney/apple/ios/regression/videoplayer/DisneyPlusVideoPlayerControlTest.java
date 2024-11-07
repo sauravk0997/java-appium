@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -135,47 +136,48 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), "Details Page is not shown after closing the player");
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
     }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66505"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyVideoPlayerControlsUIMovies() {
-            DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-            DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-            SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
 
-            setAppToHomeScreen(getAccount());
-            launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
-            Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
-            String contentTitle = detailsPage.getContentTitle();
+        String contentTitle = detailsPage.getContentTitle();
 
-            Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
-            sa.assertTrue(videoPlayer.getTitleLabel().contains(contentTitle),
-                    "Content title doesn't match from the detail's content title");
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.BACK), "Back button is not visible on player overlay");
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AIRPLAY),
-                    "Airplay Button is not visible on player overlay");
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.LOCK_ICON),
-                    "Lock Button is not visible on player overlay");
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AUDIO_SUBTITLE_BUTTON),
-                    "Audio subtitle Menu Button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.getTitleLabel().contains(contentTitle),
+                "Content title doesn't match from the detail's content title");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.BACK), "Back button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AIRPLAY),
+                "Airplay Button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.LOCK_ICON),
+                "Lock Button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AUDIO_SUBTITLE_BUTTON),
+                "Audio subtitle Menu Button is not visible on player overlay");
 
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE), "Pause button is not visible on player overlay");
-            videoPlayer.clickPauseButton();
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.REWIND), "Rewind button is not visible on player overlay");
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.FAST_FORWARD), "Forward button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE), "Pause button is not visible on player overlay");
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.REWIND), "Rewind button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.FAST_FORWARD), "Forward button is not visible on player overlay");
 
-            sa.assertTrue(videoPlayer.isCurrentTimeMarkerVisible(),
-                    "Current time marker is not visible on player overlay");
-            sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(),
-                    "Current time label is not visible on player overlay");
-            sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(),
-                    "Remaining time label is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isCurrentTimeMarkerVisible(),
+                "Current time marker is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(),
+                "Current time label is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(),
+                "Remaining time label is not visible on player overlay");
 
-            sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.RESTART),
-                    "Restart button is not visible on player overlay");
-            sa.assertAll();
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.RESTART),
+                "Restart button is not visible on player overlay");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74457"})
@@ -263,7 +265,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         int currentPositionAfterScrub = videoPlayer.getCurrentPositionOnPlayer();
         sa.assertTrue(remainingTime > remainingTimeAfterScrub, "Remaining time " + errorMessage);
         sa.assertTrue(elapsedTime < elapsedTimeAfterScrub, "Elapsed time " + errorMessage);
-        sa.assertTrue(currentPositionAfterScrub > currentPositionOnSeekPlayer , "Position of seek bar " + errorMessage);
+        sa.assertTrue(currentPositionAfterScrub > currentPositionOnSeekPlayer, "Position of seek bar " + errorMessage);
         sa.assertAll();
     }
 
@@ -349,6 +351,33 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Rating playback message error is not present");
         homePage.clickAlertConfirm();
         Assert.assertTrue(homePage.isOpened(), HOME_NOT_DISPLAYED_ERROR_MESSAGE);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66517"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDisplayingTheDuration() {
+        SoftAssert sa = new SoftAssert();
+        String videoPlayerErrorMsg = "Video player remaining time format is not as expected for ";
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        loginAndStartPlayback(THE_MARVELS);
+
+        videoPlayer.displayVideoController();
+        String remainingTime = videoPlayer.getTimeRemainingLabelText();
+        sa.assertTrue(videoPlayer.validateTimeFormat(remainingTime),
+                videoPlayerErrorMsg + remainingTime);
+
+        videoPlayer.scrubToPlaybackPercentage(50);
+        videoPlayer.displayVideoController();
+        String remainingTimeAfterFirstScrub = videoPlayer.getTimeRemainingLabelText();
+        sa.assertTrue(videoPlayer.validateTimeFormat(remainingTimeAfterFirstScrub),
+                videoPlayerErrorMsg + remainingTimeAfterFirstScrub);
+
+        videoPlayer.scrubToPlaybackPercentage(96);
+        videoPlayer.displayVideoController();
+        String remainingTimeAfterSecondScrub = videoPlayer.getTimeRemainingLabelText();
+        sa.assertTrue(videoPlayer.validateTimeFormat(remainingTimeAfterSecondScrub),
+                videoPlayerErrorMsg + remainingTimeAfterSecondScrub);
+        sa.assertAll();
     }
 
     private void loginAndStartPlayback(String content) {
