@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DisneyGlobalUtils {
     protected DisneyCountryData disneyCountryData = new DisneyCountryData();
@@ -34,11 +35,11 @@ public class DisneyGlobalUtils {
         }
     }
 
-    public ArrayList<String> getRatingValueFromCountries(String locale, String itemToSearch) {
+    public List<String> getRatingValueFromCountries(String locale, String itemToSearch) {
         try {
-            return (ArrayList<String>) disneyCountryData.searchAndReturnCountryData(locale, "code", itemToSearch);
+            return (List<String>) disneyCountryData.searchAndReturnCountryData(locale, "code", itemToSearch);
         } catch (NullPointerException e) {
-            LOGGER.info(e.getMessage());
+            return List.of();
         }
     }
 }

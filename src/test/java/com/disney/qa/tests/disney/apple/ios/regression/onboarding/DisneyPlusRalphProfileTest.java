@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -391,7 +392,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     private String getRecommendedContentRating(String locale, int age, int[] ageValues) {
         DisneyGlobalUtils disneyGlobalUtils = new DisneyGlobalUtils();
-        ArrayList<String> ratingValues = disneyGlobalUtils.getRatingValueFromCountries(locale, "ratingValues");
+        List<String> ratingValues = disneyGlobalUtils.getRatingValueFromCountries(locale, "ratingValues");
         LOGGER.info("Ratings values {} ", ratingValues);
         for (int i = 0; i < ageValues.length; i++) {
             if (age <= ageValues[i]) {
