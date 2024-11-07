@@ -6,8 +6,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Map;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase {
 
