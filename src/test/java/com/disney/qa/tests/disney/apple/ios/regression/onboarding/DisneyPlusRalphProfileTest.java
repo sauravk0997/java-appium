@@ -27,19 +27,17 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BA
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
-    private static final String RATING_G = "G, TV-G";
-    private static final String RATING_PG = "PG, TV-PG";
-    private static final String TV_14_RATING = "TV-14";
-    private static final String RATING_TV_MA = "TV-MA";
     private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String TWENTY_THIRTEEN = "2013";
     private static final String FIRST = "01";
     private static final int NINE_YEARS_AGE = 9;
-    private static final int[] ageRangeGermany = {5, 11, 15, 17};
-    private static final String[] ratingsGermany = {"0", "6", "12", "16", "18"};
-    private static final int[] ageRangesCanada = {5, 8, 11, 13, 15, 17};
-    private static final String[] ratingsCanada = {RATING_G, RATING_PG, RATING_PG, TV_14_RATING, TV_14_RATING, TV_14_RATING, RATING_TV_MA};
+    private static final int TEN_YEARS_AGE = 10;
+    private static final int [] ageRangeGermany = {5, 11, 15, 17};
+    private static final String [] ratingsGermany = {"0", "6", "12", "16", "18"};
+    private static final int [] ageRangesCanada = {5, 8, 11, 13, 15, 17};
+    private static final String [] ratingsCanada = {"TV-MA", "R", "TV-14", "PG-13", "PG, TV-PG", "G, TV-G", "TV-Y7-FV", "TV-Y7", "TV-Y"};
     private static final int[] ageRangesEMEA = {5, 8, 11, 13, 15, 17};
-    private static final String[] ratingsEMEA = {"AL", "6+", "9+", "12+", "14+", "16+", "18+"};
+    private static final String [] ratingsEMEA = {"AL", "6+", "9+", "12+", "14+", "16+", "18+"};
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
@@ -292,7 +290,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-
+        SoftAssert sa = new SoftAssert();
         String recommendedContentRating = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RECOMMENDED_RATING.getText());
@@ -312,8 +310,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         updateProfilePage.tapSaveButton();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        navigateToContentRating();
-
+        navigateToContentRating(sa);
+        sa.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
+                "Rating expected is not present");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74273"})
@@ -323,15 +323,15 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
 
         String recommendedContentRating = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RECOMMENDED_RATING.getText());
-        System.out.println("* recommendedContentRating: " + recommendedContentRating);
 
         recommendedContentRating = getLocalizationUtils().formatPlaceholderString(recommendedContentRating,
-                Map.of("content_rating", getRecommendedContentRating(NINE_YEARS_AGE, ageRangesCanada, ratingsCanada)));
-        System.out.println("** recommendedContentRating: " + recommendedContentRating);
+                Map.of("content_rating", getRecommendedContentRating(TEN_YEARS_AGE, ageRangesCanada, ratingsCanada)));
+        LOGGER.info("RecommendedContentRating {} ", recommendedContentRating);
 
         createAccountAndAddSecondaryProfile(CANADA, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
@@ -340,11 +340,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
             oneTrustPage.tapAcceptAllButton();
         }
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_THIRTEEN);
         updateProfilePage.tapSaveButton();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        navigateToContentRating();
-
+        navigateToContentRating(sa);
+        sa.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
+                "Rating expected is not present");
+        sa.assertAll();
     }
 
 
@@ -355,7 +357,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-
+        SoftAssert sa = new SoftAssert();
         String recommendedContentRating = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RECOMMENDED_RATING.getText());
@@ -375,17 +377,22 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
         updateProfilePage.tapSaveButton();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        navigateToContentRating();
+        navigateToContentRating(sa);
 
+        sa.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
+                "Rating expected is not present");
+        sa.assertAll();
     }
 
 
-    private void navigateToContentRating() {
+    private void navigateToContentRating(SoftAssert sa) {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
+        sa.assertTrue(editProfile.isProfilePresent(JUNIOR_PROFILE), "Junior profile is not present");
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        sa.assertTrue(editProfile.getMaturityRatingLabel().isPresent(), "Maturity option is not present");
         swipe(editProfile.getMaturityRatingLabel(), Direction.UP, 2, 500);
         editProfile.getMaturityRatingCell().click();
         editProfile.enterPassword(getAccount());
@@ -397,20 +404,16 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 locale, language));
         getAccountApi().overrideLocations(getAccount(), locale);
-
+        // Create secondary profile with no DOB and gender
         getAccountApi().addProfile(
                 CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE)
-                        .gender(null).language(getAccount().getProfileLang())
-                        .avatarId(DARTH_MAUL)
-                        .dateOfBirth(null)
-                        .kidsModeEnabled(false)
-                        .isStarOnboarded(false)
-                        .build());
+                        .gender(null).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
+                        .dateOfBirth(null).kidsModeEnabled(false).isStarOnboarded(false).build());
     }
 
-    private String getRecommendedContentRating(int age, int[] ageRange, String[] ratings) {
-        for (int i = 0; i < ageRange.length; i++) {
-            if (age <= ageRange[i]) {
+    private String getRecommendedContentRating(int age, int[] ageValues, String[] ratings) {
+        for (int i = 0; i < ageValues.length; i++) {
+            if (age <= ageValues[i]) {
                 return ratings[i];
             }
         }
