@@ -278,7 +278,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.waitForUpdatedToastToDisappear();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         swipeUp(2, 500);
-        Assert.assertTrue(editProfile.verifyProfileSettingsMaturityRating(EXPECTED_RATING), "Profile rating is not as expected");
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(EXPECTED_RATING), "Profile rating is not as expected");
         sa.assertAll();
     }
 
