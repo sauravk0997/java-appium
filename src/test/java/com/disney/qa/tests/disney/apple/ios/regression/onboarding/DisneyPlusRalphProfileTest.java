@@ -26,14 +26,9 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BA
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
-    private static final String TWENTY_EIGHTEEN = "2018";
-    private static final String FIRST = "01";
     private static final int THIRTEEN_YEARS_AGE = 13;
-    private static final int EIGHTEEN_YEARS_AGE = 18;
     private static final int [] AGE_VALUES_GERMANY = {5, 11, 15, 17};
-
     private static final int [] AGE_VALUES_CANADA = {5, 8, 11, 13, 15, 17, 18};
-
     private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17, 18};
 
     private static final String RECOMMENDED_RATING_ERROR_MESSAGE = "Recommended rating is not present";
@@ -350,7 +345,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
-                Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, EIGHTEEN_YEARS_AGE, AGE_VALUES_EMEA)));
+                Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, 50, AGE_VALUES_EMEA)));
         LOGGER.info("RecommendedContentRating {} ", recommendedContentRatingByAge);
 
         createAccountAndAddSecondaryProfile(UNITED_KINGDOM, ENGLISH_LANG);
