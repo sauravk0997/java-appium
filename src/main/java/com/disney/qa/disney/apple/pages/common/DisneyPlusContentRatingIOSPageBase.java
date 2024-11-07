@@ -6,6 +6,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase {
 
@@ -63,4 +65,13 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
     public void clickSaveButton(){
         saveButton.click();
     }
+
+    public String getRecommendedRating()
+    {
+       return getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.RECOMMENDED_RATING.getText());
+
+    }
+
 }
