@@ -357,25 +357,26 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDisplayingTheDuration() {
         SoftAssert sa = new SoftAssert();
+        String videoPlayerErrorMsg = "Video player remaining time format is not as expected for ";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(THE_MARVELS);
 
         videoPlayer.displayVideoController();
         String remainingTime = videoPlayer.getTimeRemainingLabelText();
         sa.assertTrue(videoPlayer.validateTimeFormat(remainingTime),
-                "Video player remaining time format is not as expected for" + remainingTime);
+                videoPlayerErrorMsg + remainingTime);
 
         videoPlayer.scrubToPlaybackPercentage(50);
         videoPlayer.displayVideoController();
         String remainingTimeAfterFirstScrub = videoPlayer.getTimeRemainingLabelText();
         sa.assertTrue(videoPlayer.validateTimeFormat(remainingTimeAfterFirstScrub),
-                "Video player remaining time format is not as expected for" + remainingTimeAfterFirstScrub);
+                videoPlayerErrorMsg + remainingTimeAfterFirstScrub);
 
         videoPlayer.scrubToPlaybackPercentage(96);
         videoPlayer.displayVideoController();
         String remainingTimeAfterSecondScrub = videoPlayer.getTimeRemainingLabelText();
         sa.assertTrue(videoPlayer.validateTimeFormat(remainingTimeAfterSecondScrub),
-                "Video player remaining time format is not as expected for" + remainingTimeAfterSecondScrub);
+                videoPlayerErrorMsg + remainingTimeAfterSecondScrub);
         sa.assertAll();
     }
 
