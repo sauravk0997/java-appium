@@ -35,7 +35,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     private static final int [] AGE_VALUES_CANADA = {5, 8, 11, 13, 15, 17};
     private static final String [] RATINGS_CANADA = {"TV-Y", "TV-Y7","TV-Y7-FV","G, TV-G","PG, TV-PG", "PG-13", "TV-14", "R", "TV-MA"};
     private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17};
-    private static final String [] RATINGS_EMEA = {"AL", "6+", "9+", "12+", "14+", "16+", "18+"};
+    private static final String [] RATINGS_EMEA = {"AL", "6+", "9+", "12+", "14+", "16+", "18"};
     private static final String RECOMMENDED_RATING_ERROR_MESSAGE = "Recommended rating is not present";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
