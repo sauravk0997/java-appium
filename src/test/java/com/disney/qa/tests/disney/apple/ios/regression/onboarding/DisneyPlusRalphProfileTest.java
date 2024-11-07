@@ -337,7 +337,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         navigateToContentRating();
-
+        swipeUp(2, 500);
         sa.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                 RECOMMENDED_RATING_ERROR_MESSAGE);
         sa.assertAll();
