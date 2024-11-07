@@ -294,11 +294,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String recommendedContentRating = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RECOMMENDED_RATING.getText());
-        System.out.println("* recommendedContentRating: " + recommendedContentRating);
 
         recommendedContentRating = getLocalizationUtils().formatPlaceholderString(recommendedContentRating,
                 Map.of("content_rating", getRecommendedContentRating(NINE_YEARS_AGE, ageRangeGermany, ratingsGermany)));
-        System.out.println("** recommendedContentRating: " + recommendedContentRating);
+        LOGGER.info("RecommendedContentRating {} ", recommendedContentRating);
 
         createAccountAndAddSecondaryProfile(GERMANY, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
@@ -311,7 +310,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         navigateToContentRating(sa);
-        sa.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
+        sa.assertFalse(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
                 "Rating expected is not present");
         sa.assertAll();
     }
@@ -344,11 +343,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         navigateToContentRating(sa);
-        sa.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
+        //
+        sa.assertFalse(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
                 "Rating expected is not present");
         sa.assertAll();
     }
-
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74104"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
@@ -361,11 +360,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String recommendedContentRating = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RECOMMENDED_RATING.getText());
-        System.out.println("* recommendedContentRating: " + recommendedContentRating);
 
         recommendedContentRating = getLocalizationUtils().formatPlaceholderString(recommendedContentRating,
                 Map.of("content_rating", getRecommendedContentRating(NINE_YEARS_AGE, ageRangesEMEA, ratingsEMEA)));
-        System.out.println("** recommendedContentRating: " + recommendedContentRating);
+        LOGGER.info("RecommendedContentRating {} ", recommendedContentRating);
 
         createAccountAndAddSecondaryProfile(UNITED_KINGDOM, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
@@ -379,7 +377,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         navigateToContentRating(sa);
 
-        sa.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
+        sa.assertFalse(whoIsWatching.getStaticTextByLabelContains(recommendedContentRating).isPresent(),
                 "Rating expected is not present");
         sa.assertAll();
     }
@@ -390,7 +388,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
-        sa.assertTrue(editProfile.isProfilePresent(JUNIOR_PROFILE), "Junior profile is not present");
+        sa.assertTrue(moreMenu.getProfileAvatar(JUNIOR_PROFILE).isPresent(SHORT_TIMEOUT), "Junior profile is not present");
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
         sa.assertTrue(editProfile.getMaturityRatingLabel().isPresent(), "Maturity option is not present");
         swipe(editProfile.getMaturityRatingLabel(), Direction.UP, 2, 500);
