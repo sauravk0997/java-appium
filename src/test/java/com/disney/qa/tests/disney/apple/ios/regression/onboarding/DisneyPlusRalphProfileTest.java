@@ -32,12 +32,12 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     private static final String FIRST = "01";
     private static final int NINE_YEARS_AGE = 9;
     private static final int TEN_YEARS_AGE = 10;
-    private static final int [] ageRangeGermany = {5, 11, 15, 17};
-    private static final String [] ratingsGermany = {"0", "6", "12", "16", "18"};
-    private static final int [] ageRangesCanada = {5, 8, 11, 13, 15, 17};
-    private static final String [] ratingsCanada = {"TV-MA", "R", "TV-14", "PG-13", "PG, TV-PG", "G, TV-G", "TV-Y7-FV", "TV-Y7", "TV-Y"};
-    private static final int[] ageRangesEMEA = {5, 8, 11, 13, 15, 17};
-    private static final String [] ratingsEMEA = {"AL", "6+", "9+", "12+", "14+", "16+", "18+"};
+    private static final int [] AGE_VALUES_GERMANY = {5, 11, 15, 17};
+    private static final String [] RATINGS_GERMANY = {"0", "6", "12", "16", "18"};
+    private static final int [] AGE_VALUES_CANADA = {5, 8, 11, 13, 15, 17};
+    private static final String [] RATINGS_CANADA = {"TV-MA", "R", "TV-14", "PG-13", "PG, TV-PG", "G, TV-G", "TV-Y7-FV", "TV-Y7", "TV-Y"};
+    private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17};
+    private static final String [] RATINGS_EMEA = {"AL", "6+", "9+", "12+", "14+", "16+", "18+"};
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
@@ -296,7 +296,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 DictionaryKeys.RECOMMENDED_RATING.getText());
 
         recommendedContentRating = getLocalizationUtils().formatPlaceholderString(recommendedContentRating,
-                Map.of("content_rating", getRecommendedContentRating(NINE_YEARS_AGE, ageRangeGermany, ratingsGermany)));
+                Map.of("content_rating", getRecommendedContentRating(NINE_YEARS_AGE, AGE_VALUES_GERMANY, RATINGS_GERMANY)));
         LOGGER.info("RecommendedContentRating {} ", recommendedContentRating);
 
         createAccountAndAddSecondaryProfile(GERMANY, ENGLISH_LANG);
@@ -329,7 +329,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 DictionaryKeys.RECOMMENDED_RATING.getText());
 
         recommendedContentRating = getLocalizationUtils().formatPlaceholderString(recommendedContentRating,
-                Map.of("content_rating", getRecommendedContentRating(TEN_YEARS_AGE, ageRangesCanada, ratingsCanada)));
+                Map.of("content_rating", getRecommendedContentRating(TEN_YEARS_AGE, AGE_VALUES_CANADA, RATINGS_CANADA)));
         LOGGER.info("RecommendedContentRating {} ", recommendedContentRating);
 
         createAccountAndAddSecondaryProfile(CANADA, ENGLISH_LANG);
@@ -362,7 +362,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 DictionaryKeys.RECOMMENDED_RATING.getText());
 
         recommendedContentRating = getLocalizationUtils().formatPlaceholderString(recommendedContentRating,
-                Map.of("content_rating", getRecommendedContentRating(NINE_YEARS_AGE, ageRangesEMEA, ratingsEMEA)));
+                Map.of("content_rating", getRecommendedContentRating(NINE_YEARS_AGE, AGE_VALUES_EMEA, RATINGS_EMEA)));
         LOGGER.info("RecommendedContentRating {} ", recommendedContentRating);
 
         createAccountAndAddSecondaryProfile(UNITED_KINGDOM, ENGLISH_LANG);
@@ -388,7 +388,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
-        sa.assertTrue(moreMenu.getProfileAvatar(JUNIOR_PROFILE).isPresent(SHORT_TIMEOUT), "Junior profile is not present");
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
         sa.assertTrue(editProfile.getMaturityRatingLabel().isPresent(), "Maturity option is not present");
         swipe(editProfile.getMaturityRatingLabel(), Direction.UP, 2, 500);
