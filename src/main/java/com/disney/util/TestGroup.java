@@ -65,5 +65,6 @@ public final class TestGroup {
     public static final String RATING_SYSTEM_NCS = "NCS";
     public static final String RATING_SYSTEM_OFLC = "OFLC";
     public static final String PROXY = "proxy";
+    public static final String ATV_JARVIS_CONFIGURATION = "atv_jarvis_configuration";
     public static final String PRE_CONFIGURATION = "pre_configuration";
 }
