@@ -73,5 +73,4 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
                 DictionaryKeys.RECOMMENDED_RATING.getText());
 
     }
-
 }
