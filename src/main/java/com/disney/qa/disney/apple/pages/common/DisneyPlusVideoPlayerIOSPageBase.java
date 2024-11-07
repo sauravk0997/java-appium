@@ -165,7 +165,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getTimeRemainingLabelText() {
-        return timeRemainingLabel.getText().replace("-","");
+        return timeRemainingLabel.getText().replace("-", "");
     }
 
     public boolean isRemainingTimeLabelVisible() {
