@@ -64,8 +64,7 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
         saveButton.click();
     }
 
-    public String getRecommendedRating()
-    {
+    public String getRecommendedRating() {
        return getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RECOMMENDED_RATING.getText());
