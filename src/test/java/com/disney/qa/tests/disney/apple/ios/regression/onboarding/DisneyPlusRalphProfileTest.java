@@ -17,7 +17,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
