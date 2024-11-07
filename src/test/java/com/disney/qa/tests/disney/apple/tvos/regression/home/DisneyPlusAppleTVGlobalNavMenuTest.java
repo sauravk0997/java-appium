@@ -41,6 +41,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     private static final String WATCHLIST_REF_TYPE_MOVIES = "programId";
     private static final String GLOBAL_NAV_NOT_COLLAPSED = "Global Nav menu is not collapsed";
     private static final String GLOBAL_NAV_IS_PRESENT = "Global nav is present";
+    private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
 
     public void initDisneyPlusAppleTVGlobalNavMenuTest() {
         DisneyPlusAppleTVHomePage appleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -270,16 +271,13 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        logInTemp(getAccount());
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
+        logInTemp(getAccount());
         homePage.moveLeft(2, 1);
         homePage.isCarouselFocused();
-        //Hero image is not been recognized https://jira.disney.com/browse/QAE-124
-        //aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.BANNER.getText());
-
         homePage.clickMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
         sa.assertTrue(homePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
@@ -288,7 +286,10 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         LOGGER.info("Collapsing Global Nav menu by moving right");
         homePage.moveRight(2, 1);
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_BRAND_TILE.getText());
+        homePage.moveDown(1, 1);
+        sa.assertTrue(homePage.getStaticTextByLabel(RECOMMENDED_FOR_YOU).isPresent(),
+                "Recommended For You is not present");
+
         sa.assertAll();
     }
 }
