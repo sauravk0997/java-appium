@@ -3,11 +3,15 @@ package com.disney.util.disney;
 import com.disney.qa.api.utils.DisneyCountryData;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.config.ConfigurationHolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 
 public class DisneyGlobalUtils {
     protected DisneyCountryData disneyCountryData = new DisneyCountryData();
+    Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //Returns host config property value
     public static String getProject() {
@@ -34,7 +38,7 @@ public class DisneyGlobalUtils {
         try {
             return (ArrayList<String>) disneyCountryData.searchAndReturnCountryData(locale, "code", itemToSearch);
         } catch (NullPointerException e) {
-            return null;
+            LOGGER.info(e.getMessage());
         }
     }
 }
