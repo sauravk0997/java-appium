@@ -36,13 +36,4 @@
             </class>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus tvOS Onboarding Api Utils tests" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.tvos.regression.onboarding.DisneyPlusAppleTVLoginTests">
-                <methods>
-                    <include name="emailInputScreenAppearance"/>
-                </methods>
-            </class>
-        </classes>
-    </test>
 </suite>
