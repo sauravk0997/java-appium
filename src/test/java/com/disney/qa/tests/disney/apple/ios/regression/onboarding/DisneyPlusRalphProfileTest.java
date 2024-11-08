@@ -294,9 +294,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         createAccountAndAddSecondaryProfile(GERMANY, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
@@ -350,9 +347,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         createAccountAndAddSecondaryProfile(UNITED_KINGDOM, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
         updateProfilePage.tapSaveButton();
