@@ -164,6 +164,15 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return currentTimeLabel.isPresent();
     }
 
+    public String getTimeRemainingLabelText() {
+        String remainingTime = timeRemainingLabel.getText();
+        if (remainingTime != null && !remainingTime.isEmpty()) {
+            return remainingTime.replace("-", "");
+        } else {
+            throw new NoSuchElementException("Time remaining label is not found on video player");
+        }
+    }
+
     public boolean isRemainingTimeLabelVisible() {
         displayVideoController();
         return timeRemainingLabel.isPresent();
@@ -606,9 +615,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean validateTimeFormat(String time) {
-        Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][\\d]|2[0-3]):[0-5][\\d]:[0-5][\\d]$");
-        Pattern timePatternInHMMSS = Pattern.compile("^[\\d]:[0-5][\\d]:[0-5][\\d]$");
-        Pattern timePatternInMMSS = Pattern.compile("^[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInHHMMSS = Pattern.compile("^([1-9][\\d]):[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInHMMSS = Pattern.compile("^[1-9]:[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInMMSS = Pattern.compile("^[1-5][\\d]:[0-5][\\d]$");
         Pattern timePatternInMSS = Pattern.compile("^[\\d]:[0-5][\\d]$");
         if (timePatternInHHMMSS.matcher(time).matches()) {
             LOGGER.info("Content time is displayed HH:MM:SS format");
