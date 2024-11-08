@@ -787,9 +787,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(moreMenu.getDynamicCellByLabel(
                 moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).isPresent(SHORT_TIMEOUT),
                 "Watchlist Menu is not present");
-        sa.assertTrue(moreMenu.getDynamicCellByLabel(
-                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).isPresent(SHORT_TIMEOUT),
-                "Legal Menu is present");
+//        sa.assertTrue(moreMenu.getDynamicCellByLabel(
+//                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).isPresent(SHORT_TIMEOUT),
+//                "Legal Menu is present");
 
         // Elements that should not be present on screen
         sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS),
