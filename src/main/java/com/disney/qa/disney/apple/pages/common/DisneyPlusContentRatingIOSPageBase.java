@@ -20,6 +20,10 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
     private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
+    private ExtendedWebElement textRecommended =  getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.PCON,
+            DictionaryKeys.RECOMMENDED_RATING.getText()));
+
     public DisneyPlusContentRatingIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -68,5 +72,9 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
        return getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RECOMMENDED_RATING.getText());
+    }
+
+    public ExtendedWebElement getRecommendedText() {
+        return textRecommended;
     }
 }
