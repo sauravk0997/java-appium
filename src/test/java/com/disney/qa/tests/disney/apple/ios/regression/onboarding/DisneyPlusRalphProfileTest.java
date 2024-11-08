@@ -33,6 +33,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17, 18};
     private static final String RATING_VALUES = "ratingValues";
     private static final String RECOMMENDED_RATING_ERROR_MESSAGE = "Recommended rating is not present";
+    private static final String CODE = "code";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
@@ -384,7 +385,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     private String getRecommendedContentRating(String locale, int age, int[] ageValues) {
         DisneyCountryData disneyCountryData = new DisneyCountryData();
-        List<String> ratingValues = (List<String>)disneyCountryData.searchAndReturnCountryData(locale, "code", RATING_VALUES);
+        List<String> ratingValues = (List<String>)disneyCountryData.searchAndReturnCountryData(locale, CODE, RATING_VALUES);
         LOGGER.info("Ratings values {} ", ratingValues);
         for (int i = 0; i < ageValues.length; i++) {
             if (age <= ageValues[i]) {
