@@ -289,7 +289,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(GERMANY, THIRTEEN_YEARS_AGE, AGE_VALUES_GERMANY)));
-        LOGGER.info("RecommendedContentRating {} ", recommendedContentRatingByAge);
+        LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
         jarvisDisableOneTrustBanner();
         createAccountAndAddSecondaryProfile(GERMANY, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
