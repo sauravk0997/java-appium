@@ -385,7 +385,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     private String getRecommendedContentRating(String locale, int age, int[] ageValues) {
         DisneyCountryData disneyCountryData = new DisneyCountryData();
         List<String> ratingValues = (List<String>)disneyCountryData.searchAndReturnCountryData(locale, CODE, RATING_VALUES);
-        LOGGER.info("Ratings values {} ", ratingValues);
+        LOGGER.info("Ratings values {}", ratingValues);
         if(!ratingValues.isEmpty()) {
             for (int i = 0; i < ageValues.length; i++) {
                 if (age <= ageValues[i]) {
