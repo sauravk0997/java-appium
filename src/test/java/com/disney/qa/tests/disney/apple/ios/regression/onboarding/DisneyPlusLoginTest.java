@@ -26,6 +26,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
@@ -43,21 +44,26 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72745"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void testLogInScreen() {
+        String step1Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem
+                        (DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()),
+                Map.of("current_step", "1"));
+        String learnMoreBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_LEARN_MORE_BODY.getText()), Map.of("link_1", "and more"));
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = new DisneyPlusSignUpIOSPageBase(getDriver());
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
         softAssert.assertTrue(loginPage.isBackButtonPresent(), BACK_ARROW_NOT_DISPLAYED);
         softAssert.assertTrue(loginPage.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
         softAssert.assertTrue(loginPage.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
-        softAssert.assertTrue(loginPage.isStep1LabelDisplayed(), "STEP 1 text should be displayed");
+        softAssert.assertTrue(loginPage.getStaticTextByLabel(step1Label).isPresent(), "STEP 1 text should be displayed");
         softAssert.assertTrue(loginPage.isEnterEmailHeaderDisplayed(), "'Enter your email to continue' text should be displayed");
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(), "Email field should be present");
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEnterEmailBodyDisplayed(), "Log in to Disney+ with your MyDisney account should display or Email Body should display");
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.continueButtonPresent(), "Continue (primary) button should be present");
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreHeaderDisplayed(), "'Disney+ is part of The Walt Disney Family of Companies' text should be displayed");
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isLearnMoreBodyDisplayed(), "'MyDisney lets you seamlessly log in to services' text should be displayed");
+        softAssert.assertTrue(loginPage.isEmailFieldDisplayed(), "Email field should be present");
+        softAssert.assertTrue(loginPage.isEnterEmailBodyDisplayed(), "Log in to Disney+ with your MyDisney account should display or Email Body should display");
+        softAssert.assertTrue(loginPage.continueButtonPresent(), "Continue (primary) button should be present");
+        softAssert.assertTrue(loginPage.isLearnMoreHeaderDisplayed(), "'Disney+ is part of The Walt Disney Family of Companies' text should be displayed");
+        softAssert.assertTrue(loginPage.getStaticTextByLabel(learnMoreBody).isPresent(), "'MyDisney lets you seamlessly log in to services' text should be displayed");
         softAssert.assertAll();
     }
 
@@ -355,6 +361,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testLogInEntitledDOBCollectionOver18() {
         SoftAssert sa = new SoftAssert();
+        String stepperDict = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ONBOARDING_STEPPER.getText());
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
@@ -387,7 +395,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Element Validations
         sa.assertTrue(loginPage.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
         sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
-        sa.assertTrue(loginPage.isStepperDictValueDisplayed("3", "5"),
+        sa.assertTrue(loginPage.getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+                stepperDict, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
                 "'STEP 3 OF 5' should be displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "DOB Sub Copy not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label not displayed");

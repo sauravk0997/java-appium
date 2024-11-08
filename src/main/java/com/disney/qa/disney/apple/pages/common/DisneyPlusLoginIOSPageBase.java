@@ -43,12 +43,6 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return headlineHeader.isElementPresent();
     }
 
-    private String getDictionaryItem(DisneyDictionaryApi.ResourceKeys dictionary, DictionaryKeys key) {
-        boolean isSupported = getLocalizationUtils().getSupportedLangs().
-                contains(getLocalizationUtils().getUserLanguage());
-        return getLocalizationUtils().getDictionaryItem(dictionary, key.getText(), isSupported);
-    }
-
     public boolean isBackArrowDisplayed() {
         return getBackArrow().isPresent();
     }
@@ -114,22 +108,18 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return myDisneyLogo.isPresent();
     }
 
-    public boolean isStep1LabelDisplayed() {
-        String step1Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem
-                        (DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()),
-                Map.of("current_step", "1"));
-        return getStaticTextByLabel(step1Label).isPresent();
-    }
-
     public boolean isEnterEmailHeaderDisplayed() {
-        return getStaticTextByLabel(getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER)).isPresent();
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent();
     }
 
-    public boolean isStepperDictValueDisplayed(String stepValueOne , String stepValueTwo) {
-        String text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.ONBOARDING_STEPPER.getText());
-        return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(text, Map.of("current_step",
-                stepValueOne, "total_steps", stepValueTwo))).isElementPresent();
+    public boolean isEnterEmailBodyDisplayed() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_ENTER_EMAIL_BODY.getText())).isPresent();
+    }
+
+    public boolean isLearnMoreHeaderDisplayed() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_LEARN_MORE_HEADER.getText())).isPresent();
     }
 }
