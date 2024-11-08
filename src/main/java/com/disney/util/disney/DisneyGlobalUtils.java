@@ -4,8 +4,6 @@ import com.disney.qa.api.utils.DisneyCountryData;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.config.ConfigurationHolder;
 
-import java.util.List;
-
 public class DisneyGlobalUtils {
     protected DisneyCountryData disneyCountryData = new DisneyCountryData();
 
