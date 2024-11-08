@@ -358,7 +358,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 RECOMMENDED_RATING_ERROR_MESSAGE);
     }
 
-
     private void navigateToContentRating() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
