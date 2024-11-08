@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Map;
 
 /*
  * Email and password login pages
@@ -91,7 +90,8 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isNoAccountAlertSubtextDisplayed() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        String text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_NO_ACCOUNT_SUB_TEXT.getText());
+        String text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.LOGIN_NO_ACCOUNT_SUB_TEXT.getText());
         LOGGER.info("Expecting alert subtext: {}", text);
         return getDynamicAccessibilityId(text).isElementPresent();
     }
