@@ -34,7 +34,7 @@ public class DisneyGlobalUtils {
         try {
             return (List<String>) disneyCountryData.searchAndReturnCountryData(locale, "code", itemToSearch);
         } catch (NullPointerException e) {
-            throw new RuntimeException("Ratings list not found for country specified");
+            throw new NullPointerException("Ratings list not found for country specified");
         }
     }
 }
