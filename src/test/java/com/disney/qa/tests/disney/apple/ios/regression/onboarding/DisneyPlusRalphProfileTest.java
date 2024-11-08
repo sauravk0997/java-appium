@@ -387,12 +387,16 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyCountryData disneyCountryData = new DisneyCountryData();
         List<String> ratingValues = (List<String>)disneyCountryData.searchAndReturnCountryData(locale, CODE, RATING_VALUES);
         LOGGER.info("Ratings values {} ", ratingValues);
-        for (int i = 0; i < ageValues.length; i++) {
-            if (age <= ageValues[i]) {
-                return ratingValues.get(i);
+        if(!ratingValues.isEmpty()) {
+            for (int i = 0; i < ageValues.length; i++) {
+                if (age <= ageValues[i]) {
+                    return ratingValues.get(i);
+                }
             }
+            return ratingValues.get(ratingValues.size() - 1);
+        } else {
+            throw new NullPointerException("Ratings list not found for country specified");
         }
-        return ratingValues.get(ratingValues.size() - 1);
     }
 
     private void  setupForRalph(String... DOB) {
