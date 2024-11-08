@@ -440,6 +440,7 @@ public enum DictionaryKeys {
     RATING_RESTRICTION_DETAIL_MESSAGE("rating_restriction_detail_message"),
     RATING_RESTRICTION_PLAYBACK_MESSAGE("rating_restriction_playback_message"),
     RATING_TVPG_TV_PG("rating_tvpg_tv-pg"),
+    RECOMMENDED_RATING("recommended_rating"),
     REMOVE_DOWNLOAD_BTN("btn_remove_download"),
     RESEND_EMAIL_COPY("resend_email_copy"),
     RESEND_EMAIL_COPY_2("resend_email_copy_2"),
