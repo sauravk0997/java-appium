@@ -29,12 +29,4 @@ public class DisneyGlobalUtils {
             return false;
         }
     }
-
-    public List<String> getRatingValueFromCountries(String locale, String itemToSearch) {
-        try {
-            return (List<String>) disneyCountryData.searchAndReturnCountryData(locale, "code", itemToSearch);
-        } catch (NullPointerException e) {
-            throw new NullPointerException("Ratings list not found for country specified");
-        }
-    }
 }

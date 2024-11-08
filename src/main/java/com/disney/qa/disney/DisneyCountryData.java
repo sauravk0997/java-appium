@@ -84,25 +84,4 @@ public class DisneyCountryData {
         LOGGER.info("Live countries Added to Data Provider: " + country);
         countryList.add(new Object[]{country});
     }
-
-    /**
-     * This method allows you to specify a value to search for in a specific field of the yaml file and to return another field as needed.
-     *
-     * @param valueToSearchFor the value to search for in the YAML field.
-     * @param fieldToSearch    the field that the value will be searched against in the YAML file.
-     * @param fieldToReturn    the field that will be returned when a match is found
-     * @return will return the fieldToReturn value that is specified.
-     */
-    public String searchAndReturnCountryData(String valueToSearchFor, String fieldToSearch, String fieldToReturn) {
-        LOGGER.debug(String.format("Searching for (%s) in Field (%s) and Returning Field (%s)", valueToSearchFor, fieldToSearch, fieldToReturn));
-        for (Object item: countryYml) {
-            Map<String, String> country = (HashMap<String, String>) item;
-            String searchableField = country.get(fieldToSearch);
-            if (searchableField.equalsIgnoreCase(valueToSearchFor)) {
-                LOGGER.debug(String.format("Returning Field Value: %s", country.get(fieldToReturn)));
-                return country.get(fieldToReturn);
-            }
-        }
-        return "";
-    }
 }

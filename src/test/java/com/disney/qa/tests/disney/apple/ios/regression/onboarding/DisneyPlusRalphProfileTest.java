@@ -5,6 +5,7 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.utils.DisneyCountryData;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -27,10 +28,10 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BA
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     private static final int THIRTEEN_YEARS_AGE = 13;
-    private static final int [] AGE_VALUES_GERMANY = {5, 11, 15, 17};
-    private static final int [] AGE_VALUES_CANADA = {0, 5, 8, 11, 13, 15, 17, 18};
-    private static final int [] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17, 18};
-
+    private static final int[] AGE_VALUES_GERMANY = {5, 11, 15, 17};
+    private static final int[] AGE_VALUES_CANADA = {0, 5, 8, 11, 13, 15, 17, 18};
+    private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17, 18};
+    private static final String RATING_VALUES = "ratingValues";
     private static final String RECOMMENDED_RATING_ERROR_MESSAGE = "Recommended rating is not present";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
@@ -289,7 +290,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(GERMANY, THIRTEEN_YEARS_AGE, AGE_VALUES_GERMANY)));
         LOGGER.info("RecommendedContentRating {} ", recommendedContentRatingByAge);
-
+        jarvisDisableOneTrustBanner();
         createAccountAndAddSecondaryProfile(GERMANY, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
@@ -318,13 +319,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(CANADA, 17, AGE_VALUES_CANADA)));
         LOGGER.info("RecommendedContentRating {} ", recommendedContentRatingByAge);
-
+        jarvisDisableOneTrustBanner();
         createAccountAndAddSecondaryProfile(CANADA, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
         updateProfilePage.tapSaveButton();
@@ -348,9 +346,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, 5, AGE_VALUES_EMEA)));
         LOGGER.info("RecommendedContentRating {} ", recommendedContentRatingByAge);
         // Validation for 0 Rating because in screen appears AL Rating in slider
-        if(recommendedContentRatingByAge.contains("0 (Recommended)")) {
-            recommendedContentRatingByAge = "AL (Recommended)";
-        }
+        jarvisDisableOneTrustBanner();
         createAccountAndAddSecondaryProfile(UNITED_KINGDOM, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
@@ -393,8 +389,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     private String getRecommendedContentRating(String locale, int age, int[] ageValues) {
-        DisneyGlobalUtils disneyGlobalUtils = new DisneyGlobalUtils();
-        List<String> ratingValues = disneyGlobalUtils.getRatingValueFromCountries(locale, "ratingValues");
+        DisneyCountryData disneyCountryData = new DisneyCountryData();
+        List<String> ratingValues = (List<String>)disneyCountryData.searchAndReturnCountryData(locale, "code", RATING_VALUES);
         LOGGER.info("Ratings values {} ", ratingValues);
         for (int i = 0; i < ageValues.length; i++) {
             if (age <= ageValues[i]) {
