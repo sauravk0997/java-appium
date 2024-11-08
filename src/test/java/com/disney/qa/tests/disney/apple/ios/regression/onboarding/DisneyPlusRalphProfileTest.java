@@ -344,6 +344,9 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, 5, AGE_VALUES_EMEA)));
         LOGGER.info("RecommendedContentRating {} ", recommendedContentRatingByAge);
         // Validation for 0 Rating because in screen appears AL Rating in slider
+        if(recommendedContentRatingByAge.contains("0 (Recommended)")) {
+            recommendedContentRatingByAge = "AL (Recommended)";
+        }
         jarvisDisableOneTrustBanner();
         createAccountAndAddSecondaryProfile(UNITED_KINGDOM, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
