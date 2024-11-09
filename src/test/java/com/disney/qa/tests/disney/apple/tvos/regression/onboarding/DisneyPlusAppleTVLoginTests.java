@@ -150,64 +150,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    //TODO this test is not enabled due to Bookworm QAA-16228
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90106"})
-    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
-    public void verifyTryAgainBringsBackToEmailEntry() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        String errorMessage = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, LOGIN_INVALID_EMAIL_ERROR.getText());
-        String continueBtnText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText());
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(DisneyApiCommon.getUniqueEmail());
-        disneyPlusAppleTVLoginPage.clickTryAgainBtn();
-
-        sa.assertTrue(disneyPlusAppleTVLoginPage.isOpened(),
-                "Enter email screen did not launch from unknown email screen");
-        sa.assertEquals(disneyPlusAppleTVLoginPage.getErrorMessageLabelText(), errorMessage);
-        sa.assertTrue(disneyPlusAppleTVLoginPage.isStaticTextPresentWithScreenShot(continueBtnText),
-                "The following text was not found on the button of enter email screen: " + continueBtnText);
-
-        disneyPlusAppleTVLoginPage.clickEmailField();
-
-        sa.assertTrue(disneyPlusAppleTVLoginPage.isEnterNewEmailBtnPresent(),
-                "Previously used email screen did not launch");
-
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90108", "XCDQA-90110"})
-    @Test(description = "Verify user flow from unknown user screen with completed sign up", groups = {TestGroup.ONBOARDING, US}, enabled = false)
-    public void verifyUserFlowFromUnknownUserScreenWithCompletedSignUp() {
-        SoftAssert sa = new SoftAssert();
-        String uniqueUserEmail = DisneyApiCommon.getUniqueEmail();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPageBase = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
-        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        sa.assertTrue(disneyPlusAppleTVSignUpPage.isOpened(), "Sign up email entry screen did not launch");
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(uniqueUserEmail);
-        disneyPlusAppleTVPasswordPage.clickPassword();
-        disneyPlusAppleTVPasswordPage.enterPasswordCreatePassword(R.TESTDATA.getDecrypted("disney_qa_web_d23password"));
-        disneyPlusAppleTVPasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
-        disneyPlusAppleTVPasswordPage.clickSelect();
-        disneyPlusAppleTVPasswordPage.clickSignUp();
-        sa.assertTrue(ednaDOBCollectionPageBase.isOpened(), "Edna enforce DOB collection page didn't open after login");
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90598"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void registeredEmailTakenToLoginPassword() {
@@ -483,58 +425,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         aliceDriver.screenshotAndRecognize()
                 .assertLabelContainsCaption(sa, "", AliceLabels.PROFILE_BUTTON_HOVERED.getText());
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90591", "XCDQA-90593"})
-    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
-    public void verifyRestartSubscriptionScreenDetails() {
-        SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyPlusAppleTVRestartSubscriptionPage disneyPlusAppleTVRestartSubscriptionPage = new DisneyPlusAppleTVRestartSubscriptionPage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyAccount disneyAccount = getAccountApi().createExpiredAccount(ENTITLEMENT_LOOKUP, getCountry(), getLanguage(), "V2");
-        logInWithoutHomeCheck(disneyAccount);
-
-        sa.assertTrue(disneyPlusAppleTVRestartSubscriptionPage.isOpened(), "Restart subscription screen did not launch");
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
-
-        disneyPlusAppleTVRestartSubscriptionPage.getRestartSubscriptionScreenDictionaryTexts().forEach(item -> sa.assertTrue(
-                disneyPlusAppleTVRestartSubscriptionPage.isDynamicAccessibilityIDElementPresent(item),
-                "Following text was not found on restart subscription screen " + item));
-
-        disneyPlusAppleTVRestartSubscriptionPage.moveDown(1, 1);
-        disneyPlusAppleTVRestartSubscriptionPage.clickLogoutButtonIfHasFocus();
-
-        sa.assertTrue(disneyPlusAppleTVRestartSubscriptionPage.isLogoutPageOpen(), "LOG OUT menu from restart subscription did not launch");
-        sa.assertTrue(disneyPlusAppleTVRestartSubscriptionPage.getLogOutConfirmationButton().isPresent(), "LOG OUT Confirmation Button is not present");
-        sa.assertTrue(disneyPlusAppleTVRestartSubscriptionPage.getLogOutCancelButton().isPresent(), "LOG OUT Cancel Button is not present");
-
-        disneyPlusAppleTVRestartSubscriptionPage.moveDown(1, 1);
-        disneyPlusAppleTVRestartSubscriptionPage.clickCancelAlertBtn();
-        sa.assertTrue(disneyPlusAppleTVRestartSubscriptionPage.isOpened(), "Restart subscription screen did not launch");
-
-        disneyPlusAppleTVRestartSubscriptionPage.clickLogoutButtonIfHasFocus();
-        sa.assertTrue(disneyPlusAppleTVRestartSubscriptionPage.isLogoutPageOpen(), "LOG OUT menu from restart subscription did not launch");
-
-        disneyPlusAppleTVRestartSubscriptionPage.clickLogoutAlertBtn();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch from restart subscription log out");
-
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90596"})
-    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
-    public void verifyCompleteSubButtonOnUnSubbedRegisteredAccount() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVCompletePurchasePage disneyPlusAppleTVCompletePurchasePage = new DisneyPlusAppleTVCompletePurchasePage(getDriver());
-        DisneyAccount disneyAccount = getAccountApi().createAccount(getCountry(), getLanguage());
-
-        logInWithoutHomeCheck(disneyAccount);
-
-        sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isCompleteSubscriptionBtnPresent(), "Complete Sub button not present");
-        sa.assertTrue(disneyPlusAppleTVCompletePurchasePage.isLogOutBtnPresent(), "Log Out button not present");
-
         sa.assertAll();
     }
 
