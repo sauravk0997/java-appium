@@ -40,32 +40,16 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         return new Object[][] {{"ON"}, {"OFF"}};
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67656"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyUpNextUI() {
-        DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
-        sa.assertTrue(disneyPlusUpNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67648"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyPlayIconOnUpNextUI() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         //Login
         setAppToHomeScreen(getAccount());
         //Turn off autoplay
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.clickEditProfilesBtn();
-        editProfile.toggleAutoplay(getAccount().getFirstName(), "OFF");
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        toggleAutoPlay("OFF");
         //Search and forward the content
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
@@ -96,16 +80,11 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     public void verifyAutoPlayOnPlayerView() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getAccount());
         //Turn ON autoplay
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.clickEditProfilesBtn();
-        editProfile.toggleAutoplay(getAccount().getFirstName(), "ON");
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        toggleAutoPlay("ON");
         //Bring up upnext UI
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
@@ -159,17 +138,11 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     public void verifyUpNextBehaviorWhenAppIsBackgrounded(String autoplayState) {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getAccount());
         //Turn ON autoplay
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.clickEditProfilesBtn();
-        editProfile.isOpened();
-        editProfile.toggleAutoplay(getAccount().getFirstName(), autoplayState);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        toggleAutoPlay(autoplayState);
         //Bring up upNext UI
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
@@ -188,16 +161,11 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     public void verifyAutoplayDoesNotAutoplayWhenDisabled() {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getAccount());
         //Turn ON autoplay
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.clickEditProfilesBtn();
-        editProfile.toggleAutoplay(getAccount().getFirstName(), "OFF");
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        toggleAutoPlay("OFF");
         //Forward the content
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         int remainingTime = disneyPlusVideoPlayerIOSPageBase.getRemainingTime();
@@ -220,18 +188,13 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         int timeoutInSeconds = 90;
         String three = "3";
         String two = "2";
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         //Enable autoplay
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.clickEditProfilesBtn();
-        editProfile.toggleAutoplay(getAccount().getFirstName(), "ON");
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        toggleAutoPlay("ON");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
         detailsPage.isOpened();
@@ -258,6 +221,19 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         Assert.assertTrue(secondSubtitle.contains(secondEpisodeTitle), "Second episode for series didn't play");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67646"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpNextAutoPlayUIWhenEnabled() {
+        DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        //Enable autoplay
+        toggleAutoPlay("ON");
+        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        sa.assertAll();
+    }
+
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -275,5 +251,14 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         disneyPlusVideoPlayerIOSPageBase.clickPauseButton();
         disneyPlusVideoPlayerIOSPageBase.scrubToPlaybackPercentage(percentage);
         disneyPlusVideoPlayerIOSPageBase.clickPlayButton();
+    }
+
+    private void toggleAutoPlay(String value) {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfile.toggleAutoplay(getAccount().getFirstName(), value.toUpperCase());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
     }
 }
