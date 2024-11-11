@@ -4,7 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import lombok.Getter;
+import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -12,8 +12,8 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
 
     //LOCATORS
 
-    private String genderPlaceholder = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
-    private String saveButton = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SETTINGS_GENDER_SAVE.getText());
+    private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
+    private String saveButton = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SETTINGS_GENDER_SAVE.getText());
     @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
     private ExtendedWebElement genderOptionValue;
 
@@ -27,31 +27,38 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      * For gender option validation
      */
     public enum GenderOption {
-        GENDER_WOMEN(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText()), 1),
-        GENDER_MEN(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText()), 2),
-        GENDER_NOBINARY(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText()), 3),
-        GENDER_PREFERNOTTOSAY(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText()), 4);
-
-        private final String genderValue;
-        @Getter
-        private final int index;
-
-        GenderOption(String genderValue, int index) {
-            this.genderValue = genderValue;
-            this.index = index;
-        }
-
-        public String getGenderOption() {
-            return genderValue;
-        }
+        GENDER_WOMEN,
+        GENDER_MEN,
+        GENDER_NOBINARY,
+        GENDER_PREFERNOTTOSAY
     }
 
+    public String selectGender(GenderOption option) {
+        String selection;
+        switch (option) {
+            case GENDER_WOMEN:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
+                break;
+            case GENDER_MEN:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText());
+                break;
+            case GENDER_NOBINARY:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText());
+                break;
+            case GENDER_PREFERNOTTOSAY:
+                selection = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
+                break;
+            default:
+                throw new InvalidArgumentException("Invalid selection made");
+        }
+        return selection;
+    }
     /**
      * @param option - gender value Men, Woman, NoBinary, preferNotToSay
      * @return - true/false
      */
     public boolean isGenderOptionPresent(GenderOption option) {
-        return genderOptionValue.format(option.getGenderOption()).isElementPresent();
+        return genderOptionValue.format(selectGender(option)).isElementPresent();
     }
 
     /**
@@ -66,14 +73,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      * click on gender dropdown to select gender value
      */
     public void clickGenderDropDown() {
-        dynamicBtnFindByLabel.format(GenderOption.GENDER_PREFERNOTTOSAY.getGenderOption()).click();
-    }
-
-    /**
-     * @param gender - Pass the value which need to be selected
-     */
-    public void selectGender(String gender) {
-        dynamicBtnFindByLabel.format(gender).click();
+        dynamicBtnFindByLabel.format(selectGender(GenderOption.GENDER_PREFERNOTTOSAY)).click();
     }
 
     /**

@@ -21,24 +21,18 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @ExtendedFindBy(accessibilityId = "signUpSwap")
-    protected ExtendedWebElement signUpButton;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement dPlusLogo;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[$type='XCUIElementTypeTextField'$]/XCUIElementTypeOther/**/XCUIElementTypeImage[2]")
     private ExtendedWebElement myDisneyLogo;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert[`label == \"We couldn't find an account for that email\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeScrollView[1]/XCUIElementTypeOther[1]")
-    protected ExtendedWebElement noAccountAlert;
-
     @ExtendedFindBy(accessibilityId = "alertAction:secondaryButton")
     protected ExtendedWebElement alertSignUpBtn;
 
     @ExtendedFindBy(accessibilityId = "alertAction:defaultButton")
     protected ExtendedWebElement alertTryAgainBtn;
-    
+
     public DisneyPlusLoginIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -53,27 +47,15 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isEmailFieldDisplayed() {
-        return getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())).isPresent();
-    }
-
-    public boolean isSignUpButtonDisplayed() {
-        return signUpButton.isPresent();
+        return getTextEntryField().format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())).isPresent();
     }
 
     public boolean isDisneyLogoDisplayed() {
         return dPlusLogo.isPresent();
     }
 
-    public boolean isLoginTextDisplayed() {
-        return headlineHeader.isPresent();
-    }
-
-    public boolean isNewToDPlusTextDisplayed() {
-        return getTextViewByName("signUpSwap").isElementPresent();
-    }
-
     public String getEmailFieldText() {
-        return getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())).getText();
+        return getTextEntryField().format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())).getText();
     }
 
     public void fillOutEmailField(String email) {
@@ -108,7 +90,8 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isNoAccountAlertSubtextDisplayed() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        String text = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_NO_ACCOUNT_SUB_TEXT.getText());
+        String text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.LOGIN_NO_ACCOUNT_SUB_TEXT.getText());
         LOGGER.info("Expecting alert subtext: {}", text);
         return getDynamicAccessibilityId(text).isElementPresent();
     }
@@ -123,5 +106,20 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isMyDisneyLogoDisplayed() {
         return myDisneyLogo.isPresent();
+    }
+
+    public boolean isEnterEmailHeaderDisplayed() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent();
+    }
+
+    public boolean isEnterEmailBodyDisplayed() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_ENTER_EMAIL_BODY.getText())).isPresent();
+    }
+
+    public boolean isLearnMoreHeaderDisplayed() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_LEARN_MORE_HEADER.getText())).isPresent();
     }
 }

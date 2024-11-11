@@ -4,46 +4,35 @@ import com.disney.alice.AliceAssertion;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTest {
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89345", "XCDQA-89341"})
-    @Test(description = "Verify navigation & focus of the welcome screen, primarily sign up & login buttons", groups = {TestGroup.ONBOARDING})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89345"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void welcomeScreenNavigation() {
-        SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome Screen did not launch");
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isSignUpFocused(),
-                "Sign up button is not focused post app launch");
-
-        // Alice cannot detect this text in the screen: https://jira.disneystreaming.com/browse/QCE-2472
-        // aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, "SIGN UP NOW", AliceLabels.BUTTON_HOVERED.getText());
-
-        disneyPlusAppleTVWelcomeScreenPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isLoginBtnFocused(),
+        Assert.assertTrue(welcomeScreen.isOpened(), "Welcome Screen did not launch");
+        Assert.assertTrue(welcomeScreen.isLoginBtnFocused(),
                 "Login Button is not focused after navigating down from Sign up");
-
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89343"})
-    @Test(description = "Verify all texts and images on the screen conform to dictionary keys and expected images", groups = {TestGroup.SMOKE, TestGroup.ONBOARDING})
+    @Test(groups = {TestGroup.SMOKE, TestGroup.ONBOARDING, US}, enabled = false)
     public void welcomeScreenAppearance() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());

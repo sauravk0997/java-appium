@@ -3,6 +3,9 @@ package com.disney.qa.tests.disney.apple.tvos;
 import static com.disney.jarvisutils.pages.apple.JarvisAppleBase.*;
 import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.Configs.*;
 import static com.disney.jarvisutils.pages.apple.JarvisAppleTV.DictionaryResourceKeys.*;
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
@@ -10,6 +13,7 @@ import java.net.URISyntaxException;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.carina.utils.config.Configuration;
 import org.slf4j.Logger;
@@ -19,15 +23,9 @@ import org.testng.annotations.BeforeMethod;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
-import com.disney.config.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
-import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 
@@ -40,13 +38,52 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
 
     public static final String SUB_VERSION = "V1";
     public static final String ENTITLEMENT_LOOKUP = "Yearly";
-    protected boolean IS_PROD = DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).equalsIgnoreCase("prod");
-
+    
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         setBuildType();
     }
 
+    public void jarvisOverrideDisableCompanionConfig() {
+        boolean isJarvisConfigured = false;
+        int jarvisAttempt = 1;
+        String isEnabled = "isEnabled";
+        JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
+        DisneyPlusApplePageBase appleBase = new DisneyPlusApplePageBase(getDriver());
+
+        while (!isJarvisConfigured && jarvisAttempt < 4) {
+            try {
+                LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
+
+                launchJarvis(true);
+
+                jarvis.navigateToConfig(APP_CONFIG.getText(), Direction.DOWN);
+                jarvis.navigateToConfig(EDIT_CONFIG.getText(), Direction.DOWN);
+                jarvis.navigateToConfig(COMPANION_CONFIG.getText(), Direction.DOWN);
+                jarvis.navigateToConfig(isEnabled, Direction.DOWN);
+
+                if (appleBase.getStaticTextByLabelContains(JARVIS_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT) ||
+                        appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
+                    appleBase.moveUp(1, 1);
+                    fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Unable to set IsEnabled flag to 'false'")
+                            .until(it -> {
+                                appleBase.clickSelect();
+                                return appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(THREE_SEC_TIMEOUT);
+                            });
+                }
+                isJarvisConfigured = true;
+                LOGGER.info("Successfully configured Jarvis on attempt {}", jarvisAttempt);
+            } catch (Exception e) {
+                LOGGER.error("Exception occurred configuring Jarvis on attempt {}", jarvisAttempt);
+                e.printStackTrace();
+                jarvisAttempt++;
+            }
+        }
+
+        if(!isJarvisConfigured) {
+            throw new RuntimeException("Couldn't configure Jarvis companion flag");
+        }
+    }
     public void addHoraValidationSku(DisneyAccount accountToEntitle) {
         if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
             try {
@@ -58,9 +95,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
     }
 
     public void installJarvis() {
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        disneyPlusAppleTVWelcomeScreenPage.dismissUnexpectedErrorAlert();
-        disneyPlusAppleTVWelcomeScreenPage.isOpened();
         super.installJarvis();
     }
 
@@ -68,9 +102,11 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
         Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
+        disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPasswordButton();
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
     }
 
@@ -167,25 +203,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         pause(5);
         applePageBase.detectAppleUpdateAndClickUpdateLater();
         applePageBase.dismissAppTrackingPopUp(5);
-    }
-
-    public void launchJarvis() {
-        DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
-        applePageBase.fluentWait(getDriver(), 30, 0, "Unable to launch Jarvis")
-                .until(it -> {
-                    LOGGER.info("Jarvis is not launched, launching jarvis...");
-                    startApp(sessionBundles.get(JARVIS));
-                    pause(1);
-                    boolean isRunning = isAppRunning(sessionBundles.get(JARVIS));
-                    LOGGER.info("Is app running: {}", isRunning);
-                    return isRunning;
-                });
-    }
-
-    public void installJarvisForConfig() {
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        welcomeScreen.isOpened();
-        super.installJarvis();
     }
 
     public void collapseGlobalNav() {

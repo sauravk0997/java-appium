@@ -14,12 +14,11 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.options.SupportsAppOption;
-import io.appium.java_client.remote.options.SupportsFullResetOption;
-import io.appium.java_client.remote.options.SupportsNoResetOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -47,6 +46,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
 import static com.disney.qa.common.constant.RatingConstant.getRoamingDas;
 
@@ -85,13 +85,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.NO_RESET)
-    public void enableNoTestReset() {
-        R.CONFIG.put("capabilities." + SupportsNoResetOption.NO_RESET_OPTION, "true", true);
-        R.CONFIG.put("capabilities." + SupportsFullResetOption.FULL_RESET_OPTION, "false", true);
-    }
-
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION, dependsOnMethods = "enableNoTestReset")
+    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             localContext.set(context);
@@ -326,6 +320,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .until(it -> isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS)));
     }
 
+    public void removeJarvis() {
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        removeApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+    }
+
     public void rotateScreen(ScreenOrientation orientation) {
         try {
             rotate(orientation);
@@ -400,57 +399,16 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getAccountApi().createAccount(request);
     }
 
-    public void disableBrazeConfig() {
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        JarvisAppleBase jarvis = getJarvisPageFactory();
-        installAndLaunchJarvis();
-        jarvis.openAppConfigOverrides();
-        applePageBase.scrollToItem("brazeConfig").click();
-        LOGGER.info("Navigating to isEnabled..");
-        applePageBase.scrollToItem("isEnabled").click();
-        applePageBase.disableBrazeConfig();
-        terminateJarvisInstallDisney();
-    }
 
-    public void launchJarvisOrInstall() {
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+    public void launchOrInstallJarvis() {
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
-        LOGGER.info("Attempting to launch Jarvis app...");
         if (isInstalled) {
-            launchJarvisNoInstall();
-            if (!applePageBase.isCompatibleDisneyTextPresent()) {
-                launchJarvis(true);
-            }
+            launchJarvis(false);
+
         } else {
             launchJarvis(true);
         }
     }
-
-    public void launchJarvisNoInstall() {
-        startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
-                .until(it -> {
-                    LOGGER.info("Jarvis is not launched, launching jarvis...");
-                    pause(1);
-                    boolean isRunning = isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS));
-                    LOGGER.info("Is app running: {}", isRunning);
-                    return isRunning;
-                });
-    }
-
-    //TODO: uncomment it after moving the Subscription test to a separate XML
-
-    //    public void clearDSSSandboxAccountFor(String accountName) {
-    //        LOGGER.info("Clearing purchase history for '{}' account", accountName);
-    //        AppStoreConnectApi appStoreConnectApi = new AppStoreConnectApi();
-    //        for (SandboxAccount account : DisneyPlusIAPStandardPurchaseTest.accountsList) {
-    //            if (account.getAttributes().getAcAccountName().contains(accountName)) {
-    //                Assert.assertTrue(appStoreConnectApi.clearAccountPurchaseHistory(account.getId()).getStatusCode()
-    //                                .is2xxSuccessful(),
-    //                        "Clear account purchase history for" + accountName + "was not successful!");
-    //            }
-    //        }
-    //    }
 
     public String buildS3BucketPath(String title, String feature) {
         String deviceName = R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
@@ -464,8 +422,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     //Explore API methods
-    public ExploreContent getDisneyApiSeries(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getDisneyApiSeries(String entityID) {
+        try {
+            return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ExploreContent getDisneyApiMovie(String entityID) throws URISyntaxException, JsonProcessingException {
@@ -543,6 +505,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             return getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setId)
                     .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                    .setDisneyAccount(getAccount())
                     .setProfileId(getAccount().getProfileId())
                     .setLimit(limit)).getData().getSet().getItems();
         } catch (URISyntaxException e) {
@@ -587,7 +550,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void setPictureInPictureConfig(String value) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        launchJarvis(true);
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PLAYER);
         jarvis.openOverrideSection(PICTURE_IN_PICTURE);
@@ -597,7 +560,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public void setR21PauseTimeOut(int newPauseTime) {
         JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvisOrInstall();
+        launchJarvis(true);
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(PARENTAL_CONTROLS_CONFIG);
         try {
@@ -607,5 +570,85 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
         setOverrideValue(String.valueOf(newPauseTime));
         terminateJarvisInstallDisney();
+    }
+
+    public String getHuluSubscriptionId() {
+        try {
+            JsonNode activeSubscriptions = getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
+            int huluSubscriptionIndex = activeSubscriptions.get(0).get("product")
+                    .get("sku").textValue()
+                    .equals(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE.getValue()) ? 0 : 1;
+            return activeSubscriptions.get(huluSubscriptionIndex).get("id").textValue();
+
+        } catch (IndexOutOfBoundsException e) {
+            throw new IndexOutOfBoundsException(e.getMessage());
+        }
+    }
+
+    public String convertMinutesIntoStringWithHourAndMinutes(int timeInMinutes) {
+        long hours = timeInMinutes / 60;
+        long minutes = timeInMinutes % 60;
+        return String.format("%dh %dm", hours, minutes);
+    }
+
+    public String getOTPFromApi(Date startTime, DisneyAccount testAccount) {
+        int emailAPILatency = 10;
+        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+        pause(emailAPILatency);
+        String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+
+        if (!secondOTP.equals(firstOTP)) {
+            LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+            return secondOTP;
+        } else {
+            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+            return firstOTP;
+        }
+    }
+
+    public void jarvisDisableOneTrustBanner() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        boolean isOneTrustEnabled = true;
+        int jarvisAttempt = 1;
+        removeJarvis();
+        installAndLaunchJarvis();
+        // Validate Jarvis Config
+        while (isOneTrustEnabled && jarvisAttempt < 3)
+            try {
+                LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
+                if (isJarvisOneTrustDisabled(applePageBase)) {
+                    isOneTrustEnabled = false;
+                    LOGGER.info("Successfully disabled One Trust");
+                } else {
+                    terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                    launchJarvis(false);
+                    jarvisAttempt++;
+                }
+            } catch (Exception e) {
+                LOGGER.info("Exception occurred attempting to disable One Trust");
+                terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+                launchJarvis(false);
+                jarvisAttempt++;
+            }
+
+        // Relaunch Disney app
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+    }
+    
+    private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {
+        applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_PLATFORM_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_ONE_TRUST_CONFIG).click();
+        applePageBase.scrollToItem(JARVIS_APP_IS_ENABLED).click();
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("oneTrustConfig is not enabled");
+            return true;
+        } else {
+            LOGGER.info("Disabling oneTrustConfig");
+            applePageBase.clickToggleView();
+            return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
+        }
     }
 }

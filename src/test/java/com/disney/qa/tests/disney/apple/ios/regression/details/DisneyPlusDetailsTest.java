@@ -2,10 +2,8 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusUpNextIOSPageBase;
@@ -24,20 +22,19 @@ import org.testng.asserts.SoftAssert;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
-    private static final String HIGH_SCHOOL_MUSICAL = "High School Musical: The Musical: The Series";
-    private static final String HOCUS_POCUS = "Hocus Pocus";
     private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
     private static final String SHOP = "Shop";
-    private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
-    private static final String SHOP_TAB_SERIES = "Bluey";
+    private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 40;
+    private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
@@ -48,42 +45,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         };
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448","XMOBQA-71632"})
-    @Test(description = "Series/Movies Detail Page > User taps add to watchlist", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
-    public void verifyAddSeriesAndMovieToWatchlist() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        //search movies
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(HOCUS_POCUS);
-        List<ExtendedWebElement> movies = searchPage.getDisplayedTitles();
-        movies.get(0).click();
-        String firstMovieTitle = detailsPage.getMediaTitle();
-        detailsPage.addToWatchlist();
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.SEARCH);
-
-        //search series
-        searchPage.clearText();
-        searchPage.searchForMedia(HIGH_SCHOOL_MUSICAL);
-        List<ExtendedWebElement> series = searchPage.getDisplayedTitles();
-        series.get(0).click();
-        String firstSeriesTitle = initPage(DisneyPlusDetailsIOSPageBase.class).getMediaTitle();
-        detailsPage.addToWatchlist();
-
-        //titles added to watchlist
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST.getMenuOption()).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstSeriesTitle,firstMovieTitle), "Titles were not added to the Watchlist");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71130"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyIMAXEnhancedBadges() {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -115,7 +78,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68648"})
-    @Test(description = "Series/Movies Detail Page > Negative Stereotype Advisory Expansion", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyNegativeStereotypeAdvisoryExpansion() {
         DisneyPlusHomeIOSPageBase home = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -128,9 +91,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(THE_LION_KINGS_TIMON_AND_PUUMBA);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
+        sa.assertTrue(details.isContentDetailsPagePresent(),
+                "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Negative Stereotype Advisory text was not found on details page");
 
         //movie
         home.clickSearchIcon();
@@ -138,15 +103,17 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         search.searchForMedia(THE_ARISTOCATS);
         search.getDisplayedTitles().get(0).click();
         details.isOpened();
-        sa.assertTrue(details.isContentDetailsPagePresent(), "Details tab was not found on details page");
+        sa.assertTrue(details.isContentDetailsPagePresent(),
+                "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(), "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Negative Stereotype Advisory text was not found on details page");
 
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66841"})
-    @Test(description = "Maturity Rating Restriction on Detail Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Maturity Rating Restriction on Detail Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyMaturityRatingRestrictionOnDetailPage() {
         SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(TV_Y7).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
@@ -191,7 +158,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71128"})
-    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyIMAXEnhancedVersionTab() throws URISyntaxException, JsonProcessingException {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -236,7 +203,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72725"})
-    @Test(description = "Details Page - ShopDisney - Feature Area of Details Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyShopPromoLabelInFeatureAreaOfDetailPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -244,7 +211,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         //Verify Shop Promo for Series
         validateShopPromoLabelHeaderAndSubHeader(sa, SHOP_TAB_SERIES);
@@ -256,7 +223,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72730"})
-    @Test(description = "Details Page - ShopDisney - Shop Tab - Primary Profile (Ad Tier & Non Ad Tier)", dataProvider = "disneyPlanTypes", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Details Page - ShopDisney - Shop Tab - Primary Profile (Ad Tier & Non Ad Tier)", dataProvider = "disneyPlanTypes", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyShopTabInDetailsPage(String planType) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -278,7 +245,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68171"})
-    @Test(description = "Details Page - Bookmarks - Visual Progress Bar - Update after user watches content", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyProgressBarAfterUserWatchesContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -302,33 +269,42 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         videoPlayerPage.clickBackButton();
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getProgressBar());
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button not present after exiting playback");
-        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present after exiting playback");
-        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(), "Continue watching - time remaining is not present");
-        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(durationTime), "Correct remaining time is not reflecting in progress bar");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(),
+                "Continue button not present after exiting playback");
+        sa.assertTrue(detailsPage.isProgressBarPresent(),
+                "Progress bar is not present after exiting playback");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(),
+                "Continue watching - time remaining is not present");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(durationTime),
+                "Correct remaining time is not reflecting in progress bar");
 
         detailsPage.clickContinueButton();
         sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
-        videoPlayerPage.scrubToPlaybackPercentage(99);
+        videoPlayerPage.scrubToPlaybackPercentage(99.5);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
         videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "Continue button on detail page is present after completing playback");
-        sa.assertFalse(detailsPage.isProgressBarPresent(), "Progress bar on detail page is present after completing playback");
+        sa.assertFalse(detailsPage.isContinueButtonPresent(),
+                "Continue button on detail page is present after completing playback");
+        sa.assertFalse(detailsPage.isProgressBarPresent(),
+                "Progress bar on detail page is present after completing playback");
         sa.assertAll();
     }
 
-    private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName){
+    private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         searchPage.searchForMedia(titleName);
-        List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
-        sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(), "Shop Promo Label header was not found");
-        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(), "Shop Promo Label Sub-header was not found");
-        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isShopPromoLabelHeaderPresent(),
+                String.format("Shop Promo Label header was not found for: %s", titleName));
+        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(),
+                String.format("Shop Promo Label Sub-header was not found for: %s", titleName));
+        sa.assertTrue(detailsPage.getShopBtn().isPresent(),
+                String.format("Shop Tab was not found for: %s", titleName));
     }
 
     private void validateShopTabButton(SoftAssert sa, String titleName){

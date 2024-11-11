@@ -1,15 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.config.DisneyParameters;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
 import org.testng.asserts.SoftAssert;
@@ -26,27 +24,26 @@ import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
  * IF running on CI as a single class level: set lang/locale on Jenkins
  * IF running locally: set lang/locale on config level
  */
-public class DisneyPlusRatingsBase extends DisneyBaseTest {
-    private final ThreadLocal<DisneyLocalizationUtils> LOCALIZATION_UTILS = new ThreadLocal<>();
-    protected String contentTitle;
-    private boolean isMovie;
-    String episodicRating;
+public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
+    public static ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
+    public static ThreadLocal<Boolean> IS_MOVIE = new ThreadLocal<>();
+    public static ThreadLocal<String> EPISODIC_RATING = new ThreadLocal<>();;
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
-    static final String AUSTRALIA_LANG = "en-GB";
-    static final String BRAZIL_LANG = "pt-BR";
-    static final String GERMANY_LANG = "de";
-    static final String JAPAN_LANG = "ja";
-    static final String KOREAN_LANG = "ko";
-    static final String NETHERLANDS_LANG = "en-GB";
-    static final String NEW_ZEALAND_LANG = "en";
-    public static final String SINGAPORE_LANG = "en";
-    static final String TURKEY_LANG = "tr";
-    static final String LATAM_LANG = "es";
 
-    public void ratingsSetup(String ratingValue, String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
+    public void ratingsSetup(String locale, boolean... ageVerified) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetup(String ratingValue, String locale, boolean... ageVerified) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -56,9 +53,38 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
-    public void ratingsSetup(String lang, String locale, boolean... ageVerified) {
-        setDictionary(lang, locale);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+    public void ratingSetupWithPINForOTPAccount(String locale) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (IOException e) {
+            new Exception("Failed to update Profile pin: {}", e);
+        }
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetupWithPINNew(String locale, boolean... ageVerified) {
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
+        getAccountApi().overrideLocations(getAccount(), locale);
+        try {
+            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAccountRatingsMax(getAccount());
+        initialSetup();
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+    }
+
+    public void ratingsSetupForOTPAccount(String locale) {
+        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
         initialSetup();
@@ -66,33 +92,36 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
     }
 
+    public void handleOneTrustPopUp() {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        LOGGER.info("Checking for one trust popup");
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
+    }
+
+    public void confirmRegionalRatingsDisplays(String rating) {
+        LOGGER.info("Rating value under test: {}", rating);
+        if (IS_MOVIE.get()) {
+            LOGGER.info("Testing against Movie content.");
+            validateMovieContent(rating);
+        } else {
+            LOGGER.info("Testing against Series content.");
+            validateSeriesContent(rating);
+        }
+    }
+
     private void setAccountRatingsMax(DisneyAccount account) {
         List<String> ratingSystemValues = account.getProfile(DEFAULT_PROFILE).getAttributes().getParentalControls().getMaturityRating()
                 .getRatingSystemValues();
         LOGGER.info("Rating values: " + ratingSystemValues);
         getAccountApi().editContentRatingProfileSetting(account,
-                LOCALIZATION_UTILS.get().getRatingSystem(),
+                getLocalizationUtils().getRatingSystem(),
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
 
-    private void setDictionary(String lang, String locale) {
-        getLocalizationUtils().setCountryDataByCode(locale);
-        getLocalizationUtils().setLanguageCode(lang);
-        DisneyLocalizationUtils disneyLocalizationUtils =
-                new DisneyLocalizationUtils(
-                        locale, lang, MobilePlatform.IOS,
-                        DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setLegalDocuments();
-        LOCALIZATION_UTILS.set(disneyLocalizationUtils);
-        DisneyPlusApplePageBase.setDictionary(LOCALIZATION_UTILS.get());
-    }
-
     private void getDesiredRatingContent(String rating, String locale, String language) {
-        LOGGER.info("Scanning API for title with desired rating '{}'.", rating);
-        isMovie = false;
-        episodicRating = null;
+        LOGGER.info("Scanning API for title with desired rating parameters: '{}, {}, {}'.", rating, locale, language);
+        IS_MOVIE.set(false);
         String apiContentTitle = null;
         try {
             ArrayList<String> brandIDList = getHomePageBrandIDList(locale, language);
@@ -105,7 +134,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                 LOGGER.info("Couldn't find content for brand: {} region: {}, rating: {}", brandID, locale, rating);
             }
         } catch (Exception e) {
-            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage()));
+            throw new ObjectNotFoundException(String.format("Exception occurred while scanning api for the desired rating %s", e.getMessage(), locale, language));
         }
 
         if (apiContentTitle == null) {
@@ -137,6 +166,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
+        CONTENT_TITLE.remove();
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
@@ -144,22 +174,23 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
                     if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
                         if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                             LOGGER.info("Title returned: " + item.getVisuals().getTitle());
-                            contentTitle = item.getVisuals().getTitle();
+                            CONTENT_TITLE.set(item.getVisuals().getTitle());
                             Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
                             if (pageContainer != null) {
                                 if (!pageContainer.getType().equals(EPISODES)) {
-                                    isMovie = true;
+                                    IS_MOVIE.set(true);
                                 } else {
                                     if (pageContainer.getSeasons().get(0) != null) {
+                                        IS_MOVIE.set(false);
                                         List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
                                         if (seasonItems.get(0) != null) {
-                                            episodicRating = seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+                                            EPISODIC_RATING.set(seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText());
                                         } else {
                                             throw new NullPointerException("Episodic rating is null");
                                         }
                                     }
                                 }
-                                return contentTitle;
+                                return CONTENT_TITLE.get();
                             }
                         }
                     }
@@ -169,17 +200,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         return null;
     }
 
-    public void confirmRegionalRatingsDisplays(String rating) {
-        if (isMovie) {
-            LOGGER.info("Testing against Movie content.");
-            validateMovieContent(rating);
-        } else {
-            LOGGER.info("Testing against Series content.");
-            validateSeriesContent(rating);
-        }
-    }
-
-    public void validateSeriesContent(String rating) {
+    private void validateSeriesContent(String rating) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -187,11 +208,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
+        searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
-        videoPlayer.validateRatingsOnPlayer(episodicRating, sa, detailsPage);
+        videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
@@ -203,15 +224,16 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         if (!detailsPage.getDownloadAllSeasonButton().isPresent()) {
             swipe(detailsPage.getDownloadAllSeasonButton());
         }
-        pressByElement(detailsPage.getDownloadAllSeasonButton(), 1);
+        detailsPage.getDownloadAllSeasonButton().click();
         detailsPage.clickDefaultAlertBtn();
+        downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
-        downloads.getStaticTextByLabelContains(contentTitle).click();
-        sa.assertTrue(downloads.isRatingPresent(episodicRating), rating + " Rating was not found on series downloads");
+        downloads.getStaticTextByLabelContains(CONTENT_TITLE.get()).click();
+        sa.assertTrue(downloads.isRatingPresent(EPISODIC_RATING.get()), rating + " Rating was not found on series downloads");
         sa.assertAll();
     }
 
-    public void validateMovieContent(String rating) {
+    private void validateMovieContent(String rating) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -219,16 +241,18 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(contentTitle);
+        searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
 
         //ratings are shown on downloaded content
         if (!detailsPage.getMovieDownloadButton().isPresent()) {
             swipe(detailsPage.getMovieDownloadButton(), 3, 500);
         }
         detailsPage.getMovieDownloadButton().click();
+        downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
+        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(CONTENT_TITLE.get()));
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
@@ -236,12 +260,5 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest {
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
-    }
-
-    public void handleOneTrustPopUp() {
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        LOGGER.info("Checking for one trust poup");
-        if (oneTrustPage.isOpened())
-            oneTrustPage.tapAcceptAllButton();
     }
 }

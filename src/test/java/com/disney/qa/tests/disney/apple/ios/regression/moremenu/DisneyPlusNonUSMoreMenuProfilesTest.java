@@ -2,8 +2,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -13,22 +11,20 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.RatingConstant.JAPAN;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
 
-    private static final String FIRST = "01";
-    private static final String TWENTY_EIGHTEEN = "2018";
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66766"})
-    @Test(description = "Add Profile Button & Flow (Legacy - No DOB or Gender Collection)", groups = {TestGroup.MORE_MENU}, enabled = false)
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.SMOKE, US})
     public void verifyAddProfileFlow() {
         initialSetup();
         handleAlert();
-        SoftAssert sa = new SoftAssert();
-        setAccount(createAccountFor("JP",  getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountFor(JAPAN, getLocalizationUtils().getUserLanguage()));
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -36,42 +32,54 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         //Add Profiles
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Third").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Fourth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Fifth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Sixth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName("Third").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName("Fourth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName("Fifth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName("Sixth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
 
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
         handleAlert();
         moreMenu.clickMoreTab();
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
         }
         moreMenu.clickAddProfile();
-        sa.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
-        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
+        Assert.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened");
         addProfile.enterProfileName("Seventh");
         addProfile.clickSaveBtn();
-        pause(2);
+        editProfilePage.waitForUpdatedToastToDisappear();
         //Not now button
         addProfile.clickSecondaryButtonByCoordinates();
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
         }
-        sa.assertFalse(moreMenu.isAddProfileButtonPresent(), "Add profile button was present when the account had seven profiles on it");
+        Assert.assertFalse(moreMenu.isAddProfileButtonPresent(),
+                "Add profile button was present when the account had seven profiles on it");
         moreMenu.clickEditProfilesBtn();
         editProfilePage.getDoneButton().click();
-        pause(2);
-        sa.assertTrue(whoIsWatching.isOpened(), "who is watching page didn't open");
-        sa.assertFalse(moreMenu.isAddProfileButtonPresent(), "Add profile button was present on who is watching screen when the account had seven profiles on it");
-        sa.assertAll();
+        editProfilePage.waitForUpdatedToastToDisappear();
+        Assert.assertTrue(whoIsWatching.isOpened(), "who is watching page didn't open");
+        Assert.assertFalse(moreMenu.isAddProfileButtonPresent(),
+                "Add profile button was present on who is watching " +
+                        "screen when the account had seven profiles on it");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66792"})
-    @Test(description = "Edit Profile - UI Elements - Primary Profile (NOT ARIEL)", groups = {TestGroup.MORE_MENU})
+    @Test(description = "Edit Profile - UI Elements - Primary Profile (NOT ARIEL)", groups = {TestGroup.MORE_MENU, US})
     public void verifyEditProfileUIPrimaryProfile() {
         initialSetup();
         handleAlert();
@@ -102,7 +110,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73708"})
-    @Test(description = "Edit Profile - UI Elements - (Legacy) - Kids Mode Profile", groups = {TestGroup.MORE_MENU})
+    @Test(description = "Edit Profile - UI Elements - (Legacy) - Kids Mode Profile", groups = {TestGroup.MORE_MENU, US})
     public void verifyEditProfileUIKidsProfile() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -131,7 +139,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66776"})
-    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {TestGroup.MORE_MENU}, enabled = false)
+    @Test(description = "Add Profile UI - (Legacy - No DOB or Gender Collection)", groups = {TestGroup.MORE_MENU, US}, enabled = false)
     public void verifyAddProfilePageUI() {
         initialSetup();
         handleAlert();

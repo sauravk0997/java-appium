@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.IConstantHelper.US;
+
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private static final String BLUEY = "Bluey";
@@ -45,7 +47,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68278"})
-    @Test(description = "'Recent Searches' is not shown when user has made no Recent Searches", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE})
+    @Test(description = "'Recent Searches' is not shown when user has made no Recent Searches", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyRecentSearchWhenNoSearchMade() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -60,8 +62,38 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67325"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, TestGroup.SEARCH, US})
+    public void verifyMaintainSearchQuery() {
+        String content = "The Simpsons";
+        List<String> firstResultList = new ArrayList<>();
+        List<String> secondResultList = new ArrayList<>();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        searchPage.getCancelButton();
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(content);
+        searchPage.getDisplayedTitles().forEach(searchResult -> firstResultList.add(searchResult.getText()));
+
+        searchPage.getDynamicAccessibilityId(content).click();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+        detailsPage.getBackArrow().click();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.getDisplayedTitles()
+                .subList(0, firstResultList.size())
+                .forEach(searchResult -> secondResultList.add(searchResult.getText()));
+
+        Assert.assertTrue(firstResultList.containsAll(secondResultList),
+                "Search Result list doesn't match with the previous navigation");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
-    @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Search - Recent Searches - Clear Recent Search by clicking on the X Icon", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void clearRecentSearches() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -103,8 +135,39 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67319"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
+    public void verifySearchBarUI() {
+        String title = "Simpson";
+        String placeholderError = "Placeholder text is not as expected";
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        searchPage.clickSearchIcon();
+
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+        Assert.assertTrue(searchPage.getMagnifyingGlassImage().isPresent(),
+                "Magnifying glass image was not present on search page");
+
+        searchPage.getSearchBar().click();
+        Assert.assertTrue(searchPage.getCancelButton().isPresent(), "Cancel button was not present on search page");
+        Assert.assertTrue(searchPage.getMagnifyingGlassImage().isPresent(),
+                "Magnifying glass image was not present on search page");
+        Assert.assertTrue(searchPage.getKeyboardSearchButton().isPresent(),
+                "Keyboard was not shown when entering the search term");
+        Assert.assertEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+        searchPage.searchForMedia(title);
+        Assert.assertNotEquals(searchPage.getSearchBar().getText(),
+                searchPage.getPlaceholderText(),
+                placeholderError);
+    }
+    
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
-    @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecentSearchInitiatesValidSearch() {
         String media = "Turning Red";
         SoftAssert sa = new SoftAssert();
@@ -147,7 +210,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68280"})
-    @Test(description = "Search - Recent Searches - Show 10 Results Max with the Ability to Scroll Up and Down", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search - Recent Searches - Show 10 Results Max with the Ability to Scroll Up and Down", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecentSearchShowsMaxTenResults() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -188,7 +251,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67956"})
-    @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames", enabled = false)
+    @Test(description = "Search - Content Type Landing Pages - Scroll Behavior & Dropdown Behavior", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collectionNames", enabled = false)
     public void verifyScrollAndDropdownForSearchContentLandingPage(@NotNull String collectionName) {
         String filterValue = "Comedy";
         SoftAssert sa = new SoftAssert();
@@ -233,7 +296,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67958"})
-    @Test(description = "Search - Originals Landing Page - UI Elements", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search - Originals Landing Page - UI Elements", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyOriginalsLandingPageUI() throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -280,7 +343,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67950"})
-    @Test(description = "Search - Content Type Landing Pages - UI Elements & Filtering", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION}, dataProvider = "collectionNames", enabled = false)
+    @Test(description = "Search - Content Type Landing Pages - UI Elements & Filtering", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collectionNames", enabled = false)
     public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
@@ -357,7 +420,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchResultContainsRatingAndYearDetails() throws URISyntaxException, JsonProcessingException {
             String media = "M";
             String movie = "The Marvels";
@@ -395,7 +458,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67379"})
-    @Test(description = "Search - Explore - Editorials & Collections", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Search - Explore - Editorials & Collections", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchExploreEditorialsAndCollections() {
         String collectionPageDidNotOpen = "User did not land on the collection page";
         String collectionLogoNotExpanded = "Collection brand logo is not expanded";
@@ -419,7 +482,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(brandIOSPageBase.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(brandIOSPageBase.isCollectionTitleDisplayed(), "Collection title not displayed");
 
-        sa.assertTrue(brandIOSPageBase.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt), "Image not collapsed after swipe");
+        sa.assertTrue(brandIOSPageBase.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt),
+                "Image not collapsed after swipe");
         sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
         brandIOSPageBase.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
@@ -429,15 +493,41 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.clickFirstCollection();
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
-        brandIOSPageBase.clickFirstCarouselPoster();
+        brandIOSPageBase.clickFirstNoLiveEvent();
         sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
-        pressByElement(detailsPage.getBackArrow(), 1);
+        clickElementAtLocation(detailsPage.getBackArrow(), 50, 50);
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75718"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHideRestrictedTitlesInSearchResults() {
+        String contentTitle = "Deadpool & Wolverine";
+
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RATING_TV14);
+        
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(contentTitle);
+        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(),
+                "PCON restricted title message not present for TV-MA profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle),
+                "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
     }
 

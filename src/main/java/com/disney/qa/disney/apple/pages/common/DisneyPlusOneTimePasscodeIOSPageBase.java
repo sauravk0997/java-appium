@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -21,7 +22,10 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
     @FindBy(id = "oneTimePasscodeContainerInputView")
     protected ExtendedWebElement otpInputField;
 
-    private ExtendedWebElement resendButton = xpathNameOrName.format(getDictionary()
+    @ExtendedFindBy(accessibilityId = "buttonLoginWithPassword")
+    private ExtendedWebElement loginWithPassword;
+
+    private ExtendedWebElement resendButton = xpathNameOrName.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             RESEND_EMAIL_COPY_2.getText()),
             RESEND_EMAIL_COPY_2.getText());
@@ -38,16 +42,24 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
 
     public void enterOtpValue(String value) {
         otpInputField.type(value);
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
+        getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public void enterOtpValueDismissKeys(String value) {
         otpInputField.type(value);
         dismissKeyboardForPhone();
-        getStaticTextByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
+        getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public void enterOtp(String value) {
         otpInputField.type(value);
+    }
+
+    public void clickLoginWithPasswordButton() {
+        loginWithPassword.click();
+    }
+
+    public ExtendedWebElement getLoginButtonWithPassword() {
+        return loginWithPassword;
     }
 }

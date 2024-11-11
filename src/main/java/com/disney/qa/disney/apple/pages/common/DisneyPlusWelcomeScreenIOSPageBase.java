@@ -17,7 +17,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "buttonSignUp")
     protected ExtendedWebElement signUpButton;
 
-    @ExtendedFindBy(accessibilityId = "buttonSignUp")
+    @ExtendedFindBy(accessibilityId = "loginButton")
     protected ExtendedWebElement loginButton;
 
     @ExtendedFindBy(accessibilityId = "dismissButton")
@@ -55,7 +55,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     @Override
     public boolean isOpened() {
-        return signUpButton.isPresent();
+        return loginButton.isPresent();
     }
 
     public boolean isBackgroundDisplayed() {
@@ -67,16 +67,16 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isMainTextDisplayed() {
-        return staticTextLabelContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
+        return staticTextLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        String subCopyDirectText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
+        String subCopyDirectText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
         return staticTextNameContains.format(subCopyDirectText).isPresent();
     }
 
     public ExtendedWebElement getSubCopyDirectText(){
-        return staticTextNameContains.format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
+        return staticTextNameContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
     }
 
     public boolean isSignUpButtonDisplayed() {
@@ -112,12 +112,12 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void clickLogInButton() {
-        clickDontAllowBtn();
+        handleSystemAlert(AlertButtonCommand.DISMISS, 2);
         loginButton.click();
     }
 
     public void clickSignUpButton() {
-        clickDontAllowBtn();
+        handleSystemAlert(AlertButtonCommand.DISMISS, 2);
         signUpButton.click();
     }
 

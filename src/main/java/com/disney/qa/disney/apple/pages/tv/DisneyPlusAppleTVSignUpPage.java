@@ -17,23 +17,15 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
     private ExtendedWebElement viewAgreementAndPolicies;
     @ExtendedFindBy(accessibilityId = "textFieldEmail")
     private ExtendedWebElement emailTextField;
-    
-    @ExtendedFindBy(accessibilityId = "legalDisclosureView")
-    private ExtendedWebElement legalDisclosure;
 
     @Override
     public boolean isOpened() {
-        return getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).isElementPresent();
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).isElementPresent();
     }
 
     @Override
     public void clickAgreeAndContinue() {
-        getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
-    }
-
-    public boolean isAgreeAndContinueFocused() {
-        moveDown(1,1);
-        return isFocused(getTypeButtonByLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())));
+        getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText())).click();
     }
 
     public DisneyPlusAppleTVSignUpPage(WebDriver driver) {
@@ -44,50 +36,18 @@ public class DisneyPlusAppleTVSignUpPage extends DisneyPlusSignUpIOSPageBase {
         return customButton.isPresent();
     }
 
-    public boolean islegalDisclosureViewPresent() {
-        return legalDisclosure.isPresent();
-    }
-
     public void clickRestartSubscription() {
         customButton.click();
-    }
-
-    public boolean isViewAgreementAndPoliciesFocused() {
-        return isFocused(viewAgreementAndPolicies);
     }
 
     public void clickViewAgreementAndPolicies() {
         viewAgreementAndPolicies.click();
     }
 
-    @Override
-    public String getEmailFieldText() {
-        return emailTextField.getText();
-    }
-
-    public void waitUntilEmailFieldIsFocused() {
-        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT,"Unable to focus email field on sign up page")
-                .until(it -> isFocused(getTextEntryField().format(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()))));
-    }
-
     public void enterDateOfBirth(String dob) {
         for (char c : dob.toCharArray()) {
             dynamicBtnFindByName.format(c).click();
         }
-    }
-
-    public void proceedToLegalPage(boolean isKR) {
-        // KR has some check boxes that are required to be selected for sign up
-        if (isKR) {
-            keyPressTimes(IRemoteControllerAppleTV::clickDown,  2, 1);
-            clickSelect();
-            clickDown();
-            clickSelect();
-            clickDown();
-        } else {
-            keyPressTimes(IRemoteControllerAppleTV::clickDown, 2, 1);
-        }
-        clickSelect();
     }
 
     public void selectCheckBoxesForKr(boolean isKr) {

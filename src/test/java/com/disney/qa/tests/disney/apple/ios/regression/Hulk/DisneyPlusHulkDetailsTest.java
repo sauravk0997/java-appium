@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -11,27 +12,28 @@ import com.zebrunner.carina.utils.R;
 
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
+import org.testng.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
-    public static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String PREY = "Prey";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
     private static final String HULU = "Hulu";
-    private static final String SPIDERMAN_THREE = "SpiderMan 3";
-    private static final String ADULT_DOB = "1980-10-23";
-    
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
-    @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkMovieDetailsTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -62,7 +64,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73825"})
-    @Test(description = "Hulk Movie Details: Verify Tabs are visible", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulk Movie Details: Verify Tabs are visible", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkDetailsTabs() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -98,7 +100,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
-    @Test(description = "Hulk Series & Movie Details - verify included with hulu subscription service attribution", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulk Series & Movie Details - verify included with hulu subscription service attribution", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkSeriesAndMovieServiceAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -120,7 +122,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75021"})
-    @Test(description = "Hulu Series Details Page - Restart Button", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Hulu Series Details Page - Restart Button", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySeriesDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -147,7 +149,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75020"})
-    @Test(description = "Hulu Movies Details Page - Restart Button", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulu Movies Details Page - Restart Button", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovieDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -174,7 +176,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72248"})
-    @Test(description = "Hulk Details verify extras tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulk Details verify extras tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkExtrasTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -212,7 +214,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74254"})
-    @Test(description = "Hulk Details verify share on adult and kids profile", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulk Details verify share on adult and kids profile", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkShare() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -249,7 +251,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
-    @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulk Network Attribution on various series/movie details pages - different networks", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkSeriesAndMovieNetworkAttribution() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -277,7 +279,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74845"})
-    @Test(description = "Hulk Base UI - Movies - all attributes on base ui of movie details page", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulk Base UI - Movies - all attributes on base ui of movie details page", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkBaseUIMovies() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -350,7 +352,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74450"})
-    @Test(description = "Hulu Movie Download - download metadata and playable", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulu Movie Download - download metadata and playable", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluMovieDownloadAsset() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -384,7 +386,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74448"})
-    @Test(description = "Hulu Ad Tier Movie and Series Details - No download buttons", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulu Ad Tier Movie and Series Details - No download buttons", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluAdTierMovieSeriesNoDownloadButton() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -412,7 +414,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
-    @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for Ads Account", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for Ads Account", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesAdsAccount() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -434,7 +436,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
-    @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for No Ads Account", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION})
+    @Test(description = "Hulu Detail Pages - Featured Area - Validate A/V Badges on details page for No Ads Account", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesNoAdsAccount() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -452,6 +454,53 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.isDolbyVisionPresentOrNot(sa);
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    public void verifyExpiredHuluWatchlistDisplay() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String GRIMCUTTY = "Grimcutty";
+        String WANDA_VISION = "WandaVision";
+        try {
+            getSubscriptionApi().addEntitlementBySku(getAccount(),
+                    DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, SUBSCRIPTION_V2);
+        } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        setAppToHomeScreen(getAccount());
+        //TODO:use api to add the titles once QP ticket is resolved
+        // https://jira.disney.com/browse/QP-3616
+        // Add Disney Plus and HULU content to Watchlist
+//        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
+//                R.TESTDATA.get("hulu_movie_grimcutty_entity_id"), CONTENT_ENTITLEMENT_HULU);
+//        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
+//                DisneyEntityIds.WANDA_VISION.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
+
+        // Verify content on Watchlist
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
+        Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(GRIMCUTTY, WANDA_VISION),
+                "Titles were not added to the Watchlist");
+        //TODO: https://jira.disney.com/browse/QP-3626
+        //https://jira.disney.com/browse/QP-3626
+        // Revoke HULU subscription
+        String huluSubscriptionId = getHuluSubscriptionId();
+        getSubscriptionApi().revokeSubscription(getAccount(), huluSubscriptionId);
+
+        // Terminate app and relaunch
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        // Verify content on watchlist after revoke HULU entitlement
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
+        Assert.assertFalse(moreMenu.getTypeCellLabelContains(GRIMCUTTY).isPresent(),
+                "HULU title was present in the Watchlist");
+        Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),
+                "Disney Plus title was not present in the Watchlist");
     }
 
     protected ArrayList<String> getMedia() {

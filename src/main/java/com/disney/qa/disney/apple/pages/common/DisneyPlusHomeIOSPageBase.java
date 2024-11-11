@@ -73,6 +73,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         pause(5);
     }
 
+    public void clickDynamicCollectionOrContent(int collectionViewColumn, int cellRow) {
+        clickContent(collectionViewColumn, cellRow);
+    }
+
     public List<ExtendedWebElement> getKidsCarousels() {
         return getAllCollectionCells(CollectionConstant.Collection.KIDS_CAROUSEL);
     }
@@ -141,8 +145,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNetworkLogoImage(String item) {
-        return imageLabelContains.format(getDictionary().formatPlaceholderString(
-                getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+        return imageLabelContains.format(getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
                         false), Map.of(BRAND_NAME, item)));
     }
 
@@ -160,7 +164,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void swipeTillContinueWatchingCarouselPresent() {
         String wordSeparator = " ";
-        String continueWatchingText = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
+        String continueWatchingText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
         String expectedTitle = convertToTitleCase(continueWatchingText, wordSeparator);
         ExtendedWebElement continueWatchingHeader = getDynamicAccessibilityId(expectedTitle);
         Assert.assertTrue(swipe(continueWatchingHeader, Direction.UP, 3, 400), "Couldn't scroll to continue watching carousel");

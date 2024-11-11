@@ -16,18 +16,13 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
-    protected static final String WATCH_LIVE_TIME_REMAINING = "watchLiveTimeRemaining";
-    protected static final String WATCH_FROM_START_TIME_REMAINING = "watchFromStartTimeRemaining";
-    protected static final String LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE = "Live video is not playing";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -60,26 +55,24 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement chromecastButton;
     @ExtendedFindBy(accessibilityId = "ucp.audioOutput")
     private ExtendedWebElement airplayButton;
+    @ExtendedFindBy(accessibilityId = "iconPinUnlocked")
+    private ExtendedWebElement iconPinUnlocked;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
     private ExtendedWebElement currentlyPlayingTitle;
     @ExtendedFindBy(accessibilityId = "brandImageView")
     private ExtendedWebElement brandImageView;
-    @ExtendedFindBy(accessibilityId = "advisoryLabel")
-    private ExtendedWebElement advisoryLabel;
     @ExtendedFindBy(accessibilityId = "skipIntroButton")
     private ExtendedWebElement skipIntroButton;
-    @ExtendedFindBy(accessibilityId = "restartButton")
-    private ExtendedWebElement restartButton;
-    @ExtendedFindBy(accessibilityId = "youAreLiveButton")
-    private ExtendedWebElement youAreLiveButton;
     @FindBy(name = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"adPod\"`]")
     private ExtendedWebElement adPod;
+
+    @ExtendedFindBy(accessibilityId = "adCountdownLabel")
+    private ExtendedWebElement adTimeBadge;
 
     //FUNCTIONS
 
@@ -93,11 +86,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getPlayButton() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAY.getText()));
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAY.getText()));
     }
 
     public ExtendedWebElement getPauseButton() {
-        return getDynamicAccessibilityId(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PAUSE.getText()));
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PAUSE.getText()));
     }
 
     public ExtendedWebElement getBackButton() {
@@ -116,14 +109,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 return chromecastButton;
             case FAST_FORWARD:
                 return forwardButton;
+            case NEXT_EPISODE:
+                return getNextEpisodeButton();
             case PLAY:
                 return getPlayButton();
             case PAUSE:
                 return getPauseButton();
             case RESTART:
-                return restartButton;
+                return getRestartButton();
             case REWIND:
                 return rewindButton;
+            case LOCK_ICON:
+                return iconPinUnlocked;
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' is an invalid player control", control));
@@ -148,6 +145,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return seekBar.isPresent();
     }
 
+    public ExtendedWebElement getSkipIntroButton() {
+        return skipIntroButton;
+    }
+
     public boolean isServiceAttributionLabelVisible() {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
                 .until(it -> getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent(SIXTY_SEC_TIMEOUT)));
@@ -163,9 +164,22 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return currentTimeLabel.isPresent();
     }
 
+    public String getTimeRemainingLabelText() {
+        String remainingTime = timeRemainingLabel.getText();
+        if (remainingTime != null && !remainingTime.isEmpty()) {
+            return remainingTime.replace("-", "");
+        } else {
+            throw new NoSuchElementException("Time remaining label is not found on video player");
+        }
+    }
+
     public boolean isRemainingTimeLabelVisible() {
         displayVideoController();
         return timeRemainingLabel.isPresent();
+    }
+    public boolean isCurrentTimeMarkerVisible() {
+        displayVideoController();
+        return currentTimeMarker.isPresent();
     }
 
     public boolean verifyVideoPaused() {
@@ -306,28 +320,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
         LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
         displayVideoController();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
         int seekBarWidth = seekBar.getSize().getWidth();
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
         int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
-        dragAndDropElement(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY(), 3);
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    /**
-     * Scrubs on the seek bar to the given percentage for playback with ads. Returns the object of
-     * DisneyPlusVideoPlayerIOSPageBase.
-     *
-     * @param playbackPercent
-     */
-    public DisneyPlusVideoPlayerIOSPageBase scrubPlaybackWithAdsPercentage(double playbackPercent) {
-        LOGGER.info("Setting video playback to {}% completed..", playbackPercent);
-        displayVideoController();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
-        int seekBarWidth = seekBar.getSize().getWidth();
-        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
-        displayVideoController();
-        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
+        scrollFromTo(currentTimeMarker.getLocation().getX(),
+                currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -341,12 +339,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         waitForVideoToStart();
         displayVideoController();
         return currentlyPlayingTitle.format(episodeName).isPresent();
-    }
-
-    public void seekOnPlayer() {
-        pause(5);
-        displayVideoController();
-        longPressAndHoldElement(currentTimeMarker, 20);
     }
 
     public int getCurrentPositionOnPlayer() {
@@ -378,7 +370,24 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTimeThreeIntegers() {
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60 + Integer.parseInt(remainingTime[1]) * 60 + (Integer.parseInt(remainingTime[2]));
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60
+                + Integer.parseInt(remainingTime[1]) * 60
+                + (Integer.parseInt(remainingTime[2]));
+        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
+        return remainingTimeInSec;
+    }
+
+    /**
+     * Opens the player overlay, reads remaining time that has 3 integers
+     * (hours, minutes, seconds) on the seekbar and converts only hour and mins to seconds
+     * to match the details page duration
+     * @return Playback remaining time in seconds
+     */
+    public int getRemainingHourAndMinInSeconds() {
+        displayVideoController();
+        String[] remainingTime = timeRemainingLabel.getText().split(":");
+        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60
+                + Integer.parseInt(remainingTime[1]) * 60;
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
@@ -401,11 +410,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSkipIntroButtonPresent() {
         return skipIntroButton.isElementPresent();
-    }
-
-    public boolean isYouAreLiveButtonPresent() {
-        displayVideoController();
-        return youAreLiveButton.isElementPresent();
     }
 
     /**
@@ -457,80 +461,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         if (timeout.length > 0) {
             waitTime = timeout[0];
         }
-        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        String adLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
         return getStaticTextByLabel(adLabel).isPresent(waitTime);
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
-        String adLabel = getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        String adLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
         displayVideoController();
         return getStaticTextByLabel(adLabel).isElementPresent();
-    }
-
-    public void compareWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
-        Map<String, Integer> params = new HashMap<>();
-
-        liveEventModalPage.getWatchLiveButton().click();
-        sa.assertTrue(isOpened(), LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE);
-        displayVideoController();
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        List<String> timeRemaining = List.of(remainingTime);
-        if (timeRemaining.size() == 3) {
-            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTimeThreeIntegers());
-        } else if (timeRemaining.size() == 2) {
-            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTime());
-        }
-        clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-
-        detailsPage.clickWatchButton();
-        liveEventModalPage.getWatchFromStartButton().click();
-        sa.assertTrue(isOpened(), LIVE_VIDEO_NOT_PLAYING_ERROR_MESSAGE);
-        if (timeRemaining.size() == 3) {
-            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTimeThreeIntegers());
-        } else if (timeRemaining.size() == 2) {
-            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTime());
-        }
-        sa.assertTrue(params.get(WATCH_FROM_START_TIME_REMAINING) > params.get(WATCH_LIVE_TIME_REMAINING),
-                "Watch from start did not return to beginning of live content.");
-        params.clear();
-    }
-
-    /**
-     * Below are QA env specific methods for DWTS Anthology.
-     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
-     */
-    public void compareQAWatchLiveToWatchFromStartTimeRemaining(SoftAssert sa) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusLiveEventModalIOSPageBase liveEventModalPage = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
-        Map<String, Integer> params = new HashMap<>();
-
-        liveEventModalPage.getQAWatchLiveButton().click();
-        pause(10); //transition
-        displayVideoController();
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        List<String> timeRemaining = List.of(remainingTime);
-        if (timeRemaining.size() == 3) {
-            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTimeThreeIntegers());
-        } else if (timeRemaining.size() == 2) {
-            params.put(WATCH_LIVE_TIME_REMAINING, getRemainingTime());
-        }
-        clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-
-        detailsPage.clickQAWatchButton();
-        liveEventModalPage.getQAWatchFromStartButton().click();
-        pause(10); //transition
-        if (timeRemaining.size() == 3) {
-            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTimeThreeIntegers());
-        } else if (timeRemaining.size() == 2) {
-            params.put(WATCH_FROM_START_TIME_REMAINING, getRemainingTime());
-        }
-        sa.assertTrue(params.get(WATCH_FROM_START_TIME_REMAINING) > params.get(WATCH_LIVE_TIME_REMAINING),
-                "Watch from start did not return to beginning of live content.");
-        params.clear();
     }
 
     public ExtendedWebElement getNetworkWatermarkLogo(String network) {
@@ -558,19 +496,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         detailsPage.clickContinueButton();
         waitForVideoToStart();
         sa.assertTrue(scrubbedTimeRemaining > getRemainingTime(),
-                "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeThreeIntegerRemaining(SoftAssert sa) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        scrubToPlaybackPercentage(30);
-        int scrubbedTimeRemaining = getRemainingTimeThreeIntegers();
-        clickBackButton();
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
-        detailsPage.clickContinueButton();
-        waitForVideoToStart();
-        sa.assertTrue(scrubbedTimeRemaining > getRemainingTimeThreeIntegers(),
                 "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -614,12 +539,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlayingFromBeginning(SoftAssert sa) {
         sa.assertTrue(getBeginningTime() < 60,
-                "Video is not playing from the beginning.");
+                "Video is not playing from the beginning");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public ExtendedWebElement getNextEpisodeButton() {
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_NEXT_EPISODE.getText()));
+    }
+
     public ExtendedWebElement getRestartButton() {
-        return restartButton;
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.VIDEO_PLAYER_RESTART_BUTTON.getText()));
     }
 
     public String getRestartButtonStatus() {
@@ -633,42 +564,26 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getAdRemainingTime() {
-        ExtendedWebElement adRemainingTime = staticTextLabelContains.format(":");
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed").until(it -> adRemainingTime.isPresent());
-        if (!adRemainingTime.getText().contains("-")) {
-            return adRemainingTime;
+        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Ad not displayed")
+                .until(it -> adTimeBadge.isPresent());
+        if (adTimeBadge.isPresent()) {
+            return adTimeBadge;
         } else {
             throw new NoSuchElementException("Ad remaining time was not found");
         }
     }
 
     public boolean isAdTimeDurationPresent() {
-        ExtendedWebElement adTimeBadge = staticTextLabelContains.format(":");
         return adTimeBadge.isPresent();
     }
 
-    /**
-     * There are two timers on screen when video controls are up
-     * One-remaining time for ad and second - time remaining for the content
-     * remaining time for content has a negative sign, this method utilizes this check to rule out the content remaining playback time.
-     * @return true if ad timer is displayed on screen when video overlay is up.
-     */
     public boolean isAdTimeDurationPresentWithVideoControls() {
         displayVideoController();
-        List<ExtendedWebElement> remainingTimes = findExtendedWebElements(staticTextLabelContains.format(":").getBy());
-        if (!remainingTimes.isEmpty()) {
-            for (ExtendedWebElement remainingTime : remainingTimes) {
-                if (!remainingTime.getText().contains("-")) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return adTimeBadge.isPresent();
     }
 
     public void waitForAdToCompleteIfPresent(int polling) {
-        ExtendedWebElement adTimeBadge = getAdRemainingTime();
-        if (isAdBadgeLabelPresent() && adTimeBadge.isPresent()) {
+        if (isAdBadgeLabelPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
             fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent(ONE_SEC_TIMEOUT));
         } else {
@@ -677,7 +592,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public int getAdRemainingTimeInSeconds() {
-        ExtendedWebElement adTimeBadge = getAdRemainingTime();
         String[] adTime = adTimeBadge.getText().split(":");
         int remainingTime = (Integer.parseInt(adTime[0]) * 60) + (Integer.parseInt(adTime[1]));
         LOGGER.info("Ad Playback time remaining {} seconds...", remainingTime);
@@ -701,9 +615,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean validateTimeFormat(String time) {
-        Pattern timePatternInHHMMSS = Pattern.compile("^([0-1][\\d]|2[0-3]):[0-5][\\d]:[0-5][\\d]$");
-        Pattern timePatternInHMMSS = Pattern.compile("^[\\d]:[0-5][\\d]:[0-5][\\d]$");
-        Pattern timePatternInMMSS = Pattern.compile("^[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInHHMMSS = Pattern.compile("^([1-9][\\d]):[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInHMMSS = Pattern.compile("^[1-9]:[0-5][\\d]:[0-5][\\d]$");
+        Pattern timePatternInMMSS = Pattern.compile("^[1-5][\\d]:[0-5][\\d]$");
         Pattern timePatternInMSS = Pattern.compile("^[\\d]:[0-5][\\d]$");
         if (timePatternInHHMMSS.matcher(time).matches()) {
             LOGGER.info("Content time is displayed HH:MM:SS format");
@@ -744,6 +658,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         BACK,
         CHROMECAST,
         FAST_FORWARD,
+        LOCK_ICON,
+        NEXT_EPISODE,
         PLAY,
         PAUSE,
         RESTART,
@@ -752,7 +668,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
         detailsPage.getPlayButton().click();
-        sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player.");
+        sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player");
         waitForVideoToStart();
         scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         waitForVideoToStart();
@@ -760,7 +676,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getSkipPromoButton() {
-        return getTypeButtonContainsLabel(getDictionary().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
+        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
     }
 
     public void skipPromoIfPresent() {
