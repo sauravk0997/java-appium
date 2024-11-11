@@ -8,12 +8,18 @@ import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.*;
 
+import java.lang.invoke.*;
 import java.util.Map;
+
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.ERROR_DUPLICATE_PROFILE_NAME;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @ExtendedFindBy(accessibilityId = "kidsProfileToggleCell")
     protected ExtendedWebElement kidsProfileToggleCell;
@@ -27,34 +33,17 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeImage' AND name='badgeIcon'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[1]")
     protected ExtendedWebElement addProfileAvatar;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
-    protected ExtendedWebElement addProfileBtn;
-
     @ExtendedFindBy(accessibilityId = "Cancel")
     private ExtendedWebElement cancelButton;
 
-    //Visibility set to false
-    //dict key: create_profile_add_profile
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Add Profile\"`]")
-    private ExtendedWebElement addProfileBtnTitle;
-
     @ExtendedFindBy(accessibilityId = "Skip")
     protected ExtendedWebElement skipBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"Profile Name\"`]")
-    private ExtendedWebElement profileNameTextField;
-
-    @ExtendedFindBy(accessibilityId = "editProfile")
-    private ExtendedWebElement editProfile;
 
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement titleLabel;
 
     @ExtendedFindBy(accessibilityId = "submitButtonCellIdentifier")
     private ExtendedWebElement saveButton;
-
-    @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
-    private ExtendedWebElement genderFormButtonCellIdentifier;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Choose content rating\"`]")
     private ExtendedWebElement chooseContentRating;
@@ -63,10 +52,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement birthDateValue;
 
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
-
-    private String genderWoman = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_WOMAN.getText());
-    private String genderMan = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_MAN.getText());
-    private String genderNonBinary = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_NON_BINARY.getText());
     private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
     private static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
@@ -109,12 +94,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return profileSelectionBtn.isPresent();
     }
 
-    public boolean isProfileNamefieldPresent() {
+    public boolean isProfileNameFieldPresent() {
         return profileNameTextFieldIdentifier.isPresent();
-    }
-
-    public boolean profileNameTextFieldIdentifierFocused() {
-        return isFocused(profileNameTextFieldIdentifier);
     }
 
     public void updateUserName(String userName) {
@@ -124,15 +105,12 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
             profileNameTextFieldIdentifier.type(userName);
         }
     }
-    public boolean kidsProfileToggleCellFocused() {
-        return isFocused(kidsProfileToggleCell);
-    }
 
-    public boolean iskidsProfileToggleCellPresent() {
+    public boolean isKidsProfileToggleCellPresent() {
         return kidsProfileToggleCell.isPresent();
     }
 
-    public String getkidsProfileToggleCellValue() {
+    public String getKidsProfileToggleCellValue() {
         return kidsProfileToggleCell.getAttribute("value");
     }
 
@@ -164,19 +142,11 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         saveBtn.click();
     }
 
-    public void createProfileForNewUser(String profileName) {
-        enterProfileName(profileName);
-        chooseGender();
-        tapSaveButton();
-    }
-
     public void createProfile(String profileName, DateHelper.Month month, String day, String year) {
         enterProfileName(profileName);
         enterDOB(month, day, year);
         chooseGender();
         clickElementAtLocation(saveBtn, 50, 50);
-        //Save button is not tappable
-        //saveBtn.click();
     }
 
     //format: Month, day, year
@@ -203,10 +173,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         dynamicBtnFindByLabel.format(genderPlaceholder).click();
     }
 
-    public void clickSaveByDictionaryKey() {
-        dynamicBtnFindByNameContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_SAVE.getText())).click();
-    }
 
     /**
      * checks if gender field is enabled or not
@@ -278,6 +244,12 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
         return staticTextByLabel.format(getLocalizationUtils().formatPlaceholderString(
                 maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
+    }
+
+    public boolean isErrorDuplicateProfileNamePresent() {
+        String message = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText());
+        LOGGER.info("Error Message by dictionary: {}", message);
+        return staticTextLabelName.format(message).isPresent();
     }
 
     public ExtendedWebElement getChooseContentRating() {
