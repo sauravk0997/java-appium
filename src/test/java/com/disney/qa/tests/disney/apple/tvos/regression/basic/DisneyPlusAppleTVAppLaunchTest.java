@@ -11,7 +11,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVAppLaunchTest extends DisneyPlusAppleTVBaseTest {
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89335"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89341"})
     @Test(groups = {TestGroup.SMOKE, US})
     public void launchApp() {
         selectAppleUpdateLaterAndDismissAppTracking();
