@@ -162,7 +162,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67505"})
-    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HOME})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HOME, US})
     public void verifyHeroAutoRotationOnHomeScreen() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();

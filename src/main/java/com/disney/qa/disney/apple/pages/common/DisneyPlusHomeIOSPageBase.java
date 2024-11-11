@@ -5,6 +5,7 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -191,6 +192,15 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void swipeInHomePage(Direction direction) {
-        swipeInContainer(null, direction, 500);
+        switch (direction) {
+            case UP:
+                swipeUp(900);
+                break;
+            case DOWN:
+                swipeDown(900);
+                break;
+            default:
+                throw new InvalidArgumentException("Invalid swipe");
+        }
     }
 }

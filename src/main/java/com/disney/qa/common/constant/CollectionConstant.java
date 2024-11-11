@@ -59,7 +59,7 @@ public class CollectionConstant {
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
             case HERO_CAROUSEL:
-                return "3766321d-ea10-4dc1-b086-d8fd557b7a62";
+                return "ea652c0d-ccc3-40f8-9fce-b122fcd6a224";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
