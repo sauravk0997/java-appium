@@ -35,7 +35,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT = 90;
     private static final double PLAYER_PERCENTAGE_FOR_AUTO_PLAY = 95;
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
-    private static final String REGEX_UPNEXT_SERIES_TITLE = "S%s:E%s %s";
+    private static final String REGEX_UPNEXT_SERIES_TITLE = "Season %s Episode %s %s";
 
     @DataProvider(name = "autoplay-state")
     public Object[][] autoplayState(){
@@ -248,7 +248,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
         sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
                 "Up Next meta data title not displayed");
-        sa.assertTrue(upNextIOSPageBase.isUpNextHeaderPresent(), "Up Next Header is not displayed");
+        sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
         sa.assertAll();
     }
 

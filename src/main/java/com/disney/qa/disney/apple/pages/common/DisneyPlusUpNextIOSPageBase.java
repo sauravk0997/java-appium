@@ -89,8 +89,8 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
         contentTitleLabel.isElementPresent();
     }
 
-    public boolean isUpNextHeaderPresent() {
+    public boolean isNextEpisodeHeaderPresent() {
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.POSTPLAY_UPNEXT.getText())).isPresent();
+                DictionaryKeys.POSTPLAY_NEXTEPISODE_HEADER.getText())).isPresent();
     }
 }
