@@ -123,7 +123,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         chooseAvatar.clickSkipButton();
         addProfile.enterProfileName(DEFAULT_PROFILE);
         addProfile.clickSaveBtn();
-        Assert.assertTrue(addProfile.isErrorDuplicateProfileNamePresent(),
+        Assert.assertTrue(addProfile.isDuplicateProfileNameErrorPresent(),
                 "Error `Duplicate Profile Name` is not present");
     }
 

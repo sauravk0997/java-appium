@@ -246,8 +246,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
                 maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
     }
 
-    public boolean isErrorDuplicateProfileNamePresent() {
-        String message = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText());
+    public boolean isDuplicateProfileNameErrorPresent() {
+        String message = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                ERROR_DUPLICATE_PROFILE_NAME.getText());
         LOGGER.info("Error Message by dictionary: {}", message);
         return staticTextLabelName.format(message).isPresent();
     }
