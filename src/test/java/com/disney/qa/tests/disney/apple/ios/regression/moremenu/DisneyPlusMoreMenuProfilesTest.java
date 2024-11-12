@@ -49,6 +49,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
     private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String KID_PROOF_EXIT_SCREEN_DID_NOT_OPEN = "Kid Proof Exit code screen was not displayed";
+    private final static String UPDATED_TOAST_WAS_NOT_DISPLAYED = "'Updated' toast was not displayed";
+    private final static String KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON = "'kids proof exit' toggle is not 'On'";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -123,7 +125,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getAccount().getFirstName());
         editProfile.toggleAutoplayButton("OFF");
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         sa.assertAll();
     }
 
@@ -139,7 +141,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         verifyAutoPlayStateForProfile(getAccount().getFirstName(),"On",sa);
         //Turn off autoplay for adult profile
         editProfile.toggleAutoplayButton("OFF");
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         sa.assertTrue(editProfile.getAutoplayState().equals("Off"), "Autoplay wasn't turned Off for primary profile");
         //wait for updated toast to disappear before tapping on done button
         editProfile.waitForUpdatedToastToDisappear();
@@ -152,7 +154,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //Turn on autoplay for adult profile
         editProfile.toggleAutoplayButton("ON");
         passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
         sa.assertAll();
@@ -487,7 +489,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //User select Rating R
         contentRatingPage.selectContentRating(RATING_R);
         contentRatingPage.clickSaveButton();
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_R), "profile rating is not as expected");
 
         editProfile.waitForUpdatedToastToDisappear();
@@ -496,7 +498,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         passwordPage.enterPassword(getAccount());
         contentRatingPage.selectContentRating(RATING_MATURE);
         contentRatingPage.clickSaveButton();
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
         sa.assertAll();
     }
@@ -588,7 +590,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("Off"), "kids exit toggle value is not Off by default");
         editProfile.toggleKidsProofExit();
         passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
-        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "kids exit toggle is not 'On'");
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON);
         editProfile.waitForUpdatedToastToDisappear();
         //Turn off junior mode toggle
         editProfile.toggleJuniorMode();
@@ -599,7 +601,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"),"Kid proof exit toggle value was not retained from previous setting");
         //Change non-primary(general audience) profile back to kids profile
         editProfile.toggleJuniorMode();
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "Kid proof exit toggle value was not retained from previous setting");
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
@@ -975,6 +977,28 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(brandPage.getBackButton().isPresent(), "Back button is not present");
         Assert.assertTrue(brandPage.isKidThemeBackgroudUIDisplayed(),
                 "UI on collection page is not in kid mode theme");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75395"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyKidProofExitToggleOffFlow() {
+        String ON = "On";
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
+                .avatarId(DARTH_MAUL).kidsModeEnabled(true).kidProofExitEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(KIDS_PROFILE);
+        Assert.assertTrue(editProfile.getKidProofExitToggleValue().equals(ON), KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON);
+
+        editProfile.toggleKidsProofExit();
+        editProfile.enterPassword(getAccount());
+        Assert.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
