@@ -124,7 +124,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(DEFAULT_PROFILE);
         addProfile.clickSaveBtn();
         Assert.assertTrue(addProfile.isDuplicateProfileNameErrorPresent(),
-                "Error `Duplicate Profile Name` is not present");
+                "Error 'Duplicate Profile Name' is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66786"})
