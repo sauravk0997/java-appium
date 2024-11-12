@@ -1,5 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -85,5 +87,10 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     private boolean isNextEpisodeInfoPresent() {
         return nextEpisodeHeader.isElementPresent() &&
         contentTitleLabel.isElementPresent();
+    }
+
+    public boolean isUpNextHeaderPresent() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.POSTPLAY_UPNEXT.getText())).isPresent();
     }
 }

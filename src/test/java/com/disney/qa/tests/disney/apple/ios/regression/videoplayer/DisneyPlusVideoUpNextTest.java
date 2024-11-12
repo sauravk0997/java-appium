@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.config.*;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
@@ -34,6 +35,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT = 90;
     private static final double PLAYER_PERCENTAGE_FOR_AUTO_PLAY = 95;
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
+    private static final String REGEX_UPNEXT_SERIES_TITLE = "S%s:E%s %s";
 
     @DataProvider(name = "autoplay-state")
     public Object[][] autoplayState(){
@@ -227,10 +229,26 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
+
+        ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_series_detail_bluey_entity_id"));
+        String episodeTitle = "";
+        String seasonNumber = "";
+        try {
+            episodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+            seasonNumber = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getSeasonNumber();
+        } catch (Exception e) {
+            Assert.fail("Exception occurred: " + e.getMessage());
+        }
+        String upNextTitlePlaceHolder = String.format(REGEX_UPNEXT_SERIES_TITLE, seasonNumber, "2", episodeTitle);
+
         //Enable autoplay
         toggleAutoPlay("ON");
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        upNextIOSPageBase.waitForUpNextUIToAppear();
         sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
+                "Up Next meta data title not displayed");
+        sa.assertTrue(upNextIOSPageBase.isUpNextHeaderPresent(), "Up Next Header is not displayed");
         sa.assertAll();
     }
 
