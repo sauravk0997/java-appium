@@ -258,6 +258,21 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         Assert.assertTrue(secondSubtitle.contains(secondEpisodeTitle), "Second episode for series didn't play");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67684"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpNextContentRatingOverlay() {
+        DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        upNextIOSPageBase.waitForUpNextUIToAppear();
+        upNextIOSPageBase.tapPlayIconOnUpNext();
+        Assert.assertTrue(videoPlayerIOSPageBase.isContentRatingOverlayPresent(), "Content Rating overlay not displayed");
+        Assert.assertTrue(videoPlayerIOSPageBase.waitForContentRatingOverlayToDisappear(), "Content rating overlay " +
+                "didnt dismiss");
+    }
+
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
