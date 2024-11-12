@@ -32,7 +32,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89343"})
-    @Test(groups = {TestGroup.SMOKE, TestGroup.ONBOARDING, US}, enabled = false)
+    @Test(groups = {TestGroup.SMOKE, TestGroup.ONBOARDING, US})
     public void welcomeScreenAppearance() {
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
@@ -48,11 +48,10 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         labelList.forEach(item -> aliceAssertion.isLabelPresent(sa, item.getText()));
 
         sa.assertTrue(welcomePage.isMainTextDisplayed(), "Main text is not displayed");
-        sa.assertTrue(welcomePage.getSignupButton().isElementPresent(), "Sign Up button is not displayed");
         sa.assertTrue(welcomePage.getLoginButton().isElementPresent(), "Log In button is not displayed");
         sa.assertTrue(welcomePage.isSubCopyDirectTextPresent(), "Welcome sub text is not present");
         sa.assertTrue(welcomePage.isDynamicAccessibilityIDElementPresent(getLocalizationUtils().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL,
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         MOBILE_LINK_TEXT.getText())), "Mobile link text not present");
         sa.assertAll();
     }
