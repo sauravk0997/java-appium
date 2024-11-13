@@ -37,6 +37,7 @@ public enum DictionaryKeys {
     BRAND_LANDING_PAGE_LOAD("brandlanding_pageload"),
     BROWSE_CONTENT_HIDDEN_BODY("browse_content_hidden_body"),
     BROWSE_CONTENT_HIDDEN_BODY_KIDS("browse_content_hidden_body_kids"),
+    BROWSE_CONTENT_HIDDEN_HEADER("browse_content_hidden_header"),
     BTN_ACCOUNT_CREATE_PASSWORD_SAVE("button_account_create_password_save"),
     BTN_ACCOUNT_HOLD_UPDATE_PAYMENT("btn_account_hold_update_payment"),
     BTN_ACTION_START_FROM_BEGINNING("btn_action_start_from_beginning"),

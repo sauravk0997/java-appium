@@ -159,12 +159,19 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(noResultError).isPresent();
     }
 
-    public boolean isPCONRestrictedTitlePresent() {
+    public boolean isPCONRestrictedErrorMessagePresent() {
         String dictVal = getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.BROWSE_CONTENT_HIDDEN_BODY.getText())
                 .replace(ratingImage, " ")
                 .replace("{ }", "");
+        return getStaticTextByLabel(dictVal).isPresent();
+    }
+
+    public boolean isPCONRestrictedErrorHeaderPresent() {
+        String dictVal = getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.BROWSE_CONTENT_HIDDEN_HEADER.getText());
         return getStaticTextByLabel(dictVal).isPresent();
     }
 

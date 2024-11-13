@@ -524,7 +524,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
         searchPage.searchForMedia(contentTitle);
-        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(),
+        sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
                 "PCON restricted title message not present for TV-MA profile");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle),
                 "No results found message was not as expected for TV-MA profile");

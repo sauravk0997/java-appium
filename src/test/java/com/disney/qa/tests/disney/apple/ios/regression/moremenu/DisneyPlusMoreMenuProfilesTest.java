@@ -994,6 +994,30 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "UI on collection page is not in kid mode theme");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75500"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyProfileContentMaturityRatingRestriction() {
+        String LOKI = "Loki";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        //set lower rating
+        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+
+        homePage.clickMarvelTile();
+        Assert.assertTrue(brandPage.isOpened(), "Brand/Collection page is not open");
+        brandPage.getDynamicCellByLabel(LOKI).click();
+        Assert.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
+                "Rating Restriction message Header not displayed");
+        Assert.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+                "Rating Restriction message was not displayed");
+    }
+
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         if (avatarSets.isEmpty()) {
