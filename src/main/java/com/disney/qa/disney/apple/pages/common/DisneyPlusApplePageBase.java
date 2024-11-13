@@ -334,6 +334,15 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement keyboardByPredicate;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]")
     private ExtendedWebElement firstCellElementFromCollection;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/**/XCUIElementTypeOther[`name == 'progressBar'`]")
+    private ExtendedWebElement firstCellElementProgressBarFromCollection;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/**/XCUIElementTypeImage[`name == 'playIcon'`]")
+    private ExtendedWebElement firstCellElementPlayIconFromCollection;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value CONTAINS '%s'`]")
+    private ExtendedWebElement firstCellElementTextFromCollection;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
 
