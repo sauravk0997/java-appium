@@ -158,9 +158,9 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         avatars[0].click();
         sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
         sa.assertTrue(addProfile.isAddProfileHeaderPresent(), "Add Profile header was not found");
-        sa.assertTrue(addProfile.isProfileNamefieldPresent(), "Profile Name field was not found");
-        sa.assertTrue(addProfile.iskidsProfileToggleCellPresent(), " Kids profile toogle was not found");
-        sa.assertTrue(addProfile.getkidsProfileToggleCellValue().equalsIgnoreCase("off"), "Kid profile toogle was not turned off by default");
+        sa.assertTrue(addProfile.isProfileNameFieldPresent(), "Profile Name field was not found");
+        sa.assertTrue(addProfile.isKidsProfileToggleCellPresent(), " Kids profile toogle was not found");
+        sa.assertTrue(addProfile.getKidsProfileToggleCellValue().equalsIgnoreCase("off"), "Kid profile toogle was not turned off by default");
         sa.assertTrue(addProfile.isSaveBtnPresent(), "Save button was not found");
         sa.assertTrue(addProfile.isCancelButtonPresent(), "Cancel button was not found");
         sa.assertFalse(addProfile.isDateOfBirthFieldPresent(), "Date Of Birth field was found");
