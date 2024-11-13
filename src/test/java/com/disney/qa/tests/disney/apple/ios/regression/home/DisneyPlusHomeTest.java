@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
-import com.amazonaws.services.rekognition.model.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -163,31 +162,33 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67505"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HOME, US})
-    public void verifyHeroAutoRotationOnHomeScreen() {
+    public void verifyHeroAutoRotationOnHomeScreen() throws URISyntaxException, JsonProcessingException {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(homePage.isHeroCarouselDisplayed(), "Hero Carousel is not displayed");
+        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        String heroCarouselId = collections.get(0).getId();
+        Assert.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed");
 
-        String currentHeroTitle = homePage.getCurrentHeroCarouselTitle();
-        sa.assertTrue(homePage.isHeroCarouselAutoRotating(currentHeroTitle),
+        String currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
+        sa.assertTrue(homePage.isHeroCarouselAutoRotating(currentHeroTitle, heroCarouselId),
                 "Hero Carousel did not auto rotate after 5 seconds");
 
-        swipeInContainer(homePage.getHeroCarouselContainer(), Direction.LEFT, 500);
+        swipeInContainer(homePage.getHeroCarouselContainer(heroCarouselId), Direction.LEFT, 500);
 
-        currentHeroTitle = homePage.getCurrentHeroCarouselTitle();
-        Assert.assertTrue(homePage.isHeroCarouselDisplayed(), "Hero Carousel is not displayed");
-        sa.assertFalse(homePage.isHeroCarouselAutoRotating(currentHeroTitle),
+        currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
+        Assert.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed");
+        sa.assertFalse(homePage.isHeroCarouselAutoRotating(currentHeroTitle, heroCarouselId),
                 "Hero Carousel auto rotate after 5 seconds");
 
         homePage.swipeUp(900);
-        sa.assertFalse(homePage.isHeroCarouselDisplayed(), "Hero Carousel is displayed after swipe Down");
+        sa.assertFalse(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is displayed after swipe Down");
         homePage.swipeDown(900);
-        sa.assertTrue(homePage.isHeroCarouselDisplayed(), "Hero Carousel is not displayed after swipe up");
+        sa.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed after swipe up");
 
-        currentHeroTitle = homePage.getCurrentHeroCarouselTitle();
-        sa.assertTrue(homePage.isHeroCarouselAutoRotating(currentHeroTitle),
+        currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
+        sa.assertTrue(homePage.isHeroCarouselAutoRotating(currentHeroTitle, heroCarouselId),
                 "Hero Carousel did not auto rotate after 5 seconds");
         sa.assertAll();
     }

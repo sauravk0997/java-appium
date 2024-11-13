@@ -21,7 +21,6 @@ public class CollectionConstant {
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         TRENDING,
-        HERO_CAROUSEL, //carousel rotating slides
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
@@ -58,8 +57,6 @@ public class CollectionConstant {
                 return "aaab13b2-4e15-4e71-836e-debe6d004193";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
-            case HERO_CAROUSEL:
-                return "ea652c0d-ccc3-40f8-9fce-b122fcd6a224";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
