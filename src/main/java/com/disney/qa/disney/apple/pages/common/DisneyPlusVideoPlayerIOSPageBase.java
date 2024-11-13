@@ -702,6 +702,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isCrossingAdBoundaryMessagePresent() {
         return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ALERT_MESSAGE_CROSSING_AD_BOUNDARY.getText())).isPresent();
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ALERT_MESSAGE_CROSSING_AD_BOUNDARY.getText())).isPresent();
     }
 }
