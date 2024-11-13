@@ -270,7 +270,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         upNextIOSPageBase.tapPlayIconOnUpNext();
         Assert.assertTrue(videoPlayerIOSPageBase.isContentRatingOverlayPresent(), "Content Rating overlay not displayed");
         Assert.assertTrue(videoPlayerIOSPageBase.waitForContentRatingOverlayToDisappear(), "Content rating overlay " +
-                "didnt dismiss");
+                "didn't dismiss");
     }
 
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
