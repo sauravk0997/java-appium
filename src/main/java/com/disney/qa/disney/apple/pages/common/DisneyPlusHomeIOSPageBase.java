@@ -60,8 +60,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isHeroCarouselDisplayed() {
-        return getDynamicAccessibilityId(CollectionConstant.getCollectionName(
-                CollectionConstant.Collection.HERO_CAROUSEL)).isPresent();
+        return getHeroCarouselContainer().isPresent();
     }
 
     public ExtendedWebElement getHeroCarouselContainer() {
@@ -189,18 +188,5 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
             return false;
         }
         return true;
-    }
-
-    public void swipeInHomePage(Direction direction) {
-        switch (direction) {
-            case UP:
-                swipeUp(900);
-                break;
-            case DOWN:
-                swipeDown(900);
-                break;
-            default:
-                throw new InvalidArgumentException("Invalid swipe");
-        }
     }
 }

@@ -168,7 +168,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(homePage.isHeroCarouselDisplayed(), "Hero Carousel is not displayed");
+        Assert.assertTrue(homePage.isHeroCarouselDisplayed(), "Hero Carousel is not displayed");
 
         String currentHeroTitle = homePage.getCurrentHeroCarouselTitle();
         sa.assertTrue(homePage.isHeroCarouselAutoRotating(currentHeroTitle),
@@ -177,13 +177,13 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         swipeInContainer(homePage.getHeroCarouselContainer(), Direction.LEFT, 500);
 
         currentHeroTitle = homePage.getCurrentHeroCarouselTitle();
-        sa.assertTrue(homePage.isHeroCarouselDisplayed(), "Hero Carousel is not displayed");
+        Assert.assertTrue(homePage.isHeroCarouselDisplayed(), "Hero Carousel is not displayed");
         sa.assertFalse(homePage.isHeroCarouselAutoRotating(currentHeroTitle),
                 "Hero Carousel auto rotate after 5 seconds");
 
-        homePage.swipeInHomePage(Direction.UP);
+        homePage.swipeUp(900);
         sa.assertFalse(homePage.isHeroCarouselDisplayed(), "Hero Carousel is displayed after swipe Down");
-        homePage.swipeInHomePage(Direction.DOWN);
+        homePage.swipeDown(900);
         sa.assertTrue(homePage.isHeroCarouselDisplayed(), "Hero Carousel is not displayed after swipe up");
 
         currentHeroTitle = homePage.getCurrentHeroCarouselTitle();
