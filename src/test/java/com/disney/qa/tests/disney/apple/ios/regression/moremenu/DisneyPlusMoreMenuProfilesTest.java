@@ -983,6 +983,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyKidProofExitToggleOffFlow() {
         String ON = "On";
+        String OFF = "Off";
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
@@ -994,12 +995,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
-        Assert.assertTrue(editProfile.isOpened(), "Edit profile screen did not open");
         Assert.assertTrue(editProfile.getKidProofExitToggleValue().equals(ON), KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON);
 
         editProfile.toggleKidsProofExit();
         editProfile.enterPassword(getAccount());
         Assert.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile screen did not open");
+        Assert.assertTrue(editProfile.getKidProofExitToggleValue().equals(OFF),
+                "'kids proof exit' toggle is not 'Off'");
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
