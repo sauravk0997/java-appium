@@ -356,26 +356,16 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyMovingBackwardsAdPodNotForceAdPlay() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         String adNotPresentMessage = "Ad is not present";
+        String adPresentMessage = "Ad is present";
+        String adBoundaryPresentMessage = "Ad boundary is present";
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), adNotPresentMessage);
         videoPlayer.waitForAdToCompleteIfPresent(6);
-        videoPlayer.clickPauseButton();
-        int totalTime = videoPlayer.getRemainingTime();
-        videoPlayer.clickPlayButton();
-        LOGGER.info("Playback total time {}", totalTime);
-        // Validate current time is in grace period and make validations according to this
-        if (videoPlayer.isValidGracePeriodLimit(totalTime)) {
-            LOGGER.info("Valid grace period");
-            // Rewind to the beginning and validate Ad should not be playing
-            videoPlayer.scrubToPlaybackPercentage(0);
-            Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(),
-                    "Ad boundary is present");
-            Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad is present");
-        } else {
-            videoPlayer.scrubToPlaybackPercentage(0);
-            Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), adNotPresentMessage);
-        }
+        // Rewind to the beginning and validate Ad should not be playing
+        videoPlayer.scrubToPlaybackPercentage(0);
+        Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(), adBoundaryPresentMessage);
+        Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(), adPresentMessage);
     }
     
     private void loginAndStartPlayback(String content) {

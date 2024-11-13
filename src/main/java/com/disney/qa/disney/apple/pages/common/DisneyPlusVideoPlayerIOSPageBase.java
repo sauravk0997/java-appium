@@ -690,12 +690,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 until(it -> getRemainingTime() < gracePeriod);
     }
 
-    public boolean isValidGracePeriodLimit(int totalTime) {
-        int gracePeriod = totalTime - getRemainingTime();
-        LOGGER.info("Playback gracePeriod {}", gracePeriod);
-        return gracePeriod <= FORTY_FIVE_SEC_TIMEOUT;
-    }
-
     public void waitingForR21PauseTimeOutToEnd(int waitTime, int polling) {
         LOGGER.info("Waiting for R21 Pause timeout to end");
         fluentWait(getDriver(), waitTime, polling, "Video player is visible after R21 Pause timeout")
