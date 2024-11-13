@@ -180,7 +180,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isHeroCarouselAutoRotating(String title, String carouselId) {
         try {
             fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Hero Carousel did not auto-rotate")
-                    .until(it -> !firstCellElementFromCollection.format(carouselId).getText().contains(title));
+                    .until(it -> !getCurrentHeroCarouselTitle(carouselId).equals(title));
         } catch (TimeoutException e) {
             return false;
         }
