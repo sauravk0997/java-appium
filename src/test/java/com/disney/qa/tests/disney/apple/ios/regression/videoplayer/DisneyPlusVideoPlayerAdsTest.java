@@ -355,10 +355,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovingBackwardsAdPodNotForceAdPlay() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String adNotPresentMessage = "Ad is not present";
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6),
-              "Ad is not present");
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), adNotPresentMessage);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.clickPauseButton();
         int totalTime = videoPlayer.getRemainingTime();
@@ -374,7 +374,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad is present");
         } else {
             videoPlayer.scrubToPlaybackPercentage(0);
-            Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad is not present");
+            Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), adNotPresentMessage);
         }
     }
     
