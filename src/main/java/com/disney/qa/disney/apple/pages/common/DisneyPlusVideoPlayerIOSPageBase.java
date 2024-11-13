@@ -709,4 +709,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Content Rating is visible")
                 .until(it -> !contentRatingOverlayLabel.isElementPresent());
     }
+
+    public boolean isCrossingAdBoundaryMessagePresent() {
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ALERT_MESSAGE_CROSSING_AD_BOUNDARY.getText())).isPresent();
+    }
 }
