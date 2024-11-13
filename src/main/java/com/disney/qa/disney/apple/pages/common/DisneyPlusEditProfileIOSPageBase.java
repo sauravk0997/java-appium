@@ -514,12 +514,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 getProfilePinDescription().isPresent();
     }
 
-    public boolean isErrorDuplicateProfileNamePresent() {
-        String message = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, ERROR_DUPLICATE_PROFILE_NAME.getText());
-        LOGGER.info("Error Message by dictionary: {}", message);
-        return staticTextLabelName.format(message).isPresent();
-    }
-
     public ExtendedWebElement getDeleteProfileCancelButton() {
         return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText()));
     }
