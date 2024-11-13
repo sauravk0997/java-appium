@@ -4,13 +4,16 @@ import com.amazonaws.services.rekognition.model.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -159,6 +162,99 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickCloseButton();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68157"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingContainer() {
+        int swipeCount = 5;
+        int titlesLimit = 4;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        String deeplink = R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink");
+        launchDeeplink(deeplink);
+        detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+
+        deeplink = R.TESTDATA.get("disney_prod_avengers_end_game_deeplink");
+        launchDeeplink(deeplink);
+        detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+
+        deeplink = R.TESTDATA.get("disney_prod_mulan_2020_deeplink");
+        launchDeeplink(deeplink);
+        detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+
+        deeplink = R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink");
+        launchDeeplink(deeplink);
+        detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        homePage.waitForHomePageToOpen();
+        CollectionConstant.Collection continueWatchingCollection = CollectionConstant.Collection.CONTINUE_WATCHING;
+        homePage.swipeTillCollectionTappable(continueWatchingCollection, Direction.UP, swipeCount);
+        sa.assertTrue(homePage.isCollectionPresent(continueWatchingCollection),
+                "Continue Watching Container not found");
+
+        List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(continueWatchingCollection), titlesLimit);
+
+        Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
+        String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
+        String firstCellTitle = homePage.getFirstCellTitleFromContainer(continueWatchingCollection).split(",")[0];
+        sa.assertEquals(firstCellTitle, firstAPICollectionItemTitle,
+                "First element under 'Continue Watching' did not have same Title from the API");
+        sa.assertTrue(homePage.isFirstCellProgressBarPresent(continueWatchingCollection),
+                "First element under 'Continue Watching' did not have Progress bar");
+        sa.assertTrue(homePage.isFirstCellPlayIconPresent(continueWatchingCollection),
+                "First element under 'Continue Watching' did not have Play icon");
+        String firstAPICollectionItemSeasonNumber = firstAPICollectionItem.getVisuals().getSeasonNumber();
+        String firstAPICollectionItemEpisodeNumber = firstAPICollectionItem.getVisuals().getEpisodeNumber();
+        String firstAPICollectionItemEpisodeTitle = firstAPICollectionItem.getVisuals().getEpisodeTitle();
+        sa.assertTrue(
+                homePage.isFirstCellEpisodeMetadataPresent(continueWatchingCollection,
+                        firstAPICollectionItemSeasonNumber,
+                        firstAPICollectionItemEpisodeNumber,
+                        firstAPICollectionItemEpisodeTitle),
+                "First element under 'Continue Watching' did not have Episode metadata");
+        String firstAPICollectionItemPrompt = firstAPICollectionItem.getVisuals().getPrompt();
+        sa.assertTrue(homePage.isFirstCellRemainingTimePresent(
+                continueWatchingCollection, firstAPICollectionItemPrompt),
+                "First element under 'Continue Watching' did not have Remaining time text");
+
+        int continueWatchingTitlesQuantity = continueWatchingTitlesFromApi.size();
+        String lastAPICollectionItemTitle = continueWatchingTitlesFromApi.get(continueWatchingTitlesQuantity - 1)
+                .getVisuals().getTitle();
+        ExtendedWebElement lastElement = homePage.getCellElementFromContainer(
+                continueWatchingCollection, lastAPICollectionItemTitle);
+        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(continueWatchingCollection),
+                lastElement,
+                10,
+                Direction.LEFT);
+        sa.assertTrue(lastElement.isPresent(),
+                "Last element under 'Continue Watching' was not visible after swiping left in the container");
+
+        ExtendedWebElement firstElement = homePage.getCellElementFromContainer(
+                continueWatchingCollection, firstAPICollectionItemTitle);
+        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(continueWatchingCollection),
+                firstElement,
+                10,
+                Direction.RIGHT);
+        sa.assertTrue(firstElement.isPresent(),
+                "First element under 'Continue Watching' was not visible after swiping right in the container");
+
+        sa.assertAll();
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
