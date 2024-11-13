@@ -375,7 +375,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74742"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
-    public void verifyR21CreatePinDownloadsCompleted() {
+    public void verifyR21CreatePinDownloadStarts() {
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage =
