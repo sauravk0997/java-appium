@@ -994,6 +994,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
+        Assert.assertTrue(editProfile.isOpened(), "Edit profile screen did not open");
         Assert.assertTrue(editProfile.getKidProofExitToggleValue().equals(ON), KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON);
 
         editProfile.toggleKidsProofExit();
