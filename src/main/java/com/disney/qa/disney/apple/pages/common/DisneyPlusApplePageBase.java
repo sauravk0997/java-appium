@@ -1567,4 +1567,26 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
     }
+
+    public boolean isFirstCellPlayIconPresent(CollectionConstant.Collection collection) {
+        String collectionName = CollectionConstant.getCollectionName(collection);
+        return firstCellElementPlayIconFromCollection.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellProgressBarPresent(CollectionConstant.Collection collection) {
+        String collectionName = CollectionConstant.getCollectionName(collection);
+        return firstCellElementProgressBarFromCollection.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellEpisodeMetadataPresent(
+            CollectionConstant.Collection collection, String seasonNumber, String episodeNumber, String episodeTitle) {
+        String collectionName = CollectionConstant.getCollectionName(collection);
+        String episodeMetadata = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
+        return firstCellElementTextFromCollection.format(collectionName, episodeMetadata).isPresent();
+    }
+
+    public boolean isFirstCellRemainingTimePresent(CollectionConstant.Collection collection, String titlePrompt) {
+        String collectionName = CollectionConstant.getCollectionName(collection);
+        return firstCellElementTextFromCollection.format(collectionName, titlePrompt).isPresent();
+    }
 }
