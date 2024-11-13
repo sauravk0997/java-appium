@@ -364,7 +364,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int totalTime = videoPlayer.getRemainingTime();
         videoPlayer.clickPlayButton();
         LOGGER.info("Playback total time {}", totalTime);
-        // Validate current time is in current grace period
+        // Validate current time is in grace period and make validations according to this
         if (videoPlayer.isValidGracePeriodLimit(totalTime)) {
             LOGGER.info("Valid grace period");
             // Rewind to the beginning and validate Ad should not be playing
