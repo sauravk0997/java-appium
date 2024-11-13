@@ -377,6 +377,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
             Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad is not present");
         }
     }
+    
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
