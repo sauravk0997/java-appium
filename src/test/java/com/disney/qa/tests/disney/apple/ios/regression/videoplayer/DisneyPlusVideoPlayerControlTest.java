@@ -399,8 +399,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Video player controls are not automatically dismissed");
         // Tap two times anywhere on the video player and validate that video controls are dismissed
         clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
-        // Scrub bar to prepare for pause action
-        videoPlayer.scrubToPlaybackPercentage(10);
+        // Prepare for pause action
         clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.getPlayButton().isPresent(),
