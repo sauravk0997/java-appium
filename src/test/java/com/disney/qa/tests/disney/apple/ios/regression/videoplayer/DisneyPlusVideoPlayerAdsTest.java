@@ -350,6 +350,24 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
                 "Ad badge countdown didn't pause");
     }
 
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73082"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMovingBackwardsAdPodNotForceAdPlay() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String adNotPresentMessage = "Ad is not present";
+        String adPresentMessage = "Ad is present";
+        String adBoundaryPresentMessage = "Ad boundary is present";
+        loginAndStartPlayback(MS_MARVEL);
+        // Validate and wait for Ad to complete
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), adNotPresentMessage);
+        videoPlayer.waitForAdToCompleteIfPresent(6);
+        // Rewind to the beginning and validate Ad should not be playing
+        videoPlayer.scrubToPlaybackPercentage(0);
+        Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(), adBoundaryPresentMessage);
+        Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(), adPresentMessage);
+    }
+    
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
