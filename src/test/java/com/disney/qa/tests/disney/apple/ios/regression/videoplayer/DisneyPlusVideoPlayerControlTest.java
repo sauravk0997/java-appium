@@ -380,6 +380,55 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66509"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyVideoControlBringUpAndDismissControls() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        int waitTime = 5;
+        loginAndStartPlayback(THE_MARVELS);
+        videoPlayer.waitForVideoToStart();
+        // Taps anywhere on the video player and validate video controls
+        clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+        validateVideoControls(true);
+        // Wait for 5 seconds
+        pause(waitTime);
+        validateVideoControls(false);
+        // Tap two times anywhere on the video player and validate that video controls are dismissed
+        clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+      //  pause(2);
+      //  clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+       // validateVideoControls(false);
+        // Scrub bar to prepare for pause action
+        videoPlayer.scrubToPlaybackPercentage(10);
+        clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.getPlayButton().isPresent(),
+                "Video player controls are not up");
+    }
+
+    private void validateVideoControls(boolean validation) {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        LOGGER.info("Starting validation {}", validation);
+        if(validation) {
+            sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                    "Pause control is not present");
+            sa.assertTrue(videoPlayer.getElementFor(PlayerControl.REWIND).isPresent(SHORT_TIMEOUT),
+                    "Rewind control is not present");
+            sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isPresent(SHORT_TIMEOUT),
+                    "Fast Forward control is not present");
+        } else {
+            sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                    "Pause control is present");
+            sa.assertFalse(videoPlayer.getElementFor(PlayerControl.REWIND).isPresent(SHORT_TIMEOUT),
+                    "Rewind control is present");
+            sa.assertFalse(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isPresent(SHORT_TIMEOUT),
+                    "Rewind control is present");
+        }
+    }
+
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
