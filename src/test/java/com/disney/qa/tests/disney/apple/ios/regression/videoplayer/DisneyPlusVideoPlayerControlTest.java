@@ -394,7 +394,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
                 "Video player controls are not displayed after tapping the player screen");
         // Wait for video controls to disappear
-        waitForDisplayControlToDisappear();
+        waitForVideoControlToDisappear();
         sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
                 "Video player controls are not automatically dismissed");
         // Tap two times anywhere on the video player and validate that video controls are dismissed
@@ -403,14 +403,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
                 "Video player controls are not dismissed");
         // Prepare for pause action
-        clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.getPlayButton().isPresent(),
                 "Video player controls are not up");
         sa.assertAll();
     }
 
-    public void waitForDisplayControlToDisappear() {
+    public void waitForVideoControlToDisappear() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         fluentWait(getDriver(), 300, SHORT_TIMEOUT, "Player controls still displayed")
                 .until(it -> videoPlayer.getPauseButton().isElementNotPresent(1));
