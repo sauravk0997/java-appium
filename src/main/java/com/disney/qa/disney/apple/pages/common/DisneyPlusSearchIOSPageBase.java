@@ -49,7 +49,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS 'Rated' AND label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
     @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS 'Rated %s'`]")
+            "**/XCUIElementTypeCell[`label CONTAINS \"%s\" AND label CONTAINS \"Rated %s\"`]")
     private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,

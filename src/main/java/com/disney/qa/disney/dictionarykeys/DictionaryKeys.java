@@ -22,6 +22,7 @@ public enum DictionaryKeys {
     ADD_PROFILE_SUB("add_profile_subcopy"),
     ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE("add_profile_update_maturity_rating_title"),
     AGREE_AND_CONTINUE_BTN("btn_agree_continue"),
+    ALERT_MESSAGE_CROSSING_AD_BOUNDARY("alert_message_crossing_ad_boundary"),
     APP_SETTINGS_TITLE("app_settings_title"),
     APP_VERSION_NUMBER("app_version_number"),
     ATTRIBUTE_VALIDATION("attributeValidation"),
