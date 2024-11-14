@@ -336,13 +336,16 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement firstCellElementFromCollection;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/**/XCUIElementTypeOther[`name == 'progressBar'`]")
-    private ExtendedWebElement firstCellElementProgressBarFromCollection;
+    private ExtendedWebElement firstCellElementFromCollectionProgressBar;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeOther[1]/XCUIElementTypeImage[1]")
+    private ExtendedWebElement firstCellElementFromCollectionAssetImage;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/**/XCUIElementTypeImage[`name == 'playIcon'`]")
-    private ExtendedWebElement firstCellElementPlayIconFromCollection;
+    private ExtendedWebElement firstCellElementFromCollectionPlayIcon;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value CONTAINS '%s'`]")
-    private ExtendedWebElement firstCellElementTextFromCollection;
+    private ExtendedWebElement firstCellElementFromCollectionDynamicStaticText;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
 
@@ -1568,25 +1571,31 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return kidThemeBackgroundUI.isPresent();
     }
 
-    public boolean isFirstCellPlayIconPresent(CollectionConstant.Collection collection) {
+    public boolean isFirstCellFromCollectionAssetImagePresent(CollectionConstant.Collection collection) {
         String collectionName = CollectionConstant.getCollectionName(collection);
-        return firstCellElementPlayIconFromCollection.format(collectionName).isPresent();
+        return firstCellElementFromCollectionAssetImage.format(collectionName).isPresent();
     }
 
-    public boolean isFirstCellProgressBarPresent(CollectionConstant.Collection collection) {
+    public boolean isFirstCellFromCollectionPlayIconPresent(CollectionConstant.Collection collection) {
         String collectionName = CollectionConstant.getCollectionName(collection);
-        return firstCellElementProgressBarFromCollection.format(collectionName).isPresent();
+        return firstCellElementFromCollectionPlayIcon.format(collectionName).isPresent();
     }
 
-    public boolean isFirstCellEpisodeMetadataPresent(
+    public boolean isFirstCellFromCollectionProgressBarPresent(CollectionConstant.Collection collection) {
+        String collectionName = CollectionConstant.getCollectionName(collection);
+        return firstCellElementFromCollectionProgressBar.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionEpisodeMetadataPresent(
             CollectionConstant.Collection collection, String seasonNumber, String episodeNumber, String episodeTitle) {
         String collectionName = CollectionConstant.getCollectionName(collection);
         String episodeMetadata = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
-        return firstCellElementTextFromCollection.format(collectionName, episodeMetadata).isPresent();
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
     }
 
-    public boolean isFirstCellRemainingTimePresent(CollectionConstant.Collection collection, String titlePrompt) {
+    public boolean isFirstCellFromCollectionRemainingTimePresent(
+            CollectionConstant.Collection collection, String titlePrompt) {
         String collectionName = CollectionConstant.getCollectionName(collection);
-        return firstCellElementTextFromCollection.format(collectionName, titlePrompt).isPresent();
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, titlePrompt).isPresent();
     }
 }

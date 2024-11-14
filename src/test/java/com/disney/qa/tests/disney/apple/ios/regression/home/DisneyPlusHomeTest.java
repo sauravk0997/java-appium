@@ -215,21 +215,23 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String firstCellTitle = homePage.getFirstCellTitleFromContainer(continueWatchingCollection).split(",")[0];
         sa.assertEquals(firstCellTitle, firstAPICollectionItemTitle,
                 "First element under 'Continue Watching' did not have same Title from the API");
-        sa.assertTrue(homePage.isFirstCellProgressBarPresent(continueWatchingCollection),
+        sa.assertTrue(homePage.isFirstCellFromCollectionAssetImagePresent(continueWatchingCollection),
+                "First element under 'Continue Watching' did not have Asset image");
+        sa.assertTrue(homePage.isFirstCellFromCollectionProgressBarPresent(continueWatchingCollection),
                 "First element under 'Continue Watching' did not have Progress bar");
-        sa.assertTrue(homePage.isFirstCellPlayIconPresent(continueWatchingCollection),
+        sa.assertTrue(homePage.isFirstCellFromCollectionPlayIconPresent(continueWatchingCollection),
                 "First element under 'Continue Watching' did not have Play icon");
         String firstAPICollectionItemSeasonNumber = firstAPICollectionItem.getVisuals().getSeasonNumber();
         String firstAPICollectionItemEpisodeNumber = firstAPICollectionItem.getVisuals().getEpisodeNumber();
         String firstAPICollectionItemEpisodeTitle = firstAPICollectionItem.getVisuals().getEpisodeTitle();
         sa.assertTrue(
-                homePage.isFirstCellEpisodeMetadataPresent(continueWatchingCollection,
+                homePage.isFirstCellFromCollectionEpisodeMetadataPresent(continueWatchingCollection,
                         firstAPICollectionItemSeasonNumber,
                         firstAPICollectionItemEpisodeNumber,
                         firstAPICollectionItemEpisodeTitle),
                 "First element under 'Continue Watching' did not have Episode metadata");
         String firstAPICollectionItemPrompt = firstAPICollectionItem.getVisuals().getPrompt();
-        sa.assertTrue(homePage.isFirstCellRemainingTimePresent(
+        sa.assertTrue(homePage.isFirstCellFromCollectionRemainingTimePresent(
                 continueWatchingCollection, firstAPICollectionItemPrompt),
                 "First element under 'Continue Watching' did not have Remaining time text");
 
