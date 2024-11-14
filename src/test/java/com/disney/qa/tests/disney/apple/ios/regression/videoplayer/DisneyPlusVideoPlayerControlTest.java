@@ -22,6 +22,7 @@ import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
@@ -386,20 +387,18 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyVideoControlBringUpAndDismissControls() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        int waitTime = 5;
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.waitForVideoToStart();
         // Taps anywhere on the video player and validate video controls
         clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
-        validateVideoControls(true);
-        // Wait for 5 seconds
-        pause(waitTime);
-        validateVideoControls(false);
+        sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not displayed after tapping the player screen");
+        // Wait for video controls to disappear
+        waitForDisplayControlToDisappear();
+        sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not automatically dismissed");
         // Tap two times anywhere on the video player and validate that video controls are dismissed
         clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
-      //  pause(2);
-      //  clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
-       // validateVideoControls(false);
         // Scrub bar to prepare for pause action
         videoPlayer.scrubToPlaybackPercentage(10);
         clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
@@ -408,25 +407,10 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Video player controls are not up");
     }
 
-    private void validateVideoControls(boolean validation) {
+    public void waitForDisplayControlToDisappear() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        LOGGER.info("Starting validation {}", validation);
-        if(validation) {
-            sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
-                    "Pause control is not present");
-            sa.assertTrue(videoPlayer.getElementFor(PlayerControl.REWIND).isPresent(SHORT_TIMEOUT),
-                    "Rewind control is not present");
-            sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isPresent(SHORT_TIMEOUT),
-                    "Fast Forward control is not present");
-        } else {
-            sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
-                    "Pause control is present");
-            sa.assertFalse(videoPlayer.getElementFor(PlayerControl.REWIND).isPresent(SHORT_TIMEOUT),
-                    "Rewind control is present");
-            sa.assertFalse(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isPresent(SHORT_TIMEOUT),
-                    "Rewind control is present");
-        }
+        fluentWait(getDriver(), 300, SHORT_TIMEOUT, "Player controls still displayed")
+                .until(it -> videoPlayer.getPauseButton().isElementNotPresent(1));
     }
 
     private void loginAndStartPlayback(String content) {
