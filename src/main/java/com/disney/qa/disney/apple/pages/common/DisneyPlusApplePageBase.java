@@ -333,7 +333,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeKeyboard\"")
     private ExtendedWebElement keyboardByPredicate;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]")
-    private ExtendedWebElement firstCellElementFromCollection;
+    protected ExtendedWebElement firstCellElementFromCollection;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
 
