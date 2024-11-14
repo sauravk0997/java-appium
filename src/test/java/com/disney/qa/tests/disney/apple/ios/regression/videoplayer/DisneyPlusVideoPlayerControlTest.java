@@ -390,7 +390,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.waitForVideoToStart();
         // Taps anywhere on the video player and validate video controls
-        clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
+       // clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+        videoPlayer.displayVideoController();
         sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
                 "Video player controls are not displayed after tapping the player screen");
         // Wait for video controls to disappear
@@ -398,17 +399,19 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
                 "Video player controls are not automatically dismissed");
         // Tap two times anywhere on the video player and validate that video controls are dismissed
-        clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
-        pause(2);
-        clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
+       // clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+        videoPlayer.displayVideoController();
+        pause(1);
+        videoPlayer.displayVideoController();
         sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
                 "Video player controls are not dismissed");
         // Prepare for pause action
        // videoPlayer.clickPauseButton();
-        clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
-        if(videoPlayer.getPlayButton().isPresent()) {
-            videoPlayer.getPlayButton().click();
-        }
+       // clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+        videoPlayer.displayVideoController();
+      //  if(videoPlayer.getPlayButton().isPresent()) {
+        //    videoPlayer.getPlayButton().click();
+       // }
         videoPlayer.getPauseButton().click();
         sa.assertTrue(videoPlayer.getPlayButton().isPresent(),
                 "Video player controls are not up");
