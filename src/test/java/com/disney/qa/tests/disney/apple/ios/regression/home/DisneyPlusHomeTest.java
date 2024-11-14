@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -168,7 +169,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
-        String heroCarouselId = collections.get(0).getId();
+        String heroCarouselId = "";
+        try{
+            heroCarouselId = collections.get(0).getId();
+        } catch (Exception e){
+            throw new SkipException("Skipping test, hero carousel collection id not found:- " +  e.getMessage());
+        }
         Assert.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed");
 
         String currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
