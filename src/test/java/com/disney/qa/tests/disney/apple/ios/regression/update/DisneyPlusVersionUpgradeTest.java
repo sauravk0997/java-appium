@@ -77,6 +77,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
 
         enableHardForceUpdateInJarvis();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
         Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
                 FORCE_UPDATE_ERROR + " Title not found");
         Assert.assertTrue(welcomePage.isForceAppUpdateMessagePresent(),
