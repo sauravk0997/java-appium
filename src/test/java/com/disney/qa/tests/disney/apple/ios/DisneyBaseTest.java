@@ -581,7 +581,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         jarvis.openAppConfigOverrides();
         jarvis.openOverrideSection(FORCE_UPDATE_CONFIG);
         jarvis.openOverrideSection(SHOW_UPDATE_APP_ALERT);
-        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+        if (applePageBase.getStaticTextByLabelContains(FALSE).isPresent(SHORT_TIMEOUT)) {
             LOGGER.info("Enabling Hard Force Update");
             applePageBase.clickToggleView();
         }
