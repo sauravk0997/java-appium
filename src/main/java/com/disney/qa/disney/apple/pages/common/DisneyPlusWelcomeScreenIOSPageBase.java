@@ -46,8 +46,8 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     private ExtendedWebElement dontAllowbtn;
 
     private ExtendedWebElement forceUpdateTitle = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.APPLICATION,
-            DictionaryKeys.UPDATE_APP_TITLE.getText()));
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.UPDATE_APP_TITLE.getText()));
 
     //FUNCTIONS
 
@@ -60,14 +60,6 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
         return loginButton.isPresent();
     }
 
-    public boolean isBackgroundDisplayed() {
-        return backgroundImage.isElementPresent();
-    }
-
-    public boolean isDisneyPlusLogoDisplayed() {
-        return disneyPlusLogo.isPresent();
-    }
-
     public boolean isMainTextDisplayed() {
         return staticTextLabelContains.format(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
@@ -77,7 +69,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     public boolean isSubCopyDirectTextPresent() {
         String subCopyDirectText = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
+                        DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
         return staticTextNameContains.format(subCopyDirectText).isPresent();
     }
 
@@ -129,12 +121,14 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isForceAppUpdateMessagePresent() {
-        return getTextViewByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.UPDATE_APP_BODY.getText())).isPresent();
+        return getTextViewByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.UPDATE_APP_BODY.getText())).isPresent();
     }
 
     public boolean isForceAppUpdateButtonPresent() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_UPDATE_APP.getText())).isPresent();
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.BTN_UPDATE_APP.getText())).isPresent();
     }
 }
