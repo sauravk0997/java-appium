@@ -230,4 +230,16 @@ public interface MobileUtilsExtended extends UniversalUtils, IMobileUtils {
         int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + height));
         tap(location.getX() + (int) x, location.getY() + y);
     }
+
+    default void clickElementAtLocation(ExtendedWebElement element, int height, int width, int times) {
+        var dimension = element.getSize();
+        Point location = element.getLocation();
+
+        int x = (int) Math.round(dimension.getWidth() * Double.parseDouble("." + width));
+        int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + height));
+        while (times > 0) {
+            tap(location.getX() + x, location.getY() + y);
+            times--;
+        }
+    }
 }
