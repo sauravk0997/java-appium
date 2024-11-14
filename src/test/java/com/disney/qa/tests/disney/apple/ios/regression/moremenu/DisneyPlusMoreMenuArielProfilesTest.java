@@ -69,6 +69,26 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74468"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAddProfileU13AuthenticationAbandonFlow() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert softAssert = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        createKidsProfile();
+        pause(5);
+        //Abandon the flow after DOB entry
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
+        softAssert.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
     @Test(description = "Add profile U13, minor authentication-Restriction ON", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyAddProfileU13RestrictionONAuthentication() {
@@ -174,33 +194,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
         softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isPresent(), "Kids Home page is not open after login");
-        softAssert.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74468"})
-    @Test(description = "Edit Profile U13-> Minor Consent Abandon Flow", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyEditProfileU13MinorConsentAbandonFlow() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        SoftAssert softAssert = new SoftAssert();
-        onboard();
-        whoIsWatching.clickProfile(KIDS_PROFILE);
-        pause(3);
-        moreMenu.clickMoreTab();
-        editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
-        updateProfilePage.tapSaveButton();
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
-        //Abandon the flow
-        terminateApp(buildType.getDisneyBundle());
-        relaunch();
-        //Select KIDS profile
-        whoIsWatching.clickProfile(KIDS_PROFILE);
-        //TODO: Bug created IOS-5038
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         softAssert.assertAll();
     }
 
