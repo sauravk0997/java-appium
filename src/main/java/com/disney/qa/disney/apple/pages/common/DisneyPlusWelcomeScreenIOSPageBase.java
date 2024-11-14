@@ -2,12 +2,10 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase {
@@ -47,6 +45,10 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "Don’t Allow")
     private ExtendedWebElement dontAllowbtn;
 
+    private ExtendedWebElement forceUpdateTitle = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION,
+            DictionaryKeys.UPDATE_APP_TITLE.getText()));
+
     //FUNCTIONS
 
     public DisneyPlusWelcomeScreenIOSPageBase(WebDriver driver) {
@@ -67,48 +69,30 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isMainTextDisplayed() {
-        return staticTextLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
+        return staticTextLabelContains.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
     public boolean isSubCopyDirectTextPresent() {
-        String subCopyDirectText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
+        String subCopyDirectText = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
         return staticTextNameContains.format(subCopyDirectText).isPresent();
     }
 
     public ExtendedWebElement getSubCopyDirectText(){
-        return staticTextNameContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
-    }
-
-    public boolean isSignUpButtonDisplayed() {
-        return signUpButton.isPresent();
+        return staticTextNameContains.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
     }
 
     public boolean isLogInButtonDisplayed() {
         return loginButton.isPresent();
     }
 
-    public boolean isLogOutButtonDisplayed() {
-        return logOutButton.isElementPresent();
-    }
-
     public boolean isCompleteSubscriptionButtonDisplayed() {
         return completeSubscriptionButton.isElementPresent();
-    }
-
-    public boolean isCancelButtonDisplayed() {
-        return paywallCancelButton.isElementPresent();
-    }
-
-    public boolean isMonthlySubButtonDisplayed() {
-        return monthlySubButton.isElementPresent();
-    }
-
-    public boolean isYearlySubButtonDisplayed() {
-        return yearlySubButton.isElementPresent();
-    }
-
-    public boolean isRestoreButtonDisplayed() {
-        return restoreButton.isElementPresent();
     }
 
     public void clickLogInButton() {
@@ -125,13 +109,6 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
         completeSubscriptionButton.click();
     }
 
-    public void logOutFromUnentitledAccount() {
-        paywallCancelButton.click();
-        systemAlertDefaultBtn.click();
-        logOutButton.click();
-        systemAlertDefaultBtn.click();
-    }
-
     public By getSignUpButtonBy() {
         return signUpButton.getBy();
     }
@@ -142,5 +119,22 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     public void clickDontAllowBtn() {
         dontAllowbtn.clickIfPresent();
+    }
+
+    public void clickForceUpdateTitle() {
+        forceUpdateTitle.click();
+    }
+    public boolean isForceAppUpdateTitlePresent() {
+        return forceUpdateTitle.isPresent();
+    }
+
+    public boolean isForceAppUpdateMessagePresent() {
+        return getTextViewByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.UPDATE_APP_BODY.getText())).isPresent();
+    }
+
+    public boolean isForceAppUpdateButtonPresent() {
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_UPDATE_APP.getText())).isPresent();
     }
 }

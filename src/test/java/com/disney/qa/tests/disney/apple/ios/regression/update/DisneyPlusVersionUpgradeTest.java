@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.update;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -8,6 +9,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -15,6 +17,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
     String APP_URL = "appcenter://Disney-Prod-Enterprise/ios/enterprise/%s";
+    private static final String FORCE_UPDATE_ERROR = "Force Update Error";
 
     /* This test case installs the previous FC build (appPreviousFCVersion) that was tested previous the current version
        and upgrades against the latest FC approved (appCurrentFCVersion) it is in the current FC XML
@@ -68,9 +71,45 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), "Video player Page did not open");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67615"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.UPGRADE, US})
+    public void verifyHardForcedUpdateWhileLoggedOut() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+
+        enableHardForceUpdateInJarvis();
+        Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
+                FORCE_UPDATE_ERROR + " Title not found");
+        Assert.assertTrue(welcomePage.isForceAppUpdateMessagePresent(),
+                FORCE_UPDATE_ERROR + " message not found");
+        Assert.assertTrue(welcomePage.isForceAppUpdateButtonPresent(),
+                FORCE_UPDATE_ERROR + " button not found");
+
+        welcomePage.clickForceUpdateTitle();
+        Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
+                FORCE_UPDATE_ERROR + " Title not found after clicking on model");
+
+        welcomePage.clickDefaultAlertBtn();
+
+        Assert.assertTrue(welcomePage.isAppStoreAppOpen(), "AppStore App not open");
+        Assert.assertTrue(welcomePage.getAppStoreAppScreenTitle().contains("Disney"),
+                "AppStore is not opened to Disney+");
+
+        relaunch();
+        Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
+                FORCE_UPDATE_ERROR + " Title not found");
+    }
+
     private void installApplication(String version) {
         installApp(AppCenterManager.getInstance()
                 .getAppInfo(String.format(APP_URL, version))
                 .getDirectLink());
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void removeJarvisApp(){
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        if(isInstalled){
+            removeJarvis();
+        }
     }
 }

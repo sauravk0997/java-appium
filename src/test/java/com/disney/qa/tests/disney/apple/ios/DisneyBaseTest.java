@@ -82,6 +82,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PLAYER = "player";
     public static final String PICTURE_IN_PICTURE = "pictureInPicture";
     public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
+    public static final String FORCE_UPDATE_CONFIG = "forceUpdateConfig";
+    public static final String SHOW_UPDATE_APP_ALERT = "showUpdateAppAlert";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
 
@@ -569,6 +571,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new SkipException("Failed to update R21 Pause TimeOut: {}", e);
         }
         setOverrideValue(String.valueOf(newPauseTime));
+        terminateJarvisInstallDisney();
+    }
+
+    public void enableHardForceUpdateInJarvis() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvis(true);
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection(FORCE_UPDATE_CONFIG);
+        jarvis.openOverrideSection(SHOW_UPDATE_APP_ALERT);
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("Enabling Hard Force Update");
+            applePageBase.clickToggleView();
+        }
         terminateJarvisInstallDisney();
     }
 
