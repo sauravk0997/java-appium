@@ -129,7 +129,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isForceAppUpdateButtonPresent() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_UPDATE_APP.getText())).isPresent();
     }
