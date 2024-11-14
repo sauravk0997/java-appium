@@ -399,11 +399,15 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Video player controls are not automatically dismissed");
         // Tap two times anywhere on the video player and validate that video controls are dismissed
         clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+        clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
+        sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not dismissed");
         // Prepare for pause action
         clickElementAtLocation(videoPlayer.getPlayerView(), 50, 50);
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.getPlayButton().isPresent(),
                 "Video player controls are not up");
+        sa.assertAll();
     }
 
     public void waitForDisplayControlToDisappear() {
