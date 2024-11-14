@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
-import com.amazonaws.services.rekognition.model.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
