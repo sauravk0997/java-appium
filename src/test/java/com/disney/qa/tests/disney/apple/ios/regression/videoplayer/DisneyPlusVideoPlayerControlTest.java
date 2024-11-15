@@ -31,6 +31,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final int ONE_SEC_TIMEOUT = 1;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -410,8 +411,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     public void waitForVideoControlToDisappear() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        fluentWait(getDriver(), 300, SHORT_TIMEOUT, "Player controls still displayed")
-                .until(it -> videoPlayer.getPauseButton().isElementNotPresent(1));
+        fluentWait(getDriver(), SHORT_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
+                .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(1));
     }
 
     private void loginAndStartPlayback(String content) {
