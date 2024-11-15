@@ -404,14 +404,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertFalse(videoPlayer.getPauseButton().isPresent(),
                 "Video player controls are not dismissed");
         // Prepare for pause action and validate video controls are up
-        videoPlayer.displayVideoController();
-        videoPlayer.getPauseButton().click();
-        sa.assertTrue(videoPlayer.getPlayButton().isPresent(),
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.verifyVideoPaused(),
                 "Video player controls are not up");
         // Wait configured time and validate video controls do not dismissed after the configured time
         pause(controlsConfiguredTime);
-        fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to see video controls")
-                .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT));
+        sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT));
         sa.assertAll();
     }
 
