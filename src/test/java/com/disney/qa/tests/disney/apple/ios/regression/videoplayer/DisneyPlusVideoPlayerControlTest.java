@@ -406,7 +406,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         // Prepare for pause action and validate video controls are up
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.verifyVideoPaused(),
-                "Video player controls are not up");
+                "Video player did not paused");
         // Wait configured time and validate video controls do not dismissed after the configured time
         pause(controlsConfiguredTime);
         sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT),
