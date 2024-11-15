@@ -222,15 +222,6 @@ public interface MobileUtilsExtended extends UniversalUtils, IMobileUtils {
         tap(location.getX() + x, location.getY() + y);
     }
 
-    default void clickElementAtAbsoluteLocation(ExtendedWebElement element, int height, double width) {
-        var dimension = element.getSize();
-        var location = element.getLocation();
-
-        double x = (dimension.getWidth() * width);
-        int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + height));
-        tap(location.getX() + (int) x, location.getY() + y);
-    }
-
     default void clickElementAtLocation(ExtendedWebElement element, int height, int width, int times) {
         var dimension = element.getSize();
         Point location = element.getLocation();
@@ -241,5 +232,14 @@ public interface MobileUtilsExtended extends UniversalUtils, IMobileUtils {
             tap(location.getX() + x, location.getY() + y);
             times--;
         }
+    }
+
+    default void clickElementAtAbsoluteLocation(ExtendedWebElement element, int height, double width) {
+        var dimension = element.getSize();
+        var location = element.getLocation();
+
+        double x = (dimension.getWidth() * width);
+        int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + height));
+        tap(location.getX() + (int) x, location.getY() + y);
     }
 }
