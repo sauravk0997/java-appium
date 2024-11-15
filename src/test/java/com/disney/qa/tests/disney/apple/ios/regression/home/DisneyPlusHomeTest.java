@@ -250,6 +250,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
         String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
+        if (firstAPICollectionItemTitle.isEmpty()) {
+            throw new SkipException("First API Collection item did not have a title");
+        }
         String firstCellTitle = homePage.getFirstCellTitleFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING)
                 .split(",")[0];
         sa.assertEquals(firstCellTitle, firstAPICollectionItemTitle,
@@ -263,13 +266,22 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String firstAPICollectionItemSeasonNumber = firstAPICollectionItem.getVisuals().getSeasonNumber();
         String firstAPICollectionItemEpisodeNumber = firstAPICollectionItem.getVisuals().getEpisodeNumber();
         String firstAPICollectionItemEpisodeTitle = firstAPICollectionItem.getVisuals().getEpisodeTitle();
+        if (firstAPICollectionItemSeasonNumber.isEmpty() ||
+                firstAPICollectionItemEpisodeNumber.isEmpty() ||
+                firstAPICollectionItemEpisodeTitle.isEmpty() ) {
+            throw new SkipException("First API Collection item did not have episode metadata to validate");
+        }
         sa.assertTrue(
                 homePage.isFirstCellFromCollectionEpisodeMetadataPresent(continueWatchingCollectionName,
                         firstAPICollectionItemSeasonNumber,
                         firstAPICollectionItemEpisodeNumber,
                         firstAPICollectionItemEpisodeTitle),
                 "First element under 'Continue Watching' did not have Episode metadata");
+
         String firstAPICollectionItemPrompt = firstAPICollectionItem.getVisuals().getPrompt();
+        if (firstAPICollectionItemPrompt.isEmpty()) {
+            throw new SkipException("First API Collection item did not have a prompt to validate");
+        }
         sa.assertTrue(homePage.isFirstCellFromCollectionRemainingTimePresent(
                         continueWatchingCollectionName, firstAPICollectionItemPrompt),
                 "First element under 'Continue Watching' did not have Remaining time text");
@@ -277,6 +289,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         String lastAPICollectionItemTitle = continueWatchingTitlesFromApi.get(continueWatchingTitlesFromApi.size() - 1)
                 .getVisuals().getTitle();
+        if (lastAPICollectionItemTitle.isEmpty()) {
+            throw new SkipException("Last API Collection item did not have a title");
+        }
         ExtendedWebElement lastElement = homePage.getCellElementFromContainer(
                 CollectionConstant.Collection.CONTINUE_WATCHING, lastAPICollectionItemTitle);
         homePage.swipeInContainerTillElementIsPresent(
