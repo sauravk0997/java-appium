@@ -116,6 +116,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     public void clickForceUpdateTitle() {
         forceUpdateTitle.click();
     }
+
     public boolean isForceAppUpdateTitlePresent() {
         return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
                 "Force Update page did not Open ")
