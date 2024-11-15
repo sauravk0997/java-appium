@@ -11,6 +11,7 @@ import java.lang.invoke.MethodHandles;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusCollectionIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == 'On the %s screen.'`]")
     private ExtendedWebElement collectionScreen;
 
@@ -21,8 +22,7 @@ public class DisneyPlusCollectionIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForCollectionPageToOpen(String collectionName) {
-        String logMessage = String.format("Waiting for '%s' collection page to load", collectionName);
-        LOGGER.info(logMessage);
+        LOGGER.info("Waiting for {} collection page to load", collectionName);
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Collection page is not opened")
                 .until(it -> isOpened(collectionName));
     }
