@@ -36,7 +36,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final int ONE_SEC_TIMEOUT = 1;
     private static final String REWIND = "rewind";
-    private static final String FASTFORWARD = "rewind";
+    private static final String FASTFORWARD = "fastForward";
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -396,7 +396,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.waitForVideoToStart();
         firstValueTimeToCompare = videoPlayer.getCurrentTime();
-
+        LOGGER.info("");
         waitForVideoControlToDisappear();
         clickAtScreenPlayer(REWIND);
         secondValueTimeToCompare = videoPlayer.getCurrentTime();
@@ -424,10 +424,10 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         int x = 0;
         int y = dimension.getHeight();
         switch(option) {
-            case "rewind":
+            case REWIND:
                 x = dimension.getWidth() - dimension.getWidth() / 2;
                 break;
-            case "fastForward":
+            case FASTFORWARD:
                 x = dimension.getWidth() + dimension.getWidth() / 2;
                 break;
             default:
