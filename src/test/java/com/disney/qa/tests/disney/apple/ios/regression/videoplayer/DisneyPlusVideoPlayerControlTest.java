@@ -406,6 +406,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.getPauseButton().click();
         sa.assertTrue(videoPlayer.getPlayButton().isPresent(),
                 "Video player controls are not up");
+        pause(10);
         sa.assertAll();
     }
 
