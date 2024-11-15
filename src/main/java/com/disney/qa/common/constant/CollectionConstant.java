@@ -7,26 +7,26 @@ public class CollectionConstant {
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
         BRANDS_DISNEY_ORIGINALS,
-        BRANDS_PIXAR_FEATURED,
-        BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
         BRANDS_MARVEL_FEATURED,
+        BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
+        BRANDS_PIXAR_FEATURED,
         BRANDS_STAR_WARS_ORIGINALS,
         COLLECTIONS,
         COMEDIES,
         CONTINUE_WATCHING,
         DISNEY_JUNIOR,
         DOCUMENTARIES_AND_REALITY,
+        HULU_FEATURED,
+        HULU_ORIGINALS,
+        KIDS_CAROUSEL, //Kids carousel rotating slides
+        KIDS_MICKEY_AND_FRIENDS,
+        KIDS_PRINCESSES_AND_FAIRY_TALES,
         NEW_TO_DISNEY,
         ORIGINALS,
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
-        TRENDING,
-        HULU_FEATURED,
-        HULU_ORIGINALS,
-        KIDS_CAROUSEL, //Kids carousel rotating slides
-        KIDS_PRINCESSES_AND_FAIRY_TALES,
-        KIDS_MICKEY_AND_FRIENDS,
-        STUDIOS_AND_NETWORKS;
+        STUDIOS_AND_NETWORKS,
+        TRENDING;
     }
 
     public static String getCollectionName(Collection collection) {
