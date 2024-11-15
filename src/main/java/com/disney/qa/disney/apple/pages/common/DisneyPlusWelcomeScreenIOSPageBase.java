@@ -73,12 +73,6 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
         return staticTextNameContains.format(subCopyDirectText).isPresent();
     }
 
-    public ExtendedWebElement getSubCopyDirectText(){
-        return staticTextNameContains.format(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                        DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText()));
-    }
-
     public boolean isLogInButtonDisplayed() {
         return loginButton.isPresent();
     }
