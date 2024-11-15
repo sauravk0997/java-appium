@@ -585,7 +585,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             LOGGER.info("Enabling Hard Force Update");
             applePageBase.clickToggleView();
         }
-        terminateJarvisInstallDisney();
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
     }
 
     public String getHuluSubscriptionId() {
