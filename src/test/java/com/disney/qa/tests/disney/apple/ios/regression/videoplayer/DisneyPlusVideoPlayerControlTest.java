@@ -409,7 +409,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Video player controls are not up");
         // Wait configured time and validate video controls do not dismissed after the configured time
         pause(controlsConfiguredTime);
-        sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT));
+        sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT),
+                "Video player controls are not up");
         sa.assertAll();
     }
 
