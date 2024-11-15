@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
-import com.amazonaws.services.rekognition.model.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -13,6 +12,7 @@ import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -159,6 +159,44 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickCloseButton();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67505"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HOME, US})
+    public void verifyHeroAutoRotationOnHomeScreen() throws URISyntaxException, JsonProcessingException {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
+        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        String heroCarouselId = "";
+        try{
+            heroCarouselId = collections.get(0).getId();
+        } catch (Exception e){
+            throw new SkipException("Skipping test, hero carousel collection id not found:- " +  e.getMessage());
+        }
+        Assert.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed");
+
+        String currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
+        sa.assertTrue(homePage.isHeroCarouselAutoRotating(currentHeroTitle, heroCarouselId),
+                "Hero Carousel did not auto rotate after 5 seconds");
+
+        swipeInContainer(homePage.getHeroCarouselContainer(heroCarouselId), Direction.LEFT, 500);
+
+        currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
+        Assert.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed");
+        sa.assertFalse(homePage.isHeroCarouselAutoRotating(currentHeroTitle, heroCarouselId),
+                "Hero Carousel auto rotate after 5 seconds");
+
+        homePage.swipeUp(900);
+        sa.assertFalse(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is displayed after swipe Down");
+        homePage.swipeDown(900);
+        sa.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed after swipe up");
+
+        currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
+        sa.assertTrue(homePage.isHeroCarouselAutoRotating(currentHeroTitle, heroCarouselId),
+                "Hero Carousel did not auto rotate after 5 seconds");
+        sa.assertAll();
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
