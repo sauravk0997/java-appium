@@ -11,7 +11,6 @@ public class CollectionConstant {
         BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
         BRANDS_MARVEL_FEATURED,
         BRANDS_STAR_WARS_ORIGINALS,
-        CAROUSEL, //carousel rotating slides
         COLLECTIONS,
         COMEDIES,
         CONTINUE_WATCHING,
@@ -48,8 +47,6 @@ public class CollectionConstant {
                 return "df6c1d07-c9fa-4532-b487-faa57287570e";
             case BRANDS_STAR_WARS_ORIGINALS:
                 return "887acd70-a8bd-45df-94b5-477e31f905b4";
-            case CAROUSEL:
-                return "55c72c2f-c8ce-4317-ae6c-6a8fa7213c85";
             case COLLECTIONS:
                 return "ed2d5ad2-cfc6-42c7-942e-aa539772f10c";
             case COMEDIES:
