@@ -387,8 +387,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyVideoControlBringUpAndDismissControls() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(THE_MARVELS);
         int controlsConfiguredTime = 5;
+        loginAndStartPlayback(THE_MARVELS);
 
         videoPlayer.waitForVideoToStart();
         // Tap anywhere on the video player and validate video controls
