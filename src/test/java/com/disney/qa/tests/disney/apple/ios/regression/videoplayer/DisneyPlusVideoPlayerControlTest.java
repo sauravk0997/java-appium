@@ -390,33 +390,36 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoControlRewindAndForwardWithControlsDown() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        int firstValueTimeToCompare = 0;
-        int secondValueTimeToCompare = 0;
+        int remainingTimeBeforeDoubleTap = 0;
+        int remainingTimeAfterDoubleTap = 0;
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.displayVideoController();
-        videoPlayer.getPauseButton().click();
-        firstValueTimeToCompare = videoPlayer.getCurrentTime();
-        LOGGER.info("* firstValueTimeToCompare {}", firstValueTimeToCompare);
+
+        remainingTimeBeforeDoubleTap = videoPlayer.getRemainingTime();
+        LOGGER.info("* firstValueTimeToCompare {}", remainingTimeBeforeDoubleTap);
         waitForVideoControlToDisappear();
         clickAtScreenPlayer(REWIND);
-        secondValueTimeToCompare = videoPlayer.getCurrentTime();
-        LOGGER.info("* secondValueTimeToCompare {}", secondValueTimeToCompare);
+        remainingTimeAfterDoubleTap = videoPlayer.getRemainingTime();
+        LOGGER.info("* remainingTimeAfterDoubleTap {}", remainingTimeAfterDoubleTap);
 
-        LOGGER.info("times {} {}" , firstValueTimeToCompare, secondValueTimeToCompare);
-        sa.assertTrue(secondValueTimeToCompare < firstValueTimeToCompare,"Rewind did not happen");
+        LOGGER.info("remainingTimeBeforeDoubleTap {} remainingTimeAfterDoubleTap {}" , remainingTimeBeforeDoubleTap,
+                remainingTimeAfterDoubleTap);
+        sa.assertTrue(remainingTimeBeforeDoubleTap > remainingTimeAfterDoubleTap,"Rewind did not happen");
 
-        firstValueTimeToCompare = videoPlayer.getCurrentTime();
-        LOGGER.info("** firstValueTimeToCompare {}", firstValueTimeToCompare);
+        remainingTimeBeforeDoubleTap = videoPlayer.getCurrentTime();
+        LOGGER.info("** firstValueTimeToCompare {}", remainingTimeBeforeDoubleTap);
 
         waitForVideoControlToDisappear();
         clickAtScreenPlayer(FASTFORWARD);
-        secondValueTimeToCompare = videoPlayer.getCurrentTime();
-        LOGGER.info("** secondValueTimeToCompare {}", secondValueTimeToCompare);
-        LOGGER.info("times {} {}" , firstValueTimeToCompare, secondValueTimeToCompare);
-        secondValueTimeToCompare = videoPlayer.getCurrentTime();
-        sa.assertTrue(secondValueTimeToCompare > firstValueTimeToCompare,"Fast Forward did not happen");
+        remainingTimeAfterDoubleTap = videoPlayer.getCurrentTime();
+        LOGGER.info("** remainingTimeAfterDoubleTap {}", remainingTimeAfterDoubleTap);
+        LOGGER.info("remainingTimeAfterDoubleTap {} remainingTimeBeforeDoubleTap {}" , remainingTimeBeforeDoubleTap,
+                remainingTimeAfterDoubleTap);
+        remainingTimeAfterDoubleTap = videoPlayer.getCurrentTime();
+        sa.assertTrue(remainingTimeAfterDoubleTap > remainingTimeBeforeDoubleTap,"Fast Forward did not happen");
+
+
         sa.assertAll();
     }
 
