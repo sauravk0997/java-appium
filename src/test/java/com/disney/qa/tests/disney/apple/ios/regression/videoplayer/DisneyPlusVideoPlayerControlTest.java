@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import static com.disney.jarvisutils.pages.apple.JarvisAppleBase.fluentWait;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -11,14 +12,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.jetbrains.annotations.NotNull;
+import org.openqa.selenium.JavascriptExecutor;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
@@ -31,6 +34,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final int ONE_SEC_TIMEOUT = 1;
+    private static final String REWIND = "rewind";
+    private static final String FASTFORWARD = "rewind";
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -378,6 +384,64 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.validateTimeFormat(remainingTimeAfterSecondScrub),
                 videoPlayerErrorMsg + remainingTimeAfterSecondScrub);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71946"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyVideoControlRewindAndForwardWithControlsDown() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int firstValueTimeToCompare = 0;
+        int secondValueTimeToCompare = 0;
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(THE_MARVELS);
+        videoPlayer.waitForVideoToStart();
+        firstValueTimeToCompare = videoPlayer.getCurrentTime();
+
+        waitForVideoControlToDisappear();
+        clickAtScreenPlayer(REWIND);
+        secondValueTimeToCompare = videoPlayer.getCurrentTime();
+        LOGGER.info("times {} {}" , firstValueTimeToCompare, secondValueTimeToCompare);
+        sa.assertTrue(secondValueTimeToCompare > firstValueTimeToCompare,"Rewind did not happen");
+
+        firstValueTimeToCompare = videoPlayer.getCurrentTime();
+        waitForVideoControlToDisappear();
+        clickAtScreenPlayer(FASTFORWARD);
+        secondValueTimeToCompare = videoPlayer.getCurrentTime();
+        LOGGER.info("times {} {}" , firstValueTimeToCompare, secondValueTimeToCompare);
+        secondValueTimeToCompare = videoPlayer.getCurrentTime();
+        sa.assertTrue(secondValueTimeToCompare < firstValueTimeToCompare,"Fast Forward did not happen");
+        sa.assertAll();
+    }
+
+
+    public void clickAtScreenPlayer(String option) {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        JavascriptExecutor jsDriver = (JavascriptExecutor) getDriver();
+        String DOUBLE_CLICK_GESTURE = "mobile: doubleTap";
+        var dimension = videoPlayer.getPlayerView().getSize();
+        var location = videoPlayer.getPlayerView().getLocation();
+        Map<String, Object> locationCoordinates = new HashMap<>();
+        int x = 0;
+        int y = dimension.getHeight();
+        switch(option) {
+            case "rewind":
+                x = dimension.getWidth() - dimension.getWidth() / 2;
+                break;
+            case "fastForward":
+                x = dimension.getWidth() + dimension.getWidth() / 2;
+                break;
+            default:
+                Assert.fail("Video control action not defined");
+        }
+        locationCoordinates.put("x", location.getX() + x / 2);
+        locationCoordinates.put("y", location.getY() + y / 2);
+        jsDriver.executeScript(DOUBLE_CLICK_GESTURE, locationCoordinates);
+    }
+
+    public void waitForVideoControlToDisappear() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        fluentWait(getDriver(), SHORT_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
+                .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(1));
     }
 
     private void loginAndStartPlayback(String content) {
