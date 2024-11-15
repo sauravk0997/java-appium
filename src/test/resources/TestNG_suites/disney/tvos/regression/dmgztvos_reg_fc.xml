@@ -2,9 +2,9 @@
 <suite verbose="1" name="dmgztvos_reg_fc" annotations="JDK" configfailurepolicy="continue" thread-count="2" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.9.0-fc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-77672"/>
-    <parameter name="jenkinsBuild" value="3.9.0.73891"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.9.5-fc"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-77909"/>
+    <parameter name="jenkinsBuild" value="3.9.5.74013"/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_reg_fc"/>
@@ -17,7 +17,7 @@
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression. Some Groups may not have associated tests at this time."
                value=",Smoke,Anthology,Ariel,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
-<!--    <parameter name="scheduling" value="H 12 * * 1-5"/>-->
+    <parameter name="scheduling" value="H 12 * * 1-5"/>
     <parameter name="overrideFields" value="init_retry_count=0,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
 
