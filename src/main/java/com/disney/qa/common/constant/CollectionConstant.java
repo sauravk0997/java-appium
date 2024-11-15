@@ -26,6 +26,7 @@ public class CollectionConstant {
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         STUDIOS_AND_NETWORKS,
+        TREEHOUSE_OF_HORROR_I_TO_V,
         TRENDING;
     }
 
@@ -79,6 +80,8 @@ public class CollectionConstant {
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case STUDIOS_AND_NETWORKS:
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
+            case TREEHOUSE_OF_HORROR_I_TO_V:
+                return "43a35f2b-3788-4449-a54d-cd37263f0940";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
