@@ -388,6 +388,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS);
+        int controlsConfiguredTime = 5;
+
         videoPlayer.waitForVideoToStart();
         // Tap anywhere on the video player and validate video controls
         videoPlayer.displayVideoController();
@@ -407,7 +409,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getPlayButton().isPresent(),
                 "Video player controls are not up");
         // Wait configured time and validate video controls do not dismissed after the configured time
-        pause(5);
+        pause(controlsConfiguredTime);
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to see video controls")
                 .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT));
         sa.assertAll();
