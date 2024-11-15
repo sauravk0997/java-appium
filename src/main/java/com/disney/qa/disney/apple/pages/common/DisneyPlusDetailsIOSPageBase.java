@@ -140,6 +140,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement durationTimeLabel;
     @ExtendedFindBy(accessibilityId = "contentAdvisory")
     private ExtendedWebElement contentAdvisory;
+    @ExtendedFindBy(accessibilityId = "downloadButtonDownloading")
+    private ExtendedWebElement downloadStartedButton;
+
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                     DictionaryKeys.DOWNLOAD_STOP.getText()), 1);
@@ -187,6 +190,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getDownloadCompleteButton() {
         return dynamicBtnFindByLabelContains.format("downloadComplete24");
+    }
+
+    public ExtendedWebElement getDownloadStartedButton() {
+        return downloadStartedButton;
     }
 
     public boolean isContinueButtonPresent() {
