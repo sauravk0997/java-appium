@@ -395,21 +395,28 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.waitForVideoToStart();
+        videoPlayer.displayVideoController();
+        videoPlayer.getPauseButton().click();
         firstValueTimeToCompare = videoPlayer.getCurrentTime();
-        LOGGER.info("");
+        LOGGER.info("* firstValueTimeToCompare {}", firstValueTimeToCompare);
         waitForVideoControlToDisappear();
         clickAtScreenPlayer(REWIND);
         secondValueTimeToCompare = videoPlayer.getCurrentTime();
+        LOGGER.info("* secondValueTimeToCompare {}", secondValueTimeToCompare);
+
         LOGGER.info("times {} {}" , firstValueTimeToCompare, secondValueTimeToCompare);
-        sa.assertTrue(secondValueTimeToCompare > firstValueTimeToCompare,"Rewind did not happen");
+        sa.assertTrue(secondValueTimeToCompare < firstValueTimeToCompare,"Rewind did not happen");
 
         firstValueTimeToCompare = videoPlayer.getCurrentTime();
+        LOGGER.info("** firstValueTimeToCompare {}", firstValueTimeToCompare);
+
         waitForVideoControlToDisappear();
         clickAtScreenPlayer(FASTFORWARD);
         secondValueTimeToCompare = videoPlayer.getCurrentTime();
+        LOGGER.info("** secondValueTimeToCompare {}", secondValueTimeToCompare);
         LOGGER.info("times {} {}" , firstValueTimeToCompare, secondValueTimeToCompare);
         secondValueTimeToCompare = videoPlayer.getCurrentTime();
-        sa.assertTrue(secondValueTimeToCompare < firstValueTimeToCompare,"Fast Forward did not happen");
+        sa.assertTrue(secondValueTimeToCompare > firstValueTimeToCompare,"Fast Forward did not happen");
         sa.assertAll();
     }
 
@@ -417,7 +424,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void clickAtScreenPlayer(String option) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         JavascriptExecutor jsDriver = (JavascriptExecutor) getDriver();
-        String DOUBLE_CLICK_GESTURE = "mobile: doubleTap";
+        String doubleClickGesture = "mobile: doubleTap";
         var dimension = videoPlayer.getPlayerView().getSize();
         var location = videoPlayer.getPlayerView().getLocation();
         Map<String, Object> locationCoordinates = new HashMap<>();
@@ -435,7 +442,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         }
         locationCoordinates.put("x", location.getX() + x / 2);
         locationCoordinates.put("y", location.getY() + y / 2);
-        jsDriver.executeScript(DOUBLE_CLICK_GESTURE, locationCoordinates);
+        jsDriver.executeScript(doubleClickGesture, locationCoordinates);
     }
 
     public void waitForVideoControlToDisappear() {
