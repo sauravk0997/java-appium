@@ -335,6 +335,22 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]")
     protected ExtendedWebElement firstCellElementFromCollection;
     @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+                    "**/XCUIElementTypeOther[`name == 'progressBar'`]")
+    private ExtendedWebElement firstCellElementFromCollectionProgressBar;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+            "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/" +
+            "XCUIElementTypeOther[1]/XCUIElementTypeImage[1]")
+    private ExtendedWebElement firstCellElementFromCollectionAssetImage;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+                    "**/XCUIElementTypeImage[`name == 'playIcon'`]")
+    private ExtendedWebElement firstCellElementFromCollectionPlayIcon;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+                    "**/XCUIElementTypeStaticText[`value CONTAINS '%s'`]")
+    private ExtendedWebElement firstCellElementFromCollectionDynamicStaticText;
+    @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCollectionView[`name == '43a35f2b-3788-4449-a54d-cd37263f0940'`]/" +
                     "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+:E.+'`]")
     private ExtendedWebElement firstCellElementFromCollectionEpisodeMetadata;
@@ -1561,6 +1577,29 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionAssetImagePresent(String collectionName) {
+        return firstCellElementFromCollectionAssetImage.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionPlayIconPresent(String collectionName) {
+        return firstCellElementFromCollectionPlayIcon.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionProgressBarPresent(String collectionName) {
+        return firstCellElementFromCollectionProgressBar.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionEpisodeMetadataPresent(
+            String collectionName, String seasonNumber, String episodeNumber, String episodeTitle) {
+        String episodeMetadata = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionRemainingTimePresent(
+            String collectionName, String titlePrompt) {
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, titlePrompt).isPresent();
     }
 
     public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
