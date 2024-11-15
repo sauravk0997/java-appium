@@ -215,7 +215,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
                 Direction.UP, 5);
         Assert.assertTrue(collectionPage.isCollectionPresent(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V),
-                "Treehous of Horror I-V container not found");
+                "Treehouse of Horror I-V container not found");
 
         collectionPage.getFirstCellFromCollectionEpisodeMetadataElement(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V))
