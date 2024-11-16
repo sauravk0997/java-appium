@@ -400,15 +400,14 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         timeAfterDoubleTap = videoPlayer.getRemainingTime();
         LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
                 timeAfterDoubleTap);
-        sa.assertTrue(timeBeforeDoubleTap >= timeAfterDoubleTap,"Rewind did not work as expected");
+        sa.assertTrue(timeBeforeDoubleTap >= timeAfterDoubleTap, "Rewind did not work as expected");
         timeBeforeDoubleTap = videoPlayer.getCurrentTime();
         videoPlayer.waitForVideoControlToDisappear();
         doubleTapInScreenPlayer(FAST_FORWARD);
         timeAfterDoubleTap = videoPlayer.getCurrentTime();
         LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeBeforeDoubleTap,
                 timeAfterDoubleTap);
-        timeAfterDoubleTap = videoPlayer.getCurrentTime();
-        sa.assertTrue(timeAfterDoubleTap >= timeBeforeDoubleTap,"Fast Forward did not work as expected");
+        sa.assertTrue(timeAfterDoubleTap >= timeBeforeDoubleTap, "Fast Forward did not work as expected");
         sa.assertAll();
     }
 
