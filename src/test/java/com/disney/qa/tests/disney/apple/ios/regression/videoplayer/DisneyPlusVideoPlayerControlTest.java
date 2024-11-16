@@ -35,8 +35,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final int ONE_SEC_TIMEOUT = 1;
-    private static final String REWIND = "rewind";
-    private static final String FASTFORWARD = "fastForward";
+    private static final String REWIND = "Rewind";
+    private static final String FAST_FORWARD = "FastForward";
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -398,33 +398,31 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.displayVideoController();
         timeBeforeDoubleTap = videoPlayer.getRemainingTime();
         waitForVideoControlToDisappear();
-        clickAtScreenPlayer(REWIND);
+        doubleTapInScreenPlayer(REWIND);
         timeAfterDoubleTap = videoPlayer.getRemainingTime();
         LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
                 timeAfterDoubleTap);
         sa.assertTrue(timeBeforeDoubleTap >= timeAfterDoubleTap,"Rewind did not work as expected");
-
         timeBeforeDoubleTap = videoPlayer.getCurrentTime();
-
         waitForVideoControlToDisappear();
-        clickAtScreenPlayer(FASTFORWARD);
+        doubleTapInScreenPlayer(FAST_FORWARD);
         timeAfterDoubleTap = videoPlayer.getCurrentTime();
         LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeBeforeDoubleTap,
                 timeAfterDoubleTap);
         timeAfterDoubleTap = videoPlayer.getCurrentTime();
-        sa.assertTrue(timeAfterDoubleTap >= timeBeforeDoubleTap,"Fast Forward did not work as expecte");
-
+        sa.assertTrue(timeAfterDoubleTap >= timeBeforeDoubleTap,"Fast Forward did not work as expected");
         sa.assertAll();
     }
 
 
-    public void clickAtScreenPlayer(String option) {
+    public void doubleTapInScreenPlayer(String option) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         JavascriptExecutor javascriptExecutor = (JavascriptExecutor) getDriver();
         String doubleTapGesture = "mobile: doubleTap";
         var dimension = videoPlayer.getPlayerView().getSize();
         var location = videoPlayer.getPlayerView().getLocation();
         Map<String, Object> coordinates = new HashMap<>();
+        LOGGER.info("Double tap for {}", option);
         int x = 0;
         int y = 0;
         switch(option) {
@@ -432,7 +430,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 x = dimension.getWidth() - dimension.getWidth() / 2;
                 y = dimension.getHeight();
                 break;
-            case FASTFORWARD:
+            case FAST_FORWARD:
                 x = dimension.getWidth() + dimension.getWidth() / 2;
                 y = dimension.getHeight();
                 break;
