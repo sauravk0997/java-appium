@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
-import static com.disney.jarvisutils.pages.apple.JarvisAppleBase.fluentWait;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -34,7 +33,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final int ONE_SEC_TIMEOUT = 1;
     private static final String REWIND = "Rewind";
     private static final String FAST_FORWARD = "FastForward";
 
@@ -397,14 +395,14 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.displayVideoController();
         timeBeforeDoubleTap = videoPlayer.getRemainingTime();
-        waitForVideoControlToDisappear();
+        videoPlayer.waitForVideoControlToDisappear();
         doubleTapInScreenPlayer(REWIND);
         timeAfterDoubleTap = videoPlayer.getRemainingTime();
         LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
                 timeAfterDoubleTap);
         sa.assertTrue(timeBeforeDoubleTap >= timeAfterDoubleTap,"Rewind did not work as expected");
         timeBeforeDoubleTap = videoPlayer.getCurrentTime();
-        waitForVideoControlToDisappear();
+        videoPlayer.waitForVideoControlToDisappear();
         doubleTapInScreenPlayer(FAST_FORWARD);
         timeAfterDoubleTap = videoPlayer.getCurrentTime();
         LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeBeforeDoubleTap,
@@ -413,7 +411,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(timeAfterDoubleTap >= timeBeforeDoubleTap,"Fast Forward did not work as expected");
         sa.assertAll();
     }
-
 
     public void doubleTapInScreenPlayer(String option) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -440,12 +437,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         coordinates.put("x", location.getX() + x / 2);
         coordinates.put("y", location.getY() + y / 2);
         javascriptExecutor.executeScript(doubleTapGesture, coordinates);
-    }
-
-    public void waitForVideoControlToDisappear() {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        fluentWait(getDriver(), SHORT_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
-                .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(1));
     }
 
     private void loginAndStartPlayback(String content) {
