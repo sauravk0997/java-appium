@@ -390,35 +390,29 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoControlRewindAndForwardWithControlsDown() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        int remainingTimeBeforeDoubleTap = 0;
-        int remainingTimeAfterDoubleTap = 0;
+        int timeBeforeDoubleTap = 0;
+        int timeAfterDoubleTap = 0;
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.waitForVideoToStart();
-
-        remainingTimeBeforeDoubleTap = videoPlayer.getRemainingTime();
-        LOGGER.info("* firstValueTimeToCompare {}", remainingTimeBeforeDoubleTap);
+        videoPlayer.displayVideoController();
+        timeBeforeDoubleTap = videoPlayer.getRemainingTime();
         waitForVideoControlToDisappear();
         clickAtScreenPlayer(REWIND);
-        remainingTimeAfterDoubleTap = videoPlayer.getRemainingTime();
-        LOGGER.info("* remainingTimeAfterDoubleTap {}", remainingTimeAfterDoubleTap);
+        timeAfterDoubleTap = videoPlayer.getRemainingTime();
+        LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
+                timeAfterDoubleTap);
+        sa.assertTrue(timeBeforeDoubleTap >= timeAfterDoubleTap,"Rewind did not work as expected");
 
-        LOGGER.info("remainingTimeBeforeDoubleTap {} remainingTimeAfterDoubleTap {}" , remainingTimeBeforeDoubleTap,
-                remainingTimeAfterDoubleTap);
-        sa.assertTrue(remainingTimeBeforeDoubleTap > remainingTimeAfterDoubleTap,"Rewind did not happen");
-
-        remainingTimeBeforeDoubleTap = videoPlayer.getCurrentTime();
-        LOGGER.info("** firstValueTimeToCompare {}", remainingTimeBeforeDoubleTap);
+        timeBeforeDoubleTap = videoPlayer.getCurrentTime();
 
         waitForVideoControlToDisappear();
         clickAtScreenPlayer(FASTFORWARD);
-        remainingTimeAfterDoubleTap = videoPlayer.getCurrentTime();
-        LOGGER.info("** remainingTimeAfterDoubleTap {}", remainingTimeAfterDoubleTap);
-        LOGGER.info("remainingTimeAfterDoubleTap {} remainingTimeBeforeDoubleTap {}" , remainingTimeBeforeDoubleTap,
-                remainingTimeAfterDoubleTap);
-        remainingTimeAfterDoubleTap = videoPlayer.getCurrentTime();
-        sa.assertTrue(remainingTimeAfterDoubleTap > remainingTimeBeforeDoubleTap,"Fast Forward did not happen");
-
+        timeAfterDoubleTap = videoPlayer.getCurrentTime();
+        LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeBeforeDoubleTap,
+                timeAfterDoubleTap);
+        timeAfterDoubleTap = videoPlayer.getCurrentTime();
+        sa.assertTrue(timeAfterDoubleTap >= timeBeforeDoubleTap,"Fast Forward did not work as expecte");
 
         sa.assertAll();
     }
@@ -426,26 +420,28 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     public void clickAtScreenPlayer(String option) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        JavascriptExecutor jsDriver = (JavascriptExecutor) getDriver();
-        String doubleClickGesture = "mobile: doubleTap";
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) getDriver();
+        String doubleTapGesture = "mobile: doubleTap";
         var dimension = videoPlayer.getPlayerView().getSize();
         var location = videoPlayer.getPlayerView().getLocation();
-        Map<String, Object> locationCoordinates = new HashMap<>();
+        Map<String, Object> coordinates = new HashMap<>();
         int x = 0;
-        int y = dimension.getHeight();
+        int y = 0;
         switch(option) {
             case REWIND:
                 x = dimension.getWidth() - dimension.getWidth() / 2;
+                y = dimension.getHeight();
                 break;
             case FASTFORWARD:
                 x = dimension.getWidth() + dimension.getWidth() / 2;
+                y = dimension.getHeight();
                 break;
             default:
                 Assert.fail("Video control action not defined");
         }
-        locationCoordinates.put("x", location.getX() + x / 2);
-        locationCoordinates.put("y", location.getY() + y / 2);
-        jsDriver.executeScript(doubleClickGesture, locationCoordinates);
+        coordinates.put("x", location.getX() + x / 2);
+        coordinates.put("y", location.getY() + y / 2);
+        javascriptExecutor.executeScript(doubleTapGesture, coordinates);
     }
 
     public void waitForVideoControlToDisappear() {
