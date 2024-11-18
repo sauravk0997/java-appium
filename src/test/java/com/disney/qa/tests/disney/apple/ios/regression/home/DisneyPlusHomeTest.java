@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
@@ -24,6 +25,7 @@ import java.awt.image.BufferedImage;
 import java.net.*;
 import java.util.*;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
@@ -336,6 +338,55 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .click();
 
         Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68157"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingContainerDeletedAfterContentComplete() throws URISyntaxException, JsonProcessingException {
+        int swipeCount = 5;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(10);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+        restart();
+
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+        Assert.assertTrue(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
+                END_GAME.getTitle()).isPresent(), "Title not found in Continue watching container");
+
+        homePage.clickCollectionTile(CollectionConstant.Collection.CONTINUE_WATCHING, 1);
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(END_GAME.getTitle()),
+                "Expected content title not playing");
+        videoPlayer.scrubToPlaybackPercentage(99);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+        Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container found after content completed");
+        Assert.assertFalse(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
+                END_GAME.getTitle()).isPresent(), "Title found in Continue watching container");
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        ExploreContent movieApiContent = getDisneyApiMovie(END_GAME.getEntityId());
+        String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
+
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI),
+                "Video is not playing from begining");
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
