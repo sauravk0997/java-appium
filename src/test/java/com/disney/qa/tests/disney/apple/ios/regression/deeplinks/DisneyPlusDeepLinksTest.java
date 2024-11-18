@@ -217,8 +217,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
 
-        ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get(
-                "disney_prod_hulu_series_detail_only_murders_in_the_building_entity_id"));
+        ExploreContent seriesApiContent = getDisneyApiSeries(
+                R.TESTDATA.get("disney_prod_hulu_series_detail_only_murders_in_the_building_entity_id"));
         String episodeTitle =
                 seriesApiContent.getSeasons().get(seasonNumber).getItems().get(episodeNumber).getVisuals().getEpisodeTitle();
         String episodeDeeplinkId =
