@@ -349,13 +349,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
         homePage.waitForHomePageToOpen();
         boolean isContinueWatchingContainerVisible = homePage.isCollectionVisibleAfterSwiping(
                 CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
-        sa.assertFalse(isContinueWatchingContainerVisible,
+        Assert.assertFalse(isContinueWatchingContainerVisible,
                 String.format("Continue Watching container was visible after %s swipes", swipeCount));
 
         // Add a secondary profile and select it
@@ -372,11 +371,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         boolean isContinueWatchingContainerVisibleOnSecondaryProfile = homePage.isCollectionVisibleAfterSwiping(
                 CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
-        sa.assertFalse(isContinueWatchingContainerVisibleOnSecondaryProfile,
+        Assert.assertFalse(isContinueWatchingContainerVisibleOnSecondaryProfile,
                 String.format(
                         "Continue Watching container was visible after %s swipes on secondary profile", swipeCount));
-
-        sa.assertAll();
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
