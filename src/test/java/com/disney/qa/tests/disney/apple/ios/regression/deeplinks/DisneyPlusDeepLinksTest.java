@@ -229,7 +229,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 episodeDeeplinkId);
 
         launchDeeplink(contentDeeplink);
-        videoPlayer.isOpened();
+        videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Video player deeplink is not playing correct series episode");
     }
