@@ -340,7 +340,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68157"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68177"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingContainerDeletedAfterContentComplete() throws URISyntaxException, JsonProcessingException {
         int swipeCount = 5;
