@@ -387,7 +387,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
 
         detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), "Video player did not open");
         Assert.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI),
                 "Video is not playing from begining");
     }
