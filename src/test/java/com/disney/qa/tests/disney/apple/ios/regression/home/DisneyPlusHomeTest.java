@@ -357,7 +357,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(10);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
-        restart();
+
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
 
         homePage.waitForHomePageToOpen();
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
