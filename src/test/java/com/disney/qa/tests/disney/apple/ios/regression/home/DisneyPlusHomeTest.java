@@ -368,7 +368,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
                 THE_AVENGERS.getTitle()).isPresent(), "Title not found in Continue watching container");
 
-        homePage.clickCollectionTile(CollectionConstant.Collection.CONTINUE_WATCHING, 1);
+        homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
+                THE_AVENGERS.getTitle()).click();
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(THE_AVENGERS.getTitle()),
                 "Expected content title not playing");
