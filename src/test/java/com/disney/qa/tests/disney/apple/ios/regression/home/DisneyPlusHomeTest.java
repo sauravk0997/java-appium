@@ -4,11 +4,14 @@ import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.DisneyAbstractPage;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusChooseAvatarIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.*;
@@ -336,6 +339,41 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .click();
 
         Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68155"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingContainerNotBeingDisplayed() {
+        int swipeCount = 5;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.waitForHomePageToOpen();
+        boolean isContinueWatchingContainerVisible = homePage.isCollectionVisibleAfterSwiping(
+                CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertFalse(isContinueWatchingContainerVisible,
+                String.format("Continue Watching container was visible after %s swipes", swipeCount));
+
+        // Add a secondary profile and select it
+        moreMenu.clickMoreTab();
+        moreMenu.clickAddProfile();
+        chooseAvatar.clickSkipButton();
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.chooseGender();
+        addProfile.clickSaveProfileButton();
+        addProfile.clickSecondaryButton();
+        moreMenu.getProfileAvatar(SECONDARY_PROFILE).click();
+        homePage.waitForHomePageToOpen();
+
+        boolean isContinueWatchingContainerVisibleOnSecondaryProfile = homePage.isCollectionVisibleAfterSwiping(
+                CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertFalse(isContinueWatchingContainerVisibleOnSecondaryProfile,
+                String.format(
+                        "Continue Watching container was visible after %s swipes on secondary profile", swipeCount));
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
