@@ -355,9 +355,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                     "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+:E.+'`]")
     private ExtendedWebElement firstCellElementFromCollectionEpisodeMetadata;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label " +
-            "CONTAINS \"%s\",'$]")
+            "CONTAINS \"%s,\"$]")
     private ExtendedWebElement cellElementFromCollection;
-
     @ExtendedFindBy(accessibilityId = "iconNavBack24LightActive")
     protected ExtendedWebElement navBackButton;
     @ExtendedFindBy(accessibilityId = "Clear text")
