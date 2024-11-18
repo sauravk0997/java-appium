@@ -25,8 +25,8 @@ import java.awt.image.BufferedImage;
 import java.net.*;
 import java.util.*;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
@@ -222,7 +222,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
@@ -350,7 +350,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         // Populate Continue Watching assets
-        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
@@ -366,11 +366,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container not found");
         Assert.assertTrue(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
-                END_GAME.getTitle()).isPresent(), "Title not found in Continue watching container");
+                THE_AVENGERS.getTitle()).isPresent(), "Title not found in Continue watching container");
 
         homePage.clickCollectionTile(CollectionConstant.Collection.CONTINUE_WATCHING, 1);
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.getTitleLabel().equals(END_GAME.getTitle()),
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(THE_AVENGERS.getTitle()),
                 "Expected content title not playing");
         videoPlayer.scrubToPlaybackPercentage(99);
         videoPlayer.waitForVideoToStart();
@@ -378,11 +378,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container found after content completed");
         Assert.assertFalse(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
-                END_GAME.getTitle()).isPresent(), "Title found in Continue watching container");
+                THE_AVENGERS.getTitle()).isPresent(), "Title found in Continue watching container");
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        ExploreContent movieApiContent = getDisneyApiMovie(END_GAME.getEntityId());
+        ExploreContent movieApiContent = getDisneyApiMovie(THE_AVENGERS.getEntityId());
         String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
 
         detailsPage.clickPlayButton();

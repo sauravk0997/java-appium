@@ -126,7 +126,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(1).getProfileName());
 
         // Movies
-        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
 
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
