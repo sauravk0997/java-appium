@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -8,6 +9,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -204,5 +206,45 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         homePage.getUnavailableOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75302"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluSeriesVideoPlayerDeepLink() {
+        int seasonNumber = 0;
+        int episodeNumber = 0;
+        String episodeTitle, episodeDeeplinkId;
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        ExploreContent seriesApiContent = getHuluApiSeries(
+                R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_entity_id"));
+        try {
+            episodeTitle = seriesApiContent.getSeasons()
+                    .get(seasonNumber)
+                    .getItems()
+                    .get(episodeNumber)
+                    .getVisuals()
+                    .getEpisodeTitle();
+            episodeDeeplinkId =
+                    seriesApiContent.getSeasons().get(seasonNumber).getItems().get(episodeNumber).getId();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, titles or deeplinkID were not found" + e.getMessage());
+        }
+
+        if(episodeTitle == null || episodeDeeplinkId == null){
+            throw new SkipException("Skipping test, failed to get titles or deeplinkID from the api");
+        }
+
+        String contentDeeplink = String.format("%s/%s",
+                R.TESTDATA.get("disney_prod_content_playback_deeplink"),
+                episodeDeeplinkId);
+
+        launchDeeplink(contentDeeplink);
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
+                "Video player deeplink is not playing correct series episode");
     }
 }
