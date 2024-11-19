@@ -218,20 +218,12 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         int second = 2;
         int pollingInSeconds = 5;
         int timeoutInSeconds = 90;
-        String three = "3";
+        String one = "1";
         String two = "2";
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-
-        //Enable autoplay
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.clickEditProfilesBtn();
-        editProfile.toggleAutoplay(getAccount().getFirstName(), "ON");
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
         detailsPage.isOpened();
@@ -239,7 +231,9 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
             swipeUp(2500);
         }
         //Download episode
-        detailsPage.getEpisodeToDownload(three, two).click();
+        swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
+                detailsPage.getContentDetailsPage(), Direction.UP, 1200);
+        detailsPage.getEpisodeToDownload(one, two).click();
         String secondEpisodeTitle = detailsPage.getEpisodeTitleLabel(second)
                 .getText().split("\\.")[1];
         detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
