@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -374,6 +375,52 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertFalse(isContinueWatchingContainerVisibleOnSecondaryProfile,
                 String.format(
                         "Continue Watching container was visible after %s swipes on secondary profile", swipeCount));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68165"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingContainerScrollForOneItem() {
+        int swipeCount = 5;
+        int titlesLimit = 1;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
+        detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+
+        List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), titlesLimit);
+        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+                "No items for 'Continue Watching' collection were fetched from Explore API");
+
+        Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
+        String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
+        if (firstAPICollectionItemTitle.isEmpty()) {
+            throw new SkipException("First API Collection item did not have a title");
+        }
+
+        ExtendedWebElement firstElement = homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.CONTINUE_WATCHING, firstAPICollectionItemTitle);
+        Point initialLocation = firstElement.getLocation();
+        homePage.swipeInContainer(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING),
+                Direction.LEFT, 2, 900
+        );
+        Point newLocation = firstElement.getLocation();
+        Assert.assertEquals(initialLocation, newLocation,
+                "'Continue Watching' title moved from position");
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
