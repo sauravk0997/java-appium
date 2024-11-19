@@ -440,6 +440,42 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76204"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
+    public void verifyR21HasPINUpNext() {
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        ratingsSetupWithPINNew(SINGAPORE);
+        navigateToHomePageForPinUser();
+        launchDeeplink(R.TESTDATA.get("disney_prod_r21_series_love_victor_deeplink"));
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.clickPlayButton();
+
+        verifyAgePage.clickIAm21PlusButton();
+        verifyAgePage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+
+        videoPlayer.scrubToPlaybackPercentage(95);
+        upNextPage.waitForUpNextUIToAppear();
+        String expectedNextEpisodesTitle = upNextPage.getNextEpisodeInfo();
+        LOGGER.info("Expected next episode title: {}", expectedNextEpisodesTitle);
+        //Verify that the next episode has started playing
+        upNextPage.waitForUpNextUIToDisappear();
+        videoPlayer.waitForVideoToStart();
+        String nextEpisodeTitle = videoPlayer.getSubTitleLabel();
+        Assert.assertTrue(nextEpisodeTitle.contains(expectedNextEpisodesTitle),
+                "Next episode didn't play");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
     public void verifyR21CreatePINErrorMessageForInvalidDOB() {
