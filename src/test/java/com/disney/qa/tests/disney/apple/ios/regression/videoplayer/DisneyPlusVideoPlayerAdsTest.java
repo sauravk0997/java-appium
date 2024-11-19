@@ -51,7 +51,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
     private static final String AD_IS_NOT_PRESENT_MESSAGE = "Ad is not present";
     private static final String AD_IS_PRESENT_MESSAGE = "Ad is present";
-    private static final String AD_POD_NOT_PRESENT_MESSAGE = "Ad pod not present in timeline";
+    private static final String AD_POD_PRESENT_MESSAGE = "Ad pod is present in timeline";
 
     @DataProvider(name = "tapAction")
     public Object[][] tapAction() {
@@ -382,7 +382,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         // Rewind to zero percentage
         videoPlayer.scrubToPlaybackPercentage(0);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_PRESENT_MESSAGE);
-        sa.assertFalse(videoPlayer.isAdPodPresent(), AD_POD_NOT_PRESENT_MESSAGE);
+        sa.assertFalse(videoPlayer.isAdPodPresent(), AD_POD_PRESENT_MESSAGE);
         sa.assertAll();
     }
 
