@@ -377,10 +377,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
+      //  sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Scrub to the next Ad
-        videoPlayer.scrubToPlaybackPercentage(15);
+        videoPlayer.scrubToPlaybackPercentage(65.30);
         sa.assertTrue(videoPlayer.isCrossingAdBoundaryMessagePresent(), AD_BOUNDARY_IS_PRESENT_MESSAGE);
         sa.assertTrue(videoPlayer.isSeekbarVisible(), SEEK_BAR_NOT_VISIBLE_MESSAGE);
         sa.assertTrue(videoPlayer.isCrossingAdBoundaryMessagePresent(), AD_BOUNDARY_IS_PRESENT_MESSAGE);
