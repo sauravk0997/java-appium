@@ -23,11 +23,6 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement downloadsHeader;
 
 	private ExtendedWebElement editButton = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT.getText()));
-
-	private ExtendedWebElement selectAllButton = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SELECT_ALL_LABEL.getText()));
-
-	private ExtendedWebElement cancelButton = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL.getText()));
-
 	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
 
 	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
@@ -57,32 +52,26 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]/XCUIElementTypeOther")
 	private ExtendedWebElement progressBarBookmarkPositionOnDownload;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"emptyView\"`]/XCUIElementTypeScrollView" +
+			"/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
+	private ExtendedWebElement emptyDownloadImage;
+
 	//FUNCTIONS
 	@Override
 	public boolean isOpened() {
 		return downloadsHeader.isPresent();
 	}
 
-	public void waitForDownloadToStart() {
-		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-				"Download tab notification badge was not present")
-				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
-	}
-
-	public ExtendedWebElement getDownloadAssetFromListView(String downloadAsset) {
-		return staticTextByLabel.format(downloadAsset);
-	}
-
-	public void tapDownloadedAsset(String downloadedAsset) {
-		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
+	public ExtendedWebElement getEmptyDownloadImage() {
+		return emptyDownloadImage;
 	}
 
 	public ExtendedWebElement getDownloadedAssetImage(String downloadedAsset) {
 		return dynamicBtnFindByLabelContains.format("Play " + downloadedAsset);
 	}
 
-	public boolean isDownloadsEmptyHeaderPresent() {
-		return downloadsEmptyHeader.isPresent();
+	public ExtendedWebElement getDownloadAssetFromListView(String downloadAsset) {
+		return staticTextByLabel.format(downloadAsset);
 	}
 
 	public ExtendedWebElement getEditButton() {
@@ -93,6 +82,31 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return downloadCompleteButton;
 	}
 
+	public void waitForDownloadToStart() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download tab notification badge was not present")
+				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
+	}
+	public void tapDownloadedAsset(String downloadedAsset) {
+		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
+	}
+
+	public boolean isDownloadHeaderPresent() {
+		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DOWNLOADS_TITLE.getText()))
+				.isPresent();
+	}
+
+	public boolean isDownloadsEmptyHeaderPresent() {
+		return downloadsEmptyHeader.isPresent();
+	}
+
+	public boolean isDownloadsEmptyCopyPresent() {
+		String downloadsCopy = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText());
+		return getDynamicAccessibilityId(downloadsCopy).isPresent();
+	}
 	public void clickEditButton() {
 		getTypeButtonContainsLabel("Edit").click();
 	}
