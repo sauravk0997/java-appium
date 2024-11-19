@@ -396,7 +396,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.displayVideoController();
         timeBeforeDoubleTap = videoPlayer.getRemainingTime();
         videoPlayer.waitForVideoControlToDisappear();
-       // doubleTapInScreenPlayer(REWIND);
         videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
         timeAfterDoubleTap = videoPlayer.getRemainingTime();
         LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
@@ -404,7 +403,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(timeBeforeDoubleTap >= timeAfterDoubleTap, "Rewind did not work as expected");
         timeBeforeDoubleTap = videoPlayer.getCurrentTime();
         videoPlayer.waitForVideoControlToDisappear();
-        // doubleTapInScreenPlayer(FAST_FORWARD);
         videoPlayer.tapPlayerScreen(PlayerControl.FAST_FORWARD, 2);
         timeAfterDoubleTap = videoPlayer.getCurrentTime();
         LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeBeforeDoubleTap,
