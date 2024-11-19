@@ -213,8 +213,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyHuluSeriesVideoPlayerDeepLink() {
         int seasonNumber = 0;
         int episodeNumber = 0;
-        String episodeTitle = "";
-        String episodeDeeplinkId = "";
+        String episodeTitle, episodeDeeplinkId;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -236,7 +235,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         }
 
         if(episodeTitle == null || episodeDeeplinkId == null){
-            throw new SkipException("Skipping test, titles or deeplinkID were not found");
+            throw new SkipException("Skipping test, failed to get titles or deeplinkID from the api");
         }
 
         String contentDeeplink = String.format("%s/%s",
