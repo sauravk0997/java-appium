@@ -51,6 +51,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
     private static final String AD_IS_NOT_PRESENT_MESSAGE = "Ad is not present";
     private static final String SEEK_BAR_NOT_VISIBLE_MESSAGE = "Seek bar is not visible";
+    private static final String AD_POD_NOT_PRESENT_MESSAGE = "Ad pod not present in timeline";
 
 
     @DataProvider(name = "tapAction")
@@ -381,10 +382,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Wait to be outside grace period
         pause(FORTY_FIVE_SEC_TIMEOUT);
-        // Scrub to the next Ad
+        // Scrub to an Ad area
         videoPlayer.scrubToPlaybackPercentage(nextAdScrubPercentage);
-        // Wait for add to start
-        pause(THREE_SEC_TIMEOUT);
+        // Wait for add to start and verify Ad and Ad pod in timeline
+        sa.assertTrue(videoPlayer.isAdPodPresent(), AD_POD_NOT_PRESENT_MESSAGE);
         sa.assertTrue(videoPlayer.isSeekbarVisible(), SEEK_BAR_NOT_VISIBLE_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         sa.assertAll();
