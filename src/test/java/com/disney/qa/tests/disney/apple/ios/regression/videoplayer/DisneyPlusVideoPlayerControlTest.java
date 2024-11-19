@@ -30,8 +30,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final String REWIND = "Rewind";
-    private static final String FAST_FORWARD = "FastForward";
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {

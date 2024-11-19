@@ -26,6 +26,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "ucp.playerView")
     protected ExtendedWebElement playerView;
