@@ -376,6 +376,62 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                         "Continue Watching container was visible after %s swipes on secondary profile", swipeCount));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68159"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingItemSelection() {
+        int swipeCount = 5;
+        int titlesLimit = 1;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        videoPlayer.clickPlayButton();
+        videoPlayer.clickBackButton();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+
+        List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), titlesLimit);
+        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+                "No items for 'Continue Watching' collection were fetched from Explore API");
+
+        Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
+        int titleDurationInSeconds = firstAPICollectionItem.getVisuals().getDurationMs() / 1000;
+        String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
+        if (firstAPICollectionItemTitle.isEmpty()) {
+            throw new SkipException("First API Collection item did not have a title");
+        }
+        String firstCellTitle = homePage.getFirstCellTitleFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING)
+                .split(",")[0];
+        sa.assertEquals(firstCellTitle, firstAPICollectionItemTitle,
+                "First element under 'Continue Watching' did not have same Title from the API");
+
+        ExtendedWebElement firstElement = homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.CONTINUE_WATCHING, firstAPICollectionItemTitle);
+        firstElement.click();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+
+        int videoPlayerCurrentTimeInSeconds = videoPlayer.getCurrentTime();
+        sa.assertTrue(videoPlayerCurrentTimeInSeconds >= (titleDurationInSeconds/2),
+                "Playback did not start from user's most recent bookmark");
+
+        sa.assertAll();
+    }
+
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
         try {
