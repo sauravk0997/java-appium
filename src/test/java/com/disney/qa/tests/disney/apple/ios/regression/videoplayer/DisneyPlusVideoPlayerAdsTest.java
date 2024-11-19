@@ -385,6 +385,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(nextAdScrubPercentage);
         // Wait for add to start
         pause(THREE_SEC_TIMEOUT);
+        sa.assertTrue(videoPlayer.isSeekbarVisible(), SEEK_BAR_NOT_VISIBLE_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         sa.assertAll();
     }
