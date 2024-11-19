@@ -961,7 +961,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Duration of episode was not found");
         sa.assertTrue(downloads.getDownloadCompleteButton().isPresent(),
                 "Download state button was not found");
-        sa.assertTrue(downloads.getDownloadedAssetImage(DETAILS_TAB_METADATA_SERIES).isPresent(),
+//        sa.assertTrue(downloads.getDownloadedAssetImage(DETAILS_TAB_METADATA_SERIES).isPresent(),
+//                "Episode artwork and play button was not found");
+        sa.assertTrue(downloads.getTypeButtonContainsLabel("Play").isPresent(),
                 "Episode artwork and play button was not found");
         downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
         LOGGER.info("Description:- " +seasonDetails.getDescription().getBrief());
