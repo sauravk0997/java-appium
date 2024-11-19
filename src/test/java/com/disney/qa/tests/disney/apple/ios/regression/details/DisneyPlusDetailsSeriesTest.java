@@ -45,6 +45,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
     private static final String CONTENT_TITLE = "Content_Title";
     private static final String DISNEY_JUNIOR_ARIEL = "Disney Junior Ariel";
+    private static final String PLAY = "Play";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
@@ -963,7 +964,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Download state button was not found");
 //        sa.assertTrue(downloads.getDownloadedAssetImage(DETAILS_TAB_METADATA_SERIES).isPresent(),
 //                "Episode artwork and play button was not found");
-        sa.assertTrue(downloads.getTypeButtonContainsLabel("Play").isPresent(),
+        sa.assertTrue(downloads.getTypeButtonContainsLabel(PLAY).isPresent(),
                 "Episode artwork and play button was not found");
         downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
         LOGGER.info("Description:- " +seasonDetails.getDescription().getBrief());
