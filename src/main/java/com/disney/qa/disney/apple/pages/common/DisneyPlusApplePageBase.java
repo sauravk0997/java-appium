@@ -374,10 +374,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCell[`name == 'downloadsTab'`]/**/XCUIElementTypeButton[`name MATCHES '\\\\d+'`]")
     protected ExtendedWebElement downloadsTabNotificationBadge;
-    @ExtendedFindBy(accessibilityId = "AppStore.productPage")
-    private ExtendedWebElement appStoreScreen;
-    @ExtendedFindBy(accessibilityId = "AppStore.shelfItemSubComponent.title")
-    private ExtendedWebElement appStoreScreenTitle;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1615,13 +1611,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
         return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
-    }
-
-    public boolean isAppStoreAppOpen() {
-        return appStoreScreen.isPresent();
-    }
-
-    public String getAppStoreAppScreenTitle() {
-        return appStoreScreenTitle.getText();
     }
 }

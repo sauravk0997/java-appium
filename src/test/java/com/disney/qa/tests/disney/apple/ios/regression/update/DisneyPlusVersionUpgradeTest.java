@@ -75,6 +75,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.UPGRADE, US})
     public void verifyHardForcedUpdateWhileLoggedOut() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        AppStorePageBase appStorePageBase = initPage(AppStorePageBase.class);
 
         enableHardForceUpdateInJarvis();
         Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
@@ -90,8 +91,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         welcomePage.clickDefaultAlertBtn();
 
-        Assert.assertTrue(welcomePage.isAppStoreAppOpen(), "AppStore App not open");
-        Assert.assertTrue(welcomePage.getAppStoreAppScreenTitle().contains("Disney"),
+        Assert.assertTrue(appStorePageBase.isAppStoreAppOpen(), "AppStore App not open");
+        Assert.assertTrue(appStorePageBase.getAppStoreAppScreenTitle().contains("Disney"),
                 "AppStore is not opened to Disney+");
 
         relaunch();
