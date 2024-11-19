@@ -380,7 +380,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68177"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyContinueWatchingContainerDeletedAfterContentComplete() throws URISyntaxException, JsonProcessingException {
+    public void verifyContinueWatchingContainerNotPresentAfterContentComplete() throws URISyntaxException,
+            JsonProcessingException {
         int swipeCount = 5;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -388,16 +389,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         // Populate Continue Watching assets
-        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(10);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
-
-        terminateApp(sessionBundles.get(DISNEY));
-        relaunch();
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
 
         homePage.waitForHomePageToOpen();
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
@@ -443,5 +435,19 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         } catch (URISyntaxException | JsonProcessingException | IndexOutOfBoundsException e) {
             throw new RuntimeException(String.format("Not able to get the Home page data from the api, exception occurred: %s", e));
         }
+    }
+
+    private void addContentInContinueWatching(String url, int scrubPercentage) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        launchDeeplink(url);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
     }
 }
