@@ -9,6 +9,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -212,17 +213,28 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyHuluSeriesVideoPlayerDeepLink() {
         int seasonNumber = 0;
         int episodeNumber = 0;
+        String episodeTitle = "";
+        String episodeDeeplinkId = "";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
 
         ExploreContent seriesApiContent = getHuluApiSeries(
-                R.TESTDATA.get("disney_prod_hulu_series_detail_only_murders_in_the_building_entity_id"));
-        String episodeTitle =
-                seriesApiContent.getSeasons().get(seasonNumber).getItems().get(episodeNumber).getVisuals().getEpisodeTitle();
-        String episodeDeeplinkId =
-                seriesApiContent.getSeasons().get(seasonNumber).getItems().get(episodeNumber).getId();
+                R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_entity_id"));
+        try {
+            episodeTitle = seriesApiContent.getSeasons()
+                    .get(seasonNumber)
+                    .getItems()
+                    .get(episodeNumber)
+                    .getVisuals()
+                    .getEpisodeTitle();
+            episodeDeeplinkId =
+                    seriesApiContent.getSeasons().get(seasonNumber).getItems().get(episodeNumber).getId();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, titles or deeplinkID were not found" + e.getMessage());
+        }
+
 
         String contentDeeplink = String.format("%s/%s",
                 R.TESTDATA.get("disney_prod_content_playback_deeplink"),
