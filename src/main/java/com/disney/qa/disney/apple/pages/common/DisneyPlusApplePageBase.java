@@ -1325,6 +1325,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
+    public boolean isCollectionVisibleAfterSwiping
+            (CollectionConstant.Collection collection, Direction direction, int count) {
+        ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
+        return swipe(element, direction, count, 900);
+    }
+
+
     /**
      * Navigate to collection and clicks a tile in collection.
      * @param collection gets collection name from enum Collection
