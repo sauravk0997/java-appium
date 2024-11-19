@@ -49,7 +49,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
     private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
-    private static final String AD_IS_NOT_PRESENT_MESSAGE = "Ad is not present";
+    private static final String AD_IS_NOT_PRESENT_MESSAGE = "Ad badge is not present";
     private static final String SEEK_BAR_NOT_VISIBLE_MESSAGE = "Seek bar is not visible";
     private static final String AD_POD_NOT_PRESENT_MESSAGE = "Ad pod not present in timeline";
 
@@ -378,13 +378,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int nextAdScrubPercentage = 65;
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Wait to be outside grace period
         pause(FORTY_FIVE_SEC_TIMEOUT);
         // Scrub to an Ad area
         videoPlayer.scrubToPlaybackPercentage(nextAdScrubPercentage);
-        // Wait for add to start and verify Ad and Ad pod in timeline
+        // Wait for ad to start and verify Ad and Ad pod in timeline
         sa.assertTrue(videoPlayer.isAdPodPresent(), AD_POD_NOT_PRESENT_MESSAGE);
         sa.assertTrue(videoPlayer.isSeekbarVisible(), SEEK_BAR_NOT_VISIBLE_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
