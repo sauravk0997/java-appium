@@ -235,6 +235,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
             throw new SkipException("Skipping test, titles or deeplinkID were not found" + e.getMessage());
         }
 
+        if(episodeTitle == null || episodeDeeplinkId == null){
+            throw new SkipException("Skipping test, titles or deeplinkID were not found");
+        }
 
         String contentDeeplink = String.format("%s/%s",
                 R.TESTDATA.get("disney_prod_content_playback_deeplink"),
