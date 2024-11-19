@@ -333,7 +333,27 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosPredicate = "type == \"XCUIElementTypeKeyboard\"")
     private ExtendedWebElement keyboardByPredicate;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]")
-    private ExtendedWebElement firstCellElementFromCollection;
+    protected ExtendedWebElement firstCellElementFromCollection;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+                    "**/XCUIElementTypeOther[`name == 'progressBar'`]")
+    private ExtendedWebElement firstCellElementFromCollectionProgressBar;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+            "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/" +
+            "XCUIElementTypeOther[1]/XCUIElementTypeImage[1]")
+    private ExtendedWebElement firstCellElementFromCollectionAssetImage;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+                    "**/XCUIElementTypeImage[`name == 'playIcon'`]")
+    private ExtendedWebElement firstCellElementFromCollectionPlayIcon;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+                    "**/XCUIElementTypeStaticText[`value CONTAINS '%s'`]")
+    private ExtendedWebElement firstCellElementFromCollectionDynamicStaticText;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '43a35f2b-3788-4449-a54d-cd37263f0940'`]/" +
+                    "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+:E.+'`]")
+    private ExtendedWebElement firstCellElementFromCollectionEpisodeMetadata;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label CONTAINS '%s,'$]")
     private ExtendedWebElement cellElementFromCollection;
 
@@ -1305,6 +1325,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
+    public boolean isCollectionVisibleAfterSwiping
+            (CollectionConstant.Collection collection, Direction direction, int count) {
+        ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
+        return swipe(element, direction, count, 900);
+    }
+
+
     /**
      * Navigate to collection and clicks a tile in collection.
      * @param collection gets collection name from enum Collection
@@ -1557,5 +1584,32 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isKidThemeBackgroudUIDisplayed() {
         return kidThemeBackgroundUI.isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionAssetImagePresent(String collectionName) {
+        return firstCellElementFromCollectionAssetImage.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionPlayIconPresent(String collectionName) {
+        return firstCellElementFromCollectionPlayIcon.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionProgressBarPresent(String collectionName) {
+        return firstCellElementFromCollectionProgressBar.format(collectionName).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionEpisodeMetadataPresent(
+            String collectionName, String seasonNumber, String episodeNumber, String episodeTitle) {
+        String episodeMetadata = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
+    }
+
+    public boolean isFirstCellFromCollectionRemainingTimePresent(
+            String collectionName, String titlePrompt) {
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, titlePrompt).isPresent();
+    }
+
+    public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
+        return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
     }
 }
