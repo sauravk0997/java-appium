@@ -243,7 +243,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusDetailsIOSPageBase clickBackButton() {
-        displayVideoController();
+        if (!seekBar.isElementPresent()) {
+            displayVideoController();
+        }
         List<ExtendedWebElement> backButtonList = findExtendedWebElements(getBackButton().getBy());
         if (!backButtonList.isEmpty()) {
             for (ExtendedWebElement backButton : backButtonList) {
