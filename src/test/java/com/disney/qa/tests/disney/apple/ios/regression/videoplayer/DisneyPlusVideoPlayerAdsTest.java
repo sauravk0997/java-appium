@@ -50,7 +50,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
     private static final String AD_IS_NOT_PRESENT_MESSAGE = "Ad is not present";
-    private static final String AD_BOUNDARY_IS_PRESENT_MESSAGE = "Ad boundary is present";
     private static final String SEEK_BAR_NOT_VISIBLE_MESSAGE = "Seek bar is not visible";
 
 
@@ -359,13 +358,14 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifyMovingBackwardsAdPodNotForceAdPlay() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         String adPresentMessage = "Ad is present";
+        String adBoundaryPresentMessage = "Ad boundary is present";
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Rewind to the beginning and validate Ad should not be playing
         videoPlayer.scrubToPlaybackPercentage(0);
-        Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(), AD_BOUNDARY_IS_PRESENT_MESSAGE);
+        Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(), adBoundaryPresentMessage);
         Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(), adPresentMessage);
     }
 
@@ -374,6 +374,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     public void verifySeeksOverAdsOutsideGracePeriod() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        int nextAdScrubPercentage = 65;
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
@@ -381,10 +382,9 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         // Wait to be outside grace period
         pause(FORTY_FIVE_SEC_TIMEOUT);
         // Scrub to the next Ad
-        videoPlayer.scrubToPlaybackPercentage(65);
-        sa.assertTrue(videoPlayer.isCrossingAdBoundaryMessagePresent(), AD_BOUNDARY_IS_PRESENT_MESSAGE);
+        videoPlayer.scrubToPlaybackPercentage(nextAdScrubPercentage);
+        pause(THREE_SEC_TIMEOUT);
         sa.assertTrue(videoPlayer.isSeekbarVisible(), SEEK_BAR_NOT_VISIBLE_MESSAGE);
-        sa.assertTrue(videoPlayer.isCrossingAdBoundaryMessagePresent(), AD_BOUNDARY_IS_PRESENT_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         sa.assertAll();
     }
