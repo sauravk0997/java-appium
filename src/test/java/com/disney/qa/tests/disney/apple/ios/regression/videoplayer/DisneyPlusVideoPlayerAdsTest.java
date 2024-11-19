@@ -50,6 +50,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final String CONTENT_TIME_CHANGED_ERROR_MESSAGE = "Content time remaining did not remain the same";
     private static final String AD_BADGE_NOT_PRESENT_ERROR_MESSAGE = "Ad badge was not present";
     private static final String NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE = "Unable to return to details page";
+    private static final String AD_IS_NOT_PRESENT_MESSAGE = "Ad is not present";
+    private static final String AD_BOUNDARY_IS_PRESENT_MESSAGE = "Ad boundary is present";
+    private static final String SEEK_BAR_NOT_VISIBLE_MESSAGE = "Seek bar is not visible";
+
 
     @DataProvider(name = "tapAction")
     public Object[][] tapAction() {
@@ -355,19 +359,35 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovingBackwardsAdPodNotForceAdPlay() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        String adNotPresentMessage = "Ad is not present";
         String adPresentMessage = "Ad is present";
-        String adBoundaryPresentMessage = "Ad boundary is present";
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), adNotPresentMessage);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Rewind to the beginning and validate Ad should not be playing
         videoPlayer.scrubToPlaybackPercentage(0);
-        Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(), adBoundaryPresentMessage);
+        Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(), AD_BOUNDARY_IS_PRESENT_MESSAGE);
         Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(), adPresentMessage);
     }
-    
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72568"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySeeksOverAdsOutsideGracePeriod() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(MS_MARVEL);
+        // Validate and wait for Ad to complete
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
+        videoPlayer.waitForAdToCompleteIfPresent(6);
+        // Scrub to the next Ad
+        videoPlayer.scrubToPlaybackPercentage(30);
+        sa.assertTrue(videoPlayer.isCrossingAdBoundaryMessagePresent(), AD_BOUNDARY_IS_PRESENT_MESSAGE);
+        sa.assertTrue(videoPlayer.isSeekbarVisible(), SEEK_BAR_NOT_VISIBLE_MESSAGE);
+        sa.assertTrue(videoPlayer.isCrossingAdBoundaryMessagePresent(), AD_BOUNDARY_IS_PRESENT_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
+        sa.assertAll();
+    }
+
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
