@@ -396,46 +396,21 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.displayVideoController();
         timeBeforeDoubleTap = videoPlayer.getRemainingTime();
         videoPlayer.waitForVideoControlToDisappear();
-        doubleTapInScreenPlayer(REWIND);
+       // doubleTapInScreenPlayer(REWIND);
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
         timeAfterDoubleTap = videoPlayer.getRemainingTime();
         LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
                 timeAfterDoubleTap);
         sa.assertTrue(timeBeforeDoubleTap >= timeAfterDoubleTap, "Rewind did not work as expected");
         timeBeforeDoubleTap = videoPlayer.getCurrentTime();
         videoPlayer.waitForVideoControlToDisappear();
-        doubleTapInScreenPlayer(FAST_FORWARD);
+        // doubleTapInScreenPlayer(FAST_FORWARD);
+        videoPlayer.tapPlayerScreen(PlayerControl.FAST_FORWARD, 2);
         timeAfterDoubleTap = videoPlayer.getCurrentTime();
         LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeBeforeDoubleTap,
                 timeAfterDoubleTap);
-        sa.assertTrue(timeAfterDoubleTap >= timeBeforeDoubleTap, "Fast Forward did not work as expected");
+        sa.assertTrue(timeAfterDoubleTap > timeBeforeDoubleTap, "Fast Forward did not work as expected");
         sa.assertAll();
-    }
-
-    public void doubleTapInScreenPlayer(String option) {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) getDriver();
-        String doubleTapGesture = "mobile: doubleTap";
-        var dimension = videoPlayer.getPlayerView().getSize();
-        var location = videoPlayer.getPlayerView().getLocation();
-        Map<String, Object> coordinates = new HashMap<>();
-        LOGGER.info("Double tap for {}", option);
-        int x = 0;
-        int y = 0;
-        switch(option) {
-            case REWIND:
-                x = dimension.getWidth() - dimension.getWidth() / 2;
-                y = dimension.getHeight();
-                break;
-            case FAST_FORWARD:
-                x = dimension.getWidth() + dimension.getWidth() / 2;
-                y = dimension.getHeight();
-                break;
-            default:
-                Assert.fail("Video control action not defined");
-        }
-        coordinates.put("x", location.getX() + x / 2);
-        coordinates.put("y", location.getY() + y / 2);
-        javascriptExecutor.executeScript(doubleTapGesture, coordinates);
     }
 
     private void loginAndStartPlayback(String content) {
