@@ -378,10 +378,11 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Need to be inside grace period
-        pause(FIFTEEN_SEC_TIMEOUT);
+        pause(TEN_SEC_TIMEOUT);
         // Rewind to zero percentage
         videoPlayer.scrubToPlaybackPercentage(0);
         sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_PRESENT_MESSAGE);
+        sa.assertFalse(videoPlayer.isAdPodPresent(), "Ad pod highlighted is present");
         sa.assertAll();
     }
 
