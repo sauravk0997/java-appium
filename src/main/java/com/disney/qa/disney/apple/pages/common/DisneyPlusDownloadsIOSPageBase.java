@@ -104,7 +104,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isDownloadsEmptyCopyPresent() {
 		String downloadsCopy = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-				DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText());
+				DictionaryKeys.DOWNLOADS_EMPTY_COPY.getText());
 		return getDynamicAccessibilityId(downloadsCopy).isPresent();
 	}
 	public void clickEditButton() {
