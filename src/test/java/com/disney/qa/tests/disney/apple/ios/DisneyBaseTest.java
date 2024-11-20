@@ -200,13 +200,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             restart();
             handleAlert();
             loginToHome(account, profileName);
-            homePage.dismissAppTrackingPopUp();
         } else {
             disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
         }
-        homePage.dismissAppTrackingPopUp();
         pause(3);
-
     }
 
     /**
