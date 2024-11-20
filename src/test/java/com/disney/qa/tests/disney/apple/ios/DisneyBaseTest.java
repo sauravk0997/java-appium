@@ -674,7 +674,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
     }
-    
+
     private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {
         applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
         applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();

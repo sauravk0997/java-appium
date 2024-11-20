@@ -258,7 +258,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.getSearchNav().click();
         searchPage.searchForMedia(SPIDERMAN_THREE);
         searchPage.getDisplayedTitles().get(0).click();
-        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), "Video player is not opened");
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayerPage.isOpened(), "Video player is not opened");
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT);
         videoPlayerPage.waitForVideoToStart();
