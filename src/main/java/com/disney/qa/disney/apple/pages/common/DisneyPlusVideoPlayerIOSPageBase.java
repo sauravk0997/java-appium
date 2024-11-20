@@ -410,7 +410,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             int minutes = Integer.parseInt(remainingTimeParts[1]);
             return (hours * 60) + minutes;
         } else {
-            throw new IllegalArgumentException("Invalid time format: {}", timeRemainingLabel.getText());
+            throw new IllegalArgumentException(String.format("Invalid time format: %s", timeRemainingLabel.getText()));
         }
     }
 
