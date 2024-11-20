@@ -10,6 +10,7 @@ import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
@@ -166,7 +167,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         login(entitledUser);
         pause(5);
-        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp(5);
+        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp(DisneyAbstractPage.TEN_SEC_TIMEOUT);
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
         }
