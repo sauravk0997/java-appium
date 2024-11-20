@@ -380,6 +380,30 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71665"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySeriesPlaybackInterstitial() {
+        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        //search series
+        disneyPlusHomeIOSPageBase.clickSearchIcon();
+        // Timon and Puumba
+        disneyPlusSearchIOSPageBase.searchForMedia("Timon and Puumba");
+        List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        results.get(0).click();
+
+        disneyPlusDetailsIOSPageBase.clickSeasonsButton("1");
+        List<ExtendedWebElement> seasons = disneyPlusDetailsIOSPageBase.getSeasonsFromPicker();
+        seasons.get(1).click();
+
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isSeasonButtonDisplayed("2"), "Season has not changed to Season 2");
+        sa.assertAll();
+    }
+
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
