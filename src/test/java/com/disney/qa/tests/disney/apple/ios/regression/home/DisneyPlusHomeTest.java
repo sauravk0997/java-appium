@@ -428,15 +428,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         int swipeCount = 5;
         int titlesLimit = 1;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         // Populate Continue Watching assets
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
-        detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
 
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
