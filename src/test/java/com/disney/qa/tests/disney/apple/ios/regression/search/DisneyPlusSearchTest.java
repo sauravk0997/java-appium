@@ -421,7 +421,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
-    public void verifySearchResultContainsRatingAndYearDetails() throws URISyntaxException, JsonProcessingException {
+    public void verifySearchResultContainsRatingAndYearDetails() {
             String media = "M";
             String movie = "The Marvels";
             String series = "The Simpsons";
@@ -524,7 +524,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
         searchPage.searchForMedia(contentTitle);
-        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(),
+        sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
                 "PCON restricted title message not present for TV-MA profile");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle),
                 "No results found message was not as expected for TV-MA profile");
