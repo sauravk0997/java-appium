@@ -388,23 +388,25 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.displayVideoController();
-        timeBeforeDoubleTap = videoPlayer.getRemainingTimeThreeIntegers();
-        videoPlayer.waitForVideoControlToDisappear();
-        // Tap to rewind and validate time
-        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
-        timeAfterDoubleTap = videoPlayer.getRemainingTimeThreeIntegers();
-        LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
-                timeAfterDoubleTap);
-        sa.assertTrue(timeBeforeDoubleTap >= timeAfterDoubleTap, "Rewind did not work as expected");
+
+        // Double tap to fast forward and validate time
         timeBeforeDoubleTap = videoPlayer.getCurrentTime();
         videoPlayer.waitForVideoControlToDisappear();
-        // Tap to fast forward and validate time
         videoPlayer.tapPlayerScreen(PlayerControl.FAST_FORWARD, 2);
         timeAfterDoubleTap = videoPlayer.getCurrentTime();
         LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeAfterDoubleTap,
                 timeBeforeDoubleTap);
         sa.assertTrue(timeAfterDoubleTap > timeBeforeDoubleTap, "Fast Forward did not work as expected");
+        // Double tap twice and rewind and then validate time
+        timeBeforeDoubleTap = videoPlayer.clickPauseButton().getRemainingTime();
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+
+        timeAfterDoubleTap = videoPlayer.getRemainingTime();
+        LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
+                timeAfterDoubleTap);
+        sa.assertTrue(timeBeforeDoubleTap <= timeAfterDoubleTap, "Rewind did not work as expected");
+
         sa.assertAll();
     }
 
