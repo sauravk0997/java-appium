@@ -391,6 +391,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
 
