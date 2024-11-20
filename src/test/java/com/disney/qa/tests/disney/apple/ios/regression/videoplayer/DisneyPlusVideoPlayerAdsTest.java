@@ -10,7 +10,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
@@ -20,7 +19,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.URISyntaxException;
 import java.time.*;
 import java.time.temporal.ValueRange;
 import java.util.List;
@@ -256,7 +254,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72476"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyContentDurationBeforeAndAfterAd() throws URISyntaxException, JsonProcessingException {
+    public void verifyContentDurationBeforeAndAfterAd() {
         int timeout = 15;
         String durationNotmatchedErrorMessage = "Duration of video is not representing total length of main content";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);

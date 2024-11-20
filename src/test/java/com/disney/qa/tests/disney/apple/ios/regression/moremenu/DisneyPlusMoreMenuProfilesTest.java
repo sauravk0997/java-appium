@@ -1022,6 +1022,26 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "'kids proof exit' toggle is not 'Off'");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75500"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyProfileContentMaturityRatingRestriction() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        //set lower rating
+        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+        launchDeeplink(R.TESTDATA.get("disney_prod_loki_collection_deeplink"));
+        Assert.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
+                "Rating Restriction message Header not displayed");
+        Assert.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+                "Rating Restriction message was not displayed");
+    }
+
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         if (avatarSets.isEmpty()) {
