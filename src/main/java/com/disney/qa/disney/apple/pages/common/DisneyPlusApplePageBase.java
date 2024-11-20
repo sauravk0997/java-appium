@@ -1052,7 +1052,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         String popUpTitle = "Allow \"Disney+\" to track your activity across other companies' apps and websites?";
         if(getStaticTextByLabelContains(popUpTitle).isPresent(FIVE_SEC_TIMEOUT)) {
             LOGGER.info("App tracking pop-up detected, canceling it");
-            moveDown(2,2);
+            moveDown(1,2);
             clickSelect();
         }
     }
