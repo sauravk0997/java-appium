@@ -403,7 +403,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String continueWatchingCollectionName = CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
         int homePageRemainingTimeInMinutes =
-                homePage.getFirstCellFromCollectionRemainingTimeInMinutes(continueWatchingCollectionName);
+                homePage.getFirstCellRemainingTimeInMinutesFromCollection(continueWatchingCollectionName);
         ExtendedWebElement firstElement = homePage.getFirstCellFromCollection(continueWatchingCollectionName);
         firstElement.click();
         videoPlayer.waitForVideoToStart();
