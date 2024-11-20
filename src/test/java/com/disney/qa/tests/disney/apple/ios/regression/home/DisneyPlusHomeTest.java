@@ -400,10 +400,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container not found");
 
-        List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
-                (CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), titlesLimit);
-        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
-                "No items for 'Continue Watching' collection were fetched from Explore API");
+        List<Item> continueWatchingTitlesFromApi =
+                getItemsFromCollection(CollectionConstant.Collection.CONTINUE_WATCHING, titlesLimit);
 
         Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
         String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
@@ -411,14 +409,18 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             throw new SkipException("First API Collection item did not have a title");
         }
 
-        ExtendedWebElement firstElement = homePage.getCellElementFromContainer(
+        ExtendedWebElement continueWatchingElement = homePage.getCellElementFromContainer(
                 CollectionConstant.Collection.CONTINUE_WATCHING, firstAPICollectionItemTitle);
-        Point initialLocation = firstElement.getLocation();
+        Point initialLocation = continueWatchingElement.getLocation();
         homePage.swipeInContainer(
                 homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING),
                 Direction.LEFT, 2, 900
         );
-        Point newLocation = firstElement.getLocation();
+        homePage.swipeInContainer(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING),
+                Direction.RIGHT, 2, 900
+        );
+        Point newLocation = continueWatchingElement.getLocation();
         Assert.assertEquals(initialLocation, newLocation,
                 "'Continue Watching' title moved from position");
     }
