@@ -100,6 +100,41 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 FORCE_UPDATE_ERROR + " Title not found");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73777"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.UPGRADE, US})
+    public void verifyHardForcedUpdateWhileLoggedIn() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        AppStorePageBase appStorePageBase = initPage(AppStorePageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+
+        enableHardForceUpdateInJarvis();
+        Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
+                FORCE_UPDATE_ERROR + " Title not found");
+        Assert.assertTrue(welcomePage.isForceAppUpdateMessagePresent(),
+                FORCE_UPDATE_ERROR + " message not found");
+        Assert.assertTrue(welcomePage.isForceAppUpdateButtonPresent(),
+                FORCE_UPDATE_ERROR + " button not found");
+
+        welcomePage.clickForceUpdateTitle();
+        Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
+                FORCE_UPDATE_ERROR + " Title not found after clicking on model");
+
+        welcomePage.clickDefaultAlertBtn();
+
+        Assert.assertTrue(appStorePageBase.isAppStoreAppOpen(), "AppStore App not open");
+        Assert.assertTrue(appStorePageBase.getAppStoreAppScreenTitle().contains("Disney"),
+                "AppStore is not opened to Disney+");
+
+        relaunch();
+        Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
+                FORCE_UPDATE_ERROR + " Title not found");
+    }
+
     private void installApplication(String version) {
         installApp(AppCenterManager.getInstance()
                 .getAppInfo(String.format(APP_URL, version))
