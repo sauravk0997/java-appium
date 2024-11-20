@@ -10,7 +10,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusUpNextIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -19,7 +18,6 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -126,7 +124,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(1).getProfileName());
 
         // Movies
-        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
 
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
@@ -159,7 +157,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71128"})
     @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyIMAXEnhancedVersionTab() throws URISyntaxException, JsonProcessingException {
+    public void verifyIMAXEnhancedVersionTab() {
         String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
