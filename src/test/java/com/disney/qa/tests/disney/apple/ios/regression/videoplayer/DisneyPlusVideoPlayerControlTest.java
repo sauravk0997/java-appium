@@ -7,17 +7,14 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -236,7 +233,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
     @Test(description = "VOD Player Controls - Scrubber Elements", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyScrubberElementsOnPlayer() throws URISyntaxException, JsonProcessingException {
+    public void verifyScrubberElementsOnPlayer() {
         String errorMessage = "not changed after scrub";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();

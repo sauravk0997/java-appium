@@ -442,8 +442,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public ExploreContent getDisneyApiMovie(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getMovie(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getDisneyApiMovie(String entityID) {
+        try {
+            return getExploreApi().getMovie(getDisneyExploreSearchRequest()
+                    .setEntityId(entityID)
+                    .setProfileId(getAccount().getProfileId()));
+        } catch (URISyntaxException | JsonProcessingException e){
+            throw new RuntimeException(e);
+        }
+
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
@@ -477,12 +484,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .setLanguage(language)).getData().getPage().getContainers();
     }
 
-    public String getFirstContentIDForSet(String setID) throws URISyntaxException, JsonProcessingException {
-        ExploreSetResponse setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
+    public String getFirstContentIDForSet(String setID) {
+        ExploreSetResponse setResponse;
         String firstContentID = null;
         try {
+            setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
+                    .setSetId(setID)
+                    .setProfileId(getAccount().getProfileId()));
             firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | URISyntaxException e) {
             Assert.fail(e.getMessage());
         }
         return firstContentID;
