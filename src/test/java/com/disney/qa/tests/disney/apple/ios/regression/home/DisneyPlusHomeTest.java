@@ -380,8 +380,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68177"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyContinueWatchingContainerNotPresentAfterContentComplete() throws URISyntaxException,
-            JsonProcessingException {
+    public void verifyContinueWatchingContainerNotPresentAfterContentComplete() {
         int swipeCount = 5;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -402,7 +401,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 THE_AVENGERS.getTitle()).click();
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(THE_AVENGERS.getTitle()),
-                "Expected content title not playing");
+                "Title didn't play from continue watching shelf");
         videoPlayer.scrubToPlaybackPercentage(99);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
@@ -419,7 +418,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), "Video player did not open");
         Assert.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI),
-                "Video is not playing from begining");
+                "Video is not playing from beginning");
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
