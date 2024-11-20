@@ -437,4 +437,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             throw new RuntimeException(String.format("Not able to get the Home page data from the api, exception occurred: %s", e));
         }
     }
+
+    private List<Item> getItemsFromCollection(CollectionConstant.Collection collection, int titlesLimit) {
+        List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(collection), titlesLimit);
+        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+                String.format("No items for '%s' collection were fetched from Explore API", collection.name()));
+        return continueWatchingTitlesFromApi;
+    }
 }
