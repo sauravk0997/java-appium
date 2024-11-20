@@ -68,6 +68,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
+        LOGGER.info("Search Page For Popup before isOpened - " + getDriver().getPageSource());
         return searchBar.isPresent();
     }
 

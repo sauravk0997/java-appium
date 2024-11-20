@@ -781,7 +781,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void clickSearchIcon() {
         getSearchNav().click();
-        LOGGER.info("Home Page For Popup before search - " + getDriver().getPageSource());
     }
 
     public boolean isDownloadsDisplayed() {
@@ -1050,7 +1049,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissAppTrackingPopUp(int timeout) {
-        LOGGER.info("Home Page For Popup - " + getDriver().getPageSource());
         trackingPopUp.clickIfPresent(timeout);
     }
 
