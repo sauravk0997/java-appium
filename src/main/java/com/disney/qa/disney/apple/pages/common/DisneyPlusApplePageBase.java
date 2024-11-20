@@ -1612,4 +1612,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
         return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
     }
+
+    public ExtendedWebElement getFirstCellFromCollection(String collectionName) {
+        return firstCellElementFromCollection.format(collectionName);
+    }
+
 }
