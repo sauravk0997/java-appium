@@ -1025,7 +1025,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75500"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyProfileContentMaturityRatingRestriction() {
-        String LOKI = "Loki";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1036,10 +1035,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
         setAppToHomeScreen(getAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
-
-        homePage.clickMarvelTile();
-        Assert.assertTrue(brandPage.isOpened(), "Brand/Collection page is not open");
-        brandPage.getDynamicCellByLabel(LOKI).click();
+        launchDeeplink(R.TESTDATA.get("disney_prod_loki_collection_deeplink"));
         Assert.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
                 "Rating Restriction message Header not displayed");
         Assert.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
