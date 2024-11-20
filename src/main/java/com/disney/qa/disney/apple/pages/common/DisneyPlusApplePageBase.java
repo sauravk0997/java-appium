@@ -1617,7 +1617,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return firstCellElementFromCollection.format(collectionName);
     }
 
-    public int getFirstCellFromCollectionRemainingTimeInMinutes(String collectionName) {
+    public int getFirstCellRemainingTimeInMinutesFromCollection(String collectionName) {
         String remainingTimePrompt = firstCellElementFromCollectionDynamicStaticText
                 .format(collectionName, "remaining").getText();
         String[] remainingTimePromptParts = remainingTimePrompt.split(" ");
