@@ -8,7 +8,6 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,14 +15,12 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
-import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
@@ -34,7 +31,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90964", "XCDQA-107758", "XCDQA-90972", "XCDQA-90974"})
     @Test(description = "Verify movie details screen appearance", groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE,
             US})
-    public void verifyMovieDetailsPageAppearance() throws URISyntaxException, JsonProcessingException {
+    public void verifyMovieDetailsPageAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
