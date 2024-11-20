@@ -203,6 +203,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         } else {
             disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
         }
+        homePage.dismissAppTrackingPopUp();
         pause(3);
     }
 
