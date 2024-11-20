@@ -323,7 +323,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75465"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyPlaybackForEpisodesInSets() {
+    public void verifyPlaybackForEpisodesInSetsByTappingOnMetadata() {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
