@@ -433,9 +433,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         // Populate Continue Watching assets
         addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
 
-        terminateApp(sessionBundles.get(DISNEY));
-        relaunch();
-
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
         Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container not found");
