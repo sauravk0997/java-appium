@@ -427,18 +427,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         int swipeCount = 5;
         int minutesThreshold = 1;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         // Populate Continue Watching assets
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
-        detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
-        detailsPage.waitForDetailsPageToOpen();
-        terminateApp(sessionBundles.get(DISNEY));
-        relaunch();
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"), 50);
 
         homePage.waitForHomePageToOpen();
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
