@@ -147,7 +147,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         String contentTitle = detailsPage.getContentTitle();
 
-        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         sa.assertTrue(videoPlayer.getTitleLabel().contains(contentTitle),
                 "Content title doesn't match from the detail's content title");
@@ -293,7 +294,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         String contentTitle = detailsPage.getContentTitle();
         String episodeTitle = detailsPage.getEpisodeContentTitle();
 
-        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Episode title doesn't match from the detail's episode title");
