@@ -21,6 +21,20 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open";
     private static final double SCRUB_PERCENTAGE_FIFTY = 50;
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66668"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEmptyDownloadsUI() {
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(downloads.isDownloadHeaderPresent(), "Downloads header is not present");
+        Assert.assertTrue(downloads.getEmptyDownloadImage().isPresent(), "Downloads Image is not present");
+        Assert.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Downloads empty header is not present");
+        Assert.assertTrue(downloads.isDownloadsEmptyCopyPresent(), "Downloads empty copy is not present");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66730"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() {
