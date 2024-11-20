@@ -1586,6 +1586,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return kidThemeBackgroundUI.isPresent();
     }
 
+    public ExtendedWebElement getFirstCellFromCollectionAssetImage(String collectionName) {
+        return firstCellElementFromCollectionAssetImage.format(collectionName);
+    }
+
     public boolean isFirstCellFromCollectionAssetImagePresent(String collectionName) {
         return firstCellElementFromCollectionAssetImage.format(collectionName).isPresent();
     }
