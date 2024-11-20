@@ -166,7 +166,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         login(entitledUser);
         pause(5);
-        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp(5);
+//        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
         }
@@ -674,7 +675,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
     }
-    
+
     private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {
         applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
         applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
