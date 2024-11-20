@@ -394,6 +394,26 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return remainingTimeInSec;
     }
 
+    /**
+     * Opens the player overlay, reads remaining time from seek bar taking into account there could be titles where
+     * hours unit might not be present and returns the total quantity of remaining minutes using hours and minutes
+     * @return Playback remaining time in minutes
+     */
+    public int getRemainingTimeInMinutes() {
+        displayVideoController();
+        String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
+
+        if (remainingTimeParts.length == 2) {
+            return Integer.parseInt(remainingTimeParts[0]);
+        } else if (remainingTimeParts.length == 3) {
+            int hours = Integer.parseInt(remainingTimeParts[0]);
+            int minutes = Integer.parseInt(remainingTimeParts[1]);
+            return (hours * 60) + minutes;
+        } else {
+            throw new IllegalArgumentException("Invalid time format: {}", timeRemainingLabel.getText());
+        }
+    }
+
     public String getRemainingTimeInStringWithHourAndMinutes() {
         int remainingTimeInMinutes = getRemainingTime();
         long hours = remainingTimeInMinutes / 60;
