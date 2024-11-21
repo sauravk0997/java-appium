@@ -19,7 +19,6 @@ import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
@@ -431,15 +430,16 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeAfterDoubleTap,
                 timeBeforeDoubleTap);
         sa.assertTrue(timeAfterDoubleTap > timeBeforeDoubleTap, "Fast Forward did not work as expected");
-        // Double tap to rewind and then validate time
-        timeBeforeDoubleTap = videoPlayer.clickPauseButton().getRemainingTime();
+        // Double tap and rewind three times to make sure the rewind is working and compare against current time
+        timeBeforeDoubleTap = videoPlayer.getCurrentTime();
         videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
-
-        timeAfterDoubleTap = videoPlayer.getRemainingTime();
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+        timeAfterDoubleTap = videoPlayer.getCurrentTime();
         LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
                 timeAfterDoubleTap);
-        sa.assertTrue(timeBeforeDoubleTap <= timeAfterDoubleTap, "Rewind did not work as expected");
+        sa.assertTrue( timeAfterDoubleTap < timeBeforeDoubleTap, "Rewind did not work as expected");
 
         sa.assertAll();
     }
