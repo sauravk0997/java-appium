@@ -27,7 +27,7 @@ import java.util.*;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
-public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
+public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
     //Test constants
     protected static final String SHORT_SERIES = "Bluey";
@@ -264,7 +264,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
 
         //Enable autoplay
         toggleAutoPlay("ON");
-        initiatePlaybackAndScrubOnPlayer(seriesContentTitle, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        initiatePlaybackAndScrubOnPlayer(seriesContentTitle, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         upNextIOSPageBase.waitForUpNextUIToAppear();
         sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
         sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
