@@ -38,6 +38,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
+    private static final String THE_SIMPSONS_TREEHOUSE_OF_HORROR_COLLECTION_PAGE_NAME =
+            "The Simpsons Treehouse of Horror";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
@@ -330,7 +332,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
-        collectionPage.waitForCollectionPageToOpen("The Simpsons Treehouse of Horror");
+        collectionPage.waitForCollectionPageToOpen(THE_SIMPSONS_TREEHOUSE_OF_HORROR_COLLECTION_PAGE_NAME);
 
         collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
                 Direction.UP, 5);
@@ -502,7 +504,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
-        collectionPage.waitForCollectionPageToOpen("The Simpsons Treehouse of Horror");
+        collectionPage.waitForCollectionPageToOpen(THE_SIMPSONS_TREEHOUSE_OF_HORROR_COLLECTION_PAGE_NAME);
 
         collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
                 Direction.UP, 5);
@@ -516,7 +518,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
 
         videoPlayer.clickBackButton();
-        collectionPage.waitForCollectionPageToOpen("The Simpsons Treehouse of Horror");
+        collectionPage.waitForCollectionPageToOpen(THE_SIMPSONS_TREEHOUSE_OF_HORROR_COLLECTION_PAGE_NAME);
         Assert.assertTrue(collectionPage.isCollectionPresent(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V));
     }
 
