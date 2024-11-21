@@ -19,6 +19,7 @@ import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
@@ -28,6 +29,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final int ONE_SEC_TIMEOUT = 1;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -376,6 +378,38 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         String remainingTimeAfterSecondScrub = videoPlayer.getTimeRemainingLabelText();
         sa.assertTrue(videoPlayer.validateTimeFormat(remainingTimeAfterSecondScrub),
                 videoPlayerErrorMsg + remainingTimeAfterSecondScrub);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66509"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyVideoControlBringUpAndDismissControls() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        int controlsConfiguredTime = 5;
+        loginAndStartPlayback(THE_MARVELS);
+
+        videoPlayer.waitForVideoToStart();
+        // Tap anywhere on the video player and validate video controls
+        videoPlayer.displayVideoController();
+        sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not displayed after tapping the player screen");
+        // Wait for video controls to disappear and validate them
+        videoPlayer.waitForVideoControlToDisappear();
+        sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not automatically dismissed");
+        // Tap anywhere to activate video controls and tap again to validate that video controls are dismissed
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50, 2);
+        sa.assertFalse(videoPlayer.getPauseButton().isPresent(),
+                "Video player controls are not dismissed");
+        // Prepare for pause action and validate video controls are up
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.verifyVideoPaused(),
+                "Video player did not paused");
+        // Wait configured time and validate video controls do not dismissed after the configured time
+        pause(controlsConfiguredTime);
+        sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT),
+                "Video player controls are not up");
         sa.assertAll();
     }
 
