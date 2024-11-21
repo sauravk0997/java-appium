@@ -166,7 +166,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         login(entitledUser);
         pause(5);
-        initPage(DisneyPlusApplePageBase.class).dismissAppTrackingPopUp(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
         }

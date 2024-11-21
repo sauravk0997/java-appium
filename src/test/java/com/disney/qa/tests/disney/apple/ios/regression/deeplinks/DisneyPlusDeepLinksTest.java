@@ -78,7 +78,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         terminateApp(BuildType.ENTERPRISE.getDisneyBundle());
         launchDeeplink(deepLink);
-        homePage.dismissAppTrackingPopUp(10);
+        homePage.handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(),
                 WATCHLIST_DEEP_LINK_ERROR);
 
