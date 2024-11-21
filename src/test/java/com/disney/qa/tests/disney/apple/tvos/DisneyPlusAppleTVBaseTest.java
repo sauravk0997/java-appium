@@ -104,6 +104,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
         Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        disneyPlusAppleTVWelcomeScreenPage.dismissATVAppTrackingPopUp();
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPasswordButton();
@@ -202,7 +203,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         pause(5);
         applePageBase.detectAppleUpdateAndClickUpdateLater();
-        applePageBase.dismissATVAppTrackingPopUp();
     }
 
     public void collapseGlobalNav() {

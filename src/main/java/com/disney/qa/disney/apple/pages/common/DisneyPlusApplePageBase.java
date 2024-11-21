@@ -10,6 +10,7 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
@@ -1049,9 +1050,16 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissATVAppTrackingPopUp() {
-        String popUpTitle = "Allow \"Disney+\" to track your activity across other companies' apps and websites?";
+        /*String popUpTitle = "Allow “Disney+” to track your activity across other companies’ apps and websites?";
+        System.out.println(getDriver().getPageSource());
         if(getStaticTextByLabelContains(popUpTitle).isPresent(FIVE_SEC_TIMEOUT)) {
             LOGGER.info("App tracking pop-up detected, canceling it");
+            moveDown(1,2);
+            clickSelect();
+        }*/
+        //Currently the ATT pop-up elements are not visible to appium
+        DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        if(!isFocused(welcomePage.getLoginButton())){
             moveDown(1,2);
             clickSelect();
         }
