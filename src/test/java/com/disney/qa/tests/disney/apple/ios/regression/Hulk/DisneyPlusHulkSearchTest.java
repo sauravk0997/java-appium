@@ -64,8 +64,10 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         searchPage.searchForMedia("Only murders in the building");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
         pause(2);
-        sa.assertTrue(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Only murders in the building"), "No results found message was not as expected for TV-14 profile");
+        sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+                "PCON restricted title message was not as expected");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Only murders in the building"),
+                "No results found message was not as expected for TV-14 profile");
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         whoIsWatching.clickProfile(KIDS_PROFILE);
@@ -96,8 +98,10 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         searchPage.searchForMedia("Demolition");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
         pause(2);
-        sa.assertFalse(searchPage.isPCONRestrictedTitlePresent(), "PCON restricted title message present for TV-MA profile");
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"), "No results found message was not as expected for TV-MA profile");
+        sa.assertFalse(searchPage.isPCONRestrictedErrorMessagePresent(),
+                "PCON restricted title message present for TV-MA profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"),
+                "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
     }
 
