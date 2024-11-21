@@ -1616,4 +1616,26 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
         return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
     }
+
+    public ExtendedWebElement getFirstCellFromCollection(String collectionName) {
+        return firstCellElementFromCollection.format(collectionName);
+    }
+
+    public int getFirstCellRemainingTimeInMinutesFromCollection(String collectionName) {
+        String remainingTimePrompt = firstCellElementFromCollectionDynamicStaticText
+                .format(collectionName, "remaining").getText();
+        String[] remainingTimePromptParts = remainingTimePrompt.split(" ");
+        int totalMinutes = 0;
+
+        for (String remainingTimePromptPart : remainingTimePromptParts) {
+            if (remainingTimePromptPart.endsWith("h")) {
+                int hours = Integer.parseInt(remainingTimePromptPart.replace("h", ""));
+                totalMinutes += hours * 60;
+            } else if (remainingTimePromptPart.endsWith("m")) {
+                int minutes = Integer.parseInt(remainingTimePromptPart.replace("m", ""));
+                totalMinutes += minutes;
+            }
+        }
+        return totalMinutes;
+    }
 }
