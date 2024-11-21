@@ -82,6 +82,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String PLAYER = "player";
     public static final String PICTURE_IN_PICTURE = "pictureInPicture";
     public static final String PARENTAL_CONTROLS_CONFIG = "parentalControlsConfig";
+    public static final String FORCE_UPDATE_CONFIG = "forceUpdateConfig";
+    public static final String SHOW_UPDATE_APP_ALERT = "showUpdateAppAlert";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
 
@@ -430,8 +432,25 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public ExploreContent getDisneyApiMovie(String entityID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getMovie(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
+    public ExploreContent getHuluApiSeries(String entityID) {
+        try {
+            return getExploreApi().getSeries(getHuluExploreSearchRequest()
+                    .setEntityId(entityID)
+                    .setProfileId(getAccount().getProfileId()));
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ExploreContent getDisneyApiMovie(String entityID) {
+        try {
+            return getExploreApi().getMovie(getDisneyExploreSearchRequest()
+                    .setEntityId(entityID)
+                    .setProfileId(getAccount().getProfileId()));
+        } catch (URISyntaxException | JsonProcessingException e){
+            throw new RuntimeException(e);
+        }
+
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
@@ -465,12 +484,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .setLanguage(language)).getData().getPage().getContainers();
     }
 
-    public String getFirstContentIDForSet(String setID) throws URISyntaxException, JsonProcessingException {
-        ExploreSetResponse setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest().setSetId(setID).setProfileId(getAccount().getProfileId()));
+    public String getFirstContentIDForSet(String setID) {
+        ExploreSetResponse setResponse;
         String firstContentID = null;
         try {
+            setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
+                    .setSetId(setID)
+                    .setProfileId(getAccount().getProfileId()));
             firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
-        } catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException | URISyntaxException e) {
             Assert.fail(e.getMessage());
         }
         return firstContentID;
@@ -572,6 +594,23 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateJarvisInstallDisney();
     }
 
+    public void enableHardForceUpdateInJarvis() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+        launchJarvis(true);
+        jarvis.openAppConfigOverrides();
+        jarvis.openOverrideSection(FORCE_UPDATE_CONFIG);
+        jarvis.openOverrideSection(SHOW_UPDATE_APP_ALERT);
+        if (applePageBase.getStaticTextByLabelContains(FALSE).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("Enabling Hard Force Update");
+            applePageBase.clickToggleView();
+        }
+        LOGGER.info("Terminating Jarvis app..");
+        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+    }
+
     public String getHuluSubscriptionId() {
         try {
             JsonNode activeSubscriptions = getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
@@ -635,7 +674,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
     }
-    
+
     private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {
         applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
         applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();

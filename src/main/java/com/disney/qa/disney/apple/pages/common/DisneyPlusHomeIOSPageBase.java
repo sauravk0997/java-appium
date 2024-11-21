@@ -5,6 +5,7 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,6 +56,14 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isKidsHomePageOpen() {
         return mickeyAndFriends.isElementPresent();
+    }
+
+    public boolean isHeroCarouselDisplayed(String carouselId) {
+        return getHeroCarouselContainer(carouselId).isPresent();
+    }
+
+    public ExtendedWebElement getHeroCarouselContainer(String carouselId) {
+        return getDynamicAccessibilityId(carouselId);
     }
 
     public void clickFirstCarouselPoster() {
@@ -162,5 +171,19 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public void goToDetailsPageFromContinueWatching(String title) {
         swipeTillContinueWatchingCarouselPresent();
         getStaticTextByLabel(title).click();
+    }
+
+    public String getCurrentHeroCarouselTitle(String carouselId) {
+        return firstCellElementFromCollection.format(carouselId).getText().split(",")[0];
+    }
+
+    public boolean isHeroCarouselAutoRotating(String title, String carouselId) {
+        try {
+            fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Hero Carousel did not auto-rotate")
+                    .until(it -> !getCurrentHeroCarouselTitle(carouselId).equals(title));
+        } catch (TimeoutException e) {
+            return false;
+        }
+        return true;
     }
 }

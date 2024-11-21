@@ -373,6 +373,37 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74742"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
+    public void verifyR21CreatePinDownloadStarts() {
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage =
+                initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+
+        ratingsSetup(SINGAPORE);
+        launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
+        detailsPage.startDownload();
+
+        verifyAgePage.clickIAm21PlusButton();
+        passwordPage.enterPassword(getAccount());
+
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+
+        Assert.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_DID_NOT_OPEN);
+        IntStream.range(0, 4).forEach(i ->
+            pinPage.getTypeKey(String.valueOf(i)).click());
+        pinPage.getR21SetPinButton().click();
+
+        Assert.assertTrue(detailsPage.isOpened(), "Details page didn't open after creating the pin");
+        Assert.assertTrue(detailsPage.getDownloadStartedButton().isPresent(),
+                "Download not started, Stop or Pause Download button not displayed");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74658"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
     public void verifyR21HasPINVerifyPasswordScreen() {
@@ -407,6 +438,42 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76204"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
+    public void verifyR21HasPINUpNext() {
+        DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        ratingsSetupWithPINNew(SINGAPORE);
+        navigateToHomePageForPinUser();
+        launchDeeplink(R.TESTDATA.get("disney_prod_r21_series_love_victor_deeplink"));
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.clickPlayButton();
+
+        verifyAgePage.clickIAm21PlusButton();
+        verifyAgePage.enterPassword(getAccount());
+        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+
+        verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        verifyAgeDOBPage.clickVerifyAgeButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+
+        videoPlayer.scrubToPlaybackPercentage(95);
+        upNextPage.waitForUpNextUIToAppear();
+        String expectedNextEpisodesTitle = upNextPage.getNextEpisodeInfo();
+        LOGGER.info("Expected next episode title: {}", expectedNextEpisodesTitle);
+        //Verify that the next episode has started playing
+        upNextPage.waitForUpNextUIToDisappear();
+        videoPlayer.waitForVideoToStart();
+        String nextEpisodeTitle = videoPlayer.getSubTitleLabel();
+        Assert.assertTrue(nextEpisodeTitle.contains(expectedNextEpisodesTitle),
+                "Next episode didn't play");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69944"})

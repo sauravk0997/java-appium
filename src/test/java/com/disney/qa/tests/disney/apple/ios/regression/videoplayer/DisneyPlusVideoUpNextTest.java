@@ -188,15 +188,12 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         int second = 2;
         int pollingInSeconds = 5;
         int timeoutInSeconds = 90;
-        String three = "3";
+        String one = "1";
         String two = "2";
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-
-        //Enable autoplay
-        toggleAutoPlay("ON");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
         detailsPage.isOpened();
@@ -204,7 +201,9 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
             swipeUp(2500);
         }
         //Download episode
-        detailsPage.getEpisodeToDownload(three, two).click();
+        swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
+                detailsPage.getContentDetailsPage(), Direction.UP, 1200);
+        detailsPage.getEpisodeToDownload(one, two).click();
         String secondEpisodeTitle = detailsPage.getEpisodeTitleLabel(second)
                 .getText().split("\\.")[1];
         detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
@@ -221,6 +220,21 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         videoPlayerPage.waitForVideoToStart();
         String secondSubtitle = videoPlayerPage.getSubTitleLabel();
         Assert.assertTrue(secondSubtitle.contains(secondEpisodeTitle), "Second episode for series didn't play");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67684"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpNextContentRatingOverlay() {
+        DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        upNextIOSPageBase.waitForUpNextUIToAppear();
+        upNextIOSPageBase.tapPlayIconOnUpNext();
+        Assert.assertTrue(videoPlayerIOSPageBase.isContentRatingOverlayPresent(), "Content Rating overlay not displayed");
+        Assert.assertTrue(videoPlayerIOSPageBase.waitForContentRatingOverlayToDisappear(), "Content rating overlay " +
+                "didn't dismiss");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67646"})

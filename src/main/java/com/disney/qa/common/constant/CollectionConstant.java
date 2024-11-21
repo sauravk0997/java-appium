@@ -7,27 +7,27 @@ public class CollectionConstant {
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
         BRANDS_DISNEY_ORIGINALS,
-        BRANDS_PIXAR_FEATURED,
-        BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
         BRANDS_MARVEL_FEATURED,
+        BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
+        BRANDS_PIXAR_FEATURED,
         BRANDS_STAR_WARS_ORIGINALS,
-        CAROUSEL, //carousel rotating slides
         COLLECTIONS,
         COMEDIES,
         CONTINUE_WATCHING,
         DISNEY_JUNIOR,
         DOCUMENTARIES_AND_REALITY,
+        HULU_FEATURED,
+        HULU_ORIGINALS,
+        KIDS_CAROUSEL, //Kids carousel rotating slides
+        KIDS_MICKEY_AND_FRIENDS,
+        KIDS_PRINCESSES_AND_FAIRY_TALES,
         NEW_TO_DISNEY,
         ORIGINALS,
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
-        TRENDING,
-        HULU_FEATURED,
-        HULU_ORIGINALS,
-        KIDS_CAROUSEL, //Kids carousel rotating slides
-        KIDS_PRINCESSES_AND_FAIRY_TALES,
-        KIDS_MICKEY_AND_FRIENDS,
-        STUDIOS_AND_NETWORKS;
+        STUDIOS_AND_NETWORKS,
+        TREEHOUSE_OF_HORROR_I_TO_V,
+        TRENDING;
     }
 
     public static String getCollectionName(Collection collection) {
@@ -48,8 +48,6 @@ public class CollectionConstant {
                 return "df6c1d07-c9fa-4532-b487-faa57287570e";
             case BRANDS_STAR_WARS_ORIGINALS:
                 return "887acd70-a8bd-45df-94b5-477e31f905b4";
-            case CAROUSEL:
-                return "55c72c2f-c8ce-4317-ae6c-6a8fa7213c85";
             case COLLECTIONS:
                 return "ed2d5ad2-cfc6-42c7-942e-aa539772f10c";
             case COMEDIES:
@@ -82,6 +80,8 @@ public class CollectionConstant {
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case STUDIOS_AND_NETWORKS:
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
+            case TREEHOUSE_OF_HORROR_I_TO_V:
+                return "43a35f2b-3788-4449-a54d-cd37263f0940";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }

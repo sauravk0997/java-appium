@@ -67,12 +67,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement subtitleLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"adPod\"`]")
     private ExtendedWebElement adPod;
-
     @ExtendedFindBy(accessibilityId = "adCountdownLabel")
     private ExtendedWebElement adTimeBadge;
+    @ExtendedFindBy(accessibilityId = "ratingLabel")
+    private ExtendedWebElement contentRatingOverlayLabel;
 
     //FUNCTIONS
 
@@ -698,5 +698,21 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAdPodPresent() {
         return adPod.isPresent();
+    }
+
+    public boolean isContentRatingOverlayPresent() {
+        return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Content Rating is not visible")
+                .until(it -> contentRatingOverlayLabel.isElementPresent(THREE_SEC_TIMEOUT));
+    }
+
+    public boolean waitForContentRatingOverlayToDisappear() {
+        return fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Content Rating is visible")
+                .until(it -> !contentRatingOverlayLabel.isElementPresent());
+    }
+
+    public boolean isCrossingAdBoundaryMessagePresent() {
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ALERT_MESSAGE_CROSSING_AD_BOUNDARY.getText())).isPresent();
     }
 }
