@@ -421,6 +421,59 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 "Video is not playing from beginning");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67511"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEpisodeInSetUIElements() {
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String collectionName = CollectionConstant.getCollectionName(
+                CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V);
+        setAppToHomeScreen(getAccount());
+
+        // Get metadata for The Simpsons Season 2, Episode 3
+        // as it is the first available episode in 'Treehouse of Horror' collection
+        Item firstEpisodeFromCollection = getDisneyApiSeries(R.TESTDATA.get("disney_prod_series_the_simpsons_entity_id"))
+                .getSeasons().get(1).getItems().get(2);
+
+        String firstEpisodeFromCollectionSeriesTitle = firstEpisodeFromCollection.getVisuals().getTitle();
+        String firstEpisodeFromCollectionTitle = firstEpisodeFromCollection.getVisuals().getEpisodeTitle();
+        String firstEpisodeFromCollectionSeasonNumber = firstEpisodeFromCollection.getVisuals().getSeasonNumber();
+        String firstEpisodeFromCollectionEpisodeNumber = firstEpisodeFromCollection.getVisuals().getEpisodeNumber();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
+        collectionPage.waitForCollectionPageToOpen("The Simpsons Treehouse of Horror");
+
+        collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
+                Direction.UP, 5);
+        if (firstEpisodeFromCollectionSeriesTitle.isEmpty()) {
+            throw new SkipException("Episode series title from API is empty");
+        }
+        sa.assertTrue(
+                collectionPage.isFirstCellFromCollectionStaticTextPresent(collectionName,
+                        firstEpisodeFromCollectionSeriesTitle),
+                "First element of the collection did not have series title"
+        );
+
+        if (firstEpisodeFromCollectionSeasonNumber.isEmpty() ||
+                firstEpisodeFromCollectionEpisodeNumber.isEmpty() ||
+                firstEpisodeFromCollectionTitle.isEmpty() ) {
+            throw new SkipException("Episode metadata from API is empty");
+        }
+        sa.assertTrue(
+                collectionPage.isFirstCellFromCollectionEpisodeMetadataPresent(collectionName,
+                        firstEpisodeFromCollectionSeasonNumber,
+                        firstEpisodeFromCollectionEpisodeNumber,
+                        firstEpisodeFromCollectionTitle),
+                "First element of the collection did not have episode metadata");
+
+        sa.assertTrue(collectionPage.isFirstCellFromCollectionAssetImagePresent(collectionName),
+                "First element of the collection did not have Asset image");
+        sa.assertTrue(collectionPage.isFirstCellFromCollectionPlayIconPresent(collectionName),
+                "First element  of the collection did not have Play icon");
+        sa.assertAll();
+    }
+
+
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
         try {
