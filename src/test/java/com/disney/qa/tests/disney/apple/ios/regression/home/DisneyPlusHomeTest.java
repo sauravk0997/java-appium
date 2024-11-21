@@ -541,7 +541,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String firstEpisodeFromCollectionEpisodeNumber = firstEpisodeFromCollection.getVisuals().getEpisodeNumber();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
-        collectionPage.waitForCollectionPageToOpen("The Simpsons Treehouse of Horror");
+        collectionPage.waitForCollectionPageToOpen(
+                CollectionConstant.getCollectionTitle(CollectionConstant.Collection.TREEHOUSE_OF_HORROR));
 
         collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
                 Direction.UP, 5);
