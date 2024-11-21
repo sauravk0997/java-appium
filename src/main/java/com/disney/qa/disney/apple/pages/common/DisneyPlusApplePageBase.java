@@ -931,6 +931,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             clickSelect();
         }
     }
+    
+    public void dismissAppTrackingPopUp(int timeout) {
+        trackingPopUp.clickIfPresent(timeout);
+    }
 
     public String getSystemAlertText() {
         return typeSystemAlerts.getText();
@@ -963,20 +967,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         systemAlertDismissBtn.click();
     }
 
-    public void clickCancelAlertBtn() {
-        systemAlertCancelBtn.click();
-    }
-
-    public void clickLogoutAlertBtn() {
-        systemAlertLogoutBtn.click();
-    }
-
-    public void clickLogoutButtonIfHasFocus() {
-        if (isFocused(logoutButton)) {
-            logoutButton.click();
-        }
-    }
-
     public String getParsedString(ExtendedWebElement element, String part, String regex) {
         String[] elementParts = element.getText().split(regex);
         return elementParts[Integer.parseInt(part)];
@@ -986,17 +976,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         logoutButton.click();
     }
 
-    public boolean isLogOutBtnPresent() {
-        return logoutButton.isElementPresent();
-    }
-
     public void clickSaveProfileButton() {
         dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText())).click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-    }
-
-    public void clickTypeButton() {
-        typeButtons.click();
     }
 
     public void clickMoreTab() {
@@ -1021,18 +1003,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         clickPrimaryButton();
     }
 
-    public boolean doesAiringBadgeContainLive() {
-        return airingBadgeLabel.getText().toLowerCase().contains("live");
-    }
-
     public boolean doesAttributeEqualTrue(ExtendedWebElement element, String name) {
         return element.getAttribute(name).equalsIgnoreCase("true");
-    }
-
-    public void dismissKeyboardIfIpadLandscapeDetected() {
-        if (detectDevice(DeviceType.Type.IOS_TABLET) && detectOrientation(ScreenOrientation.LANDSCAPE)) {
-            hideKeyboard.clickIfPresent();
-        }
     }
 
     public boolean isUpNextHeaderPresent() {
@@ -1047,30 +1019,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void dismissAppTrackingPopUp() {
         trackingPopUp.clickIfPresent();
-    }
-
-    public void dismissATVAppTrackingPopUp() {
-        /*String popUpTitle = "Allow “Disney+” to track your activity across other companies’ apps and websites?";
-        System.out.println(getDriver().getPageSource());
-        if(getStaticTextByLabelContains(popUpTitle).isPresent(FIVE_SEC_TIMEOUT)) {
-            LOGGER.info("App tracking pop-up detected, canceling it");
-            moveDown(1,2);
-            clickSelect();
-        }*/
-        //Currently the ATT pop-up elements are not visible to appium
-        DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        if(!isFocused(welcomePage.getLoginButton())){
-            moveDown(1,2);
-            clickSelect();
-        }
-    }
-
-    public boolean isThumbnailViewPresent() {
-        return thumbnailView.isPresent();
-    }
-
-    public void clickThumbnailView() {
-        thumbnailView.click();
     }
 
     public enum FooterTabs {

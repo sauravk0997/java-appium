@@ -31,31 +31,4 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
     public boolean isOpened() {
         return watchLiveButton.isElementPresent();
     }
-
-    public ExtendedWebElement getWatchLiveButton() {
-        return watchLiveButton;
-    }
-
-    public ExtendedWebElement getWatchFromStartButton() {
-        return watchFromStartButton;
-    }
-
-    public boolean isTitleLabelPresent() { return titleLabel.isPresent(); }
-
-    public boolean isSubtitleLabelPresent() { return subtitleLabel.isPresent(); }
-
-    @Override
-    public boolean isThumbnailViewPresent() { return thumbnailImageView.isPresent(); }
-
-    /**
-     * Below are QA env specific methods for DWTS Anthology.
-     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
-     */
-    public ExtendedWebElement getQAWatchLiveButton() { return getTypeButtonContainsLabel("WATCH LIVE"); }
-
-    public ExtendedWebElement getQAWatchFromStartButton() { return getTypeButtonContainsLabel("WATCH FROM START"); }
-
-    public boolean isQASubtitleLabelPresent() { return getStaticTextByNameContains("subtitleLabel").isPresent(); }
-
-    public boolean isQAThumbnailViewPresent() { return getTypeOtherContainsName("thumbnailView").isPresent(); }
 }
