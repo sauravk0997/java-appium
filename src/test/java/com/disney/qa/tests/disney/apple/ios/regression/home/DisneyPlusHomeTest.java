@@ -462,6 +462,38 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 "'Continue Watching' title moved from position");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68159"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingItemSelection() {
+        int swipeCount = 5;
+        int thresholdInMins = 1;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"), 50);
+
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+
+        String continueWatchingCollectionName = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        int homePageRemainingTimeInMinutes =
+                homePage.getFirstCellRemainingTimeInMinutesFromCollection(continueWatchingCollectionName);
+        ExtendedWebElement firstElement = homePage.getFirstCellFromCollection(continueWatchingCollectionName);
+        firstElement.click();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        int videoPlayerRemainingTimeInMinutes = videoPlayer.getRemainingTimeInMinutes();
+
+        Assert.assertTrue(
+                Math.abs(homePageRemainingTimeInMinutes - videoPlayerRemainingTimeInMinutes) <= thresholdInMins,
+                "Playback did not start from user's most recent bookmark");
+    }
+
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
         try {
