@@ -19,6 +19,7 @@ import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -421,6 +422,78 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 "Video is not playing from beginning");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68165"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingContainerScrollForOneItem() {
+        int swipeCount = 5;
+        int titlesLimit = 1;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
+
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+
+        List<Item> continueWatchingTitlesFromApi =
+                getItemsFromCollection(CollectionConstant.Collection.CONTINUE_WATCHING, titlesLimit);
+
+        Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
+        String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
+        if (firstAPICollectionItemTitle.isEmpty()) {
+            throw new SkipException("First API Collection item did not have a title");
+        }
+
+        ExtendedWebElement continueWatchingElement = homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.CONTINUE_WATCHING, firstAPICollectionItemTitle);
+        Point initialLocation = continueWatchingElement.getLocation();
+        homePage.swipeInContainer(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING),
+                Direction.LEFT, 2, 900
+        );
+        homePage.swipeInContainer(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING),
+                Direction.RIGHT, 2, 900
+        );
+        Point newLocation = continueWatchingElement.getLocation();
+        Assert.assertEquals(initialLocation, newLocation,
+                "'Continue Watching' title moved from position");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68159"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingItemSelection() {
+        int swipeCount = 5;
+        int thresholdInMins = 1;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"), 50);
+
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+
+        String continueWatchingCollectionName = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        int homePageRemainingTimeInMinutes =
+                homePage.getFirstCellRemainingTimeInMinutesFromCollection(continueWatchingCollectionName);
+        ExtendedWebElement firstElement = homePage.getFirstCellFromCollection(continueWatchingCollectionName);
+        firstElement.click();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        int videoPlayerRemainingTimeInMinutes = videoPlayer.getRemainingTimeInMinutes();
+
+        Assert.assertTrue(
+                Math.abs(homePageRemainingTimeInMinutes - videoPlayerRemainingTimeInMinutes) <= thresholdInMins,
+                "Playback did not start from user's most recent bookmark");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67511"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEpisodeInSetUIElements() {
@@ -501,5 +574,13 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
+    }
+
+    private List<Item> getItemsFromCollection(CollectionConstant.Collection collection, int titlesLimit) {
+        List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(collection), titlesLimit);
+        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+                String.format("No items for '%s' collection were fetched from Explore API", collection.name()));
+        return continueWatchingTitlesFromApi;
     }
 }

@@ -243,7 +243,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusDetailsIOSPageBase clickBackButton() {
-        displayVideoController();
+        if (!seekBar.isElementPresent()) {
+            displayVideoController();
+        }
         List<ExtendedWebElement> backButtonList = findExtendedWebElements(getBackButton().getBy());
         if (!backButtonList.isEmpty()) {
             for (ExtendedWebElement backButton : backButtonList) {
@@ -390,6 +392,26 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 + Integer.parseInt(remainingTime[1]) * 60;
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
+    }
+
+    /**
+     * Opens the player overlay, reads remaining time from seek bar taking into account there could be titles where
+     * hours unit might not be present and returns the total quantity of remaining minutes using hours and minutes
+     * @return Playback remaining time in minutes
+     */
+    public int getRemainingTimeInMinutes() {
+        displayVideoController();
+        String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
+
+        if (remainingTimeParts.length == 2) {
+            return Integer.parseInt(remainingTimeParts[0]);
+        } else if (remainingTimeParts.length == 3) {
+            int hours = Integer.parseInt(remainingTimeParts[0]);
+            int minutes = Integer.parseInt(remainingTimeParts[1]);
+            return (hours * 60) + minutes;
+        } else {
+            throw new IllegalArgumentException(String.format("Invalid time format: %s", timeRemainingLabel.getText()));
+        }
     }
 
     public String getRemainingTimeInStringWithHourAndMinutes() {
