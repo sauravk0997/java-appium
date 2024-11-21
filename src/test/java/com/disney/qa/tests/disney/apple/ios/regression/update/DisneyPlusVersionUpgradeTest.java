@@ -105,12 +105,10 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     public void verifyHardForcedUpdateWhileLoggedIn() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         AppStorePageBase appStorePageBase = initPage(AppStorePageBase.class);
 
         setAppToHomeScreen(getAccount());
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
 
         enableHardForceUpdateInJarvis();
         Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(),
