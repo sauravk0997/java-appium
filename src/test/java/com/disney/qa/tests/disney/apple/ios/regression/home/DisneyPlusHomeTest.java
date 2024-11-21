@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -28,6 +30,7 @@ import java.net.*;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
@@ -223,7 +226,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_avengers_end_game_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         detailsPage.clickPlayButton(DisneyAbstractPage.TEN_SEC_TIMEOUT);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
@@ -376,6 +379,89 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                         "Continue Watching container was visible after %s swipes on secondary profile", swipeCount));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68177"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingContainerNotPresentAfterContentComplete() {
+        int swipeCount = 5;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
+
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+        Assert.assertTrue(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
+                THE_AVENGERS.getTitle()).isPresent(), "Title not found in Continue watching container");
+
+        homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
+                THE_AVENGERS.getTitle()).click();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(THE_AVENGERS.getTitle()),
+                "Title didn't play from continue watching shelf");
+        videoPlayer.scrubToPlaybackPercentage(99);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+        Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container found after content completed");
+        Assert.assertFalse(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
+                THE_AVENGERS.getTitle()).isPresent(), "Title found in Continue watching container");
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        ExploreContent movieApiContent = getDisneyApiMovie(THE_AVENGERS.getEntityId());
+        String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
+
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), "Video player did not open");
+        Assert.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI),
+                "Video is not playing from beginning");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68165"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingContainerScrollForOneItem() {
+        int swipeCount = 5;
+        int titlesLimit = 1;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
+
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+
+        List<Item> continueWatchingTitlesFromApi =
+                getItemsFromCollection(CollectionConstant.Collection.CONTINUE_WATCHING, titlesLimit);
+
+        Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
+        String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
+        if (firstAPICollectionItemTitle.isEmpty()) {
+            throw new SkipException("First API Collection item did not have a title");
+        }
+
+        ExtendedWebElement continueWatchingElement = homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.CONTINUE_WATCHING, firstAPICollectionItemTitle);
+        Point initialLocation = continueWatchingElement.getLocation();
+        homePage.swipeInContainer(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING),
+                Direction.LEFT, 2, 900
+        );
+        homePage.swipeInContainer(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING),
+                Direction.RIGHT, 2, 900
+        );
+        Point newLocation = continueWatchingElement.getLocation();
+        Assert.assertEquals(initialLocation, newLocation,
+                "'Continue Watching' title moved from position");
+    }
+
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
         try {
@@ -389,5 +475,27 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         } catch (URISyntaxException | JsonProcessingException | IndexOutOfBoundsException e) {
             throw new RuntimeException(String.format("Not able to get the Home page data from the api, exception occurred: %s", e));
         }
+    }
+
+    private void addContentInContinueWatching(String url, int scrubPercentage) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        launchDeeplink(url);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+    }
+
+    private List<Item> getItemsFromCollection(CollectionConstant.Collection collection, int titlesLimit) {
+        List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(collection), titlesLimit);
+        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+                String.format("No items for '%s' collection were fetched from Explore API", collection.name()));
+        return continueWatchingTitlesFromApi;
     }
 }

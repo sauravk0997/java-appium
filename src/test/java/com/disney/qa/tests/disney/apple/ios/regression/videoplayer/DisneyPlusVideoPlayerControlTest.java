@@ -7,21 +7,19 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
@@ -31,6 +29,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final int ONE_SEC_TIMEOUT = 1;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -150,7 +149,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         String contentTitle = detailsPage.getContentTitle();
 
-        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         sa.assertTrue(videoPlayer.getTitleLabel().contains(contentTitle),
                 "Content title doesn't match from the detail's content title");
@@ -236,7 +236,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
     @Test(description = "VOD Player Controls - Scrubber Elements", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyScrubberElementsOnPlayer() throws URISyntaxException, JsonProcessingException {
+    public void verifyScrubberElementsOnPlayer() {
         String errorMessage = "not changed after scrub";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -296,7 +296,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         String contentTitle = detailsPage.getContentTitle();
         String episodeTitle = detailsPage.getEpisodeContentTitle();
 
-        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Episode title doesn't match from the detail's episode title");
@@ -378,6 +379,44 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.validateTimeFormat(remainingTimeAfterSecondScrub),
                 videoPlayerErrorMsg + remainingTimeAfterSecondScrub);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66509"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyVideoControlBringUpAndDismissControls() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        int controlsConfiguredTime = 5;
+        loginAndStartPlayback(THE_MARVELS);
+
+        videoPlayer.waitForVideoToStart();
+        // Tap anywhere on the video player and validate video controls
+        videoPlayer.displayVideoController();
+        sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not displayed after tapping the player screen");
+        // Wait for video controls to disappear and validate them
+        waitForVideoControlToDisappear();
+        sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not automatically dismissed");
+        // Tap anywhere to activate video controls and tap again to validate that video controls are dismissed
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50, 2);
+        sa.assertFalse(videoPlayer.getPauseButton().isPresent(),
+                "Video player controls are not dismissed");
+        // Prepare for pause action and validate video controls are up
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.verifyVideoPaused(),
+                "Video player did not paused");
+        // Wait configured time and validate video controls do not dismissed after the configured time
+        pause(controlsConfiguredTime);
+        sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT),
+                "Video player controls are not up");
+        sa.assertAll();
+    }
+
+    public void waitForVideoControlToDisappear() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        fluentWait(getDriver(), SHORT_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
+                .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(1));
     }
 
     private void loginAndStartPlayback(String content) {
