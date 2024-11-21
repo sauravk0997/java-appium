@@ -285,7 +285,8 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         disneyPlusSearchIOSPageBase.searchForMedia(content);
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
-        disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
+        disneyPlusDetailsIOSPageBase.clickPlayButton();
+        Assert.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(), "Video Player did not open");
         disneyPlusVideoPlayerIOSPageBase.waitForVideoToStart();
         disneyPlusVideoPlayerIOSPageBase.clickPauseButton();
         disneyPlusVideoPlayerIOSPageBase.scrubToPlaybackPercentage(percentage);
