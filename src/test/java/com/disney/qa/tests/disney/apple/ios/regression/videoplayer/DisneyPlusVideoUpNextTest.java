@@ -245,7 +245,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
-        ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_series_detail_bluey_entity_id"));
+        ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_loki_entity_id"));
         String episodeTitle = "";
         String seasonNumber = "";
         try {
