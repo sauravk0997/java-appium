@@ -240,6 +240,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67646"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpNextAutoPlayUIWhenEnabled() {
+        String seriesContentTitle = "Loki";
         DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -263,7 +264,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
 
         //Enable autoplay
         toggleAutoPlay("ON");
-        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        initiatePlaybackAndScrubOnPlayer(seriesContentTitle, PLAYER_PERCENTAGE_FOR_UP_NEXT);
         upNextIOSPageBase.waitForUpNextUIToAppear();
         sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
         sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
