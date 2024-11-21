@@ -241,6 +241,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpNextAutoPlayUIWhenEnabled() {
         DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
@@ -253,6 +254,11 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         } catch (Exception e) {
             Assert.fail("Exception occurred: " + e.getMessage());
         }
+
+        if(episodeTitle == null || seasonNumber == null){
+            throw new SkipException("Skipping test, failed to get episodeTitles or seasonNumber from the api");
+        }
+
         String upNextTitlePlaceHolder = String.format(REGEX_UPNEXT_SERIES_TITLE, seasonNumber, "2", episodeTitle);
 
         //Enable autoplay
@@ -263,6 +269,7 @@ public class DisneyPlusVideoUpNextTest  extends DisneyBaseTest {
         sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
                 "Up Next meta data title not displayed");
         sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
+        sa.assertTrue(videoPlayer.getBackButton().isPresent(), "Back button is not found");
         sa.assertAll();
     }
 
