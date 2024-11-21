@@ -288,7 +288,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         if (firstAPICollectionItemPrompt.isEmpty()) {
             throw new SkipException("First API Collection item did not have a prompt to validate");
         }
-        sa.assertTrue(homePage.isFirstCellFromCollectionRemainingTimePresent(
+        sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
                         continueWatchingCollectionName, firstAPICollectionItemPrompt),
                 "First element under 'Continue Watching' did not have Remaining time text");
 
