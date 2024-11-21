@@ -19,7 +19,6 @@ import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWait;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
@@ -395,7 +394,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
                 "Video player controls are not displayed after tapping the player screen");
         // Wait for video controls to disappear and validate them
-        waitForVideoControlToDisappear();
+        videoPlayer.waitForVideoControlToDisappear();
         sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
                 "Video player controls are not automatically dismissed");
         // Tap anywhere to activate video controls and tap again to validate that video controls are dismissed
@@ -413,10 +412,36 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    public void waitForVideoControlToDisappear() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71946"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyVideoControlRewindAndForwardWithControlsDown() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        fluentWait(getDriver(), SHORT_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
-                .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(1));
+        int timeBeforeDoubleTap = 0;
+        int timeAfterDoubleTap = 0;
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(THE_MARVELS);
+        videoPlayer.waitForVideoToStart();
+
+        // Double tap to fast forward and validate time
+        timeBeforeDoubleTap = videoPlayer.getCurrentTime();
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.tapPlayerScreen(PlayerControl.FAST_FORWARD, 2);
+        timeAfterDoubleTap = videoPlayer.getCurrentTime();
+        LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeAfterDoubleTap,
+                timeBeforeDoubleTap);
+        sa.assertTrue(timeAfterDoubleTap > timeBeforeDoubleTap, "Fast Forward did not work as expected");
+        // Double tap and rewind three times to make sure the rewind is working and compare against current time
+        timeBeforeDoubleTap = videoPlayer.getCurrentTime();
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+        timeAfterDoubleTap = videoPlayer.getCurrentTime();
+        LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
+                timeAfterDoubleTap);
+        sa.assertTrue( timeAfterDoubleTap < timeBeforeDoubleTap, "Rewind did not work as expected");
+
+        sa.assertAll();
     }
 
     private void loginAndStartPlayback(String content) {
