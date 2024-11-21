@@ -425,7 +425,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingItemSelection() {
         int swipeCount = 5;
-        int minutesThreshold = 1;
+        int thresholdInMins = 1;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
@@ -449,7 +449,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         int videoPlayerRemainingTimeInMinutes = videoPlayer.getRemainingTimeInMinutes();
 
         Assert.assertTrue(
-                Math.abs(homePageRemainingTimeInMinutes - videoPlayerRemainingTimeInMinutes) <= minutesThreshold,
+                Math.abs(homePageRemainingTimeInMinutes - videoPlayerRemainingTimeInMinutes) <= thresholdInMins,
                 "Playback did not start from user's most recent bookmark");
     }
 
