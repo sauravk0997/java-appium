@@ -503,10 +503,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V);
         setAppToHomeScreen(getAccount());
 
-        // Get metadata for The Simpsons Season 2, Episode 3
-        // as it is the first available episode in 'Treehouse of Horror' collection
-        Item firstEpisodeFromCollection = getDisneyApiSeries(R.TESTDATA.get("disney_prod_series_the_simpsons_entity_id"))
-                .getSeasons().get(1).getItems().get(2);
+        Item firstEpisodeFromCollection = getItemsFromCollection(
+                CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V, 1).get(0);
 
         String firstEpisodeFromCollectionSeriesTitle = firstEpisodeFromCollection.getVisuals().getTitle();
         String firstEpisodeFromCollectionTitle = firstEpisodeFromCollection.getVisuals().getEpisodeTitle();
