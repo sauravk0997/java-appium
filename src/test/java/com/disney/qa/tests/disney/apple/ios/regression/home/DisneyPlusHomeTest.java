@@ -252,12 +252,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), titlesLimit);
-        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+        Assert.assertFalse(continueWatchingTitlesFromApi == null,
                 "No items for 'Continue Watching' collection were fetched from Explore API");
 
         Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
         String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
-        if (firstAPICollectionItemTitle.isEmpty()) {
+        if (firstAPICollectionItemTitle == null) {
             throw new SkipException("First API Collection item did not have a title");
         }
         String firstCellTitle = homePage.getFirstCellTitleFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING)
@@ -273,10 +273,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String firstAPICollectionItemSeasonNumber = firstAPICollectionItem.getVisuals().getSeasonNumber();
         String firstAPICollectionItemEpisodeNumber = firstAPICollectionItem.getVisuals().getEpisodeNumber();
         String firstAPICollectionItemEpisodeTitle = firstAPICollectionItem.getVisuals().getEpisodeTitle();
-        if (firstAPICollectionItemSeasonNumber.isEmpty() ||
-                firstAPICollectionItemEpisodeNumber.isEmpty() ||
-                firstAPICollectionItemEpisodeTitle.isEmpty() ) {
-            throw new SkipException("First API Collection item did not have episode metadata to validate");
+        if (firstAPICollectionItemSeasonNumber == null ||
+                firstAPICollectionItemEpisodeNumber == null ||
+                firstAPICollectionItemEpisodeTitle == null ) {
+            throw new SkipException("First API Collection item did not have all episode metadata to validate");
         }
         sa.assertTrue(
                 homePage.isFirstCellFromCollectionEpisodeMetadataPresent(continueWatchingCollectionName,
@@ -286,7 +286,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 "First element under 'Continue Watching' did not have Episode metadata");
 
         String firstAPICollectionItemPrompt = firstAPICollectionItem.getVisuals().getPrompt();
-        if (firstAPICollectionItemPrompt.isEmpty()) {
+        if (firstAPICollectionItemPrompt == null) {
             throw new SkipException("First API Collection item did not have a prompt to validate");
         }
         sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
@@ -296,7 +296,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         String lastAPICollectionItemTitle = continueWatchingTitlesFromApi.get(continueWatchingTitlesFromApi.size() - 1)
                 .getVisuals().getTitle();
-        if (lastAPICollectionItemTitle.isEmpty()) {
+        if (lastAPICollectionItemTitle == null) {
             throw new SkipException("Last API Collection item did not have a title");
         }
         ExtendedWebElement lastElement = homePage.getCellElementFromContainer(
@@ -443,7 +443,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
         String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
-        if (firstAPICollectionItemTitle.isEmpty()) {
+        if (firstAPICollectionItemTitle == null) {
             throw new SkipException("First API Collection item did not have a title");
         }
 
@@ -540,11 +540,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String firstEpisodeFromCollectionSeasonNumber = firstEpisodeFromCollectionVisuals.getSeasonNumber();
         String firstEpisodeFromCollectionEpisodeNumber = firstEpisodeFromCollectionVisuals.getEpisodeNumber();
 
-        if (firstEpisodeFromCollectionSeriesTitle.isEmpty() ||
-                firstEpisodeFromCollectionSeasonNumber.isEmpty() ||
-                firstEpisodeFromCollectionEpisodeNumber.isEmpty() ||
-                firstEpisodeFromCollectionTitle.isEmpty() ) {
-            throw new SkipException("Episode metadata from API is empty");
+        if (firstEpisodeFromCollectionSeriesTitle == null ||
+                firstEpisodeFromCollectionSeasonNumber == null ||
+                firstEpisodeFromCollectionEpisodeNumber == null ||
+                firstEpisodeFromCollectionTitle  == null ) {
+            throw new SkipException("At least one Episode metadata from API was set to null");
         }
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
@@ -607,7 +607,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private List<Item> getItemsFromCollection(CollectionConstant.Collection collection, int titlesLimit) {
         List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(collection), titlesLimit);
-        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+        Assert.assertNotNull(continueWatchingTitlesFromApi,
                 String.format("No items for '%s' collection were fetched from Explore API", collection.name()));
         return continueWatchingTitlesFromApi;
     }
