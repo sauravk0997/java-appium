@@ -1604,9 +1604,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
     }
 
-    public boolean isFirstCellFromCollectionRemainingTimePresent(
-            String collectionName, String titlePrompt) {
-        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, titlePrompt).isPresent();
+    public boolean isFirstCellFromCollectionStaticTextPresent(
+            String collectionName, String expectedContainedText) {
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, expectedContainedText)
+                .isPresent();
     }
 
     public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
