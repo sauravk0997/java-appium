@@ -532,13 +532,20 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V);
         setAppToHomeScreen(getAccount());
 
-        Item firstEpisodeFromCollection = getItemsFromCollection(
-                CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V, 1).get(0);
+        Visuals firstEpisodeFromCollectionVisuals = getItemsFromCollection(
+                CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V, 1).get(0).getVisuals();
 
-        String firstEpisodeFromCollectionSeriesTitle = firstEpisodeFromCollection.getVisuals().getTitle();
-        String firstEpisodeFromCollectionTitle = firstEpisodeFromCollection.getVisuals().getEpisodeTitle();
-        String firstEpisodeFromCollectionSeasonNumber = firstEpisodeFromCollection.getVisuals().getSeasonNumber();
-        String firstEpisodeFromCollectionEpisodeNumber = firstEpisodeFromCollection.getVisuals().getEpisodeNumber();
+        String firstEpisodeFromCollectionSeriesTitle = firstEpisodeFromCollectionVisuals.getTitle();
+        String firstEpisodeFromCollectionTitle = firstEpisodeFromCollectionVisuals.getEpisodeTitle();
+        String firstEpisodeFromCollectionSeasonNumber = firstEpisodeFromCollectionVisuals.getSeasonNumber();
+        String firstEpisodeFromCollectionEpisodeNumber = firstEpisodeFromCollectionVisuals.getEpisodeNumber();
+
+        if (firstEpisodeFromCollectionSeriesTitle.isEmpty() ||
+                firstEpisodeFromCollectionSeasonNumber.isEmpty() ||
+                firstEpisodeFromCollectionEpisodeNumber.isEmpty() ||
+                firstEpisodeFromCollectionTitle.isEmpty() ) {
+            throw new SkipException("Episode metadata from API is empty");
+        }
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
         collectionPage.waitForCollectionPageToOpen(
@@ -546,20 +553,13 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
                 Direction.UP, 5);
-        if (firstEpisodeFromCollectionSeriesTitle.isEmpty()) {
-            throw new SkipException("Episode series title from API is empty");
-        }
+
         sa.assertTrue(
                 collectionPage.isFirstCellFromCollectionStaticTextPresent(collectionName,
                         firstEpisodeFromCollectionSeriesTitle),
                 "First element of the collection did not have series title"
         );
 
-        if (firstEpisodeFromCollectionSeasonNumber.isEmpty() ||
-                firstEpisodeFromCollectionEpisodeNumber.isEmpty() ||
-                firstEpisodeFromCollectionTitle.isEmpty() ) {
-            throw new SkipException("Episode metadata from API is empty");
-        }
         sa.assertTrue(
                 collectionPage.isFirstCellFromCollectionEpisodeMetadataPresent(collectionName,
                         firstEpisodeFromCollectionSeasonNumber,
