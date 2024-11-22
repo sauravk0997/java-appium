@@ -26,6 +26,7 @@ public class CollectionConstant {
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         STUDIOS_AND_NETWORKS,
+        TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
         TRENDING;
     }
@@ -95,6 +96,8 @@ public class CollectionConstant {
                 return "Continue Watching";
             case RECOMMENDED_FOR_YOU:
                 return "Recommended For You";
+            case TREEHOUSE_OF_HORROR:
+                return "The Simpsons Treehouse of Horror";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }

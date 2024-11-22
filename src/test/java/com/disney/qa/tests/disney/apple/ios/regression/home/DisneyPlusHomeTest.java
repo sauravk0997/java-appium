@@ -324,13 +324,14 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75465"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyPlaybackForEpisodesInSets() {
+    public void verifyPlaybackForEpisodesInSetsByTappingOnMetadata() {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
-        collectionPage.waitForCollectionPageToOpen("The Simpsons Treehouse of Horror");
+        collectionPage.waitForCollectionPageToOpen(
+                CollectionConstant.getCollectionTitle(CollectionConstant.Collection.TREEHOUSE_OF_HORROR));
 
         collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
                 Direction.UP, 5);
@@ -460,6 +461,66 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Point newLocation = continueWatchingElement.getLocation();
         Assert.assertEquals(initialLocation, newLocation,
                 "'Continue Watching' title moved from position");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68159"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingItemSelection() {
+        int swipeCount = 5;
+        int thresholdInMins = 1;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        // Populate Continue Watching assets
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"), 50);
+
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+
+        String continueWatchingCollectionName = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        int homePageRemainingTimeInMinutes =
+                homePage.getFirstCellRemainingTimeInMinutesFromCollection(continueWatchingCollectionName);
+        ExtendedWebElement firstElement = homePage.getFirstCellFromCollection(continueWatchingCollectionName);
+        firstElement.click();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        int videoPlayerRemainingTimeInMinutes = videoPlayer.getRemainingTimeInMinutes();
+
+        Assert.assertTrue(
+                Math.abs(homePageRemainingTimeInMinutes - videoPlayerRemainingTimeInMinutes) <= thresholdInMins,
+                "Playback did not start from user's most recent bookmark");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75464"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyPlaybackForEpisodesInSetsByTappingOnArtwork() {
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
+        collectionPage.waitForCollectionPageToOpen(
+                CollectionConstant.getCollectionTitle(CollectionConstant.Collection.TREEHOUSE_OF_HORROR));
+
+        collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
+                Direction.UP, 5);
+        Assert.assertTrue(collectionPage.isCollectionPresent(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V),
+                "Treehouse of Horror I-V container not found");
+
+        collectionPage.getFirstCellFromCollectionAssetImage(
+                        CollectionConstant.getCollectionName(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V))
+                .click();
+
+        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+
+        videoPlayer.clickBackButton();
+        collectionPage.waitForCollectionPageToOpen(
+                CollectionConstant.getCollectionTitle(CollectionConstant.Collection.TREEHOUSE_OF_HORROR));
+        Assert.assertTrue(collectionPage.isCollectionPresent(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V));
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {

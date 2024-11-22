@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
+import com.disney.qa.api.disney.*;
+import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
@@ -11,7 +13,6 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
@@ -134,5 +135,44 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(downloads.isDownloadInProgressPluralTextPresent(),
                 "Download text for multiple downloads was not as expected");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66670"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMoviesDownloadsUI() {
+        int polling = 10;
+        int timeout = 300;
+        String Deeplink = "disneyplus://www.disneyplus.com/browse/";
+
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        SoftAssert sa = new SoftAssert();
+
+        launchDeeplink(Deeplink+DisneyEntityIds.MARVELS.getEntityId());
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String movieTitle = detailsPage.getMediaTitle();
+        ExploreContent movieApiContent = getDisneyApiMovie(DisneyEntityIds.MARVELS.getEntityId());
+        
+        //Start download
+        detailsPage.getMovieDownloadButton().click();
+        detailsPage.waitForMovieDownloadComplete(timeout, polling);
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+
+        //Verify movie asset metadata on downloads
+        sa.assertTrue(downloadsPage.isDownloadHeaderPresent(),
+                "Downloads header is not present on downloads screen");
+        sa.assertTrue(downloadsPage.getEditButton().isPresent(),
+                "Edit button is not present on downloads screen");
+        sa.assertTrue(downloadsPage.getDownloadedAssetImage(movieTitle).isPresent(),
+                "Downloaded movie asset image is not found");
+        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
+                String.format("Movie title '%s' is not found for downloaded asset", movieTitle));
+        sa.assertTrue(downloadsPage.getSizeAndRuntime().isPresent(),
+                "Downloaded movie asset size and runtime are not found for downloaded asset");
+        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieApiContent.getRating()).isPresent(),
+                "Movie downloaded asset rating not found for the downloaded asset");
+        sa.assertAll();
     }
 }
