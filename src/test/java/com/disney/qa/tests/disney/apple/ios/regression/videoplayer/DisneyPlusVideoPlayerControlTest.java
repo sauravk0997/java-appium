@@ -465,12 +465,16 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
                 "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(videoPlayer.getPlaybackAdvisoryCountdown().isPresent(),
+                "Playback Advisory Countdown is not present");
         detailsPage.clickPlayButton();
-        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
+        sa.assertTrue(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(),
                 "Negative Stereotype Advisory text was not found at the beginning of the video");
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
-        videoPlayer.clickContinueBtn();
+        detailsPage.clickPlayOrContinue().waitForVideoToStart();
+        sa.assertFalse(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(),
+                "Negative Stereotype Advisory was found -");
 
 
 
