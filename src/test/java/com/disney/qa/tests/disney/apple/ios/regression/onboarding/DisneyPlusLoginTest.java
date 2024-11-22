@@ -248,7 +248,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
     //TODO: QAA-14561
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68436"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testEmailNoAccountSignUp() {
         String noEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_INVALID_EMAIL_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
@@ -265,7 +265,12 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isTryAgainAlertButtonDisplayed(), "try again button was not displayed");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed(), "sign up button was not displayed");
 
+        pause(5);
+        System.out.println(getDriver().getPageSource());
+
         disneyPlusLoginIOSPageBase.clickAlertSignUpButton();
+        pause(5);
+        System.out.println(getDriver().getPageSource());
 
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(), "sign up page did not load");
         softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(), "email field was not displayed");
