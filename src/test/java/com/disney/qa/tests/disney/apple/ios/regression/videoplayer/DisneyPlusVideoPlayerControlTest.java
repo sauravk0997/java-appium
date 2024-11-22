@@ -7,17 +7,14 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -150,7 +147,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         String contentTitle = detailsPage.getContentTitle();
 
-        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         sa.assertTrue(videoPlayer.getTitleLabel().contains(contentTitle),
                 "Content title doesn't match from the detail's content title");
@@ -236,7 +234,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
     @Test(description = "VOD Player Controls - Scrubber Elements", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyScrubberElementsOnPlayer() throws URISyntaxException, JsonProcessingException {
+    public void verifyScrubberElementsOnPlayer() {
         String errorMessage = "not changed after scrub";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -296,7 +294,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         String contentTitle = detailsPage.getContentTitle();
         String episodeTitle = detailsPage.getEpisodeContentTitle();
 
-        Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
         sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Episode title doesn't match from the detail's episode title");
@@ -380,6 +379,70 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66509"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyVideoControlBringUpAndDismissControls() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        int controlsConfiguredTime = 5;
+        loginAndStartPlayback(THE_MARVELS);
+
+        videoPlayer.waitForVideoToStart();
+        // Tap anywhere on the video player and validate video controls
+        videoPlayer.displayVideoController();
+        sa.assertTrue(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not displayed after tapping the player screen");
+        // Wait for video controls to disappear and validate them
+        videoPlayer.waitForVideoControlToDisappear();
+        sa.assertFalse(videoPlayer.getPauseButton().isPresent(SHORT_TIMEOUT),
+                "Video player controls are not automatically dismissed");
+        // Tap anywhere to activate video controls and tap again to validate that video controls are dismissed
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50, 2);
+        sa.assertFalse(videoPlayer.getPauseButton().isPresent(),
+                "Video player controls are not dismissed");
+        // Prepare for pause action and validate video controls are up
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.verifyVideoPaused(),
+                "Video player did not paused");
+        // Wait configured time and validate video controls do not dismissed after the configured time
+        pause(controlsConfiguredTime);
+        sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT),
+                "Video player controls are not up");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71946"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyVideoControlRewindAndForwardWithControlsDown() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int timeBeforeDoubleTap = 0;
+        int timeAfterDoubleTap = 0;
+        SoftAssert sa = new SoftAssert();
+        loginAndStartPlayback(THE_MARVELS);
+        videoPlayer.waitForVideoToStart();
+
+        // Double tap to fast forward and validate time
+        timeBeforeDoubleTap = videoPlayer.getCurrentTime();
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.tapPlayerScreen(PlayerControl.FAST_FORWARD, 2);
+        timeAfterDoubleTap = videoPlayer.getCurrentTime();
+        LOGGER.info("timeAfterDoubleTap {} timeBeforeDoubleTap {}" , timeAfterDoubleTap,
+                timeBeforeDoubleTap);
+        sa.assertTrue(timeAfterDoubleTap > timeBeforeDoubleTap, "Fast Forward did not work as expected");
+        // Double tap and rewind three times to make sure the rewind is working and compare against current time
+        timeBeforeDoubleTap = videoPlayer.getCurrentTime();
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+        videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 2);
+        timeAfterDoubleTap = videoPlayer.getCurrentTime();
+        LOGGER.info("timeBeforeDoubleTap {} timeAfterDoubleTap {}" , timeBeforeDoubleTap,
+                timeAfterDoubleTap);
+        sa.assertTrue( timeAfterDoubleTap < timeBeforeDoubleTap, "Rewind did not work as expected");
+
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71665"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesPlaybackInterstitial() {
@@ -401,10 +464,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         seasons.get(1).click();
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isSeasonButtonDisplayed("2"), "Season has not changed to Season 2");
-        sa.assertAll();
     }
 
-    private void loginAndStartPlayback(String content) {
+        private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
