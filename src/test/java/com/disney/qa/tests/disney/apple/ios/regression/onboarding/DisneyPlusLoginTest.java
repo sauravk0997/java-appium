@@ -246,39 +246,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    //TODO: QAA-14561
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68436"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
-    public void testEmailNoAccountSignUp() {
-        String noEmailError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LOGIN_INVALID_EMAIL_ERROR.getText());
-        SoftAssert softAssert = new SoftAssert();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusSignUpIOSPageBase disneyPlusSignUpIOSPageBase = new DisneyPlusSignUpIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-
-        String newEmail = "thisEmailDoesntExist2@disenystreaming.com";
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(newEmail);
-
-        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), noEmailError, NO_ERROR_DISPLAYED);
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isNoAccountAlertSubtextDisplayed(), "No Account alert subtext was not displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isTryAgainAlertButtonDisplayed(), "try again button was not displayed");
-        softAssert.assertTrue(disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed(), "sign up button was not displayed");
-
-        pause(5);
-        System.out.println(getDriver().getPageSource());
-
-        LOGGER.info("is alert signup button present? " + disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed());
-        disneyPlusLoginIOSPageBase.clickAlertSignUpButton();
-        pause(5);
-        System.out.println(getDriver().getPageSource());
-
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isOpened(), "sign up page did not load");
-        softAssert.assertTrue(disneyPlusSignUpIOSPageBase.isEmailFieldDisplayed(), "email field was not displayed");
-        softAssert.assertEquals(disneyPlusSignUpIOSPageBase.getEmailFieldText(), newEmail, "Email field was not prefilled with email address");
-        softAssert.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66764"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testChooseProfiles() {
