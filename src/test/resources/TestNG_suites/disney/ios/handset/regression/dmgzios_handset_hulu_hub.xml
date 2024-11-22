@@ -5,13 +5,13 @@
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
-    <parameter name="jenkinsBuild" value=""/>
-    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-PreProd-Enterprise"/>
-    <parameter name="jenkinsBuild" value="3.9.2.73980.3"/>
+    <parameter name="choiceParam::appcenter_app_name::app center app name"
+               value="Disney-Prod-Enterprise,Disney-Non-IAP-PreProd-Enterprise"/>
+    <parameter name="jenkinsEnvironments" value="Prod,PreProd"/>
+    <parameter name="jenkinsBuild" value="3.9.2.73981"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_handset_hulu_hub"/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
-    <parameter name="jenkinsEnvironments" value="PreProd"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="hiddenParam::groups::group Name" value="HuluHub"/>
@@ -32,11 +32,13 @@
     <test verbose="1" name="DisneyPlus iOS Handset Search" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Home" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
         </classes>
     </test>
 </suite>
