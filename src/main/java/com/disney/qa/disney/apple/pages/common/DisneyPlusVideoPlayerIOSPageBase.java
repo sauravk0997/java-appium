@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_NEGATIVE_STEREOTYPE_ADVISORY;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.PLAYBACK_NEGATIVE_STEREOTYPE_ADVISORY_COUNTDOWN;
+
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
@@ -742,5 +745,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
                 .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public ExtendedWebElement getPlaybackAdvisoryCountdown() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                PLAYBACK_NEGATIVE_STEREOTYPE_ADVISORY_COUNTDOWN.getText()));
+    }
+
+    public boolean isNegativeStereotypeAdvisoryPresentInVideoPlayer() {
+        String stereotype = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText());
+        return getStaticTextByLabel(stereotype).isPresent();
     }
 }
