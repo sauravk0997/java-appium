@@ -450,23 +450,24 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String seriesTitle = "The Lion King's Timon & Puumba";
         setAppToHomeScreen(getAccount());
 
-        //search series
+        // search series
         disneyPlusHomeIOSPageBase.clickSearchIcon();
-        // Timon and Puumba
-        disneyPlusSearchIOSPageBase.searchForMedia("Timon and Puumba");
+        disneyPlusSearchIOSPageBase.searchForMedia(seriesTitle);
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
 
         disneyPlusDetailsIOSPageBase.clickSeasonsButton("1");
         List<ExtendedWebElement> seasons = disneyPlusDetailsIOSPageBase.getSeasonsFromPicker();
-        seasons.get(1).click();
+        seasons.get(0).click();
 
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isSeasonButtonDisplayed("2"), "Season has not changed to Season 2");
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isSeasonButtonDisplayed("1"), "Season has not changed to Season 1");
+        sa.assertAll();
     }
 
-        private void loginAndStartPlayback(String content) {
+    private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
