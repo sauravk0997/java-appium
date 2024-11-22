@@ -287,7 +287,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(getAccount());
-//        disneyPlusWhoseWatchingIOSPageBase.dismissAppTrackingPopUp();
+        disneyPlusWhoseWatchingIOSPageBase.dismissAppTrackingPopUp();
 
         softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isHeaderTextDisplayed(), "Header text was not displayed");
         softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isAccessModeProfileIconPresent(DEFAULT_PROFILE), "Profile name or image not displayed");
