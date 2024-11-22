@@ -249,7 +249,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         });
 
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVLoginPage.clickAgreeAndContinue();
+        disneyPlusAppleTVForgotPasswordPage.clickAgreeAndContinue();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOtpIncorrectErrorPresent());
 
