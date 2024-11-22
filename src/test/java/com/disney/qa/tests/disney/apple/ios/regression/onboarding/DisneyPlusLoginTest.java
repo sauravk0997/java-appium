@@ -268,6 +268,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         pause(5);
         System.out.println(getDriver().getPageSource());
 
+        LOGGER.info("is alert signup button present? " + disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed());
         disneyPlusLoginIOSPageBase.clickAlertSignUpButton();
         pause(5);
         System.out.println(getDriver().getPageSource());
