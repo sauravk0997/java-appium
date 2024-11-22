@@ -446,25 +446,43 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71665"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesPlaybackInterstitial() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
         SoftAssert sa = new SoftAssert();
         String seriesTitle = "The Lion King's Timon & Puumba";
         setAppToHomeScreen(getAccount());
 
         // search series
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.searchForMedia(seriesTitle);
-        List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(seriesTitle);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after selecting the search result");
+        sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started");
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Negative Stereotype Advisory text was not found on details page");
+        detailsPage.clickPlayButton();
+        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Negative Stereotype Advisory text was not found at the beginning of the video");
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
+        videoPlayer.clickContinueBtn();
 
+
+
+        /*
         disneyPlusDetailsIOSPageBase.clickSeasonsButton("1");
         List<ExtendedWebElement> seasons = disneyPlusDetailsIOSPageBase.getSeasonsFromPicker();
         seasons.get(0).click();
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isSeasonButtonDisplayed("1"), "Season has not changed to Season 1");
+        */
         sa.assertAll();
+
     }
 
     private void loginAndStartPlayback(String content) {
