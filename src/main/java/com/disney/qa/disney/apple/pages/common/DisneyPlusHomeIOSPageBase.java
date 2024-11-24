@@ -7,6 +7,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.*;
@@ -52,6 +53,12 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for Home page to load");
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Home page is not opened")
                 .until(it -> getHomePageMainElement().isPresent(THREE_SEC_TIMEOUT));
+    }
+
+    public boolean waitAndValidateHomePageOpened(int timeout) {
+        return waitUntil(
+                ExpectedConditions.presenceOfElementLocated(getHomePageMainElement().getBy()),
+                timeout);
     }
 
     public boolean isKidsHomePageOpen() {
