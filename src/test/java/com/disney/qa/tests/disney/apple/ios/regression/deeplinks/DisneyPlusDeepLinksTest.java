@@ -247,4 +247,32 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Video player deeplink is not playing correct series episode");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68458"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyBehaviorWhenExtraContentEndsFromDeeplink() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_trailer_playback_dancing_with_the_stars_deeplink"));
+        videoPlayer.waitForVideoToStart();
+
+        videoPlayer.scrubToPlaybackPercentage(90);
+        sa.assertFalse(upNextPage.isUpNextViewPresent(),
+                "Up Next view was present");
+
+        Assert.assertTrue(detailsPage.waitAndValidateDetailsPageOpened(FIFTEEN_SEC_TIMEOUT),
+                "User was not redirected to Details Page");
+
+        detailsPage.tap(detailsPage.getBackButton());
+        Assert.assertTrue(homePage.waitAndValidateHomePageOpened(FIFTEEN_SEC_TIMEOUT),
+                "User was not redirected to Home Page");
+
+        sa.assertAll();
+    }
 }
