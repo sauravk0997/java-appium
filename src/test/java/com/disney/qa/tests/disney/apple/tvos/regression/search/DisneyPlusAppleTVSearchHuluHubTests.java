@@ -10,7 +10,7 @@ import org.testng.asserts.SoftAssert;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
-public class DisneyPlusAppleTVHomeHuluHubTests extends DisneyPlusAppleTVBaseTest {
+public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTest {
 
 // move to search folder
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121510"})
