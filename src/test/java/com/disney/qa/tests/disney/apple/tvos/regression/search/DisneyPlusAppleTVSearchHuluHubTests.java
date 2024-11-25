@@ -25,10 +25,10 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         loginTVHuluStandaloneBasicAccount();
-        home.isOpened();
+        sa.assertTrue(home.isOpened(), "Home page did not open");
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        searchPage.isOpened();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.typeInSearchField(HULU_CONTENT);
         sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
         sa.assertAll();
