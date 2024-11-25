@@ -217,7 +217,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         }
     }
 
-    public void loginTVWitHULUStandaloneBasicAccount() {
+    public void loginTVHuluStandaloneBasicAccount() {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());

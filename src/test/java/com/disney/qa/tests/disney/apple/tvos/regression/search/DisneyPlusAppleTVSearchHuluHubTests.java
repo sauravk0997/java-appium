@@ -12,7 +12,6 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 
 public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTest {
 
-// move to search folder
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121510"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifyHuluHubSearchContentWithStandaloneAccount() {
@@ -21,7 +20,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         SoftAssert sa = new SoftAssert();
         String huluContent = "Only Murders in the Building";
 
-        loginTVWitHULUStandaloneBasicAccount();
+        loginTVHuluStandaloneBasicAccount();
         home.isOpened();
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
