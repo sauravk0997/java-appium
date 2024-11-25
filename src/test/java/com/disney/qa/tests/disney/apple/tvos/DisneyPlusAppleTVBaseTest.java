@@ -28,7 +28,6 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
-import org.testng.asserts.SoftAssert;
 
 /**
  * Base class for tvos
@@ -222,8 +221,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        SoftAssert sa = new SoftAssert();
-        sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(STANDALONE_USER);
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
