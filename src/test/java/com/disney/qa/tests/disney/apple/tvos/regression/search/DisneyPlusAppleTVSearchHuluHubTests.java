@@ -22,9 +22,9 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6740c467@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-       // Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
-       // loginATVHuluHub(standaloneAccount);
+        loginATVHuluHub(standaloneAccount);
         Assert.assertTrue(home.isOpened(), "Home page did not open");
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
