@@ -86,6 +86,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String SHOW_UPDATE_APP_ALERT = "showUpdateAppAlert";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
+    public static final String STANDALONE_BASIC_USER = "alekhya.rallapalli+6740c467@disneyplustesting.com";
+    public static final String STANDALONE_BASIC_USER_PASSWORD = "Test123!";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -692,12 +694,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void loginWithHulUStandaloneBasicUser() {
-        String standaloneBasicUser = "alekhya.rallapalli+6740c467@disneyplustesting.com";
-        String password = "Test123!";
         initialSetup();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(standaloneBasicUser);
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(password);
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(STANDALONE_BASIC_USER);
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(STANDALONE_BASIC_USER_PASSWORD);
         pause(5);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
     }

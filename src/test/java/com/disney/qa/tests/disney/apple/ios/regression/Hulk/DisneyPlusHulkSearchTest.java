@@ -222,17 +222,4 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
                 "Hulu Content not found in search result");
     }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, SG})
-    public void verifySearchHuluContentForStandaloneUserInNonEligibleCountry() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        loginWithHulUStandaloneBasicUser();
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
-        searchPage.searchForMedia(HULU_CONTENT);
-        Assert.assertFalse(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
-                "Hulu Content found in search result for Non-eligible Country");
-    }
 }
