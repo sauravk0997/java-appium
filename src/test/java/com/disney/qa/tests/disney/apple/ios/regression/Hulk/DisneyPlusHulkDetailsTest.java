@@ -30,7 +30,6 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String PREY = "Prey";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
-    private static final String HULU = "Hulu";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
