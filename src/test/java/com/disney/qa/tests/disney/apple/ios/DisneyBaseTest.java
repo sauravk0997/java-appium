@@ -692,21 +692,23 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void loginWithHulUStandaloneBasicUser() {
+        String standaloneBasicUser = "alekhya.rallapalli+6740c467@disneyplustesting.com";
+        String password = "Test123!";
         initialSetup();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class)
-                .submitEmail("alekhya.rallapalli+6740c467@disneyplustesting.com");
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(standaloneBasicUser);
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(password);
         pause(5);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
     }
 
     public void loginWithHulUStandalonePremiumUser() {
+        String StandalonePremiumUser = "robert.walters+6740c4f3@disneyplustesting.com";
+        String password = "Test123!";
         initialSetup();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class)
-                .submitEmail("robert.walters+6740c4f3@disneyplustesting.com");
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(StandalonePremiumUser);
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(password);
         pause(5);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
     }
