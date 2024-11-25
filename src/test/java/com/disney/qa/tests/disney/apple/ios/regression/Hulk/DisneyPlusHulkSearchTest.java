@@ -18,6 +18,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String DISNEY_CONTENT = "Percy Jackson";
     static final String HULU_CONTENT = "Only Murders in the Building";
+    private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
     @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
@@ -30,7 +31,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Naruto");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
@@ -59,7 +60,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Only murders in the building");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
@@ -72,7 +73,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Only murders in the building");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
@@ -93,7 +94,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Demolition");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
@@ -195,7 +196,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
         searchPage.searchForMedia(searchLimitQuery);
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
@@ -208,14 +209,17 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    private void verifyNoResultFoundMessage(SoftAssert sa, String title) {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77872"})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    public void verifySearchHuluContentForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        loginWithHulUStandaloneBasicUser();
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        homePage.getSearchNav().click();
-        searchPage.searchForMedia(title);
-        searchPage.getKeyboardSearchButton().clickIfPresent();
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(title), "'No results' error message was not as expected");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(HULU_CONTENT);
+        searchPage.getDynamicAccessibilityId(HULU_CONTENT).click();
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
+                "Hulu Content not found in search result");
     }
 }

@@ -690,4 +690,24 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
         }
     }
+
+    public void loginWithHulUStandaloneBasicUser() {
+        initialSetup();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class)
+                .submitEmail("alekhya.rallapalli+6740c467@disneyplustesting.com");
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+    }
+
+    public void loginWithHulUStandalonePremiumUser() {
+        initialSetup();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class)
+                .submitEmail("robert.walters+6740c4f3@disneyplustesting.com");
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+    }
 }
