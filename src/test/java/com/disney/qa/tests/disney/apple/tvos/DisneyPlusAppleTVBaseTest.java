@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.carina.utils.config.Configuration;
@@ -38,7 +39,11 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
 
     public static final String SUB_VERSION = "V1";
     public static final String ENTITLEMENT_LOOKUP = "Yearly";
-    
+    public static final String STANDALONE_USER = "alekhya.rallapalli+6740c467@disneyplustesting.com";
+    public static final String STANDALONE_USER_PASSWORD = "Test123!";
+    public static final String PREMIUM_USER = "robert.walters+6740c4f3@disneyplustesting.com";
+    public static final String PREMIUM_USER_PASSWORD = "Test123!";
+
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         setBuildType();
@@ -212,5 +217,17 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
             LOGGER.warn("Menu was opened before landing. Closing menu.");
             homePage.clickSelect();
         }
+    }
+
+    public void loginTVHuluStandalonePremiumAccount() {
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        welcomeScreenPage.clickLogInButton();
+        loginPage.proceedToPasswordScreen(PREMIUM_USER);
+        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
+        passwordPage.logInWithPassword(PREMIUM_USER_PASSWORD);
+        pause(5);
     }
 }
