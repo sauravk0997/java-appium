@@ -19,7 +19,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
         String huluContent = "Only Murders in the Building";
-
+        selectAppleUpdateLaterAndDismissAppTracking();
         loginTVHuluStandaloneBasicAccount();
         home.isOpened();
         home.moveDownFromHeroTileToBrandTile();
