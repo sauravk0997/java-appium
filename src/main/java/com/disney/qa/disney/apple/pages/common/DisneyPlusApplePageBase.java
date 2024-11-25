@@ -918,7 +918,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         trackingPopUp.clickIfPresent();
     }
     public void dismissATVAppTrackingPopUp(int timeout) {
-        if (staticTextLabelContains.format("SELECT").isPresent(5)) {
+        if (dynamicBtnFindByLabelContains.format("Select").isPresent(5)) {
             LOGGER.info("Dismissing App Track popup by clicking {}", "Ask App not to Track");
             moveDown(1, 1);
             clickSelect();
