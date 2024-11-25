@@ -14,8 +14,8 @@ public class DisneyPlusAppleTVHomeHuluHubTests extends DisneyPlusAppleTVBaseTest
 
 // move to search folder
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121510"})
-    @Test(groups = {TestGroup.HULU_HUB, US})
-    public void verifyLogIn() {
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    public void verifyHuluHubSearchContentWithStandaloneAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
