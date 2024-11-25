@@ -214,7 +214,12 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     public void verifySearchHuluContentForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        loginWithHulUStandaloneBasicUser();
+        initialSetup();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("alekhya.rallapalli+6740c467@disneyplustesting.com");
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.searchForMedia(HULU_CONTENT);
