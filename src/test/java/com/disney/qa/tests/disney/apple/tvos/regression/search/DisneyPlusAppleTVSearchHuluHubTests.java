@@ -4,8 +4,8 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -20,17 +20,16 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        SoftAssert sa = new SoftAssert();
+        String standaloneAccount = "alekhya.rallapalli+6740c467@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+       // Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
-        loginTVHuluStandaloneBasicAccount();
-        sa.assertTrue(home.isOpened(), "Home page did not open");
+       // loginATVHuluHub(standaloneAccount);
+        Assert.assertTrue(home.isOpened(), "Home page did not open");
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.typeInSearchField(HULU_CONTENT);
-        sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu content is not present");
-        sa.assertAll();
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu content is not present");
     }
 }

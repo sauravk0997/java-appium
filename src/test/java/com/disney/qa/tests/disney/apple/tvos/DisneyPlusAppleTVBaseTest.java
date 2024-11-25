@@ -38,8 +38,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
 
     public static final String SUB_VERSION = "V1";
     public static final String ENTITLEMENT_LOOKUP = "Yearly";
-    public static final String STANDALONE_USER = "alekhya.rallapalli+6740c467@disneyplustesting.com";
-    public static final String STANDALONE_USER_PASSWORD = "Test123!";
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
@@ -216,15 +214,15 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         }
     }
 
-    public void loginTVHuluStandaloneBasicAccount() {
+    public void loginATVHuluHub(String email) {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         welcomeScreenPage.clickLogInButton();
-        loginPage.proceedToPasswordScreen(STANDALONE_USER);
+        loginPage.proceedToPasswordScreen(email);
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
-        passwordPage.logInWithPassword(STANDALONE_USER_PASSWORD);
+        passwordPage.logInWithPassword("Test123!");
         pause(5);
     }
 }
