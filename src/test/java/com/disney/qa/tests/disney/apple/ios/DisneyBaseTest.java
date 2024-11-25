@@ -701,15 +701,4 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         pause(5);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
     }
-
-    public void loginWithHulUStandalonePremiumUser() {
-        String StandalonePremiumUser = "robert.walters+6740c4f3@disneyplustesting.com";
-        String password = "Test123!";
-        initialSetup();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(StandalonePremiumUser);
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(password);
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
-    }
 }
