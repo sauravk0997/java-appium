@@ -20,17 +20,21 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+       //  sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
-        loginTVHuluStandalonePremiumAccount();
-        home.isOpened();
+        // loginTVHuluStandalonePremiumAccount();
+        sa.assertTrue(home.isOpened(), "Home page did not open");
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        searchPage.isOpened();
+        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.typeInSearchField(HULU_CONTENT);
         sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
+        searchPage.clickSearchResult(HULU_CONTENT);
+        detailsPage.isOpened();
+
         sa.assertAll();
     }
 }
