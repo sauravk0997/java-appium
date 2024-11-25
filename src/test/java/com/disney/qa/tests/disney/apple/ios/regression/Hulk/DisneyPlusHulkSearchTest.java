@@ -13,7 +13,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
