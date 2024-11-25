@@ -9,12 +9,13 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-import static com.disney.qa.common.constant.IConstantHelper.SG;
+import static com.disney.qa.common.constant.IConstantHelper.NZ;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
@@ -223,12 +224,12 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, SG})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, NZ, "removeLocationOverride"})
     public void verifySearchHuluContentForStandaloneUserInNonEligibleCountry() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         String accountId = getAccountApi().getAccountIdByEmail(STANDALONE_BASIC_USER);
-        DisneyAccount account = getAccount().setAccountId(accountId);
+        getAccount().setAccountId(accountId);
         getScuttleApi().overrideAccountLocation(accountId, getLocalizationUtils().getLocale());
         loginWithHulUStandaloneBasicUser();
         homePage.clickSearchIcon();
@@ -236,6 +237,10 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         searchPage.searchForMedia(HULU_CONTENT);
         Assert.assertFalse(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
                 "Hulu Content found in search result for Non-eligible Country");
-        getAccountApi().removeLocationOverrides(account);
+    }
+
+    @AfterMethod(onlyForGroups = "removeLocationOverride", alwaysRun = true)
+    public void removeLocationOverride(){
+        getAccountApi().removeLocationOverrides(getAccount());
     }
 }
