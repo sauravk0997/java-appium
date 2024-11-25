@@ -86,6 +86,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String SHOW_UPDATE_APP_ALERT = "showUpdateAppAlert";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
+    public static final String HULU = "Hulu";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
