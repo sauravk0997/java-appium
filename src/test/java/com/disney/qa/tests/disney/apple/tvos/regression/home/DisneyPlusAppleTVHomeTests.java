@@ -25,6 +25,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private static final String HULU_BRAND_TILE_LABEL = "Hulu";
+    private static final String ESPN_BRAND_TILE_LABEL = "ESPN";
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyHomeScreenLayout() {
