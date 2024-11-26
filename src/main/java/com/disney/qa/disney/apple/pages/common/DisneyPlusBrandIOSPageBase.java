@@ -23,6 +23,13 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandLogoImage;
 
+    @ExtendedFindBy(accessibilityId = "On the %s screen.")
+    private ExtendedWebElement brandScreen;
+
+    @ExtendedFindBy(accessibilityId = "Sports")
+    private ExtendedWebElement sportsCell;
+
+
     public DisneyPlusBrandIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -30,6 +37,14 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         return brandLandingView.isPresent();
+    }
+
+    public boolean isBrandScreenDisplayed(String brandName) {
+        return brandScreen.format(brandName).isPresent();
+    }
+
+    public boolean isSportsCellPresent() {
+        return sportsCell.isPresent();
     }
 
     public void clickFirstCarouselPoster() {
@@ -69,6 +84,8 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
 
     public enum Brand {
         DISNEY,
+        ESPN,
+        HULU,
         PIXAR,
         MARVEL,
         STAR_WARS,
@@ -79,6 +96,10 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         switch (brand) {
             case DISNEY:
                 return "Disney";
+            case ESPN:
+                return "ESPN";
+            case HULU:
+                return "Hulu";
             case PIXAR:
                 return "Pixar";
             case MARVEL:
