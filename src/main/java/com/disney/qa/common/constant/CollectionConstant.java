@@ -28,7 +28,8 @@ public class CollectionConstant {
         STUDIOS_AND_NETWORKS,
         TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
-        TRENDING;
+        TRENDING,
+        UNLOCK_TO_STREAM_MORE_HULU
     }
 
     public static String getCollectionName(Collection collection) {
@@ -83,6 +84,8 @@ public class CollectionConstant {
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
             case TREEHOUSE_OF_HORROR_I_TO_V:
                 return "43a35f2b-3788-4449-a54d-cd37263f0940";
+            case UNLOCK_TO_STREAM_MORE_HULU:
+                return "ab0bba56-0738-4348-b29b-ed2ae2d51130";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }
@@ -98,6 +101,8 @@ public class CollectionConstant {
                 return "Recommended For You";
             case TREEHOUSE_OF_HORROR:
                 return "The Simpsons Treehouse of Horror";
+            case UNLOCK_TO_STREAM_MORE_HULU:
+                return "Unlock to Stream More Hulu";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }
