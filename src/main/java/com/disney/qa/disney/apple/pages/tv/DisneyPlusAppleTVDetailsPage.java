@@ -38,8 +38,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
 
-    private static final String UPGRADE_NOW = "UPGRADE NOW";
-
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
     }
@@ -199,21 +197,5 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public boolean isExtrasTabPresent() {
         return extrasTab.isPresent();
-    }
-
-    public ExtendedWebElement getUpgradeNowButton() {
-        return dynamicBtnFindByLabel.format(UPGRADE_NOW);
-    }
-
-    public boolean isHeaderIneligiblePresent() {
-        return getStaticTextByLabel(HEADER_INELIGIBLE_HULU).isPresent();
-    }
-
-    public boolean isIneligibleScreenDescriptionPresent() {
-        return getStaticTextByLabel(DESCRIPTION_INELIGIBLE_HULU).isPresent();
-    }
-
-    public ExtendedWebElement getButtonOKIneligible() {
-        return getTypeButtonByLabel(OK_HULU_BUTTON);
     }
 }
