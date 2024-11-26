@@ -235,12 +235,18 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, NZ, "removeLocationOverride"})
     public void verifySearchHuluContentForStandaloneUserInNonEligibleCountry() {
+        String userEmailAddress = "alekhya.rallapalli+6740c523@disneyplustesting.com";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        String accountId = getAccountApi().getAccountIdByEmail(STANDALONE_BASIC_USER);
+        String accountId = getAccountApi().getAccountIdByEmail(userEmailAddress);
         getAccount().setAccountId(accountId);
         getScuttleApi().overrideAccountLocation(accountId, getLocalizationUtils().getLocale());
-        loginWithHulUStandaloneBasicUser();
+        initialSetup();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(userEmailAddress);
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.searchForMedia(HULU_CONTENT);
