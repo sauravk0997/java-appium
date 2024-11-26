@@ -1105,7 +1105,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public boolean isOnlyExpHeaderDuoPresent() {
+    public boolean isOnlyAvailableWithHuluHeaderPresent() {
         /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                 IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER.getText());*/
         String dictValue = "This content is only available with a Hulu subscription";

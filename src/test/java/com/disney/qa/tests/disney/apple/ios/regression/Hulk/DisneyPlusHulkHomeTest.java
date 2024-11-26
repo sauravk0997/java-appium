@@ -167,7 +167,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         detailsPage.getUpgradeNowButton().click();
 
         //Verify that user is on the ineligible interstitial screen
-        sa.assertTrue(detailsPage.isOnlyExpHeaderDuoPresent(), "Ineligible Screen Header is not present");
+        sa.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Ineligible Screen Header is not present");
         sa.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
         sa.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
 
