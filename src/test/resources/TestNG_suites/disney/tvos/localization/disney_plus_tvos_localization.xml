@@ -22,13 +22,6 @@
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="overrideFields"
                value="capabilities.locale=${locale},capabilities.language=${language},custom_string4=${globalization},custom_string5={debugDictionary},init_retry_count=2,init_retry_interval=15"/>
-
-    <test verbose="1" name="Disney Plus Onboarding Localization Screenshots" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.tvos.localization.DisneyPlusAppleTVOnboardingLocalizationCaptures">
-            </class>
-        </classes>
-    </test>
     <test verbose="1" name="Disney Plus Subscriber Localization Screenshots" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.localization.DisneyPlusAppleTVSubscriberLocalizationCaptures">

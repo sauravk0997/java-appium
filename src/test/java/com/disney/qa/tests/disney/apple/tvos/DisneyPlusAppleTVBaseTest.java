@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.carina.utils.config.Configuration;
@@ -25,7 +26,6 @@ import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.UniversalUtils;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 
@@ -38,7 +38,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
 
     public static final String SUB_VERSION = "V1";
     public static final String ENTITLEMENT_LOOKUP = "Yearly";
-    
+
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
         setBuildType();
@@ -212,5 +212,17 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
             LOGGER.warn("Menu was opened before landing. Closing menu.");
             homePage.clickSelect();
         }
+    }
+
+    public void loginATVHuluHub(String email) {
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        welcomeScreenPage.clickLogInButton();
+        loginPage.proceedToPasswordScreen(email);
+        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
+        passwordPage.logInWithPassword("Test123!");
+        pause(5);
     }
 }
