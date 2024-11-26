@@ -24,10 +24,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final String DETAILS = "DETAILS";
-    private static final String HEADER_INELIGIBLE_HULU = "This content is only available with a Hulu subscription";
-    private static final String DESCRIPTION_INELIGIBLE_HULU = "This page may be unavailable or you may not be eligible to upgrade to a plan. " +
-            "You can call Customer Service for more information. You can also visit Account Management or the Help Centre.";
-    private static final String OK_HULU_BUTTON = "OK";
 
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
