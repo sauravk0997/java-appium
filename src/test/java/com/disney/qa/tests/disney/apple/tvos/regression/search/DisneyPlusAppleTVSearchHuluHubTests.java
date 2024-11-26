@@ -13,6 +13,7 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTest {
 
     private static final String HULU_CONTENT = "Only Murders in the Building";
+    private static final String UNLOCK = "Unlock";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121510"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
@@ -49,8 +50,11 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        // Look for non entitled Hulu content
         searchPage.typeInSearchField(HULU_CONTENT);
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(),
+                "Unlock 'upsell message' not found in search result");
         searchPage.clickSearchResult(HULU_CONTENT);
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
         Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now button is not present");
