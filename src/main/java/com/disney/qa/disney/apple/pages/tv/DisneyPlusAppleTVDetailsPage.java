@@ -24,6 +24,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final String DETAILS = "DETAILS";
+    private static final String UPGRADE_NOW = "UPGRADE NOW";
 
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
@@ -193,5 +194,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public boolean isExtrasTabPresent() {
         return extrasTab.isPresent();
+    }
+
+    public ExtendedWebElement getUpgradeNowButton() {
+        return dynamicBtnFindByLabel.format(UPGRADE_NOW);
     }
 }
