@@ -3,7 +3,7 @@
        parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="jenkinsJobName" value="dmgzios_handset_hulu_hub"/>
+    <parameter name="jenkinsJobName" value="dmgzios_tablet_hulu_hub"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
