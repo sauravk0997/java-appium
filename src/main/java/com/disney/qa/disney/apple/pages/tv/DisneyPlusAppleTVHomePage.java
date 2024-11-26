@@ -326,4 +326,25 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     public boolean isCarouselFocused() {
         return isFocused(carouselFocusedElement);
     }
+
+    public int getBrandTilesQuantity() {
+        List<ExtendedWebElement> brandTiles =
+                findExtendedWebElements(getTypeCellLabelContains("Select for details on this title.").getBy());
+        return brandTiles.size();
+    }
+
+    public void clickBrandTile(String brandLabel) {
+        boolean expectedBrandTileIsFocused = false;
+        for(int i = 0; i < getBrandTilesQuantity(); i++) {
+            clickRight();
+            pause(1);
+            if(isFocused(getBrandCell(brandLabel))) {
+                expectedBrandTileIsFocused = true;
+                break;
+            }
+        }
+        if(expectedBrandTileIsFocused) { clickSelect(); }
+        else { throw new SkipException(brandLabel + " brand tile was not focused"); }
+
+    }
 }
