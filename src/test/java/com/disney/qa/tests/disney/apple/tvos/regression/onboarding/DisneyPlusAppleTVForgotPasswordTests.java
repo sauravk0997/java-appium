@@ -221,7 +221,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        DisneyPlusAppleTVSignUpPage disneyPlusAppleTVSignUpPage = new DisneyPlusAppleTVSignUpPage(getDriver());
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
 
         DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
@@ -250,7 +249,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         });
 
         disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVSignUpPage.clickAgreeAndContinue();
+        disneyPlusAppleTVForgotPasswordPage.clickAgreeAndContinue();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOtpIncorrectErrorPresent());
 
