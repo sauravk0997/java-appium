@@ -43,6 +43,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_PROMO_LABEL_HEADER = "Enjoy access to merchandise";
     private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the SHOP tab to learn more.";
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
+    private static final String UPGRADE_NOW = "UPGRADE NOW";
+    private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
+    private static final String UPGRADE_YOUR_PLAN = "Upgrade your plan to stream Hulu";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
@@ -598,16 +601,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return itemPickerClose;
     }
 
-    public ExtendedWebElement getTabBar() {
-        return tabBar;
-    }
-
-    public ExtendedWebElement getInfoView() {
-        return infoView;
-    }
-
     public ExtendedWebElement getRestartButton() {
         return restartButton;
+    }
+
+    public ExtendedWebElement getUpgradeNowButton() {
+        return dynamicBtnFindByLabel.format(UPGRADE_NOW);
     }
 
     public boolean isHeroImagePresent() {
@@ -669,26 +668,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open.");
         sa.assertTrue(params.get("extrasCellTitle").equalsIgnoreCase(videoPlayer.getTitleLabel()),
                 "Extras title is not the same as video player title");
-    }
-
-    public ExtendedWebElement getUpcomingDateTime() {
-        String[] upcomingDateTime = getAiringBadgeLabel().getText().split(" ");
-        String upcomingDate = upcomingDateTime[2] + " " + upcomingDateTime[3];
-        String upcomingTime = upcomingDateTime[0];
-        String upcomingDateAndTime = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                        BADGE_TEXT_DATE_TIME.getText()),
-                Map.of("date", upcomingDate, "time", upcomingTime));
-        return getDynamicAccessibilityId(upcomingDateAndTime);
-    }
-
-    public ExtendedWebElement getUpcomingBadge() {
-        String upcomingBadge = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_UPCOMING.getText());
-        return getStaticTextByLabel(upcomingBadge);
-    }
-
-    public ExtendedWebElement getUpcomingTodayBadge() {
-        String upcomingTodayBadge = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, BADGE_LABEL_EVENT_UPCOMING_TODAY.getText());
-        return getStaticTextByLabel(upcomingTodayBadge);
     }
 
     public String getDetailsTabTitle() {
@@ -1124,5 +1103,26 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             minutes = Integer.parseInt(time[0].split("m")[0]);
             return minutes * 60;
         }
+    }
+
+    public boolean isOnlyAvailableWithHuluHeaderPresent() {
+        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER.getText());*/
+        String dictValue = "This content is only available with a Hulu subscription";
+        return getStaticTextByLabel(dictValue).isPresent();
+    }
+
+    public boolean isIneligibleScreenBodyPresent() {
+        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_BODY_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());*/
+        String dictValue = "This page may be unavailable or you may not be eligible to upgrade to a plan. You can call Customer Service for more information. You can also visit Account Management or the Help Centre.";
+        return getStaticTextByLabel(dictValue).isPresent();
+    }
+
+    public ExtendedWebElement getCtaIneligibleScreen() {
+        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());*/
+        String dictValue = "OK";
+        return getTypeButtonByLabel(dictValue);
     }
  }
