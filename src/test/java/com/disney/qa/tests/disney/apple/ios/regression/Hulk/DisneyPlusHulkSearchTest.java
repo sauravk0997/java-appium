@@ -228,6 +228,36 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
                 "Hulu brand name not found in content in search result");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77875"})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    public void verifyEntitleAndNonEntitleHuluContentForNonBundleUser() {
+        String entitleHuluContent = "Solar Opposites";
+        String notEntitleHuluContent = "Only Murders in the Building";
+        String email = "robert.walters+6740c4f3@disneyplustesting.com";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        loginForHuluHub(email);
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.searchForMedia(entitleHuluContent);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(entitleHuluContent).isPresent(),
+                "Hulu Content not found in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(entitleHuluContent).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(entitleHuluContent).getText().contains(UNLOCK),
+                "Unlock 'upsell message' found in search result");
+
+        searchPage.getClearTextBtn().click();
+        searchPage.searchForMedia(notEntitleHuluContent);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(notEntitleHuluContent).isPresent(),
+                "Hulu Content not found in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(notEntitleHuluContent).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(notEntitleHuluContent).getText().contains(UNLOCK),
+                "Unlock 'upsell message' not found in search result");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77874"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifySearchHuluContentForBundleUser() {
