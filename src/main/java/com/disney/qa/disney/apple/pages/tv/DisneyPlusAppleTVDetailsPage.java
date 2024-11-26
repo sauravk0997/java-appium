@@ -25,6 +25,11 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     private static final String DETAILS = "DETAILS";
 
+    private static final String HEADER_INELIGIBLE_HULU = "This content is only available with a Hulu subscription";
+    private static final String DESCRIPTION_INELIGIBLE_HULU = "This page may be unavailable or you may not be eligible to upgrade to a plan. " +
+            "You can call Customer Service for more information. You can also visit Account Management or the Help Centre.";
+    private static final String OK_HULU_BUTTON = "OK";
+
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
 
@@ -33,6 +38,8 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
+
+    private static final String UPGRADE_NOW = "UPGRADE NOW";
 
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
@@ -193,5 +200,21 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public boolean isExtrasTabPresent() {
         return extrasTab.isPresent();
+    }
+
+    public ExtendedWebElement getUpgradeNowButton() {
+        return dynamicBtnFindByLabel.format(UPGRADE_NOW);
+    }
+
+    public boolean isHeaderIneligiblePresent() {
+        return getStaticTextByLabel(HEADER_INELIGIBLE_HULU).isPresent();
+    }
+
+    public boolean isIneligibleScreenDescriptionPresent() {
+        return getStaticTextByLabel(DESCRIPTION_INELIGIBLE_HULU).isPresent();
+    }
+
+    public ExtendedWebElement getButtonOKIneligible() {
+        return getTypeButtonByLabel(OK_HULU_BUTTON);
     }
 }

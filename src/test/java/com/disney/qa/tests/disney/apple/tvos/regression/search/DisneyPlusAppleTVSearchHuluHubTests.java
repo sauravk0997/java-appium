@@ -4,6 +4,7 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -21,21 +22,24 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        SoftAssert sa = new SoftAssert();
+        String premiumAccount = "robert.walters+6740c4f3@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-       //  sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
-        // loginTVHuluStandalonePremiumAccount();
-        sa.assertTrue(home.isOpened(), "Home page did not open");
+        loginATVHuluHub(premiumAccount);
+        Assert.assertTrue(home.isOpened(), "Home page did not open");
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.typeInSearchField(HULU_CONTENT);
-        sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
         searchPage.clickSearchResult(HULU_CONTENT);
-        detailsPage.isOpened();
-
-        sa.assertAll();
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now button is not present");
+        detailsPage.getUpgradeNowButton().click();
+        Assert.assertTrue(detailsPage.isHeaderIneligiblePresent(), "Hulu ineligible screen header is not present");
+        Assert.assertTrue(detailsPage.isIneligibleScreenDescriptionPresent(), "Hulu ineligible screen description  is not present");
+        Assert.assertTrue(detailsPage.getButtonOKIneligible().isPresent(), "Hulu button ineligible screen is not present");
     }
 }
 
