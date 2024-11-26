@@ -27,4 +27,9 @@
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.home.DisneyPlusAppleTVHomeTests"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus tvOS Search" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.search.DisneyPlusAppleTVSearchHuluHubTests"/>
+        </classes>
+    </test>
 </suite>
