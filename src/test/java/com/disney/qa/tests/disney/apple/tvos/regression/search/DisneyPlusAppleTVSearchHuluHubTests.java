@@ -57,5 +57,5 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         detailsPage.getUpgradeNowButton().click();
         Assert.assertTrue(detailsPage.isHeaderIneligiblePresent(), "Hulu ineligible screen header is not present");
         Assert.assertTrue(detailsPage.isIneligibleScreenDescriptionPresent(), "Hulu ineligible screen description  is not present");
-
     }
+}
