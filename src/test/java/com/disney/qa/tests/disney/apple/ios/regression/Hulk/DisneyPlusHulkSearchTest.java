@@ -231,15 +231,10 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77874"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifySearchHuluContentForBundleUser() {
+        String email = "alekhya.rallapalli+6740d2fc@disneyplustesting.com";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        initialSetup();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(
-                "alekhya.rallapalli+6740d2fc@disneyplustesting.com");
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        loginForHuluHub(email);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
