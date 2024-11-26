@@ -19,6 +19,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String DISNEY_CONTENT = "Percy Jackson";
     static final String HULU_CONTENT = "Only Murders in the Building";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
+    static final String UNLOCK = "Unlock";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
     @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
@@ -227,5 +228,38 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
                 "Hulu Content not found in search result");
         Assert.assertTrue(searchPage.getTypeCellLabelContains(HULU_CONTENT).getText().contains(HULU),
                 "Hulu brand name not found in content in search result");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77875"})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    public void verifySearchHuluContentForNonBundleUser() {
+        String entitleHuluContent = "Solar Opposites";
+        String notEntitleHuluContent = "Only Murders in the Building";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        initialSetup();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("robert.walters+6740c4f3@disneyplustesting.com");
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(entitleHuluContent);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(entitleHuluContent).isPresent(),
+                "Hulu Content not found in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(entitleHuluContent).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(entitleHuluContent).getText().contains(UNLOCK),
+                "Unlock 'upsell message' found in search result");
+
+        searchPage.getClearTextBtn().click();
+        searchPage.searchForMedia(notEntitleHuluContent);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(notEntitleHuluContent).isPresent(),
+                "Hulu Content not found in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(notEntitleHuluContent).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(notEntitleHuluContent).getText().contains(UNLOCK),
+                "Unlock 'upsell message' not found in search result");
     }
 }
