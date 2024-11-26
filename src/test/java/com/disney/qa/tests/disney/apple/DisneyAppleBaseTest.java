@@ -236,6 +236,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             } else if (groups.contains(BR)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), BR, true);
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), PT_LANG, true);
+            } else if (groups.contains(CA)) {
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CA, true);
+                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
             } else if (groups.contains(CH)) {
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CH, true);
                 R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);

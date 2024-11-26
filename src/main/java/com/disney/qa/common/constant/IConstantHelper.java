@@ -21,6 +21,7 @@ public interface IConstantHelper {
     //country codes
     String AT = "AT";
     String AU = "AU";
+    String CA = "CA";
     String BR = "BR";
     String CH = "CH";
     String DE = "DE";

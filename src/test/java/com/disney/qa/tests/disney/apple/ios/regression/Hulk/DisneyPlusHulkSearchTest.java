@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -9,13 +8,12 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-import static com.disney.qa.common.constant.IConstantHelper.NZ;
+import static com.disney.qa.common.constant.IConstantHelper.CA;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
@@ -231,29 +229,16 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, NZ, "removeLocationOverride"})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, CA})
     public void verifySearchHuluContentForStandaloneUserInNonEligibleCountry() {
         String userEmailAddress = "alekhya.rallapalli+6740c523@disneyplustesting.com";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        String accountId = getAccountApi().getAccountIdByEmail(userEmailAddress);
-        getAccount().setAccountId(accountId);
-        getScuttleApi().overrideAccountLocation(accountId, getLocalizationUtils().getLocale());
-        initialSetup();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(userEmailAddress);
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        loginForHuluHub(userEmailAddress);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.searchForMedia(HULU_CONTENT);
-        Assert.assertFalse(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
-                "Hulu Content found in search result for Non-eligible Country");
-    }
-
-    @AfterMethod(onlyForGroups = "removeLocationOverride", alwaysRun = true)
-    public void removeLocationOverride(){
-        getAccountApi().removeLocationOverrides(getAccount());
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(HULU_CONTENT).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
     }
 }
