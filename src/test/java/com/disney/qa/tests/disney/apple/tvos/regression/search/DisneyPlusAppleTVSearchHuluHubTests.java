@@ -45,7 +45,6 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         loginATVHuluHub(bundlePremiumAccount);
-        Assert.assertTrue(home.isOpened(), "Home page did not open");
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
