@@ -54,5 +54,6 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         searchPage.clickSearchResult(HULU_CONTENT);
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
         Assert.assertFalse(detailsPage.getUpgradeNowButton().isPresent(), "Upsell message is present");
+        Assert.assertTrue(detailsPage.isPlayButtonDisplayed(), "Play button is not displayed");
     }
 }
