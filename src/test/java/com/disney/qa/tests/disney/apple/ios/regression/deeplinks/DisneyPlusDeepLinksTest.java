@@ -256,7 +256,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
@@ -264,16 +263,14 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
 
         videoPlayer.scrubToPlaybackPercentage(90);
-        sa.assertFalse(upNextPage.isUpNextViewPresent(),
+        Assert.assertFalse(upNextPage.isUpNextViewPresent(),
                 "Up Next view was present");
 
-        Assert.assertTrue(detailsPage.waitAndValidateDetailsPageOpened(FIFTEEN_SEC_TIMEOUT),
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(FIFTEEN_SEC_TIMEOUT),
                 "User was not redirected to Details Page");
 
         detailsPage.tap(detailsPage.getBackButton());
-        Assert.assertTrue(homePage.waitAndValidateHomePageOpened(FIFTEEN_SEC_TIMEOUT),
+        Assert.assertTrue(homePage.waitForHomePageToOpen(FIFTEEN_SEC_TIMEOUT),
                 "User was not redirected to Home Page");
-
-        sa.assertAll();
     }
 }

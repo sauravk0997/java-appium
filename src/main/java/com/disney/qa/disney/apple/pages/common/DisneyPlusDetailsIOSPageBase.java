@@ -18,7 +18,6 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -158,11 +157,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getDetailsTab().isPresent();
     }
 
-    public boolean waitAndValidateDetailsPageOpened(int timeout) {
+    public boolean waitForDetailsPageToOpen(int timeout) {
         LOGGER.info("Waiting for Details page to load");
-        return waitUntil(
-                ExpectedConditions.visibilityOfElementLocated(contentDetailsPage.getBy()),
-                timeout);
+        return fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Details page was not opened")
+                .until(it -> contentDetailsPage.isPresent());
+    }
+
+    public boolean waitForDetailsPageToOpen() {
+        return waitForDetailsPageToOpen(SIXTY_SEC_TIMEOUT);
     }
 
     public boolean isDetailPageOpened(long time) {
