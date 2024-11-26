@@ -86,8 +86,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String SHOW_UPDATE_APP_ALERT = "showUpdateAppAlert";
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
-    public static final String STANDALONE_BASIC_USER = "alekhya.rallapalli+6740c467@disneyplustesting.com";
-    public static final String STANDALONE_BASIC_USER_PASSWORD = "Test123!";
+    public static final String HULU = "Hulu";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -691,14 +690,5 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             applePageBase.clickToggleView();
             return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
         }
-    }
-
-    public void loginWithHulUStandaloneBasicUser() {
-        initialSetup();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(STANDALONE_BASIC_USER);
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(STANDALONE_BASIC_USER_PASSWORD);
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
     }
 }
