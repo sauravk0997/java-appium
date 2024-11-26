@@ -2,12 +2,13 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.utils.*;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCollectionPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.webdriver.*;
 import org.slf4j.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -52,6 +53,31 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         verifyHomeCollectionsAndContent(homeCollections, sa);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121517"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    public void verifyESPNAndHuluBrandTiles() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVCollectionPage collectionPage = new DisneyPlusAppleTVCollectionPage(getDriver());
+        String standaloneAccount = "alekhya.rallapalli+6740c523@disneyplustesting.com";
+
+        selectAppleUpdateLaterAndDismissAppTracking();
+        welcomeScreenPage.waitForWelcomePageToLoad();
+        loginATVHuluHub(standaloneAccount);
+        homePage.waitForHomePageToOpen();
+
+        Assert.assertTrue(homePage.getBrandCell(HULU_BRAND_TILE_LABEL).isPresent(),
+                "Hulu brand tile was not present on home page screen");
+        Assert.assertTrue(homePage.getBrandCell(ESPN_BRAND_TILE_LABEL).isPresent(),
+                "ESPN brand tile was not present on home page screen");
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(HULU_BRAND_TILE_LABEL);
+
+        Assert.assertTrue(collectionPage.waitForCollectionPageToOpen(HULU_BRAND_TILE_LABEL),
+                "Hulu Hub page did not open");
     }
 
     private List<Container> getCollectionsHome() {
