@@ -233,15 +233,10 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     public void verifyEntitleAndNonEntitleHuluContentForNonBundleUser() {
         String entitleHuluContent = "Solar Opposites";
         String notEntitleHuluContent = "Only Murders in the Building";
+        String email = "robert.walters+6740c4f3@disneyplustesting.com";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        initialSetup();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(
-                "robert.walters+6740c4f3@disneyplustesting.com");
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        loginForHuluHub(email);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
