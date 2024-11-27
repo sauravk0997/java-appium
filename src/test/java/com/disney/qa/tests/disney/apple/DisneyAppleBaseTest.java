@@ -19,7 +19,6 @@ import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyOffer;
-import com.disney.qa.api.scuttle.ScuttleApi;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
@@ -596,16 +595,5 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             default:
                 throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
         }
-    }
-
-    public ScuttleApi getScuttleApi() {
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                .platform(APPLE)
-                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                .partner(DisneyConfiguration.getPartner())
-                .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
-                .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
-                .build();
-        return new ScuttleApi(apiConfiguration);
     }
 }
