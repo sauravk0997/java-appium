@@ -328,7 +328,12 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     }
 
     public List<ExtendedWebElement> getBrandTiles() {
-        return findExtendedWebElements(getTypeCellLabelContains("Select for details on this title.").getBy());
+        return findExtendedWebElements(
+                getTypeCellLabelContains(String.format(
+                        getLocalizationUtils().getDictionaryItem(
+                                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                                DictionaryKeys.CONTENT_TILE_INTERACT.getText())))
+                        .getBy());
     }
 
     public void clickBrandTile(String brandLabel) {
