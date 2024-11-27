@@ -288,7 +288,9 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.searchForMedia(HULU_CONTENT);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
+                "Hulu Content not found in search result");
         Assert.assertFalse(searchPage.getTypeCellLabelContains(HULU_CONTENT).getText().contains(HULU),
-                "Hulu brand name not found in content in search result");
+                "Hulu brand name found in content in search result");
     }
 }
