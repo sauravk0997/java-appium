@@ -113,7 +113,6 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(ENTITLED_HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
         Assert.assertFalse(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(),
                 "Unlock 'upsell message' found in search result");
-        pause(5);
         searchPage.clearSearchBar();
         // Look for non entitled Hulu content
         searchPage.typeInSearchField(HULU_CONTENT);
