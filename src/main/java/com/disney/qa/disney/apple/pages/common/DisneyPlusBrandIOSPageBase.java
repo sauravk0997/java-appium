@@ -7,7 +7,7 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
-import java.util.Map;
+import java.util.*;
 
 public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     private static final String IMAGES_ARE_THE_SAME_ERROR_MESSAGE = "Images are the same";
@@ -24,6 +24,11 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandLogoImage;
 
+
+    @ExtendedFindBy(accessibilityId = "Sports")
+    private ExtendedWebElement sportsCell;
+
+
     public DisneyPlusBrandIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -36,12 +41,16 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isBrandScreenDisplayed(String brandName) {
         return getDynamicAccessibilityId(
                 String.format(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
-                                        .getDictionaryItem(
-                                                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                                                DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
-                                                false),
-                                        Map.of(BRAND_NAME, brandName))))
+                                .getDictionaryItem(
+                                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                                        DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+                                        false),
+                        Map.of(BRAND_NAME, brandName))))
                 .isPresent();
+    }
+
+    public boolean isSportsCellPresent() {
+        return sportsCell.isPresent();
     }
 
     public void clickFirstCarouselPoster() {
