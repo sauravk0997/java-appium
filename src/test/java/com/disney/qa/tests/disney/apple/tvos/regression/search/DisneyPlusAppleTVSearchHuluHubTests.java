@@ -7,8 +7,8 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.constant.IConstantHelper.CA;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
@@ -59,30 +59,27 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121511"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, CA})
     public void verifyHuluHubSearchContentInNonEligibleCountry() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusOneTrustConsentBannerIOSPageBase bannerIOSPageBase =
                 new DisneyPlusOneTrustConsentBannerIOSPageBase(getDriver());
-        SoftAssert sa = new SoftAssert();
         String standaloneAccount = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         loginATVHuluHub(standaloneAccount);
         if (bannerIOSPageBase.isAllowAllButtonPresent()) {
             bannerIOSPageBase.tapAcceptAllButton();
         }
-        whoIsWatchingPage.clickProfile("Profile");
-        sa.assertTrue(home.isOpened(), "Home page did not open");
+        Assert.assertTrue(home.isOpened(), "Home page did not open");
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        sa.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.typeInSearchField(HULU_CONTENT);
-        sa.assertFalse(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(),
+        Assert.assertFalse(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(),
                 "Hulu content is present");
     }
 }
