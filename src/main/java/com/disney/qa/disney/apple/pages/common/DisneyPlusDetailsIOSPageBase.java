@@ -166,10 +166,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> contentDetailsPage.isPresent());
     }
 
-    public boolean waitForDetailsPageToOpen() {
-        return waitForDetailsPageToOpen(SIXTY_SEC_TIMEOUT);
-    }
-
     public boolean isDetailPageOpened(long time) {
         dismissNotificationsPopUp();
         return shareBtn.isPresent(time);
