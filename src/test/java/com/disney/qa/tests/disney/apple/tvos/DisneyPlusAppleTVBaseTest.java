@@ -79,36 +79,29 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
                 startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
 
-                try {
-                    LOGGER.info("Attempt {} to configure Jarvis for ATT popup", jarvisAttempt);
-                    jarvis.navigateToConfig(APP_CONFIG.getText(), Direction.DOWN);
-                    jarvis.navigateToConfig(EDIT_CONFIG.getText(), Direction.DOWN);
-                    jarvis.navigateToConfig(PLATFORM_CONFIG, Direction.DOWN);
-                    jarvis.navigateToConfig(APP_TRACK_POPUP_CONFIG, Direction.DOWN);
+                LOGGER.info("Attempt {} to configure Jarvis for ATT popup", jarvisAttempt);
+                jarvis.navigateToConfig(APP_CONFIG.getText(), Direction.DOWN);
+                jarvis.navigateToConfig(EDIT_CONFIG.getText(), Direction.DOWN);
+                jarvis.navigateToConfig(PLATFORM_CONFIG, Direction.DOWN);
+                jarvis.navigateToConfig(APP_TRACK_POPUP_CONFIG, Direction.DOWN);
 
-                    if (appleBase.getStaticTextByLabelContains(JARVIS_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT) ||
-                            appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
-                        appleBase.moveUp(1, 1);
-                        fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Unable to set IsEnabled flag to 'false'")
-                                .until(it -> {
-                                    appleBase.clickSelect();
-                                    return appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(THREE_SEC_TIMEOUT);
-                                });
-                    }
-                    isAttPopUpConfigured = true;
-                    LOGGER.info("Successfully configured Jarvis to disbale ATT popup on attempt {}", jarvisAttempt);
-                } catch (Exception e) {
-                    LOGGER.error("Exception occurred configuring Jarvis on attempt {}", jarvisAttempt);
-                    e.printStackTrace();
-                    jarvisAttempt++;
+                if (appleBase.getStaticTextByLabelContains(JARVIS_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT) ||
+                        appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
+                    appleBase.moveUp(1, 1);
+                    fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Unable to set IsEnabled flag to 'false'")
+                            .until(it -> {
+                                appleBase.clickSelect();
+                                return appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(THREE_SEC_TIMEOUT);
+                            });
                 }
+                isAttPopUpConfigured = true;
 
-                LOGGER.info("Successfully configured Jarvis on attempt {}", jarvisAttempt);
             } catch (Exception e) {
                 LOGGER.error("Exception occurred configuring Jarvis on attempt {}", jarvisAttempt);
                 e.printStackTrace();
                 jarvisAttempt++;
             }
+            LOGGER.info("Successfully configured Jarvis on attempt {}", jarvisAttempt);
         }
 
         if(!isJarvisConfigured || !isAttPopUpConfigured) {
