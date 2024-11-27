@@ -554,6 +554,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public String getCollectionHeadlineTitleText() {
+        System.out.println(getDriver().getPageSource());
         return collectionHeadlineTitle.getText();
     }
 
