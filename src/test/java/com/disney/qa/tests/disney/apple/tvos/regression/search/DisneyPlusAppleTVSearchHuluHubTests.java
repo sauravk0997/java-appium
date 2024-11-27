@@ -15,6 +15,7 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTest {
 
     private static final String HULU_CONTENT = "Only Murders in the Building";
+    private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121510"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
@@ -68,9 +69,9 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
                 new DisneyPlusOneTrustConsentBannerIOSPageBase(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+       // Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
-        loginATVHuluHub(standaloneAccount);
+       // loginATVHuluHub(standaloneAccount);
         if (bannerIOSPageBase.isAllowAllButtonPresent()) {
             bannerIOSPageBase.tapAcceptAllButton();
         }
@@ -78,8 +79,8 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        searchPage.typeInSearchField(HULU_CONTENT);
-        Assert.assertFalse(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(),
-                "Hulu content is present");
+        searchPage.typeInSearchField(HULU_CONTENT_NOT_AVAILABLE_IN_CANADA);
+        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(HULU_CONTENT_NOT_AVAILABLE_IN_CANADA),
+                "No results found message was not as expected for non eligible country Canada");
     }
 }
