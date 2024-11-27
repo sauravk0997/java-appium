@@ -8,6 +8,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusATVJarvisConfigTest extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {US, TestGroup.ATV_JARVIS_CONFIGURATION})
     public void disableCompanionConfig() {
-        jarvisOverrideDisableCompanionConfig();
+        jarvisOverrideDisableCompanionConfigAndATTPopUp();
     }
 }
