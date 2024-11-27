@@ -68,4 +68,9 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         }
         getTypeCellLabelContains(assetName).clickIfPresent();
     }
+
+    public void clearSearchBar() {
+        moveRight(28, 1);
+        keyPressTimes(IRemoteControllerAppleTV::clickSelect, 20, 5);
+    }
 }

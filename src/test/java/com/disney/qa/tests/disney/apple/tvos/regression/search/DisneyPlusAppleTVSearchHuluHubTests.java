@@ -13,6 +13,7 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTest {
 
     private static final String HULU_CONTENT = "Only Murders in the Building";
+    private static final String ENTITLED_HULU_CONTENT = "Solar Opposites";
     private static final String UNLOCK = "Unlock";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121510"})
@@ -46,6 +47,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         loginATVHuluHub(bundlePremiumAccount);
+        Assert.assertTrue(home.isOpened(), "Home page did not open");
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
@@ -73,6 +75,11 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        // Look for entitled Hulu content
+        searchPage.typeInSearchField(ENTITLED_HULU_CONTENT);
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ENTITLED_HULU_CONTENT).isPresent(), "Hulu movie is not present");
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(), "Unlock 'upsell message' found in search result");
+        searchPage.clearSearchBar();
         // Look for non entitled Hulu content
         searchPage.typeInSearchField(HULU_CONTENT);
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
