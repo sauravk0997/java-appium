@@ -55,7 +55,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
         DisneyPlusApplePageBase appleBase = new DisneyPlusApplePageBase(getDriver());
 
-        while (!isJarvisConfigured && jarvisAttempt < 4) {
+        while ((!isJarvisConfigured || !isAttPopUpConfigured) && jarvisAttempt < 4) {
             launchJarvis(true);
 
             try {
@@ -111,8 +111,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
             }
         }
 
-        if(!isJarvisConfigured && !isAttPopUpConfigured) {
-            throw new RuntimeException("Couldn't configure Jarvis companion flag");
+        if(!isJarvisConfigured || !isAttPopUpConfigured) {
+            throw new RuntimeException("Couldn't configure Jarvis companion and ATT flag");
         }
     }
 
