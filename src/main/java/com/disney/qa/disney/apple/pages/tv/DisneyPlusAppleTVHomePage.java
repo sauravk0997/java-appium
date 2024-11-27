@@ -327,15 +327,13 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         return isFocused(carouselFocusedElement);
     }
 
-    public int getBrandTilesQuantity() {
-        List<ExtendedWebElement> brandTiles =
-                findExtendedWebElements(getTypeCellLabelContains("Select for details on this title.").getBy());
-        return brandTiles.size();
+    public List<ExtendedWebElement> getBrandTiles() {
+        return findExtendedWebElements(getTypeCellLabelContains("Select for details on this title.").getBy());
     }
 
     public void clickBrandTile(String brandLabel) {
         boolean expectedBrandTileIsFocused = false;
-        for(int i = 0; i < getBrandTilesQuantity(); i++) {
+        for(int i = 0; i < getBrandTiles().size(); i++) {
             clickRight();
             pause(1);
             if(isFocused(getBrandCell(brandLabel))) {
