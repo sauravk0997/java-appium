@@ -442,7 +442,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061", "XCDQA-91063"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void userLoggingInWithMultipleProfilesIsTakenToProfileSelection() {
         SoftAssert sa = new SoftAssert();
@@ -461,29 +461,22 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         logInWithoutHomeCheck(getAccount());
 
-        sa.assertTrue(whoIsWatchingPage.isOpened(), "Who's Watching page did not launch");
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), "Who's Watching page did not launch");
         sa.assertEquals(whoIsWatchingPage.getCollectionHeadlineTitleText(), whoIsWatchingTitle);
 
         whoIsWatchingPage.clickRight();
         pause(5);
-//        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, getAccount().getProfiles().get(0).
-//                        getProfileName(), ROUND_TILE_HOVERED.getText())
-//                .assertLabelContainsCaption(sa, secondProfile, ROUND_TILE.getText())
-//                .assertLabelContainsCaption(sa, addProfileBtn, ROUND_TILE.getText());
-//        sa.assertTrue(whoIsWatchingPage.isDynamicAccessibilityIDElementPresent(editProfileBtn),
-//                "The following button text was not found " + editProfileBtn);
 
-//        whoIsWatchingPage.clickRight();
-//        pause(3);
-//        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, secondProfile, ROUND_TILE_HOVERED.getText());
-//
-//        whoIsWatchingPage.clickRight();
-//        pause(3);
-//        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, addProfileBtn, ROUND_TILE_HOVERED.getText());
-//
-//        whoIsWatchingPage.clickDown();
-//        pause(3);
-//        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, editProfileBtn, BUTTON_HOVERED.getText());
+        whoIsWatchingPage.clickRight();
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(secondProfile)),
+                "Second profile on focused");
+
+
+        whoIsWatchingPage.clickRight();
+        //validate add profile in focus
+
+        whoIsWatchingPage.clickDown();
+        //validate edit profile in focus
 
         sa.assertAll();
     }
