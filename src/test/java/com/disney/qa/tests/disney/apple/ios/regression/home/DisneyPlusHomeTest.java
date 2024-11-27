@@ -6,13 +6,7 @@ import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusChooseAvatarIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.*;
@@ -574,6 +568,30 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77869"})
+    @Test(groups = {TestGroup.HULU_HUB, US})
+    public void verifyStandaloneUserSubBrandTile() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        String email = "robert.walters+6740c5ea@disneyplustesting.com";
+        loginForHuluHub(email);
+
+        //Open Hulu brand page
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        Assert. assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU)),
+                "After tapping the hulu tile user did not land on Hulu screen");
+        huluPage.getBackButton().click();
+        Assert. assertTrue(homePage.isOpened(), "Home page didn't open after closing the Hulu page");
+
+        //Open ESPN brand page
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.ESPN));
+        Assert. assertTrue(brandPage.isSportsCellPresent(),
+                "After tapping the ESPN tile user did not land on ESPN screen");
+        homePage.getBackButton().click();
+        Assert. assertTrue(homePage.isOpened(), "Home page didn't open after closing the ESPN page");
+    }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
