@@ -21,9 +21,9 @@ public class DisneyPlusCollectionIOSPageBase extends DisneyPlusApplePageBase {
         return collectionScreen.format(collectionName).isPresent();
     }
 
-    public boolean waitForCollectionPageToOpen(String collectionName) {
+    public void waitForCollectionPageToOpen(String collectionName) {
         LOGGER.info("Waiting for {} collection page to load", collectionName);
-        return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Collection page is not opened")
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Collection page is not opened")
                 .until(it -> isOpened(collectionName));
     }
 }
