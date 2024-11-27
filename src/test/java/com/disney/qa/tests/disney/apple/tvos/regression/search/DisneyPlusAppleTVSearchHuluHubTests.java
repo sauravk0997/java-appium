@@ -34,6 +34,29 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu content is not present");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121512"})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    public void verifyHuluHubSearchContentWithBundleUserAccount() {
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        String bundlePremiumAccount = "alekhya.rallapalli+6740d2fc@disneyplustesting.com";
+        selectAppleUpdateLaterAndDismissAppTracking();
+        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+
+        loginATVHuluHub(bundlePremiumAccount);
+        home.moveDownFromHeroTileToBrandTile();
+        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.typeInSearchField(HULU_CONTENT);
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
+        searchPage.clickSearchResult(HULU_CONTENT);
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        Assert.assertFalse(detailsPage.getUpgradeNowButton().isPresent(), "Upsell message is present");
+        Assert.assertTrue(detailsPage.isPlayButtonDisplayed(), "Play button is not displayed");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121513"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifyHuluHubSearchContentWithNonBundleUserAccount() {
