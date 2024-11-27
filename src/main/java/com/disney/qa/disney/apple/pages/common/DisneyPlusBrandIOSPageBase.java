@@ -69,24 +69,31 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
 
     public enum Brand {
         DISNEY,
-        PIXAR,
+        ESPN,
+        HULU,
         MARVEL,
-        STAR_WARS,
-        NATIONAL_GEOGRAPHIC
+        NATIONAL_GEOGRAPHIC,
+        PIXAR,
+        STAR_WARS
+
     }
 
     public String getBrand(Brand brand) {
         switch (brand) {
             case DISNEY:
                 return "Disney";
-            case PIXAR:
-                return "Pixar";
+            case ESPN:
+                return "ESPN";
+            case HULU:
+                return "Hulu";
             case MARVEL:
                 return "Marvel";
-            case STAR_WARS:
-                return "Star Wars";
             case NATIONAL_GEOGRAPHIC:
                 return "National Geographic";
+            case PIXAR:
+                return "Pixar";
+            case STAR_WARS:
+                return "Star Wars";
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' Brand is not a valid option", brand));
