@@ -15,6 +15,11 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     private static final String HULU_CONTENT = "Only Murders in the Building";
     private static final String ENTITLED_HULU_CONTENT = "Solar Opposites";
     private static final String UNLOCK = "Unlock";
+    private static final String HOME_PAGE_ERROR_MESSAGE = "Home page did not open";
+    private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
+    private static final String HULU_CONTENT_ERROR_MESSAGE = "Hulu content is not present";
+    private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
+    private static final String WELCOME_SCREEN_ERROR_MESSAGE = "Welcome screen did not launch";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121510"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
@@ -24,15 +29,15 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6740c467@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_ERROR_MESSAGE);
 
         loginATVHuluHub(standaloneAccount);
-        Assert.assertTrue(home.isOpened(), "Home page did not open");
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         searchPage.typeInSearchField(HULU_CONTENT);
-        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu content is not present");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121512"})
@@ -44,17 +49,17 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         String bundlePremiumAccount = "alekhya.rallapalli+6740d2fc@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_ERROR_MESSAGE);
 
         loginATVHuluHub(bundlePremiumAccount);
-        Assert.assertTrue(home.isOpened(), "Home page did not open");
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         searchPage.typeInSearchField(HULU_CONTENT);
-        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
         searchPage.clickSearchResult(HULU_CONTENT);
-        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
         Assert.assertFalse(detailsPage.getUpgradeNowButton().isPresent(), "Upsell message is present");
         Assert.assertTrue(detailsPage.isPlayButtonDisplayed(), "Play button is not displayed");
     }
@@ -68,29 +73,29 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         String premiumAccount = "robert.walters+6740c4f3@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_ERROR_MESSAGE);
 
         loginATVHuluHub(premiumAccount);
-        Assert.assertTrue(home.isOpened(), "Home page did not open");
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         // Look for entitled Hulu content
         searchPage.typeInSearchField(ENTITLED_HULU_CONTENT);
-        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ENTITLED_HULU_CONTENT).isPresent(), "Hulu movie is not present");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ENTITLED_HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
         Assert.assertFalse(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(), "Unlock 'upsell message' found in search result");
         searchPage.clearSearchBar();
         // Look for non entitled Hulu content
         searchPage.typeInSearchField(HULU_CONTENT);
-        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), "Hulu movie is not present");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
         Assert.assertTrue(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(),
                 "Unlock 'upsell message' not found in search result");
         searchPage.clickSearchResult(HULU_CONTENT);
-        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
         Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now button is not present");
         detailsPage.getUpgradeNowButton().click();
         Assert.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Hulu ineligible screen header is not present");
         Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Hulu ineligible screen description  is not present");
-        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Hulu button is not present");
+        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible CTA button is not present");
     }
 }
