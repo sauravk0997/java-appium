@@ -2,7 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.utils.*;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCollectionPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVBrandsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -24,9 +24,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
-    private static final String HULU_BRAND_TILE_LABEL = "Hulu";
-    private static final String ESPN_BRAND_TILE_LABEL = "ESPN";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89521"})
     @Test(groups = {TestGroup.HOME, US})
@@ -63,7 +60,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyESPNAndHuluBrandTiles() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVCollectionPage collectionPage = new DisneyPlusAppleTVCollectionPage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6740c523@disneyplustesting.com";
 
         selectAppleUpdateLaterAndDismissAppTracking();
@@ -71,15 +68,16 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         loginATVHuluHub(standaloneAccount);
         homePage.waitForHomePageToOpen();
 
-        Assert.assertTrue(homePage.getBrandCell(HULU_BRAND_TILE_LABEL).isPresent(),
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).isPresent(),
                 "Hulu brand tile was not present on home page screen");
-        Assert.assertTrue(homePage.getBrandCell(ESPN_BRAND_TILE_LABEL).isPresent(),
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
                 "ESPN brand tile was not present on home page screen");
 
         homePage.moveDownFromHeroTileToBrandTile();
-        homePage.clickBrandTile(HULU_BRAND_TILE_LABEL);
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
 
-        Assert.assertTrue(collectionPage.waitForCollectionPageToOpen(HULU_BRAND_TILE_LABEL),
+        Assert.assertTrue(
+                brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)),
                 "Hulu Hub page did not open");
     }
 
