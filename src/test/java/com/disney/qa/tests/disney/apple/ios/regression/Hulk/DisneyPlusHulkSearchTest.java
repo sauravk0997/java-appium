@@ -282,15 +282,17 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, CA})
     public void verifySearchHuluContentForStandaloneUserInNonEligibleCountry() {
         String userEmailAddress = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
+        String unavailableContentInCA = "Normal People";
+
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
         loginForHuluHub(userEmailAddress);
+
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
-        searchPage.searchForMedia(HULU_CONTENT);
-        Assert.assertTrue(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
-                "Hulu Content not found in search result");
-        Assert.assertFalse(searchPage.getTypeCellLabelContains(HULU_CONTENT).getText().contains(HULU),
-                "Hulu brand name found in content in search result");
+        searchPage.searchForMedia(unavailableContentInCA);
+        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(unavailableContentInCA),
+                String.format("No results found message was not displayed for, '%s'", unavailableContentInCA));
     }
 }
