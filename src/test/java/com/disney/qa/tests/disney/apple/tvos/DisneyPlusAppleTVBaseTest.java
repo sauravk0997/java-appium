@@ -47,43 +47,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         setBuildType();
     }
 
-    public void turnOffATTPopUp() {
-        JarvisAppleTV jarvis = new JarvisAppleTV(getDriver());
-        DisneyPlusApplePageBase appleBase = new DisneyPlusApplePageBase(getDriver());
-
-        boolean isJarvisConfigured = false;
-        int jarvisAttempt = 1;
-
-        while (!isJarvisConfigured && jarvisAttempt < 4) {
-            try {
-                LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
-
-                launchJarvis(false);
-
-                jarvis.navigateToConfig(APP_CONFIG.getText(), Direction.DOWN);
-                jarvis.navigateToConfig(EDIT_CONFIG.getText(), Direction.DOWN);
-                jarvis.navigateToConfig(PLATFORM_CONFIG, Direction.DOWN);
-                jarvis.navigateToConfig(APP_TRACK_POPUP_CONFIG, Direction.DOWN);
-
-                if (appleBase.getStaticTextByLabelContains(JARVIS_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT) ||
-                        appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
-                    appleBase.moveUp(1, 1);
-                    fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Unable to set IsEnabled flag to 'false'")
-                            .until(it -> {
-                                appleBase.clickSelect();
-                                return appleBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(THREE_SEC_TIMEOUT);
-                            });
-                }
-                isJarvisConfigured = true;
-                LOGGER.info("Successfully configured Jarvis to disbale ATT popup on attempt {}", jarvisAttempt);
-            } catch (Exception e) {
-                LOGGER.error("Exception occurred configuring Jarvis to disbale ATT popup on attempt {}", jarvisAttempt);
-                e.printStackTrace();
-                jarvisAttempt++;
-            }
-        }
-    }
-
     public void jarvisOverrideDisableCompanionConfigAndATTPopUp() {
         boolean isJarvisConfigured = false;
         boolean isAttPopUpConfigured = false;
