@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.search;
 
+import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustConsentBannerIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -7,6 +8,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.disney.qa.common.constant.IConstantHelper.CA;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
@@ -20,6 +22,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     private static final String HULU_CONTENT_ERROR_MESSAGE = "Hulu content is not present";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String WELCOME_SCREEN_ERROR_MESSAGE = "Welcome screen did not launch";
+    private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121510"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
@@ -64,6 +67,31 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(detailsPage.isPlayButtonDisplayed(), "Play button is not displayed");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121511"})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, CA})
+    public void verifyHuluHubSearchContentInNonEligibleCountry() {
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusOneTrustConsentBannerIOSPageBase bannerIOSPageBase =
+                new DisneyPlusOneTrustConsentBannerIOSPageBase(getDriver());
+        String standaloneAccount = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
+        selectAppleUpdateLaterAndDismissAppTracking();
+        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_ERROR_MESSAGE);
+
+        loginATVHuluHub(standaloneAccount);
+        if (bannerIOSPageBase.isAllowAllButtonPresent()) {
+            bannerIOSPageBase.tapAcceptAllButton();
+        }
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        home.moveDownFromHeroTileToBrandTile();
+        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(HULU_CONTENT_NOT_AVAILABLE_IN_CANADA);
+        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(HULU_CONTENT_NOT_AVAILABLE_IN_CANADA),
+                "No results found message was not as expected for non eligible country Canada");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121513"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifyHuluHubSearchContentWithNonBundleUserAccount() {
@@ -82,10 +110,9 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         // Look for entitled Hulu content
         searchPage.typeInSearchField(ENTITLED_HULU_CONTENT);
-        // Assert.assertTrue(searchPage.getStaticTextByLabelContains(ENTITLED_HULU_CONTENT).isPresent(),
-           //     HULU_CONTENT_ERROR_MESSAGE);
-        // Assert.assertFalse(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(), "Unlock 'upsell message' found
-        // in search result");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ENTITLED_HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(),
+                "Unlock 'upsell message' found in search result");
         pause(5);
         searchPage.clearSearchBar();
         // Look for non entitled Hulu content
