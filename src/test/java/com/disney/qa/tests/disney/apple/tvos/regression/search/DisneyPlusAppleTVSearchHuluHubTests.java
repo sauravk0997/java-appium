@@ -69,9 +69,9 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
                 new DisneyPlusOneTrustConsentBannerIOSPageBase(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
         selectAppleUpdateLaterAndDismissAppTracking();
-       // Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
-       // loginATVHuluHub(standaloneAccount);
+        loginATVHuluHub(standaloneAccount);
         if (bannerIOSPageBase.isAllowAllButtonPresent()) {
             bannerIOSPageBase.tapAcceptAllButton();
         }
