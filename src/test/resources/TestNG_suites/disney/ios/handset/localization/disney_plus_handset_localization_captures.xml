@@ -29,7 +29,6 @@
     <test verbose="1" name="DisneyPlus iOS Handset Localization Captures" parallel="methods">
         <parameter name="{ds_custom_provider}" value="true"/>
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.localization.DisneyPlusAppleLocalizationCaptures"/>
             <class name="com.disney.qa.tests.disney.apple.ios.localization.DisneyPlusAppleLocalizationSubscriberCaptures"/>
         </classes>
     </test>

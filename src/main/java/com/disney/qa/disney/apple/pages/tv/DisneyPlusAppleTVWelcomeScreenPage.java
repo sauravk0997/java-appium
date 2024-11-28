@@ -52,9 +52,7 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     @Override
     public void clickLogInButton() {
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 1, "Login Button was not focused")
-                .until(it -> {
-                    return isFocused(getLoginButton());
-                });
+                .until(it -> isFocused(getLoginButton()));
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickSelect();
     }

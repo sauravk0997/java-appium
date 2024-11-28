@@ -7,6 +7,7 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
+import java.util.*;
 
 public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     private static final String IMAGES_ARE_THE_SAME_ERROR_MESSAGE = "Images are the same";
@@ -23,6 +24,11 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandLogoImage;
 
+
+    @ExtendedFindBy(accessibilityId = "Sports")
+    private ExtendedWebElement sportsCell;
+
+
     public DisneyPlusBrandIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -30,6 +36,21 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         return brandLandingView.isPresent();
+    }
+
+    public boolean isBrandScreenDisplayed(String brandName) {
+        return getDynamicAccessibilityId(
+                String.format(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
+                                .getDictionaryItem(
+                                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                                        DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+                                        false),
+                        Map.of(BRAND_NAME, brandName))))
+                .isPresent();
+    }
+
+    public boolean isSportsCellPresent() {
+        return sportsCell.isPresent();
     }
 
     public void clickFirstCarouselPoster() {
@@ -69,24 +90,31 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
 
     public enum Brand {
         DISNEY,
-        PIXAR,
+        ESPN,
+        HULU,
         MARVEL,
-        STAR_WARS,
-        NATIONAL_GEOGRAPHIC
+        NATIONAL_GEOGRAPHIC,
+        PIXAR,
+        STAR_WARS
+
     }
 
     public String getBrand(Brand brand) {
         switch (brand) {
             case DISNEY:
                 return "Disney";
-            case PIXAR:
-                return "Pixar";
+            case ESPN:
+                return "ESPN";
+            case HULU:
+                return "Hulu";
             case MARVEL:
                 return "Marvel";
-            case STAR_WARS:
-                return "Star Wars";
             case NATIONAL_GEOGRAPHIC:
                 return "National Geographic";
+            case PIXAR:
+                return "Pixar";
+            case STAR_WARS:
+                return "Star Wars";
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' Brand is not a valid option", brand));

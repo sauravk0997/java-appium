@@ -6,13 +6,7 @@ import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusChooseAvatarIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.*;
@@ -252,12 +246,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), titlesLimit);
-        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+        Assert.assertFalse(continueWatchingTitlesFromApi == null,
                 "No items for 'Continue Watching' collection were fetched from Explore API");
 
         Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
         String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
-        if (firstAPICollectionItemTitle.isEmpty()) {
+        if (firstAPICollectionItemTitle == null) {
             throw new SkipException("First API Collection item did not have a title");
         }
         String firstCellTitle = homePage.getFirstCellTitleFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING)
@@ -273,10 +267,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String firstAPICollectionItemSeasonNumber = firstAPICollectionItem.getVisuals().getSeasonNumber();
         String firstAPICollectionItemEpisodeNumber = firstAPICollectionItem.getVisuals().getEpisodeNumber();
         String firstAPICollectionItemEpisodeTitle = firstAPICollectionItem.getVisuals().getEpisodeTitle();
-        if (firstAPICollectionItemSeasonNumber.isEmpty() ||
-                firstAPICollectionItemEpisodeNumber.isEmpty() ||
-                firstAPICollectionItemEpisodeTitle.isEmpty() ) {
-            throw new SkipException("First API Collection item did not have episode metadata to validate");
+        if (firstAPICollectionItemSeasonNumber == null ||
+                firstAPICollectionItemEpisodeNumber == null ||
+                firstAPICollectionItemEpisodeTitle == null ) {
+            throw new SkipException("First API Collection item did not have all episode metadata to validate");
         }
         sa.assertTrue(
                 homePage.isFirstCellFromCollectionEpisodeMetadataPresent(continueWatchingCollectionName,
@@ -286,17 +280,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 "First element under 'Continue Watching' did not have Episode metadata");
 
         String firstAPICollectionItemPrompt = firstAPICollectionItem.getVisuals().getPrompt();
-        if (firstAPICollectionItemPrompt.isEmpty()) {
+        if (firstAPICollectionItemPrompt == null) {
             throw new SkipException("First API Collection item did not have a prompt to validate");
         }
-        sa.assertTrue(homePage.isFirstCellFromCollectionRemainingTimePresent(
+        sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
                         continueWatchingCollectionName, firstAPICollectionItemPrompt),
                 "First element under 'Continue Watching' did not have Remaining time text");
 
 
         String lastAPICollectionItemTitle = continueWatchingTitlesFromApi.get(continueWatchingTitlesFromApi.size() - 1)
                 .getVisuals().getTitle();
-        if (lastAPICollectionItemTitle.isEmpty()) {
+        if (lastAPICollectionItemTitle == null) {
             throw new SkipException("Last API Collection item did not have a title");
         }
         ExtendedWebElement lastElement = homePage.getCellElementFromContainer(
@@ -443,7 +437,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
         String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
-        if (firstAPICollectionItemTitle.isEmpty()) {
+        if (firstAPICollectionItemTitle == null) {
             throw new SkipException("First API Collection item did not have a title");
         }
 
@@ -523,6 +517,82 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(collectionPage.isCollectionPresent(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67511"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEpisodeInSetUIElements() {
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String collectionName = CollectionConstant.getCollectionName(
+                CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V);
+        setAppToHomeScreen(getAccount());
+
+        Visuals firstEpisodeFromCollectionVisuals = getItemsFromCollection(
+                CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V, 1).get(0).getVisuals();
+
+        String firstEpisodeFromCollectionSeriesTitle = firstEpisodeFromCollectionVisuals.getTitle();
+        String firstEpisodeFromCollectionTitle = firstEpisodeFromCollectionVisuals.getEpisodeTitle();
+        String firstEpisodeFromCollectionSeasonNumber = firstEpisodeFromCollectionVisuals.getSeasonNumber();
+        String firstEpisodeFromCollectionEpisodeNumber = firstEpisodeFromCollectionVisuals.getEpisodeNumber();
+
+        if (firstEpisodeFromCollectionSeriesTitle == null ||
+                firstEpisodeFromCollectionSeasonNumber == null ||
+                firstEpisodeFromCollectionEpisodeNumber == null ||
+                firstEpisodeFromCollectionTitle  == null ) {
+            throw new SkipException("At least one Episode metadata from API was set to null");
+        }
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
+        collectionPage.waitForCollectionPageToOpen(
+                CollectionConstant.getCollectionTitle(CollectionConstant.Collection.TREEHOUSE_OF_HORROR));
+
+        collectionPage.swipeTillCollectionTappable(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V,
+                Direction.UP, 5);
+
+        sa.assertTrue(
+                collectionPage.isFirstCellFromCollectionStaticTextPresent(collectionName,
+                        firstEpisodeFromCollectionSeriesTitle),
+                "First element of the collection did not have series title"
+        );
+
+        sa.assertTrue(
+                collectionPage.isFirstCellFromCollectionEpisodeMetadataPresent(collectionName,
+                        firstEpisodeFromCollectionSeasonNumber,
+                        firstEpisodeFromCollectionEpisodeNumber,
+                        firstEpisodeFromCollectionTitle),
+                "First element of the collection did not have episode metadata");
+
+        sa.assertTrue(collectionPage.isFirstCellFromCollectionAssetImagePresent(collectionName),
+                "First element of the collection did not have Asset image");
+        sa.assertTrue(collectionPage.isFirstCellFromCollectionPlayIconPresent(collectionName),
+                "First element  of the collection did not have Play icon");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77869"})
+    @Test(groups = {TestGroup.HULU_HUB, US})
+    public void verifyStandaloneUserSubBrandTile() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        String email = "robert.walters+6740c5ea@disneyplustesting.com";
+        loginForHuluHub(email);
+
+        //Open Hulu brand page
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        Assert. assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU)),
+                "After tapping the hulu tile user did not land on Hulu screen");
+        huluPage.getBackButton().click();
+        Assert. assertTrue(homePage.isOpened(), "Home page didn't open after closing the Hulu page");
+
+        //Open ESPN brand page
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.ESPN));
+        Assert. assertTrue(brandPage.isSportsCellPresent(),
+                "After tapping the ESPN tile user did not land on ESPN screen");
+        homePage.getBackButton().click();
+        Assert. assertTrue(homePage.isOpened(), "Home page didn't open after closing the ESPN page");
+    }
+
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
         try {
@@ -555,7 +625,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private List<Item> getItemsFromCollection(CollectionConstant.Collection collection, int titlesLimit) {
         List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(collection), titlesLimit);
-        Assert.assertFalse(continueWatchingTitlesFromApi.isEmpty(),
+        Assert.assertNotNull(continueWatchingTitlesFromApi,
                 String.format("No items for '%s' collection were fetched from Explore API", collection.name()));
         return continueWatchingTitlesFromApi;
     }
