@@ -123,4 +123,12 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
+
+    public ExtendedWebElement getAddProfile() {
+        return addProfile;
+    }
+
+    public ExtendedWebElement getEditProfile() {
+        return editProfileBtn;
+    }
 }

@@ -446,7 +446,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void userLoggingInWithMultipleProfilesIsTakenToProfileSelection() {
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         String secondProfile = "second";
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
@@ -463,21 +462,26 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         Assert.assertTrue(whoIsWatchingPage.isOpened(), "Who's Watching page did not launch");
         sa.assertEquals(whoIsWatchingPage.getCollectionHeadlineTitleText(), whoIsWatchingTitle);
+        sa.assertTrue(whoIsWatchingPage.getStaticTextByLabelContains(editProfileBtn).isPresent(),
+                "Edit Profile button not present");
+        sa.assertTrue(whoIsWatchingPage.getTypeCellLabelContains(addProfileBtn).isPresent(),
+                "Add profile cell not present");
 
         whoIsWatchingPage.clickRight();
-        pause(5);
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(getAccount().getFirstName())),
+                "First profile is not in focus");
 
         whoIsWatchingPage.clickRight();
         sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(secondProfile)),
-                "Second profile on focused");
-
+                "Second profile is not in focus");
 
         whoIsWatchingPage.clickRight();
-        //validate add profile in focus
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(addProfileBtn)),
+                "Add profile is not in focus");
 
         whoIsWatchingPage.clickDown();
-        //validate edit profile in focus
-
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getEditProfile()),
+                "Edit profile button is not in focus");
         sa.assertAll();
     }
 
