@@ -173,6 +173,17 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public void loginForHuluHub(String Email) {
+        initialSetup();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(Email);
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        Assert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
+                "Couldn't login into the Hulu-sub account");
+    }
+
     public DisneyAccount createAccountFor(String country, String language) {
         DisneyOffer offer = getAccountApi().lookupOfferToUse(country, BUNDLE_PREMIUM);
         return getAccountApi().createAccount(offer, country, language, SUBSCRIPTION_V2);

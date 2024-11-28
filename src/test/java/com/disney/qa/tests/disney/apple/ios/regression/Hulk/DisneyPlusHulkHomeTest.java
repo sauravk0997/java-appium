@@ -3,9 +3,9 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHuluIOSPageBase;
+import com.disney.qa.common.constant.*;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.phone.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -27,6 +27,8 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     String UNENTITLED_SERIES_ID = "entity-7840bf30-f440-48d4-bf81-55d8cb24457a";
     String PLATFORM = "apple";
     String ENVIRONMENT = "PROD";
+    String AVAILABLE_WITH_HULU = "Available with Hulu Subscription";
+    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
     @DataProvider(name = "huluUnavailableDeepLinks")
     public Object[][] huluUnavailableDeepLinks() {
@@ -126,6 +128,49 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
         sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
         sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77868"})
+    @Test(groups = {TestGroup.HULU_HUB, US})
+    public void verifyHulkUpsellStandaloneUserInEligible() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        int swipeCount = 5;
+        String email = "robert.walters+6740c5ea@disneyplustesting.com";
+
+        loginForHuluHub(email);
+        homePage.tapHuluBrandTile();
+
+        //Verify user can play some Hulu content
+
+        String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
+        homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayOrContinue();
+        videoPlayer.verifyVideoPlaying(sa);
+        videoPlayer.clickBackButton();
+
+        //Go back to the Hulu page
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.tapBackButton();
+
+        //Swipe to the "Unlock to stream more collection"
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU,
+                Direction.UP,
+                swipeCount);
+
+        homePage.getTypeCellLabelContains(AVAILABLE_WITH_HULU).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.getUpgradeNowButton().click();
+
+        //Verify that user is on the ineligible interstitial screen
+        sa.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Ineligible Screen Header is not present");
+        sa.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
+        sa.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
 
         sa.assertAll();
     }
