@@ -98,12 +98,12 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         homePage.getSearchNav().click();
-        searchPage.searchForMedia("Demolition");
+        searchPage.searchForMedia("robocop");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
         pause(2);
         sa.assertFalse(searchPage.isPCONRestrictedErrorMessagePresent(),
                 "PCON restricted title message present for TV-MA profile");
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Demolition"),
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("robocop"),
                 "No results found message was not as expected for TV-MA profile");
         sa.assertAll();
     }
@@ -216,7 +216,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     public void verifySearchHuluContentForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        
+
         String email = "alekhya.rallapalli+6740c467@disneyplustesting.com";
         loginForHuluHub(email);
 
