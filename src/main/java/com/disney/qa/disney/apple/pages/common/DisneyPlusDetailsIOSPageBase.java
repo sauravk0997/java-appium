@@ -1015,9 +1015,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void validateRatingsInDetailsTab(String rating, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in details tab");
-//        if (!getDetailsTab().isPresent()) {
-//            swipe(getDetailsTab(), 2);
-//        }
         clickDetailsTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(getTypeOtherByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText())), 2);

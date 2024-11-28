@@ -85,7 +85,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	public void waitForDownloadToStart() {
 		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
 				"Download tab notification badge was not present")
-				.until(it -> downloadsTabNotificationBadge.isPresent(FIVE_SEC_TIMEOUT));
+				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
 	}
 	public void tapDownloadedAsset(String downloadedAsset) {
 		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
