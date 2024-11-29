@@ -52,9 +52,9 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         DisneyPlusApplePageBase appleBase = new DisneyPlusApplePageBase(getDriver());
 
         while (!isJarvisConfigured && jarvisAttempt < 4) {
-
             try {
                 LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
+                launchJarvis(true);
                 jarvis.navigateToConfig(APP_CONFIG.getText(), Direction.DOWN);
                 jarvis.navigateToConfig(EDIT_CONFIG.getText(), Direction.DOWN);
                 jarvis.navigateToConfig(COMPANION_CONFIG.getText(), Direction.DOWN);
@@ -71,13 +71,11 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 }
                 isJarvisConfigured = true;
                 LOGGER.info("Successfully configured Jarvis on attempt {}", jarvisAttempt);
-
             } catch (Exception e) {
                 LOGGER.error("Exception occurred configuring Jarvis on attempt {}", jarvisAttempt);
                 e.printStackTrace();
                 jarvisAttempt++;
             }
-            LOGGER.info("Successfully configured Jarvis on attempt {}", jarvisAttempt);
         }
 
         if(!isJarvisConfigured) {
