@@ -75,7 +75,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getBamtechBundleSubscriptionMessage() {
-        String subscriptionMessage = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BAMTECH_DISNEY.getText()).replace("\u00a0"," ");
+        String subscriptionMessage = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK.getText());
         return getStaticTextByLabel(subscriptionMessage);
     }
 
