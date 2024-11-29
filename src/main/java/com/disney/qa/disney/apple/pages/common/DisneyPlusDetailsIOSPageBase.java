@@ -145,6 +145,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentAdvisory;
     @ExtendedFindBy(accessibilityId = "downloadButtonDownloading")
     private ExtendedWebElement downloadStartedButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"SHOP\" OR name == \"PERKS\"`]")
+    protected ExtendedWebElement shopOrPerksBtn;
 
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
@@ -753,17 +755,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return shareBtn;
     }
 
-    public ExtendedWebElement getShopBtn() {
-        return shopTab;
+    public ExtendedWebElement getShopOrPerksBtn() {
+        return shopOrPerksBtn;
     }
 
-    public void clickShopTab() {
-        if (!shopTab.isPresent()) {
+    public void clickShopoOrPerksTab() {
+        if (!getShopOrPerksBtn().isPresent()) {
             swipeInContainer(null, Direction.UP, 1200);
             pause(2); //transition
             swipeTabBar(Direction.LEFT, 1000);
         }
-        shopTab.click();
+        getShopOrPerksBtn().click();
     }
 
     public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {

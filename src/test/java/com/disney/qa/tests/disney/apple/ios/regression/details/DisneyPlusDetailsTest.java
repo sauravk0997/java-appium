@@ -302,7 +302,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 String.format("Shop Promo Label header was not found for: %s", titleName));
         sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(),
                 String.format("Shop Promo Label Sub-header was not found for: %s", titleName));
-        sa.assertTrue(detailsPage.getShopBtn().isPresent(),
+        sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(),
                 String.format("Shop Tab was not found for: %s", titleName));
     }
 
@@ -313,8 +313,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
-        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
-        detailsPage.clickShopTab();
-        sa.assertTrue(detailsPage.isTabSelected(SHOP.toUpperCase()), "Shop tab is not focused");
+        sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(), "Shop or Perks Tab was not found");
+        detailsPage.clickShopoOrPerksTab();
+        sa.assertTrue(detailsPage.isTabSelected(detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute())),
+                "Shop tab is not focused");
     }
 }
