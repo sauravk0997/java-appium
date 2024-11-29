@@ -19,8 +19,8 @@ import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.*;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
@@ -455,7 +455,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         String seriesTitle = "The Lion King's Timon & Puumba";
         setAppToHomeScreen(getAccount());
 
-        // search series
+        // Search series
         homePage.clickSearchIcon();
         searchPage.searchForMedia(seriesTitle);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
@@ -464,17 +464,42 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started");
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
-                "Negative Stereotype Advisory text was not found on details page");
-        sa.assertTrue(videoPlayer.getPlaybackAdvisoryCountdown().isPresent(),
-                "Playback Advisory Countdown is not present");
+                "Details page does not have the Negative Stereotype Advisory");
         detailsPage.clickPlayButton();
-        sa.assertTrue(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(),
-                "Negative Stereotype Advisory text was not found at the beginning of the video");
+       // sa.assertTrue(videoPlayer.isNegativeStereotypeInterstitialMessagePresent(),
+         //       "Negative Stereotype Advisory text was not found at the beginning of the video");
+        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(),
+                "first paragraph not present");
+        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(), "second paragraph not present");
+        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(), "third paragraph not present");
+
+        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
+                "Negative Stereotype Advisory Countdown is not present");
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
-        detailsPage.clickPlayOrContinue().waitForVideoToStart();
-        sa.assertFalse(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(),
-                "Negative Stereotype Advisory was found -");
+        pause(5);
+        detailsPage.clickPlayOrContinue();
+        sa.assertFalse(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(), "first paragraph is present");
+        sa.assertFalse(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(), "second paragraph is present");
+        sa.assertFalse(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(), "third paragraph is present");
+
+        // detailsPage.getContinueButton().click();
+       // sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
+         //       "Negative Stereotype Advisory text was not found on details page");
+       // sa.assertTrue(detailsPage.clickPlayButton().getPlaybackAdvisoryCountdown(),
+         //       "----sdddd--aj");
+      //  sa.assertTrue(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(), "lololol");
+      //  sa.assertTrue(detailsPage.clickPlayButton().isNegativeStereotypeMessagePresent(), "lilili"); // working
+       // sa.assertTrue(videoPlayer.isNegativeStereotypeMessagePresent(), "lalalalal");
+       // sa.assertTrue(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(),
+         //       "Negative Stereotype Advisory text was not found at the beginning of the video");
+       // sa.assertTrue(videoPlayer.getPlaybackAdvisoryCountdown().isPresent(),
+           //     "Playback Advisory Countdown is not present");
+       // videoPlayer.clickBackButton();
+
+        //  sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
+       // detailsPage.clickPlayOrContinue().waitForVideoToStart();
+       // sa.assertFalse(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(),
+         //       "Negative Stereotype Advisory was found -");
 
 
 

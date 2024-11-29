@@ -214,7 +214,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusHomeIOSPageBase.class);
     }
 
-    //TODO Should discuss setting up Series vs. Movies page factories due to differences like this
+    //TODO Should discuss setting up SerieisContinueButtonPresents vs. Movies page factories due to differences like this
     public void startDownload() {
         if (!movieDownloadButton.isElementPresent(TEN_SEC_TIMEOUT)) {
             swipePageTillElementPresent(getDownloadButton(), 5, null, Direction.UP, 1);
@@ -843,7 +843,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isNegativeStereotypeAdvisoryLabelPresent() {
         String contentAdvisoryText = String.format("%s, %s ",
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText()).trim()).replaceAll("\\s+", " ");
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY_FULL.getText()).trim()).replaceAll("\\s+", " ");
         swipePageTillElementPresent(contentAdvisory, 1, contentDetailsPage, Direction.UP, 900);
         return contentAdvisoryText.contains(contentAdvisory.getText().replaceAll("\\s+", " "));
     }
