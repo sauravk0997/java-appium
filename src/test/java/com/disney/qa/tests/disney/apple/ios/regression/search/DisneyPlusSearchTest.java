@@ -550,20 +550,20 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.clickOriginalsTab();
         sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals page did not open.");
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
-        searchPage.getNavBackArrow().click();
+        sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
+        searchPage.getBackArrow().click();
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         searchPage.clickMoviesTab();
         sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isPresent(), "Movies page did not open");
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
-        searchPage.getNavBackArrow().click();
+        sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
+        searchPage.getBackArrow().click();
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         searchPage.clickSeriesTab();
         sa.assertTrue(searchPage.getStaticTextByLabel(SERIES).isPresent(), "Series Page did not open");
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
-        searchPage.getNavBackArrow().click();
+        sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
+        searchPage.getBackArrow().click();
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         sa.assertAll();
     }
