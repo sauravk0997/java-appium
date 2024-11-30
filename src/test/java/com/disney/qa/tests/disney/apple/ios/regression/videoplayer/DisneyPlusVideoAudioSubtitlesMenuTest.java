@@ -150,7 +150,6 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67847"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAudioAndSubtitlesPreferred() {
@@ -158,6 +157,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String choctawLang = "Chahta anumpa (Choctaw)";
+        String spanishLang = "Español";
         SoftAssert sa = new SoftAssert();
 
         // Open content and select Deutsch audio and language
@@ -189,7 +189,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         // Open content that do not have English audio and verify default is selected
         launchDeeplinkAndOpenAudioSubtitleMenu(SPANISH_LANG_MOVIE, sa);
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
-        sa.assertTrue(subtitlePage.verifySelectedAudioIs("Español"), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
+        sa.assertTrue(subtitlePage.verifySelectedAudioIs(spanishLang), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
         subtitlePage.tapCloseButton();
         videoPlayer.clickBackButton();
 
