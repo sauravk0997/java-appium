@@ -469,12 +469,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "first paragraph not present");
         sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(3),
                 "2nd paragraph not present");
-       // sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(3),
-         //       "3rd paragraph not present");
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(3),
+                "3rd paragraph not present");
         sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
              "Playback Advisory Countdown is not present");
+        pause(25);
         videoPlayer.clickBackButton();
-        pause(5);
+        pause(25);
         detailsPage.clickPlayOrContinue();
         sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(3),
                 "first paragraph is present");
