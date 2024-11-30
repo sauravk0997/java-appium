@@ -136,7 +136,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement textEntryField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"%s\"`]")
     private ExtendedWebElement textFieldValue;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`value CONTAINS \"%s\"`]")
+    private ExtendedWebElement textElementValue;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicTextEntryFieldByName;
 
@@ -1436,6 +1437,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getFirstCellFromCollection(String collectionName) {
         return firstCellElementFromCollection.format(collectionName);
+    }
+
+    public ExtendedWebElement getTextElementValue(String collectionName) {
+        return textElementValue.format(collectionName);
     }
 
     public int getFirstCellRemainingTimeInMinutesFromCollection(String collectionName) {

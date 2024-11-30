@@ -76,6 +76,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement adTimeBadge;
     @ExtendedFindBy(accessibilityId = "ratingLabel")
     private ExtendedWebElement contentRatingOverlayLabel;
+
+    public static String COMPLETE_STEREOTYPE_TEXT = "This program includes negative depictions and/or mistreatment of" +
+            " people or cultures. These stereotypes were wrong then and are wrong now. Rather than remove this content, we want to acknowledge its harmful impact, learn from it and spark conversation to create a more inclusive future together. Disney is committed to creating stories with inspirational and aspirational themes that reflect the rich diversity of the human experience around the globe. To learn more about how stories have impacted society visit: www.Disney.com/StoriesMatter";
+
   //  private static final String NEGATIVE_STEREOTYPE_MESSAGE = "This program includes negative depictions and/or " +
           //  "mistreatment of people or cultures.";
     public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
@@ -762,8 +766,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(ONE_SEC_TIMEOUT));
     }
 
-    public boolean getPlaybackAdvisoryCountdown() {
-        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+    public boolean isPlaybackAdvisoryCountdownPresent() {
+        return getTextElementValue(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                        PLAYBACK_NEGATIVE_STEREOTYPE_ADVISORY_COUNTDOWN.getText())).isPresent();
      //  return getDynamicCellByLabel(String.format(
        //         getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -775,10 +779,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         //getTypeOtherContainsLabel getDynamicAccessibilityId
     }
 
-    public boolean isNegativeStereotypeAdvisoryPresentInVideoPlayer() {
-        String stereotype = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+    public String negativeStereotypeAdvisoryInVideoPlayer() {
+        return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DETAILS_NEGATIVE_STEREOTYPE_ADVISORY_FULL.getText());
-        return getTypeOtherContainsLabel(stereotype).isPresent(SHORT_TIMEOUT);
+      //  return getTypeOtherContainsLabel(stereotype).isPresent(SHORT_TIMEOUT);
     }
     
     public boolean isNegativeStereotypeCountdownPresent() {

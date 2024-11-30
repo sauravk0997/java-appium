@@ -28,6 +28,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final String TIMON_AND_PUUMBA_DEEPLINK=R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink");
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -456,6 +457,38 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         // Search series
+
+        launchDeeplink(TIMON_AND_PUUMBA_DEEPLINK);
+        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after");
+        sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started");
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
+                "Details page does not have the Negative Stereotype Advisory");
+        detailsPage.clickPlayButton();
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(3),
+                "first paragraph not present");
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(3),
+                "2nd paragraph not present");
+       // sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(3),
+         //       "3rd paragraph not present");
+        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
+             "Playback Advisory Countdown is not present");
+        videoPlayer.clickBackButton();
+        pause(5);
+        detailsPage.clickPlayOrContinue();
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(3),
+                "first paragraph is present");
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(3),
+                "2nd paragraph is present");
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(3),
+                "3rd paragraph is present");
+        sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
+                "Playback Advisory Countdown is present");
+
+        // pause(15);
+     //   sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(),
+       //         "first paragraph isssss present");
+/*
         homePage.clickSearchIcon();
         searchPage.searchForMedia(seriesTitle);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
