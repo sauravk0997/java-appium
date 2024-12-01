@@ -35,8 +35,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String CONTINUE_BUTTON_NOT_PRESENT =
             "Continue button is not present after exiting video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final String TIMON_AND_PUUMBA_DEEPLINK=R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink");
-    private static final String DUMBO_DEEPLINK=R.TESTDATA.get("disney_prod_content_dumbo_deeplink");
+    private static final String TIMON_AND_PUUMBA_DEEPLINK = R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink");
+    private static final String DUMBO_DEEPLINK = R.TESTDATA.get("disney_prod_content_dumbo_deeplink");
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
