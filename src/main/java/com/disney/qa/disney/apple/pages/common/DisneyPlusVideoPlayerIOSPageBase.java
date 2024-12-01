@@ -748,7 +748,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForVideoStereotypeMessageToDisappear() {
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Negative Stereotype message is present")
+        fluentWait(getDriver(), TWELVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Negative Stereotype message is present")
                 .until(it -> getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE).isElementNotPresent(ONE_SEC_TIMEOUT));
     }
 
