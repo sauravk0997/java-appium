@@ -510,7 +510,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String ratingExpected = "G";
 
-        // Login and open deeplink to series Timon and Puumba
+        // Login and open deeplink to movie Dumbo
         setAppToHomeScreen(getAccount());
         launchDeeplink(DUMBO_DEEPLINK);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
