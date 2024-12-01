@@ -447,105 +447,46 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71665"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesPlaybackInterstitial() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-
         SoftAssert sa = new SoftAssert();
-        String seriesTitle = "The Lion King's Timon & Puumba";
+        String ratingExpected = "TV-Y";
+
         setAppToHomeScreen(getAccount());
 
-        // Search series
-
+        // Deeplink to series and play content
         launchDeeplink(TIMON_AND_PUUMBA_DEEPLINK);
-        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started");
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
                 "Details page does not have the Negative Stereotype Advisory");
         detailsPage.clickPlayButton();
-        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(3),
-                "first paragraph not present");
-        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(3),
-                "2nd paragraph not present");
-      //  sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(3),
-        //        "3rd paragraph not present");
-        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
-             "Playback Advisory Countdown is not present");
-        pause(25);
-        videoPlayer.clickBackButton();
-        pause(25);
+        videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayOrContinue();
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(3),
-                "first paragraph is present");
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(3),
-                "2nd paragraph is present");
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(3),
-                "3rd paragraph is present");
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 1st paragraph is not present");
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 2nd paragraph is not present");
+        videoPlayer.waitForVideoStereotypeMessageToDisappear();
+        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
+                "Playback Advisory Countdown is not present");
+        sa.assertTrue(detailsPage.isRatingPresent(ratingExpected), "Rating was not found in video player");
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayOrContinue();
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 1st paragraph is present");
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 2nd paragraph is present");
         sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
                 "Playback Advisory Countdown is present");
-
-        // pause(15);
-     //   sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(),
-       //         "first paragraph isssss present");
-/*
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(seriesTitle);
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after selecting the search result");
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started");
-        detailsPage.clickDetailsTab();
-        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
-                "Details page does not have the Negative Stereotype Advisory");
-        detailsPage.clickPlayButton();
-       // sa.assertTrue(videoPlayer.isNegativeStereotypeInterstitialMessagePresent(),
-         //       "Negative Stereotype Advisory text was not found at the beginning of the video");
-        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(),
-                "first paragraph not present");
-        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(), "second paragraph not present");
-        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(), "third paragraph not present");
-
-        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
-                "Negative Stereotype Advisory Countdown is not present");
         videoPlayer.clickBackButton();
-        pause(5);
-        detailsPage.clickPlayOrContinue();
-        sa.assertFalse(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(), "first paragraph is present");
-        sa.assertFalse(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(), "second paragraph is present");
-        sa.assertFalse(videoPlayer.getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART3).isPresent(), "third paragraph is present");
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.getEpisodesTab().click();
 
-        // detailsPage.getContinueButton().click();
-       // sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
-         //       "Negative Stereotype Advisory text was not found on details page");
-       // sa.assertTrue(detailsPage.clickPlayButton().getPlaybackAdvisoryCountdown(),
-         //       "----sdddd--aj");
-      //  sa.assertTrue(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(), "lololol");
-      //  sa.assertTrue(detailsPage.clickPlayButton().isNegativeStereotypeMessagePresent(), "lilili"); // working
-       // sa.assertTrue(videoPlayer.isNegativeStereotypeMessagePresent(), "lalalalal");
-       // sa.assertTrue(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(),
-         //       "Negative Stereotype Advisory text was not found at the beginning of the video");
-       // sa.assertTrue(videoPlayer.getPlaybackAdvisoryCountdown().isPresent(),
-           //     "Playback Advisory Countdown is not present");
-       // videoPlayer.clickBackButton();
-
-        //  sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
-       // detailsPage.clickPlayOrContinue().waitForVideoToStart();
-       // sa.assertFalse(videoPlayer.isNegativeStereotypeAdvisoryPresentInVideoPlayer(),
-         //       "Negative Stereotype Advisory was found -");
-
-
-
-        /*
-        disneyPlusDetailsIOSPageBase.clickSeasonsButton("1");
-        List<ExtendedWebElement> seasons = disneyPlusDetailsIOSPageBase.getSeasonsFromPicker();
-        seasons.get(0).click();
-
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isSeasonButtonDisplayed("1"), "Season has not changed to Season 1");
-        */
         sa.assertAll();
-
     }
 
     private void loginAndStartPlayback(String content) {
