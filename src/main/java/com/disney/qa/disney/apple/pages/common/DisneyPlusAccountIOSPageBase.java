@@ -75,7 +75,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getBamtechBundleSubscriptionMessage() {
-        String subscriptionMessage = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK.getText());
+        String subscriptionMessage = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                DictionaryKeys.APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK.getText());
         return getStaticTextByLabel(subscriptionMessage);
     }
 
@@ -316,7 +318,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isBamtechBundleSubscriptionTitlePresent() {
-        String title = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
+        String title = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS,
+                DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
         return getStaticTextByLabel(title).isPresent();
     }
 

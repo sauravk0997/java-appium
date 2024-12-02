@@ -146,7 +146,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573"})
-    @Test(description = "Verify that the correct description for Legacy Disney Bundle is displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySubscriptionDetailsUsingLegacyDisneyBundleSubscription() {
         setAccount(createAccountWithSku(
                         DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
