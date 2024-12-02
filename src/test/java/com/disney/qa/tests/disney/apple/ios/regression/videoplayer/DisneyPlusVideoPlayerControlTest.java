@@ -496,7 +496,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Negative Stereotype 2nd paragraph is present");
         sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
                 STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT);
-        // Tap nex episode to validate if stereotype message is not present
+        // Tap next episode to validate if stereotype message is not present
         videoPlayer.displayVideoController();
         videoPlayer.getElementFor(PlayerControl.NEXT_EPISODE).click();
         sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
