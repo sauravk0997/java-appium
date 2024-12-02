@@ -331,4 +331,28 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77869"})
+    @Test(groups = {TestGroup.MORE_MENU, US})
+    public void verifyAppSettingsDownloadSectionNotVisibleForAdTierUser() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
+        SoftAssert sa = new SoftAssert();
+        onboard();
+        appSettingsPage.waitForAppSettingsPageToOpen();
+
+        sa.assertTrue(appSettingsPage.getDownloadSettingsTitle().isElementNotPresent(SHORT_TIMEOUT),
+                "Download Settings section title is present");
+        sa.assertTrue(appSettingsPage.getDownloadWifiOnlyLabel().isElementNotPresent(SHORT_TIMEOUT),
+                "Download Over Wi-Fi Only label is present");
+        sa.assertTrue(appSettingsPage.getVideoQualityLabel().isElementNotPresent(SHORT_TIMEOUT),
+                "Video Quality label is present");
+        sa.assertTrue(appSettingsPage.getDeleteAllDownloadsButtonLabel().isElementNotPresent(SHORT_TIMEOUT),
+                "Delete All Downloads button is present");
+        sa.assertFalse(moreMenu.isDeviceStorageCorrectlyDisplayed(),
+                "Device Storage is displayed");
+
+        sa.assertAll();
+    }
 }
