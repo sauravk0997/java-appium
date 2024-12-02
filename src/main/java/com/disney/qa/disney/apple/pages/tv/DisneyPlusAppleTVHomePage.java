@@ -338,7 +338,10 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     public void clickBrandTile(String brandLabel) {
         boolean expectedBrandTileIsFocused = false;
-        for(int i = 0; i < getBrandTiles().size(); i++) {
+        //Declared the following variable before because result of this call is not consistent
+        // We want to avoid reevaluation of the expression on each iteration
+        int brandTilesQuantity = getBrandTiles().size();
+        for(int i = 0; i < brandTilesQuantity; i++) {
             clickRight();
             pause(1);
             if(isFocused(getBrandCell(brandLabel))) {
