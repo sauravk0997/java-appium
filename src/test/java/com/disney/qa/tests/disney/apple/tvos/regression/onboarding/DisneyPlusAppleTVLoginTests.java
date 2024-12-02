@@ -444,7 +444,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061"})
     @Test(groups = {TestGroup.ONBOARDING, US})
-    public void userLoggingInWithMultipleProfilesIsTakenToProfileSelection() {
+    public void verifyMultipleProfilesDefaultLanding() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         String secondProfile = "second";
