@@ -475,6 +475,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 "Add profile is not in focus");
 
         whoIsWatchingPage.moveDown(1, 1);
+        pause(5);
+        System.out.println(getDriver().getPageSource());
         sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(editProfileBtn)),
                 "Edit profile button is not in focus");
         sa.assertAll();
