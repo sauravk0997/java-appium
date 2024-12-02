@@ -16,7 +16,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 
-import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
@@ -263,14 +263,14 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
 
         videoPlayer.scrubToPlaybackPercentage(90);
-        Assert.assertFalse(upNextPage.isUpNextViewPresent(),
+        Assert.assertFalse(upNextPage.getUpNextImageView().isElementPresent(THREE_SEC_TIMEOUT),
                 "Up Next view was present");
 
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(FIFTEEN_SEC_TIMEOUT),
+        Assert.assertTrue(detailsPage.isOpened(),
                 "User was not redirected to Details Page");
 
         tap(detailsPage.getBackButton());
-        Assert.assertTrue(homePage.waitForHomePageToOpen(),
+        Assert.assertTrue(homePage.isOpened(),
                 "User was not redirected to Home Page");
     }
 }

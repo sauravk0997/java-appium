@@ -160,12 +160,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getDetailsTab().isPresent();
     }
 
-    public boolean waitForDetailsPageToOpen(int timeout) {
-        LOGGER.info("Waiting for Details page to load");
-        return fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Details page was not opened")
-                .until(it -> contentDetailsPage.isPresent());
-    }
-
     public boolean isDetailPageOpened(long time) {
         dismissNotificationsPopUp();
         return shareBtn.isPresent(time);
