@@ -193,7 +193,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         subtitlePage.tapCloseButton();
         videoPlayer.clickBackButton();
 
-        // Open content that contains Lakota or Choctaw
+        // Open content that contains Choctaw
         launchDeeplinkAndOpenAudioSubtitleMenu(ECHO_CHOCTAW_LANG_MOVIE, sa);
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         subtitlePage.chooseAudioLanguage(choctawLang);
