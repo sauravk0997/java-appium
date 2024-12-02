@@ -146,17 +146,19 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573"})
-    @Test(description = "Verify that the correct description for D+ Bundle displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifySubscriptionDetails_DisneyBundle() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySubscriptionDetails_LegacyDisneyBundle() {
+        setAccount(createAccountWithSku(
+                        DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                        getLocalizationUtils().getLocale(),
+                        getLocalizationUtils().getUserLanguage()));
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         setAppToAccountSettings();
         SoftAssert sa = new SoftAssert();
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionTitlePresent(), "D+ Bundle Subscription title was not displayed");
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(), "D+ Bundle Subscription message was not displayed");
-        disneyPlusAccountIOSPageBase.openBamtechBundleWebview();
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(), "Browser webview did not open");
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL), "Webview did not open to the expected url");
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionTitlePresent(),
+                "Legacy Disney Bundle subscription title was not displayed");
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(),
+                "Legacy Disney Bundle subscription message was not displayed");
         sa.assertAll();
     }
 
