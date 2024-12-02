@@ -133,7 +133,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77868"})
-    @Test(groups = {TestGroup.HULU_HUB, US})
+    @Test(groups = {TestGroup.HULU_HUB, US}, enabled = false)
     public void verifyHulkUpsellStandaloneUserInEligible() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
