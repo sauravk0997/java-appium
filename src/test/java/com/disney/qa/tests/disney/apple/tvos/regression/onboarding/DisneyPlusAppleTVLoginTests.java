@@ -463,8 +463,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 "Edit Profile button not present");
         sa.assertTrue(whoIsWatchingPage.getTypeCellLabelContains(addProfileBtn).isPresent(),
                 "Add profile cell not present");
-
-        whoIsWatchingPage.moveRight(1, 1);
         sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(getAccount().getFirstName())),
                 "First profile is not in focus");
 
