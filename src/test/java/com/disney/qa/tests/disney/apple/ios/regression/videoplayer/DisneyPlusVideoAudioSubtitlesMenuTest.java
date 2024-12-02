@@ -25,10 +25,6 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     private static final String CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG = "Checkmark was not present for the selected lang";
     private static final String SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED = "Selected subtitle language is not as expected ";
     private static final String MULAN_DEEPLINK = R.TESTDATA.get("disney_prod_mulan_2020_deeplink");
-    private static final String DEADPOOL_DEEPLINK = R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink");
-    private static final String LOST_TEMPLE_OF_THE_INCA = R.TESTDATA.get("disney_prod_content_playback_temple_of_inca");
-    private static final String ECHO_CHOCTAW_LANG_MOVIE = R.TESTDATA.get("disney_prod_content_playback_echo");
-    private static final String SPANISH_LANG_MOVIE =R.TESTDATA.get("disney_prod_content_playback_spanish_content");
     private static final String LOKI = "Loki";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67865"})
@@ -156,6 +152,10 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String deadpoolDeeplink = R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink");
+        String lostTempleOfTheIncaDeeplink = R.TESTDATA.get("disney_prod_content_playback_temple_of_inca");
+        String echoChoctawLangMovieDeeplink = R.TESTDATA.get("disney_prod_content_playback_echo");
+        String spanishLangMovieDeeplink =R.TESTDATA.get("disney_prod_content_playback_spanish_content");
         String choctawLang = "Chahta anumpa (Choctaw)";
         String spanishLang = "Español";
         SoftAssert sa = new SoftAssert();
@@ -170,7 +170,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         // Open another content and verify that Deutsch audio and language is selected
-        launchDeeplinkAndOpenAudioSubtitleMenu(DEADPOOL_DEEPLINK, sa);
+        launchDeeplinkAndOpenAudioSubtitleMenu(deadpoolDeeplink, sa);
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(DEUTSCH), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(DEUTSCH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
@@ -179,7 +179,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         // Open content that do not have Deutsch audio and language and verify English is selected
-        launchDeeplinkAndOpenAudioSubtitleMenu(LOST_TEMPLE_OF_THE_INCA, sa);
+        launchDeeplinkAndOpenAudioSubtitleMenu(lostTempleOfTheIncaDeeplink, sa);
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(ENGLISH), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
         sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(ENGLISH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
@@ -187,14 +187,14 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         // Open content that do not have English audio and verify default is selected
-        launchDeeplinkAndOpenAudioSubtitleMenu(SPANISH_LANG_MOVIE, sa);
+        launchDeeplinkAndOpenAudioSubtitleMenu(spanishLangMovieDeeplink, sa);
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(spanishLang), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
         subtitlePage.tapCloseButton();
         videoPlayer.clickBackButton();
 
         // Open content that contains Choctaw
-        launchDeeplinkAndOpenAudioSubtitleMenu(ECHO_CHOCTAW_LANG_MOVIE, sa);
+        launchDeeplinkAndOpenAudioSubtitleMenu(echoChoctawLangMovieDeeplink, sa);
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         subtitlePage.chooseAudioLanguage(choctawLang);
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(choctawLang), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
