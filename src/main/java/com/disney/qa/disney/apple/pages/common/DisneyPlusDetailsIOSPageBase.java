@@ -369,7 +369,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickDetailsTab() {
-        if (!getDetailsTab().isPresent()) {
+        if (!getDetailsTab().isPresent(TEN_SEC_TIMEOUT)) {
             swipeInContainer(null, Direction.UP, 1200);
             pause(2); //transition
             swipeTabBar(Direction.LEFT, 1000);
@@ -994,9 +994,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void validateRatingsInDetailsTab(String rating, SoftAssert sa) {
         LOGGER.info("Verifying Ratings in details tab");
-        if (!getDetailsTab().isPresent()) {
-            swipe(getDetailsTab(), 2);
-        }
         clickDetailsTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(getTypeOtherByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText())), 2);
