@@ -28,8 +28,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement magnifyingGlassImage;
     @FindBy(id = "Search")
     private ExtendedWebElement keyboardSearchButton;
-    @ExtendedFindBy(accessibilityId = "Explore")
-    private ExtendedWebElement exploreHeader;
     @ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeSearchField'")
     private ExtendedWebElement searchBar;
     @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
@@ -60,6 +58,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement seriesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_SERIES_TITLE.getText()));
+    private ExtendedWebElement exploreHeader = getDynamicAccessibilityId((getLocalizationUtils()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.NAV_EXPLORE_TITLE.getText())));
     private String ratingImage = "current_rating_value_image";
 
     public DisneyPlusSearchIOSPageBase(WebDriver driver) {
@@ -127,6 +128,14 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getOriginalsTile() {
         return originalsTile;
+    }
+
+    public ExtendedWebElement getMovieTile() {
+        return moviesTile;
+    }
+
+    public ExtendedWebElement getSeriesTile() {
+        return seriesTile;
     }
 
     public ExtendedWebElement getMagnifyingGlassImage() {

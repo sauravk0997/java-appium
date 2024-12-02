@@ -128,10 +128,4 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         swipeRightInCollectionNumOfTimes(5, collection);
         sa.assertTrue(areImagesDifferent(beginningOfCollection, closeToEndOfCollection), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
     }
-    public boolean isCollectionTitleDisplayed() {
-        return getTypeCellLabelContains(
-                getLocalizationUtils().getDictionaryItem(
-                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
-    }
 }
