@@ -456,12 +456,11 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String timonAndPuumbaDeeplink = R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink");
         String ratingExpected = "TV-Y";
 
         // Login and open deeplink to series Timon and Puumba
         setAppToHomeScreen(getAccount());
-        launchDeeplink(timonAndPuumbaDeeplink);
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink"));
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
         detailsPage.clickDetailsTab();
@@ -516,12 +515,11 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String dumboDeeplink = R.TESTDATA.get("disney_prod_content_dumbo_deeplink");
         String ratingExpected = "G";
 
         // Login and open deeplink to movie Dumbo
         setAppToHomeScreen(getAccount());
-        launchDeeplink(dumboDeeplink);
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_dumbo_deeplink"));
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "The movie has been started already");
         detailsPage.clickDetailsTab();
