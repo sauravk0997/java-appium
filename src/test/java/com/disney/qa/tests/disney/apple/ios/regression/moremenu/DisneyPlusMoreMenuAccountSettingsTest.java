@@ -147,7 +147,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifySubscriptionDetailsUsingLegacyDisneyBundleSubscription() {
+    public void verifySubscriptionDetails_LegacyDisneyBundle() {
         setAccount(createAccountWithSku(
                         DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
                         getLocalizationUtils().getLocale(),
