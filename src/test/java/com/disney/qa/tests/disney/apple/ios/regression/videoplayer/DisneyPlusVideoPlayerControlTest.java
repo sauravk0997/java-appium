@@ -464,12 +464,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         launchDeeplink(TIMON_AND_PUUMBA_DEEPLINK);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started");
+        sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
                 NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN);
 
-        // Play content and immediately click back (before stereotype countdown ends)
+        // Play content and immediately click back before stereotype countdown ends
         detailsPage.clickPlayButton();
         videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
@@ -514,12 +514,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         launchDeeplink(DUMBO_DEEPLINK);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "The movie has been started");
+        sa.assertFalse(detailsPage.isContinueButtonPresent(), "The movie has been started already");
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
                 NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN);
 
-        // Play content and immediately click back (before stereotype countdown ends)
+        // Play content and immediately click back before stereotype countdown ends
         detailsPage.clickPlayButton();
         videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
