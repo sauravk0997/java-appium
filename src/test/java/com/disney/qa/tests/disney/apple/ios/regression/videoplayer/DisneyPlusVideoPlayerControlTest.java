@@ -35,8 +35,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String CONTINUE_BUTTON_NOT_PRESENT =
             "Continue button is not present after exiting video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final String TIMON_AND_PUUMBA_DEEPLINK = R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink");
-    private static final String DUMBO_DEEPLINK = R.TESTDATA.get("disney_prod_content_dumbo_deeplink");
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -458,11 +456,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String timonAndPuumbaDeeplink = R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink");
         String ratingExpected = "TV-Y";
 
         // Login and open deeplink to series Timon and Puumba
         setAppToHomeScreen(getAccount());
-        launchDeeplink(TIMON_AND_PUUMBA_DEEPLINK);
+        launchDeeplink(timonAndPuumbaDeeplink);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
         detailsPage.clickDetailsTab();
@@ -508,11 +507,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String dumboDeeplink = R.TESTDATA.get("disney_prod_content_dumbo_deeplink");
         String ratingExpected = "G";
 
         // Login and open deeplink to movie Dumbo
         setAppToHomeScreen(getAccount());
-        launchDeeplink(DUMBO_DEEPLINK);
+        launchDeeplink(dumboDeeplink);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertFalse(detailsPage.isContinueButtonPresent(), "The movie has been started already");
         detailsPage.clickDetailsTab();
