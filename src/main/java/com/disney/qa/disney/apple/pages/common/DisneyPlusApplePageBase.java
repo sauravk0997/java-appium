@@ -26,7 +26,7 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
+import org.testng.SkipException;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
@@ -368,6 +368,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCell[`name == 'downloadsTab'`]/**/XCUIElementTypeButton[`name MATCHES '\\\\d+'`]")
     protected ExtendedWebElement downloadsTabNotificationBadge;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'loader'`]")
+    private ExtendedWebElement loader;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1450,5 +1452,25 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             }
         }
         return totalMinutes;
+    }
+
+    public void moveDownUntilCollectionContentIsFocused(String collectionName, int count) {
+        while(!isFocused(getFirstCellFromCollection(collectionName)) && count >= 0) {
+            moveDown(1,1);
+            count--;
+        }
+        if(!isFocused(getFirstCellFromCollection(collectionName))) {
+            throw new SkipException(String.format("Desired collection was not focused after %s tries", count));
+        }
+    }
+
+    public void waitForLoaderToDisappear(int timeout) {
+        LOGGER.info("Waiting for loader to disappear");
+        waitUntil(ExpectedConditions.invisibilityOfElementLocated(loader.getBy()), timeout);
+    }
+
+    public void waitUntilElementIsFocused(ExtendedWebElement element, int timeout) {
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Home page is not opened")
+                .until(it -> isFocused(element));
     }
 }
