@@ -16,6 +16,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
@@ -246,5 +247,30 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Video player deeplink is not playing correct series episode");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68458"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyBehaviorWhenExtraContentEndsFromDeeplink() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_trailer_playback_dancing_with_the_stars_deeplink"));
+        videoPlayer.waitForVideoToStart();
+
+        videoPlayer.scrubToPlaybackPercentage(90);
+        Assert.assertFalse(upNextPage.getUpNextImageView().isElementPresent(THREE_SEC_TIMEOUT),
+                "Up Next view was present");
+
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(),
+                "User was not redirected to Details Page");
+
+        tap(detailsPage.getBackButton());
+        Assert.assertTrue(homePage.isOpened(),
+                "User was not redirected to Home Page");
     }
 }
