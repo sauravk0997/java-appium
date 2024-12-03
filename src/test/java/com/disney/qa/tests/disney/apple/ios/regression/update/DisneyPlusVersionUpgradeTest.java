@@ -44,6 +44,10 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
        // setAppToHomeScreen(getAccount());
         handleAlert();
         welcomePage.clickLogInButton();
+        if(!welcomePage.getTextEntryField().isPresent()) {
+            LOGGER.info("entering to click log in button");
+            welcomePage.clickLogInButton();
+        }
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.enterLogInPassword(getAccount().getUserPass());
         passwordPage.getLoginButton().click();
