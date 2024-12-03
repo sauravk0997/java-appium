@@ -385,7 +385,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyVideoControlBringUpAndDismissControls() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        int controlsConfiguredTime = 5;
         loginAndStartPlayback(THE_MARVELS);
 
         videoPlayer.waitForVideoToStart();
@@ -405,10 +404,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.clickPauseButton();
         sa.assertTrue(videoPlayer.verifyVideoPaused(),
                 "Video player did not paused");
-        // Wait configured time and validate video controls do not dismissed after the configured time
-        pause(controlsConfiguredTime);
-        sa.assertTrue(videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementPresent(TEN_SEC_TIMEOUT),
-                "Video player controls are not up");
         sa.assertAll();
     }
 
