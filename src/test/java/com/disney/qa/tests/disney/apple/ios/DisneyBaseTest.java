@@ -465,8 +465,18 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     }
 
-    public ArrayList<Container> getDisneyAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getDisneyExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+    public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
+        try {
+            return getExploreApi().getPage(getDisneyExploreSearchRequest()
+                            .setEntityId(pageID)
+                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
+                            .setProfileId(getAccount().getProfileId()))
+                    .getData()
+                    .getPage()
+                    .getContainers();
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
     }
 
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {

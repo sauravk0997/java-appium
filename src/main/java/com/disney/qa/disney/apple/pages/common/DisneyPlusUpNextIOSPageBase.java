@@ -93,4 +93,8 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.POSTPLAY_NEXTEPISODE_HEADER.getText())).isPresent();
     }
+
+    public ExtendedWebElement getUpNextImageView() {
+        return upNextImageView;
+    }
 }
