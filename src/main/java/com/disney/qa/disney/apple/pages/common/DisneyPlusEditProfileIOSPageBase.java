@@ -44,7 +44,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     protected ExtendedWebElement maturityRatingCell;
 
     private final ExtendedWebElement deleteProfileButton = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_DELETE_PROFILE.getText()));
-    private final ExtendedWebElement editProfileTitle = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE.getText()));
+
+    private final String editProfileTitle =
+            getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+            DictionaryKeys.EDIT_PROFILE_TITLE.getText());
 
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
     private ExtendedWebElement autoplayToggleCell;
@@ -142,7 +145,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @Override
     public boolean isOpened() {
-        return editProfileTitle.isPresent(THREE_SEC_TIMEOUT);
+        return getDynamicAccessibilityId(editProfileTitle).isPresent();
     }
 
     public ExtendedWebElement getSharePlay() {
@@ -161,7 +164,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isEditProfilesTitlePresent() {
-        return collectionHeadlineTitle.isElementPresent();
+        return collectionHeadlineTitle.getText().equals(editProfileTitle);
     }
 
     public boolean isBackBtnPresent() {
