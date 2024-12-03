@@ -45,7 +45,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         handleAlert();
         welcomePage.clickLogInButton();
         if(!welcomePage.getTextEntryField().isPresent()) {
-            LOGGER.info("entering to click log in button");
+            LOGGER.info("entering to click log in button by location");
+            clickElementAtLocation(welcomePage.getHomeLoginButton(), 50, 50);
             welcomePage.clickLogInButton();
         }
         loginPage.submitEmail(getAccount().getEmail());
