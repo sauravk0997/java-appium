@@ -36,6 +36,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         // Install previous FC Version and log in
         installApplication(appPreviousFCVersion);
+        pause(10);
         setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
         // Assert that version installed it is the previous FC Version
