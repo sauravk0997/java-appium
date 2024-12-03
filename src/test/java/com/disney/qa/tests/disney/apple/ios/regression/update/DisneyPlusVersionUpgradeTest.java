@@ -25,6 +25,9 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77606"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyAppUpgrade() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -36,8 +39,15 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         // Install previous FC Version and log in
         installApplication(appPreviousFCVersion);
-        pause(10);
-        setAppToHomeScreen(getAccount());
+        launchApp(sessionBundles.get(DISNEY));
+      //  pause(10);
+       // setAppToHomeScreen(getAccount());
+        handleAlert();
+        welcomePage.clickLogInButton();
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.enterLogInPassword(getAccount().getUserPass());
+        passwordPage.getLoginButton().click();
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
         moreMenu.clickMoreTab();
         // Assert that version installed it is the previous FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
