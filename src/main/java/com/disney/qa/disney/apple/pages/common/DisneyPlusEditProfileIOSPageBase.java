@@ -145,7 +145,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @Override
     public boolean isOpened() {
-        return getDynamicAccessibilityId(editProfileTitle).isPresent();
+        return getDynamicAccessibilityId(editProfileTitle).isPresent(SHORT_TIMEOUT);
     }
 
     public ExtendedWebElement getSharePlay() {
