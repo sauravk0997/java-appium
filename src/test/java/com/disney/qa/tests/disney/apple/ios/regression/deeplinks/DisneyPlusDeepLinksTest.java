@@ -266,7 +266,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertFalse(upNextPage.getUpNextImageView().isElementPresent(THREE_SEC_TIMEOUT),
                 "Up Next view was present");
 
-        Assert.assertTrue(detailsPage.isOpened(),
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(),
                 "User was not redirected to Details Page");
 
         tap(detailsPage.getBackButton());
