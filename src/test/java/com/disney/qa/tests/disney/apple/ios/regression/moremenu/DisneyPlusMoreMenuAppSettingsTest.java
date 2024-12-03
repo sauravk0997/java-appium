@@ -356,4 +356,37 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75469"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAlertWhenUserTriesToDeleteAllDownloads() {
+        DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        //Download a title
+        homePage.getHomeNav().click();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(AVATAR);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.startDownload();
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS))
+                .click();
+        appSettingsPage.waitForAppSettingsPageToOpen();
+        moreMenu.clickDeleteAllDownloads();
+        Assert.assertTrue(moreMenu.areAllDeleteModalItemsPresent(),
+                "Delete All Downloads alert was not properly displayed");
+
+        moreMenu.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CANCEL_BTN_NORMAL.getText()))
+                .click();
+        Assert.assertTrue(moreMenu.isDeleteDownloadsEnabled(),
+                "'Delete All Downloads' cell did not remain enabled after cancel operation");
+    }
 }
