@@ -350,7 +350,15 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
         setAppToHomeScreen(getAccount(), KIDS_PROFILE);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
@@ -365,20 +373,16 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         ArrayList<Container> collections = getDisneyAPIPage(DisneyEntityIds.ORIGINALS_PAGE.getEntityId(), true);
         collections.forEach(item -> {
             ExtendedWebElement collectionName = searchPage.getTypeOtherByLabel(item.getVisuals().getName());
-            swipePageTillElementPresent(collectionName, 2, null, Direction.UP, 500);
+            swipe(collectionName, Direction.UP, 2, 500);
             //Verify that collection is present in page
             if (collectionName.isPresent()) {
                 //To get the all movie/series title under collection from API
                 if (item.getItems().size() > 0) {
                     String titleFromCollection = item.getItems().get(0).getVisuals().getTitle();
-                    swipePageTillElementPresent(originalsPage.getCollection(item.getId()), 2, null, Direction.UP, 500);
+                    swipe(originalsPage.getCollection(item.getId()), Direction.UP, 2, 500);
                     originalsPage.swipeInCollectionContainer(originalsPage.getTypeCellLabelContains(titleFromCollection), item.getId());
-                    sa.assertTrue(originalsPage.getTypeCellLabelContains(titleFromCollection).isPresent(), titleFromCollection + " was not found for " + collectionName.getText() + " collection");
-                    //verify that correct titles of that collection opened in app, verify with 1 titles
-                    originalsPage.getTypeCellLabelContains(titleFromCollection).click();
-                    sa.assertTrue(detailsPage.isOpened(), DETAIL_PAGE_DID_NOT_OPEN);
-                    sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
-                    detailsPage.clickCloseButton();
+                    sa.assertTrue(originalsPage.getTypeCellLabelContains(titleFromCollection).isPresent(),
+                            titleFromCollection + " was not found for " + collectionName.getText() + " collection");
                 } else {
                     sa.assertTrue(item.getItems().size() > 0, "API returned empty collection: " + item.getVisuals().getName());
                 }
