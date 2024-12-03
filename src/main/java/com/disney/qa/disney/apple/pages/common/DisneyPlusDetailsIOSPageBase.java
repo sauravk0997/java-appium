@@ -40,8 +40,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
     private static final String IMAX_ENHANCED = "IMAX Enhanced";
     private static final String DOLBY_VISION = "Dolby Vision";
-    private static final String SHOP_PROMO_LABEL_HEADER = "Enjoy access to merchandise";
-    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the SHOP tab to learn more.";
+    private static final String SHOP_PROMO_LABEL_HEADER = "Discover Exclusive Disney+ Subscriber Perks";
+//    private static final String SHOP_PROMO_LABEL_HEADER = "Enjoy access to merchandise";
+    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the PERKS tab to learn more.";
+//    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the SHOP tab to learn more.";
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
