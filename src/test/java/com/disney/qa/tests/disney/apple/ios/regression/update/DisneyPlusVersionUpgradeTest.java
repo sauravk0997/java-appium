@@ -41,18 +41,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         installApplication(appPreviousFCVersion);
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-      //  pause(10);
-       // setAppToHomeScreen(getAccount());
-        handleAlert();
-        welcomePage.clickLogInButton();
-        if(!welcomePage.getTextEntryField().isPresent()) {
-            LOGGER.info("entering to click log in button by location");
-            clickElementAtLocation(welcomePage.getHomeLoginButton(), 50, 50);
-            welcomePage.clickLogInButton();
-        }
-        loginPage.submitEmail(getAccount().getEmail());
-        passwordPage.enterLogInPassword(getAccount().getUserPass());
-        passwordPage.getLoginButton().click();
+        setAppToHomeScreen(getAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
         moreMenu.clickMoreTab();
         // Assert that version installed it is the previous FC Version
