@@ -128,4 +128,8 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_UPDATE_APP.getText()).toUpperCase()).isPresent();
     }
+
+    public ExtendedWebElement getHomeLoginButton() {
+        return loginButton;
+    }
 }
