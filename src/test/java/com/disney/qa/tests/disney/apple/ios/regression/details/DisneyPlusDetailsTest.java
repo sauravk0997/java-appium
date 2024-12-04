@@ -308,13 +308,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private void validateShopTabButton(SoftAssert sa, String titleName){
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         searchPage.searchForMedia(titleName);
         List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(), "Shop or Perks Tab was not found");
         detailsPage.clickShopoOrPerksTab();
+        String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
     }
