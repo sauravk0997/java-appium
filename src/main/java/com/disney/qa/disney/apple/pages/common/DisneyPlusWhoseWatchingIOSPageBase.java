@@ -124,7 +124,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
-    public ExtendedWebElement getEditProfile() {
+    public ExtendedWebElement getEditProfileButton() {
         return editProfileBtn;
     }
 }

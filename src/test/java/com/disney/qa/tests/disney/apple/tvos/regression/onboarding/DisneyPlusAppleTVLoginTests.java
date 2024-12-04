@@ -442,38 +442,39 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     public void verifyMultipleProfilesDefaultLanding() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        String secondProfile = "second";
+        String secondProfileName = "second";
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(secondProfile).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).
+                profileName(secondProfileName).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).
                 avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
         String whoIsWatchingTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, CHOOSE_PROFILE_TITLE.getText());
         String editProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, BTN_EDIT_PROFILE.getText());
-        String addProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+        String addProfileButtonLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, CREATE_PROFILE.getText());
 
         logInWithoutHomeCheck(getAccount());
 
         Assert.assertTrue(whoIsWatchingPage.isOpened(), "Who's Watching page did not launch");
-        sa.assertEquals(whoIsWatchingPage.getCollectionHeadlineTitleText(), whoIsWatchingTitle);
+        sa.assertEquals(whoIsWatchingPage.getCollectionHeadlineTitleText(), whoIsWatchingTitle,
+                "Collection headline title and Who Is Watching Title are not the same");
         sa.assertTrue(whoIsWatchingPage.getStaticTextByLabelContains(editProfileBtn).isPresent(),
                 "Edit Profile button not present");
-        sa.assertTrue(whoIsWatchingPage.getTypeCellLabelContains(addProfileBtn).isPresent(),
+        sa.assertTrue(whoIsWatchingPage.getTypeCellLabelContains(addProfileButtonLabel).isPresent(),
                 "Add profile cell not present");
         sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(getAccount().getFirstName())),
                 "First profile is not in focus");
 
         whoIsWatchingPage.moveRight(1, 1);
-        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(secondProfile)),
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(secondProfileName)),
                 "Second profile is not in focus");
 
         whoIsWatchingPage.moveRight(1, 1);
-        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(addProfileBtn)),
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(addProfileButtonLabel)),
                 "Add profile is not in focus");
 
         whoIsWatchingPage.moveDown(1, 1);
-        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getEditProfile()),
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getEditProfileButton()),
                 "Edit profile button is not in focus");
         sa.assertAll();
     }
