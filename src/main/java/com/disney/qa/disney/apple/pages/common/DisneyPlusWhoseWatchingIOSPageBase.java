@@ -43,6 +43,10 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         return isPresent;
     }
 
+    public ExtendedWebElement getEditProfileButton() {
+        return editProfileBtn;
+    }
+
     public boolean isHeaderTextDisplayed() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return whosWatchingTitle.isPresent();
@@ -122,9 +126,5 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                         getLocalizationUtils().formatPlaceholderString(
                                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-    }
-
-    public ExtendedWebElement getEditProfileButton() {
-        return editProfileBtn;
     }
 }
