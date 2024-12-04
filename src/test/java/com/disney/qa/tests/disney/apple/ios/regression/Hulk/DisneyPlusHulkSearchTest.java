@@ -231,7 +231,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77875"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US}, enabled = false)
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifyEntitleAndNonEntitleHuluContentForNonBundleUser() {
         String entitleHuluContent = "Solar Opposites";
         String notEntitleHuluContent = "Only Murders in the Building";
