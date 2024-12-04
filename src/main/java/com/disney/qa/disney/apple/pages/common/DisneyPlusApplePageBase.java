@@ -1485,7 +1485,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void waitUntilElementIsFocused(ExtendedWebElement element, int timeout) {
-        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Home page is not opened")
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT,
+                String.format("Element was not focused after %s seconds", timeout))
                 .until(it -> isFocused(element));
     }
 }
