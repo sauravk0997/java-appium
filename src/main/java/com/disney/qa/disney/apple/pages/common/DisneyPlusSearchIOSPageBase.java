@@ -129,6 +129,14 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return originalsTile;
     }
 
+    public ExtendedWebElement getMovieTile() {
+        return moviesTile;
+    }
+
+    public ExtendedWebElement getSeriesTile() {
+        return seriesTile;
+    }
+
     public ExtendedWebElement getMagnifyingGlassImage() {
         return magnifyingGlassImage;
     }
@@ -140,10 +148,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isRecentSearchDisplayed() {
         return headerViewTitleLabel.getText().equalsIgnoreCase("RECENT SEARCHES");
-    }
-
-    public boolean isTitlePresent(String title) {
-        return staticTextByLabel.format(title).isPresent();
     }
 
     public void tapTitleUnderRecentSearch(String title) {
