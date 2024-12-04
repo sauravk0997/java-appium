@@ -193,10 +193,6 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
     }
 
-    private void launchDeeplinkAndOpenAudioSubtitleMenu(String deeplink){
-
-    }
-
     private void initiatePlaybackFor(String content) {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
