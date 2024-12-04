@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
 
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
@@ -73,6 +72,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement adTimeBadge;
     @ExtendedFindBy(accessibilityId = "ratingLabel")
     private ExtendedWebElement contentRatingOverlayLabel;
+
+    public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
+          "depictions and/or mistreatment of people or cultures. These stereotypes were wrong then and are wrong now. Rather than remove this content, we want to acknowledge its harmful impact, learn from it and spark conversation to create a more inclusive future together.";
+    public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2 = "Disney is committed to creating " +
+            "stories with inspirational and aspirational themes that reflect the rich diversity of the human experience around the globe.";
+    private static final String NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE = "YOUR VIDEO WILL START IN";
 
     //FUNCTIONS
 
@@ -740,5 +745,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
                 .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public void waitForVideoStereotypeMessageToDisappear() {
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Negative Stereotype message is present")
+                .until(it -> getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE).isElementNotPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public boolean isNegativeStereotypeCountdownPresent() {
+        return getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE).isPresent(THREE_SEC_TIMEOUT);
     }
 }
