@@ -30,7 +30,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
-    private static final String SHOP = "Shop";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 40;
     private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
@@ -309,13 +308,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private void validateShopTabButton(SoftAssert sa, String titleName){
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         searchPage.searchForMedia(titleName);
         List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(), "Shop or Perks Tab was not found");
         detailsPage.clickShopoOrPerksTab();
-        sa.assertTrue(detailsPage.isTabSelected(detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute())),
-                "Shop or Perks tab is not focused");
+        sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
+                String.format("%s Tab was not found", shopOrPerksText));
     }
 }
