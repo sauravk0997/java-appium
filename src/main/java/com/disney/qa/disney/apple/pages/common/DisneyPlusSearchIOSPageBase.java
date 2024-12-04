@@ -34,8 +34,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement searchBar;
     @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
     private ExtendedWebElement cancelButtonRecentSearch;
-    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
-    private ExtendedWebElement headerViewTitleLabel;
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'iconNavBack24LightActive'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
