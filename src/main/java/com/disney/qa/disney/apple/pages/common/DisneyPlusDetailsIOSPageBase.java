@@ -588,6 +588,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 BTN_CONTINUE.getText()));
     }
 
+    public ExtendedWebElement getPlayOrContinueButton() {
+        return dynamicBtnFindByLabelOrLabel.format(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_PLAY.getText()),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText())
+                );
+    }
+
     public ExtendedWebElement getTrailerActionButton() {
         return dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_TRAILER.getText()));
