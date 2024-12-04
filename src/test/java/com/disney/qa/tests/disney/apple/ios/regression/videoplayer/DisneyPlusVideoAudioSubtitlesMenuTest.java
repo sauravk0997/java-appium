@@ -16,6 +16,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
+import static java.lang.String.format;
 
 public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     private static final String AUDIO_SUBTITLE_MENU_DID_NOT_OPEN = "Audio subtitle menu didn't open";
@@ -173,23 +174,29 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     public void verifyAudioLanguageIsInOrder(SoftAssert sa){
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         List<String> audioLanguageValue = subtitlePage.getAudioLanguagesFromUI();
-        IntStream.range(0, getAudioLanguage().size()).forEach(i -> sa.assertTrue(getAudioLanguage().get(i).equals(audioLanguageValue.get(i))));
+        IntStream.range(0, getAudioLanguage().size()).forEach(i -> sa.assertTrue(getAudioLanguage().get(i)
+                        .equals(audioLanguageValue.get(i)),
+                format("Expected audio language %s mismatched with audio language on UI %s.",
+                        getAudioLanguage().get(i), audioLanguageValue.get(i))));
     }
 
     public void verifyAudioSubtitleIsInOrder(SoftAssert sa){
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         List<String> audioSubtitleValue = subtitlePage.getAudioSubtitlesFromUI();
-        IntStream.range(0, getSubTitlesLanguage().size()).forEach(i -> sa.assertTrue(getSubTitlesLanguage().get(i).equals(audioSubtitleValue.get(i))));
+        IntStream.range(0, getSubTitlesLanguage().size()).forEach(i -> sa.assertTrue(getSubTitlesLanguage().get(i)
+                .equals(audioSubtitleValue.get(i)),
+                format("Expected audio subtitle %s mismatched with audio subtitle on UI %s.",
+                        getSubTitlesLanguage().get(i), audioSubtitleValue.get(i))));
     }
 
     private List<String> getAudioLanguage() {
-        List<String> contentList = List.of("Chinese (中文)", "Chinese (粵語)", "Dansk", "Deutsch", "English",
-                "English [Audio Description]");
+        List<String> contentList = List.of("Chinese (中文)", "Chinese (粵語)", "Dansk", "Deutsch", "English", "Español");
         return contentList;
     }
 
     private List<String> getSubTitlesLanguage() {
-        List<String> contentList = List.of("Chinese (简体)", "Chinese (粵語)", "Chinese (繁體)", "Dansk", "Deutsch");
+        List<String> contentList = List.of("Chinese (粵語)", "Chinese (繁體)", "English [CC]",
+                "Español (Latinoamérica) [CC]", "Magyar");
         return contentList;
     }
 }
