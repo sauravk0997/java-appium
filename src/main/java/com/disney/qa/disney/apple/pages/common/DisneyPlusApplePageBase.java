@@ -1460,18 +1460,26 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void moveDownUntilCollectionContentIsFocused(String collectionName, int count) {
-        while(!isFocused(getFirstCellFromCollection(collectionName)) && count >= 0) {
-            moveDown(1,1);
+        LOGGER.info("Moving down until desired collection content is focused");
+        if (isFocused(getFirstCellFromCollection(collectionName))) {
+            LOGGER.info("Desired collection content was already focused");
+            return;
+        }
+        while (count > 0) {
+            moveDown(1, 1);
+            if (isFocused(getFirstCellFromCollection(collectionName))) {
+                LOGGER.info("Reached desired collection");
+                return;
+            }
             count--;
         }
-        if(!isFocused(getFirstCellFromCollection(collectionName))) {
-            throw new SkipException(String.format("Desired collection was not focused after %s tries", count));
-        }
+        throw new NoSuchElementException(String.format("Desired collection was not focused after %s tries", count));
     }
 
     public void waitForLoaderToDisappear(int timeout) {
         LOGGER.info("Waiting for loader to disappear");
-        waitUntil(ExpectedConditions.invisibilityOfElementLocated(loader.getBy()), timeout);
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Loader was still visible")
+                .until(it -> !loader.isVisible(THREE_SEC_TIMEOUT));
     }
 
     public void waitUntilElementIsFocused(ExtendedWebElement element, int timeout) {
