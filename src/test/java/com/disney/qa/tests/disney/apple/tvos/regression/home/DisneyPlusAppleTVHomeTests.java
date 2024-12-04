@@ -116,7 +116,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), 15);
         detailsPage.clickSelect();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), "Video player did not open");
         videoPlayer.clickBack();
 
         //Go back to the Hulu page
