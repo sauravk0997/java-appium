@@ -465,7 +465,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         // Play content and immediately click back before stereotype countdown ends
         detailsPage.clickPlayButton();
         videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         // Play content again to validate that stereotype message is still in the screen
         detailsPage.clickPlayOrContinue();
@@ -524,7 +524,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         // Play content and immediately click back before stereotype countdown ends
         detailsPage.clickPlayButton();
         videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         // Play content again to validate that stereotype message is still in the screen
         detailsPage.clickPlayOrContinue();
