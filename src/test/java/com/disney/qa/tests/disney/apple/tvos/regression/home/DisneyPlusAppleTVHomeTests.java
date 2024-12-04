@@ -107,26 +107,21 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
 
-        //THE FOLLOWING BLOCKS SHOULD BE UNCOMMENTED ONCE CONTENT PROGRAMMING ENABLES HULU WATCHABLE CONTENT
-
         //Validate in-eligible for upsell user still has some content to watch
-        /*
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
         Assert.assertTrue(brandPage.getTypeCellLabelContains(titleAvailableToPlay).isPresent(),
                 "In-Eligible user for upsell couldn't see any playable Hulu content");
         brandPage.clickDown();
         brandPage.clickSelect();
         detailsPage.waitForDetailsPageToOpen();
+        detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), 15);
         detailsPage.clickSelect();
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
         videoPlayer.clickBack();
-        */
 
         //Go back to the Hulu page
-        /*
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickBack();
-        */
 
         //Move to the "Unlock to Stream More Hulu" collection
         brandPage.waitForLoaderToDisappear(15);
