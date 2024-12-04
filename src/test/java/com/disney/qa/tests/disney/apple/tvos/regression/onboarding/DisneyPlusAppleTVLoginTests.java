@@ -22,9 +22,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -482,7 +480,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91065"})
     @Test(description = "Verify the appropriate profile is loaded with the appropriate content after logging in", groups = {TestGroup.ONBOARDING, US})
-    public void verifyProfileSelectionContentPostLogIn() throws URISyntaxException, IOException {
+    public void verifyProfileSelectionContentPostLogIn() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
 
