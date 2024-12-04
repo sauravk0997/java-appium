@@ -82,8 +82,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement movieDownloadButton;
     @ExtendedFindBy(accessibilityId = "watch")
     protected ExtendedWebElement watchButton;
-    @ExtendedFindBy(accessibilityId = "SHOP")
-    protected ExtendedWebElement shopTab;
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")

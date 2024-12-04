@@ -316,6 +316,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(), "Shop or Perks Tab was not found");
         detailsPage.clickShopoOrPerksTab();
         sa.assertTrue(detailsPage.isTabSelected(detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute())),
-                "Shop tab is not focused");
+                "Shop or Perks tab is not focused");
     }
 }
