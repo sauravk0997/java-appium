@@ -34,23 +34,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String NEW_PASSWORD = "TestPass1234!";
     private static final String MONTHLY = "Monthly";
     private static final String YEARLY = "Yearly";
-    private static final String VERIZON_URL = "verizon.com";
-    private static final String TELMEX_URL = "telmex.com";
-    private static final String O2_URL = "o2.com";
-    private static final String CANAL_URL = "client.canalplus.com";
     private static final String GOOGLE_URL = "accounts.google.com";
     private static final String HULU_URL = "auth.hulu.com";
     private static final String ROKU_URL = "my.roku.com";
-    private static final String SKY_URL = "skyid.sky.com";
     private static final String AMAZON_URL = "amazon.com";
     private static final String MERCADOLIBRE_URL = "mercadolibre.com";
-    private static final String MERCADOLIBRE_BR_URL = "mercadolivre.com";
-    private static final String CABLEVISION_URL = "telecom.com.ar";
-    private static final String TELECOM_TIM_URL = "tim.it";
-    private static final String MOVISTAR_URL = "movistar.es";
-    private static final String BRADESCO_URL = "banco.bradesco";
-    private static final String BRADESCO_NEXT_URL = "next.me";
-    private static final String DETELEKOM_URL = "telekom.de";
     private DisneyEntitlement disneyEntitlements;
     private static final String EDIT_ICON = "editIcon";
 
@@ -547,6 +535,31 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Assert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(),
                 "User was not able to log in successfully with the new email");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75208"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void  testAccountSettingsEditProfileButton() {
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        String doneButtonLabel = "Done";
+
+        setAppToAccountSettings(getAccount());
+        accountPage.waitForAccountPageToOpen();
+
+        Assert.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
+        accountPage.tapEditProfilesLink();
+
+        Assert.assertTrue(editProfilePage.isEditProfilesTitlePresent(), "Edit profile screen is not displayed");
+        Assert.assertTrue(editProfilePage.isEditModeProfileIconPresent(DEFAULT_PROFILE),
+                "Profiles are not in Edit Mode (pencil shown)");
+        Assert.assertTrue(editProfilePage.isEditProfileImageDisplayed(),
+                "Avatar Image was not displayed");
+        Assert.assertTrue(editProfilePage.getTypeButtonByLabel(doneButtonLabel).isElementPresent(),
+                "Done button was not displayed");
+        Assert.assertTrue(whoIsWatchingPage.isAddProfileBtnPresent(),
+                "Add Profile Icon was not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
