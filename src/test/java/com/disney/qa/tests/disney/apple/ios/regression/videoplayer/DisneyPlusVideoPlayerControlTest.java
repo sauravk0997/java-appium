@@ -457,7 +457,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink"));
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
+        Assert.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
                 NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN);
@@ -516,7 +516,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_content_dumbo_deeplink"));
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertFalse(detailsPage.isContinueButtonPresent(), "The movie has been started already");
+        Assert.assertFalse(detailsPage.isContinueButtonPresent(), "The movie has been started already");
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
                 NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN);
