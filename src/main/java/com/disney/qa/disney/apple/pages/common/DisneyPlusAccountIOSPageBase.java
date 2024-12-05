@@ -9,7 +9,7 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -75,7 +75,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getBamtechBundleSubscriptionMessage() {
-        String subscriptionMessage = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_BAMTECH_DISNEY.getText()).replace("\u00a0"," ");
+        String subscriptionMessage = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                DictionaryKeys.APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK.getText());
         return getStaticTextByLabel(subscriptionMessage);
     }
 
@@ -316,7 +318,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isBamtechBundleSubscriptionTitlePresent() {
-        String title = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
+        String title = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS,
+                DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
         return getStaticTextByLabel(title).isPresent();
     }
 
@@ -453,12 +457,23 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getRestrictProfileCreationContainer().isElementPresent();
     }
 
-    public boolean isEditProfilesLinkPresent() {
+    public ExtendedWebElement getEditProfileLink() {
         String dictValOfEditProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
         //To manage parental controls for profiles on your account, visit [Edit Profiles](https://www.disneyplus.com/edit-profiles) and select a Profile.
         //Extracting the link text which is inside the '[]'
-        String expectedHyperLinkText = dictValOfEditProfile.substring(dictValOfEditProfile.indexOf('[')+1,dictValOfEditProfile.indexOf(']'));
-        return customHyperlinkByLabel.format(expectedHyperLinkText).isElementPresent();
+        String expectedHyperLinkText = dictValOfEditProfile.substring(dictValOfEditProfile.indexOf('[') + 1, dictValOfEditProfile.indexOf(']'));
+        return customHyperlinkByLabel.format(expectedHyperLinkText);
+    }
+
+    public boolean isEditProfilesLinkPresent() {
+        return getEditProfileLink().isElementPresent();
+    }
+
+    public void tapEditProfilesLink() {
+        ExtendedWebElement element = getEditProfileLink();
+        Dimension dimension = element.getSize();
+        Point location = element.getLocation();
+        tap(location.getX() + 5, location.getY() + dimension.getHeight() / 2);
     }
 
     public boolean isEditProfilesTextPresent() {

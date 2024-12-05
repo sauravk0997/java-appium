@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -13,7 +14,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -23,12 +23,12 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
@@ -296,8 +296,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67958"})
-    @Test(description = "Search - Originals Landing Page - UI Elements", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyOriginalsLandingPageUI() throws URISyntaxException, JsonProcessingException {
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyOriginalsLandingPageUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -332,6 +332,57 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                     sa.assertTrue(detailsPage.isOpened(), DETAIL_PAGE_DID_NOT_OPEN);
                     sa.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
                     detailsPage.clickCloseButton();
+                } else {
+                    sa.assertTrue(item.getItems().size() > 0, "API returned empty collection: " + item.getVisuals().getName());
+                }
+            } else {
+                sa.assertTrue(collectionName.isPresent(), String.format("%s collection was not found", item.getVisuals().getName()));
+            }
+        });
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75482"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyOriginalsLandingPageUIForKids() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+        setAppToHomeScreen(getAccount(), KIDS_PROFILE);
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.clickOriginalsTab();
+
+        //Verify Original page opened
+        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
+        //Verify Back button is present
+        sa.assertTrue(originalsPage.getBackButton().isElementPresent(), BACK_BUTTON_ERROR_MESSAGE);
+
+        //To get the collections details of Originals from API
+        ArrayList<Container> collections = getDisneyAPIPage(DisneyEntityIds.ORIGINALS_PAGE.getEntityId(), true);
+        collections.forEach(item -> {
+            ExtendedWebElement collectionName = searchPage.getTypeOtherByLabel(item.getVisuals().getName());
+            swipe(collectionName, Direction.UP, 2, 500);
+            //Verify that collection is present in page
+            if (collectionName.isPresent()) {
+                //To get the all movie/series title under collection from API
+                if (item.getItems().size() > 0) {
+                    String titleFromCollection = item.getItems().get(0).getVisuals().getTitle();
+                    swipe(originalsPage.getCollection(item.getId()), Direction.UP, 2, 500);
+                    originalsPage.swipeInCollectionContainer(originalsPage.getTypeCellLabelContains(titleFromCollection), item.getId());
+                    sa.assertTrue(originalsPage.getTypeCellLabelContains(titleFromCollection).isPresent(),
+                            titleFromCollection + " was not found for " + collectionName.getText() + " collection");
                 } else {
                     sa.assertTrue(item.getItems().size() > 0, "API returned empty collection: " + item.getVisuals().getName());
                 }
@@ -528,6 +579,43 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 "PCON restricted title message not present for TV-MA profile");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle),
                 "No results found message was not as expected for TV-MA profile");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67317"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyBackBehaviorForContentLandingPage() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
+
+        sa.assertTrue(searchPage.getOriginalsTile().isPresent(), "Originals tile not found");
+        sa.assertTrue(searchPage.getMovieTile().isPresent(), "Movies tile not found");
+        sa.assertTrue(searchPage.getSeriesTile().isPresent(), "Series tile not found");
+
+        searchPage.clickOriginalsTab();
+        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals page did not open.");
+        sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
+        searchPage.getBackArrow().click();
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.clickMoviesTab();
+        sa.assertTrue(searchPage.getStaticTextByLabel(MOVIES).isPresent(), "Movies page did not open");
+        sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
+        searchPage.getBackArrow().click();
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.clickSeriesTab();
+        sa.assertTrue(searchPage.getStaticTextByLabel(SERIES).isPresent(), "Series Page did not open");
+        sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
+        searchPage.getBackArrow().click();
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         sa.assertAll();
     }
 
