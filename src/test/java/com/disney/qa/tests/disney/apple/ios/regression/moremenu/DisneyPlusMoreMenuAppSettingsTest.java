@@ -371,7 +371,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         homePage.getHomeNav().click();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(AVATAR);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(AVATAR).click();
         detailsPage.startDownload();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
