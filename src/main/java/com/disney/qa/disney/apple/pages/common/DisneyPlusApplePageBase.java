@@ -26,7 +26,6 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.SkipException;
 
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
