@@ -1,20 +1,30 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.*;
+
+import java.lang.invoke.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
-public class DisneyPlusWatchlistIOSPageBase extends DisneyPlusApplePageBase{
+public class DisneyPlusWatchlistIOSPageBase extends DisneyPlusApplePageBase {
 
-    @ExtendedFindBy(accessibilityId = "badgeContentView")
-    protected ExtendedWebElement badgeContentView;
-
-    public ExtendedWebElement getBadgeContentView() {
-        return badgeContentView;
-    }
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     public DisneyPlusWatchlistIOSPageBase(WebDriver driver) {
         super(driver);
+    }
+
+    public void waitForWatchlistPageToOpen() {
+        LOGGER.info("Waiting for watchlist page to load");
+        fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Watchlist page is not opened")
+                .until(it -> headerViewTitleLabel.isPresent(THREE_SEC_TIMEOUT));
+    }
+
+    public boolean isWatchlistTitlePresent(String contentTitle) {
+        return getTypeCellLabelContains(contentTitle).isPresent();
+    }
+
+    public void tapWatchlistContent(String contentTitle) {
+        getTypeCellLabelContains(contentTitle).click();
     }
 }

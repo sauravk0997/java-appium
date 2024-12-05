@@ -271,6 +271,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "airingBadgeLabel")
     private ExtendedWebElement airingBadgeLabel;
 
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    protected ExtendedWebElement headerViewTitleLabel;
+
     @ExtendedFindBy(accessibilityId = "Hide keyboard")
     private ExtendedWebElement hideKeyboard;
 
@@ -1459,5 +1462,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             }
         }
         return totalMinutes;
+    }
+
+    public boolean isCollectionTitleDisplayed() {
+        return getTypeCellLabelContains(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
     }
 }
