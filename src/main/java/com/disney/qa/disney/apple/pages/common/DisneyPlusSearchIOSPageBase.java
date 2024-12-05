@@ -247,7 +247,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isExploreTitleDisplayed(int timeOut) {
-        return exploreHeader.isPresent(timeOut);
+        return getDynamicAccessibilityId((getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
     public void clickFirstCollection() {
