@@ -25,9 +25,6 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement brandLogoImage;
 
 
-    @ExtendedFindBy(accessibilityId = "Sports")
-    private ExtendedWebElement sportsCell;
-
 
     public DisneyPlusBrandIOSPageBase(WebDriver driver) {
         super(driver);
@@ -47,10 +44,6 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
                                         false),
                         Map.of(BRAND_NAME, brandName))))
                 .isPresent();
-    }
-
-    public boolean isSportsCellPresent() {
-        return sportsCell.isPresent();
     }
 
     public void clickFirstCarouselPoster() {
