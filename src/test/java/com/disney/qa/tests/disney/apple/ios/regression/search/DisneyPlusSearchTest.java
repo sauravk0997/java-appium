@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
@@ -579,6 +580,33 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 "PCON restricted title message not present for TV-MA profile");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(contentTitle),
                 "No results found message was not as expected for TV-MA profile");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67313"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySearchExploreUIElements() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(searchPage.getOriginalsTile().isPresent(), "Originals tile not found");
+        sa.assertTrue(searchPage.getMovieTile().isPresent(), "Movies tile not found");
+        sa.assertTrue(searchPage.getSeriesTile().isPresent(), "Series tile not found");
+        sa.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
+        sa.assertTrue(searchPage.isCollectionTitleDisplayed(), "Collection title not displayed");
+
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            searchPage.swipeUp(1500);
+            sa.assertFalse(searchPage.getOriginalsTile().isPresent(), "Originals tile found after scrolling");
+            sa.assertFalse(searchPage.getMovieTile().isPresent(), "Movies tile found after scrolling");
+            sa.assertFalse(searchPage.getSeriesTile().isPresent(), "Series tile found after scrolling");
+            sa.assertFalse(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT),
+                    "Explore title is displayed after scrolling");
+        }
         sa.assertAll();
     }
 
