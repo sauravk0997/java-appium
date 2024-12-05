@@ -462,7 +462,16 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         } catch (URISyntaxException | JsonProcessingException e){
             throw new RuntimeException(e);
         }
+    }
 
+    public ExploreContent getHuluApiMovie(String entityID) {
+        try {
+            return getExploreApi().getMovie(getHuluExploreSearchRequest()
+                    .setEntityId(entityID)
+                    .setProfileId(getAccount().getProfileId()));
+        } catch (URISyntaxException | JsonProcessingException e){
+            throw new RuntimeException(e);
+        }
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
@@ -480,7 +489,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+        return getExploreApi().getPage(getHuluExploreSearchRequest()
+                .setEntityId(pageID)
+                .setProfileId(getAccount().getProfileId()))
+                .getData()
+                .getPage()
+                .getContainers();
     }
 
     public Visuals getExploreAPIPageVisuals(String entityID) {

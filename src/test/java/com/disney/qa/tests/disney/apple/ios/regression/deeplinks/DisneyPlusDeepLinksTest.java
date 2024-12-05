@@ -126,7 +126,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74858"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluSeriesDetailDeepLink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
@@ -139,7 +139,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluNetworkDeepLinks")
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, dataProvider =
+            "huluNetworkDeepLinks")
     public void verifyDeepLinkNewURLStructureHuluNetworkPage(String deepLink) {
         String network = "ABC";
         SoftAssert sa = new SoftAssert();
@@ -269,8 +270,32 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(),
                 "User was not redirected to Details Page");
 
-        tap(detailsPage.getBackButton());
+        detailsPage.getBackButton().click();
         Assert.assertTrue(homePage.isOpened(),
                 "User was not redirected to Home Page");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74587"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureHuluVideoPlayback() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        ExploreContent movieAPIContent = getHuluApiMovie(R.TESTDATA.get("disney_prod_hulu_movie_prey_entity_id"));
+        String movieTitle = movieAPIContent.getTitle();
+
+        if(movieTitle == null){
+            throw new SkipException("Skipping test, failed to get title from the api");
+        }
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.getSubTitleLabel().equals(movieTitle),
+                "Video player deeplink is not playing correct movie");
     }
 }
