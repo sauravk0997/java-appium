@@ -19,16 +19,22 @@ import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.*;
 import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.PlayerControl;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     protected static final String THE_MARVELS = "The Marvels";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
+    private static final String NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN =
+            "Details page does not have the Negative Stereotype Advisory";
+    private static final String STEREOTYPE_ADVISORY_COUNTDOWN_NOT_PRESENT = "Playback Advisory Countdown is not present";
+    private static final String STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT = "Playback Advisory Countdown is present";
+    private static final String RATING_NOT_PRESENT = "Rating was not found in video player";
+    private static final String CONTINUE_BUTTON_NOT_PRESENT =
+            "Continue button is not present after exiting video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final int ONE_SEC_TIMEOUT = 1;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -436,6 +442,115 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 timeAfterDoubleTap);
         sa.assertTrue( timeAfterDoubleTap < timeBeforeDoubleTap, "Rewind did not work as expected");
 
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71665"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySeriesPlaybackStereotypeAdvisory() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String ratingExpected = "TV-Y";
+
+        // Login and open deeplink to series Timon and Puumba
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink"));
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
+                NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN);
+
+        // Play content and immediately click back before stereotype countdown ends
+        detailsPage.clickPlayButton();
+        videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        // Play content again to validate that stereotype message is still in the screen
+        detailsPage.clickPlayOrContinue();
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 1st paragraph is not present");
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 2nd paragraph is not present");
+        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
+                STEREOTYPE_ADVISORY_COUNTDOWN_NOT_PRESENT);
+        videoPlayer.waitForVideoStereotypeMessageToDisappear();
+        sa.assertTrue(detailsPage.isRatingPresent(ratingExpected), RATING_NOT_PRESENT);
+
+        // Click back and play again to validate that stereotype message is not present
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isContinueButtonPresent(),
+                CONTINUE_BUTTON_NOT_PRESENT);
+        detailsPage.clickContinueButton();
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 1st paragraph is present");
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 2nd paragraph is present");
+        sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
+                STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT);
+        // Tap next episode to validate if stereotype message is not present
+        videoPlayer.displayVideoController();
+        videoPlayer.getElementFor(PlayerControl.NEXT_EPISODE).click();
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 1st paragraph is present");
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 2nd paragraph is present");
+        sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
+                STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68462"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMoviePlaybackStereotypeAdvisory() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String ratingExpected = "G";
+
+        // Login and open deeplink to movie Dumbo
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_dumbo_deeplink"));
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertFalse(detailsPage.isContinueButtonPresent(), "The movie has been started already");
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
+                NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN);
+
+        // Play content and immediately click back before stereotype countdown ends
+        detailsPage.clickPlayButton();
+        videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        // Play content again to validate that stereotype message is still in the screen
+        detailsPage.clickPlayOrContinue();
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 1st paragraph is not present");
+        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 2nd paragraph is not present");
+        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
+                STEREOTYPE_ADVISORY_COUNTDOWN_NOT_PRESENT);
+        videoPlayer.waitForVideoStereotypeMessageToDisappear();
+        sa.assertTrue(detailsPage.isRatingPresent(ratingExpected), RATING_NOT_PRESENT);
+
+        // Click back and play again to validate that stereotype message is not present
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isContinueButtonPresent(),
+                CONTINUE_BUTTON_NOT_PRESENT);
+        detailsPage.clickContinueButton();
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 1st paragraph is present in the movie");
+        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
+                "Negative Stereotype 2nd paragraph is present in the movie");
+        sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
+                STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT);
+        videoPlayer.clickBackButton();
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertAll();
     }
 

@@ -3,18 +3,15 @@ package com.disney.qa.disney.apple.pages.common;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
-import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
-import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.DriverHelper;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -29,10 +26,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -106,6 +101,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement typeCellLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement typeCellNameContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`value CONTAINS \"%s\"`]")
+    private ExtendedWebElement staticTextValueContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
     private ExtendedWebElement dynamicIosClassChainElementTypeImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value == '%s'`]")
@@ -136,7 +133,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement textEntryField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"%s\"`]")
     private ExtendedWebElement textFieldValue;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicTextEntryFieldByName;
 
@@ -274,6 +270,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "airingBadgeLabel")
     private ExtendedWebElement airingBadgeLabel;
+
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    protected ExtendedWebElement headerViewTitleLabel;
 
     @ExtendedFindBy(accessibilityId = "Hide keyboard")
     private ExtendedWebElement hideKeyboard;
@@ -1443,6 +1442,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return firstCellElementFromCollection.format(collectionName);
     }
 
+    public ExtendedWebElement getTextElementValue(String collectionName) {
+        return staticTextValueContains.format(collectionName);
+    }
+
     public int getFirstCellRemainingTimeInMinutesFromCollection(String collectionName) {
         String remainingTimePrompt = firstCellElementFromCollectionDynamicStaticText
                 .format(collectionName, "remaining").getText();
@@ -1459,5 +1462,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             }
         }
         return totalMinutes;
+    }
+
+    public boolean isCollectionTitleDisplayed() {
+        return getTypeCellLabelContains(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
     }
 }
