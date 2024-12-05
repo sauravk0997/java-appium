@@ -270,7 +270,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(),
                 "User was not redirected to Details Page");
 
-        detailsPage.getBackButton().click();
+        tap(detailsPage.getBackButton());
         Assert.assertTrue(homePage.isOpened(),
                 "User was not redirected to Home Page");
     }
