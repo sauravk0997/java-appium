@@ -29,10 +29,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     public void verifyHuluHubSearchContentWithStandaloneAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6740c467@disneyplustesting.com";
-        selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_ERROR_MESSAGE);
 
         loginATVHuluHub(standaloneAccount);
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
@@ -48,11 +45,8 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     public void verifyHuluHubSearchContentWithBundleUserAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         String bundlePremiumAccount = "alekhya.rallapalli+6740d2fc@disneyplustesting.com";
-        selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_ERROR_MESSAGE);
 
         loginATVHuluHub(bundlePremiumAccount);
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
@@ -72,12 +66,9 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     public void verifyHuluHubSearchContentInNonEligibleCountry() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusOneTrustConsentBannerIOSPageBase bannerIOSPageBase =
                 new DisneyPlusOneTrustConsentBannerIOSPageBase(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
-        selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_ERROR_MESSAGE);
 
         loginATVHuluHub(standaloneAccount);
         if (bannerIOSPageBase.isAllowAllButtonPresent()) {
@@ -97,11 +88,8 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     public void verifyHuluHubSearchContentWithNonBundleUserAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         String premiumAccount = "robert.walters+6740c4f3@disneyplustesting.com";
-        selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_ERROR_MESSAGE);
 
         loginATVHuluHub(premiumAccount);
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
