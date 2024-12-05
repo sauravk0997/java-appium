@@ -153,41 +153,40 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     public void verifyAudioAndSubtitlesPreferredLanguage() {
         String choctawLang = "Chahta anumpa (Choctaw)";
         String spanishLang = "Español";
-        String deadpoolDeeplink = "disneyplus://disneyplus.com/play/bdcd5a83-ad6e-428f-8c34-63a9cf695048";
-        String templeOfIncaDeeplink = "disneyplus://www.disneyplus.com/browse/entity-22dfa802-965a-4249-8c7e-d418effe0df3";
-        String spanishContentDeeplink = "disneyplus://www.disneyplus.com/browse/entity-5794ff82-fcee-400f-85e2-0836e5e9060e";
-        String cloctawContentDeeplink = "disneyplus://www.disneyplus.com/browse/entity-9278c70f-5e37-48b4-a22f-4ec944ef9de8";
         setAppToHomeScreen(getAccount());
 
         // Open content and select Deutsch audio and language
-        verifyAudioLanguage(MULAN_DEEPLINK, DEUTSCH);
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_mulan_deeplink"), DEUTSCH, DEUTSCH);
 
         // Open another content and verify that preferred Deutsch audio and language is selected
-        verifyAudioLanguage(deadpoolDeeplink, DEUTSCH);
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"), DEUTSCH, DEUTSCH);
 
         // Open content that do not have Deutsch (preferred) audio and language and verify English is selected
-        verifyAudioLanguage(templeOfIncaDeeplink, ENGLISH);
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_temple_of_inca_deeplink"), ENGLISH, ENGLISH_CC);
 
         // Open content that do not have English audio and verify default is selected
-        verifyAudioLanguage(spanishContentDeeplink, spanishLang);
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_spanish_deeplink"), spanishLang, ENGLISH_CC);
 
         // Open content that contains Choctaw
-        verifyAudioLanguage(cloctawContentDeeplink, choctawLang);
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_cloctaw_deeplink"), choctawLang, ENGLISH_CC);
     }
 
-    private void verifyAudioLanguage(String deeplink, String audioLanguage) {
+    private void verifyAudioLanguage(String deeplink, String audioLanguage, String subtitle) {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         launchDeeplink(deeplink);
-        detailsPage.clickPlayButton();
+       // detailsPage.clickPlayButton();
+        pause(5);
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
         videoPlayer.tapAudioSubtitleMenu();
         Assert.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
         subtitlePage.chooseAudioLanguage(audioLanguage);
-        subtitlePage.chooseSubtitlesLanguage(audioLanguage);
+        subtitlePage.chooseSubtitlesLanguage(subtitle);
+        Assert.assertTrue(subtitlePage.verifySelectedAudioIs(audioLanguage), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
+        Assert.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(subtitle), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
         subtitlePage.tapCloseButton();
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
