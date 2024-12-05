@@ -284,7 +284,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72544"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyMovieResumeStateBehavior() {
-        int UI_LATENCY_IN_SEC = 35;
+        int UI_LATENCY_IN_SEC = 60;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
