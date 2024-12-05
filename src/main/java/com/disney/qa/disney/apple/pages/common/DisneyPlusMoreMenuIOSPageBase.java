@@ -289,7 +289,8 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).isElementPresent()
 				&& deleteOneDownload.format(getDeleteOneDownloadValue(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_ONE_DOWNLOAD.getText()))).isElementPresent()
 				&& getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText())).isElementPresent()
-				&& getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).isElementPresent();
+				&& getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).isElementPresent()
+				&& staticTextLabelMatches.format("(?i).*\\\\(.*(KB|MB|GB)\\\\).*").isElementPresent();
 	}
 
 	public boolean isDownloadOverWifiEnabled() {
