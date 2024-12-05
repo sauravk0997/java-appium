@@ -295,7 +295,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
-        Assert.assertTrue(videoPlayer.getSubTitleLabel().equals(movieTitle),
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
                 "Video player deeplink is not playing correct movie");
     }
 }
