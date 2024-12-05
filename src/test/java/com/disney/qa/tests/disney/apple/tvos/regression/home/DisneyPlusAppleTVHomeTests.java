@@ -58,12 +58,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
     public void verifyESPNAndHuluBrandTiles() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6740c523@disneyplustesting.com";
 
-        selectAppleUpdateLaterAndDismissAppTracking();
-        welcomeScreenPage.waitForWelcomePageToLoad();
         loginATVHuluHub(standaloneAccount);
         homePage.waitForHomePageToOpen();
 
@@ -93,7 +90,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
     public void verifyHulkUpsellStandaloneUserInEligible() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -102,8 +98,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String lockedHuluContentCollectionName =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
 
-        selectAppleUpdateLaterAndDismissAppTracking();
-        welcomeScreenPage.waitForWelcomePageToLoad();
         loginATVHuluHub(standaloneAccount);
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
