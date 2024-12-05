@@ -251,7 +251,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68458"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyBehaviorWhenExtraContentEndsFromDeeplink() {
+    public void verifyBehaviourWhenExtraContentEndsFromDeeplink() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
@@ -269,7 +269,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(),
                 "User was not redirected to Details Page");
 
-//        tap(detailsPage.getBackButton());
         detailsPage.getBackButton().click();
         Assert.assertTrue(homePage.isOpened(),
                 "User was not redirected to Home Page");
