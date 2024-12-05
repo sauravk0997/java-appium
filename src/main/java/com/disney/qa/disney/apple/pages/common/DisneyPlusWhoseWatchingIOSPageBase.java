@@ -43,6 +43,10 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         return isPresent;
     }
 
+    public ExtendedWebElement getEditProfileButton() {
+        return editProfileBtn;
+    }
+
     public boolean isHeaderTextDisplayed() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return whosWatchingTitle.isPresent();

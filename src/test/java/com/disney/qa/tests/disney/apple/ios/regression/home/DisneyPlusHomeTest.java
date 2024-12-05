@@ -587,7 +587,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         //Open ESPN brand page
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.ESPN));
-        Assert. assertTrue(brandPage.isSportsCellPresent(),
+        Assert. assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.ESPN)),
                 "After tapping the ESPN tile user did not land on ESPN screen");
         homePage.getBackButton().click();
         Assert. assertTrue(homePage.isOpened(), "Home page didn't open after closing the ESPN page");

@@ -102,6 +102,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement typeCellLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name CONTAINS \"%s\"`]")
     protected ExtendedWebElement typeCellNameContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`value CONTAINS \"%s\"`]")
+    private ExtendedWebElement staticTextValueContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
     private ExtendedWebElement dynamicIosClassChainElementTypeImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value == '%s'`]")
@@ -132,7 +134,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement textEntryField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"%s\"`]")
     private ExtendedWebElement textFieldValue;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicTextEntryFieldByName;
 
@@ -272,6 +273,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(accessibilityId = "airingBadgeLabel")
     private ExtendedWebElement airingBadgeLabel;
+
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    protected ExtendedWebElement headerViewTitleLabel;
 
     @ExtendedFindBy(accessibilityId = "Hide keyboard")
     private ExtendedWebElement hideKeyboard;
@@ -1443,6 +1447,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return firstCellElementFromCollection.format(collectionName);
     }
 
+    public ExtendedWebElement getTextElementValue(String collectionName) {
+        return staticTextValueContains.format(collectionName);
+    }
+
     public int getFirstCellRemainingTimeInMinutesFromCollection(String collectionName) {
         String remainingTimePrompt = firstCellElementFromCollectionDynamicStaticText
                 .format(collectionName, "remaining").getText();
@@ -1459,6 +1467,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             }
         }
         return totalMinutes;
+    }
+
+    public boolean isCollectionTitleDisplayed() {
+        return getTypeCellLabelContains(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
     }
 
     public void moveDownUntilCollectionContentIsFocused(String collectionName, int count) {

@@ -2,6 +2,10 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.utils.*;
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVBrandsPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -84,7 +88,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickUp();
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
-        Assert.assertTrue(brandPage.isSportsCellPresent(), "ESPN page did not open");
+        Assert.assertTrue(
+                brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                "Hulu Hub page did not open");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121516"})

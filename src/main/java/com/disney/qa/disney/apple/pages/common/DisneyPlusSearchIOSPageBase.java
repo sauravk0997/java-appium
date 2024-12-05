@@ -28,14 +28,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement magnifyingGlassImage;
     @FindBy(id = "Search")
     private ExtendedWebElement keyboardSearchButton;
-    @ExtendedFindBy(accessibilityId = "Explore")
-    private ExtendedWebElement exploreHeader;
     @ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeSearchField'")
     private ExtendedWebElement searchBar;
     @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
     private ExtendedWebElement cancelButtonRecentSearch;
-    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
-    private ExtendedWebElement headerViewTitleLabel;
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'iconNavBack24LightActive'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
@@ -129,6 +125,14 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return originalsTile;
     }
 
+    public ExtendedWebElement getMovieTile() {
+        return moviesTile;
+    }
+
+    public ExtendedWebElement getSeriesTile() {
+        return seriesTile;
+    }
+
     public ExtendedWebElement getMagnifyingGlassImage() {
         return magnifyingGlassImage;
     }
@@ -140,10 +144,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isRecentSearchDisplayed() {
         return headerViewTitleLabel.getText().equalsIgnoreCase("RECENT SEARCHES");
-    }
-
-    public boolean isTitlePresent(String title) {
-        return staticTextByLabel.format(title).isPresent();
     }
 
     public void tapTitleUnderRecentSearch(String title) {
@@ -242,7 +242,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isExploreTitleDisplayed(int timeOut) {
-        return exploreHeader.isPresent(timeOut);
+        return getDynamicAccessibilityId((getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
     public void clickFirstCollection() {
