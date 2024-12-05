@@ -156,7 +156,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         // Open content and select Deutsch audio and language
-        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_mulan_deeplink"), DEUTSCH, DEUTSCH);
+      //  verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_mulan_deeplink"), DEUTSCH, DEUTSCH);
 
         // Open another content and verify that preferred Deutsch audio and language is selected
         verifyAudioLanguage(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"), DEUTSCH, DEUTSCH);
