@@ -28,8 +28,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement magnifyingGlassImage;
     @FindBy(id = "Search")
     private ExtendedWebElement keyboardSearchButton;
-    @ExtendedFindBy(accessibilityId = "Explore")
-    private ExtendedWebElement exploreHeader;
     @ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeSearchField'")
     private ExtendedWebElement searchBar;
     @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
@@ -246,7 +244,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isExploreTitleDisplayed(int timeOut) {
-        return exploreHeader.isPresent(timeOut);
+        return getDynamicAccessibilityId((getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
     public void clickFirstCollection() {

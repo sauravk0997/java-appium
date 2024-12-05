@@ -1460,4 +1460,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
         return totalMinutes;
     }
+
+    public boolean isCollectionTitleDisplayed() {
+        return getTypeCellLabelContains(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
+    }
 }

@@ -372,6 +372,7 @@ public enum DictionaryKeys {
     NAV_DETAILS("nav_details"),
     NAV_EPISODES("nav_episodes"),
     NAV_EXIT_KIDS_PROFILE("nav_exit_kids_profile"),
+    NAV_EXPLORE_TITLE("explore_label"),
     NAV_EXTRAS("nav_extras"),
     NAV_HELP("nav_help"),
     NAV_HOME("nav_home"),
