@@ -271,6 +271,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "airingBadgeLabel")
     private ExtendedWebElement airingBadgeLabel;
 
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    protected ExtendedWebElement headerViewTitleLabel;
+
     @ExtendedFindBy(accessibilityId = "Hide keyboard")
     private ExtendedWebElement hideKeyboard;
 
