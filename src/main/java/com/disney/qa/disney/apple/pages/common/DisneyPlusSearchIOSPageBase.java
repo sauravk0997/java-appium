@@ -151,10 +151,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return headerViewTitleLabel.getText().equalsIgnoreCase("RECENT SEARCHES");
     }
 
-    public boolean isTitlePresent(String title) {
-        return staticTextByLabel.format(title).isPresent();
-    }
-
     public void tapTitleUnderRecentSearch(String title) {
         staticTextByLabel.format(title).click();
     }

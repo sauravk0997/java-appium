@@ -20,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
@@ -30,7 +31,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "SpiderMan 3";
-    private static final String SHOP = "Shop";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 40;
     private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
@@ -302,8 +302,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 String.format("Shop Promo Label header was not found for: %s", titleName));
         sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(),
                 String.format("Shop Promo Label Sub-header was not found for: %s", titleName));
-        sa.assertTrue(detailsPage.getShopBtn().isPresent(),
-                String.format("Shop Tab was not found for: %s", titleName));
+        sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(THREE_SEC_TIMEOUT),
+                String.format("Shop or Perks Tab was not found for: %s", titleName));
     }
 
     private void validateShopTabButton(SoftAssert sa, String titleName){
@@ -313,8 +313,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
         results.get(0).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
-        sa.assertTrue(detailsPage.getShopBtn().isPresent(), "Shop Tab was not found");
-        detailsPage.clickShopTab();
-        sa.assertTrue(detailsPage.isTabSelected(SHOP.toUpperCase()), "Shop tab is not focused");
+        sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(), "Shop or Perks Tab was not found");
+        detailsPage.clickShopoOrPerksTab();
+        String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
+        sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
+                String.format("%s Tab was not found", shopOrPerksText));
     }
 }

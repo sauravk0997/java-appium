@@ -40,8 +40,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
     private static final String IMAX_ENHANCED = "IMAX Enhanced";
     private static final String DOLBY_VISION = "Dolby Vision";
-    private static final String SHOP_PROMO_LABEL_HEADER = "Enjoy access to merchandise";
-    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the SHOP tab to learn more.";
+    private static final String SHOP_PROMO_LABEL_HEADER = "Discover Exclusive Disney+ Subscriber Perks";
+    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the PERKS tab to learn more.";
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
@@ -82,8 +82,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement movieDownloadButton;
     @ExtendedFindBy(accessibilityId = "watch")
     protected ExtendedWebElement watchButton;
-    @ExtendedFindBy(accessibilityId = "SHOP")
-    protected ExtendedWebElement shopTab;
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
@@ -145,6 +143,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentAdvisory;
     @ExtendedFindBy(accessibilityId = "downloadButtonDownloading")
     private ExtendedWebElement downloadStartedButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"SHOP\" OR name == \"PERKS\"`]")
+    protected ExtendedWebElement shopOrPerksBtn;
 
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
@@ -753,17 +753,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return shareBtn;
     }
 
-    public ExtendedWebElement getShopBtn() {
-        return shopTab;
+    public ExtendedWebElement getShopOrPerksBtn() {
+        return shopOrPerksBtn;
     }
 
-    public void clickShopTab() {
-        if (!shopTab.isPresent()) {
+    public void clickShopoOrPerksTab() {
+        if (!getShopOrPerksBtn().isPresent()) {
             swipeInContainer(null, Direction.UP, 1200);
             pause(2); //transition
             swipeTabBar(Direction.LEFT, 1000);
         }
-        shopTab.click();
+        getShopOrPerksBtn().click();
     }
 
     public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
@@ -843,7 +843,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isNegativeStereotypeAdvisoryLabelPresent() {
         String contentAdvisoryText = String.format("%s, %s ",
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY.getText()).trim()).replaceAll("\\s+", " ");
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY_FULL.getText()).trim()).replaceAll("\\s+", " ");
         swipePageTillElementPresent(contentAdvisory, 1, contentDetailsPage, Direction.UP, 900);
         return contentAdvisoryText.contains(contentAdvisory.getText().replaceAll("\\s+", " "));
     }
