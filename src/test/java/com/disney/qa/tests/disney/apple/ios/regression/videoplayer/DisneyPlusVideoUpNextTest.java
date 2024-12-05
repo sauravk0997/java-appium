@@ -36,6 +36,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     private static final double PLAYER_PERCENTAGE_FOR_AUTO_PLAY = 95;
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
     private static final String REGEX_UPNEXT_SERIES_TITLE = "Season %s Episode %s %s";
+    private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES = 85;
 
     @DataProvider(name = "autoplay-state")
     public Object[][] autoplayState(){
@@ -88,7 +89,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         //Turn ON autoplay
         toggleAutoPlay("ON");
         //Bring up upnext UI
-        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
         String nextEpisodesTitle = disneyPlusUpNextIOSPageBase.getNextEpisodeInfo();
         //Wait for upnext UI to disappear
@@ -229,7 +230,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
-        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
         upNextIOSPageBase.waitForUpNextUIToAppear();
         upNextIOSPageBase.tapPlayIconOnUpNext();
         Assert.assertTrue(videoPlayerIOSPageBase.isContentRatingOverlayPresent(), "Content Rating overlay not displayed");
