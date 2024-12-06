@@ -22,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.net.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
@@ -593,6 +594,29 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert. assertTrue(homePage.isOpened(), "Home page didn't open after closing the ESPN page");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69662"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, EMEA})
+    public void verifyStarBrandTile() {
+        int totalExpectedBrands = 6;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        String brandCollectionContainerId = collections.get(1).getId();
+        int totalBrandTile = collections.get(1).getItems().size();
+
+        Assert.assertEquals(totalBrandTile, totalExpectedBrands,
+                "Total number of brand does not match with expected");
+
+        IntStream.range(0, getExpectedBrand().size()).forEach(i -> {
+            Assert.assertTrue(homePage.getCollectionCellFromContainer(brandCollectionContainerId).get(i).getText()
+                    .contains(getExpectedBrand().get(i)), getExpectedBrand().get(i) + " tile is not in order");
+        });
+
+
+    }
+
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
         try {
@@ -628,5 +652,16 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertNotNull(continueWatchingTitlesFromApi,
                 String.format("No items for '%s' collection were fetched from Explore API", collection.name()));
         return continueWatchingTitlesFromApi;
+    }
+
+    protected ArrayList<String> getExpectedBrand() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add("Disney");
+        contentList.add("Pixar");
+        contentList.add("Marvel");
+        contentList.add("Star Wars");
+        contentList.add("National Geographic");
+        contentList.add("STAR");
+        return contentList;
     }
 }
