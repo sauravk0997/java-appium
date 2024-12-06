@@ -599,6 +599,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyStarBrandTile() {
         int totalExpectedBrands = 6;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
