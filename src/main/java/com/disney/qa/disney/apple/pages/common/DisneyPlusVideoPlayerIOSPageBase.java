@@ -72,6 +72,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement adTimeBadge;
     @ExtendedFindBy(accessibilityId = "ratingLabel")
     private ExtendedWebElement contentRatingOverlayLabel;
+    @ExtendedFindBy(accessibilityId = "skipRecapButton")
+    private ExtendedWebElement skipRecapButton;
+    @ExtendedFindBy(accessibilityId = "contentRatingInfoView")
+    private ExtendedWebElement contentRatingInfoView;
 
     public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
           "depictions and/or mistreatment of people or cultures. These stereotypes were wrong then and are wrong now. Rather than remove this content, we want to acknowledge its harmful impact, learn from it and spark conversation to create a more inclusive future together.";
@@ -754,5 +758,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isNegativeStereotypeCountdownPresent() {
         return getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE).isPresent(THREE_SEC_TIMEOUT);
+    }
+
+    public ExtendedWebElement getSkipRecapButton() {
+        return skipRecapButton;
+    }
+
+    public ExtendedWebElement getContentRatingInfoView() {
+        return contentRatingInfoView;
     }
 }
