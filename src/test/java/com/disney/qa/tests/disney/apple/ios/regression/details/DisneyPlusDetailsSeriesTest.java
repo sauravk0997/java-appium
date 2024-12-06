@@ -846,7 +846,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
-        ExploreContent seriesApiContent = getDisneyApiSeries(entityID);
+        ExploreContent seriesApiContent = getSeriesApi(entityID, DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String firstEpisodeTitle =
                 seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals().getEpisodeTitle();
 
@@ -923,7 +923,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         //Get season1 episode details from API
-        ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_loki_entity_id"));
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
 
         //Download season 1 & 2

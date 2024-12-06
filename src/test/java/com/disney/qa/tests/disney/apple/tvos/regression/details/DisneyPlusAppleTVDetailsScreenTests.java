@@ -4,6 +4,7 @@ import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -43,7 +44,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 getAccount().getProfileId(),
                 getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
 
-        ExploreContent movieApiContent = getDisneyApiMovie(END_GAME.getEntityId());
+        ExploreContent movieApiContent = getMovieApi(END_GAME.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String description = movieApiContent.getDescription().getBrief();
         String ratingsValue = movieApiContent.getRating();
         List<String> tabs = Stream.of("SUGGESTED", "EXTRAS", "DETAILS").collect(Collectors.toList());

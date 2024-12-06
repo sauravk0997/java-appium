@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 import com.disney.config.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -247,7 +248,8 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
-        ExploreContent seriesApiContent = getDisneyApiSeries(R.TESTDATA.get("disney_prod_loki_entity_id"));
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String episodeTitle = "";
         String seasonNumber = "";
         try {

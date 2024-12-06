@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
@@ -152,7 +153,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         launchDeeplink(Deeplink+DisneyEntityIds.MARVELS.getEntityId());
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String movieTitle = detailsPage.getMediaTitle();
-        ExploreContent movieApiContent = getDisneyApiMovie(DisneyEntityIds.MARVELS.getEntityId());
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         
         //Start download
         detailsPage.getMovieDownloadButton().click();
