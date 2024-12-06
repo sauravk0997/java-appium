@@ -286,10 +286,20 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean areAllDeleteModalItemsPresent() {
-		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText())).isElementPresent()
-				&& deleteOneDownload.format(getDeleteOneDownloadValue(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_ONE_DOWNLOAD.getText()))).isElementPresent()
-				&& getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText())).isElementPresent()
-				&& getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText())).isElementPresent();
+		String deleteDownloadsTitleLabel = getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText());
+		String deleteOneDownloadMessageLabel = getDeleteOneDownloadValue(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_ONE_DOWNLOAD.getText()));
+		String modalCancelButtonLabel = getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CANCEL_BTN_NORMAL.getText());
+		String modalDeleteButtonLabel = getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText());
+		String downloadsTotalSizeRegex = "(?i).*\\\\(.*(KB|MB|GB)\\\\).*";
+		return getStaticTextByLabel(deleteDownloadsTitleLabel).isElementPresent()
+				&& deleteOneDownload.format(deleteOneDownloadMessageLabel).isElementPresent()
+				&& getTypeButtonByLabel(modalCancelButtonLabel).isElementPresent()
+				&& getTypeButtonByLabel(modalDeleteButtonLabel).isElementPresent()
+				&& staticTextLabelMatches.format(downloadsTotalSizeRegex).isElementPresent();
 	}
 
 	public boolean isDownloadOverWifiEnabled() {

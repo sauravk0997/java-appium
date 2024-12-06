@@ -163,7 +163,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean waitForDetailsPageToOpen() {
         LOGGER.info("Waiting for Details page to load");
         return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Details page was not opened")
-                .until(it -> contentDetailsPage.isPresent());
+                .until(it -> getDetailsTab().isPresent());
     }
 
     public boolean isDetailPageOpened(long time) {
@@ -586,6 +586,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getContinueButton() {
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_CONTINUE.getText()));
+    }
+
+    public ExtendedWebElement getPlayOrContinueButton() {
+        return dynamicBtnFindByLabelOrLabel.format(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_PLAY.getText()),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText())
+                );
     }
 
     public ExtendedWebElement getTrailerActionButton() {
