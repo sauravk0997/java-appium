@@ -221,8 +221,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
 
-        ExploreContent seriesApiContent = getHuluApiSeries(
-                R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_entity_id"));
+        ExploreContent seriesApiContent = getSeriesApi(
+                R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
         try {
             episodeTitle = seriesApiContent.getSeasons()
                     .get(seasonNumber)
@@ -285,7 +286,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
-        ExploreContent movieAPIContent = getHuluApiMovie(R.TESTDATA.get("disney_prod_hulu_movie_prey_entity_id"));
+        ExploreContent movieAPIContent = getMovieApi(R.TESTDATA.get("disney_prod_hulu_movie_prey_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
         String movieTitle = movieAPIContent.getTitle();
 
         if(movieTitle == null){
@@ -296,6 +298,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
-                "Video player deeplink is not playing correct movie");
+                "Video player deeplink's title doesn't match with api title");
     }
 }
