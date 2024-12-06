@@ -603,7 +603,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
-        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
         String brandCollectionContainerId = collections.get(1).getId();
         int totalBrandTile = collections.get(1).getItems().size();
 
@@ -620,7 +622,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
-        try {
             ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
                     getLocalizationUtils().getUserLanguage());
@@ -628,9 +629,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             contentTitle = collections.get(2).getItems().get(0).getVisuals().getTitle();
             swipe(homePage.getDynamicAccessibilityId(collectionID));
             homePage.getElementTypeCellByLabel(contentTitle).click();
-        } catch (URISyntaxException | JsonProcessingException | IndexOutOfBoundsException e) {
-            throw new RuntimeException(String.format("Not able to get the Home page data from the api, exception occurred: %s", e));
-        }
     }
 
     private void addContentInContinueWatching(String url, int scrubPercentage) {
