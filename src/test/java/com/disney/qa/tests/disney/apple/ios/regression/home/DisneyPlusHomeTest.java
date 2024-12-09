@@ -20,14 +20,13 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
-import java.net.*;
 import java.util.*;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
+import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -142,7 +141,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, US})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SINGAPORE, ENGLISH_LANG));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
@@ -595,7 +594,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69662"})
-    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, EMEA})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, SG})
     public void verifyStarBrandTile() {
         int totalExpectedBrands = 6;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -612,12 +611,19 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertEquals(totalBrandTile, totalExpectedBrands,
                 "Total number of brand does not match with expected");
 
+        ArrayList<String> contentTitleFromAPI = new ArrayList<>();
+        IntStream.range(0, totalBrandTile).forEach(i -> {
+            contentTitleFromAPI.add(collections.get(1).getItems().get(i).getVisuals().getTitle());
+                });
+
         IntStream.range(0, getExpectedBrand().size()).forEach(i -> {
             Assert.assertTrue(homePage.getCollectionCellFromContainer(brandCollectionContainerId).get(i).getText()
-                    .contains(getExpectedBrand().get(i)), getExpectedBrand().get(i) + " tile is not in order");
+                    .contains(getExpectedBrand().get(i)),
+                    getExpectedBrand().get(i) + " tile is not in order");
+            Assert.assertTrue(homePage.getCollectionCellFromContainer(brandCollectionContainerId).get(i).getText()
+                    .contains(contentTitleFromAPI.get(i)),
+                    contentTitleFromAPI.get(i) + " title is not matching with UI");
         });
-
-
     }
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
