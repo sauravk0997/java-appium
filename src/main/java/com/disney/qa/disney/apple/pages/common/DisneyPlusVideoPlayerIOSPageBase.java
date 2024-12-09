@@ -72,8 +72,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement adTimeBadge;
     @ExtendedFindBy(accessibilityId = "ratingLabel")
     private ExtendedWebElement contentRatingOverlayLabel;
-    @ExtendedFindBy(accessibilityId = "skipRecapButton")
-    private ExtendedWebElement skipRecapButton;
     @ExtendedFindBy(accessibilityId = "contentRatingInfoView")
     private ExtendedWebElement contentRatingInfoView;
 
@@ -761,7 +759,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getSkipRecapButton() {
-        return skipRecapButton;
+        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SKIP_RECAP.getText()));
     }
 
     public ExtendedWebElement getContentRatingInfoView() {
