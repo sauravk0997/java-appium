@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.config.DisneyConfiguration;
@@ -40,6 +41,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
@@ -435,18 +437,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    //Explore API methods
-    public ExploreContent getDisneyApiSeries(String entityID) {
-        try {
-            return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException(e);
+    public ExploreSearchRequest getExploreSearchRequest(String brand) {
+        switch (brand.toUpperCase()){
+            case "HULU":
+                return getHuluExploreSearchRequest();
+            case "DISNEY":
+            default:
+                return getDisneyExploreSearchRequest();
         }
     }
 
-    public ExploreContent getHuluApiSeries(String entityID) {
+    //Explore API methods
+    public ExploreContent getSeriesApi(String entityID, Brand brand) {
         try {
-            return getExploreApi().getSeries(getHuluExploreSearchRequest()
+            return getExploreApi().getSeries(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
                     .setProfileId(getAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e) {
@@ -454,15 +458,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public ExploreContent getDisneyApiMovie(String entityID) {
+    public ExploreContent getMovieApi(String entityID, Brand brand) {
         try {
-            return getExploreApi().getMovie(getDisneyExploreSearchRequest()
+            return getExploreApi().getMovie(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
                     .setProfileId(getAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e){
             throw new RuntimeException(e);
         }
-
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
@@ -480,7 +483,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+        return getExploreApi().getPage(getHuluExploreSearchRequest()
+                .setEntityId(pageID)
+                .setProfileId(getAccount().getProfileId()))
+                .getData()
+                .getPage()
+                .getContainers();
     }
 
     public Visuals getExploreAPIPageVisuals(String entityID) {
