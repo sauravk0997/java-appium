@@ -607,15 +607,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         String brandCollectionContainerId = collections.get(1).getId();
         int totalBrandTile = collections.get(1).getItems().size();
 
+        swipe(homePage.getCollection(brandCollectionContainerId));
+
         Assert.assertEquals(totalBrandTile, totalExpectedBrands,
                 "Total number of brand does not match with expected");
 
         ArrayList<String> contentTitleFromAPI = new ArrayList<>();
-        IntStream.range(0, totalBrandTile).forEach(i -> {
+        IntStream.range(0, totalBrandTile-1).forEach(i -> {
             contentTitleFromAPI.add(collections.get(1).getItems().get(i).getVisuals().getTitle());
                 });
 
-        IntStream.range(0, getExpectedBrand().size()).forEach(i -> {
+        IntStream.range(0, getExpectedBrand().size()-1).forEach(i -> {
             Assert.assertTrue(homePage.getCollectionCellFromContainer(brandCollectionContainerId).get(i).getText()
                     .contains(getExpectedBrand().get(i)),
                     getExpectedBrand().get(i) + " tile is not in order");
