@@ -304,7 +304,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75301"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyDeepLinkNewURLStructureDisneyPlusVideoPlayer() {
+    public void verifyDeepLinkNewURLStructureDisneyPlusMovieVideoPlayer() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
