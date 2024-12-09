@@ -3,6 +3,8 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.offer.pojos.*;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -18,8 +20,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 
@@ -456,38 +457,63 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74876"})
-    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExpiredHuluWatchlistDisplay() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
         String GRIMCUTTY = "Grimcutty";
         String WANDA_VISION = "WandaVision";
-        try {
-            getSubscriptionApi().addEntitlementBySku(getAccount(),
-                    DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, SUBSCRIPTION_V2);
-        } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        String disneyPremiumPlan = "Disney+ Premium - 159.99 USD - Yearly";
+        String trioBasicPlan = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
 
-        setAppToHomeScreen(getAccount());
-        //TODO:use api to add the titles once QP ticket is resolved
-        // https://jira.disney.com/browse/QP-3616
-        // Add Disney Plus and HULU content to Watchlist
-//        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
-//                R.TESTDATA.get("hulu_movie_grimcutty_entity_id"), CONTENT_ENTITLEMENT_HULU);
-//        getWatchlistApi().addContentToWatchlist(getAccount(), getAccount().getProfileId(),
-//                DisneyEntityIds.WANDA_VISION.getEntityId(), CONTENT_ENTITLEMENT_DISNEY);
+        //Create account with Disney Bundle plan
+        UnifiedOffer unifiedOffer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(getUnifiedOfferRequest(trioBasicPlan));
+
+        getCreateUnifiedAccountRequest()
+                .setPartner(Partner.DISNEY)
+                .addEntitlement(UnifiedEntitlement.builder().unifiedOffer(unifiedOffer).subVersion(UNIFIED_ORDER).build())
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest()));
+        loginToHome(getUnifiedAccount());
+
+        //Add disney content to watchlist
+        getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
+                getUnifiedAccount().getAccountToken(),
+                getUnifiedAccount().getProfileId(),
+                getWatchlistInfoBlockForUnifiedAccount(R.TESTDATA.get("disney_prod_wanda_vision_entity_id")));
+
+        //Add hulu content to watchlist
+        getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
+                getUnifiedAccount().getAccountToken(),
+                getUnifiedAccount().getProfileId(),
+                getWatchlistInfoBlockForUnifiedAccount(R.TESTDATA.get("disney_prod_hulu_movie_grimcutty_entity_id")));
 
         // Verify content on Watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(GRIMCUTTY, WANDA_VISION),
                 "Titles were not added to the Watchlist");
-        //TODO: https://jira.disney.com/browse/QP-3626
-        //https://jira.disney.com/browse/QP-3626
+
         // Revoke HULU subscription
-        String huluSubscriptionId = getHuluSubscriptionId();
-        getSubscriptionApi().revokeSubscription(getAccount(), huluSubscriptionId);
+
+        getUnifiedSubscriptionApi().revokeSubscription(getUnifiedAccount(),
+                getUnifiedAccount().getAgreement(0).getAgreementId());
+
+        //Entitle account with D+
+        UnifiedOffer unifiedOfferHulu = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(getUnifiedOfferRequest(disneyPremiumPlan));
+
+        UnifiedEntitlement huluEntitlements = UnifiedEntitlement.builder()
+                .unifiedOffer(unifiedOfferHulu).subVersion(UNIFIED_ORDER).build();
+
+        try {
+            getUnifiedSubscriptionApi().entitleAccount(getUnifiedAccount(), Arrays.asList(huluEntitlements));
+        } catch (MalformedURLException | URISyntaxException | InterruptedException e) {
+            Assert.fail("Failed to entitle the account with new entitlement");
+        }
 
         // Terminate app and relaunch
         terminateApp(sessionBundles.get(DISNEY));
@@ -496,8 +522,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         // Verify content on watchlist after revoke HULU entitlement
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        Assert.assertFalse(moreMenu.getTypeCellLabelContains(GRIMCUTTY).isPresent(),
-                "HULU title was present in the Watchlist");
+        Assert.assertFalse(moreMenu.getTypeCellLabelContains(GRIMCUTTY).isPresent(SHORT_TIMEOUT),
+                        "Hulu title was present in the Watchlist");
         Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),
                 "Disney Plus title was not present in the Watchlist");
     }
