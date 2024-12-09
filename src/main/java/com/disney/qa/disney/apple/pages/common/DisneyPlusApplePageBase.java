@@ -1138,10 +1138,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return findExtendedWebElements(collectionCellNoRow.format(CollectionConstant.getCollectionName(collection)).getBy());
     }
 
-    public List<ExtendedWebElement> getCollectionCellFromContainer(String containerId) {
-        return findExtendedWebElements(collectionCellNoRow.format(containerId).getBy());
-    }
-
     public void swipeTillCollectionTappable
             (CollectionConstant.Collection collection, Direction direction, int count) {
         ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));

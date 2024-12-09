@@ -604,10 +604,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
-        String brandCollectionContainerId = collections.get(1).getId();
         int totalBrandTile = collections.get(1).getItems().size();
 
-        swipe(homePage.getCollection(brandCollectionContainerId));
+        swipe(homePage.getHomePageMainElement());
 
         Assert.assertEquals(totalBrandTile, totalExpectedBrands,
                 "Total number of brand does not match with expected");
@@ -618,10 +617,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 });
 
         IntStream.range(0, getExpectedBrand().size()-1).forEach(i -> {
-            Assert.assertTrue(homePage.getCollectionCellFromContainer(brandCollectionContainerId).get(i).getText()
+            Assert.assertTrue(homePage.getBrandCells().get(i).getText()
                     .contains(getExpectedBrand().get(i)),
                     getExpectedBrand().get(i) + " tile is not in order");
-            Assert.assertTrue(homePage.getCollectionCellFromContainer(brandCollectionContainerId).get(i).getText()
+            Assert.assertTrue(homePage.getBrandCells().get(i).getText()
                     .contains(contentTitleFromAPI.get(i)),
                     contentTitleFromAPI.get(i) + " title is not matching with UI");
         });
