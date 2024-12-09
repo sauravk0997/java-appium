@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -299,5 +300,28 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
                 "Video player deeplink's title doesn't match with api title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75301"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureDisneyPlusVideoPlayer() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        ExploreContent movieAPI = getMovieApi(DisneyEntityIds.IRONMAN.getEntityId(),
+                    DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String movieTitle = movieAPI.getTitle();
+
+        if(movieTitle == null) {
+            throw new SkipException("Skipping test, title from API was not found");
+        }
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
+                "Video player deeplink title does not match API title");
     }
 }
