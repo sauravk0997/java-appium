@@ -474,7 +474,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
                 getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlockForUnifiedAccount(R.TESTDATA.get("disney_prod_wanda_vision_entity_id")));
+                getWatchlistInfoBlockForUnifiedAccount(DisneyEntityIds.WANDA_VISION.getEntityId()));
 
         //Add hulu content to watchlist
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
