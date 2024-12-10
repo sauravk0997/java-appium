@@ -1,6 +1,8 @@
 package com.disney.qa.disney.apple.pages.tv;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -21,6 +23,8 @@ public class DisneyPlusAppleTVOriginalsPage extends DisneyPlusOriginalsIOSPageBa
 
     @Override
     public boolean isOpened() {
-        return DisneyPlusAppleTVCommonPage.isProd() ? shorts.isElementPresent() : getStaticTextByLabelContains("On the Originals screen.").isPresent();
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.NAV_ORIGINALS_TITLE.getText())).isPresent();
     }
 }
