@@ -195,8 +195,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         login(entitledUser);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
-        //Assert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
-              //  "Home Page did not open after login");
+        Assert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
+                "Home Page did not open after login");
     }
 
     /**
