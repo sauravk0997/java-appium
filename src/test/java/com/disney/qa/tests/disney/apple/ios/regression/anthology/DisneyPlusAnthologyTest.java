@@ -314,7 +314,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         swipe(details.getSeasonSelectorButton());
         Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(), "Download all season button displayed");
-        Assert.assertFalse(details.getEpisodeToDownload("1", "1").isPresent(),
+        Assert.assertFalse(details.getEpisodeToDownload().isPresent(),
                 "Episode Download button is displayed");
     }
 
