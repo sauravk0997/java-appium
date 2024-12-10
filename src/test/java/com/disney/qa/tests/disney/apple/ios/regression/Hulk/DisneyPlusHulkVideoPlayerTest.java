@@ -148,10 +148,8 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_survivor_episode_playback"));
-        videoPlayer.waitForVideoToStart();
-        System.out.println(getDriver().getPageSource());
-        Assert.assertTrue(videoPlayer.getSkipRecapButton().isPresent(30),"Skip Recap button is not present");
-        System.out.println(getDriver().getPageSource());
+        Assert.assertTrue(videoPlayer.getSkipRecapButton().isPresent(),
+                "Skip Recap button is not present");
         Assert.assertFalse(videoPlayer.getNetworkWatermarkLogo(contentNetwork).isElementPresent(1),
                 String.format("Network (%s) Watermark logo is present at the same time that Skip Recap button",
                         contentNetwork));
