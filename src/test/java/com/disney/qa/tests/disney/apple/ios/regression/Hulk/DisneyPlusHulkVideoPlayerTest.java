@@ -134,7 +134,7 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74452"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluVideoPlayerNetworkWatermarkAutoInterrupted() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
