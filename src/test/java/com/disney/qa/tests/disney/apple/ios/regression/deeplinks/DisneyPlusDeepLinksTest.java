@@ -307,22 +307,20 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyDeepLinkNewURLStructureDisneyPlusSeriesVideoPlayer() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String mickeySeriesEntity = "entity-72e27eeb-100d-47eb-b1dd-82f4b7ebfeaf";
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
-        ExploreContent movieAPI = getMovieApi(DisneyEntityIds.WANDA_VISION.getEntityId(),
+        ExploreContent seriesAPI = getSeriesApi(mickeySeriesEntity,
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        String movieTitle = movieAPI.getTitle();
-
-        if(movieTitle == null) {
+        String seriesTitle = seriesAPI.getTitle();
+        if(seriesTitle == null) {
             throw new SkipException("Skipping test, title from API was not found");
         }
-
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_me_and_mickey_1st_episode_deeplink"));
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
-        Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(seriesTitle),
                 "Video player deeplink title does not match API title");
     }
-
 }
