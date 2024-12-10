@@ -30,4 +30,10 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
     public void swipeInCollectionContainer(ExtendedWebElement element, String id){
         swipePageTillElementPresent(element, 10, collectionCell.format(id), Direction.LEFT, 1500);
     }
+
+    public ExtendedWebElement getOriginalsTitle() {
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.NAV_ORIGINALS_TITLE.getText()));
+    }
 }

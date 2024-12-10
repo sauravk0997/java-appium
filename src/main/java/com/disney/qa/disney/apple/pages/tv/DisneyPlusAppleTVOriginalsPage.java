@@ -23,8 +23,6 @@ public class DisneyPlusAppleTVOriginalsPage extends DisneyPlusOriginalsIOSPageBa
 
     @Override
     public boolean isOpened() {
-        return getStaticTextByLabelContains(getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.NAV_ORIGINALS_TITLE.getText())).isPresent();
+        return getOriginalsTitle().isPresent();
     }
 }
