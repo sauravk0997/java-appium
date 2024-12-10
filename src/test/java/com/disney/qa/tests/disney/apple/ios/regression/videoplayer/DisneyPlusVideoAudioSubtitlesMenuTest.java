@@ -156,19 +156,19 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         // Open content and select Deutsch audio and language, this will be the preferred language
-        changeAudioLanguage(R.TESTDATA.get("disney_prod_content_mulan_deeplink"), DEUTSCH, DEUTSCH);
+        changeAudioLanguage(R.TESTDATA.get("disney_prod_content_mulan_playback_deeplink"), DEUTSCH, DEUTSCH);
 
         // Open another content and verify that preferred Deutsch audio is selected
         verifyAudioLanguage(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"), DEUTSCH);
 
         // Open content with no preferred language and verify English audio is selected
-        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_temple_of_inca_deeplink"), ENGLISH);
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_temple_of_inca_playback_deeplink"), ENGLISH);
 
         // Open content that do not have English audio and verify default is selected
-        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_spanish_deeplink"), spanishLang);
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_spanish_playback_deeplink"), spanishLang);
 
         // Open content that contains Choctaw and change it to that language
-        changeAudioLanguage(R.TESTDATA.get("disney_prod_content_choctaw_deeplink"), choctawLang, DEUTSCH);
+        changeAudioLanguage(R.TESTDATA.get("disney_prod_content_choctaw_playback_deeplink"), choctawLang, DEUTSCH);
     }
 
     private void changeAudioLanguage(String deeplink, String language, String subtitles) {
