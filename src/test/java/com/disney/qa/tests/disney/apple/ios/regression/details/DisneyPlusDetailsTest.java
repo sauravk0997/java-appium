@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
@@ -20,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
@@ -187,7 +189,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //get Video duration from API and verify that its present at last in IMAX Enhance Header
         String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET.getEntityId());
         if (entityID != null) {
-            ExploreContent exploreMovieContent = getDisneyApiMovie(entityID);
+            ExploreContent exploreMovieContent = getMovieApi(entityID, DisneyPlusBrandIOSPageBase.Brand.DISNEY);
             int duration = exploreMovieContent.getDurationMs();
             LOGGER.info("Duration returned from api: {}", duration);
             String durationTime = detailsPage.getHourMinFormatForDuration(duration);
@@ -301,8 +303,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 String.format("Shop Promo Label header was not found for: %s", titleName));
         sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(),
                 String.format("Shop Promo Label Sub-header was not found for: %s", titleName));
-        sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(),
-                String.format("Shop Tab was not found for: %s", titleName));
+        sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(THREE_SEC_TIMEOUT),
+                String.format("Shop or Perks Tab was not found for: %s", titleName));
     }
 
     private void validateShopTabButton(SoftAssert sa, String titleName){

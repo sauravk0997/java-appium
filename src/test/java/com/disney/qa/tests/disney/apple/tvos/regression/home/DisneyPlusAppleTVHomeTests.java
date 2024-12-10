@@ -2,9 +2,8 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.utils.*;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVBrandsPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
+import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.*;
@@ -59,12 +58,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
     public void verifyESPNAndHuluBrandTiles() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         String standaloneAccount = "alekhya.rallapalli+6740c523@disneyplustesting.com";
 
-        selectAppleUpdateLaterAndDismissAppTracking();
-        welcomeScreenPage.waitForWelcomePageToLoad();
         loginATVHuluHub(standaloneAccount);
         homePage.waitForHomePageToOpen();
 
@@ -85,7 +81,62 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickUp();
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
-        Assert.assertTrue(brandPage.isSportsCellPresent(), "ESPN page did not open");
+        Assert.assertTrue(
+                brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                "Hulu Hub page did not open");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121516"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    public void verifyHulkUpsellStandaloneUserInEligible() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String standaloneAccount = "robert.walters+6740c5ea@disneyplustesting.com";
+        String lockedHuluContentCollectionName =
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
+
+        loginATVHuluHub(standaloneAccount);
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
+
+        //Validate in-eligible for upsell user still has some content to watch
+        String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
+        Assert.assertTrue(brandPage.getTypeCellLabelContains(titleAvailableToPlay).isPresent(),
+                "In-Eligible user for upsell couldn't see any playable Hulu content");
+        brandPage.clickDown();
+        brandPage.clickSelect();
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), 15);
+        detailsPage.clickSelect();
+        Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), "Video player did not open");
+        videoPlayer.clickBack();
+
+        //Go back to the Hulu page
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickBack();
+
+        //Move to the "Unlock to Stream More Hulu" collection
+        brandPage.waitForLoaderToDisappear(15);
+        brandPage.moveDownUntilCollectionContentIsFocused(lockedHuluContentCollectionName, 3);
+        brandPage.clickSelect();
+        detailsPage.waitUntilElementIsFocused(detailsPage.getUpgradeNowButton(), 15);
+        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(),
+                "Upgrade Now button was not present");
+        detailsPage.clickSelect();
+
+        //Verify that user is on the ineligible interstitial screen
+        sa.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(),
+                "Ineligible Screen Header is not present");
+        sa.assertTrue(detailsPage.isIneligibleScreenBodyPresent(),
+                "Ineligible Screen Body is not present");
+        sa.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
+                "Ineligible Screen cta is not present");
+
+        sa.assertAll();
     }
 
     private List<Container> getCollectionsHome() {

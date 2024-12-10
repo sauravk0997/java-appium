@@ -95,6 +95,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement staticTextByLabelOrLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement staticTextLabelContains;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label MATCHES \"%s\"`]")
+    protected ExtendedWebElement staticTextLabelMatches;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label CONTAINS \"%s\"`]")
     protected ExtendedWebElement imageLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
@@ -173,6 +175,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicRowOtherLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByLabel;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"%s\" or label == \"%s\"`]")
+    protected ExtendedWebElement dynamicBtnFindByLabelOrLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"%s\"`]")
@@ -271,6 +275,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "airingBadgeLabel")
     private ExtendedWebElement airingBadgeLabel;
 
+    @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
+    protected ExtendedWebElement headerViewTitleLabel;
+
     @ExtendedFindBy(accessibilityId = "Hide keyboard")
     private ExtendedWebElement hideKeyboard;
 
@@ -368,6 +375,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCell[`name == 'downloadsTab'`]/**/XCUIElementTypeButton[`name MATCHES '\\\\d+'`]")
     protected ExtendedWebElement downloadsTabNotificationBadge;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'loader'`]")
+    private ExtendedWebElement loader;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1459,5 +1468,43 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             }
         }
         return totalMinutes;
+    }
+
+    public boolean isCollectionTitleDisplayed() {
+        return getTypeCellLabelContains(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).isDisplayed();
+    }
+
+    public void moveDownUntilCollectionContentIsFocused(String collectionName, int count) {
+        LOGGER.info("Moving down until desired collection content is focused");
+        ExtendedWebElement firstCellFromCollection = getFirstCellFromCollection(collectionName);
+        if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) && isFocused(firstCellFromCollection)) {
+            LOGGER.info("Desired collection content was already focused");
+            return;
+        }
+        while (count > 0) {
+            moveDown(1, 1);
+            if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) &&
+                    isFocused(getFirstCellFromCollection(collectionName))) {
+                LOGGER.info("Reached desired collection");
+                return;
+            }
+            count--;
+        }
+        throw new NoSuchElementException("Desired collection was not focused");
+    }
+
+    public void waitForLoaderToDisappear(int timeout) {
+        LOGGER.info("Waiting for loader to disappear");
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Loader was still visible")
+                .until(it -> !loader.isVisible(THREE_SEC_TIMEOUT));
+    }
+
+    public void waitUntilElementIsFocused(ExtendedWebElement element, int timeout) {
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT,
+                String.format("Element was not focused after %s seconds", timeout))
+                .until(it -> isFocused(element));
     }
 }

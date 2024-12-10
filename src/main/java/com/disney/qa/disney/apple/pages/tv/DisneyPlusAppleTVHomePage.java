@@ -87,6 +87,13 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     }
 
     @Override
+    public void waitForHomePageToOpen() {
+        LOGGER.info("Waiting for Home page to load");
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Home page is not opened")
+                .until(it -> getHomePageMainElement().isPresent(THREE_SEC_TIMEOUT));
+    }
+
+    @Override
     public boolean isKidsHomePageOpen() {
         return getTypeCellNameContains("Disney Junior").isElementPresent();
     }

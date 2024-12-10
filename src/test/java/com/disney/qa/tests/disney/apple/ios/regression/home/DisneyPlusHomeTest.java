@@ -408,7 +408,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        ExploreContent movieApiContent = getDisneyApiMovie(THE_AVENGERS.getEntityId());
+        ExploreContent movieApiContent = getMovieApi(THE_AVENGERS.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
 
         detailsPage.clickPlayButton();
@@ -587,7 +587,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         //Open ESPN brand page
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.ESPN));
-        Assert. assertTrue(brandPage.isSportsCellPresent(),
+        Assert. assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.ESPN)),
                 "After tapping the ESPN tile user did not land on ESPN screen");
         homePage.getBackButton().click();
         Assert. assertTrue(homePage.isOpened(), "Home page didn't open after closing the ESPN page");

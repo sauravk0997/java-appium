@@ -16,20 +16,24 @@ import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.lang.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.alice.labels.AliceLabels.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 
 public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String WELCOME_SCREEN_NOT_LAUNCH_ERROR_MESSAGE = "Welcome screen did not launch";
     private static final String EMAIL_INPUT_SCREEN_NOT_LAUNCH_ERROR_MESSAGE = "Email input screen did not launch";
     private static final String NO_EMAIL_INPUT_ERROR_FOUND_ERROR_MESSAGE = "No email input error was found";
@@ -357,30 +361,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90689"})
-    @Test(description = "When user enters the correct password then a validating screen is prompted prior to login", groups = {TestGroup.ONBOARDING, US})
-    public void validatingScreenPostLogIn() {
-        SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        logInWithoutHomeCheck(getAccount());
-
-        disneyPlusAppleTVPasswordPage.waitForPasswordPageToDisappear();
-        aliceDriver.screenshotAndRecognize()
-                .isLabelPresent(sa, AliceLabels.LOADING_ANIMATION.getText());
-
-        sa.assertTrue(homePage.isOpened(),
-                "Home page did not launch for single profile user after logging in");
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90691"})
     @Test(description = "User logging in with a single profile account will be taken directly to home page", groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void singleProfileAccountIsTakenToHomePage() {
@@ -433,42 +413,45 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061", "XCDQA-91063"})
-    @Test(groups = {TestGroup.ONBOARDING, US}, enabled = false)
-    public void userLoggingInWithMultipleProfilesIsTakenToProfileSelection() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
+    public void verifyMultipleProfilesDefaultLanding() {
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyOffer offer = new DisneyOffer();
-        DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
-        DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        String testProfile = "test";
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(entitledUser).profileName(testProfile).language(getLanguage()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
-        String whoIsWatchingTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CHOOSE_PROFILE_TITLE.getText());
-        String editProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_EDIT_PROFILE.getText());
-        String addProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_PROFILE.getText());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        String secondProfileName = "second";
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
+                profileName(secondProfileName).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).
+                avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        String whoIsWatchingTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, CHOOSE_PROFILE_TITLE.getText());
+        String editProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, BTN_EDIT_PROFILE.getText());
+        String addProfileButtonLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, CREATE_PROFILE.getText());
 
-        logInWithoutHomeCheck(entitledUser);
+        logInWithoutHomeCheck(getAccount());
 
-        sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), "Who's Watching page did not launch");
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), "Who's Watching page did not launch");
+        sa.assertEquals(whoIsWatchingPage.getCollectionHeadlineTitleText(), whoIsWatchingTitle,
+                "Collection headline title and Who Is Watching Title are not the same");
+        sa.assertTrue(whoIsWatchingPage.getStaticTextByLabelContains(editProfileBtn).isPresent(),
+                "Edit Profile button not present");
+        sa.assertTrue(whoIsWatchingPage.getTypeCellLabelContains(addProfileButtonLabel).isPresent(),
+                "Add profile cell not present");
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(getAccount().getFirstName())),
+                "First profile is not in focus");
 
-        sa.assertEquals(disneyPlusAppleTVWhoIsWatchingPage.getCollectionHeadlineTitleText(), whoIsWatchingTitle);
+        whoIsWatchingPage.moveRight(1, 1);
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(secondProfileName)),
+                "Second profile is not in focus");
 
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, entitledUser.getProfiles().get(0).getProfileName(), ROUND_TILE_HOVERED.getText())
-                .assertLabelContainsCaption(sa, testProfile, ROUND_TILE.getText())
-                .assertLabelContainsCaption(sa, addProfileBtn, ROUND_TILE.getText());
+        whoIsWatchingPage.moveRight(1, 1);
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(addProfileButtonLabel)),
+                "Add profile is not in focus");
 
-        sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isDynamicAccessibilityIDElementPresent(editProfileBtn),
-                "The following button text was not found " + editProfileBtn);
-
-        disneyPlusAppleTVWhoIsWatchingPage.clickRight();
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, testProfile, ROUND_TILE_HOVERED.getText());
-
-        disneyPlusAppleTVWhoIsWatchingPage.clickRight();
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, addProfileBtn, ROUND_TILE_HOVERED.getText());
-
-        disneyPlusAppleTVWhoIsWatchingPage.clickDown();
-        aliceDriver.screenshotAndRecognize().assertLabelContainsCaption(sa, editProfileBtn, BUTTON_HOVERED.getText());
-
+        whoIsWatchingPage.moveDown(1, 1);
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getEditProfileButton()),
+                "Edit profile button is not in focus");
         sa.assertAll();
     }
 

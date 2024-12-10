@@ -40,8 +40,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
     private static final String IMAX_ENHANCED = "IMAX Enhanced";
     private static final String DOLBY_VISION = "Dolby Vision";
-    private static final String SHOP_PROMO_LABEL_HEADER = "Enjoy access to merchandise";
-    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the SHOP tab to learn more.";
+    private static final String SHOP_PROMO_LABEL_HEADER = "Discover Exclusive Disney+ Subscriber Perks";
+    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the PERKS tab to learn more.";
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
@@ -163,7 +163,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean waitForDetailsPageToOpen() {
         LOGGER.info("Waiting for Details page to load");
         return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Details page was not opened")
-                .until(it -> contentDetailsPage.isPresent());
+                .until(it -> getDetailsTab().isPresent());
     }
 
     public boolean isDetailPageOpened(long time) {
@@ -586,6 +586,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getContinueButton() {
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 BTN_CONTINUE.getText()));
+    }
+
+    public ExtendedWebElement getPlayOrContinueButton() {
+        return dynamicBtnFindByLabelOrLabel.format(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_PLAY.getText()),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText())
+                );
     }
 
     public ExtendedWebElement getTrailerActionButton() {

@@ -220,6 +220,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        selectAppleUpdateLaterAndDismissAppTracking();
+        welcomeScreenPage.waitForWelcomePageToLoad();
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(email);
         oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
