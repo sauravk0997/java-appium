@@ -395,8 +395,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_out_of_my_mind_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_out_of_my_mind_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_moana_2_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_moana_2_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 
