@@ -467,16 +467,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         String trioBasicPlan = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
 
         //Create account with Disney Bundle plan
-        UnifiedOffer unifiedOffer = getUnifiedSubscriptionApi()
-                .lookupUnifiedOffer(getUnifiedOfferRequest(trioBasicPlan));
-
-        getCreateUnifiedAccountRequest()
-                .setPartner(Partner.DISNEY)
-                .addEntitlement(UnifiedEntitlement.builder().unifiedOffer(unifiedOffer).subVersion(UNIFIED_ORDER).build())
-                .setCountry(getLocalizationUtils().getLocale())
-                .setLanguage(getLocalizationUtils().getUserLanguage());
-
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(trioBasicPlan)));
         loginToHome(getUnifiedAccount());
 
         //Add disney content to watchlist
@@ -498,19 +489,14 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
                 "Titles were not added to the Watchlist");
 
         // Revoke HULU subscription
-
         getUnifiedSubscriptionApi().revokeSubscription(getUnifiedAccount(),
                 getUnifiedAccount().getAgreement(0).getAgreementId());
 
         //Entitle account with D+
-        UnifiedOffer unifiedOfferHulu = getUnifiedSubscriptionApi()
-                .lookupUnifiedOffer(getUnifiedOfferRequest(disneyPremiumPlan));
-
-        UnifiedEntitlement huluEntitlements = UnifiedEntitlement.builder()
-                .unifiedOffer(unifiedOfferHulu).subVersion(UNIFIED_ORDER).build();
-
+        UnifiedEntitlement disneyEntitlements = UnifiedEntitlement.builder()
+                .unifiedOffer(getUnifiedOffer(disneyPremiumPlan)).subVersion(UNIFIED_ORDER).build();
         try {
-            getUnifiedSubscriptionApi().entitleAccount(getUnifiedAccount(), Arrays.asList(huluEntitlements));
+            getUnifiedSubscriptionApi().entitleAccount(getUnifiedAccount(), Arrays.asList(disneyEntitlements));
         } catch (MalformedURLException | URISyntaxException | InterruptedException e) {
             Assert.fail("Failed to entitle the account with new entitlement");
         }
@@ -523,7 +509,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertFalse(moreMenu.getTypeCellLabelContains(GRIMCUTTY).isPresent(SHORT_TIMEOUT),
-                        "Hulu title was present in the Watchlist");
+                "Hulu title was present in the Watchlist");
         Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),
                 "Disney Plus title was not present in the Watchlist");
     }
