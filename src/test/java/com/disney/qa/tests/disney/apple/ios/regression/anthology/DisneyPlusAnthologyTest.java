@@ -21,6 +21,8 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
+import java.util.List;
+
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     //Test constants
@@ -289,7 +291,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_en_gb_detailpage_deeplink"));
         Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(details.getMediaTitle().equals(DANCING_WITH_THE_STARS),
                 "Media title of detail page does not match " + DANCING_WITH_THE_STARS);
@@ -298,6 +300,21 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(DANCING_WITH_THE_STARS),
                 "Content title doesn't match with the anthology title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73971"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologyMaturityRatingRestriction() {
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        //set lower rating
+        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertFalse(details.isOpened(), "Details page should not open");
     }
 
     private void searchAndOpenDWTSDetails() {
