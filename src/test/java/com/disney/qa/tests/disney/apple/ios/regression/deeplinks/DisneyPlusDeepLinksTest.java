@@ -29,6 +29,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     private static final String HOME_PAGE_NOT_DISPLAYED = "Home page not displayed";
     private static final String WATCHLIST_IS_EMPTY_ERROR = "Your watchlist is empty";
     private static final String WATCHLIST_DEEP_LINK_ERROR = "Watchlist Page did not open via Deep Link";
+    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
 
     @DataProvider(name = "watchlistDeepLinks")
     public Object[][] watchlistDeepLinks() {
@@ -297,7 +298,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
                 "Video player deeplink's title doesn't match with api title");
     }
@@ -318,9 +319,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
             throw new SkipException("Skipping test, title from API was not found");
         }
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
                 "Video player deeplink title does not match API title");
     }
