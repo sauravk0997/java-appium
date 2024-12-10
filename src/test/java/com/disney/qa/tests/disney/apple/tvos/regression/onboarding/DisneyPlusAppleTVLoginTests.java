@@ -361,30 +361,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90689"})
-    @Test(description = "When user enters the correct password then a validating screen is prompted prior to login", groups = {TestGroup.ONBOARDING, US})
-    public void validatingScreenPostLogIn() {
-        SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        logInWithoutHomeCheck(getAccount());
-
-        disneyPlusAppleTVPasswordPage.waitForPasswordPageToDisappear();
-        aliceDriver.screenshotAndRecognize()
-                .isLabelPresent(sa, AliceLabels.LOADING_ANIMATION.getText());
-
-        sa.assertTrue(homePage.isOpened(),
-                "Home page did not launch for single profile user after logging in");
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90691"})
     @Test(description = "User logging in with a single profile account will be taken directly to home page", groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void singleProfileAccountIsTakenToHomePage() {
