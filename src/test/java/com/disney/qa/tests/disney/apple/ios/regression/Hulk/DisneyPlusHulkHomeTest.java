@@ -5,7 +5,6 @@ import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVBrandsPage;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -45,7 +44,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     public void verifyHuluBrandTileOnHome() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
-        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -64,7 +63,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
-        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -100,7 +99,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     public void verifyHuluPageContent() throws URISyntaxException, JsonProcessingException {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
-        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
