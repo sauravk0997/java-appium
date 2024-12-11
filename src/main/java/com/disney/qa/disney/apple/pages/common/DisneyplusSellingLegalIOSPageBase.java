@@ -13,7 +13,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     private static String iabOptOutListLink = "IAB opt-out list";
     private static String learnMoreText = "Do Not Sell or Share My Personal Information\\\" and \\\"Targeted Advertising\\\" Opt-Out Rights";
     private static String iabOptOutPageURL = "iabprivacy.com";
-    private static final String DNSSMI_TITLE = "DNSSMI";
+    private static final String DNSSMI_TITLE = "“DO NOT SELL OR SHARE MY PERSONAL INFORMATION” AND “TARGETED ADVERTISING” OPT-OUT RIGHTS";
 
     @ExtendedFindBy(accessibilityId = "purposeDetailsConsentLabel")
     private ExtendedWebElement pageHeader;
