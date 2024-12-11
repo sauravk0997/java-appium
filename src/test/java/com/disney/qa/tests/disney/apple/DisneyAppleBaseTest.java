@@ -601,6 +601,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else {
             buildType = BuildType.AD_HOC;
             sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getAdhocBundle());
+            removeEnterpriseApps();
+            removePurchaseApps();
         }
         sessionBundles.put(DISNEY, buildType.getDisneyBundle());
     }
