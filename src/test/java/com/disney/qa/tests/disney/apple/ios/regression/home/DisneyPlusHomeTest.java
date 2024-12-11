@@ -400,6 +400,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(99);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        homePage.waitUntilElementIsNotPresent(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), 10);
         Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container found after content completed");
         Assert.assertFalse(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
