@@ -13,6 +13,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.JSONException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -501,8 +502,13 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+        accountPage.waitForAccountPageToOpen();
         accountPage.clickManageWithMyDisneyButton();
+        Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
+                accountPage.getStaticTextByLabelContains(getAccount().getEmail()).getBy()), 15),
+                "My disney overlay didn't open");
         accountPage.clickEditEmail(getAccount().getEmail());
+
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
         changeEmailPage.clickCancelBtn();
 
