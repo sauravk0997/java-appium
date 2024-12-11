@@ -346,4 +346,17 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(seriesTitle),
                 "Video player deeplink title does not match API title");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74589"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureHuluBrandLanding() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
+        Assert.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand page did not open");
+    }
 }
