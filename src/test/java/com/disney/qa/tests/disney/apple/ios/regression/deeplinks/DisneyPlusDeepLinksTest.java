@@ -327,7 +327,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75329"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkNewURLStructureDisneyPlusSeriesVideoPlayer() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -349,7 +349,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75028"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkNewURLStructureHuluJuniorMode() {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
