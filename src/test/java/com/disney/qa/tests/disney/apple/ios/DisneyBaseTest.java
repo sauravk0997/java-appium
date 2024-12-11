@@ -527,14 +527,21 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return pageResponse.getData().getPage().getVisuals();
     }
 
-    public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getDisneyExploreSearchRequest()
-                .setEntityId(pageID)
-                .setProfileId(getAccount().getProfileId())
-                .setCountryCode(locale)
-                .setMaturity(getMaxMaturityRating(locale))
-                .setRoamingDas(getRoamingDas(locale))
-                .setLanguage(language)).getData().getPage().getContainers();
+    public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) {
+        ArrayList<Container> container;
+        try{
+            container = getExploreApi().getPage(getDisneyExploreSearchRequest()
+                    .setEntityId(pageID)
+                    .setProfileId(getAccount().getProfileId())
+                    .setCountryCode(locale)
+                    .setMaturity(getMaxMaturityRating(locale))
+                    .setRoamingDas(getRoamingDas(locale))
+                    .setLanguage(language)).getData().getPage().getContainers();
+        }
+        catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+        return container;
     }
 
     public String getFirstContentIDForSet(String setID) {

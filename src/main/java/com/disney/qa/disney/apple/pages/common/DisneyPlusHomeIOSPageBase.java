@@ -35,6 +35,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement mickeyAndFriends;
     @ExtendedFindBy(accessibilityId = "TabBar/Home/active")
     private ExtendedWebElement activeHomeIcon;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name = 'brandTileContentView'$]")
+    private ExtendedWebElement brandTileCell;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -191,5 +193,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
             return false;
         }
         return true;
+    }
+
+    public List<ExtendedWebElement> getBrandCells() {
+        return findExtendedWebElements(brandTileCell.getBy());
     }
 }
