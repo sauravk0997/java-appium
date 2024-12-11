@@ -342,7 +342,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         }
         launchDeeplink(R.TESTDATA.get("disney_prod_series_me_and_mickey_1st_episode_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(seriesTitle),
                 "Video player deeplink title does not match API title");
     }
