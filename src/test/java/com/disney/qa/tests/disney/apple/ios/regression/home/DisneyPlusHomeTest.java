@@ -596,17 +596,18 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, SG})
     public void verifyStarBrandTile() {
         int totalExpectedBrands = 6;
+        Container brandCollection;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
-        Container brandCollection = getDisneyAPIPage(HOME_PAGE.getEntityId(),
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage()).get(1);
-
-        if (brandCollection == null) {
-            throw new SkipException("Skipping test, failed to get brand collection details from the api");
+        try {
+            brandCollection = getDisneyAPIPage(HOME_PAGE.getEntityId(),
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage()).get(1);
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get brand collection details from the api " + e.getMessage());
         }
 
         int totalBrandTile = brandCollection.getItems().size();
