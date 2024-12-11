@@ -99,7 +99,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = "3.9.5";
+            String version = AppCenterManager.getInstance()
+                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+                            .orElseThrow(
+                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
+                    .getVersion();
             LOGGER.info("version:{}", version);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), version);
@@ -357,11 +361,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
-    /*@BeforeSuite(alwaysRun = true)
-    public final void cleanAppInstall() {
-        R.CONFIG.put("capabilities.fullReset", "true");
-    }*/
-
     @BeforeMethod(onlyForGroups = TestGroup.PROXY, alwaysRun = true)
     public final void initProxy() {
         //todo enable when grid will be updated and devices will use proxy
@@ -602,8 +601,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else {
             buildType = BuildType.AD_HOC;
             sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getAdhocBundle());
-            //removeEnterpriseApps();
-            //removePurchaseApps();
         }
         sessionBundles.put(DISNEY, buildType.getDisneyBundle());
     }
