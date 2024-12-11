@@ -353,12 +353,10 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
-        Assert.assertTrue(huluPage.isOpened(), "Hulu brand page did not open");
+        Assert.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand page did not open");
     }
 }
