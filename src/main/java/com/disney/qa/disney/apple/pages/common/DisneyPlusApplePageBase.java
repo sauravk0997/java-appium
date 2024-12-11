@@ -1507,4 +1507,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                 String.format("Element was not focused after %s seconds", timeout))
                 .until(it -> isFocused(element));
     }
+
+    public void waitUntilElementIsNotPresent(ExtendedWebElement element, int timeout) {
+        LOGGER.info("Waiting for element to not be present");
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Given element was still present")
+                .until(it -> !element.isPresent(THREE_SEC_TIMEOUT));
+    }
 }
