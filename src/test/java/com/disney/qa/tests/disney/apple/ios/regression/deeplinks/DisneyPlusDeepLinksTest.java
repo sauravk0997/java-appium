@@ -354,9 +354,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String contentUnavailableError = "content-unavailable";
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
                 .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
                 .avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
@@ -367,6 +364,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         whoIsWatchingPage.clickProfile(JUNIOR_PROFILE);
         Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(), CONTENT_UNAVAILABLE_ERROR);
         homePage.getOkButton().click();
-        Assert.assertTrue(homePage.isOpened(),HOME_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 }
