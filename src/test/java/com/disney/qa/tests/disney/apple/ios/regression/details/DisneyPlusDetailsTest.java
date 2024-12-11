@@ -302,7 +302,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String contentTitle = detailsPage.getContentTitle();
-        swipe(detailsPage.getContentDetailsPage());
+        swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
         Assert.assertTrue(detailsPage.getStaticTextByLabel(contentTitle).isPresent(),
                 "Content title is not found in navigation bar");
     }
