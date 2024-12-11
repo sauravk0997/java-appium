@@ -347,7 +347,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 "Video player deeplink title does not match API title");
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75028"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkNewURLStructureHuluJuniorMode() {
