@@ -313,9 +313,10 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         swipe(details.getSeasonSelectorButton());
-        Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(), "Download all season button displayed");
+        Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(), 
+                "Download all season button displayed for ad tier user");
         Assert.assertFalse(details.getEpisodeToDownload().isPresent(),
-                "Episode Download button is displayed");
+                "Episode Download button is displayed for ad tier user");
     }
 
     private void searchAndOpenDWTSDetails() {
