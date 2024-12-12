@@ -6,7 +6,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_hulu_hub"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="deviceName=ATV_4_Gen_12,ATV_4_Gen_9;platformName=iOS;deviceType=tvOS"/>
+    <parameter name="capabilities" value="deviceName=ATV_4_Gen_12,ATV_4_Gen_10;platformName=iOS;deviceType=tvOS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name"
                value="Disney-Non-IAP-Prod-Enterprise-tvOS,Disney-Non-IAP-PreProd-Enterprise-tvOS"/>
     <parameter name="choiceParam::env::Test ENV" value="Prod,PreProd"/>
