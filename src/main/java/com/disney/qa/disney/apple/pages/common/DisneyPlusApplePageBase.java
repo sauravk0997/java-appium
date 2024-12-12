@@ -378,6 +378,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'loader'`]")
     private ExtendedWebElement loader;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"Sorry, this content is unavailable. If " +
+            "the problem continues, visit our Help Center at disneyplus.com/content-unavailable.\"`]")
+    private ExtendedWebElement unavailableContentMessage;
+
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1506,5 +1510,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT,
                 String.format("Element was not focused after %s seconds", timeout))
                 .until(it -> isFocused(element));
+    }
+
+    public ExtendedWebElement getUnavailableContentMessage() {
+        return unavailableContentMessage;
     }
 }
