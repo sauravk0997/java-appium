@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.explore.*;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -225,7 +226,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Checkbox was not unchecked after tapping checked checkbox");
 
         downloadsPage.getSelectAllButton().click();
-        sa.assertTrue(downloadsPage.isCheckedCheckboxPresent(),
+        sa.assertTrue(downloadsPage.getUncheckedCheckbox().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals("1"),
                 "Checkbox was not checked after clicking Select All");
         sa.assertTrue(downloadsPage.getDeSelectAllButton().isPresent(),
                 "DeSelect All was not displayed after clicking Select All");
