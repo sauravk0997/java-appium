@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.search;
 
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustConsentBannerIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -89,9 +90,10 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        String premiumAccount = "robert.walters+6740c4f3@disneyplustesting.com";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        loginATVHuluHub(premiumAccount);
+        logIn(getAccount());
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -115,7 +117,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now button is not present");
         detailsPage.getUpgradeNowButton().click();
         Assert.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Hulu ineligible screen header is not present");
-        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Hulu ineligible screen description  is not present");
+        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Hulu ineligible screen description is not present");
         Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible CTA button is not present");
     }
 }
