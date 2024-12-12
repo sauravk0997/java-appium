@@ -92,6 +92,7 @@ public enum DictionaryKeys {
     BTN_SET_PROFILE_PIN("btn_set_profile_pin"),
     BTN_SIGN_UP("btn_signup"),
     BTN_SKIP_PROMO("btn_skip_promo"),
+    BTN_SKIP_RECAP("btn_skip_recap"),
     BTN_TRAILER("btn_trailer"),
     BTN_TRAVEL_MESSAGE_OK("btn_travel_message_ok"),
     BTN_UPDATE_APP("btn_update_app"),
