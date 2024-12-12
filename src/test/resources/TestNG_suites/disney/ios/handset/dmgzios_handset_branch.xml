@@ -10,7 +10,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="platformName=iOS;deviceName=iPhone_14,iPhone_12,iPhone_12_Pro,iPhone_Xs,iPhone_13_Pro;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
+               value="platformName=iOS;deviceName=iPhone_14,iPhone_12,iPhone_12_Pro,iPhone_Xs,iPhone_13_Pro,iPhone_11_2;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
@@ -20,7 +20,7 @@
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,Ariel,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Welch"/>
-    <parameter name="jenkinsBuild" value="3.9.5.74147"/>
+    <parameter name="jenkinsBuild" value="4.0.0.74899"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>

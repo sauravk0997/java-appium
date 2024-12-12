@@ -18,6 +18,11 @@ public interface IConstantHelper {
     String JARVIS_OVERRIDE_IN_USE = "Override in use! Set to: true";
     String JARVIS_NO_OVERRIDE_IN_USE_TEXT = "NO override in use!";
 
+    String SUBSCRIPTION_ID_KEY = "id";
+    String SUBSCRIPTION_PRODUCT_KEY = "product";
+    String SUBSCRIPTION_PRODUCT_SKU_KEY = "sku";
+    String UNIFIED_ORDER = "UNIFIED-ORDER";
+
     //country codes
     String AT = "AT";
     String AU = "AU";

@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_tablet_ratings_branch" annotations="JDK" configfailurepolicy="continue" thread-count="2" parallel="tests">
+<suite verbose="1" name="dmgzios_tablet_ratings_branch" annotations="JDK" configfailurepolicy="continue" thread-count="6" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
@@ -8,7 +8,7 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Pro_Gen_3,iPad_Gen_9,iPad_Pro_Gen_3_1;deviceType=Tablet;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Pro_Gen_3,iPad_Gen_9,iPad_Pro_Gen_3_1,iPad_8_Gen,iPad_Mini_5_Gen,iPad_8_Gen_1;deviceType=Tablet;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="choiceParam::groups::Test Group selection"
                value=",AI,APAC,DJCTQ,EMEA,FSK,KCC,Kijkwijzer,KMRB,LATAM,MDA,MPAATVPG,NCS,OFLC,R21"/>
@@ -16,7 +16,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
-    <parameter name="jenkinsBuild" value="3.9.5.74147"/>
+    <parameter name="jenkinsBuild" value="4.0.0.74899"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings" parallel="methods">
         <classes>

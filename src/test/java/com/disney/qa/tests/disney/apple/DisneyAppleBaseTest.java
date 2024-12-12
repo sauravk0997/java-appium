@@ -10,15 +10,15 @@ import java.util.stream.Stream;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
-import com.disney.qa.api.account.DisneyAccountApi;
+import com.disney.qa.api.account.*;
 import com.disney.config.DisneyParameters;
-import com.disney.qa.api.account.DisneySubscriptionApi;
+import com.disney.qa.api.client.requests.*;
+import com.disney.qa.api.client.requests.offer.*;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import com.disney.qa.api.pojos.ApiConfiguration;
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.offer.pojos.*;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
@@ -143,6 +143,31 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return new DisneyAccountApi(apiConfiguration);
     });
 
+    private static final ThreadLocal<UnifiedAccountApi> UNIFIED_ACCOUNT_API = ThreadLocal.withInitial(() -> {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
+                .partner(DisneyConfiguration.getPartner())
+                .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
+                .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
+                .build();
+        return new UnifiedAccountApi(apiConfiguration);
+    });
+
+    private static final ThreadLocal<UnifiedSubscriptionApi> UNIFIED_SUBSCRIPTION_API = ThreadLocal.withInitial(() -> {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(Configuration.getRequired(Configuration.Parameter.ENV))
+                .partner(DisneyConfiguration.getPartner())
+                .useMultiverse(Configuration.getRequired(
+                        DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
+                .multiverseAccountsUrl(Configuration.getRequired(
+                        DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
+                .build();
+        return new UnifiedSubscriptionApi(apiConfiguration);
+
+    });
+
     private static final LazyInitializer<DisneySearchApi> SEARCH_API = new LazyInitializer<>() {
         @Override
         protected DisneySearchApi initialize() {
@@ -154,7 +179,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         @Override
         protected ExploreApi initialize() {
             ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(APPLE).partner(DisneyConfiguration.getPartner())
-            .environment(DisneyParameters.getEnv()).build();
+                    .environment(DisneyParameters.getEnv()).build();
             return new ExploreApi(apiConfiguration);
         }
     };
@@ -172,6 +197,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     };
 
     private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(EmailApi::new);
+    ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
 
@@ -219,62 +245,67 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         });
     }
 
+    @BeforeSuite(alwaysRun = true)
+    public final void cleanAppInstall() {
+        R.CONFIG.put("capabilities.fullReset", "true");
+    }
+
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
         List<String> groups = Arrays.asList(result.getMethod().getGroups());
         String country;
-            if (groups.contains(US)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-            } else if (groups.contains(AT)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AT, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-            } else if (groups.contains(AU)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AU, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-            } else if (groups.contains(BR)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), BR, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), PT_LANG, true);
-            } else if (groups.contains(CA)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CA, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-            } else if (groups.contains(CH)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CH, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-            } else if (groups.contains(DE)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), DE, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), DE_LANG, true);
-            } else if (groups.contains(JP)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), JP, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), JA_LANG, true);
-            } else if (groups.contains(KR)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), KO_LANG, true);
-            } else if (groups.contains(NL)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NL, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-            } else if (groups.contains(NZ)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NZ, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-            } else if (groups.contains(SG)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), SG, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-            } else if (groups.contains(TR)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), TR_LANG, true);
-            } else if (groups.contains(LATAM)) {
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), ES_LANG, true);
-            } else if (groups.contains(EMEA)) {
-                country = getEMEACountryCode();
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), country, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), getEMEACountryLanguage(country), true);
-            } else if (groups.contains(MPAA)) {
-                country = getMPAACountryCode();
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), country, true);
-                R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), getMPAACountryLanguage(country), true);
-            } else {
-                throw new RuntimeException("No associated Locale and Language was found.");
+        if (groups.contains(US)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(AT)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AT, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(AU)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AU, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(BR)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), BR, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), PT_LANG, true);
+        } else if (groups.contains(CA)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CA, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(CH)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), CH, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(DE)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), DE, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), DE_LANG, true);
+        } else if (groups.contains(JP)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), JP, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), JA_LANG, true);
+        } else if (groups.contains(KR)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), KO_LANG, true);
+        } else if (groups.contains(NL)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NL, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(NZ)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NZ, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(SG)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), SG, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(TR)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), TR_LANG, true);
+        } else if (groups.contains(LATAM)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), ES_LANG, true);
+        } else if (groups.contains(EMEA)) {
+            country = getEMEACountryCode();
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), country, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), getEMEACountryLanguage(country), true);
+        } else if (groups.contains(MPAA)) {
+            country = getMPAACountryCode();
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), country, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), getMPAACountryLanguage(country), true);
+        } else {
+            throw new RuntimeException("No associated Locale and Language was found.");
         }
     }
 
@@ -330,11 +361,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
-    @BeforeSuite(alwaysRun = true)
-    public final void cleanAppInstall() {
-        R.CONFIG.put("capabilities.fullReset", "true");
-    }
-
     @BeforeMethod(onlyForGroups = TestGroup.PROXY, alwaysRun = true)
     public final void initProxy() {
         //todo enable when grid will be updated and devices will use proxy
@@ -378,6 +404,10 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
         LOCALIZATION_UTILS.clear();
+        UNIFIED_ACCOUNT.remove();
+        UNIFIED_ACCOUNT_API.remove();
+        UNIFIED_SUBSCRIPTION_API.remove();
+        CREATE_UNIFIED_ACCOUNT_REQUEST.remove();
     }
 
     @AfterSuite(alwaysRun = true)
@@ -413,12 +443,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return ACCOUNT_API.get();
     }
 
+    public static UnifiedAccountApi getUnifiedAccountApi() {
+        return UNIFIED_ACCOUNT_API.get();
+    }
+
     public static DisneySubscriptionApi getSubscriptionApi() {
         try {
             return SUBSCRIPTION_API.get();
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
+    }
+
+    public static UnifiedSubscriptionApi getUnifiedSubscriptionApi() {
+        return UNIFIED_SUBSCRIPTION_API.get();
     }
 
     public static EmailApi getEmailApi() {
@@ -437,6 +475,43 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     public void setAccount(DisneyAccount account) {
         DISNEY_ACCOUNT.set(account);
+    }
+
+    public UnifiedAccount getUnifiedAccount() {
+        return Objects.requireNonNull(UNIFIED_ACCOUNT.get());
+    }
+
+    public void setAccount(UnifiedAccount account) {
+        UNIFIED_ACCOUNT.set(Objects.requireNonNull(account));
+    }
+
+    public UnifiedOfferRequest getUnifiedOfferRequest(String searchTerm) {
+        UnifiedOfferRequest unifiedOfferRequest = UnifiedOfferRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .partner(Partner.DISNEY)
+                .searchText(searchTerm)
+                .skuPlatform(SkuPlatform.WEB)
+                .build();
+        return unifiedOfferRequest;
+    }
+
+    public UnifiedOffer getUnifiedOffer(String planName) {
+        return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName));
+    }
+
+    ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
+            ThreadLocal.withInitial(CreateUnifiedAccountRequest::new);
+
+    public CreateUnifiedAccountRequest getDefaultCreateUnifiedAccountRequest() {
+        return CREATE_UNIFIED_ACCOUNT_REQUEST.get();
+    }
+
+    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName) {
+        return getDefaultCreateUnifiedAccountRequest()
+                .setPartner(Partner.DISNEY)
+                .addEntitlement(UnifiedEntitlement.builder().unifiedOffer(getUnifiedOffer(planName)).subVersion(UNIFIED_ORDER).build())
+                .setCountry(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage());
     }
 
     public static DisneySearchApi getSearchApi() {
@@ -470,7 +545,15 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .build();
         return getExploreApi().getWatchlistActionInfoBlock(pageRequest);
     }
-    
+
+    public String getWatchlistInfoBlockForUnifiedAccount(String entityId) {
+        ExploreSearchRequest pageRequest = ExploreSearchRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .entityId(entityId)
+                .build();
+        return getExploreApi().getWatchlistActionInfoBlock(pageRequest);
+    }
+
     public static ExploreSearchRequest getDisneyExploreSearchRequest() {
         return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY);
     }
@@ -480,7 +563,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     ////////////////////////////
-
     protected BuildType buildType;
     protected Map<String, String> sessionBundles = new HashMap<>();
 

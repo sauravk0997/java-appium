@@ -5,6 +5,8 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -129,5 +131,33 @@ public class DisneyPlusHulkVideoPlayerTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isNetworkWatermarkIsNotLogoPresent(NETWORK),
                 String.format("Network (%s) Watermark logo is present after rewind the video", NETWORK));
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74452"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluVideoPlayerNetworkWatermarkAutoInterrupted() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String contentNetwork = "CBS";
+
+        setAccount(createAccountWithSku(
+                DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_survivor_episode_playback"));
+        Assert.assertTrue(videoPlayer.getSkipRecapButton().isPresent(),
+                "Skip Recap button is not present");
+        Assert.assertFalse(videoPlayer.getNetworkWatermarkLogo(contentNetwork).isElementPresent(1),
+                String.format("Network (%s) Watermark logo is present at the same time that Skip Recap button",
+                        contentNetwork));
+        videoPlayer.getSkipRecapButton().click();
+
+        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(contentNetwork),
+                String.format("Network (%s) Watermark logo is not present after skipping recap", contentNetwork));
+        Assert.assertTrue(videoPlayer.getContentRatingInfoView().isPresent(),
+                "Content rating info view is not present after skipping recap");
     }
 }

@@ -9,7 +9,6 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -20,13 +19,13 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
-import java.net.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
+import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -141,7 +140,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, US})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SINGAPORE, ENGLISH_LANG));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
@@ -408,7 +407,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        ExploreContent movieApiContent = getDisneyApiMovie(THE_AVENGERS.getEntityId());
+        ExploreContent movieApiContent = getMovieApi(THE_AVENGERS.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String contentTimeFromAPI = detailsPage.getHourMinFormatForDuration(movieApiContent.getDurationMs());
 
         detailsPage.clickPlayButton();
@@ -593,9 +592,43 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert. assertTrue(homePage.isOpened(), "Home page didn't open after closing the ESPN page");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69662"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, SG})
+    public void verifyStarBrandTile() {
+        int totalExpectedBrands = 6;
+        Container brandCollection;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        try {
+            brandCollection = getDisneyAPIPage(HOME_PAGE.getEntityId(),
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage()).get(1);
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get brand collection details from the api " + e.getMessage());
+        }
+
+        int totalBrandTile = brandCollection.getItems().size();
+
+        swipe(homePage.getHomePageMainElement());
+
+        Assert.assertEquals(totalBrandTile, totalExpectedBrands,
+                "Total number of brand does not match with expected");
+
+        IntStream.range(0, getExpectedBrand().size() - 1).forEach(i -> {
+            Assert.assertTrue(homePage.getBrandCells().get(i).getText()
+                            .contains(getExpectedBrand().get(i)),
+                    getExpectedBrand().get(i) + " tile is not in order");
+            Assert.assertTrue(homePage.getBrandCells().get(i).getText()
+                            .contains(brandCollection.getItems().get(i).getVisuals().getTitle()),
+                    brandCollection.getItems().get(i).getVisuals().getTitle() + " title is not matching with UI");
+        });
+    }
+
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
-        try {
             ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
                     getLocalizationUtils().getUserLanguage());
@@ -603,9 +636,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             contentTitle = collections.get(2).getItems().get(0).getVisuals().getTitle();
             swipe(homePage.getDynamicAccessibilityId(collectionID));
             homePage.getElementTypeCellByLabel(contentTitle).click();
-        } catch (URISyntaxException | JsonProcessingException | IndexOutOfBoundsException e) {
-            throw new RuntimeException(String.format("Not able to get the Home page data from the api, exception occurred: %s", e));
-        }
     }
 
     private void addContentInContinueWatching(String url, int scrubPercentage) {
@@ -628,5 +658,16 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertNotNull(continueWatchingTitlesFromApi,
                 String.format("No items for '%s' collection were fetched from Explore API", collection.name()));
         return continueWatchingTitlesFromApi;
+    }
+
+    protected ArrayList<String> getExpectedBrand() {
+        ArrayList<String> contentList = new ArrayList<>();
+        contentList.add("Disney");
+        contentList.add("Pixar");
+        contentList.add("Marvel");
+        contentList.add("Star Wars");
+        contentList.add("National Geographic");
+        contentList.add("STAR");
+        return contentList;
     }
 }

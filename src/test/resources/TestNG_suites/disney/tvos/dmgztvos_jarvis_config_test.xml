@@ -19,8 +19,8 @@
             <class name="com.disney.qa.tests.disney.apple.tvos.DisneyPlusATVJarvisConfigTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus tvOS Disable Jarvis Config on ATV_4_Gen_4">
-        <parameter name="tvOSDeviceName" value="ATV_4_Gen_4"/>
+    <test verbose="1" name="DisneyPlus tvOS Disable Jarvis Config on ATV_4_Gen_10">
+        <parameter name="tvOSDeviceName" value="ATV_4_Gen_10"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.DisneyPlusATVJarvisConfigTest"/>
         </classes>

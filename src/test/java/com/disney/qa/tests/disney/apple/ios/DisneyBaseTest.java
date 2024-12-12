@@ -6,8 +6,9 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.util.*;
 
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
-import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.pojos.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -35,11 +36,11 @@ import org.testng.asserts.SoftAssert;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
@@ -182,6 +183,30 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         Assert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
                 "Couldn't login into the Hulu-sub account");
+    }
+
+    /**
+     * Logs into the app by entering the provided account's credentials and username
+     *
+     * @param entitledUser - Unified Account generated for the test run
+     */
+    public void loginToHome(UnifiedAccount entitledUser) {
+        handleAlert();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        login(entitledUser);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        Assert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
+                "Home Page did not open after login");
+    }
+
+    /**
+     * Logs into the app by entering the provided account's credentials and username
+     *
+     * @param account - UnifiedAccount generated for the test run
+     */
+    public void login(UnifiedAccount account) {
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(account.getEmail());
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(account.getUserPass());
     }
 
     public DisneyAccount createAccountFor(String country, String language) {
@@ -435,18 +460,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    //Explore API methods
-    public ExploreContent getDisneyApiSeries(String entityID) {
-        try {
-            return getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(entityID).setProfileId(getAccount().getProfileId()));
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException(e);
+    public ExploreSearchRequest getExploreSearchRequest(String brand) {
+        switch (brand.toUpperCase()){
+            case "HULU":
+                return getHuluExploreSearchRequest();
+            case "DISNEY":
+            default:
+                return getDisneyExploreSearchRequest();
         }
     }
 
-    public ExploreContent getHuluApiSeries(String entityID) {
+    //Explore API methods
+    public ExploreContent getSeriesApi(String entityID, Brand brand) {
         try {
-            return getExploreApi().getSeries(getHuluExploreSearchRequest()
+            return getExploreApi().getSeries(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
                     .setProfileId(getAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e) {
@@ -454,15 +481,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public ExploreContent getDisneyApiMovie(String entityID) {
+    public ExploreContent getMovieApi(String entityID, Brand brand) {
         try {
-            return getExploreApi().getMovie(getDisneyExploreSearchRequest()
+            return getExploreApi().getMovie(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
                     .setProfileId(getAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e){
             throw new RuntimeException(e);
         }
-
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
@@ -480,7 +506,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getHuluExploreSearchRequest().setEntityId(pageID).setProfileId(getAccount().getProfileId())).getData().getPage().getContainers();
+        return getExploreApi().getPage(getHuluExploreSearchRequest()
+                .setEntityId(pageID)
+                .setProfileId(getAccount().getProfileId()))
+                .getData()
+                .getPage()
+                .getContainers();
     }
 
     public Visuals getExploreAPIPageVisuals(String entityID) {
@@ -496,14 +527,21 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return pageResponse.getData().getPage().getVisuals();
     }
 
-    public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getDisneyExploreSearchRequest()
-                .setEntityId(pageID)
-                .setProfileId(getAccount().getProfileId())
-                .setCountryCode(locale)
-                .setMaturity(getMaxMaturityRating(locale))
-                .setRoamingDas(getRoamingDas(locale))
-                .setLanguage(language)).getData().getPage().getContainers();
+    public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) {
+        ArrayList<Container> container;
+        try{
+            container = getExploreApi().getPage(getDisneyExploreSearchRequest()
+                    .setEntityId(pageID)
+                    .setProfileId(getAccount().getProfileId())
+                    .setCountryCode(locale)
+                    .setMaturity(getMaxMaturityRating(locale))
+                    .setRoamingDas(getRoamingDas(locale))
+                    .setLanguage(language)).getData().getPage().getContainers();
+        }
+        catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+        return container;
     }
 
     public String getFirstContentIDForSet(String setID) {
@@ -631,19 +669,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-    }
-
-    public String getHuluSubscriptionId() {
-        try {
-            JsonNode activeSubscriptions = getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
-            int huluSubscriptionIndex = activeSubscriptions.get(0).get("product")
-                    .get("sku").textValue()
-                    .equals(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE.getValue()) ? 0 : 1;
-            return activeSubscriptions.get(huluSubscriptionIndex).get("id").textValue();
-
-        } catch (IndexOutOfBoundsException e) {
-            throw new IndexOutOfBoundsException(e.getMessage());
-        }
     }
 
     public String convertMinutesIntoStringWithHourAndMinutes(int timeInMinutes) {

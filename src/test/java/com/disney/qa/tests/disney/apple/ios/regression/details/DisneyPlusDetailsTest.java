@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
@@ -188,7 +189,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //get Video duration from API and verify that its present at last in IMAX Enhance Header
         String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET.getEntityId());
         if (entityID != null) {
-            ExploreContent exploreMovieContent = getDisneyApiMovie(entityID);
+            ExploreContent exploreMovieContent = getMovieApi(entityID, DisneyPlusBrandIOSPageBase.Brand.DISNEY);
             int duration = exploreMovieContent.getDurationMs();
             LOGGER.info("Duration returned from api: {}", duration);
             String durationTime = detailsPage.getHourMinFormatForDuration(duration);
@@ -258,6 +259,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.getSearchNav().click();
         searchPage.searchForMedia(SPIDERMAN_THREE);
         searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayerPage.isOpened(), "Video player is not opened");
         videoPlayerPage.waitForVideoToStart();

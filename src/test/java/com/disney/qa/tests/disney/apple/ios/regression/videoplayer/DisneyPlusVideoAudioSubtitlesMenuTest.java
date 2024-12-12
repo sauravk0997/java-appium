@@ -6,6 +6,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -147,6 +148,63 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67847"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAudioAndSubtitlesPreferredLanguage() {
+        String choctawLang = "Chahta anumpa (Choctaw)";
+        String spanishLang = "Español";
+        setAppToHomeScreen(getAccount());
+
+        // Open content and select Deutsch audio and language, this will be the preferred language
+        changeAudioLanguage(R.TESTDATA.get("disney_prod_content_mulan_playback_deeplink"), DEUTSCH, DEUTSCH);
+
+        // Open another content and verify that preferred Deutsch audio is selected
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"), DEUTSCH);
+
+        // Open content with no preferred language and verify English audio is selected
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_temple_of_inca_playback_deeplink"), ENGLISH);
+
+        // Open content that do not have English audio and verify default is selected
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_spanish_playback_deeplink"), spanishLang);
+
+        // Open content that contains Choctaw and change it to that language
+        changeAudioLanguage(R.TESTDATA.get("disney_prod_content_choctaw_playback_deeplink"), choctawLang, DEUTSCH);
+    }
+
+    private void changeAudioLanguage(String deeplink, String language, String subtitles) {
+        DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        launchDeeplink(deeplink);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.tapAudioSubtitleMenu();
+        Assert.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
+        subtitlePage.chooseAudioLanguage(language);
+        subtitlePage.chooseSubtitlesLanguage(subtitles);
+        Assert.assertTrue(subtitlePage.verifySelectedAudioIs(language), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
+        Assert.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(subtitles), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
+        subtitlePage.tapCloseButton();
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+    }
+
+    private void verifyAudioLanguage(String deeplink, String audioLanguage) {
+        DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        launchDeeplink(deeplink);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.tapAudioSubtitleMenu();
+        Assert.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
+        Assert.assertTrue(subtitlePage.verifySelectedAudioIs(audioLanguage), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED);
+        subtitlePage.tapCloseButton();
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+    }
+
     private void initiatePlaybackFor(String content) {
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -161,7 +219,6 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     }
 
     private void loginAndDeeplinkToPlayerAudioSubtitleMenu(String deeplink, SoftAssert sa) {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());

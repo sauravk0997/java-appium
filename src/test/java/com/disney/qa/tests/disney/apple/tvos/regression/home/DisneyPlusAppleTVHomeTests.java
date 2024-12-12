@@ -140,13 +140,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     private List<Container> getCollectionsHome() {
-        try {
             return getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
                     getLocalizationUtils().getUserLanguage());
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void verifyBrandDetails(String brandCollectionID, DisneyPlusAppleTVHomePage homePage, SoftAssert sa) {

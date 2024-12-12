@@ -482,8 +482,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
             DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-            ExploreContent seriesApiContent = getDisneyApiSeries(DisneyEntityIds.SERIES.getEntityId());
-            ExploreContent movieApiContent = getDisneyApiMovie(DisneyEntityIds.MARVELS.getEntityId());
+            ExploreContent seriesApiContent = getSeriesApi(DisneyEntityIds.SERIES.getEntityId(),
+                    DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+            ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
 
             setAppToHomeScreen(getAccount());
             homePage.clickSearchIcon();

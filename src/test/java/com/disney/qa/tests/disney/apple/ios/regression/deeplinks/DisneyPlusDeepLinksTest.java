@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -28,6 +29,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     private static final String HOME_PAGE_NOT_DISPLAYED = "Home page not displayed";
     private static final String WATCHLIST_IS_EMPTY_ERROR = "Your watchlist is empty";
     private static final String WATCHLIST_DEEP_LINK_ERROR = "Watchlist Page did not open via Deep Link";
+    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
 
     @DataProvider(name = "watchlistDeepLinks")
     public Object[][] watchlistDeepLinks() {
@@ -126,7 +128,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74858"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluSeriesDetailDeepLink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
@@ -139,7 +141,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluNetworkDeepLinks")
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, dataProvider =
+            "huluNetworkDeepLinks")
     public void verifyDeepLinkNewURLStructureHuluNetworkPage(String deepLink) {
         String network = "ABC";
         SoftAssert sa = new SoftAssert();
@@ -220,8 +223,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
 
-        ExploreContent seriesApiContent = getHuluApiSeries(
-                R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_entity_id"));
+        ExploreContent seriesApiContent = getSeriesApi(
+                R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
         try {
             episodeTitle = seriesApiContent.getSeasons()
                     .get(seasonNumber)
@@ -272,5 +276,87 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         detailsPage.getBackButton().click();
         Assert.assertTrue(homePage.isOpened(),
                 "User was not redirected to Home Page");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74587"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureHuluVideoPlayback() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        ExploreContent movieAPIContent = getMovieApi(R.TESTDATA.get("disney_prod_hulu_movie_prey_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
+        String movieTitle = movieAPIContent.getTitle();
+
+        if(movieTitle == null){
+            throw new SkipException("Skipping test, failed to get title from the api");
+        }
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
+                "Video player deeplink's title doesn't match with api title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75301"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureDisneyPlusMovieVideoPlayer() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        ExploreContent movieAPI = getMovieApi(DisneyEntityIds.IRONMAN.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String movieTitle = movieAPI.getTitle();
+
+        if(movieTitle == null) {
+            throw new SkipException("Skipping test, title from API was not found");
+        }
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
+                "Video player deeplink title does not match API title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75329"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureDisneyPlusSeriesVideoPlayer() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        ExploreContent seriesApi = getSeriesApi(R.TESTDATA.get("disney_prod_series_me_and_mickey_entity"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String seriesTitle = seriesApi.getTitle();
+        if(seriesTitle == null) {
+            throw new SkipException("Skipping test, title from API was not found");
+        }
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_me_and_mickey_1st_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(seriesTitle),
+                "Video player deeplink title does not match API title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74589"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureHuluBrandLanding() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
+        Assert.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand page did not open");
     }
 }
