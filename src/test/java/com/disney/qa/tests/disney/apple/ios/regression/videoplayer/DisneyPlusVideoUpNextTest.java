@@ -214,6 +214,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         detailsPage.getEpisodeTitleLabel(first).click();
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.getSkipIntroButton().click();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
 
         //Wait for upnext UI to disappear
