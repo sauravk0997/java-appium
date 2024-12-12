@@ -376,7 +376,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         whoIsWatchingPage.clickProfile(JUNIOR_PROFILE);
         Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(), CONTENT_UNAVAILABLE_ERROR);
         homePage.getOkButton().click();
-        Assert.assertTrue(homePage.isKidsHomePageOpen(),
-                "Kids Home page is not open after login");
+        Assert.assertTrue(homePage.isKidsHomePageOpen(), "Kids Home page is not open after login");
     }
 }
