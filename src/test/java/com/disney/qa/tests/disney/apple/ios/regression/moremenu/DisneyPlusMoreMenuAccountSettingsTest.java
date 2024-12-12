@@ -507,7 +507,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
                 accountPage.getStaticTextByLabelContains(getAccount().getEmail()).getBy()), 15),
                 "My disney overlay didn't open");
-        accountPage.clickEditEmail(getAccount().getEmail());
+        accountPage.tapEditEmailButton();
 
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
         changeEmailPage.clickCancelBtn();
