@@ -187,12 +187,12 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
         SoftAssert sa = new SoftAssert();
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.THE_AVENGERS.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
 
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String movieTitle = detailsPage.getMediaTitle();
-        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.THE_AVENGERS.getEntityId(),
-                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         detailsPage.getMovieDownloadButton().click();
         detailsPage.waitForMovieDownloadComplete(timeout, polling);
         detailsPage.clickDownloadsIcon();
@@ -205,7 +205,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Downloaded movie asset image is not found");
         sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
                 String.format("Movie title '%s' is not found for downloaded asset", movieTitle));
-        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieApiContent.getRating()).isPresent(),
+        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(getApiMovieRatingDetails(movieApiContent)).isPresent(),
                 "Movie downloaded asset rating not found for the downloaded asset");
         sa.assertTrue(downloadsPage.getSizeAndRuntime().isPresent(),
                 "Downloaded movie asset size and runtime are not found for downloaded asset");
