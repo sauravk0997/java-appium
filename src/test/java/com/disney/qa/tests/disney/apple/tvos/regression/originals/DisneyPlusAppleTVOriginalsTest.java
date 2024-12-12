@@ -21,6 +21,7 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90978", "XCDQA-90980", "XCDQA-90982"})
     @Test(groups = {TestGroup.SMOKE, TestGroup.DETAILS_PAGE, US})
     public void originalsAppearance() {
+        int originalTitleIndex = 3;
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
@@ -36,7 +37,7 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(originalsPage.isOpened(), "Originals page is not open");
         sa.assertTrue(originalsPage.isContentShownCertainNumberPerRow(3, 7),
                 "Original items are not arranged 5 per row");
-        List<String> originalContent = originalsPage.getContentItems(3); //Originals begins at 3
+        List<String> originalContent = originalsPage.getContentItems(originalTitleIndex); //Originals begins at 3
         originalsPage.moveRight(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(originalsPage.isFocused(homePage.getDynamicCellByLabel(
@@ -44,19 +45,20 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
         originalsPage.moveRight(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(originalsPage.isFocused(homePage.getDynamicCellByLabel(
-                originalContent.get(3))), "Moving right did not focus the 1st item in Series");
-        originalsPage.moveLeft(1, 1);
+                originalContent.get(3))), "Moving right did not focus the 3rd item in Series");
+        originalsPage.moveLeft(2, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(originalsPage.isFocused(homePage.getDynamicCellByLabel(
-                originalContent.get(2))), "Moving left did not focus the 1st item in Series");
+                originalContent.get(1))), "Moving left did not focus the 1st item in Series");
         originalsPage.moveDown(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        //First 6 cells visible in Series collection, so 7th is 1st item in Movies
         sa.assertTrue(originalsPage.isFocused(homePage.getDynamicCellByLabel(
-                originalContent.get(8))), "Moving down did not focus the 1st item in Movies");
+                originalContent.get(7))), "Moving down did not focus the 1st item in Movies");
         originalsPage.moveUp(1, 1);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         sa.assertTrue(originalsPage.isFocused(homePage.getDynamicCellByLabel(
-                originalContent.get(2))), "Moving up did not focus the 1st item in Series");
+                originalContent.get(1))), "Moving up did not focus the 1st item in Series");
         sa.assertAll();
     }
 }
