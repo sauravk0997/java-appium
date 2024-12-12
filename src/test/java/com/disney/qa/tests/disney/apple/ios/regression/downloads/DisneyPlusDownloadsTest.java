@@ -39,7 +39,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66730"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() {
+    public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() throws InterruptedException {
         int latency = 20;
         int pollingInSeconds = 5;
         int timeoutInSeconds = 120;
@@ -87,7 +87,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Download episode
         detailsPage.getEpisodeToDownload(one, one).click();
         detailsPage.getEpisodeToDownload(one, two).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
+        detailsPage.waitForFirstEpisodeToCompleteDownload(timeoutInSeconds, pollingInSeconds);
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
