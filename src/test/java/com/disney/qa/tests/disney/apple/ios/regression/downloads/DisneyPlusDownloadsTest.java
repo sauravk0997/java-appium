@@ -236,7 +236,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloadsPage.getSelectAllButton().isPresent(),
                 "Select All was not displayed after clicking Deselect All");
 
-        downloadsPage.clickCancelBtn();
+        downloadsPage.getCancelButton().click();
         sa.assertTrue(downloadsPage.getEditButton().isPresent(),
                 "Edit button not displayed after exiting Edit mode");
         sa.assertFalse(downloadsPage.getTrashIcon().isPresent(), "Trash icon found after exiting Edit mode");
