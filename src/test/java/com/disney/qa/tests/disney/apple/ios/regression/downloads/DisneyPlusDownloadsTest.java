@@ -177,4 +177,77 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Movie downloaded asset rating not found for the downloaded asset");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66672"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadsEditModeScreenUI() {
+        int polling = 10;
+        int timeout = 300;
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        SoftAssert sa = new SoftAssert();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String movieTitle = detailsPage.getMediaTitle();
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.THE_AVENGERS.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        detailsPage.getMovieDownloadButton().click();
+        detailsPage.waitForMovieDownloadComplete(timeout, polling);
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        downloadsPage.getEditButton().click();
+
+        sa.assertTrue(downloadsPage.getCancelButton().isPresent(), "Cancel button not displayed");
+        sa.assertTrue(downloadsPage.getSelectAllButton().isPresent(), "Select All button not displayed");
+        sa.assertTrue(downloadsPage.getDownloadedAssetImage(movieTitle).isPresent(),
+                "Downloaded movie asset image is not found");
+        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
+                String.format("Movie title '%s' is not found for downloaded asset", movieTitle));
+        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieApiContent.getRating()).isPresent(),
+                "Movie downloaded asset rating not found for the downloaded asset");
+        sa.assertTrue(downloadsPage.getSizeAndRuntime().isPresent(),
+                "Downloaded movie asset size and runtime are not found for downloaded asset");
+        sa.assertTrue(downloadsPage.getUncheckedCheckbox().isPresent(), "Empty Checkbox is not displayed");
+        sa.assertTrue(downloadsPage.isSelectContentToRemoveTextDisplayed(),
+                "Select Content to remove text is not displayed");
+        sa.assertTrue(downloadsPage.getTrashIcon().isPresent(), "Trash icon is not displayed");
+
+        downloadsPage.clickUncheckedCheckbox();
+        sa.assertTrue(downloadsPage.isCheckedCheckboxPresent(),
+                "Checkbox is not selected after tapping unchecked checkbox");
+        sa.assertTrue(downloadsPage.getDeSelectAllButton().isPresent(),
+                "Deselect All button not displayed after tapping unchecked checkbox");
+
+        downloadsPage.getCheckedCheckbox().click();
+        sa.assertTrue(downloadsPage.getUncheckedCheckbox().isPresent(),
+                "Checkbox was not unchecked after tapping checked checkbox");
+
+        downloadsPage.getSelectAllButton().click();
+        sa.assertTrue(downloadsPage.isCheckedCheckboxPresent(),
+                "Checkbox was not checked after clicking Select All");
+        sa.assertTrue(downloadsPage.getDeSelectAllButton().isPresent(),
+                "DeSelect All was not displayed after clicking Select All");
+
+        downloadsPage.getDeSelectAllButton().click();
+        sa.assertTrue(downloadsPage.getUncheckedCheckbox().isPresent(),
+                "Checkbox was not unchecked after clicking Deselect All");
+        sa.assertTrue(downloadsPage.getSelectAllButton().isPresent(),
+                "Select All was not displayed after clicking Deselect All");
+
+        downloadsPage.clickCancelBtn();
+        sa.assertTrue(downloadsPage.getEditButton().isPresent(),
+                "Edit button not displayed after exiting Edit mode");
+        sa.assertFalse(downloadsPage.getTrashIcon().isPresent(), "Trash icon found after exiting Edit mode");
+
+        downloadsPage.getEditButton().click();
+        downloadsPage.getSelectAllButton().click();
+        downloadsPage.clickDeleteDownloadButton();
+        sa.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
+                "Download was not removed, empty header not present.");
+        sa.assertFalse(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
+                String.format("Movie title '%s' is found after deleting content", movieTitle));
+        sa.assertAll();
+    }
 }
