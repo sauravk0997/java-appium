@@ -402,10 +402,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         homePage.waitUntilElementIsNotPresent(
                 homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), 10);
-        Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+        Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING, 1),
                 "Continue Watching Container found after content completed");
         Assert.assertFalse(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
-                THE_AVENGERS.getTitle()).isPresent(), "Title found in Continue watching container");
+                THE_AVENGERS.getTitle()).isPresent(1), "Title found in Continue watching container");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
