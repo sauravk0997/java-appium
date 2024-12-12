@@ -14,6 +14,7 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
@@ -143,19 +144,18 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyMoviesDownloadsUI() {
         int polling = 10;
         int timeout = 300;
-        String Deeplink = "disneyplus://www.disneyplus.com/browse/";
 
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
         SoftAssert sa = new SoftAssert();
 
-        launchDeeplink(Deeplink+DisneyEntityIds.MARVELS.getEntityId());
+        launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String movieTitle = detailsPage.getMediaTitle();
         ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        
+
         //Start download
         detailsPage.getMovieDownloadButton().click();
         detailsPage.waitForMovieDownloadComplete(timeout, polling);
@@ -187,10 +187,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
         SoftAssert sa = new SoftAssert();
-        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.THE_AVENGERS.getEntityId(),
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String movieTitle = detailsPage.getMediaTitle();
         detailsPage.getMovieDownloadButton().click();
