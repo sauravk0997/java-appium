@@ -1172,6 +1172,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getCollection(collection).isPresent();
     }
 
+    public boolean isCollectionPresent(CollectionConstant.Collection collection, int timeout) {
+        return getCollection(collection).isPresent(timeout);
+    }
+
     public void swipeInHuluBrandPage(Direction direction) {
         swipeInContainer(brandLandingView, direction, 500);
     }
