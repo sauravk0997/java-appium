@@ -650,6 +650,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
     }
