@@ -378,10 +378,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'loader'`]")
     private ExtendedWebElement loader;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"Sorry, this content is unavailable. If " +
-            "the problem continues, visit our Help Center at disneyplus.com/content-unavailable.\"`]")
-    private ExtendedWebElement unavailableContentMessage;
-
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
     }
@@ -1263,7 +1259,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getUnavailableContentErrorPopUpMessage() {
         // This element has hardcoded the text in the app and there is not a dictionary key with the same content
-        return  findExtendedWebElement(AppiumBy.iOSClassChain("**/XCUIElementTypeTextView[`label == \"Sorry, this content is unavailable. If the problem continues, visit our Help Center at disneyplus.com/content-unavailable.\"`]"));
+        return getStaticTextByLabelContains("**/XCUIElementTypeTextView[`label == \"Sorry, this content is " +
+                "unavailable. If the problem continues, visit our Help Center at disneyplus.com/content-unavailable.");
+     //   return  findExtendedWebElement(AppiumBy.iOSClassChain("**/XCUIElementTypeTextView[`label == \"Sorry, this " +
+               // "content is unavailable. If the problem continues, visit our Help Center at disneyplus" +
+            //    ".com/content-unavailable.\"`]"));
     }
 
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
@@ -1510,9 +1510,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT,
                 String.format("Element was not focused after %s seconds", timeout))
                 .until(it -> isFocused(element));
-    }
-
-    public ExtendedWebElement getUnavailableContentMessage() {
-        return unavailableContentMessage;
     }
 }
