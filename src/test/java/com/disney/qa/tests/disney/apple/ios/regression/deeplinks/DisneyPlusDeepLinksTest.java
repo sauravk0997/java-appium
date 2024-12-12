@@ -205,7 +205,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_hub"));
         Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
 
