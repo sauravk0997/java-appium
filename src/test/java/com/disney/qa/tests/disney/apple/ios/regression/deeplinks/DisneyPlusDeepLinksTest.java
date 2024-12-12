@@ -368,7 +368,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_content_unavailable_entity_id"));
-        Assert.assertTrue(homePage.getUnavailableContentMessage().isPresent(), CONTENT_UNAVAILABLE_ERROR);
+        Assert.assertTrue(homePage.isUnavailableContentErrorPopUpMessageIsPresent(), CONTENT_UNAVAILABLE_ERROR);
         homePage.getOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
