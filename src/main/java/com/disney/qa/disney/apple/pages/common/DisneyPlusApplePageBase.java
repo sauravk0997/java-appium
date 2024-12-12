@@ -1261,9 +1261,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         // This element has hardcoded the text in the app and there is not a dictionary key with the same content
         return getStaticTextByLabelContains("**/XCUIElementTypeTextView[`label == \"Sorry, this content is " +
                 "unavailable. If the problem continues, visit our Help Center at disneyplus.com/content-unavailable.");
-     //   return  findExtendedWebElement(AppiumBy.iOSClassChain("**/XCUIElementTypeTextView[`label == \"Sorry, this " +
-               // "content is unavailable. If the problem continues, visit our Help Center at disneyplus" +
-            //    ".com/content-unavailable.\"`]"));
     }
 
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
