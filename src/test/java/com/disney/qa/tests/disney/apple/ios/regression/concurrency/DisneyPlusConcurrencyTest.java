@@ -22,14 +22,16 @@ public class DisneyPlusConcurrencyTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
       //  setAppToHomeScreen(getAccount());
-
+/*
         String email = getAccount().getEmail();
         String password = getAccount().getUserPass();
         LOGGER.info("* email** " + email);
         LOGGER.info("* password ** " + password);
+        */
+
         welcomePage.clickLogInButton();
     //    loginPage.submitEmail(getAccount().getEmail());
-        loginPage.submitEmail("qaittestguid+1733771288797e24d@gsuite.disneyplustesting.com");
+        loginPage.submitEmail("qaittestguid+173402350387805e8@gsuite.disneyplustesting.com");
      //   passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         passwordPage.submitPasswordForLogin("M1ck3yM0us3#");
 
