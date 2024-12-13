@@ -33,7 +33,6 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.
                 globalNavigationMenu.ORIGINALS.getText());
 
-//        originalsPage.waitForPresenceOfAnElement(originalsPage.getOriginalsTitle());
         Assert.assertTrue(originalsPage.isOpened(), "Originals page is not open");
         sa.assertTrue(originalsPage.isContentShownCertainNumberPerRow(3, 7),
                 "Original items are not arranged 5 per row");
