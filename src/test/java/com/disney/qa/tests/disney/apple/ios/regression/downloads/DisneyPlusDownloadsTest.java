@@ -191,10 +191,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         //Start download
         detailsPage.getMovieDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
         detailsPage.clickDownloadsIcon();
         Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
 
-        downloadsPage.waitForDownloadToStart();
         sa.assertTrue(downloadsPage.getDownloadStopIcon().isPresent(), "Download not started");
 
         downloadsPage.getDownloadStopIcon().click();
