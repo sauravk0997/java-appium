@@ -1116,23 +1116,20 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isOnlyAvailableWithHuluHeaderPresent() {
-        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER.getText());*/
-        String dictValue = "This content is only available with a Hulu subscription";
+        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER.getText());
         return getStaticTextByLabel(dictValue).isPresent();
     }
 
     public boolean isIneligibleScreenBodyPresent() {
-        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                IPS_BODY_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());*/
-        String dictValue = "This page may be unavailable or you may not be eligible to upgrade to a plan. You can call Customer Service for more information. You can also visit Account Management or the Help Centre.";
+        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_BODY_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());
         return getStaticTextByLabel(dictValue).isPresent();
     }
 
     public ExtendedWebElement getCtaIneligibleScreen() {
-        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());*/
-        String dictValue = "OK";
+        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());
         return getTypeButtonByLabel(dictValue);
     }
  }
