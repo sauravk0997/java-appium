@@ -363,31 +363,30 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testRalphSuggestMatureContentRatingGermany() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        String yearOfBirth = "2000";
+        String secondaryUser = "User2";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
+                GERMANY, getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), GERMANY);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(GERMANY, 24, AGE_VALUES_GERMANY)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
         jarvisDisableOneTrustBanner();
-      //  createAccountAndAddSecondaryProfile(GERMANY, ENGLISH_LANG);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
-       // whoIsWatching.clickProfile(JUNIOR_PROFILE);
-//        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         homePage.clickMoreTab();
         moreMenu.clickAddProfile();
-       // addProfile.enterProfileName();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
         addProfile.getCellsWithLabels().get(0).click();
-        addProfile.enterProfileName("Extra");
-        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), "2000");
-        pause(10);
-
-        Assert.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
+        addProfile.enterProfileName(secondaryUser);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), yearOfBirth);
+        Assert.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
+        Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                 RECOMMENDED_RATING_ERROR_MESSAGE);
     }
 

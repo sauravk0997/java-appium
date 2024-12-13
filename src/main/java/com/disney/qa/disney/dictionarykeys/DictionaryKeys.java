@@ -129,6 +129,7 @@ public enum DictionaryKeys {
     CONTACT_CSR_SUBTITLE("contact_csr_subtitle"),
     CONTENT_TILE_EPISODE("contenttile_episode"),
     CONTENT_TILE_INTERACT("contenttile_interact"),
+    CONTENT_RATING("content_rating"),
     CONTINUE_WATCHING_HOURS("continue_watching_hours"),
     CONTINUE_WATCHING_TITLE("continue_watching_set_title"),
     CONTINUE_WITHOUT_MATURE_DESC("continue_without_mature_description"),
