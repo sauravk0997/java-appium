@@ -359,4 +359,17 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
         Assert.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand page did not open");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74855"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureSeriesContentUnavailable() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_content_unavailable_entity_id"));
+        Assert.assertTrue(homePage.isUnavailableContentErrorPopUpMessageIsPresent(), CONTENT_UNAVAILABLE_ERROR);
+        homePage.getOkButton().click();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
 }
