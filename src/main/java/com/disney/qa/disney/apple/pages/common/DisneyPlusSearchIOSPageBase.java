@@ -114,6 +114,13 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return searchBar;
     }
 
+    public ExtendedWebElement getCancelButton() {
+        String cancelButtonText = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.CANCEL.getText());
+        return getTypeButtonByLabel(cancelButtonText);
+    }
+
     public ExtendedWebElement getOriginalsTile() {
         return originalsTile;
     }
