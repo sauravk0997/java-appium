@@ -286,7 +286,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(GERMANY, THIRTEEN_YEARS_AGE, AGE_VALUES_GERMANY)));
@@ -312,7 +311,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(CANADA, 17, AGE_VALUES_CANADA)));
@@ -338,7 +336,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, 5, AGE_VALUES_EMEA)));
@@ -357,6 +354,39 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         navigateToContentRating();
         swipe(contentRating.getRecommendedText(), Direction.UP, 2, 500);
+        Assert.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
+                RECOMMENDED_RATING_ERROR_MESSAGE);
+    }
+
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74308"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
+    public void testRalphSuggestMatureContentRatingGermany() {
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+
+        String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
+                Map.of("content_rating", getRecommendedContentRating(GERMANY, 24, AGE_VALUES_GERMANY)));
+        LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
+        jarvisDisableOneTrustBanner();
+      //  createAccountAndAddSecondaryProfile(GERMANY, ENGLISH_LANG);
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        setAppToHomeScreen(getAccount());
+       // whoIsWatching.clickProfile(JUNIOR_PROFILE);
+//        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        homePage.clickMoreTab();
+        moreMenu.clickAddProfile();
+       // addProfile.enterProfileName();
+        Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
+        addProfile.getCellsWithLabels().get(0).click();
+        addProfile.enterProfileName("Extra");
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), "2000");
+        pause(10);
+
         Assert.assertTrue(whoIsWatching.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                 RECOMMENDED_RATING_ERROR_MESSAGE);
     }
