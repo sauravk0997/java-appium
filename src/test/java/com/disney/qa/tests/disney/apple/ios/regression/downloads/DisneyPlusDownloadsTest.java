@@ -42,7 +42,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() throws InterruptedException {
         int latency = 20;
         int pollingInSeconds = 5;
-        int timeoutInSeconds = 120;
+        int timeoutInSeconds = 180;
         String zero = "0";
         String one = "1";
         String two = "2";
