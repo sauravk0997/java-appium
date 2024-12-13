@@ -800,7 +800,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForFirstEpisodeToCompleteDownload(int timeOut, int polling) {
-        LOGGER.info("Waiting for one episode download to complete");
+        LOGGER.info("Waiting for the download of the first episode to complete.");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getFirstEpisondeDownloadButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
