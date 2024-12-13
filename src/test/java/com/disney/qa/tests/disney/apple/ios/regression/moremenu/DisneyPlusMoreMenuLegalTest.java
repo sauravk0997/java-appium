@@ -332,6 +332,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     public void removeJarvisApp(){
         if(isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS))){
             removeJarvis();
+            restart();
         }
     }
 }
