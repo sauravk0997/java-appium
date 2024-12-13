@@ -31,6 +31,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()));
 	private ExtendedWebElement checkedCheckbox = getDynamicAccessibilityId(getLocalizationUtils()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_CHECKED.getText()));
+	private ExtendedWebElement resumeDownload = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_PAUSED.getText()));
+	private ExtendedWebElement stopDownload = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP.getText()));
 
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
@@ -197,26 +201,15 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				.isPresent();
 	}
 
-	public ExtendedWebElement getSelectAllButton() {
-		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION,
-				DictionaryKeys.SELECT_ALL_LABEL.getText()));
+	public ExtendedWebElement getDownloadStopIcon() {
+		return stopDownload;
 	}
 
-	public ExtendedWebElement getTrashIcon() {
-		return deleteDownloadButton;
+	public ExtendedWebElement getDownloadResumeIcon() {
+		return resumeDownload;
 	}
 
-	public boolean isSelectContentToRemoveTextDisplayed() {
-		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION,
-				DictionaryKeys.SELECT_CONTENT_REMOVE.getText()))
-				.isPresent();
-	}
-
-	public ExtendedWebElement getDeSelectAllButton() {
-		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION,
-				DictionaryKeys.DESELCT_ALL_LABEL.getText()));
+	public void clickDownloadHeader() {
+		downloadsHeader.click();
 	}
 }
