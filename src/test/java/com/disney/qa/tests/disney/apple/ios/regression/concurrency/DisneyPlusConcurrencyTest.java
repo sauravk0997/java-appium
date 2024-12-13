@@ -28,12 +28,16 @@ public class DisneyPlusConcurrencyTest extends DisneyBaseTest {
         LOGGER.info("* email** " + email);
         LOGGER.info("* password ** " + password);
         */
+        String email = System.getenv("accountEmail");
+        String password = System.getenv("accountPassword");
 
         welcomePage.clickLogInButton();
+        loginPage.submitEmail(email);
+        passwordPage.submitPasswordForLogin(password);
     //    loginPage.submitEmail(getAccount().getEmail());
-        loginPage.submitEmail("qaittestguid+173402350387805e8@gsuite.disneyplustesting.com");
+       // loginPage.submitEmail("qaittestguid+173402350387805e8@gsuite.disneyplustesting.com");
      //   passwordPage.submitPasswordForLogin(getAccount().getUserPass());
-        passwordPage.submitPasswordForLogin("M1ck3yM0us3#");
+       // passwordPage.submitPasswordForLogin("M1ck3yM0us3#");
 
 
         //  passwordPage.clickPrimaryButton();
