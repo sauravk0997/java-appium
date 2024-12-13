@@ -3,6 +3,8 @@ package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
+import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
@@ -298,6 +300,23 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(DANCING_WITH_THE_STARS),
                 "Content title doesn't match with the anthology title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73972"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologyDownloadForAdTierUser() {
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        swipe(details.getSeasonSelectorButton());
+        Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(), 
+                "Download all season button displayed for ad tier user");
+        Assert.assertFalse(details.getEpisodeToDownload().isPresent(),
+                "Episode Download button is displayed for ad tier user");
     }
 
     private void searchAndOpenDWTSDetails() {
