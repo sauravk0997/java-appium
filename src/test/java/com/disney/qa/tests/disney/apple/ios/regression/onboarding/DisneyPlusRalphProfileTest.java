@@ -367,6 +367,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         String yearOfBirth = "2000";
+        int age = 24;
         String secondaryUser = "User2";
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
@@ -374,7 +375,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         getAccountApi().overrideLocations(getAccount(), GERMANY);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
-                Map.of("content_rating", getRecommendedContentRating(GERMANY, 24, AGE_VALUES_GERMANY)));
+                Map.of("content_rating", getRecommendedContentRating(GERMANY, age, AGE_VALUES_GERMANY)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
         jarvisDisableOneTrustBanner();
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
