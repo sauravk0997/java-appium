@@ -20,9 +20,4 @@ public class DisneyPlusAppleTVOriginalsPage extends DisneyPlusOriginalsIOSPageBa
     public DisneyPlusAppleTVOriginalsPage(WebDriver driver) {
         super(driver);
     }
-
-    @Override
-    public boolean isOpened() {
-        return getOriginalsTitle().isPresent();
-    }
 }
