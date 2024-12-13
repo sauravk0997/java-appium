@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
@@ -20,6 +21,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -326,4 +328,10 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @BeforeMethod(alwaysRun = true)
+    public void removeJarvisApp(){
+        if(isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS))){
+            removeJarvis();
+        }
+    }
 }
