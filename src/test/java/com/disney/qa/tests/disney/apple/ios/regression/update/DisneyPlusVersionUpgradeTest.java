@@ -10,6 +10,7 @@ import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -23,15 +24,15 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
        and upgrades against the latest FC approved (appCurrentFCVersion) it is in the current FC XML
      */
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77606"})
+    @Parameters({"build"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
-    public void verifyAppUpgrade() {
+    public void verifyAppUpgrade(String currentBuildVersion) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        String appCurrentFCVersion =  R.TESTDATA.get("disney_app_current_fc_version");
         String appPreviousFCVersion =  R.TESTDATA.get("disney_app_previous_fc_version");
 
         // Install previous FC Version and log in
@@ -48,13 +49,13 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         // Terminate app and upgrade application to current version
         terminateApp(sessionBundles.get(DISNEY));
-        installApplication(appCurrentFCVersion);
+        installApplication(currentBuildVersion);
         startApp(sessionBundles.get(DISNEY));
         moreMenu.clickMoreTab();
         // Verify version is current FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
                 "App Version was not displayed");
-        Assert.assertEquals(appCurrentFCVersion, moreMenu.getAppVersion(), "Version is not the current expected");
+        Assert.assertEquals(currentBuildVersion, moreMenu.getAppVersion(), "Version is not the current expected");
         // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getAccount().getFirstName());
