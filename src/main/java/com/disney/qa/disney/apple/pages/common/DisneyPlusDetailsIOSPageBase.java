@@ -779,6 +779,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonContainsLabel("Download Season " + seasonNumber + " Episode " + episodeNumber);
     }
 
+    public ExtendedWebElement getEpisodeToDownload() {
+        return dynamicBtnFindByLabelOrLabel.format("Download Season", "Episode");
+    }
+
     /**
      * Use with hulu series content only - to get Hulu series download complete button
      */
