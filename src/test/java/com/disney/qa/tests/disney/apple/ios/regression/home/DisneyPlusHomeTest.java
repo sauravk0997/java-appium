@@ -380,6 +380,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         // Populate Continue Watching assets
@@ -398,10 +399,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(THE_AVENGERS.getTitle()),
                 "Title didn't play from continue watching shelf");
         videoPlayer.scrubToPlaybackPercentage(99);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickBackButton();
+        upNextPage.waitForYouMayAlsoLikeHeaderToBePresent(15);
+        videoPlayer.getBackArrow().click();
         homePage.waitUntilElementIsNotPresent(
-                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), 10);
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), 15);
         Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING, 1),
                 "Continue Watching Container found after content completed");
         Assert.assertFalse(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
