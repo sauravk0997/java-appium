@@ -94,6 +94,14 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
                 DictionaryKeys.POSTPLAY_NEXTEPISODE_HEADER.getText())).isPresent();
     }
 
+    public void waitForYouMayAlsoLikeHeaderToBePresent(int timeout) {
+        ExtendedWebElement postPlayBecauseYouWatchedHeader = getStaticTextByLabel(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.POSTPLAY_BECAUSEYOUWATCHED.getText()));
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "'You may also like' header wasn't visible")
+                .until(it -> postPlayBecauseYouWatchedHeader.isElementPresent(THREE_SEC_TIMEOUT));
+    }
+
     public ExtendedWebElement getUpNextImageView() {
         return upNextImageView;
     }
