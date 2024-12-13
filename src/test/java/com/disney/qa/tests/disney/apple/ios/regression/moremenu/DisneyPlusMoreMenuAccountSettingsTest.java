@@ -516,7 +516,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User was not returned to the Account page after cancelling new email submission");
         Assert.assertTrue(accountPage.getStaticTextByLabelContains(getAccount().getEmail())
                         .isPresent(),
-                "User's email didn't stay same");
+                "User's email didn't stay same after cancelling new email submission");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-70695"})
