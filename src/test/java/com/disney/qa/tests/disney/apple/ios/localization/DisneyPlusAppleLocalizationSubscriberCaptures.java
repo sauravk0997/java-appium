@@ -4,7 +4,6 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.disney.util.TestGroup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,7 +24,6 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusAppSettingsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusChangeEmailIOSPageBase;
@@ -33,7 +31,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusChangePasswordIOSPageBa
 import com.disney.qa.disney.apple.pages.common.DisneyPlusChooseAvatarIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusContentRatingIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
@@ -816,7 +813,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         List<DisneyCollectionSet> setInfo = contentCollection.getCollectionSetsInfo();
 
         searchPage.clickOriginalsTab();
-        originalsPage.isOriginalPageLoadPresent();
+        originalsPage.isOpened();
         getScreenshots("OriginalsLandingPage");
 
         ExtendedWebElement currentElement;
