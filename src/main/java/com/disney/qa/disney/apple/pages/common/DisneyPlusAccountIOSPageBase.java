@@ -43,6 +43,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton[2]")
+    private ExtendedWebElement editPasswordButton;
+
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                     DictionaryKeys.ACCESS_SECURITY_HEADER.getText()));
@@ -691,4 +694,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getAccountManagementTextElement().isElementPresent();
     }
 
+    public ExtendedWebElement getEditPasswordButton() {
+        return editPasswordButton;
+    }
 }
