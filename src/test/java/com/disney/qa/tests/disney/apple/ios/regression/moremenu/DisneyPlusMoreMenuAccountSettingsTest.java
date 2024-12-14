@@ -40,7 +40,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String AMAZON_URL = "amazon.com";
     private static final String MERCADOLIBRE_URL = "mercadolibre.com";
     private DisneyEntitlement disneyEntitlements;
-    private static final String EDIT_ICON = "editIcon";
 
     @BeforeMethod
     public void handleAlert() {
