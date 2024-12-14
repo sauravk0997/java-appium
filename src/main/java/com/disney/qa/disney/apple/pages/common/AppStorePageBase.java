@@ -1,8 +1,5 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.utils.helpers.DateHelper;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +12,10 @@ public class AppStorePageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement appStoreScreen;
     @ExtendedFindBy(accessibilityId = "AppStore.shelfItemSubComponent.title")
     private ExtendedWebElement appStoreScreenTitle;
+    @ExtendedFindBy(accessibilityId = "AppStore.onboarding.continueButton")
+    private ExtendedWebElement onboardingContinueButton;
+    @ExtendedFindBy(accessibilityId = "AppStore.onboarding.turnOffButton")
+    private ExtendedWebElement turnOffPersonalizedAdsButton;
 
     //FUNCTIONS
     public AppStorePageBase(WebDriver driver) {
@@ -27,5 +28,17 @@ public class AppStorePageBase extends DisneyPlusApplePageBase {
 
     public String getAppStoreAppScreenTitle() {
         return appStoreScreenTitle.getText();
+    }
+
+    public void dismissOnboardingScreenIfPresent() {
+        if (onboardingContinueButton.isPresent(10)) {
+            onboardingContinueButton.click();
+        }
+    }
+
+    public void dismissPersonalisedAdsScreenIfPresent() {
+        if (turnOffPersonalizedAdsButton.isPresent(10)) {
+            turnOffPersonalizedAdsButton.click();
+        }
     }
 }
