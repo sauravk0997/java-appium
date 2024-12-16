@@ -198,6 +198,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloadsPage.getDownloadStopIcon().isPresent(), "Download not started");
 
         downloadsPage.getDownloadStopIcon().click();
+        sa.assertTrue(detailsPage.waitForPauseDownloadButtonToVisible(), "Pause Download button not displayed on alert");
         downloadsPage.clickDefaultAlertBtn();
         sa.assertTrue(downloadsPage.getDownloadResumeIcon().isPresent(),
                 "Download not pause after clicking pause download");
