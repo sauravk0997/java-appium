@@ -372,4 +372,23 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.getOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75028"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkNewURLStructureHuluJuniorMode() {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String contentUnavailableError = "content-unavailable";
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), "Who is watching screen did not open");
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
+        whoIsWatchingPage.clickProfile(JUNIOR_PROFILE);
+        Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(), CONTENT_UNAVAILABLE_ERROR);
+        homePage.getOkButton().click();
+        Assert.assertTrue(homePage.isKidsHomePageOpen(), "Kids Home page is not open after dismissing error");
+    }
 }
