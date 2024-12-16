@@ -230,9 +230,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
         int remainingTimeBeforeRewind = videoPlayer.getRemainingTime();
-        int remainingTimeAfterRewindTapInPlayMode = videoPlayer.tapRewindButton(3).getRemainingTime();
+        int remainingTimeAfterRewindTapInPlayMode = videoPlayer.tapRewindButton(4).getRemainingTime();
         int remainingTimeDifferenceWhileRewind = remainingTimeAfterRewindTapInPlayMode - remainingTimeBeforeRewind;
-        sa.assertTrue(remainingTimeDifferenceWhileRewind <= 30 && remainingTimeDifferenceWhileRewind > 0,
+        sa.assertTrue(remainingTimeDifferenceWhileRewind <= 40 && remainingTimeDifferenceWhileRewind > 0,
                 "Remaining time in play mode time after rewind tap " + remainingTimeAfterRewindTapInPlayMode +
                         " is not greater than remaining time before rewind tap " + remainingTimeBeforeRewind);
 
