@@ -205,6 +205,19 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return stopDownload;
 	}
 
+	public boolean waitForStopDownloadButtonToVisible() {
+		int count = 5;
+		ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
+				getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+		while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+			clickAlertDismissBtn();
+			getDownloadStopIcon().click();
+			count--;
+		}
+		return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
+	}
+
 	public ExtendedWebElement getDownloadResumeIcon() {
 		return resumeDownload;
 	}

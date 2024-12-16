@@ -706,7 +706,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.clickStopOrPauseDownload();
-        sa.assertTrue(detailsPage.waitForPauseDownloadButtonToVisible(), "Pause Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(), "Pause Download button not displayed on alert");
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(), "Remove Download button not displayed on alert");
         sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
                 "Download in Progress status not displayed on alert");
@@ -750,7 +750,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.clickStopOrPauseDownload();
-        sa.assertTrue(detailsPage.waitForPauseDownloadButtonToVisible(), "Pause Download button not displayed on alert");
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(), "Pause Download button not displayed on alert");
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(), "Remove Download button not displayed on alert");
         sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
                 "Download in Progress status not displayed on alert");
