@@ -31,7 +31,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement nationalGeographicTile;
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
-    @ExtendedFindBy(accessibilityId = "Mickey and Friends")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Mickey Mouse and Friends'`]")
     private ExtendedWebElement mickeyAndFriends;
     @ExtendedFindBy(accessibilityId = "TabBar/Home/active")
     private ExtendedWebElement activeHomeIcon;
