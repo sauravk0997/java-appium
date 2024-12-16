@@ -385,7 +385,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Date startTime = getEmailApi().getStartTime();
         accountPage.clickChangePasswordCell();
-        accountPage.getDynamicRowButtonLabel(EDIT_ICON, 2).click();
+        accountPage.getEditPasswordButton().click();
 
         String otp = getOTPFromApi(startTime, otpAccount);
 
