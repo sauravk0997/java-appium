@@ -20,7 +20,8 @@ public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    public boolean isOriginalPageLoadPresent() {
+    @Override
+    public boolean isOpened() {
         String originalLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, NAV_ORIGINALS_TITLE.getText());
         return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
