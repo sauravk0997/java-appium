@@ -403,7 +403,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_star_brand_deeplink"));
         Assert.assertTrue(homePage.getUnavailableContentError().isPresent(),
                 "'Content not available' error modal was not present ");
-        homePage.clickAlertConfirm();
+        homePage.getUnavailableOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 }
