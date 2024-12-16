@@ -745,16 +745,20 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return webviewUrlBar.isElementPresent();
     }
 
+    public String getWebviewUrl() {
+        return webviewUrlBar.getText();
+    }
+
+    public ExtendedWebElement getWebviewUrlBar() {
+        return webviewUrlBar;
+    }
+
     public boolean continueButtonPresent() {
         return getTypeButtonByLabel("Continue").isElementPresent();
     }
 
     public void clickContinueBtn() {
         continueButton.click();
-    }
-
-    public String getWebviewUrl() {
-        return webviewUrlBar.getText();
     }
 
     // Will take you to continue or done button on tvOS on screen keyboard

@@ -586,6 +586,22 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Add Profile Icon was not displayed");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67160"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAccountsCommunicationSettings() {
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        setAppToAccountSettings(getAccount());
+
+        accountPage.waitForAccountPageToOpen();
+        accountPage.swipe(accountPage.getAccountManagementTextElement());
+        Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
+                "Account Management link was not displayed");
+        accountPage.getAccountManagementLink().click();
+        accountPage.waitForPresenceOfAnElement(accountPage.getWebviewUrlBar());
+        Assert.assertTrue(accountPage.isAccountManagementFAQWebViewDisplayed(),
+                "Account Management FAQ web page did not open");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyIAPBillingHoldWithPartnerSub() {
@@ -635,7 +651,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     //Helper methods
 
     private void setAppToAccountSettings(DisneyAccount account) {
-        setAppToHomeScreen(account, account.getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(account);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
