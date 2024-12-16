@@ -148,7 +148,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                    DictionaryKeys.DOWNLOAD_STOP.getText()), 1);
+                    DictionaryKeys.DOWNLOAD_STOP_DETAILS_PAGE.getText()), 1);
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {

@@ -31,7 +31,12 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()));
 	private ExtendedWebElement checkedCheckbox = getDynamicAccessibilityId(getLocalizationUtils()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_CHECKED.getText()));
-
+	private ExtendedWebElement resumeDownload = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_PAUSED.getText()));
+	private ExtendedWebElement stopDownload = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP.getText()));
+	private ExtendedWebElement queueDownload = getStaticTextByLabel(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_QUEUED.getText()));
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
 
@@ -50,6 +55,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
 			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]/XCUIElementTypeOther")
 	private ExtendedWebElement progressBarBookmarkPositionOnDownload;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeButton")
+	private ExtendedWebElement episodeDownloadButton;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"emptyView\"`]/XCUIElementTypeScrollView" +
 			"/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
@@ -197,26 +206,38 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				.isPresent();
 	}
 
-	public ExtendedWebElement getSelectAllButton() {
-		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION,
-				DictionaryKeys.SELECT_ALL_LABEL.getText()));
+	public ExtendedWebElement getDownloadStopIcon() {
+		return stopDownload;
 	}
 
-	public ExtendedWebElement getTrashIcon() {
-		return deleteDownloadButton;
+	public boolean waitForPauseDownloadButtonToVisible() {
+		int count = 5;
+		ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
+				getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+		while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+			clickAlertDismissBtn();
+			getDownloadStopIcon().click();
+			count--;
+		}
+		return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
 	}
 
-	public boolean isSelectContentToRemoveTextDisplayed() {
-		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION,
-				DictionaryKeys.SELECT_CONTENT_REMOVE.getText()))
-				.isPresent();
+	public ExtendedWebElement getDownloadResumeIcon() {
+		return resumeDownload;
 	}
 
-	public ExtendedWebElement getDeSelectAllButton() {
-		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION,
-				DictionaryKeys.DESELCT_ALL_LABEL.getText()));
+	public void clickDownloadHeader() {
+		downloadsHeader.click();
+	}
+
+	public ExtendedWebElement getEpisodeDownloadButton(String seasonNumber, String episodeNumber) {
+		return episodeDownloadButton.format(seasonNumber, episodeNumber);
+	}
+
+	public boolean isDownloadIsQueuedStatusDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils()
+				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.DOWNLOAD_QUEUED.getText())).isPresent();
 	}
 }

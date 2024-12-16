@@ -12,6 +12,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -175,6 +176,69 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Downloaded movie asset size and runtime are not found for downloaded asset");
         sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieApiContent.getRating()).isPresent(),
                 "Movie downloaded asset rating not found for the downloaded asset");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66718"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadsInQueueSubFunction() {
+        int seasonNumber = 1;
+        String one = "1";
+        String three = "3";
+        String episodeTitle;
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        SoftAssert sa = new SoftAssert();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_loki_share_link"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        ExploreContent seriesApiContent = getSeriesApi(
+                R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            episodeTitle = seriesApiContent.getSeasons()
+                    .get(seasonNumber)
+                    .getItems()
+                    .get(seasonNumber)
+                    .getVisuals()
+                    .getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, titles or deeplinkID were not found" + e.getMessage());
+        }
+
+        if(episodeTitle == null){
+            throw new SkipException("Skipping test, failed to get episode title from the api");
+        }
+
+        //Start download
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+        downloadsPage.waitForDownloadToStart();
+        downloadsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        downloadsPage.clickSeriesMoreInfoButton();
+
+        downloadsPage.getEpisodeDownloadButton(one, one).click();
+
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(), "Remove Download button not displayed on alert");
+        sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
+                "Download is Queued status not displayed on alert");
+        sa.assertTrue(downloadsPage.getStaticTextByLabel(episodeTitle).isPresent(),
+                "Episode title is not present on alert");
+        sa.assertTrue(downloadsPage.isAlertDismissBtnPresent(), "Dismiss button not present on alert");
+
+        downloadsPage.clickAlertDismissBtn();
+        sa.assertTrue(downloadsPage.isEpisodeCellDisplayed(one, one),
+                "episode is removed after dismissing alert");
+
+        downloadsPage.getEpisodeDownloadButton(one, three).click();
+        sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
+                "Download is Queued status not displayed on alert");
+        downloadsPage.clickDefaultAlertBtn();
+        sa.assertFalse(downloadsPage.isEpisodeCellDisplayed(one, three),
+                "episode is not removed after clicking remove download on alert");
         sa.assertAll();
     }
 }
