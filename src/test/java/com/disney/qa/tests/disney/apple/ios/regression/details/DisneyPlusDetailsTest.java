@@ -293,6 +293,20 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61128"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContentTitleInNavigationBar() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String contentTitle = detailsPage.getContentTitle();
+        swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(contentTitle).isPresent(),
+                "Content title is not found in navigation bar");
+    }
+
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

@@ -1518,4 +1518,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Given element was still present")
                 .until(it -> !element.isPresent(THREE_SEC_TIMEOUT));
     }
+
+    public ExtendedWebElement getCancelButton() {
+        String cancelButtonText = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.CANCEL.getText());
+        return getTypeButtonByLabel(cancelButtonText);
+    }
 }
