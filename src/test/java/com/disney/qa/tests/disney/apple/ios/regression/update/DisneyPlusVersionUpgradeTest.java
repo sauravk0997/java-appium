@@ -95,6 +95,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         welcomePage.clickDefaultAlertBtn();
 
+        appStorePageBase.dismissOnboardingScreenIfPresent();
+        appStorePageBase.dismissPersonalisedAdsScreenIfPresent();
         Assert.assertTrue(appStorePageBase.isAppStoreAppOpen(), "AppStore App not open");
         Assert.assertTrue(appStorePageBase.getAppStoreAppScreenTitle().contains("Disney"),
                 "AppStore is not opened to Disney+");
@@ -128,6 +130,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         welcomePage.clickDefaultAlertBtn();
 
+        appStorePageBase.dismissOnboardingScreenIfPresent();
+        appStorePageBase.dismissPersonalisedAdsScreenIfPresent();
         Assert.assertTrue(appStorePageBase.isAppStoreAppOpen(), "AppStore App not open");
         Assert.assertTrue(appStorePageBase.getAppStoreAppScreenTitle().contains("Disney"),
                 "AppStore is not opened to Disney+");
