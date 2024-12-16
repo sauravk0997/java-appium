@@ -31,13 +31,13 @@ public class AppStorePageBase extends DisneyPlusApplePageBase {
     }
 
     public void dismissOnboardingScreenIfPresent() {
-        if (onboardingContinueButton.isPresent(10)) {
+        if (onboardingContinueButton.isPresent(TEN_SEC_TIMEOUT)) {
             onboardingContinueButton.click();
         }
     }
 
     public void dismissPersonalisedAdsScreenIfPresent() {
-        if (turnOffPersonalizedAdsButton.isPresent(10)) {
+        if (turnOffPersonalizedAdsButton.isPresent(TEN_SEC_TIMEOUT)) {
             turnOffPersonalizedAdsButton.click();
         }
     }
