@@ -236,7 +236,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         downloadsPage.getEpisodeDownloadButton(one, five).click();
         sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
                 "Download is Queued status not displayed on alert");
-        downloadsPage.clickDefaultAlertBtn();
+        downloadsPage.getSystemAlertDestructiveButton().click();
         sa.assertFalse(downloadsPage.isEpisodeCellDisplayed(one, five),
                 "episode is not removed after clicking remove download on alert");
         sa.assertAll();
