@@ -191,7 +191,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         SoftAssert sa = new SoftAssert();
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_loki_share_link"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         ExploreContent seriesApiContent = getSeriesApi(
