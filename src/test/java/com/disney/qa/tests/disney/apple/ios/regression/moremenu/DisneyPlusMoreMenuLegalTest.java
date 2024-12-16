@@ -325,5 +325,4 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertTrue(sellinglegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
         sa.assertAll();
     }
-
 }
