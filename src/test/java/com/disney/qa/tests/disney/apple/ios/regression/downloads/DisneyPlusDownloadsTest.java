@@ -185,7 +185,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         String one = "1";
         String four = "4";
         String five = "5";
-        String episodeTitle;
+        String fourthEpisodeTitle, fifthEpisodeTitle;
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
@@ -198,18 +198,27 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 R.TESTDATA.get("disney_prod_loki_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         try {
-            episodeTitle = seriesApiContent.getSeasons()
+            fourthEpisodeTitle = seriesApiContent.getSeasons()
                     .get(0)
                     .getItems()
                     .get(3)
                     .getVisuals()
                     .getEpisodeTitle();
+
+            fifthEpisodeTitle = seriesApiContent.getSeasons()
+                    .get(0)
+                    .getItems()
+                    .get(4)
+                    .getVisuals()
+                    .getEpisodeTitle();
+
+
         } catch (Exception e) {
             throw new SkipException("Skipping test, titles or deeplinkID were not found" + e.getMessage());
         }
 
-        if(episodeTitle == null){
-            throw new SkipException("Skipping test, failed to get episode title from the api");
+        if(fourthEpisodeTitle == null || fifthEpisodeTitle == null){
+            throw new SkipException("Skipping test, failed to get episode titles from the api");
         }
 
         //Start download
@@ -225,7 +234,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(), "Remove Download button not displayed on alert");
         sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
                 "Download is Queued status not displayed on alert");
-        sa.assertTrue(downloadsPage.getStaticTextByLabel(episodeTitle).isPresent(),
+        sa.assertTrue(downloadsPage.getStaticTextByLabel(fourthEpisodeTitle).isPresent(),
                 "Episode title is not present on alert");
         sa.assertTrue(downloadsPage.isAlertDismissBtnPresent(), "Dismiss button not present on alert");
 
@@ -237,7 +246,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
                 "Download is Queued status not displayed on alert");
         downloadsPage.getSystemAlertDestructiveButton().click();
-        sa.assertFalse(downloadsPage.isEpisodeCellDisplayed(one, five),
+        sa.assertFalse(downloadsPage.getStaticTextByLabel(fifthEpisodeTitle).isPresent(),
                 "episode is not removed after clicking remove download on alert");
         sa.assertAll();
     }
