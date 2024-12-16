@@ -183,7 +183,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadsInQueueSubFunction() {
         String one = "1";
-        String three = "3";
+        String four = "4";
         String five = "5";
         String episodeTitle;
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -201,7 +201,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
             episodeTitle = seriesApiContent.getSeasons()
                     .get(0)
                     .getItems()
-                    .get(2)
+                    .get(3)
                     .getVisuals()
                     .getEpisodeTitle();
         } catch (Exception e) {
@@ -220,7 +220,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         downloadsPage.clickSeriesMoreInfoButton();
 
-        downloadsPage.getEpisodeDownloadButton(one, three).click();
+        downloadsPage.getEpisodeDownloadButton(one, four).click();
 
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(), "Remove Download button not displayed on alert");
         sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
@@ -230,7 +230,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloadsPage.isAlertDismissBtnPresent(), "Dismiss button not present on alert");
 
         downloadsPage.clickAlertDismissBtn();
-        sa.assertTrue(downloadsPage.isEpisodeCellDisplayed(one, three),
+        sa.assertTrue(downloadsPage.isEpisodeCellDisplayed(one, four),
                 "episode is removed after dismissing alert");
 
         downloadsPage.getEpisodeDownloadButton(one, five).click();
