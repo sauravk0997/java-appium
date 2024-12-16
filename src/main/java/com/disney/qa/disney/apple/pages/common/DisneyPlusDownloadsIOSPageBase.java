@@ -6,7 +6,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.CacheLookup;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.temporal.ValueRange;
 import java.util.Map;
@@ -22,16 +21,16 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@CacheLookup
 	private ExtendedWebElement downloadsHeader;
 
-	private ExtendedWebElement editButton = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT.getText()));
-	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
-
-	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
-
-	@ExtendedFindBy(accessibilityId = "Checkbox. Checked.")
-	private ExtendedWebElement checkedCheckbox;
-
-	@ExtendedFindBy(accessibilityId = "Checkbox. Unchecked.")
-	private ExtendedWebElement uncheckedCheckbox;
+	private ExtendedWebElement editButton = getStaticTextByLabel(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT.getText()));
+	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
+	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
+	private ExtendedWebElement uncheckedCheckbox = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()));
+	private ExtendedWebElement checkedCheckbox = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_CHECKED.getText()));
 
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
@@ -115,8 +114,16 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		uncheckedCheckbox.click();
 	}
 
+	public ExtendedWebElement getUncheckedCheckbox() {
+		return uncheckedCheckbox;
+	}
+
 	public boolean isCheckedCheckboxPresent() {
 		return checkedCheckbox.isElementPresent();
+	}
+
+	public ExtendedWebElement getCheckedCheckbox() {
+		return checkedCheckbox;
 	}
 
 	public void clickDeleteDownloadButton() {
@@ -178,15 +185,38 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isDownloadInProgressTextPresent() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
-					DisneyDictionaryApi.ResourceKeys.APPLICATION,
-					DictionaryKeys.DOWNLOAD_IN_PROGRESS.getText()))
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DOWNLOAD_IN_PROGRESS.getText()))
 				.isPresent();
 	}
 
 	public boolean isDownloadInProgressPluralTextPresent() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
-					DisneyDictionaryApi.ResourceKeys.APPLICATION,
-					DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText()))
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText()))
 				.isPresent();
+	}
+
+	public ExtendedWebElement getSelectAllButton() {
+		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.SELECT_ALL_LABEL.getText()));
+	}
+
+	public ExtendedWebElement getTrashIcon() {
+		return deleteDownloadButton;
+	}
+
+	public boolean isSelectContentToRemoveTextDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.SELECT_CONTENT_REMOVE.getText()))
+				.isPresent();
+	}
+
+	public ExtendedWebElement getDeSelectAllButton() {
+		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DESELCT_ALL_LABEL.getText()));
 	}
 }
