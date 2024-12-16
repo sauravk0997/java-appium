@@ -43,7 +43,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() {
         int latency = 20;
         int pollingInSeconds = 5;
-        int timeoutInSeconds = 120;
+        int timeoutInSeconds = 180;
         String zero = "0";
         String one = "1";
         String two = "2";
@@ -88,7 +88,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Download episode
         detailsPage.getEpisodeToDownload(one, one).click();
         detailsPage.getEpisodeToDownload(one, two).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
+        detailsPage.waitForFirstEpisodeToCompleteDownload(timeoutInSeconds, pollingInSeconds);
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);

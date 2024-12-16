@@ -145,6 +145,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement downloadStartedButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"SHOP\" OR name == \"PERKS\"`]")
     protected ExtendedWebElement shopOrPerksBtn;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name='titleLabel_0'$]/**/XCUIElementTypeButton[$name CONTAINS 'Download'$]")
+    protected ExtendedWebElement firstEpisondeDownloadButton;
 
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
@@ -790,10 +792,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabelContains.format("Offline Download Options");
     }
 
+    public ExtendedWebElement getFirstEpisondeDownloadButton() {
+        return firstEpisondeDownloadButton;
+    }
+
     public void waitForOneEpisodeDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for one episode download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
+        LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+
+    public void waitForFirstEpisodeToCompleteDownload(int timeOut, int polling) {
+        LOGGER.info("Waiting for the download of the first episode to complete.");
+        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
+                .until(it -> getFirstEpisondeDownloadButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 

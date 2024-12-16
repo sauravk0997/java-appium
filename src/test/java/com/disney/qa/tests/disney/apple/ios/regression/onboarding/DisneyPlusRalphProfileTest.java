@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -15,6 +16,7 @@ import com.disney.util.disney.DisneyGlobalUtils;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -425,5 +427,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         getAccountApi().addFlex(testAccount);
         setAccount(testAccount);
         handleAlert();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void removeJarvisApp(){
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        if(isInstalled){
+            removeJarvis();
+        }
     }
 }
