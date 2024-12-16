@@ -5,7 +5,6 @@ import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.apple.pages.phone.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,6 +28,9 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     String ENVIRONMENT = "PROD";
     String AVAILABLE_WITH_HULU = "Available with Hulu Subscription";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
+    private static final String BACK_BUTTON_NOT_PRESENT = "Back button is not present";
+    private static final String HULU_BRAND_LOGO_NOT_EXPANDED = "Hulu brand logo is not expanded";
+    private static final String HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE = "Hulu tile is not visible on home page";
 
     @DataProvider(name = "huluUnavailableDeepLinks")
     public Object[][] huluUnavailableDeepLinks() {
@@ -38,48 +40,54 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74564"})
-    @Test(description = "Brand Row Set includes Hulu Tile", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluBrandTileOnHome() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-        sa.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
-        homePage.tapHuluBrandTile();
-        sa.assertTrue(huluPage.isOpened(), "Hulu page didn't open after navigating via brand tile");
-        sa.assertAll();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
+                DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
+
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        Assert.assertTrue(huluPage.isOpened(), "Hulu page didn't open after navigating via brand tile");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74829"})
-    @Test(description = "Validate of the UI and functional items of the Hulu brand page", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluBrandPage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-        homePage.waitForPresenceOfAnElement(homePage.getElementTypeCellByLabel("Hulu"));
-        Assert.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
-        homePage.tapHuluBrandTile();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
 
-        sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
-        sa.assertTrue(huluPage.getBackButton().isPresent(), "Back button is not present");
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
+                DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
+
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        sa.assertTrue(huluPage.isHuluBrandImageExpanded(), HULU_BRAND_LOGO_NOT_EXPANDED);
+        sa.assertTrue(huluPage.getBackButton().isPresent(), BACK_BUTTON_NOT_PRESENT);
         sa.assertTrue(huluPage.isArtworkBackgroundPresent(), "Artwork images is not present");
 
         huluPage.swipeInHuluBrandPage(Direction.UP);
         sa.assertTrue(huluPage.isHuluBrandImageCollapsed(), "Hulu brand logo is not collapsed");
-        sa.assertTrue(huluPage.getBackButton().isPresent(), "Back button is not present");
+        sa.assertTrue(huluPage.getBackButton().isPresent(), BACK_BUTTON_NOT_PRESENT);
 
         huluPage.swipeInHuluBrandPage(Direction.DOWN);
-        sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
+        sa.assertTrue(huluPage.isHuluBrandImageExpanded(), HULU_BRAND_LOGO_NOT_EXPANDED);
 
         huluPage.tapBackButton();
-        Assert.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
+        Assert.assertTrue(homePage.isHuluTileVisible(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
 
-        homePage.tapHuluBrandTile();
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
         sa.assertTrue(huluPage.validateScrollingInHuluCollection(), "User cannot scroll horizontally");
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network logos are not present");
         verifyNetworkLogoValues(sa, huluPage);
@@ -87,17 +95,20 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74642"})
-    @Test(description = "Hulk - Hulu Hub Page - Collections", groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluPageContent() throws URISyntaxException, JsonProcessingException {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-        homePage.waitForPresenceOfAnElement(homePage.getElementTypeCellByLabel("Hulu"));
-        Assert.assertTrue(homePage.isHuluTileVisible(), "Hulu tile is not visible on home page");
-        homePage.tapHuluBrandTile();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
+                DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
+
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
 
         //To get the collections details of Hulu from API
         ArrayList<Container> collections = getHuluAPIPage(HULU_PAGE.getEntityId());
@@ -106,7 +117,8 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
             String titleFromCollection = collections.get(0).getItems().get(0).getVisuals().getTitle();
             huluPage.getTypeCellLabelContains(titleFromCollection).click();
             Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), "Detail page did not open");
-            Assert.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection), titleFromCollection + " Content was not opened");
+            Assert.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection),
+                    titleFromCollection + " Content was not opened");
         } catch (Exception e) {
             Assert.fail(e.getMessage());
         }
