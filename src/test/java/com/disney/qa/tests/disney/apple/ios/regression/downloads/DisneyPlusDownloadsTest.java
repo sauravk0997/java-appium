@@ -199,9 +199,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         try {
             episodeTitle = seriesApiContent.getSeasons()
-                    .get(seasonNumber)
+                    .get(0)
                     .getItems()
-                    .get(seasonNumber)
+                    .get(0)
                     .getVisuals()
                     .getEpisodeTitle();
         } catch (Exception e) {
