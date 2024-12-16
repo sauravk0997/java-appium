@@ -184,7 +184,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyDownloadsInQueueSubFunction() {
         int seasonNumber = 1;
         String one = "1";
-        String three = "3";
+        String five = "5";
         String episodeTitle;
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
@@ -233,11 +233,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloadsPage.isEpisodeCellDisplayed(one, one),
                 "episode is removed after dismissing alert");
 
-        downloadsPage.getEpisodeDownloadButton(one, three).click();
+        downloadsPage.getEpisodeDownloadButton(one, five).click();
         sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
                 "Download is Queued status not displayed on alert");
         downloadsPage.clickDefaultAlertBtn();
-        sa.assertFalse(downloadsPage.isEpisodeCellDisplayed(one, three),
+        sa.assertFalse(downloadsPage.isEpisodeCellDisplayed(one, five),
                 "episode is not removed after clicking remove download on alert");
         sa.assertAll();
     }
