@@ -391,4 +391,19 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.getOkButton().click();
         Assert.assertTrue(homePage.isKidsHomePageOpen(), "Kids Home page is not open after dismissing error");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69522"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyStarBrandLandingPageNotAvailable() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_star_brand_deeplink"));
+        Assert.assertTrue(homePage.getUnavailableContentError().isPresent(),
+                "'Content not available' error modal was not present ");
+        homePage.clickAlertConfirm();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
 }
