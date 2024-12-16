@@ -205,7 +205,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return stopDownload;
 	}
 
-	public boolean waitForStopDownloadButtonToVisible() {
+	public boolean waitForPauseDownloadButtonToVisible() {
 		int count = 5;
 		ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
 				getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
