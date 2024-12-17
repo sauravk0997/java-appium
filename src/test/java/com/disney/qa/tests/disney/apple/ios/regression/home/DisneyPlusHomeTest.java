@@ -140,8 +140,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, US})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+//        initialSetup();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
-        initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
 
