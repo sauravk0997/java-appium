@@ -402,7 +402,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(99);
         upNextPage.waitForYouMayAlsoLikeHeaderToBePresent(15);
         videoPlayer.getBackArrow().click();
-        homePage.waitUntilElementIsNotPresent(
+        homePage.waitForElementToDisappear(
                 homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), 15);
         Assert.assertFalse(
                 homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING, ONE_SEC_TIMEOUT),
