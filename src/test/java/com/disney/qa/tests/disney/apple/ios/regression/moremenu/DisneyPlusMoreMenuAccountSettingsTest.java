@@ -497,11 +497,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
-        moreMenu.clickMoreTab();
-        moreMenu.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+        setAppToAccountSettings(getAccount());
         accountPage.waitForAccountPageToOpen();
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
@@ -600,6 +597,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.waitForPresenceOfAnElement(accountPage.getWebviewUrlBar());
         Assert.assertTrue(accountPage.isAccountManagementFAQWebViewDisplayed(),
                 "Account Management FAQ web page did not open");
+        relaunch();
+        Assert.assertTrue(accountPage.isOpened(),
+                "User was not returned to the Account page after navigating back from webview");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
