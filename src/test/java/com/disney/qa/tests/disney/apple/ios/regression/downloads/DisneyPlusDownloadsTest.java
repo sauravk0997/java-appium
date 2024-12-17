@@ -253,7 +253,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66718"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadsInQueueSubFunction() {
@@ -286,13 +285,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                     .get(4)
                     .getVisuals()
                     .getEpisodeTitle();
-
-
         } catch (Exception e) {
             throw new SkipException("Skipping test, titles or deeplinkID were not found" + e.getMessage());
         }
 
-        if(fourthEpisodeTitle == null || fifthEpisodeTitle == null){
+        if (fourthEpisodeTitle == null || fifthEpisodeTitle == null) {
             throw new SkipException("Skipping test, failed to get episode titles from the api");
         }
 
