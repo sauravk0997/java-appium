@@ -8,6 +8,8 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_TABLET, parentClass = DisneyPlusMoreMenuIOSPageBase.class)
 public class DisneyPlusTabletMoreMenuIOSPage extends DisneyPlusMoreMenuIOSPage {
@@ -26,5 +28,13 @@ public class DisneyPlusTabletMoreMenuIOSPage extends DisneyPlusMoreMenuIOSPage {
 		} else {
 			return false;
 		}
+	}
+
+	@Override
+	public ExtendedWebElement getDeviceStorageTitle() {
+		return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+				getLocalizationUtils().getDictionaryItem(
+						DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()),
+				Map.of(DEVICE, "iPad")));
 	}
 }
