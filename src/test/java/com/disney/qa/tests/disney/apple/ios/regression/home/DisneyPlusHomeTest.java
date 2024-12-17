@@ -143,7 +143,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
         initialSetup();
         handleAlert();
-        welcomePage.isOpened();
+        Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
+
         welcomePage.clickLogInButton();
         login(getAccount());
         homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
