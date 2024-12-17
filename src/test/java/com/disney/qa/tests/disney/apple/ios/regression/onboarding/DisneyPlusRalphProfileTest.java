@@ -23,6 +23,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.common.constant.IConstantHelper.DE;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -361,15 +362,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74308"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
     public void testRalphSuggestMatureContentRatingGermany() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        String yearOfBirth = "2000";
-        int age = 24;
+        int age = 59;
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
@@ -386,7 +386,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
         addProfile.getCellsWithLabels().get(0).click();
         addProfile.enterProfileName(SECONDARY_PROFILE);
-        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), yearOfBirth);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         Assert.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
         Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                 RECOMMENDED_RATING_ERROR_MESSAGE);
