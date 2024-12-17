@@ -399,9 +399,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(THE_AVENGERS.getTitle()),
                 "Title didn't play from continue watching shelf");
-        videoPlayer.scrubToPlaybackPercentage(99);
-        upNextPage.waitForYouMayAlsoLikeHeaderToBePresent(15);
-        videoPlayer.getBackArrow().click();
+        videoPlayer.scrubToPlaybackPercentage(95);
+        upNextPage.waitForUpNextUIToAppear();
+        videoPlayer.clickBackButton();
         homePage.waitForElementToDisappear(
                 homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), 15);
         Assert.assertFalse(
