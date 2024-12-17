@@ -24,6 +24,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -405,10 +406,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         homePage.waitForElementToDisappear(
                 homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), 15);
         Assert.assertFalse(
-                homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING, ONE_SEC_TIMEOUT),
+                homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING, FIVE_SEC_TIMEOUT),
                 "Continue Watching Container found after content completed");
         Assert.assertFalse(homePage.getCellElementFromContainer(
-                CollectionConstant.Collection.CONTINUE_WATCHING, THE_AVENGERS.getTitle()).isPresent(ONE_SEC_TIMEOUT),
+                CollectionConstant.Collection.CONTINUE_WATCHING, THE_AVENGERS.getTitle()).isPresent(FIVE_SEC_TIMEOUT),
                 "Title found in Continue watching container");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));

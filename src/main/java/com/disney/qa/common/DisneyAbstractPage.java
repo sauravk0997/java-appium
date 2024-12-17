@@ -15,7 +15,7 @@ public abstract class DisneyAbstractPage extends AbstractPage implements IOSUtil
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final int ONE_SEC_TIMEOUT = 1;
     public static final int THREE_SEC_TIMEOUT = 3;
-    protected static final int FIVE_SEC_TIMEOUT = 5;
+    public static final int FIVE_SEC_TIMEOUT = 5;
     public static final int TEN_SEC_TIMEOUT = 10;
     public static final int FIFTEEN_SEC_TIMEOUT = 15;
     protected static final int TWENTY_FIVE_SEC_TIMEOUT = 25;
