@@ -1389,8 +1389,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         cancelButton.click();
     }
 
+    public ExtendedWebElement getTravelAlertTitle() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText()));
+    }
+
     public boolean isTravelAlertTitlePresent() {
-        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText())).isPresent();
+        return getTravelAlertTitle().isPresent();
     }
 
     public boolean isTravelAlertBodyPresent() {
