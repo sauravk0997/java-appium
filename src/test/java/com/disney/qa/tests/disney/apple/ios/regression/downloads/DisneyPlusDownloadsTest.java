@@ -278,7 +278,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Download not pause after clicking pause download");
         downloadsPage.clickDownloadHeader();
         sa.assertTrue(downloadsPage.getDownloadResumeIcon().isPresent(),
-                "Download resumed after clicking outside of sheet");
+                "Download resumed after clicking outside of container");
 
         downloadsPage.getDownloadResumeIcon().click();
         downloadsPage.clickDefaultAlertBtn();
@@ -286,7 +286,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Download not resumed after clicking resume download");
         downloadsPage.clickDownloadHeader();
         sa.assertTrue(downloadsPage.getDownloadStopIcon().isPresent(),
-                "Download stopped after clicking outside of sheet");
+                "Download stopped after clicking outside of container");
 
         downloadsPage.getDownloadStopIcon().click();
         downloadsPage.getSystemAlertDestructiveButton().click();

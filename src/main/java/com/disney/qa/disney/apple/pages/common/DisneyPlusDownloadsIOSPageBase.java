@@ -201,6 +201,29 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				.isPresent();
 	}
 
+	public ExtendedWebElement getSelectAllButton() {
+		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.SELECT_ALL_LABEL.getText()));
+	}
+
+	public ExtendedWebElement getTrashIcon() {
+		return deleteDownloadButton;
+	}
+
+	public boolean isSelectContentToRemoveTextDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.SELECT_CONTENT_REMOVE.getText()))
+				.isPresent();
+	}
+
+	public ExtendedWebElement getDeSelectAllButton() {
+		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DESELCT_ALL_LABEL.getText()));
+	}
+
 	public ExtendedWebElement getDownloadStopIcon() {
 		return stopDownload;
 	}
