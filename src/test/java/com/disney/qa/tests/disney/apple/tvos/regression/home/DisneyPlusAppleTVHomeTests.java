@@ -30,8 +30,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+//        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+//                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInWithoutHomeCheck(getAccount());
         collapseGlobalNav();
 
@@ -158,7 +158,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
-        
+
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
 
