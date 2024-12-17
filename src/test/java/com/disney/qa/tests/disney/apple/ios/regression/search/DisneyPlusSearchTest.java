@@ -166,7 +166,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 searchPage.getPlaceholderText(),
                 placeholderError);
     }
-    
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68282"})
     @Test(description = "Search - Recent Searches - Selecting a Recent Search initiates that Search", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecentSearchInitiatesValidSearch() {
@@ -311,7 +311,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.clickOriginalsTab();
 
         //Verify Original page opened
-        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
+        sa.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
         //Verify Back button is present
         sa.assertTrue(originalsPage.getBackButton().isElementPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
@@ -366,7 +366,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.clickOriginalsTab();
 
         //Verify Original page opened
-        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Original content page was not opened");
+        sa.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
         //Verify Back button is present
         sa.assertTrue(originalsPage.getBackButton().isElementPresent(), BACK_BUTTON_ERROR_MESSAGE);
 
@@ -409,7 +409,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         searchPage.clickOriginalsTab();
-        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals Page did not open.");
+        sa.assertTrue(originalsPage.isOpened(), "Originals Page did not open.");
         sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         searchPage.getNavBackArrow().click();
 
@@ -570,7 +570,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         getAccountApi().editContentRatingProfileSetting(getAccount(),
                 getLocalizationUtils().getRatingSystem(),
                 RATING_TV14);
-        
+
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
@@ -629,7 +629,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.getSeriesTile().isPresent(), "Series tile not found");
 
         searchPage.clickOriginalsTab();
-        sa.assertTrue(originalsPage.isOriginalPageLoadPresent(), "Originals page did not open.");
+        sa.assertTrue(originalsPage.isOpened(), "Originals page did not open.");
         sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_ERROR_MESSAGE);
         searchPage.getBackArrow().click();
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);

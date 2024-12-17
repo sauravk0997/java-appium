@@ -1508,4 +1508,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                 String.format("Element was not focused after %s seconds", timeout))
                 .until(it -> isFocused(element));
     }
+
+    public ExtendedWebElement getCancelButton() {
+        String cancelButtonText = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.CANCEL.getText());
+        return getTypeButtonByLabel(cancelButtonText);
+    }
 }
