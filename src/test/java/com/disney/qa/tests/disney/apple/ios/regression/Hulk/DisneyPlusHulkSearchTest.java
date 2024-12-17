@@ -283,14 +283,14 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, CA})
-    public void verifySearchHuluContentForStandaloneUserInNonEligibleCountry() {
+    public void verifySearchHuluContentForStandaloneUserInEligible() {
         String unavailableContentInCA = "Normal People";
 
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
-        initialSetup();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                CA,
+                getLocalizationUtils().getUserLanguage()));
         handleAlert();
         setAppToHomeScreen(getAccount());
 
