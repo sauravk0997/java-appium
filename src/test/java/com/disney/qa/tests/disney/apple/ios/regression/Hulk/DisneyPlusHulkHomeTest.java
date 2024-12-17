@@ -164,7 +164,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayOrContinue();
-        videoPlayer.verifyVideoPlaying(sa);
+        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
         videoPlayer.clickBackButton();
 
         //Go back to the Hulu page
