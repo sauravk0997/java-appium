@@ -21,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
+import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -286,9 +287,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        sa.assertFalse(detailsPage.getContinueButton().isPresent(1),
+        sa.assertFalse(detailsPage.getContinueButton().isPresent(ONE_SEC_TIMEOUT),
                 "Continue button on detail page is present after completing playback");
-        sa.assertFalse(detailsPage.getProgressBar().isPresent(1),
+        sa.assertFalse(detailsPage.getProgressBar().isPresent(ONE_SEC_TIMEOUT),
                 "Progress bar on detail page is present after completing playback");
         sa.assertAll();
     }
