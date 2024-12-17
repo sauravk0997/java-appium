@@ -30,8 +30,6 @@ import org.slf4j.LoggerFactory;
 public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-	private static final String storageSizeRegex = "(?i).*: \\d+(\\.\\d+)? (KB|MB|GB)";
-
 	//LOCATORS
 	private ExtendedWebElement editProfilesBtn = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_EDIT_PROFILE.getText()));
 
@@ -100,6 +98,13 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getExitJuniorModePin() {
 		return exitJuniorModePin;
+	}
+
+	public ExtendedWebElement getDeviceStorageTitle() {
+		return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+				getLocalizationUtils().getDictionaryItem(
+						DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()),
+				Map.of(DEVICE, "iPhone")));
 	}
 
 	public enum MoreMenu {
@@ -258,13 +263,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		}
 	}
 
-	public ExtendedWebElement getDeviceStorageTitle() {
-		return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
-				getLocalizationUtils().getDictionaryItem(
-						DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()),
-				Map.of(DEVICE, "iPhone")));
-	}
-
 	public ExtendedWebElement getUsedStorageLabel() {
 		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
 				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
@@ -281,6 +279,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isStorageSizeStringValid(String labelText) {
+		String storageSizeRegex = "(?i).*: \\d+(\\.\\d+)? (KB|MB|GB)";
 		Pattern pattern = Pattern.compile(storageSizeRegex);
 		Matcher matcher = pattern.matcher(labelText);
 		return matcher.matches();
