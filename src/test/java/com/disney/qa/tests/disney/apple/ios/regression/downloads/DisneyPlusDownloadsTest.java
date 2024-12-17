@@ -180,7 +180,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66672"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SMOKE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadsEditModeScreenUI() {
         int polling = 10;
         int timeout = 300;
