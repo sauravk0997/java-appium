@@ -682,14 +682,23 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return manageDevicesText.isElementPresent();
     }
 
-    public boolean isAccountManagementLinkPresent() {
+    public ExtendedWebElement getAccountManagementLink() {
         String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
-        String expectedHyperLinkText = dictValOfAccountManagement.substring(
-                dictValOfAccountManagement.indexOf('[')+1,dictValOfAccountManagement.indexOf(']'));
-        return customHyperlinkByLabel.format(expectedHyperLinkText).isElementPresent();
+         String expectedHyperLinkText = dictValOfAccountManagement.substring(
+                dictValOfAccountManagement.indexOf('[') + 1, dictValOfAccountManagement.indexOf(']'));
+        return customHyperlinkByLabel.format(expectedHyperLinkText);
     }
 
+    public boolean isAccountManagementLinkPresent() {
+        return getAccountManagementLink().isElementPresent();
+    }
+
+    public boolean isAccountManagementFAQWebViewDisplayed() {
+        String acctMgmtFaqText = "Account Management FAQ";
+        return staticTextByLabel.format(acctMgmtFaqText).isPresent();
+    }
+    
     public ExtendedWebElement getAccountManagementTextElement() {
         String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
