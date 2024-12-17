@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.disney.config.DisneyConfiguration;
 import org.apache.commons.lang3.StringUtils;
@@ -27,6 +29,8 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings({"squid:MaximumInheritanceDepth", "squid:CallToDeprecatedMethod"})
 public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+	private static final String storageSizeRegex = "(?i).*: \\d+(\\.\\d+)? (KB|MB|GB)";
 
 	//LOCATORS
 	private ExtendedWebElement editProfilesBtn = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_EDIT_PROFILE.getText()));
@@ -252,6 +256,34 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		} else {
 			return false;
 		}
+	}
+
+	public ExtendedWebElement getDeviceStorageTitle() {
+		return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+				getLocalizationUtils().getDictionaryItem(
+						DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()),
+				Map.of(DEVICE, "iPhone")));
+	}
+
+	public ExtendedWebElement getUsedStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
+	}
+
+	public ExtendedWebElement getAppStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())));
+	}
+
+	public ExtendedWebElement getFreeStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())));
+	}
+
+	public boolean isStorageSizeStringValid(String labelText) {
+		Pattern pattern = Pattern.compile(storageSizeRegex);
+		Matcher matcher = pattern.matcher(labelText);
+		return matcher.matches();
 	}
 
 	public String getValueBeforePlaceholder(String rawValue) {
