@@ -88,6 +88,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
     public static final String HULU = "Hulu";
+    public static final String DEEPLINKURL = "disneyplus://www.disneyplus.com/browse/";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
