@@ -31,12 +31,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()));
 	private ExtendedWebElement checkedCheckbox = getDynamicAccessibilityId(getLocalizationUtils()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_CHECKED.getText()));
-	private ExtendedWebElement resumeDownload = getDynamicAccessibilityId(getLocalizationUtils()
-			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_PAUSED.getText()));
-	private ExtendedWebElement stopDownload = getDynamicAccessibilityId(getLocalizationUtils()
-			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP.getText()));
-	private ExtendedWebElement queueDownload = getStaticTextByLabel(getLocalizationUtils()
-			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_QUEUED.getText()));
+
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
 
