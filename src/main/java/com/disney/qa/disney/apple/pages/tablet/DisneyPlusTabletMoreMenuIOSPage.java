@@ -34,7 +34,7 @@ public class DisneyPlusTabletMoreMenuIOSPage extends DisneyPlusMoreMenuIOSPage {
 	public ExtendedWebElement getDeviceStorageTitle() {
 		return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
 				getLocalizationUtils().getDictionaryItem(
-						DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()),
+						DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()),
 				Map.of(DEVICE, "iPad")));
 	}
 }
