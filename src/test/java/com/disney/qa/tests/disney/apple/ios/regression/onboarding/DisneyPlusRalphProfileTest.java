@@ -370,7 +370,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         String yearOfBirth = "2000";
         int age = 24;
-        String secondaryUser = "User2";
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
                 GERMANY, getLocalizationUtils().getUserLanguage()));
@@ -386,13 +385,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
         addProfile.getCellsWithLabels().get(0).click();
-        addProfile.enterProfileName(secondaryUser);
+        addProfile.enterProfileName(SECONDARY_PROFILE);
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), yearOfBirth);
         Assert.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
         Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                 RECOMMENDED_RATING_ERROR_MESSAGE);
         addProfile.clickSaveProfileButton();
-        Assert.assertTrue(moreMenu.getStaticTextByNameContains(secondaryUser).isPresent(),"New secondary user was not saved");
+        Assert.assertTrue(moreMenu.getStaticTextByNameContains(SECONDARY_PROFILE).isPresent(),"New secondary user was not saved");
     }
 
     private void navigateToContentRating() {
