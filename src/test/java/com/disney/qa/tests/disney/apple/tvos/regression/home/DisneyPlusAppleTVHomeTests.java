@@ -97,7 +97,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         String lockedHuluContentCollectionName =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM);
         logIn(basicAccount);
 
         homePage.waitForHomePageToOpen();

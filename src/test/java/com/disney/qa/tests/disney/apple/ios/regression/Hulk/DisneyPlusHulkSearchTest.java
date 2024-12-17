@@ -267,6 +267,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     public void verifySearchHuluContentForBundleUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();

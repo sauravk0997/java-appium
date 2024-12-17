@@ -147,14 +147,14 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77868"})
     @Test(groups = {TestGroup.HULU_HUB, US})
-    public void verifyHulkUpsellStandaloneUserInEligible() {
+    public void verifyHulkUpsellStandaloneUserInEligibleFlow() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         int swipeCount = 5;
 
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM);
         setAppToHomeScreen(basicAccount);
 
         homePage.tapHuluBrandTile();
