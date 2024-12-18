@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -146,24 +147,24 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77868"})
     @Test(groups = {TestGroup.HULU_HUB, US})
-    public void verifyHulkUpsellStandaloneUserInEligible() {
+    public void verifyHulkUpsellStandaloneUserInEligibleFlow() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         int swipeCount = 5;
-        String email = "robert.walters+6740c5ea@disneyplustesting.com";
 
-        loginForHuluHub(email);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM);
+        setAppToHomeScreen(basicAccount);
+
         homePage.tapHuluBrandTile();
 
         //Verify user can play some Hulu content
-
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
         homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayOrContinue();
-        videoPlayer.verifyVideoPlaying(sa);
+        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
         videoPlayer.clickBackButton();
 
         //Go back to the Hulu page
