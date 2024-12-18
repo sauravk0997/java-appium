@@ -147,10 +147,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement shopOrPerksBtn;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name='titleLabel_0'$]/**/XCUIElementTypeButton[$name CONTAINS 'Download'$]")
     protected ExtendedWebElement firstEpisondeDownloadButton;
-
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                    DictionaryKeys.DOWNLOAD_STOP.getText()), 1);
+                    DictionaryKeys.DOWNLOAD_STOP_DETAILS_PAGE.getText()), 1);
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
