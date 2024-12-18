@@ -70,6 +70,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String KMRB = "kmrb";
     private static final String MPAA_AND_TVPG = "mpaaandtvpg";
     protected static final String PLACEHOLDER_E = "E";
+    protected static final String DEVICE = "DEVICE";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -745,16 +746,20 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return webviewUrlBar.isElementPresent();
     }
 
+    public String getWebviewUrl() {
+        return webviewUrlBar.getText();
+    }
+
+    public ExtendedWebElement getWebviewUrlBar() {
+        return webviewUrlBar;
+    }
+
     public boolean continueButtonPresent() {
         return getTypeButtonByLabel("Continue").isElementPresent();
     }
 
     public void clickContinueBtn() {
         continueButton.click();
-    }
-
-    public String getWebviewUrl() {
-        return webviewUrlBar.getText();
     }
 
     // Will take you to continue or done button on tvOS on screen keyboard
@@ -1385,8 +1390,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         cancelButton.click();
     }
 
+    public ExtendedWebElement getTravelAlertTitle() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText()));
+    }
+
     public boolean isTravelAlertTitlePresent() {
-        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText())).isPresent();
+        return getTravelAlertTitle().isPresent();
     }
 
     public boolean isTravelAlertBodyPresent() {
@@ -1507,5 +1517,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT,
                 String.format("Element was not focused after %s seconds", timeout))
                 .until(it -> isFocused(element));
+    }
+
+    public ExtendedWebElement getCancelButton() {
+        String cancelButtonText = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.CANCEL.getText());
+        return getTypeButtonByLabel(cancelButtonText);
     }
 }

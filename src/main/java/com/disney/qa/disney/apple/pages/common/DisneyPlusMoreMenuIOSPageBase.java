@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.disney.config.DisneyConfiguration;
 import org.apache.commons.lang3.StringUtils;
@@ -96,6 +98,28 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getExitJuniorModePin() {
 		return exitJuniorModePin;
+	}
+
+	public ExtendedWebElement getDeviceStorageTitle() {
+		return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+				getLocalizationUtils().getDictionaryItem(
+						DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE.getText()),
+				Map.of(DEVICE, "iPhone")));
+	}
+
+	public ExtendedWebElement getUsedStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
+	}
+
+	public ExtendedWebElement getAppStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())));
+	}
+
+	public ExtendedWebElement getFreeStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())));
 	}
 
 	public enum MoreMenu {
@@ -252,6 +276,13 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		} else {
 			return false;
 		}
+	}
+
+	public boolean isStorageSizeStringValid(String labelText) {
+		String storageSizeRegex = "(?i).*: \\d+(\\.\\d+)? (KB|MB|GB)";
+		Pattern pattern = Pattern.compile(storageSizeRegex);
+		Matcher matcher = pattern.matcher(labelText);
+		return matcher.matches();
 	}
 
 	public String getValueBeforePlaceholder(String rawValue) {
