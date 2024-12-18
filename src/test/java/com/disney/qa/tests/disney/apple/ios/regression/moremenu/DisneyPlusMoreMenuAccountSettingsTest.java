@@ -490,7 +490,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "The User's new email address was not displayed as expected");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67140"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67138"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangeEmailSelectCancel() {
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
