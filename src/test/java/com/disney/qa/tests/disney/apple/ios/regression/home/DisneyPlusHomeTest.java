@@ -577,8 +577,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        String email = "robert.walters+6740c5ea@disneyplustesting.com";
-        loginForHuluHub(email);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
 
         //Open Hulu brand page
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));

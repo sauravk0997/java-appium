@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -152,13 +153,13 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         int swipeCount = 5;
-        String email = "robert.walters+6740c5ea@disneyplustesting.com";
 
-        loginForHuluHub(email);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
+
         homePage.tapHuluBrandTile();
 
         //Verify user can play some Hulu content
-
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
         homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);

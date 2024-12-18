@@ -30,9 +30,9 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     public void verifyHuluHubSearchContentWithStandaloneAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        String standaloneAccount = "alekhya.rallapalli+6740c467@disneyplustesting.com";
 
-        loginATVHuluHub(standaloneAccount);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -47,9 +47,9 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        String bundlePremiumAccount = "alekhya.rallapalli+6740d2fc@disneyplustesting.com";
 
-        loginATVHuluHub(bundlePremiumAccount);
+        logIn(getAccount());
+
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -69,9 +69,11 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusOneTrustConsentBannerIOSPageBase bannerIOSPageBase =
                 new DisneyPlusOneTrustConsentBannerIOSPageBase(getDriver());
-        String standaloneAccount = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
 
-        loginATVHuluHub(standaloneAccount);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+
+        logIn(getAccount());
+
         if (bannerIOSPageBase.isAllowAllButtonPresent()) {
             bannerIOSPageBase.tapAcceptAllButton();
         }
