@@ -272,7 +272,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloadsPage.getDownloadStopIcon().isPresent(), "Download not started");
 
         downloadsPage.getDownloadStopIcon().click();
-        sa.assertTrue(downloadsPage.waitForPauseDownloadButtonToVisible(), "Pause Download button not displayed on alert");
+        sa.assertTrue(downloadsPage.waitForPauseDownloadButton(), "Pause Download button not displayed on alert");
         downloadsPage.clickDefaultAlertBtn();
         sa.assertTrue(downloadsPage.getDownloadResumeIcon().isPresent(),
                 "Download not pause after clicking pause download");
@@ -290,7 +290,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         downloadsPage.getDownloadStopIcon().click();
         downloadsPage.getSystemAlertDestructiveButton().click();
-        downloadsPage.waitForDownloadEmptyHeaderToVisibleAfterRemove();
+        downloadsPage.waitForDownloadEmptyHeader();
         sa.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
                 "Download was not removed after clicking on Remove");
         sa.assertAll();

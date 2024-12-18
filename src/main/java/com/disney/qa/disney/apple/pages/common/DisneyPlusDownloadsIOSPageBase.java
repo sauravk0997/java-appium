@@ -117,7 +117,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return downloadsEmptyHeader.isPresent();
 	}
 
-	public void waitForDownloadEmptyHeaderToVisibleAfterRemove() {
+	public void waitForDownloadEmptyHeader() {
 		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
 				"Download was not removed")
 				.until(it -> downloadsEmptyHeader.isPresent(ONE_SEC_TIMEOUT));
@@ -238,7 +238,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				DictionaryKeys.DESELCT_ALL_LABEL.getText()));
 	}
 
-	public boolean waitForPauseDownloadButtonToVisible() {
+	public boolean waitForPauseDownloadButton() {
 		int count = 5;
 		ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
 				getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
