@@ -81,8 +81,20 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return editButton;
 	}
 
+	public ExtendedWebElement getDownloadStopIcon() {
+		return stopDownload;
+	}
+
+	public ExtendedWebElement getTrashIcon() {
+		return deleteDownloadButton;
+	}
+
 	public ExtendedWebElement getDownloadCompleteButton() {
 		return downloadCompleteButton;
+	}
+
+	public ExtendedWebElement getDownloadResumeIcon() {
+		return resumeDownload;
 	}
 
 	public void waitForDownloadToStart() {
@@ -103,6 +115,12 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isDownloadsEmptyHeaderPresent() {
 		return downloadsEmptyHeader.isPresent();
+	}
+
+	public void waitForDownloadEmptyHeaderToVisibleAfterRemove() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download was not removed")
+				.until(it -> downloadsEmptyHeader.isPresent(ONE_SEC_TIMEOUT));
 	}
 
 	public boolean isDownloadsEmptyCopyPresent() {
@@ -207,10 +225,6 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				DictionaryKeys.SELECT_ALL_LABEL.getText()));
 	}
 
-	public ExtendedWebElement getTrashIcon() {
-		return deleteDownloadButton;
-	}
-
 	public boolean isSelectContentToRemoveTextDisplayed() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
 				DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -224,10 +238,6 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				DictionaryKeys.DESELCT_ALL_LABEL.getText()));
 	}
 
-	public ExtendedWebElement getDownloadStopIcon() {
-		return stopDownload;
-	}
-
 	public boolean waitForPauseDownloadButtonToVisible() {
 		int count = 5;
 		ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
@@ -239,10 +249,6 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			count--;
 		}
 		return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
-	}
-
-	public ExtendedWebElement getDownloadResumeIcon() {
-		return resumeDownload;
 	}
 
 	public void clickDownloadHeader() {

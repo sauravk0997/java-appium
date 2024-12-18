@@ -290,6 +290,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         downloadsPage.getDownloadStopIcon().click();
         downloadsPage.getSystemAlertDestructiveButton().click();
+        downloadsPage.waitForDownloadEmptyHeaderToVisibleAfterRemove();
         sa.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
                 "Download was not removed after clicking on Remove");
         sa.assertAll();
