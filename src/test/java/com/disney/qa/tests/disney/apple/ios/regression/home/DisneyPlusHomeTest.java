@@ -24,8 +24,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
-import static com.disney.qa.common.constant.IConstantHelper.SG;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -139,12 +138,16 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyRatingRestrictionTravelingMessage() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
 
+        welcomePage.clickLogInButton();
+        login(getAccount());
+        homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
         Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
         Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");
         Assert.assertTrue(homePage.getTravelAlertOk().isPresent(), "Travel alert ok button was not present");
