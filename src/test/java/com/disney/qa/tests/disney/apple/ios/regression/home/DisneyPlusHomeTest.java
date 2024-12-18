@@ -24,11 +24,9 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.SG;
-import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -409,7 +407,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         upNextPage.waitForUpNextUIToAppear();
         videoPlayer.clickBackButton();
         homePage.waitForElementToDisappear(
-                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), 15);
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), FIFTEEN_SEC_TIMEOUT);
         Assert.assertFalse(
                 homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING, FIVE_SEC_TIMEOUT),
                 "Continue Watching Container found after content completed");
