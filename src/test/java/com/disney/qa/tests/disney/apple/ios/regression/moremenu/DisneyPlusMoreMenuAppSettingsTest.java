@@ -389,4 +389,29 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenu.isDeleteDownloadsEnabled(),
                 "'Delete All Downloads' cell did not remain enabled after cancel operation");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66653"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyInternalStorageUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        onboard();
+        Assert.assertTrue(moreMenuPage.getDeviceStorageTitle().isPresent(),
+                "Device storage title was not present");
+
+        sa.assertTrue(moreMenuPage.getUsedStorageLabel().isPresent(),
+                "'Used' storage label was not present");
+        sa.assertTrue(moreMenuPage.getAppStorageLabel().isPresent(),
+                "'Disney+' storage label was not present");
+        sa.assertTrue(moreMenuPage.getFreeStorageLabel().isPresent(),
+                "'Free' storage label was not present");
+        sa.assertTrue(moreMenuPage.isStorageSizeStringValid(moreMenuPage.getUsedStorageLabel().getText()),
+                "'Used' storage label string format was not valid");
+        sa.assertTrue(moreMenuPage.isStorageSizeStringValid(moreMenuPage.getAppStorageLabel().getText()),
+                "'Disney+' storage label string format was not valid");
+        sa.assertTrue(moreMenuPage.isStorageSizeStringValid(moreMenuPage.getFreeStorageLabel().getText()),
+                "'Free' storage label string format was not valid");
+        sa.assertAll();
+    }
 }
