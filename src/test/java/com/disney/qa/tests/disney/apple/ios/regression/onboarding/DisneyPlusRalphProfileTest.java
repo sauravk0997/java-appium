@@ -371,7 +371,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         int age = 59;
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
-                CA, getLocalizationUtils().getUserLanguage()));
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().overrideLocations(getAccount(), CA);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
