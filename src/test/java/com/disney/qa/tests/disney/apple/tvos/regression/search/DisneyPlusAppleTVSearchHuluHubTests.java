@@ -30,9 +30,10 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     public void verifyHuluHubSearchContentWithStandaloneAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        String standaloneAccount = "alekhya.rallapalli+6740c467@disneyplustesting.com";
 
-        loginATVHuluHub(standaloneAccount);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+        logIn(getAccount());
+
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -47,9 +48,9 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        String bundlePremiumAccount = "alekhya.rallapalli+6740d2fc@disneyplustesting.com";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
+        logIn(getAccount());
 
-        loginATVHuluHub(bundlePremiumAccount);
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -69,9 +70,14 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusOneTrustConsentBannerIOSPageBase bannerIOSPageBase =
                 new DisneyPlusOneTrustConsentBannerIOSPageBase(getDriver());
-        String standaloneAccount = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
 
-        loginATVHuluHub(standaloneAccount);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                CA,
+                getLocalizationUtils().getUserLanguage()));
+        handleAlert();
+
+        logIn(getAccount());
+
         if (bannerIOSPageBase.isAllowAllButtonPresent()) {
             bannerIOSPageBase.tapAcceptAllButton();
         }
@@ -90,8 +96,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
 
         logIn(getAccount());
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
@@ -107,7 +112,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
 
         searchPage.clearSearchBar();
 
-        // Look for non entitled Hulu content
+        // Look for unentitled Hulu content
         searchPage.typeInSearchField(UNENTITLED_HULU_CONTENT);
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(UNENTITLED_HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
         Assert.assertTrue(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(),
