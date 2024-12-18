@@ -70,6 +70,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String KMRB = "kmrb";
     private static final String MPAA_AND_TVPG = "mpaaandtvpg";
     protected static final String PLACEHOLDER_E = "E";
+    protected static final String DEVICE = "DEVICE";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
