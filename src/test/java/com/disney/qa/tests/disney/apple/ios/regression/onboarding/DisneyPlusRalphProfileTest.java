@@ -23,6 +23,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.common.constant.IConstantHelper.CA;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -363,6 +364,57 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 RECOMMENDED_RATING_ERROR_MESSAGE);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75290"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
+    public void testRalphAddProfileValidateDropdownContentRating() {
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        String ratingChoose = "TV-Y";
+        int age = 59;
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+
+        String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
+                Map.of("content_rating", getRecommendedContentRating(CANADA, age, AGE_VALUES_CANADA)));
+        LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
+        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        homePage.clickMoreTab();
+        moreMenu.clickAddProfile();
+        Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
+        addProfile.getCellsWithLabels().get(0).click();
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        Assert.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
+        Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
+                RECOMMENDED_RATING_ERROR_MESSAGE);
+        Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge)
+                .getAttribute("enabled").equals("true"), "Content rating dropdown is not enabled");
+
+        addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).click();
+        validateRatingValuesInDropdown(getCountry());
+        addProfile.getStaticTextByLabelContains(ratingChoose).click();
+        addProfile.clickSaveProfileButton();
+        Assert.assertTrue(moreMenu.getStaticTextByNameContains(SECONDARY_PROFILE).isPresent(),
+                "New secondary user was not saved");
+        // Review if the correct rating is selected after profile is saved
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        swipe(editProfile.getMaturityRatingLabel(), Direction.UP, 2, 500);
+        Assert.assertTrue(editProfile.verifyProfileSettingsMaturityRating(ratingChoose), "Profile rating is not as expected");
+    }
+
     private void navigateToContentRating() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -427,6 +479,20 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         getAccountApi().addFlex(testAccount);
         setAccount(testAccount);
         handleAlert();
+    }
+
+    private void validateRatingValuesInDropdown(String locale){
+        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyCountryData disneyCountryData = new DisneyCountryData();
+        List<String> ratingValues = (List<String>)disneyCountryData.searchAndReturnCountryData(locale, CODE, RATING_VALUES);
+        for (String item : ratingValues) {
+            // Some rating values from country yaml contain + symbol instead of comma
+            if (item.contains("+")) {
+                item = item.replace("+", ", ");
+            }
+            Assert.assertTrue(contentRating.getStaticTextByLabelContains(item).isPresent(),
+                    "Rating value not present: " + item);
+        }
     }
 
     @AfterMethod(alwaysRun = true)
