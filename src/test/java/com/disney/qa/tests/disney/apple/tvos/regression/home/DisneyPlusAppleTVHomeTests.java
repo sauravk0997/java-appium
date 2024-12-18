@@ -6,7 +6,6 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
-import com.fasterxml.jackson.core.*;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.*;
 import org.testng.Assert;
@@ -14,7 +13,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.*;
-import java.net.*;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
@@ -30,8 +28,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-//        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-//                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInWithoutHomeCheck(getAccount());
         collapseGlobalNav();
 
@@ -175,10 +173,14 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
                 //Verify content title
-                sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(),
+                sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
                         "Content title not found: " + firstContentTitle);
             }
             homePage.moveDown(1, 1);
+
+            if (homePage.getTypeOtherContainsName("airingBadgeContainerView").isPresent(SHORT_TIMEOUT)) {
+                homePage.moveDown(1, 1);
+            }
         });
     }
 }
