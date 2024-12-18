@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -47,6 +48,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Choose content rating\"`]")
     private ExtendedWebElement chooseContentRating;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
+    private ExtendedWebElement chooseContentRatingDropdown;
 
     @ExtendedFindBy(iosPredicate = "name == \"birthdateTextFieldIdentifier\" AND value == \"MM/DD/YYYY\"\n")
     protected ExtendedWebElement birthDateValue;
@@ -266,4 +270,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return birthDateValue;
     }
 
+    public boolean isContentRatingDropdownEnabled(String value) {
+          return chooseContentRatingDropdown.format(value).getAttribute(IOSUtils.Attributes.ENABLED.getAttribute())
+                  .equalsIgnoreCase(Boolean.TRUE.toString());
+    }
 }
