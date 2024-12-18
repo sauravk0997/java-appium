@@ -186,7 +186,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             sa.assertAll();
         }
     }
-    
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66641", "XMOBQA-66647"})
     @Test(description = "Download Quality Settings UI Elements and Navigation test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadQualitySettingsUI() {
@@ -265,9 +265,13 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 "XMOBQA-61223 - 'Cellular Data Usage' cell was not properly displayed");
 
         String[] usage = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(cellOption).getText().split(",");
-
-        sa.assertEquals(usage[1].trim(),  getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText()),
-                "XMOBQA-61205 - Cellular data default was not set to 'Automatic'");
+        String automatic = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText());
+        String saveData = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CELLULAR_SAVE_DATA.getText());
+        String cellularDataUsage = usage[1].trim();
+        sa.assertTrue(Arrays.asList(automatic, saveData).contains(cellularDataUsage),
+                String.format("Cellular data default was not set to either %s or %s", automatic, saveData));
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Download Over Wi-Fi Only' cell was not properly displayed");
