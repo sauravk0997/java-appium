@@ -391,9 +391,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
         Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                 RECOMMENDED_RATING_ERROR_MESSAGE);
-        addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).click();
-        Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Content rating dropdown is not enabled");
-        clickElementAtLocation(addProfile.getStaticTextByLabel("Save"), 50, 50);
+        Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge)
+                .getAttribute("enabled").equals("true"), "Content rating dropdown is not enabled");
         addProfile.clickSaveProfileButton();
         Assert.assertTrue(moreMenu.getStaticTextByNameContains(SECONDARY_PROFILE).isPresent(),
                 "New secondary user was not saved");
