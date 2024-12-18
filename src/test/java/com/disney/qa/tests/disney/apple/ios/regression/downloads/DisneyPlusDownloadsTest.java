@@ -180,7 +180,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66672"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SMOKE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadsEditModeScreenUI() {
         int polling = 10;
         int timeout = 300;
@@ -249,6 +249,50 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Download was not removed, empty header not present.");
         sa.assertFalse(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
                 String.format("Movie title '%s' is found after deleting content", movieTitle));
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66694"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadsInProgressSubFunction() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        SoftAssert sa = new SoftAssert();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        //Start download
+        detailsPage.getMovieDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+
+        sa.assertTrue(downloadsPage.getDownloadStopIcon().isPresent(), "Download not started");
+
+        downloadsPage.getDownloadStopIcon().click();
+        sa.assertTrue(downloadsPage.waitForPauseDownloadButton(), "Pause Download button not displayed on alert");
+        downloadsPage.clickDefaultAlertBtn();
+        sa.assertTrue(downloadsPage.getDownloadResumeIcon().isPresent(),
+                "Download not pause after clicking pause download");
+        downloadsPage.clickDownloadHeader();
+        sa.assertTrue(downloadsPage.getDownloadResumeIcon().isPresent(),
+                "Download resumed after clicking outside of container");
+
+        downloadsPage.getDownloadResumeIcon().click();
+        downloadsPage.clickDefaultAlertBtn();
+        sa.assertTrue(downloadsPage.getDownloadStopIcon().isPresent(),
+                "Download not resumed after clicking resume download");
+        downloadsPage.clickDownloadHeader();
+        sa.assertTrue(downloadsPage.getDownloadStopIcon().isPresent(),
+                "Download stopped after clicking outside of container");
+
+        downloadsPage.getDownloadStopIcon().click();
+        downloadsPage.getSystemAlertDestructiveButton().click();
+        downloadsPage.waitForDownloadEmptyHeader();
+        sa.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
+                "Download was not removed after clicking on Remove");
         sa.assertAll();
     }
 }
