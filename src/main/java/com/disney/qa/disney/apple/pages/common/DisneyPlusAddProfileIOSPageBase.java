@@ -268,7 +268,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContentRatingDropdownEnabled(String value) {
-        return getTypeButtonContainsLabel(value).getAttribute(IOSUtils.Attributes.ENABLED.getAttribute())
-                .equalsIgnoreCase(Boolean.TRUE.toString());
+          return getTypeButtonContainsLabel(value).getAttribute(IOSUtils.Attributes.ENABLED.getAttribute())
+                  .equalsIgnoreCase(Boolean.TRUE.toString());
     }
 }
