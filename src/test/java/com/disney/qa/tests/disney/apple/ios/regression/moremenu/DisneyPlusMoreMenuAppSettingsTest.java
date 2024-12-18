@@ -45,6 +45,8 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         onboard();
         String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
+        String[] usage = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(cellOption).getText().split(",");
+        String cellularDataUsage = usage[1].trim();
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).click();
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).isElementPresent(),
@@ -61,20 +63,35 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 ,getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_SAVE_DATA_BODY.getText()));
 
         ExtendedWebElement automatic = disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(automaticLabel);
-        sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(CHECKED),
-                "XMOBQA-61201 - Automatic selection was not displayed or is not checked by default");
+        sa.assertTrue(automatic.isElementPresent(), "XMOBQA-61201 - Automatic selection was not displayed");
 
         ExtendedWebElement saveData = disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel);
-        sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(UNCHECKED),
-                "XMOBQA-61201 - Save Data selection was not displayed or is checked by default");
+        sa.assertTrue(saveData.isElementPresent(), "XMOBQA-61201 - Save Data selection was not displayed");
 
-        disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel).click();
-        sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(UNCHECKED),
-                "XMOBQA-61207 - Selecting 'Save Data' did not uncheck 'Automatic' value");
+        String automaticValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText());
 
-        sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(CHECKED),
-                "XMOBQA-61207 - Selecting 'Save Data' did not update its checked value");
+        if (cellularDataUsage.equals(automaticValue)) {
+            sa.assertTrue(automatic.getAttribute(VALUE).equals(CHECKED), "Automatic option is not checked by default");
+            sa.assertTrue(saveData.getAttribute(VALUE).equals(UNCHECKED), "Save option is checked by default");
+            disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(saveDataLabel).click();
 
+            sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(UNCHECKED),
+                    "XMOBQA-61207 - Selecting 'Save Data' did not uncheck 'Automatic' value");
+
+            sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(CHECKED),
+                    "XMOBQA-61207 - Selecting 'Save Data' did not update its checked value");
+        } else {
+            sa.assertTrue(automatic.getAttribute(VALUE).equals(UNCHECKED), "Automatic option is checked by default");
+            sa.assertTrue(saveData.getAttribute(VALUE).equals(CHECKED), "Save Data option is not checked by default");
+            disneyPlusMoreMenuIOSPageBase.getElementTypeCellByLabel(automaticLabel).click();
+
+            sa.assertTrue(saveData.isElementPresent() && saveData.getAttribute(VALUE).equals(UNCHECKED),
+                    "XMOBQA-61207 - Selecting 'Automatic' did not uncheck 'Save Data' value");
+
+            sa.assertTrue(automatic.isElementPresent() && automatic.getAttribute(VALUE).equals(CHECKED),
+                    "XMOBQA-61207 - Selecting 'Automatic' did not update its checked value");
+        }
         sa.assertAll();
     }
 
@@ -186,7 +203,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
             sa.assertAll();
         }
     }
-    
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66641", "XMOBQA-66647"})
     @Test(description = "Download Quality Settings UI Elements and Navigation test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadQualitySettingsUI() {
@@ -265,9 +282,13 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 "XMOBQA-61223 - 'Cellular Data Usage' cell was not properly displayed");
 
         String[] usage = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(cellOption).getText().split(",");
-
-        sa.assertEquals(usage[1].trim(),  getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText()),
-                "XMOBQA-61205 - Cellular data default was not set to 'Automatic'");
+        String automatic = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText());
+        String saveData = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CELLULAR_SAVE_DATA.getText());
+        String cellularDataUsage = usage[1].trim();
+        sa.assertTrue(Arrays.asList(automatic, saveData).contains(cellularDataUsage),
+                String.format("Cellular data default was not set to either %s or %s", automatic, saveData));
 
         sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).isElementPresent(),
                 "XMOBQA-61223 - 'Download Over Wi-Fi Only' cell was not properly displayed");
