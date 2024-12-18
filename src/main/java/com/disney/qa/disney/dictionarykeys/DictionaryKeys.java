@@ -128,6 +128,7 @@ public enum DictionaryKeys {
     CONSENT_MINOR_MOBILE_SCROLL_BODY("consent_minor_mobile_scroll_body"),
     CONSENT_MINOR_MOBILE_SCROLL_HEADER("consent_minor_mobile_scroll_header"),
     CONTACT_CSR_SUBTITLE("contact_csr_subtitle"),
+    CONTENT_RATING("content_rating"),
     CONTENT_TILE_EPISODE("contenttile_episode"),
     CONTENT_TILE_INTERACT("contenttile_interact"),
     CONTINUE_WATCHING_HOURS("continue_watching_hours"),
