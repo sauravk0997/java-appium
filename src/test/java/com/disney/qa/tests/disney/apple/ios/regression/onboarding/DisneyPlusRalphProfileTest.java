@@ -392,15 +392,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
-        addProfile.getCellsWithLabels().get(0).click();
+        addProfile.clickSkipBtn();
         addProfile.enterProfileName(SECONDARY_PROFILE);
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         Assert.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
         Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                 RECOMMENDED_RATING_ERROR_MESSAGE);
-        Assert.assertTrue(addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge)
-                .getAttribute("enabled").equals("true"), "Content rating dropdown is not enabled");
-
+        Assert.assertTrue(addProfile.isContentRatingDropdownEnabled(recommendedContentRatingByAge),
+                "Content rating dropdown is not enabled");
         addProfile.getStaticTextByLabelContains(recommendedContentRatingByAge).click();
         validateRatingValuesInDropdown(getCountry());
         addProfile.getStaticTextByLabelContains(ratingChoose).click();
