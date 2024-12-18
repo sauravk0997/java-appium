@@ -107,6 +107,21 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 				Map.of(DEVICE, "iPhone")));
 	}
 
+	public ExtendedWebElement getUsedStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
+	}
+
+	public ExtendedWebElement getAppStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())));
+	}
+
+	public ExtendedWebElement getFreeStorageLabel() {
+		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())));
+	}
+
 	public enum MoreMenu {
 		ACCOUNT,
 		APP_SETTINGS,
@@ -261,21 +276,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		} else {
 			return false;
 		}
-	}
-
-	public ExtendedWebElement getUsedStorageLabel() {
-		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_USED.getText())));
-	}
-
-	public ExtendedWebElement getAppStorageLabel() {
-		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_APP.getText())));
-	}
-
-	public ExtendedWebElement getFreeStorageLabel() {
-		return getStaticTextByLabelContains(getValueBeforePlaceholder(getLocalizationUtils().getDictionaryItem(
-				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())));
 	}
 
 	public boolean isStorageSizeStringValid(String labelText) {
