@@ -24,6 +24,10 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
             DisneyDictionaryApi.ResourceKeys.PCON,
             DictionaryKeys.RECOMMENDED_RATING.getText()));
 
+    private ExtendedWebElement contentRatingText = getStaticTextByLabel(
+            getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                    DictionaryKeys.CONTENT_RATING.getText()));
+
     public DisneyPlusContentRatingIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -76,5 +80,9 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
 
     public ExtendedWebElement getRecommendedText() {
         return textRecommended;
+    }
+
+    public boolean isContentRatingPresent() {
+        return contentRatingText.isPresent();
     }
 }

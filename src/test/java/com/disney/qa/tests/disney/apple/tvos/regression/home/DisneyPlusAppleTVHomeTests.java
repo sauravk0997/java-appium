@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.*;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -54,12 +55,13 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121517"})
     @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
-    public void verifyESPNAndHuluBrandTiles() {
+    public void verifyStandaloneESPNAndHuluBrandTiles() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
-        String standaloneAccount = "alekhya.rallapalli+6740c523@disneyplustesting.com";
 
-        loginATVHuluHub(standaloneAccount);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        logIn(basicAccount);
+
         homePage.waitForHomePageToOpen();
 
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).isPresent(),
@@ -92,11 +94,12 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String standaloneAccount = "robert.walters+6740c5ea@disneyplustesting.com";
+
         String lockedHuluContentCollectionName =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM);
+        logIn(basicAccount);
 
-        loginATVHuluHub(standaloneAccount);
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
