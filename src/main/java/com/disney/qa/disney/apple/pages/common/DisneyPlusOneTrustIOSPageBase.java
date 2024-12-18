@@ -44,7 +44,11 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void tapConsentSwitch() {
-        consentSwitch.click();
+        getOneTrustContentSwitch().click();
+    }
+
+    public ExtendedWebElement getOneTrustContentSwitch() {
+        return consentSwitch;
     }
 
     public void tapConfirmMyChoiceButton() {
@@ -52,7 +56,7 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getValueOfConsentSwitch(){
-        return consentSwitch.getAttribute("value");
+        return getOneTrustContentSwitch().getAttribute("value");
     }
 
     public boolean isCloseIconPresent() {
