@@ -61,7 +61,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
             swipeInContainer(null, Direction.UP, 2500);
         }
         detailsPage.getEpisodeToDownload("1", "1").click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(90, 6);
+        detailsPage.waitForOneEpisodeDownloadToComplete(180, 6);
         searchPage.clickSearchIcon();
         searchPage.clearText();
         searchPage.searchForMedia(PREY);
@@ -71,7 +71,7 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
             swipeInContainer(null, Direction.UP, 2500);
         }
         detailsPage.getMovieDownloadButton().click();
-        detailsPage.waitForMovieDownloadComplete(250, 25);
+        detailsPage.waitForMovieDownloadComplete(300, 25);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloadsPage.isOpened();
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
