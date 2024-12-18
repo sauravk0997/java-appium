@@ -367,6 +367,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         int age = 59;
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY,
@@ -376,9 +377,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(CANADA, age, AGE_VALUES_CANADA)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
-        jarvisDisableOneTrustBanner();
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
         homePage.clickMoreTab();
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
