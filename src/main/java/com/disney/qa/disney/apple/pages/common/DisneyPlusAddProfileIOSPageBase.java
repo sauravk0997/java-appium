@@ -49,9 +49,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Choose content rating\"`]")
     private ExtendedWebElement chooseContentRating;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS \"%s\"`]")
-    private ExtendedWebElement chooseContentRatingDropdown;
-
     @ExtendedFindBy(iosPredicate = "name == \"birthdateTextFieldIdentifier\" AND value == \"MM/DD/YYYY\"\n")
     protected ExtendedWebElement birthDateValue;
 
@@ -271,7 +268,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isContentRatingDropdownEnabled(String value) {
-          return chooseContentRatingDropdown.format(value).getAttribute(IOSUtils.Attributes.ENABLED.getAttribute())
+          return getTypeButtonContainsLabel(value).getAttribute(IOSUtils.Attributes.ENABLED.getAttribute())
                   .equalsIgnoreCase(Boolean.TRUE.toString());
     }
 }
