@@ -318,11 +318,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickDownloadsIcon();
         Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
 
-        downloadsPage.getStaticTextByLabelContains(movieTitle).click();
-        Assert.assertTrue(downloadsPage.getStaticTextByLabel(description).isPresent(),
+        downloadsPage.getStaticTextByLabel(movieTitle).click();
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(description).isPresent(),
                 "Content description is not visible");
-        downloadsPage.getStaticTextByLabelContains(movieTitle).click();
-        Assert.assertFalse(downloadsPage.getStaticTextByLabel(description).isPresent(),
+        downloadsPage.getStaticTextByLabel(movieTitle).click();
+        Assert.assertFalse(downloadsPage.getStaticTextByLabelContains(description).isPresent(),
                 "Content description is still visible");
     }
 }
