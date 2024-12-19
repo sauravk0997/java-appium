@@ -336,7 +336,6 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeleteAllDownloadsSetting() {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         String seasonNumber = "1";
@@ -352,11 +351,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
         detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
 
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.getDynamicCellByLabel(
-                moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
-
-        appSettingsPage.waitForAppSettingsPageToOpen();
+        detailsPage.clickMoreTab();
         moreMenuPage.clickDeleteAllDownloads();
         moreMenuPage.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText()))
