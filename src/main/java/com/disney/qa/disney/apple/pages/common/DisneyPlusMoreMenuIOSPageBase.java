@@ -122,6 +122,11 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DEVICE_STORAGE_FREE.getText())));
 	}
 
+	public ExtendedWebElement getDeleteAllDownloadsCell() {
+		return deleteAllDownloadsCell.format(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_LABEL.getText()));
+	}
+
 	public enum MoreMenu {
 		ACCOUNT,
 		APP_SETTINGS,
