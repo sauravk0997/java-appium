@@ -351,7 +351,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
         detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
 
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        detailsPage.clickMoreTab();
         moreMenuPage.clickDeleteAllDownloads();
         moreMenuPage.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText()))
