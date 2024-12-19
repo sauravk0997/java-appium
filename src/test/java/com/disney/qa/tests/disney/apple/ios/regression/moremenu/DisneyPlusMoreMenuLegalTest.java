@@ -149,7 +149,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), country);
-        setAppToHomeScreen(getAccount());
 
         initialSetup();
         handleAlert();
