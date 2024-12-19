@@ -150,7 +150,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         getAccountApi().overrideLocations(getAccount(), country);
         setAppToHomeScreen(getAccount());
 
-        homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
+        homePage.waitForTravelAlertToDisplay();
         homePage.getTravelAlertOk().click();
 
         if (oneTrustPage.isAllowAllButtonPresent()) {

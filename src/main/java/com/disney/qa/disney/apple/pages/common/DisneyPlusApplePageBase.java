@@ -1407,6 +1407,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getTravelAlertTitle().isPresent();
     }
 
+    public boolean waitForTravelAlertToDisplay() {
+        LOGGER.info("Waiting for Details page to load");
+        return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Travel alert title did not display.")
+                .until(it -> isTravelAlertTitlePresent());
+    }
+
     public boolean isTravelAlertBodyPresent() {
         return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_BODY.getText())).isPresent();
     }
