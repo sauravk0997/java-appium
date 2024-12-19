@@ -307,7 +307,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
         ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        String description = movieApiContent.getDescription().getBrief();
+        String description = movieApiContent.getDescription().getFull().split("\n")[0];
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String movieTitle = detailsPage.getMediaTitle();
