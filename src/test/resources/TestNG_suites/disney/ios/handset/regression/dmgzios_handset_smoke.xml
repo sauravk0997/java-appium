@@ -20,7 +20,8 @@
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Handset-Pipeline"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=300,capabilities.newCommandTimeout=240,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields"
+               value="JOB_MAX_RUN_TIME=300,capabilities.newCommandTimeout=300,init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding1" parallel="methods">
         <classes>

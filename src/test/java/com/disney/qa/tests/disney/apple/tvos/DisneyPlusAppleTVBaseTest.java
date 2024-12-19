@@ -214,18 +214,4 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
             homePage.clickSelect();
         }
     }
-
-    public void loginATVHuluHub(String email) {
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        selectAppleUpdateLaterAndDismissAppTracking();
-        welcomeScreenPage.waitForWelcomePageToLoad();
-        welcomeScreenPage.clickLogInButton();
-        loginPage.proceedToPasswordScreen(email);
-        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
-        passwordPage.logInWithPassword("Test123!");
-        pause(5);
-    }
 }

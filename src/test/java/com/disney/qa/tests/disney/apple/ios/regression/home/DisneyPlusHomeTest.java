@@ -24,7 +24,9 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -383,6 +385,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         // Populate Continue Watching assets
@@ -400,13 +403,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(THE_AVENGERS.getTitle()),
                 "Title didn't play from continue watching shelf");
-        videoPlayer.scrubToPlaybackPercentage(99);
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(95);
+        upNextPage.waitForUpNextUIToAppear();
         videoPlayer.clickBackButton();
-        Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+        homePage.waitForElementToDisappear(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), FIFTEEN_SEC_TIMEOUT);
+        Assert.assertFalse(
+                homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING, FIVE_SEC_TIMEOUT),
                 "Continue Watching Container found after content completed");
-        Assert.assertFalse(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
-                THE_AVENGERS.getTitle()).isPresent(), "Title found in Continue watching container");
+        Assert.assertFalse(homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.CONTINUE_WATCHING, THE_AVENGERS.getTitle()).isPresent(FIVE_SEC_TIMEOUT),
+                "Title found in Continue watching container");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
@@ -577,8 +584,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        String email = "robert.walters+6740c5ea@disneyplustesting.com";
-        loginForHuluHub(email);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
 
         //Open Hulu brand page
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
@@ -651,6 +658,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
     }
