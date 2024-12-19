@@ -104,10 +104,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
         return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSCODE.getText());
     }
 
-    public boolean isOTPErrorMessagePresent() {
-        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_INCORRECT_ERROR.getText())).isPresent();
-    }
-
     public void clickContinueBtnOnOTPPage() {
         primaryButton.click();
     }
@@ -120,10 +116,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
     public boolean isResentEmailBodyPresent() {
         return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_OTP_RESENT_BODY.getText())).isPresent();
-    }
-
-    public boolean isOtpIncorrectErrorPresent() {
-        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_OTP_INCORRECT_ERROR.getText())).isPresent();
     }
 
     public void clickAgreeAndContinue() {

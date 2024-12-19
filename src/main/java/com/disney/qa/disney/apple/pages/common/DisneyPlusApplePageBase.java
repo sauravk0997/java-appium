@@ -524,6 +524,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeCellNameContains.format(name);
     }
 
+    public String getErrorMessageString() {
+        return labelError.getText();
+    }
+
     public String getHourMinFormatForDuration(int duration) {
         long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
         long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
