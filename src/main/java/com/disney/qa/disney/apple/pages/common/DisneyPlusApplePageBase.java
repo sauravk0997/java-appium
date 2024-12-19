@@ -1539,11 +1539,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                         DictionaryKeys.CANCEL.getText());
         return getTypeButtonByLabel(cancelButtonText);
     }
-
-    public ExtendedWebElement getCancelButton() {
-        String cancelButtonText = getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.CANCEL.getText());
-        return getTypeButtonByLabel(cancelButtonText);
-    }
 }
