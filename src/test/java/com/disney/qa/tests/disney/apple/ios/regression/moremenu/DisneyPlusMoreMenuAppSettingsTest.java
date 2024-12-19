@@ -8,6 +8,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +23,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
@@ -253,35 +256,41 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284","XMOBQA-75466"})
-    @Test(description = "App Settings Page UI test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAppSettingsDefaultUI() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         onboard();
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getBackArrow().isElementPresent(),
-                "Back Arrow is not displayed");
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_PLAYBACK_TITLE.getText())).isElementPresent(),
-                "XMOBQA-61223 - 'Video Playback' section header was not properly displayed");
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_SETTINGS_TITLE.getText())).isElementPresent(),
-                "XMOBQA-61223 - 'Downloads' section header was not displayed");
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText())).isElementPresent(),
-                "XMOBQA-61223 - 'Stream over Wi-Fi only' cell was not properly displayed");
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText())).isElementPresent(),
-                "XMOBQA-61223 - 'Wi-Fi Data Usage' cell was not properly displayed");
-
-        String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(cellOption).isElementPresent(),
-                "XMOBQA-61223 - 'Cellular Data Usage' cell was not properly displayed");
-
-        String[] usage = disneyPlusMoreMenuIOSPageBase.getTypeCellLabelContains(cellOption).getText().split(",");
+        sa.assertTrue(moreMenuPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()))
+                        .isElementPresent(),
+                "App Settings header was not present");
+        sa.assertTrue(moreMenuPage.getBackArrow().isElementPresent(),
+                "Back Arrow was not present");
+        sa.assertTrue(moreMenuPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_PLAYBACK_TITLE.getText()))
+                        .isElementPresent(),
+                "'Video Playback' section header was not present");
+        sa.assertTrue(moreMenuPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_SETTINGS_TITLE.getText()))
+                        .isElementPresent(),
+                "'Downloads' section header was not present");
+        sa.assertTrue(moreMenuPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText()))
+                        .isElementPresent(),
+                "'Stream over Wi-Fi only' cell was not present");
+        sa.assertTrue(moreMenuPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_DATA_USAGE.getText()))
+                        .isElementPresent(),
+                "'Wi-Fi Data Usage' cell was not present");
+        String cellOption = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CELLULAR_DATA_USAGE.getText());
+        sa.assertTrue(moreMenuPage.getStaticTextByLabel(cellOption).isElementPresent(),
+                "'Cellular Data Usage' cell was not present");
+        String[] usage = moreMenuPage.getTypeCellLabelContains(cellOption).getText().split(",");
         String automatic = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.CELLULAR_DATA_AUTOMATIC.getText());
         String saveData = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -289,20 +298,81 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         String cellularDataUsage = usage[1].trim();
         sa.assertTrue(Arrays.asList(automatic, saveData).contains(cellularDataUsage),
                 String.format("Cellular data default was not set to either %s or %s", automatic, saveData));
+        sa.assertTrue(moreMenuPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText()))
+                        .isElementPresent(),
+                "'Download Over Wi-Fi Only' cell was not present");
+        sa.assertTrue(moreMenuPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText()))
+                        .isElementPresent(),
+                "'Video Quality' label was not present");
+        ExtendedWebElement videoQualityCell = moreMenuPage.getTypeCellLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText()));
+        String selectedVideoQuality = videoQualityCell.getText().split(",")[1].trim();
+        String standardQualityLabel = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,DictionaryKeys.VIDEO_QUALITY_LABEL_STANDARD.getText());
+        String mediumQualityLabel = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,DictionaryKeys.VIDEO_QUALITY_LABEL_MEDIUM.getText());
+        String highQualityLabel = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,DictionaryKeys.VIDEO_QUALITY_LABEL_HIGH.getText());
+        List<String> expectedVideoQualityLabels = Arrays.asList(standardQualityLabel, mediumQualityLabel, highQualityLabel);
+        sa.assertTrue(expectedVideoQualityLabels.contains(selectedVideoQuality),
+                String.format("'Video Quality' selected value (%s) was not one of the following: %s",
+                        selectedVideoQuality, expectedVideoQualityLabels));
+        sa.assertTrue(moreMenuPage.getDeleteAllDownloadsCell().isPresent(),
+                "'Delete All Downloads' cell was not present");
+        sa.assertFalse(moreMenuPage.isDeleteDownloadsEnabled(),
+                "'Delete All Downloads' cell was enabled");
+        sa.assertTrue(moreMenuPage.isDeviceStorageCorrectlyDisplayed(),
+                "'Device Storage' cell was not present");
 
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).isElementPresent(),
-                "XMOBQA-61223 - 'Download Over Wi-Fi Only' cell was not properly displayed");
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText())).isElementPresent(),
-                "XMOBQA-61223 - 'Video Quality' cell was not properly displayed");
-
-        sa.assertFalse(disneyPlusMoreMenuIOSPageBase.isDeleteDownloadsEnabled(),
-                "XMOBQA-62421 - 'Delete All Downloads' cell was not properly displayed");
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isDeviceStorageCorrectlyDisplayed(),
-                "XMOBQA-61223 - 'Device Storage' cell was not properly displayed");
-
+        moreMenuPage.getBackArrow().click();
+        Assert.assertTrue(moreMenuPage.isOpened(),
+                "User was not redirected to More Menu screen");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75466"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeleteAllDownloadsSetting() {
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        String seasonNumber = "1";
+        String episodeNumber = "1";
+        String expectedAppStorageSize = "0 kB";
+        onboard();
+        Assert.assertFalse(moreMenuPage.isDeleteDownloadsEnabled(),
+                "'Delete All Downloads' cell was enabled");
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+
+        //Download one episode
+        detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenuPage.getDynamicCellByLabel(
+                moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
+
+        appSettingsPage.waitForAppSettingsPageToOpen();
+        moreMenuPage.clickDeleteAllDownloads();
+        moreMenuPage.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText()))
+                .click();
+
+        Assert.assertTrue(moreMenuPage.getDeleteAllDownloadsCell().isPresent(),
+                "User was not redirected to More Menu screen");
+        Assert.assertFalse(moreMenuPage.isDeleteDownloadsEnabled(),
+                "'Delete All Downloads' cell was enabled");
+        Assert.assertTrue(moreMenuPage.getAppStorageLabel().getText().contains(expectedAppStorageSize),
+                String.format("Device storage was: '%s' when it was expected to be '%s'",
+                        moreMenuPage.getAppStorageLabel().getText(), expectedAppStorageSize));
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
+                "Downloads empty header is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61233"})
