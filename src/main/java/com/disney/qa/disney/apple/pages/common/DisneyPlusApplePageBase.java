@@ -1408,7 +1408,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean waitForTravelAlertToDisplay() {
-        LOGGER.info("Waiting for Details page to load");
+        LOGGER.info("Waiting for Travel alert to load");
         return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Travel alert title did not display.")
                 .until(it -> isTravelAlertTitlePresent());
     }
