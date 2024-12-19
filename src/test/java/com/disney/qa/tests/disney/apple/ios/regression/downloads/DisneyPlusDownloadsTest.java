@@ -13,6 +13,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -294,5 +295,34 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
                 "Download was not removed after clicking on Remove");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66734"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMetaDataDescriptionOnDownloads() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String description = movieApiContent.getDescription().getBrief();
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String movieTitle = detailsPage.getMediaTitle();
+
+        //Start download
+        detailsPage.getMovieDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+
+        downloadsPage.getStaticTextByLabelContains(movieTitle).click();
+        Assert.assertTrue(downloadsPage.getStaticTextByLabel(description).isPresent(),
+                "Content description is not visible");
+        downloadsPage.getStaticTextByLabelContains(movieTitle).click();
+        Assert.assertFalse(downloadsPage.getStaticTextByLabel(description).isPresent(),
+                "Content description is still visible");
     }
 }
