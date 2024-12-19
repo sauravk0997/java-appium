@@ -524,6 +524,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeCellNameContains.format(name);
     }
 
+    public String getErrorMessageString() {
+        return labelError.getText();
+    }
+
     public String getHourMinFormatForDuration(int duration) {
         long hours = TimeUnit.MILLISECONDS.toHours(duration) % 24;
         long minutes = TimeUnit.MILLISECONDS.toMinutes(duration) % 60;
@@ -1177,6 +1181,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getCollection(collection).isPresent();
     }
 
+    public boolean isCollectionPresent(CollectionConstant.Collection collection, int timeout) {
+        return getCollection(collection).isPresent(timeout);
+    }
+
     public void swipeInHuluBrandPage(Direction direction) {
         swipeInContainer(brandLandingView, direction, 500);
     }
@@ -1517,6 +1525,19 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT,
                 String.format("Element was not focused after %s seconds", timeout))
                 .until(it -> isFocused(element));
+    }
+
+    public void waitForElementToDisappear(ExtendedWebElement element, int timeout) {
+        LOGGER.info("Waiting for element to disappear");
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Given element was still present")
+                .until(it -> !element.isPresent(THREE_SEC_TIMEOUT));
+    }
+
+    public ExtendedWebElement getCancelButton() {
+        String cancelButtonText = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.CANCEL.getText());
+        return getTypeButtonByLabel(cancelButtonText);
     }
 
     public ExtendedWebElement getCancelButton() {

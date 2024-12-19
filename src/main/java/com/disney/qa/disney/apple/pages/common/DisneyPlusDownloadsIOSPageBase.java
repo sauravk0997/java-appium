@@ -31,6 +31,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()));
 	private ExtendedWebElement checkedCheckbox = getDynamicAccessibilityId(getLocalizationUtils()
 			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_CHECKED.getText()));
+	private ExtendedWebElement resumeDownload = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_PAUSED.getText()));
+	private ExtendedWebElement stopDownload = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP.getText()));
 
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
@@ -81,8 +85,20 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return editButton;
 	}
 
+	public ExtendedWebElement getDownloadStopIcon() {
+		return stopDownload;
+	}
+
+	public ExtendedWebElement getTrashIcon() {
+		return deleteDownloadButton;
+	}
+
 	public ExtendedWebElement getDownloadCompleteButton() {
 		return downloadCompleteButton;
+	}
+
+	public ExtendedWebElement getDownloadResumeIcon() {
+		return resumeDownload;
 	}
 
 	public void waitForDownloadToStart() {
@@ -103,6 +119,12 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isDownloadsEmptyHeaderPresent() {
 		return downloadsEmptyHeader.isPresent();
+	}
+
+	public void waitForDownloadEmptyHeader() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download was not removed")
+				.until(it -> downloadsEmptyHeader.isPresent(ONE_SEC_TIMEOUT));
 	}
 
 	public boolean isDownloadsEmptyCopyPresent() {
@@ -207,10 +229,6 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				DictionaryKeys.SELECT_ALL_LABEL.getText()));
 	}
 
-	public ExtendedWebElement getTrashIcon() {
-		return deleteDownloadButton;
-	}
-
 	public boolean isSelectContentToRemoveTextDisplayed() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
 				DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -222,6 +240,23 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
 				DisneyDictionaryApi.ResourceKeys.APPLICATION,
 				DictionaryKeys.DESELCT_ALL_LABEL.getText()));
+	}
+
+	public boolean waitForPauseDownloadButton() {
+		int count = 5;
+		ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
+				getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+		while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+			clickAlertDismissBtn();
+			getDownloadStopIcon().click();
+			count--;
+		}
+		return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
+	}
+
+	public void clickDownloadHeader() {
+		downloadsHeader.click();
 	}
 
 	public ExtendedWebElement getEpisodeDownloadButton(String seasonNumber, String episodeNumber) {

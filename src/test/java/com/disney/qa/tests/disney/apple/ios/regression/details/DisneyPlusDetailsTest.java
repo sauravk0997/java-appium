@@ -21,7 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
@@ -281,14 +281,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         detailsPage.clickContinueButton();
         sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
-        videoPlayerPage.scrubToPlaybackPercentage(99.5);
+        videoPlayerPage.scrubToPlaybackPercentage(95);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
         videoPlayerPage.clickPauseButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        sa.assertFalse(detailsPage.isContinueButtonPresent(),
+        sa.assertFalse(detailsPage.getContinueButton().isPresent(FIVE_SEC_TIMEOUT),
                 "Continue button on detail page is present after completing playback");
-        sa.assertFalse(detailsPage.isProgressBarPresent(),
+        sa.assertFalse(detailsPage.getProgressBar().isPresent(FIVE_SEC_TIMEOUT),
                 "Progress bar on detail page is present after completing playback");
         sa.assertAll();
     }
