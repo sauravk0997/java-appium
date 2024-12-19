@@ -140,6 +140,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @Test(dataProvider = "impressumCountries", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyImpressumTab(String TUID) {
         SoftAssert sa = new SoftAssert();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -149,10 +150,16 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), country);
         setAppToHomeScreen(getAccount());
+
+        initialSetup();
+        handleAlert();
+        Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
+
+        welcomePage.clickLogInButton();
+        login(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
-
         homePage.waitForTravelAlertToDisplay();
         homePage.getTravelAlertOk().click();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
