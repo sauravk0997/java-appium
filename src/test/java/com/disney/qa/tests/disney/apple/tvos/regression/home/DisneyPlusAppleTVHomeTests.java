@@ -159,7 +159,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
-        
+
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
 
@@ -176,10 +176,14 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
                 //Verify content title
-                sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(),
+                sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
                         "Content title not found: " + firstContentTitle);
             }
             homePage.moveDown(1, 1);
+
+            if (homePage.getTypeOtherContainsName("airingBadgeContainerView").isPresent(SHORT_TIMEOUT)) {
+                homePage.moveDown(1, 1);
+            }
         });
     }
 }
