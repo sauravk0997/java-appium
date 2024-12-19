@@ -330,7 +330,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                     .getVisuals()
                     .getEpisodeTitle();
         } catch (Exception e) {
-            throw new SkipException("Skipping test, titles or deeplinkID were not found" + e.getMessage());
+            throw new SkipException("Skipping test, titles were not found" + e.getMessage());
         }
 
         if (fourthEpisodeTitle == null || fifthEpisodeTitle == null) {
