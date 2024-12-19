@@ -8,6 +8,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +23,8 @@ import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
@@ -303,6 +306,49 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 "XMOBQA-61223 - 'Device Storage' cell was not properly displayed");
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75466"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeleteAllDownloadsSetting() {
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        String seasonNumber = "1";
+        String episodeNumber = "1";
+        String expectedAppStorageSize = "0 kB";
+        onboard();
+        Assert.assertFalse(moreMenuPage.isDeleteDownloadsEnabled(),
+                "'Delete All Downloads' cell was enabled");
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+
+        //Download one episode
+        detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenuPage.getDynamicCellByLabel(
+                moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
+
+        appSettingsPage.waitForAppSettingsPageToOpen();
+        moreMenuPage.clickDeleteAllDownloads();
+        moreMenuPage.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_DOWNLOADS_DELETE_BTN.getText()))
+                .click();
+
+        Assert.assertTrue(moreMenuPage.getDeleteAllDownloadsCell().isPresent(),
+                "User was not redirected to More Menu screen");
+        Assert.assertFalse(moreMenuPage.isDeleteDownloadsEnabled(),
+                "'Delete All Downloads' cell was enabled");
+        Assert.assertTrue(moreMenuPage.getAppStorageLabel().getText().contains(expectedAppStorageSize),
+                String.format("Device storage was: '%s' when it was expected to be '%s'",
+                        moreMenuPage.getAppStorageLabel().getText(), expectedAppStorageSize));
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
+                "Downloads empty header is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61233"})
