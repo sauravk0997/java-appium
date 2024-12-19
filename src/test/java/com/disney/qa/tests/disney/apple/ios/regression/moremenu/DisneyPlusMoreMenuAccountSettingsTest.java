@@ -490,7 +490,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "The User's new email address was not displayed as expected");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67140"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67138"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangeEmailSelectCancel() {
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
@@ -516,6 +516,31 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User's email didn't stay same after cancelling new email submission");
     }
 
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75206"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void testChangeEmailIncorrectOTPInlineError() {
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
+                initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        String incorrectOTP = "888888";
+
+        setAppToAccountSettings(getAccount());
+        accountPage.waitForAccountPageToOpen();
+        accountPage.clickManageWithMyDisneyButton();
+        Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
+                        accountPage.getStaticTextByLabelContains(getAccount().getEmail()).getBy()), 15),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.tapEditEmailButton();
+
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        oneTimePasscodePage.enterOtp(incorrectOTP);
+        oneTimePasscodePage.clickPrimaryButton();
+        Assert.assertTrue(oneTimePasscodePage.isOtpIncorrectErrorPresent(),
+                "Inline error message for OTP is not displayed");
+        Assert.assertTrue(oneTimePasscodePage.isOpened(),
+                "Screen transitioned away from the One time passcode screen");
+    }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-70695"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangeEmailWithLogout() {
