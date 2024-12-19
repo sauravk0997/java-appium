@@ -153,7 +153,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
             oneTrustPage.tapAcceptAllButton();
         }
 
-        homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
+        homePage.waitForTravelAlertToDisplay();
         homePage.getTravelAlertOk().click();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
