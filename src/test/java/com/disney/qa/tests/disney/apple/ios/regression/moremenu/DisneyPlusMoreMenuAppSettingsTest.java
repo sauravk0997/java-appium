@@ -31,7 +31,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private final String customAppSettingLabel = "%s, %s ";
     private static final String VALUE = "value";
-    private static final String AVATAR = "Avatar The way of the water";
+    private static final String AVATAR = "Avatar: The Way of Water";
 
     public void onboard() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
