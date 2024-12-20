@@ -401,7 +401,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void waitForPresenceOfAnElement(ExtendedWebElement element) {
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
     }
 
     public ExtendedWebElement getDynamicIosClassChainElementTypeImage(String label) {
