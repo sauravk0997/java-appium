@@ -1144,4 +1144,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());
         return getTypeButtonByLabel(dictValue);
     }
+
+    public void playEpisode(String seasonNumber, String episodeNumber) {
+        String desiredSeasonLabel = "Season " + seasonNumber;
+        String desiredEpisodeLabel = "Episode " + episodeNumber;
+        int maxSwipes = 10;
+        ExtendedWebElement desiredEpisodeElement =
+                typeCellLabelContains.format(String.format("%s %s", desiredSeasonLabel, desiredEpisodeLabel));
+        if (!seasonSelectorButton.getAttribute("label").equals(desiredSeasonLabel)) {
+            seasonSelectorButton.click();
+            getStaticTextByLabel(desiredSeasonLabel).click();
+        }
+        swipePageTillElementPresent(desiredEpisodeElement, maxSwipes, contentDetailsPage, Direction.UP, 500);
+        desiredEpisodeElement.click();
+    }
  }
