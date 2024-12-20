@@ -994,9 +994,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
-        detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
+        detailsPage.downloadEpisode(seasonNumber, episodeNumber);
         detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
-        detailsPage.playEpisode(seasonNumber, episodeNumber);
+        detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
 
         Assert.assertTrue(videoPlayer.isOpened(),
                 "Video player did not open after choosing a downloaded episode");
