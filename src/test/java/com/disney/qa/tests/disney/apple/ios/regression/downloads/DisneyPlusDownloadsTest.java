@@ -388,6 +388,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent(one, one),
                 "Series download button is not present");
         detailsPage.getEpisodeToDownload(one, one).click();
+        // Validating a label due to id of the button not being located after clicking on it
         Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(episodeDownloadButton).isPresent(),
                 "Download not started, icon has not changed to in progress");
         Assert.assertTrue(detailsPage.getElementTypeCellByLabel(downloadInProgress).isPresent(),
