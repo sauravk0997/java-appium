@@ -11,6 +11,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import io.appium.java_client.remote.MobilePlatform;
+import kotlin._Assertions;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,19 +140,19 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
     @Test(dataProvider = "impressumCountries", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyImpressumTab(String TUID) {
-        SoftAssert sa = new SoftAssert();
+        initialSetup();
+        handleAlert();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), country);
 
-        initialSetup();
-        handleAlert();
         Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
 
         welcomePage.clickLogInButton();
@@ -159,12 +160,14 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
-        homePage.waitForTravelAlertToDisplay();
-        homePage.getTravelAlertOk().click();
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         sa.assertTrue(legalPage.isOpened(),"Legal Page did not open on navigation");
+
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en",
                 MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
