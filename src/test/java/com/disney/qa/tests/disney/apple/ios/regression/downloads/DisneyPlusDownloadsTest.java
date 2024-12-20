@@ -372,8 +372,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifySeriesIconDownloads() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String downloadInProgress = "download in progress";
-        String season = "1";
-        String episode = "1";
+        String episodeDownloadButton = "download";
+        String one = "1";
 
         setAppToHomeScreen(getAccount());
         // Launch series details page
@@ -385,10 +385,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         }
 
         // Download first episode and validate icons
-        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent(season, episode),
+        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent(one, one),
                 "Series download button is not present");
-        detailsPage.getEpisodeToDownload(season, episode).click();
-        Assert.assertTrue(detailsPage.getDownloadStartedButton().isPresent(),
+        detailsPage.getEpisodeToDownload(one, one).click();
+        Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(episodeDownloadButton).isPresent(),
                 "Download not started, icon has not changed to in progress");
         Assert.assertTrue(detailsPage.getElementTypeCellByLabel(downloadInProgress).isPresent(),
                 "Downloads tab footer has no elements in progress");
