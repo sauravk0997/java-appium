@@ -13,6 +13,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -293,6 +294,76 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         downloadsPage.waitForDownloadEmptyHeader();
         sa.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
                 "Download was not removed after clicking on Remove");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66718"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadsInQueueSubFunction() {
+        String one = "1";
+        String four = "4";
+        String five = "5";
+        String fourthEpisodeTitle, fifthEpisodeTitle;
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        SoftAssert sa = new SoftAssert();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        ExploreContent seriesApiContent = getSeriesApi(
+                R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            fourthEpisodeTitle = seriesApiContent.getSeasons()
+                    .get(0)
+                    .getItems()
+                    .get(3)
+                    .getVisuals()
+                    .getEpisodeTitle();
+
+            fifthEpisodeTitle = seriesApiContent.getSeasons()
+                    .get(0)
+                    .getItems()
+                    .get(4)
+                    .getVisuals()
+                    .getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, titles were not found" + e.getMessage());
+        }
+
+        if (fourthEpisodeTitle == null || fifthEpisodeTitle == null) {
+            throw new SkipException("Skipping test, failed to get episode titles from the api");
+        }
+
+        //Start download
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+        downloadsPage.waitForDownloadToStart();
+        downloadsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        downloadsPage.clickSeriesMoreInfoButton();
+
+        downloadsPage.getEpisodeDownloadButton(one, four).click();
+
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(), "Remove Download button not displayed on alert");
+        sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
+                "Download is Queued status not displayed on alert");
+        sa.assertTrue(downloadsPage.getStaticTextByLabel(fourthEpisodeTitle).isPresent(),
+                "Episode title is not present on alert");
+        sa.assertTrue(downloadsPage.isAlertDismissBtnPresent(), "Dismiss button not present on alert");
+
+        downloadsPage.clickAlertDismissBtn();
+        sa.assertTrue(downloadsPage.isEpisodeCellDisplayed(one, four),
+                "episode is removed after dismissing alert");
+
+        downloadsPage.getEpisodeDownloadButton(one, five).click();
+        sa.assertTrue(downloadsPage.isDownloadIsQueuedStatusDisplayed(),
+                "Download is Queued status not displayed on alert");
+        downloadsPage.getSystemAlertDestructiveButton().click();
+        sa.assertFalse(downloadsPage.getStaticTextByLabel(fifthEpisodeTitle).isPresent(),
+                "episode is not removed after clicking remove download on alert");
         sa.assertAll();
     }
 }

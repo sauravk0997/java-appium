@@ -59,6 +59,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			"/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
 	private ExtendedWebElement emptyDownloadImage;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeButton")
+	private ExtendedWebElement episodeDownloadButton;
+
 	//FUNCTIONS
 	@Override
 	public boolean isOpened() {
@@ -253,5 +257,15 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public void clickDownloadHeader() {
 		downloadsHeader.click();
+	}
+
+	public ExtendedWebElement getEpisodeDownloadButton(String seasonNumber, String episodeNumber) {
+		return episodeDownloadButton.format(seasonNumber, episodeNumber);
+	}
+
+	public boolean isDownloadIsQueuedStatusDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils()
+				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.DOWNLOAD_QUEUED.getText())).isPresent();
 	}
 }
