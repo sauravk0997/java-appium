@@ -372,18 +372,22 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifySeriesIconDownloads() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String downloadInProgress = "download in progress";
-        String one = "1";
+        String season = "1";
+        String episode = "1";
 
         setAppToHomeScreen(getAccount());
         // Launch series details page
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
-        swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 500);
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
 
         // Download first episode and validate icons
-        Assert.assertTrue(detailsPage.getEpisodeToDownload().isPresent(), "Download button is not present");
-        detailsPage.getEpisodeToDownload(one, one).click();
+        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent(season, episode),
+                "Series download button is not present");
+        detailsPage.getEpisodeToDownload(season, episode).click();
         Assert.assertTrue(detailsPage.getDownloadStartedButton().isPresent(),
                 "Download not started, icon has not changed to in progress");
         Assert.assertTrue(detailsPage.getElementTypeCellByLabel(downloadInProgress).isPresent(),
