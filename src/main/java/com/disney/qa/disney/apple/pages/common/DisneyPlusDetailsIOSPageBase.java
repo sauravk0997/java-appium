@@ -1151,17 +1151,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonByLabel(dictValue);
     }
 
-    public void playEpisode(String seasonNumber, String episodeNumber) {
-        String desiredSeasonLabel = "Season " + seasonNumber;
-        String desiredEpisodeLabel = "Episode " + episodeNumber;
+    public void downloadEpisode(String seasonNumber, String episodeNumber) {
         int maxSwipes = 10;
-        ExtendedWebElement desiredEpisodeElement =
-                typeCellLabelContains.format(String.format("%s %s", desiredSeasonLabel, desiredEpisodeLabel));
+        String desiredSeasonLabel = "Season " + seasonNumber;
+        ExtendedWebElement episodeToDownload = getEpisodeToDownload(seasonNumber, episodeNumber);
         if (!seasonSelectorButton.getAttribute("label").equals(desiredSeasonLabel)) {
             seasonSelectorButton.click();
             getStaticTextByLabel(desiredSeasonLabel).click();
         }
-        swipePageTillElementPresent(desiredEpisodeElement, maxSwipes, contentDetailsPage, Direction.UP, 500);
-        desiredEpisodeElement.click();
+        swipePageTillElementPresent(episodeToDownload, maxSwipes, contentDetailsPage, Direction.UP, 1500);
+        episodeToDownload.click();
     }
  }
