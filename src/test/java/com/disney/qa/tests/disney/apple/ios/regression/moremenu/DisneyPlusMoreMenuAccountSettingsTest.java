@@ -13,6 +13,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.JSONException;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -56,12 +57,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     public void setAppToAccountSettings() {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
-    }
-
-    public void setAppToAccountSettings(DisneyAccount account) {
-        setAppToHomeScreen(account, account.getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
@@ -322,7 +317,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Date startTime = getEmailApi().getStartTime();
         accountPage.clickManageWithMyDisneyButton();
-        accountPage.getDynamicRowButtonLabel(EDIT_ICON, 2).click();
+        accountPage.getEditPasswordButton().click();
         String otp = getOTPFromApi(startTime, otpAccount);
 
         sa.assertTrue(oneTimePasscodePage.isOpened(),
@@ -495,6 +490,57 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "The User's new email address was not displayed as expected");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67138"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void testChangeEmailSelectCancel() {
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
+                initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
+
+        setAppToAccountSettings(getAccount());
+        accountPage.waitForAccountPageToOpen();
+        accountPage.clickManageWithMyDisneyButton();
+        Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
+                accountPage.getStaticTextByLabelContains(getAccount().getEmail()).getBy()), 15),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.tapEditEmailButton();
+
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        changeEmailPage.clickCancelBtn();
+
+        Assert.assertTrue(accountPage.isOpened(),
+                "User was not returned to the Account page after cancelling new email submission");
+        Assert.assertTrue(accountPage.getStaticTextByLabelContains(getAccount().getEmail())
+                        .isPresent(),
+                "User's email didn't stay same after cancelling new email submission");
+    }
+
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75206"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void testChangeEmailIncorrectOTPInlineError() {
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
+                initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        String incorrectOTP = "888888";
+
+        setAppToAccountSettings(getAccount());
+        accountPage.waitForAccountPageToOpen();
+        accountPage.clickManageWithMyDisneyButton();
+        Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
+                        accountPage.getStaticTextByLabelContains(getAccount().getEmail()).getBy()), 15),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.tapEditEmailButton();
+
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        oneTimePasscodePage.enterOtp(incorrectOTP);
+        oneTimePasscodePage.clickPrimaryButton();
+        Assert.assertTrue(oneTimePasscodePage.isOtpIncorrectErrorPresent(),
+                "Inline error message for OTP is not displayed");
+        Assert.assertTrue(oneTimePasscodePage.isOpened(),
+                "Screen transitioned away from the One time passcode screen");
+    }
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-70695"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangeEmailWithLogout() {
@@ -562,6 +608,25 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Add Profile Icon was not displayed");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67160"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAccountsCommunicationSettings() {
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        setAppToAccountSettings(getAccount());
+
+        accountPage.waitForAccountPageToOpen();
+        accountPage.swipe(accountPage.getAccountManagementTextElement());
+        Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
+                "Account Management link was not displayed");
+        accountPage.getAccountManagementLink().click();
+        accountPage.waitForPresenceOfAnElement(accountPage.getWebviewUrlBar());
+        Assert.assertTrue(accountPage.isAccountManagementFAQWebViewDisplayed(),
+                "Account Management FAQ web page did not open");
+        relaunch();
+        Assert.assertTrue(accountPage.isOpened(),
+                "User was not returned to the Account page after navigating back from webview");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyIAPBillingHoldWithPartnerSub() {
@@ -609,6 +674,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     //Helper methods
+
+    private void setAppToAccountSettings(DisneyAccount account) {
+        setAppToHomeScreen(account);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+    }
 
     /**
      * Performs the Paused Entitlement check by checking for the passed URL value for the given provider.

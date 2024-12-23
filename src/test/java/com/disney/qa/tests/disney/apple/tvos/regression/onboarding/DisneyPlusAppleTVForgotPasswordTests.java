@@ -175,7 +175,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOTPErrorMessagePresent(), "Error message is not present");
+        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOtpIncorrectErrorPresent(), "Error message is not present");
 
         sa.assertAll();
     }
@@ -208,7 +208,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVForgotPasswordPage.enterOTP("223344");
         disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
 
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOTPErrorMessagePresent(), "Error message is not present");
+        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOtpIncorrectErrorPresent(), "Error message is not present");
 
         sa.assertAll();
     }

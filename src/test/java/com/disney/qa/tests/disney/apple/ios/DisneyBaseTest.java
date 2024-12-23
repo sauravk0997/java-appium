@@ -8,7 +8,7 @@ import java.util.*;
 
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
-import com.disney.qa.api.pojos.DisneyOffer;
+import com.disney.qa.api.pojos.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -36,7 +36,6 @@ import org.testng.asserts.SoftAssert;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
@@ -89,6 +88,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
     public static final String HULU = "Hulu";
+    public static final String DEEPLINKURL = "disneyplus://www.disneyplus.com/browse/";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -175,15 +175,28 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public void loginForHuluHub(String Email) {
-        initialSetup();
+    /**
+     * Logs into the app by entering the provided account's credentials and username
+     *
+     * @param entitledUser - Unified Account generated for the test run
+     */
+    public void loginToHome(UnifiedAccount entitledUser) {
+        handleAlert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(Email);
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
-        pause(5);
+        login(entitledUser);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         Assert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
-                "Couldn't login into the Hulu-sub account");
+                "Home Page did not open after login");
+    }
+
+    /**
+     * Logs into the app by entering the provided account's credentials and username
+     *
+     * @param account - UnifiedAccount generated for the test run
+     */
+    public void login(UnifiedAccount account) {
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(account.getEmail());
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(account.getUserPass());
     }
 
     public DisneyAccount createAccountFor(String country, String language) {
@@ -504,14 +517,21 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return pageResponse.getData().getPage().getVisuals();
     }
 
-    public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) throws URISyntaxException, JsonProcessingException {
-        return getExploreApi().getPage(getDisneyExploreSearchRequest()
-                .setEntityId(pageID)
-                .setProfileId(getAccount().getProfileId())
-                .setCountryCode(locale)
-                .setMaturity(getMaxMaturityRating(locale))
-                .setRoamingDas(getRoamingDas(locale))
-                .setLanguage(language)).getData().getPage().getContainers();
+    public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) {
+        ArrayList<Container> container;
+        try{
+            container = getExploreApi().getPage(getDisneyExploreSearchRequest()
+                    .setEntityId(pageID)
+                    .setProfileId(getAccount().getProfileId())
+                    .setCountryCode(locale)
+                    .setMaturity(getMaxMaturityRating(locale))
+                    .setRoamingDas(getRoamingDas(locale))
+                    .setLanguage(language)).getData().getPage().getContainers();
+        }
+        catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+        return container;
     }
 
     public String getFirstContentIDForSet(String setID) {
@@ -639,19 +659,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-    }
-
-    public String getHuluSubscriptionId() {
-        try {
-            JsonNode activeSubscriptions = getSubscriptionApi().getSubscriptions(getAccount().getAccountId());
-            int huluSubscriptionIndex = activeSubscriptions.get(0).get("product")
-                    .get("sku").textValue()
-                    .equals(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE.getValue()) ? 0 : 1;
-            return activeSubscriptions.get(huluSubscriptionIndex).get("id").textValue();
-
-        } catch (IndexOutOfBoundsException e) {
-            throw new IndexOutOfBoundsException(e.getMessage());
-        }
     }
 
     public String convertMinutesIntoStringWithHourAndMinutes(int timeInMinutes) {

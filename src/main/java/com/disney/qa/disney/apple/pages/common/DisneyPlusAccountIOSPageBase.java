@@ -23,6 +23,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2" +
+            "]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton[1]")
+    private ExtendedWebElement editEmailButton;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton[2]")
+    private ExtendedWebElement editPasswordButton;
+
     private ExtendedWebElement accountDetailsSection = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()));
 
     private ExtendedWebElement singleSubscriptionHeader = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE.getText()));
@@ -655,6 +662,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         getStaticTextByLabelContains(email).click();
     }
 
+    public void tapEditEmailButton() {
+        editEmailButton.click();
+    }
+
     public void clickChangePasswordCell() {
         changePasswordCell.click();
     }
@@ -671,14 +682,23 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return manageDevicesText.isElementPresent();
     }
 
-    public boolean isAccountManagementLinkPresent() {
+    public ExtendedWebElement getAccountManagementLink() {
         String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
-        String expectedHyperLinkText = dictValOfAccountManagement.substring(
-                dictValOfAccountManagement.indexOf('[')+1,dictValOfAccountManagement.indexOf(']'));
-        return customHyperlinkByLabel.format(expectedHyperLinkText).isElementPresent();
+         String expectedHyperLinkText = dictValOfAccountManagement.substring(
+                dictValOfAccountManagement.indexOf('[') + 1, dictValOfAccountManagement.indexOf(']'));
+        return customHyperlinkByLabel.format(expectedHyperLinkText);
     }
 
+    public boolean isAccountManagementLinkPresent() {
+        return getAccountManagementLink().isElementPresent();
+    }
+
+    public boolean isAccountManagementFAQWebViewDisplayed() {
+        String acctMgmtFaqText = "Account Management FAQ";
+        return staticTextByLabel.format(acctMgmtFaqText).isPresent();
+    }
+    
     public ExtendedWebElement getAccountManagementTextElement() {
         String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
@@ -691,4 +711,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getAccountManagementTextElement().isElementPresent();
     }
 
+    public ExtendedWebElement getEditPasswordButton() {
+        return editPasswordButton;
+    }
 }

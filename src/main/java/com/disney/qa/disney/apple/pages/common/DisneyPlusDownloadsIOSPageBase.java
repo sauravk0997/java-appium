@@ -6,7 +6,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.CacheLookup;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.time.temporal.ValueRange;
 import java.util.Map;
@@ -22,16 +21,20 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@CacheLookup
 	private ExtendedWebElement downloadsHeader;
 
-	private ExtendedWebElement editButton = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT.getText()));
-	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
-
-	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
-
-	@ExtendedFindBy(accessibilityId = "Checkbox. Checked.")
-	private ExtendedWebElement checkedCheckbox;
-
-	@ExtendedFindBy(accessibilityId = "Checkbox. Unchecked.")
-	private ExtendedWebElement uncheckedCheckbox;
+	private ExtendedWebElement editButton = getStaticTextByLabel(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT.getText()));
+	private ExtendedWebElement downloadCompleteButton = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_COMPLETE.getText()));
+	private ExtendedWebElement downloadsEmptyHeader = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOADS_EMPTY_HEADER.getText()));
+	private ExtendedWebElement uncheckedCheckbox = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_UNCHECKED.getText()));
+	private ExtendedWebElement checkedCheckbox = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CHECKBOX_CHECKED.getText()));
+	private ExtendedWebElement resumeDownload = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_PAUSED.getText()));
+	private ExtendedWebElement stopDownload = getDynamicAccessibilityId(getLocalizationUtils()
+			.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_STOP.getText()));
 
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
@@ -56,6 +59,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			"/XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
 	private ExtendedWebElement emptyDownloadImage;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/**/XCUIElementTypeButton")
+	private ExtendedWebElement episodeDownloadButton;
+
 	//FUNCTIONS
 	@Override
 	public boolean isOpened() {
@@ -78,8 +85,20 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return editButton;
 	}
 
+	public ExtendedWebElement getDownloadStopIcon() {
+		return stopDownload;
+	}
+
+	public ExtendedWebElement getTrashIcon() {
+		return deleteDownloadButton;
+	}
+
 	public ExtendedWebElement getDownloadCompleteButton() {
 		return downloadCompleteButton;
+	}
+
+	public ExtendedWebElement getDownloadResumeIcon() {
+		return resumeDownload;
 	}
 
 	public void waitForDownloadToStart() {
@@ -102,6 +121,12 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return downloadsEmptyHeader.isPresent();
 	}
 
+	public void waitForDownloadEmptyHeader() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download was not removed")
+				.until(it -> downloadsEmptyHeader.isPresent(ONE_SEC_TIMEOUT));
+	}
+
 	public boolean isDownloadsEmptyCopyPresent() {
 		String downloadsCopy = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 				DictionaryKeys.DOWNLOADS_EMPTY_COPY.getText());
@@ -115,8 +140,16 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		uncheckedCheckbox.click();
 	}
 
+	public ExtendedWebElement getUncheckedCheckbox() {
+		return uncheckedCheckbox;
+	}
+
 	public boolean isCheckedCheckboxPresent() {
 		return checkedCheckbox.isElementPresent();
+	}
+
+	public ExtendedWebElement getCheckedCheckbox() {
+		return checkedCheckbox;
 	}
 
 	public void clickDeleteDownloadButton() {
@@ -178,15 +211,61 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isDownloadInProgressTextPresent() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
-					DisneyDictionaryApi.ResourceKeys.APPLICATION,
-					DictionaryKeys.DOWNLOAD_IN_PROGRESS.getText()))
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DOWNLOAD_IN_PROGRESS.getText()))
 				.isPresent();
 	}
 
 	public boolean isDownloadInProgressPluralTextPresent() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
-					DisneyDictionaryApi.ResourceKeys.APPLICATION,
-					DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText()))
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText()))
 				.isPresent();
+	}
+
+	public ExtendedWebElement getSelectAllButton() {
+		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.SELECT_ALL_LABEL.getText()));
+	}
+
+	public boolean isSelectContentToRemoveTextDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.SELECT_CONTENT_REMOVE.getText()))
+				.isPresent();
+	}
+
+	public ExtendedWebElement getDeSelectAllButton() {
+		return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+				DisneyDictionaryApi.ResourceKeys.APPLICATION,
+				DictionaryKeys.DESELCT_ALL_LABEL.getText()));
+	}
+
+	public boolean waitForPauseDownloadButton() {
+		int count = 5;
+		ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
+				getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+		while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+			clickAlertDismissBtn();
+			getDownloadStopIcon().click();
+			count--;
+		}
+		return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
+	}
+
+	public void clickDownloadHeader() {
+		downloadsHeader.click();
+	}
+
+	public ExtendedWebElement getEpisodeDownloadButton(String seasonNumber, String episodeNumber) {
+		return episodeDownloadButton.format(seasonNumber, episodeNumber);
+	}
+
+	public boolean isDownloadIsQueuedStatusDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils()
+				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.DOWNLOAD_QUEUED.getText())).isPresent();
 	}
 }

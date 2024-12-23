@@ -70,6 +70,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String KMRB = "kmrb";
     private static final String MPAA_AND_TVPG = "mpaaandtvpg";
     protected static final String PLACEHOLDER_E = "E";
+    protected static final String DEVICE = "DEVICE";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -400,7 +401,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void waitForPresenceOfAnElement(ExtendedWebElement element) {
-        fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+                "Element is not present").until(it -> element.isPresent(ONE_SEC_TIMEOUT));
     }
 
     public ExtendedWebElement getDynamicIosClassChainElementTypeImage(String label) {
@@ -521,6 +523,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeCellNameContains(String name) {
         return typeCellNameContains.format(name);
+    }
+
+    public String getErrorMessageString() {
+        return labelError.getText();
     }
 
     public String getHourMinFormatForDuration(int duration) {
@@ -745,16 +751,20 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return webviewUrlBar.isElementPresent();
     }
 
+    public String getWebviewUrl() {
+        return webviewUrlBar.getText();
+    }
+
+    public ExtendedWebElement getWebviewUrlBar() {
+        return webviewUrlBar;
+    }
+
     public boolean continueButtonPresent() {
         return getTypeButtonByLabel("Continue").isElementPresent();
     }
 
     public void clickContinueBtn() {
         continueButton.click();
-    }
-
-    public String getWebviewUrl() {
-        return webviewUrlBar.getText();
     }
 
     // Will take you to continue or done button on tvOS on screen keyboard
@@ -1172,6 +1182,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getCollection(collection).isPresent();
     }
 
+    public boolean isCollectionPresent(CollectionConstant.Collection collection, int timeout) {
+        return getCollection(collection).isPresent(timeout);
+    }
+
     public void swipeInHuluBrandPage(Direction direction) {
         swipeInContainer(brandLandingView, direction, 500);
     }
@@ -1259,7 +1273,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getUnavailableContentErrorPopUpMessage() {
         // This element has hardcoded the text in the app and there is not a dictionary key with the same content
-        return  findExtendedWebElement(AppiumBy.iOSClassChain("**/XCUIElementTypeTextView[`label == \"Sorry, this content is unavailable. If the problem continues, visit our Help Center at disneyplus.com/content-unavailable.\"`]"));
+        return getStaticTextByLabelContains("**/XCUIElementTypeTextView[`label == \"Sorry, this content is " +
+                "unavailable. If the problem continues, visit our Help Center at disneyplus.com/content-unavailable.");
     }
 
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
@@ -1384,8 +1399,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         cancelButton.click();
     }
 
+    public ExtendedWebElement getTravelAlertTitle() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText()));
+    }
+
     public boolean isTravelAlertTitlePresent() {
-        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, TRAVEL_MESSAGE_TITLE.getText())).isPresent();
+        return getTravelAlertTitle().isPresent();
     }
 
     public boolean isTravelAlertBodyPresent() {
@@ -1506,5 +1526,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT,
                 String.format("Element was not focused after %s seconds", timeout))
                 .until(it -> isFocused(element));
+    }
+
+    public void waitForElementToDisappear(ExtendedWebElement element, int timeout) {
+        LOGGER.info("Waiting for element to disappear");
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Given element was still present")
+                .until(it -> !element.isPresent(THREE_SEC_TIMEOUT));
+    }
+
+    public ExtendedWebElement getCancelButton() {
+        String cancelButtonText = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.CANCEL.getText());
+        return getTypeButtonByLabel(cancelButtonText);
     }
 }

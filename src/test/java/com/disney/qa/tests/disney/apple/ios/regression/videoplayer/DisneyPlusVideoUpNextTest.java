@@ -37,7 +37,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     private static final double PLAYER_PERCENTAGE_FOR_AUTO_PLAY = 95;
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
     private static final String REGEX_UPNEXT_SERIES_TITLE = "Season %s Episode %s %s";
-    private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES = 85;
+    private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES = 80;
 
     @DataProvider(name = "autoplay-state")
     public Object[][] autoplayState(){
@@ -214,6 +214,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         detailsPage.getEpisodeTitleLabel(first).click();
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.getSkipIntroButton().click();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
 
         //Wait for upnext UI to disappear

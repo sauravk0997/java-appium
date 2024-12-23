@@ -5,12 +5,7 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyplusSellingLegalIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustConsentBannerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -39,6 +34,9 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private static final String MORE_MENU_NOT_DISPLAYED = "More Menu is not displayed";
     private static final String LEGAL_PAGE_HEADER_NOT_DISPLAYED = "Legal Page Header not displayed";
     private static final String ONE_TRUST_PAGE_NOT_DISPLAYED = "One Trust Page not displayed";
+    private static final String TOGGLE_NOT_TURNED_OFF = "Toggle was not Turned Off";
+    private static final String TOGGLE_DID_NOT_TURN_OFF = "Toggle did not turn OFF after selecting";
+    private static final String TOGGLE_SHOULD_NOT_SAVE_VALUE = "Toggle should not save value unless confirm button is tapped";
 
     @DataProvider
     private Object[] fallbackLanguages() {
@@ -139,38 +137,51 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
-    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @Test(dataProvider = "impressumCountries", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyImpressumTab(String TUID) {
-        SoftAssert sa = new SoftAssert();
-        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        initialSetup();
+        handleAlert();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), country);
-        setAppToHomeScreen(getAccount());
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+
+        Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
+
+        welcomePage.clickLogInButton();
+        login(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),"Legal Page did not open on navigation");
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en", MobilePlatform.IOS,
+        moreMenu.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        sa.assertTrue(legalPage.isOpened(),"Legal Page did not open on navigation");
+
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en",
+                MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         disneyLocalizationUtils.getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
-            Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
+            Assert.assertTrue(legalPage.isLegalHeadersPresent(header),
                     String.format("Header '%s' was not displayed", header));
         });
 
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel("Imprint").click();
+        legalPage.getTypeButtonByLabel("Imprint").click();
         String apiResponse = cleanDocument(disneyLocalizationUtils.getLegalDocumentBody("Imprint"));
-        String appDisplay = cleanDocument(disneyPlusLegalIOSPageBase.getLegalText());
+        String appDisplay = cleanDocument(legalPage.getLegalText());
         sa.assertEquals(appDisplay, apiResponse,
                 String.format("'Impressum' text was not correctly displayed for '%s'", country));
 
@@ -226,54 +237,70 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73779"})
-    @Test(description = "More Menu - Legal - OneTrust Page - Verify Toggle Behavior", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyOneTrustPageToggleBehaviour() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-        DisneyplusSellingLegalIOSPageBase sellinglegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
+        DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
         setAppToHomeScreen(getAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Toggle switch off but do not tap confirm your choice button
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle is not Turned ON by default");
+        oneTrustPage.waitForPresenceOfAnElement(oneTrustPage.getOneTrustContentSwitch());
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),
+                "Toggle is not Turned ON by default");
         oneTrustPage.tapConsentSwitch();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle was not Turned Off");
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), TOGGLE_NOT_TURNED_OFF);
         oneTrustPage.tapCloseButton();
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should not save value unless confirm button is tapped");
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),
+                TOGGLE_SHOULD_NOT_SAVE_VALUE);
 
         //Toggle switch to OFF on Selling sharing page reflect on "Notice of Right to Opt-Out of Sale/Sharing" Page
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
-        sa.assertTrue(sellinglegalTextPage.isOpened(), "Legal page/text for Selling, Sharing, Targeted Advertising not opened");
-        sa.assertTrue(sellinglegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should reflect the value of Notice of Right to Opt-Out of Sale/Sharing page");
-        sellinglegalTextPage.clickSellingSharingTargatedAdvertisingConsentSwitch();
-        sa.assertTrue(sellinglegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle was not Turned Off");
-        sellinglegalTextPage.clickBackbutton();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle on Notice of Right to Opt-Out of Sale/Sharing should reflect the value of Selling, Sharing, Targeted Advertising page");
+        sa.assertTrue(sellingLegalTextPage.isOpened(),
+                "Legal page/text for Selling, Sharing, Targeted Advertising not opened");
+        oneTrustPage.waitForPresenceOfAnElement(sellingLegalTextPage.getSellingLegalContentSwitch());
+        sa.assertTrue(sellingLegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),
+                "Toggle should reflect the value of Notice of Right to Opt-Out of Sale/Sharing page");
+        sellingLegalTextPage.clickSellingSharingTargetedAdvertisingConsentSwitch();
+        sa.assertTrue(sellingLegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("0"),
+                TOGGLE_NOT_TURNED_OFF);
+        sellingLegalTextPage.clickBackbutton();
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"),
+                "Toggle on Notice of Right to Opt-Out of Sale/Sharing should reflect the value of " +
+                        "Selling, Sharing, Targeted Advertising page");
         oneTrustPage.tapCloseButton();
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle should not save value unless confirm button is tapped");
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),
+                TOGGLE_SHOULD_NOT_SAVE_VALUE);
 
         //Toggle switch to OFF on  "Notice of Right to Opt-Out of Sale/Sharing" Page reflect on Selling Sharing" Page
         oneTrustPage.tapConsentSwitch();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"),
+                TOGGLE_DID_NOT_TURN_OFF);
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
-        sa.assertTrue(sellinglegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle on Selling, Sharing, Targeted Advertising should reflect the value of Notice of Right to Opt-Out of Sale/Sharing Page");
+        sa.assertTrue(sellingLegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("0"),
+                "Toggle on Selling, Sharing, Targeted Advertising should reflect the value of " +
+                        "Notice of Right to Opt-Out of Sale/Sharing Page");
 
         // Toggle switch to OFF, and tap 'confirm your choice button
-        sellinglegalTextPage.clickBackbutton();
+        sellingLegalTextPage.clickBackbutton();
         oneTrustPage.tapConfirmMyChoiceButton();
-        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), "after selecting the choice switch user should land on legal page");
+        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
+                "After selecting the choice switch user should land on legal page");
         //Verify that the choice is saved
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
-        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), "toggle didn't not turn OFF after selecting");
+        sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"),
+                TOGGLE_DID_NOT_TURN_OFF);
         sa.assertAll();
     }
 
@@ -325,5 +352,4 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertTrue(sellinglegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
         sa.assertAll();
     }
-
 }

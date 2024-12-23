@@ -145,10 +145,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement downloadStartedButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"SHOP\" OR name == \"PERKS\"`]")
     protected ExtendedWebElement shopOrPerksBtn;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name='titleLabel_0'$]/**/XCUIElementTypeButton[$name CONTAINS 'Download'$]")
+    protected ExtendedWebElement firstEpisondeDownloadButton;
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                    DictionaryKeys.DOWNLOAD_STOP.getText()), 1);
+                    DictionaryKeys.DOWNLOAD_STOP_DETAILS_PAGE.getText()), 1);
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -779,6 +780,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonContainsLabel("Download Season " + seasonNumber + " Episode " + episodeNumber);
     }
 
+    public ExtendedWebElement getEpisodeToDownload() {
+        return dynamicBtnFindByLabelOrLabel.format("Download Season", "Episode");
+    }
+
     /**
      * Use with hulu series content only - to get Hulu series download complete button
      */
@@ -786,10 +791,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabelContains.format("Offline Download Options");
     }
 
+    public ExtendedWebElement getFirstEpisondeDownloadButton() {
+        return firstEpisondeDownloadButton;
+    }
+
     public void waitForOneEpisodeDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for one episode download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
                 .until(it -> getHuluSeriesDownloadCompleteButton().isPresent());
+        LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+
+    public void waitForFirstEpisodeToCompleteDownload(int timeOut, int polling) {
+        LOGGER.info("Waiting for the download of the first episode to complete.");
+        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
+                .until(it -> getFirstEpisondeDownloadButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
@@ -1112,23 +1128,20 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isOnlyAvailableWithHuluHeaderPresent() {
-        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER.getText());*/
-        String dictValue = "This content is only available with a Hulu subscription";
+        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER.getText());
         return getStaticTextByLabel(dictValue).isPresent();
     }
 
     public boolean isIneligibleScreenBodyPresent() {
-        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                IPS_BODY_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());*/
-        String dictValue = "This page may be unavailable or you may not be eligible to upgrade to a plan. You can call Customer Service for more information. You can also visit Account Management or the Help Centre.";
+        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_BODY_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());
         return getStaticTextByLabel(dictValue).isPresent();
     }
 
     public ExtendedWebElement getCtaIneligibleScreen() {
-        /*String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());*/
-        String dictValue = "OK";
+        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());
         return getTypeButtonByLabel(dictValue);
     }
  }
