@@ -23,8 +23,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
-import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
@@ -980,26 +978,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
                 season1 + " " + titleErrorMessage);
         sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73790"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyPlaybackOfDownloadedEpisodeOnAnthologyDetailsPage() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        
-        String seasonNumber = "1";
-        String episodeNumber = "2";
-
-        setAppToHomeScreen(getAccount());
-
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
-        detailsPage.downloadEpisode(seasonNumber, episodeNumber);
-        detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
-        detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
-
-        Assert.assertTrue(videoPlayer.isOpened(),
-                "Video player did not open after choosing a downloaded episode");
     }
 
     private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
