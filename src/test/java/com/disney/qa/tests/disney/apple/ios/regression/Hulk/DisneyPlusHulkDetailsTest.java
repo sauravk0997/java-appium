@@ -547,6 +547,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
+
+        // Deeplink a movie, scrub and get current time
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_bohemian_rhapsody_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(),detailsTabDidNotOpen);
         detailsPage.clickPlayButton();
@@ -557,6 +559,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         LOGGER.info("remainingTimeBeforeRestartClick {}", remainingTimeBeforeRestartClick);
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(),detailsTabDidNotOpen);
+
+        // Validate and click restart button, get current time and validate restart button
         Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
         detailsPage.getRestartButton().click();
         videoPlayer.waitForVideoToStart();
