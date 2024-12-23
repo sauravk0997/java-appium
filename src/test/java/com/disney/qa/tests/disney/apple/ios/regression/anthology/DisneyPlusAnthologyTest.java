@@ -324,7 +324,9 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73971"})
     @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologyMaturityRatingRestriction() {
+        String contentUnavailableError = "content-unavailable";
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         //set lower rating
         List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
                 .getParentalControls().getMaturityRating().getRatingSystemValues();
@@ -334,6 +336,10 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
         Assert.assertFalse(details.isOpened(), "Details page should not open");
+        //At the moment Parental control error message is not supported somehow and hence verifying generic
+        // error message
+        Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(),
+                "Content Unavailable generic error not displayed");
     }
 
     private void searchAndOpenDWTSDetails() {
