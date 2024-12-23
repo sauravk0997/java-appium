@@ -390,6 +390,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66734"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDescriptionOnDownloadAsset() {
+        String description = null;
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
@@ -397,7 +398,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
         ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        String description = movieApiContent.getDescription().getFull().split("\n")[0];
+        try {
+            description = movieApiContent.getDescription().getFull().split("\n")[0];
+        } catch (Exception e) {
+            Assert.fail(String.format("content Description not found: %s", e.getMessage()));
+        }
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String movieTitle = detailsPage.getMediaTitle();
@@ -413,7 +418,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                         .getAttribute(Attributes.VISIBLE.getAttribute())
                         .equals(TRUE),
                 "Content description is not visible");
-
 
         downloadsPage.getStaticTextByLabel(movieTitle).click();
         Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(description)
