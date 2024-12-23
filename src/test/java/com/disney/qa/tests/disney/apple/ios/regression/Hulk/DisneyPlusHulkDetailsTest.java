@@ -208,9 +208,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.fluentWait(getDriver(), 60, 5, "Time remaining not found").until(it -> videoPlayer.getRemainingTime() <= 130);
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-//        detailsPage.clickSuggestedTab();
-//        detailsPage.clickExtrasTab();
-        sa.assertTrue(detailsPage.isTabSelected(detailsPage.getExtrasTab().getText()));
+        sa.assertTrue(detailsPage.isTabSelected(detailsPage.getExtrasTab().getAttribute("name")));
         sa.assertTrue(detailsPage.isProgressBarPresent(), "Duration not displayed on extras trailer.");
         sa.assertAll();
     }
