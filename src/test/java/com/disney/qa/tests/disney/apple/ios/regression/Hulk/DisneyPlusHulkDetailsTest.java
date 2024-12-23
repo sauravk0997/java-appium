@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.disney.DisneyEntityIds;
-import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -25,6 +24,8 @@ import java.util.stream.IntStream;
 
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
+import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
@@ -512,6 +513,24 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
                 "Hulu title was present in the Watchlist");
         Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),
                 "Disney Plus title was not present in the Watchlist");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74586"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluDetailsPageRatings() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_teen_titans_go_deeplink"));
+        detailsPage.verifyRatingsInDetailsFeaturedArea(TV_PG.getContentRating(), sa);
+        detailsPage.validateRatingsInDetailsTab(TV_PG.getContentRating(), sa);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_bohemian_rhapsody_deeplink"));
+        detailsPage.verifyRatingsInDetailsFeaturedArea(PG_13.getContentRating(), sa);
+        detailsPage.validateRatingsInDetailsTab(PG_13.getContentRating(), sa);
     }
 
     protected ArrayList<String> getMedia() {
