@@ -323,7 +323,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73971"})
     @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyAnthologyMaturityRatingRestriction() {
+    public void verifyAnthologyMaturityRatingRestrictionErrorMessage() {
         String contentUnavailableError = "content-unavailable";
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
