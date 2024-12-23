@@ -9,6 +9,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -332,7 +333,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
-        detailsPage.downloadEpisode(seasonNumber, episodeNumber);
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel("Season " + seasonNumber).click();
+        ExtendedWebElement episodeToDownload = detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber);
+        detailsPage.swipePageTillElementPresent(episodeToDownload, 10,
+                detailsPage.getContentDetailsPage(), Direction.UP, 1500);
+        episodeToDownload.click();
         detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
         detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
 
