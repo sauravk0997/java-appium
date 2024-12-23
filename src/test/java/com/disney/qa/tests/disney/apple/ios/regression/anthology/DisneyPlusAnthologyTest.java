@@ -338,7 +338,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertFalse(details.isOpened(), "Details page should not open");
         //At the moment Parental control error message is not supported somehow and hence verifying generic
         // error message
-        Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(),
+        Assert.assertTrue(homePage.getTextViewByLabelContains(contentUnavailableError).isPresent(),
                 "Content Unavailable generic error not displayed");
     }
 
