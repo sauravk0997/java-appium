@@ -6,7 +6,7 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="stringParam::env::Test ENV" value="PROD"/>
     <parameter name="jenkinsJobName" value="dmgztvos-disable-jarvis-config"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceType=tvOS"/>
+    <parameter name="capabilities" value="deviceName=ATV_4_Gen_12;platformName=iOS;deviceType=tvOS"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
     <parameter name="scheduling" value="H 11 * * 1-5"/>
@@ -15,12 +15,6 @@
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <test verbose="1" name="DisneyPlus tvOS Disable Jarvis Config on ATV_4_Gen_12">
         <parameter name="tvOSDeviceName" value="ATV_4_Gen_12"/>
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.tvos.DisneyPlusATVJarvisConfigTest"/>
-        </classes>
-    </test>
-    <test verbose="1" name="DisneyPlus tvOS Disable Jarvis Config on ATV_4_Gen_10">
-        <parameter name="tvOSDeviceName" value="ATV_4_Gen_10"/>
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.DisneyPlusATVJarvisConfigTest"/>
         </classes>
