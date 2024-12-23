@@ -5,12 +5,7 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyplusSellingLegalIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustConsentBannerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -142,38 +137,51 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
-    @Test(dataProvider = "impressumCountries", description = "Verify 'Impressum' functionality", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @Test(dataProvider = "impressumCountries", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyImpressumTab(String TUID) {
-        SoftAssert sa = new SoftAssert();
-        DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        initialSetup();
+        handleAlert();
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), country);
-        setAppToHomeScreen(getAccount());
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+
+        Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
+
+        welcomePage.clickLogInButton();
+        login(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),"Legal Page did not open on navigation");
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en", MobilePlatform.IOS,
+        moreMenu.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        sa.assertTrue(legalPage.isOpened(),"Legal Page did not open on navigation");
+
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en",
+                MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
         disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
         disneyLocalizationUtils.setLegalDocuments();
         disneyLocalizationUtils.getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
-            Assert.assertTrue(disneyPlusLegalIOSPageBase.isLegalHeadersPresent(header),
+            Assert.assertTrue(legalPage.isLegalHeadersPresent(header),
                     String.format("Header '%s' was not displayed", header));
         });
 
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel("Imprint").click();
+        legalPage.getTypeButtonByLabel("Imprint").click();
         String apiResponse = cleanDocument(disneyLocalizationUtils.getLegalDocumentBody("Imprint"));
-        String appDisplay = cleanDocument(disneyPlusLegalIOSPageBase.getLegalText());
+        String appDisplay = cleanDocument(legalPage.getLegalText());
         sa.assertEquals(appDisplay, apiResponse,
                 String.format("'Impressum' text was not correctly displayed for '%s'", country));
 
