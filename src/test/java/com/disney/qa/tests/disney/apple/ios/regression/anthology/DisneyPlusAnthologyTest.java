@@ -293,7 +293,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_en_gb_detailpage_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
         Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertTrue(details.getMediaTitle().equals(DANCING_WITH_THE_STARS),
                 "Media title of detail page does not match " + DANCING_WITH_THE_STARS);
