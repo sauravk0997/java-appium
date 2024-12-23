@@ -366,4 +366,24 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "episode is not removed after clicking remove download on alert");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67385"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMovieIconDownloads() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        String downloadInProgress = "download in progress";
+
+        // Launch movie details page
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        // Download movie and validate icons
+        Assert.assertTrue(detailsPage.getMovieDownloadButton().isPresent(), "Download button is not present");
+        detailsPage.getMovieDownloadButton().click();
+        Assert.assertTrue(detailsPage.getDownloadStartedButton().isPresent(),
+                "Download not started, icon has not changed to in progress");
+        Assert.assertTrue(detailsPage.getElementTypeCellByLabel(downloadInProgress).isPresent(),
+                "Downloads tab footer has no elements in progress");
+    }
 }
