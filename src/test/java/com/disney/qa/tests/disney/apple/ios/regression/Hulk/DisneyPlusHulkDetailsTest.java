@@ -197,6 +197,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             detailsPage.swipeUp(1500);
         }
+        sa.assertTrue(detailsPage.isTabSelected(detailsPage.getExtrasTab().getAttribute(Attributes.NAME.getAttribute())),
+                "EXTRAS Tab is not selected");
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
@@ -209,8 +211,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
         detailsPage.clickSuggestedTab();
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getExtrasTab());
         detailsPage.clickExtrasTab();
-        sa.assertTrue(detailsPage.isTabSelected(detailsPage.getExtrasTab().getAttribute("name")));
         sa.assertTrue(detailsPage.isProgressBarPresent(), "Duration not displayed on extras trailer.");
         sa.assertAll();
     }
