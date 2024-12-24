@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.COMMUNICATION_SETTINGS_LINK_1_TEXT;
+import static com.zebrunner.carina.utils.mobile.IMobileUtils.Direction.LEFT;
 
 import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.common.constant.CollectionConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.InvalidArgumentException;
@@ -344,11 +346,13 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean areWatchlistTitlesDisplayed(String... titles) {
 		List<String> items = Arrays.asList(titles);
-		List<ExtendedWebElement> entryCells = new ArrayList<>();
 		List<Boolean> validations = new ArrayList<>();
-		items.forEach(title -> entryCells.add(getTypeCellLabelContains(title)));
-
-		entryCells.forEach(entry -> validations.add(entry.isElementPresent()));
+		CollectionConstant.Collection watchlist = CollectionConstant.Collection.WATCHLIST;
+		items.forEach(title -> {
+			ExtendedWebElement watchlistItem = getTypeCellLabelContains(title);
+			swipeInContainerTillElementIsPresent(getCollection(watchlist), watchlistItem, 1, LEFT);
+			validations.add(watchlistItem.isElementPresent());
+		});
 		return !validations.contains(false);
 	}
 
