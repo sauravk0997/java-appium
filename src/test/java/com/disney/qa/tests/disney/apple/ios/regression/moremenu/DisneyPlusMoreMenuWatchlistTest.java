@@ -72,7 +72,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
 
-        Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(firstTitle, secondTitle, thirdTitle),
+        Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(thirdTitle, secondTitle, firstTitle),
                 "Titles were not added to the Watchlist");
 
         Assert.assertTrue(moreMenu.areWatchlistTitlesProperlyOrdered(thirdTitle, secondTitle, firstTitle),
