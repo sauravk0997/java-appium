@@ -675,9 +675,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertFalse(searchPage.getStaticTextByLabel(listOfShowsSecondaryProfile.get(j)).isPresent(),
                     listOfShowsSecondaryProfile.get(j) + " - Secondary profile content was displayed in recent " +
                             "search results");
-            if (j == listOfShowsPrimaryProfile.size() / 2) {
-                searchPage.swipeInRecentSearchResults(Direction.UP);
-            }
         }
 
         searchPage.getCancelButton().click();
@@ -699,9 +696,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertFalse(searchPage.getStaticTextByLabel(listOfShowsPrimaryProfile.get(j)).isPresent(),
                     listOfShowsPrimaryProfile.get(j) + " - Default profile content was displayed in recent " +
                             "search results");
-            if (j == listOfShowsSecondaryProfile.size() / 2) {
-                searchPage.swipeInRecentSearchResults(Direction.UP);
-            }
         }
         sa.assertAll();
     }
