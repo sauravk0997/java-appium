@@ -32,6 +32,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String PREY = "Prey";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
+    String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
+    String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
@@ -535,35 +537,31 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75022"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHuluMovieDetailsVideoPlayerRestartButton() {
+    public void verifyMovieDetailsVideoPlayerRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         int limitTime = 25;
-        String videoPlayerDidNotOpen = "Video player did not open";
-        String detailsTabDidNotOpen = "Details page did not open";
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
         // Deeplink a movie, scrub and get current time
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_bohemian_rhapsody_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(),detailsTabDidNotOpen);
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(),DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), videoPlayerDidNotOpen);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
         int remainingTimeBeforeRestartClick = videoPlayer.getCurrentTime();
         LOGGER.info("remainingTimeBeforeRestartClick {}", remainingTimeBeforeRestartClick);
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isOpened(),detailsTabDidNotOpen);
+        Assert.assertTrue(detailsPage.isOpened(),DETAILS_PAGE_DID_NOT_OPEN);
 
         // Validate and click restart button, get current time and validate restart button
         Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
         detailsPage.getRestartButton().click();
-        Assert.assertTrue(videoPlayer.isOpened(), videoPlayerDidNotOpen);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         int remainingTimeAfterRestartClick = videoPlayer.getCurrentTime();
         LOGGER.info("remainingTimeAfterRestartClick {}", remainingTimeAfterRestartClick);
         Assert.assertTrue((remainingTimeAfterRestartClick < remainingTimeBeforeRestartClick)
