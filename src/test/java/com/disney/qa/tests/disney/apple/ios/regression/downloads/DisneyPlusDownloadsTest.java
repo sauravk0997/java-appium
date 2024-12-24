@@ -372,7 +372,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyMovieIconDownloads() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        String downloadInProgress = "download in progress";
 
         // Launch movie details page
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
@@ -383,16 +382,14 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getMovieDownloadButton().click();
         Assert.assertTrue(detailsPage.getDownloadStartedButton().isPresent(),
                 "Download not started, icon has not changed to in progress");
-        Assert.assertTrue(detailsPage.getElementTypeCellByLabel(downloadInProgress).isPresent(),
+        Assert.assertTrue(detailsPage.getDownloadsTabNotificationBadge().isPresent(),
                 "Downloads tab footer has no elements in progress");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67381"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifySeriesIconDownloads() {
+    public void verifyDownloadIconOnSeriesEpisode() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        String downloadInProgress = "download in progress";
-        String episodeDownloadButton = "download";
         String one = "1";
 
         setAppToHomeScreen(getAccount());
@@ -409,9 +406,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Series download button is not present");
         detailsPage.getEpisodeToDownload(one, one).click();
         // Validating a label due to id of the button not being located after clicking on it
-        Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(episodeDownloadButton).isPresent(),
+        Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
                 "Download not started, icon has not changed to in progress");
-        Assert.assertTrue(detailsPage.getElementTypeCellByLabel(downloadInProgress).isPresent(),
+        Assert.assertTrue(detailsPage.getDownloadsTabNotificationBadge().isPresent(),
                 "Downloads tab footer has no elements in progress");
     }
 }
