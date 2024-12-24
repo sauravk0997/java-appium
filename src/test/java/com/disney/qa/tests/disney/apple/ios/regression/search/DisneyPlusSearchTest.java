@@ -13,6 +13,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -25,6 +26,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -223,17 +225,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         //Add 11 search result in recent search list
-        IntStream.range(0, getMedia().size()).forEach(i -> {
-
-            if (searchPage.getClearTextBtn().isPresent(SHORT_TIMEOUT)) {
-                searchPage.getClearTextBtn().click();
-            }
-            searchPage.searchForMedia(getMedia().get(i));
-            List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-            results.get(0).click();
-            sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
-            detailsPage.getBackArrow().click();
-        });
+        addContentInSearchResults(getMedia());
 
         searchPage.getClearTextBtn().click();
         searchPage.getSearchBar().click();
@@ -648,6 +640,73 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68286"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyRecentSearchPerProfile() {
+        //Creating a lists of shows to search
+        List<String> listOfShowsPrimaryProfile = Arrays.asList("Toy Story", "Bluey", "Doctor Strange");
+        List<String> listOfShowsSecondaryProfile = Arrays.asList("The Little Mermaid", "Planes", "Big City Greens");
+
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(false)
+                .build());
+
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        addContentInSearchResults(listOfShowsPrimaryProfile);
+
+        searchPage.getClearTextBtn().click();
+        searchPage.getSearchBar().click();
+        Assert.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+
+        for (int j = listOfShowsPrimaryProfile.size() - 1; j > 0; j--) {
+            sa.assertTrue(searchPage.getStaticTextByLabel(listOfShowsPrimaryProfile.get(j)).isPresent(),
+                    listOfShowsPrimaryProfile.get(j) + " content was not displayed in recent search results");
+            sa.assertFalse(searchPage.getStaticTextByLabel(listOfShowsSecondaryProfile.get(j)).isPresent(),
+                    listOfShowsSecondaryProfile.get(j) + " - Secondary profile content was displayed in recent " +
+                            "search results");
+            if (j == listOfShowsPrimaryProfile.size() / 2) {
+                searchPage.swipeInRecentSearchResults(Direction.UP);
+            }
+        }
+
+        searchPage.getCancelButton().click();
+        searchPage.clickMoreTab();
+        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+
+        homePage.waitForHomePageToOpen();
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        addContentInSearchResults(listOfShowsSecondaryProfile);
+        searchPage.getClearTextBtn().click();
+        searchPage.getSearchBar().click();
+        Assert.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+
+        for (int j = listOfShowsSecondaryProfile.size() - 1; j > 0; j--) {
+            sa.assertTrue(searchPage.getStaticTextByLabel(listOfShowsSecondaryProfile.get(j)).isPresent(),
+                    listOfShowsSecondaryProfile.get(j) + " content was not displayed in recent search results");
+            sa.assertFalse(searchPage.getStaticTextByLabel(listOfShowsPrimaryProfile.get(j)).isPresent(),
+                    listOfShowsPrimaryProfile.get(j) + " - Default profile content was displayed in recent " +
+                            "search results");
+            if (j == listOfShowsSecondaryProfile.size() / 2) {
+                searchPage.swipeInRecentSearchResults(Direction.UP);
+            }
+        }
+        sa.assertAll();
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add("Bluey");
@@ -677,5 +736,20 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(rating), "Rating details was not found in search results for " + title);
         sa.assertTrue(searchPage.getRatingAndYearDetailsFromSearchResults(title).contains(releasedYear), "Released year details was not found in search results " + title);
+    }
+
+    private void addContentInSearchResults(List<String> contentList) {
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        IntStream.range(0, contentList.size()).forEach(i -> {
+            if (searchPage.getClearTextBtn().isPresent(SHORT_TIMEOUT)) {
+                searchPage.getClearTextBtn().click();
+            }
+            searchPage.searchForMedia(contentList.get(i));
+            searchPage.getDynamicAccessibilityId(contentList.get(i)).click();
+            Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAIL_PAGE_DID_NOT_OPEN);
+            detailsPage.getBackArrow().click();
+        });
     }
 }
