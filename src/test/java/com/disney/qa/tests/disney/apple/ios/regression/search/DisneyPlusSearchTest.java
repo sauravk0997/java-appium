@@ -218,7 +218,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
