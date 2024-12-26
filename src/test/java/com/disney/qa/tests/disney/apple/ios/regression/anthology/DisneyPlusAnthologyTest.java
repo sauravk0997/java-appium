@@ -340,7 +340,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
                 detailsPage.getContentDetailsPage(), Direction.UP, 1500);
         episodeToDownload.click();
         detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
-        String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber).split("\\.")[1];
+        String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber);
         detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
 
         Assert.assertTrue(videoPlayer.isOpened(),
@@ -348,7 +348,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         String playerSubtitle = videoPlayer.getSubTitleLabel();
         Assert.assertTrue(playerSubtitle.contains(episodeTitle),
-                "Video Player subtitle did not contain episode title: " + episodeTitle);
+                "Video player title does not match with expected title: " + episodeTitle);
     }
 
     private void searchAndOpenDWTSDetails() {
