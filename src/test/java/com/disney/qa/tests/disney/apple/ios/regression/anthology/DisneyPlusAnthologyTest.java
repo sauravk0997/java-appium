@@ -327,7 +327,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        String seasonNumber = "31";
+        String seasonNumber = "32";
         String episodeNumber = "10";
 
         setAppToHomeScreen(getAccount());
@@ -340,10 +340,15 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
                 detailsPage.getContentDetailsPage(), Direction.UP, 1500);
         episodeToDownload.click();
         detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber).split("\\.")[1];
         detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
 
         Assert.assertTrue(videoPlayer.isOpened(),
                 "Video player did not open after choosing a downloaded episode");
+        videoPlayer.waitForVideoToStart();
+        String playerSubtitle = videoPlayer.getSubTitleLabel();
+        Assert.assertTrue(playerSubtitle.contains(episodeTitle),
+                "Video Player subtitle did not contain episode title: " + episodeTitle);
     }
 
     private void searchAndOpenDWTSDetails() {
