@@ -670,7 +670,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .build());
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
-        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"), 5);
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"), 2);
         homePage.waitForHomePageToOpen();
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
         Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
@@ -683,7 +683,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         // Verify for KIDS profile
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"), 5);
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"), 2);
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
