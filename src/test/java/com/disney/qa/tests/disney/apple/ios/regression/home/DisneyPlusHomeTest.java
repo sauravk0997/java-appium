@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -7,6 +9,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -27,6 +30,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -646,6 +650,51 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             contentTitle = collections.get(2).getItems().get(0).getVisuals().getTitle();
             swipe(homePage.getDynamicAccessibilityId(collectionID));
             homePage.getElementTypeCellByLabel(contentTitle).click();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68163"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
+        int swipeCount = 5;
+        String lessThanOneMinMessage = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.CONTINUE_WATCHING_LESS_THAN_ONE_MIN_MESSAGE.getText());
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .build());
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"), 5);
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+        Assert.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
+                        CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING),
+                        lessThanOneMinMessage),
+                "The remaining time is not less than 1 minute");
+
+        homePage.clickMoreTab();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"), 5);
+
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+        Assert.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
+                        CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING),
+                        lessThanOneMinMessage),
+                "The remaining time is not less than 1 minute");
     }
 
     private void addContentInContinueWatching(String url, int scrubPercentage) {

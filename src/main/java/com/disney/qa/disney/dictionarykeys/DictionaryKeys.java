@@ -132,6 +132,7 @@ public enum DictionaryKeys {
     CONTENT_TILE_EPISODE("contenttile_episode"),
     CONTENT_TILE_INTERACT("contenttile_interact"),
     CONTINUE_WATCHING_HOURS("continue_watching_hours"),
+    CONTINUE_WATCHING_LESS_THAN_ONE_MIN_MESSAGE("continuewatching_less1min"),
     CONTINUE_WATCHING_TITLE("continue_watching_set_title"),
     CONTINUE_WITHOUT_MATURE_DESC("continue_without_mature_description"),
     CONTINUE_WITHOUT_MATURE_TITLE("continue_without_mature_title"),
