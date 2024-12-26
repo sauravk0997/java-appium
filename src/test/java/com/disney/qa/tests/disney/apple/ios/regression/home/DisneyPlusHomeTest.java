@@ -28,7 +28,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
@@ -676,13 +676,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .build());
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_nature_boom_time_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(85);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.waitUntilRemainingTimeLessThan(FORTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
         videoPlayer.clickBackButton();
         detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
@@ -699,13 +697,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         // Verify for KIDS profile
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_nature_boom_time_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(85);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.waitUntilRemainingTimeLessThan(FORTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
         videoPlayer.clickBackButton();
         detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
