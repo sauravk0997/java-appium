@@ -28,6 +28,8 @@ import java.util.stream.IntStream;
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -656,10 +658,13 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
+        int expectedRemainingTime = 50;
         String lessThanOneMinMessage = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                 DictionaryKeys.CONTINUE_WATCHING_LESS_THAN_ONE_MIN_MESSAGE.getText());
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
@@ -670,7 +675,18 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .build());
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
-        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"), 2);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_nature_boom_time_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(85);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitUntilRemainingTimeLessThan(FORTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
         homePage.waitForHomePageToOpen();
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
         Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
@@ -683,7 +699,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         // Verify for KIDS profile
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"), 2);
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_nature_boom_time_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(85);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitUntilRemainingTimeLessThan(FORTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
