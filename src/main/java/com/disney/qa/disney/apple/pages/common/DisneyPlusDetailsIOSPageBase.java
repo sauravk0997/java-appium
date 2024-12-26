@@ -697,7 +697,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isProgressBarPresent() {
-        return progressBar.isPresent();
+        return progressBar.isPresent(TEN_SEC_TIMEOUT);
     }
 
     public String getDetailsTabSeasonRating() {
