@@ -657,7 +657,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
         String lessThanOneMinMessage = getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                 DictionaryKeys.CONTINUE_WATCHING_LESS_THAN_ONE_MIN_MESSAGE.getText());
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -680,7 +680,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
                         CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING),
                         lessThanOneMinMessage),
-                "The remaining time is not less than 1 minute");
+                "The remaining time is not less than 1 minute for adult profile");
 
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
@@ -694,7 +694,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
                         CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING),
                         lessThanOneMinMessage),
-                "The remaining time is not less than 1 minute");
+                "The remaining time is not less than 1 minute for Kid profile");
     }
 
     private void addContentInContinueWatching(String url, int scrubPercentage) {
