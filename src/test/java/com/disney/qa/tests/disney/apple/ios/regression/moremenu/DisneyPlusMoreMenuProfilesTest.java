@@ -935,7 +935,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Validates title text from Kid Proof Exit Screen
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_DID_NOT_OPEN);
         // Enter correct code and validates screen expected
-        String code = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
+        String code = kidProofExitIOSPageBase.parseExitDigitsCode();
         kidProofExitIOSPageBase.getCodeInputField().type(code);
 
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching screen did not open");
@@ -974,7 +974,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(kidProofExitIOSPageBase.isKidProofDialogTitleDisplayed(), KID_PROOF_EXIT_SCREEN_DID_NOT_OPEN);
         Assert.assertTrue(kidProofExitIOSPageBase.getCodeInputField().isPresent(), "Digits text field is not present");
         // Enter correct code and validates screen expected
-        String code = Integer.toString(Integer.parseInt(kidProofExitIOSPageBase.parseExitDigitsCode()));
+        String code = kidProofExitIOSPageBase.parseExitDigitsCode();
         kidProofExitIOSPageBase.getCodeInputField().type(code);
         Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
     }
