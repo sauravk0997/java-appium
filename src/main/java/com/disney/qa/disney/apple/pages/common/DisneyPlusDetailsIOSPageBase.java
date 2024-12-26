@@ -150,6 +150,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                     DictionaryKeys.DOWNLOAD_STOP_DETAILS_PAGE.getText()), 1);
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Season %s Episode %s'`]/**/XCUIElementTypeStaticText[`name CONTAINS 'titleLabel'`]")
+    private ExtendedWebElement dynamicEpisodeCellTitle;
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -784,6 +786,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String desiredSeasonLabel = "Season " + seasonNumber;
         String desiredEpisodeLabel = "Episode " + episodeNumber;
         return typeCellLabelContains.format(String.format("%s %s", desiredSeasonLabel, desiredEpisodeLabel));
+    }
+
+    public String getEpisodeCellTitle(String seasonNumber, String episodeNumber) {
+        return dynamicEpisodeCellTitle.format(seasonNumber, episodeNumber).getText();
     }
 
     public ExtendedWebElement getEpisodeToDownload() {
