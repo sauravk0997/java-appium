@@ -550,7 +550,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         // Deeplink a series episode, scrub and get current time
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
