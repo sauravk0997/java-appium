@@ -214,6 +214,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         disneyPlusHomeIOSPageBase.getSearchNav().click();
         disneyPlusSearchIOSPageBase.searchForMedia(content);
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        disneyPlusDetailsIOSPageBase.waitForPresenceOfAnElement(disneyPlusDetailsIOSPageBase.getPlayButton());
         results.get(0).click();
         disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
     }
