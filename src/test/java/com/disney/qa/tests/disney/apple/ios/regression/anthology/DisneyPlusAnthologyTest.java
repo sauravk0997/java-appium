@@ -359,16 +359,17 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
-        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel("Season 32").click();
         swipe(detailsPage.getFirstEpisodeDownloadButton(), 5);
         Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
                 "First episode download button was not present");
 
         detailsPage.getFirstEpisodeDownloadButton().click();
-        detailsPage.waitForEpisodeDownloadToStart(TEN_SEC_TIMEOUT);
+        downloadsPage.waitForDownloadToStart();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloadsPage.isDownloadInProgressTextPresent(),
-                "Download text for one download was not present");
+                "Download start/in-progress text not found");
     }
 
     private void searchAndOpenDWTSDetails() {
