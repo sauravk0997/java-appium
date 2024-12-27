@@ -98,7 +98,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68452"})
-    @Test(description = "Video Player Controls - Audio & Subtitles Menu - Backgrounding the App from the player", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAudioAndSubtitleMenuBackgroundingApp() {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -106,16 +106,21 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
 
         loginAndDeeplinkToPlayerAudioSubtitleMenu(MULAN_DEEPLINK, sa);
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
+
         lockDevice(Duration.ofSeconds(5));
         handleAlert();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
+
         subtitlePage.chooseAudioLanguage(DEUTSCH);
         subtitlePage.chooseSubtitlesLanguage(DEUTSCH);
         subtitlePage.tapCloseButton();
         sa.assertTrue(videoPlayer.verifyVideoPaused(), VIDEO_NOT_PAUSED);
+
         videoPlayer.tapAudioSubtitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(DEUTSCH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
-        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(DEUTSCH), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED + DEUTSCH);
+        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(DEUTSCH),
+                SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED + DEUTSCH);
         sa.assertAll();
     }
 
