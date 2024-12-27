@@ -328,6 +328,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
         swipe(detailsPage.getFirstEpisodeDownloadButton(), 5);
         Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
                 "First episode download button was not present");
