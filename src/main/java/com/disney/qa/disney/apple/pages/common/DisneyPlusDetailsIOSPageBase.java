@@ -1144,4 +1144,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());
         return getTypeButtonByLabel(dictValue);
     }
+
+    public void waitForEpisodeDownloadToStart(int timeout) {
+        fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Stop episode download button was not present")
+                .until(it -> stopOfflineDownload.isPresent(THREE_SEC_TIMEOUT));
+    }
  }
