@@ -36,7 +36,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         System.out.println(getDriver().getPageSource());
         Assert.assertTrue(getScreenLockedText(),"Screen is not locked");
 
-        
+
         sa.assertAll();
     }
 
