@@ -658,14 +658,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int expectedRemainingTime = 50;
-        String lessThanOneMinMessage = getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                DictionaryKeys.CONTINUE_WATCHING_LESS_THAN_ONE_MIN_MESSAGE.getText());
+        int expectedRemainingTimeInSec = 50;
+        String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
                 .profileName(KIDS_PROFILE)
@@ -676,46 +673,35 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .build());
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
-        videoPlayer.clickBackButton();
-        detailsPage.waitForDetailsPageToOpen();
-        terminateApp(sessionBundles.get(DISNEY));
-        relaunch();
+        addContentInContinueWatchingWithExpectedRemainingTime(
+                R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"),
+                expectedRemainingTimeInSec);
         homePage.waitForHomePageToOpen();
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
-        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
-                "Continue Watching Container not found");
-        Assert.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
+        sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found for Adult profile");
+        sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
                         CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING),
                         lessThanOneMinMessage),
-                "The remaining time is not less than 1 minute for adult profile");
+                lessThanOneMinMessage + " message not displayed on tile for Adult profile");
 
         // Verify for KIDS profile
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
-        videoPlayer.clickBackButton();
-        detailsPage.waitForDetailsPageToOpen();
-        terminateApp(sessionBundles.get(DISNEY));
-        relaunch();
+        addContentInContinueWatchingWithExpectedRemainingTime(
+                R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"),
+                expectedRemainingTimeInSec);
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
-        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
-                "Continue Watching Container not found");
-        Assert.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
+        sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found for Kid profile");
+        sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
                         CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING),
                         lessThanOneMinMessage),
-                "The remaining time is not less than 1 minute for Kid profile");
+                lessThanOneMinMessage + " message not displayed on tile for Kid profile");
+        sa.assertAll();
     }
 
     private void addContentInContinueWatching(String url, int scrubPercentage) {
@@ -727,6 +713,20 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
         videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+    }
+
+    private void addContentInContinueWatchingWithExpectedRemainingTime(String url, int expectedRemainingTime) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        launchDeeplink(url);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
         videoPlayer.clickBackButton();
         detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
