@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
@@ -317,6 +318,25 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
                 "Download all season button displayed for ad tier user");
         Assert.assertFalse(details.getEpisodeToDownload().isPresent(),
                 "Episode Download button is displayed for ad tier user");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72727"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologyDetailsPageFeatureAreaDownloadsSupportVOD() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        swipe(detailsPage.getFirstEpisodeDownloadButton(), 5);
+        Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
+                "First episode download button was not present");
+
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        detailsPage.waitForEpisodeDownloadToStart(TEN_SEC_TIMEOUT);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.isDownloadInProgressTextPresent(),
+                "Download text for one download was not present");
     }
 
     private void searchAndOpenDWTSDetails() {
