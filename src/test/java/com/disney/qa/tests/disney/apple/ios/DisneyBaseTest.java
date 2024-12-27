@@ -669,7 +669,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public String getOTPFromApi(Date startTime, DisneyAccount testAccount) {
         int emailAPILatency = 20;
-        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+        String firstOTP = "";
+        try {
+            firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+        } catch (Exception e){
+            LOGGER.info("First Attempt to get OTP failed with Exception " + e.getMessage());
+        }
+
         pause(emailAPILatency);
         String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
 
