@@ -686,6 +686,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         // Verify for KIDS profile
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
+        homePage.waitForHomePageToOpen();
         addContentInContinueWatchingWithExpectedRemainingTime(
                 R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"),
                 expectedRemainingTimeInSec);
