@@ -780,4 +780,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getContentRatingInfoView() {
         return contentRatingInfoView;
     }
+
+    public ExtendedWebElement getPlayerControlScreenLockedPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.PLAYER_CONTROLS_SCREEN_LOCKED.getText()));
+    }
 }
