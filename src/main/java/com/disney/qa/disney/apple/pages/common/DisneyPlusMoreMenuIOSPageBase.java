@@ -245,7 +245,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isHelpWebviewOpen() {
-		ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
+//		ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
+		ExtendedWebElement addressbar = getAddressBar();
+		addressbar.click();
 		return addressbar.getText().contains("help.disneyplus.com");
 	}
 
@@ -437,5 +439,13 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isPinLockOnProfileDisplayed(String profileName) {
 		return pinProtectedProfileLock.format(profileName).isPresent();
+	}
+
+	public ExtendedWebElement getAddressBar() {
+		if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+			return phoneWebviewAddressBar;
+		} else {
+			return tabletWebviewAddressBar;
+		}
 	}
 }
