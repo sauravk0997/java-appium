@@ -372,11 +372,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     public void verifyAnthologyDetailsPageFeatureAreaDownloadsSupportVOD() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        String seasonLabel = "Season 32";
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
         detailsPage.getSeasonSelectorButton().click();
-        detailsPage.getStaticTextByLabel("Season 32").click();
+        detailsPage.getStaticTextByLabel(seasonLabel).click();
         swipe(detailsPage.getFirstEpisodeDownloadButton(), 5);
         Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
                 "First episode download button was not present");
