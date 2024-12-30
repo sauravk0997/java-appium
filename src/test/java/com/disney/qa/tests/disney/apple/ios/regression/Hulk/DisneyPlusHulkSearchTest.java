@@ -20,7 +20,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String DISNEY_CONTENT = "Percy Jackson";
     static final String HULU_CONTENT = "Only Murders in the Building";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
-    private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page was not displayed";
+    private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page did not open";
     static final String UNLOCK = "Unlock";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
