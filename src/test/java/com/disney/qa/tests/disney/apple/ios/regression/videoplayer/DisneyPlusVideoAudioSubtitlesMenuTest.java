@@ -206,17 +206,17 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     }
 
     private void initiatePlaybackFor(String content) {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusHomeIOSPageBase.getSearchNav().click();
-        disneyPlusSearchIOSPageBase.searchForMedia(content);
-        List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        homePage.clickSearchIcon();
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(content);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        disneyPlusDetailsIOSPageBase.waitForPresenceOfAnElement(disneyPlusDetailsIOSPageBase.getPlayButton());
-        disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.clickPlayButton().isOpened();
     }
 
     private void loginAndDeeplinkToPlayerAudioSubtitleMenu(String deeplink, SoftAssert sa) {
