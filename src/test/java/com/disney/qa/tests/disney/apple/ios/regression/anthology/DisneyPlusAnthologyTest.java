@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
@@ -8,6 +9,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -317,6 +319,36 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
                 "Download all season button displayed for ad tier user");
         Assert.assertFalse(details.getEpisodeToDownload().isPresent(),
                 "Episode Download button is displayed for ad tier user");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73790"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyPlaybackOfDownloadedEpisodeOnAnthologyDetailsPage() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        String seasonNumber = "32";
+        String episodeNumber = "10";
+
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel("Season " + seasonNumber).click();
+        ExtendedWebElement episodeToDownload = detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber);
+        detailsPage.swipePageTillElementPresent(episodeToDownload, 10,
+                detailsPage.getContentDetailsPage(), Direction.UP, 1500);
+        episodeToDownload.click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber);
+        detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
+
+        Assert.assertTrue(videoPlayer.isOpened(),
+                "Video player did not open after choosing a downloaded episode");
+        videoPlayer.waitForVideoToStart();
+        String playerSubtitle = videoPlayer.getSubTitleLabel();
+        Assert.assertTrue(playerSubtitle.contains(episodeTitle),
+                "Video player title does not match with expected title: " + episodeTitle);
     }
 
     private void searchAndOpenDWTSDetails() {
