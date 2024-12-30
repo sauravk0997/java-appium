@@ -121,6 +121,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount());
         moreMenu.clickMoreTab();
+        moreMenu.waitForPresenceOfAnElement(moreMenu.getAddProfileBtn());
         moreMenu.clickAddProfile();
         chooseAvatar.clickSkipButton();
         addProfile.enterProfileName(DEFAULT_PROFILE);
