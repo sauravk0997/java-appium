@@ -351,6 +351,22 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
                 "Video player title does not match with expected title: " + episodeTitle);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72675"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologySeriesPromotionLabel() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        String promoLabelHeader = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_series_dwts_entity_id"))
+                .getPromoLabel().getHeader();
+        if (promoLabelHeader == null) {
+            throw new SkipException("No promo label header found for the anthology content in Content API");
+        }
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertEquals(detailsPage.getPromoLabelText(), promoLabelHeader,
+                "API promo label header and UI promo label header text did not match");
+    }
+
     private void searchAndOpenDWTSDetails() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
