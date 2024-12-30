@@ -280,6 +280,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForWatchlistButtonToAppear() {
+        waitForDetailsPageToOpen();
         LOGGER.info("Waiting for  WatchlistButton to appear");
         fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Watchlist button is not present")
                 .until(it -> watchlistButton.isPresent());
