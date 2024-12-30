@@ -150,6 +150,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private final ExtendedWebElement stopOrPauseDownloadButton = getDynamicRowButtonLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                     DictionaryKeys.DOWNLOAD_STOP_DETAILS_PAGE.getText()), 1);
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Season %s Episode %s'`]/" +
+            "**/XCUIElementTypeStaticText[`name CONTAINS 'titleLabel'`]")
+    private ExtendedWebElement dynamicEpisodeCellTitle;
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -697,7 +700,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isProgressBarPresent() {
-        return progressBar.isPresent();
+        return progressBar.isPresent(TEN_SEC_TIMEOUT);
     }
 
     public String getDetailsTabSeasonRating() {
@@ -778,6 +781,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download Season " + seasonNumber + " Episode " + episodeNumber);
+    }
+
+    public ExtendedWebElement getEpisodeCell(String seasonNumber, String episodeNumber) {
+        String desiredSeasonLabel = "Season " + seasonNumber;
+        String desiredEpisodeLabel = "Episode " + episodeNumber;
+        return typeCellLabelContains.format(String.format("%s %s", desiredSeasonLabel, desiredEpisodeLabel));
+    }
+
+    public String getEpisodeCellTitle(String seasonNumber, String episodeNumber) {
+        return dynamicEpisodeCellTitle.format(seasonNumber, episodeNumber).getText().split("\\.")[1];
     }
 
     public ExtendedWebElement getEpisodeToDownload() {
