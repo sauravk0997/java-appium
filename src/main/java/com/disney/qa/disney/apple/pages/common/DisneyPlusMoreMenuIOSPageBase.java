@@ -371,10 +371,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return !validations.contains(false);
 	}
 
-	public boolean isWatchlistHeaderDisplayed() {
-		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WATCHLIST_PAGE_HEADER.getText())).isElementPresent();
-	}
-
 	public boolean isWatchlistEmptyBackgroundDisplayed() {
 		return watchlistEmpty.isPresent();
 	}
