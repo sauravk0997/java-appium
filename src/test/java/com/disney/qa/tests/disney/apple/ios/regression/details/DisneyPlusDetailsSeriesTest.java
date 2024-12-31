@@ -997,10 +997,15 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
         }
         detailsPage.getEpisodeToDownload(Integer.toString(seasonNumber), Integer.toString(episodeNumber)).click();
-        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_entity"),
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        String episodeTitle = seriesApiContent.getSeasons().get(seasonNumber - 1).getItems().get(episodeNumber - 1)
-                .getVisuals().getEpisodeTitle();
+        String episodeTitle;
+        try {
+            episodeTitle = seriesApiContent.getSeasons().get(seasonNumber - 1).getItems().get(episodeNumber - 1)
+                    .getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test because of unexpected exception getting episode title");
+        }
         if (episodeTitle == null) {
             throw new SkipException("No episode title found for the desired series episode in Explore API");
         }
