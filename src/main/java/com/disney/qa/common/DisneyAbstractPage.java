@@ -22,7 +22,7 @@ public abstract class DisneyAbstractPage extends AbstractPage implements IOSUtil
     public static final int FORTY_FIVE_SEC_TIMEOUT = 45;
     public static final int SIXTY_SEC_TIMEOUT = 60;
     public static final int ONE_HUNDRED_TWENTY_SEC_TIMEOUT = 120;
-    protected static final long THREE_HUNDRED_SEC_TIMEOUT = 300;
+    public static final int THREE_HUNDRED_SEC_TIMEOUT = 300;
     public static final int FIFTEEN_HUNDRED_SEC_TIMEOUT = 1500;
 
     public DisneyAbstractPage(WebDriver driver) {
