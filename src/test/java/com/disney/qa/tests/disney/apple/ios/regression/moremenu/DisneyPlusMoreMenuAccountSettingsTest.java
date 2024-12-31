@@ -636,6 +636,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
 
         DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
@@ -650,17 +651,18 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         String otp = getOTPFromApi(startTime, otpAccount);
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changeEmailPage.isOpened(), "'Change Email' screen was not opened");
-        /*changeEmailPage.submitNewEmailAddress(otpAccount.getEmail());
-        Assert.assertTrue(changeEmailPage.isAlreadyInUseEmailErrorMessageDisplayed(),
-                "Already In Use Email Error message not displayed");*/
+        changeEmailPage.submitNewEmailAddress(otpAccount.getEmail());
+        sa.assertTrue(changeEmailPage.isAlreadyInUseEmailErrorMessageDisplayed(),
+                "Already In Use Email Error message not displayed");
 
         changeEmailPage.submitNewEmailAddress(emailWithoutAtSymbol);
-        Assert.assertTrue(changeEmailPage.isEmailNotProperlyFormattedErrorMessageDisplayed(),
+        sa.assertTrue(changeEmailPage.isEmailNotProperlyFormattedErrorMessageDisplayed(),
                 "Email Properly not formatted error message not displayed");
 
         changeEmailPage.submitNewEmailAddress(emailWithoutDot);
-        Assert.assertTrue(changeEmailPage.isEmailNotProperlyFormattedErrorMessageDisplayed(),
+        sa.assertTrue(changeEmailPage.isEmailNotProperlyFormattedErrorMessageDisplayed(),
                 "Email Properly not formatted error message not displayed");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
