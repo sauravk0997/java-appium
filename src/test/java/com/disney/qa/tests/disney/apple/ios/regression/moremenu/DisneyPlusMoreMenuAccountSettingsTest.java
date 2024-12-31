@@ -627,6 +627,42 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User was not returned to the Account page after navigating back from webview");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75516"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEmailChangeErrorWhenEmailInUseOrMissing() {
+        String emailWithoutAtSymbol = "qait.disneystreaminggmail.com";
+        String emailWithoutDot = "qaitdisneystreaminggmail";
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
+                initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
+
+        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
+        setAppToAccountSettings(otpAccount);
+
+        accountPage.clickManageWithMyDisneyButton();
+        Date startTime = getEmailApi().getStartTime();
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.tapEditEmailButton();
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        String otp = getOTPFromApi(startTime, otpAccount);
+        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
+        Assert.assertTrue(changeEmailPage.isOpened(), "'Change Email' screen was not opened");
+        changeEmailPage.submitNewEmailAddress(otpAccount.getEmail());
+        Assert.assertTrue(changeEmailPage.isAlreadyInUseEmailErrorMessageDisplayed(),
+                "Already In Use Email Error message not displayed");
+
+        changeEmailPage.submitNewEmailAddress(emailWithoutAtSymbol);
+        Assert.assertTrue(changeEmailPage.isEmailNotProperlyFormattedErrorMessageDisplayed(),
+                "Email Properly not formatted error message not displayed");
+
+        changeEmailPage.submitNewEmailAddress(emailWithoutDot);
+        Assert.assertTrue(changeEmailPage.isEmailNotProperlyFormattedErrorMessageDisplayed(),
+                "Email Properly not formatted error message not displayed");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
     @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyIAPBillingHoldWithPartnerSub() {
