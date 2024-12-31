@@ -245,10 +245,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public boolean isHelpWebviewOpen() {
-//		ExtendedWebElement addressbar = "Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType()) ? phoneWebviewAddressBar : tabletWebviewAddressBar;
-		ExtendedWebElement addressbar = getAddressBar();
-		addressbar.click();
-		return addressbar.getText().contains("help.disneyplus.com");
+		ExtendedWebElement addressBar = getAddressBar();
+		return fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Help Webview is not open")
+				.until(it -> addressBar.getText().contains("help.disneyplus.com"));
 	}
 
 	public String getAppVersion() {
