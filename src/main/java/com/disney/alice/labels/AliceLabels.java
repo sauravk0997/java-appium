@@ -42,7 +42,8 @@ public enum AliceLabels {
     VERTICAL_MENU_ITEM_SELECTED("vertical_menu_item_selected"),
     VERTICAL_MENU_ITEM_HOVERED_ROUND("vertical_menu_item_hovered_round"),
     VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR("vertical_menu_item_hovered_vert_separator"),
-    WATCHLIST_ICON("plus_button");
+    WATCHLIST_ICON("plus_button"),
+    CLOSED_CAPTIONING("closed_captioning");
 
     private final String label;
 

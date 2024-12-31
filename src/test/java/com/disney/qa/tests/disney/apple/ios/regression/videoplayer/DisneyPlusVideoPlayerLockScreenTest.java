@@ -1,15 +1,24 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.alice.AliceAssert;
 import com.disney.alice.AliceAssertion;
 import com.disney.alice.AliceDriver;
+import com.disney.alice.labels.AliceLabels;
+import com.disney.alice.model.RecognitionMetaType;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.openqa.selenium.Dimension;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.*;
@@ -23,7 +32,6 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         SoftAssert sa = new SoftAssert();
-        String overlayLocked = "closed_captioning";
 
         // Login and open deeplink to movie
         setAppToHomeScreen(getAccount());
@@ -32,18 +40,24 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open");
         videoPlayer.waitForVideoToStart();
+
+        // Verify lock icon and click on it
         sa.assertTrue(isLockScreenButtonPresent(),"Lock icon is not present");
         pause(3);
         clickLockScreenButton();
 
         // Look for locked overlay
-        pause(3);
-        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        tapOnScreenLocked(1);
         AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
-        aliceAssertion.getMetaData().forEach(item -> item.getCaption());
-        aliceAssertion.isLabelPresent(sa, overlayLocked);
-        aliceAssertion.isLabelPresent(sa, "CLOSED_CAPTIONING");
+        aliceAssertion.isLabelPresent(sa, AliceLabels.CLOSED_CAPTIONING.getText());
+
         sa.assertAll();
+    }
+
+    private void tapOnScreenLocked(int numOfTaps) {
+        pause(3);
+        Dimension size = getDriver().manage().window().getSize();
+        tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), numOfTaps);
     }
 
     private boolean isLockScreenButtonPresent() {
