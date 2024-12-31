@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -215,6 +216,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
+
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            swipe(detailsPage.getWatchlistButton(), Direction.DOWN);
+        }
 
         //ratings are shown on downloaded content
         if (!detailsPage.getEpisodesTab().isPresent()) {
