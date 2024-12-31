@@ -987,8 +987,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     public void verifyDownloadedEpisodePlayback() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        String seasonNumber = "1";
-        String episodeNumber = "1";
+        int seasonNumber = 1;
+        int episodeNumber = 1;
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
@@ -996,8 +996,14 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
         }
-        detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
-        String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber);
+        detailsPage.getEpisodeToDownload(Integer.toString(seasonNumber), Integer.toString(episodeNumber)).click();
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_entity"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String episodeTitle = seriesApiContent.getSeasons().get(seasonNumber - 1).getItems().get(episodeNumber - 1)
+                .getVisuals().getEpisodeTitle();
+        if (episodeTitle == null) {
+            throw new SkipException("No episode title found for the desired series episode in Explore API");
+        }
         detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
         detailsPage.getHuluSeriesDownloadCompleteButton().click();
         detailsPage.getDownloadModalPlayButton().click();
