@@ -805,6 +805,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabelContains.format("Offline Download Options");
     }
 
+    public ExtendedWebElement getMovieDownloadCompleteButton() {
+        return getTypeButtonByName("downloadButtonDownloaded");
+    }
+
     public ExtendedWebElement getFirstEpisondeDownloadButton() {
         return firstEpisondeDownloadButton;
     }
