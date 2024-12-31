@@ -629,7 +629,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75516"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyEmailChangeErrorWhenEmailInUseOrMissing() {
+    public void verifyEmailChangeErrorWhenEmailInUseOrNotFormatted() {
         String emailWithoutAtSymbol = "qait.disneystreaminggmail.com";
         String emailWithoutDot = "qaitdisneystreaminggmail";
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
