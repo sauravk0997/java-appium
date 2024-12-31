@@ -19,6 +19,8 @@ import org.testng.asserts.SoftAssert;
 
 import java.time.temporal.*;
 import java.util.*;
+
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
@@ -566,6 +568,30 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.clickBackButton();
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67387"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.DOWNLOADS, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadedMoviePlayback() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_dumbo_deeplink"));
+        detailsPage.getMovieDownloadButton().click();
+        String movieTitle = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_movie_dumbo_entity")).getTitle();
+        if (movieTitle == null) {
+            throw new SkipException("No movie title was found in Explore API");
+        }
+        detailsPage.waitForMovieDownloadComplete(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.getMovieDownloadCompleteButton().click();
+        detailsPage.getDownloadModalPlayButton().click();
+
+        Assert.assertTrue(videoPlayer.isOpened(),
+                "Video player did not open after choosing a downloaded movie");
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
+                "Video player title does not match with expected title: " + movieTitle);
     }
 
     private Map<String, Object> getMoviesMetaDataFromAPI(Visuals visualsResponse) {
