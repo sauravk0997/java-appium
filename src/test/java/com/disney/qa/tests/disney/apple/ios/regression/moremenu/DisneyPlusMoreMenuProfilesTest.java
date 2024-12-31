@@ -14,8 +14,10 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
+import org.openqa.selenium.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -26,7 +28,10 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -1042,6 +1047,58 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
                 "Rating Restriction message was not displayed");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67785"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyJuniorProfileNavigationBar() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
+                .avatarId(DARTH_MAUL).kidsModeEnabled(true).kidProofExitEnabled(true).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), KIDS_PROFILE);
+        homePage.waitForHomePageToOpen();
+        Set<Integer> distanceSet = new HashSet<>();
+        List<ExtendedWebElement> navElements = new ArrayList<>();
+        navElements.add(moreMenu.getHomeNav());
+        navElements.add(moreMenu.getSearchNav());
+        navElements.add(moreMenu.getDownloadNav());
+        navElements.add(moreMenu.getMoreMenuTab());
+
+        for (int i=0; i < navElements.size() - 1; i++)
+            distanceSet.add(getDistanceBetweenElements(navElements.get(i), navElements.get(i + 1)));
+
+        if(getDevice().getDeviceType().equals(DeviceType.Type.IOS_PHONE)) {
+            Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
+        } else if (getDevice().getDeviceType().equals(DeviceType.Type.IOS_TABLET)) {
+            Assert.assertEquals(distanceSet.size(), 2,
+                    "Junior mode navigation menu is not correctly aligned in tablet");
+        }
+    }
+
+    public int getDistanceBetweenElements(ExtendedWebElement webElement1, ExtendedWebElement webElement2) {
+        Point point1 = getElementLocation(webElement1);
+        Point point2 = getElementLocation(webElement2);
+        double pointXSqr = Math.pow((double) point2.getX() - (double) point1.getX(), 2);
+        double pointYSqr = Math.pow((double) point2.getY() - (double) point1.getY(), 2);
+
+        return (int) Math.sqrt(pointXSqr + pointYSqr);
+    }
+
+    public Point getElementLocation(ExtendedWebElement webElement) {
+        int startX = webElement.getLocation().getX();
+        int startY = webElement.getLocation().getY();
+        int width = webElement.getSize().getWidth();
+        int height = webElement.getSize().getHeight();
+
+        int centerX = startX + (width / 2);
+        int centerY = startY + (height / 2);
+
+        return new Point(centerX, centerY);
+    }
+
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
