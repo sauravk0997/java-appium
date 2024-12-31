@@ -412,7 +412,6 @@ public enum DictionaryKeys {
     PLAN_SWITCH_IAP_ANNUAL("plan_switch_iap_cta_annual"),
     PLAY("play"),
     PLAYBACK_LANGUAGE_HEADER("profile_settings_playback_language_header"),
-    PLAYER_CONTROLS_SCREEN_LOCKED("player_controls_screen_locked"),
     POSTPLAY_NEXTEPISODE_HEADER("btn_upnextlite_play"),
     POSTPLAY_SNEAK_PEEK("postplay_sneakpeek"),
     POSTPLAY_UPNEXT("postplay_upnext"),

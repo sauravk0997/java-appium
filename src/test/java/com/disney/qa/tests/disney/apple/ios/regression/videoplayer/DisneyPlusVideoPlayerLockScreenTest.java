@@ -37,6 +37,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         clickLockScreenButton();
 
         // Look for locked overlay
+        pause(3);
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
         aliceAssertion.getMetaData().forEach(item -> item.getCaption());
