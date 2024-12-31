@@ -577,9 +577,9 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_dumbo_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_dumbo_deeplink"));
         detailsPage.getMovieDownloadButton().click();
-        String movieTitle = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_movie_dumbo_entity")).getTitle();
+        String movieTitle = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_movie_dumbo_entity_id")).getTitle();
         if (movieTitle == null) {
             throw new SkipException("No movie title was found in Explore API");
         }
