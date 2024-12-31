@@ -989,6 +989,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         int seasonNumber = 1;
         int episodeNumber = 1;
+        String episodeTitle;
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
@@ -999,7 +1000,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getEpisodeToDownload(Integer.toString(seasonNumber), Integer.toString(episodeNumber)).click();
         ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        String episodeTitle;
         try {
             episodeTitle = seriesApiContent.getSeasons().get(seasonNumber - 1).getItems().get(episodeNumber - 1)
                     .getVisuals().getEpisodeTitle();

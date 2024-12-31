@@ -80,6 +80,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement metaDataLabel;
     @ExtendedFindBy(accessibilityId = "downloadButton")
     protected ExtendedWebElement movieDownloadButton;
+    @ExtendedFindBy(accessibilityId = "downloadButtonDownloaded")
+    protected ExtendedWebElement movieDownloadCompletedButton;
     @ExtendedFindBy(accessibilityId = "watch")
     protected ExtendedWebElement watchButton;
     @ExtendedFindBy(accessibilityId = "VERSIONS")
@@ -242,7 +244,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void waitForMovieDownloadComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for movie download to complete");
         fluentWait(getDriver(), timeOut, polling, "Downloaded button is not present")
-                .until(it -> getTypeButtonByName("downloadButtonDownloaded").isPresent());
+                .until(it -> getMovieDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
@@ -807,6 +809,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getFirstEpisodeDownloadButton() {
         return firstEpisodeDownloadButton;
+    }
+
+    public ExtendedWebElement getMovieDownloadCompleteButton() {
+        return movieDownloadCompletedButton;
     }
 
     public void waitForOneEpisodeDownloadToComplete(int timeOut, int polling) {
