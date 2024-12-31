@@ -13,7 +13,6 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.json.JSONException;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.support.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -251,7 +250,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67166", "XMOBQA-75307", "XMOBQA-67142"})
     @Test(description = "Verify the 'Unverified email badge is displayed in the More Menu and Account submenu", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyUnverifiedAccountFunctions() throws URISyntaxException, InterruptedException {
+    public void verifyUnverifiedAccountFunctions() throws InterruptedException {
         SoftAssert sa = new SoftAssert();
         //Builds a DisneyAccount object with existing credentials that are already configured for test needs
         DisneyProfile profile = new DisneyProfile();
@@ -398,60 +397,61 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangeEmailUI() {
         DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
-        DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
+        DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusChangeEmailIOSPageBase changeEmailPage = new DisneyPlusChangeEmailIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
         DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(otpAccount);
 
-        disneyPlusApplePageBase.clickManageWithMyDisneyButton();
+        accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
-        disneyPlusAccountIOSPageBase.clickEditEmail(otpAccount.getEmail());
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.tapEditEmailButton();
 
         String otp = getOTPFromApi(startTime, otpAccount);
 
         Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
-                "XMOBQA-61553 - OTP entry page was not opened");
+                "OTP entry page was not opened");
 
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
 
-        Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isOpened(),
-                "XMOBQA-61551 - 'Change Email' screen was not opened");
+        Assert.assertTrue(changeEmailPage.isOpened(),
+                "'Change Email' screen was not opened");
 
         hideKeyboard();
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isHeadlineSubtitlePresent(),
-                "XMOBQA-61551 - 'Change Email' subtitle was not displayed");
+        sa.assertTrue(changeEmailPage.isHeadlineSubtitlePresent(),
+                "'Change Email' subtitle was not displayed");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isCurrentEmailShown(otpAccount.getEmail()),
-                "XMOBQA-61551 - 'Change Email' display of user email was not shown");
+        sa.assertTrue(changeEmailPage.isCurrentEmailShown(otpAccount.getEmail()),
+                "'Change Email' display of user email was not shown");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isNewEmailHeaderPresent(),
-                "XMOBQA-61551 - 'Change Email' text entry header was not displayed");
+        sa.assertTrue(changeEmailPage.isNewEmailHeaderPresent(),
+                "'Change Email' text entry header was not displayed");
 
-        Assert.assertTrue(disneyPlusChangeEmailIOSPageBase.isLogoutAllDevicesUnchecked(),
-                "XMOBQA-61551 - 'Change Email' device logout checkbox was not unchecked by default");
+        Assert.assertTrue(changeEmailPage.isLogoutAllDevicesUnchecked(),
+                "'Change Email' device logout checkbox was not unchecked by default");
 
-        disneyPlusChangeEmailIOSPageBase.clickLogoutAllDevices();
+        changeEmailPage.clickLogoutAllDevices();
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLogoutAllDevicesChecked(),
-                "XMOBQA-61551 - 'Logout All Devices' was not checked");
+        sa.assertTrue(changeEmailPage.isLogoutAllDevicesChecked(),
+                "'Logout All Devices' was not checked");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isLearnMoreAboutMyDisney(),
-                "XMOBQA-61551 - 'Logout All Devices' password text was not displayed");
+        sa.assertTrue(changeEmailPage.isLearnMoreAboutMyDisney(),
+                "'Logout All Devices' password text was not displayed");
 
-        disneyPlusChangeEmailIOSPageBase.submitNewEmailAddress("invalid");
+        changeEmailPage.submitNewEmailAddress("invalid");
 
-        sa.assertTrue(disneyPlusChangeEmailIOSPageBase.isAttributeValidationErrorMessagePresent(),
-                "XMOBQA-61551 - 'Invalid Email' error was not displayed");
+        sa.assertTrue(changeEmailPage.isAttributeValidationErrorMessagePresent(),
+                "'Invalid Email' error was not displayed");
 
-        disneyPlusChangeEmailIOSPageBase.clickCancelBtn();
+        changeEmailPage.clickCancelBtn();
 
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isOpened(),
-                "XMOBQA-61555 - User was not returned to the Account Settings page after cancelling new email submission");
+        sa.assertTrue(accountPage.isOpened(),
+                "User was not returned to the Account Settings page after cancelling new email submission");
 
         sa.assertAll();
     }
@@ -474,7 +474,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
-        accountPage.clickEditEmail(otpAccount.getEmail());
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.tapEditEmailButton();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
 
         String otp = getOTPFromApi(startTime, otpAccount);
@@ -516,8 +518,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getAccount());
         accountPage.waitForAccountPageToOpen();
         accountPage.clickManageWithMyDisneyButton();
-        Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
-                accountPage.getStaticTextByLabelContains(getAccount().getEmail()).getBy()), 15),
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
                 "Manage your MyDisney account overlay didn't open");
         accountPage.tapEditEmailButton();
 
@@ -543,8 +544,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getAccount());
         accountPage.waitForAccountPageToOpen();
         accountPage.clickManageWithMyDisneyButton();
-        Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
-                        accountPage.getStaticTextByLabelContains(getAccount().getEmail()).getBy()), 15),
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
                 "Manage your MyDisney account overlay didn't open");
         accountPage.tapEditEmailButton();
 
@@ -573,7 +573,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
-        accountPage.clickEditEmail(otpAccount.getEmail());
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.tapEditEmailButton();
 
         String otp = getOTPFromApi(startTime, otpAccount);
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
