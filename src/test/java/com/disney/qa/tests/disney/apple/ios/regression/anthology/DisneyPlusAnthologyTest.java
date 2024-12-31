@@ -165,10 +165,14 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         details.clickPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.scrubToPlaybackPercentage(20);
+        videoPlayer.waitForVideoToStart();
 
         videoPlayer.clickBackButton();
         sa.assertTrue(details.isContinueButtonPresent(), "Continue button was not found.");
         sa.assertTrue(details.getProgressBar().isPresent(), "Progress found not found.");
+        sa.assertTrue(details.getContinueWatchingTimeRemaining().isPresent(),
+                "Continue watching time remaining is not present");
         sa.assertAll();
     }
 
