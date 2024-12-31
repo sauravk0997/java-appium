@@ -407,7 +407,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
-        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
                 "Manage your MyDisney account overlay didn't open");
         accountPage.tapEditEmailButton();
 
@@ -474,7 +474,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
-        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
                 "Manage your MyDisney account overlay didn't open");
         accountPage.tapEditEmailButton();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
@@ -573,7 +573,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
-        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
                 "Manage your MyDisney account overlay didn't open");
         accountPage.tapEditEmailButton();
 

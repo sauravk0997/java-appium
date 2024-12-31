@@ -11,7 +11,6 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -673,8 +672,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean waitForManageMyDisneyAccountOverlayToOpen(DisneyAccount account) {
-        return waitUntil(ExpectedConditions.visibilityOfElementLocated(
-                getStaticTextByLabelContains(account.getEmail()).getBy()), FIFTEEN_SEC_TIMEOUT);
+        return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+                "Manage MyDisney Account Overlay did not open")
+                .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
     }
 
     public boolean isSubscriptionCellPresent() {
