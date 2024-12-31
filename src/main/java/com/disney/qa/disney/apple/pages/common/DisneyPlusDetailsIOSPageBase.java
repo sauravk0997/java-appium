@@ -809,6 +809,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getFirstEpisodeDownloadButton() {
         return firstEpisodeDownloadButton;
+    }
 
     public ExtendedWebElement getMovieDownloadCompleteButton() {
         return movieDownloadCompletedButton;
