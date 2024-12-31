@@ -674,7 +674,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean waitForManageMyDisneyAccountOverlayToOpen(DisneyAccount account) {
         return waitUntil(ExpectedConditions.visibilityOfElementLocated(
-                getStaticTextByLabelContains(account.getEmail()).getBy()), 15);
+                getStaticTextByLabelContains(account.getEmail()).getBy()), FIFTEEN_SEC_TIMEOUT);
     }
 
     public boolean isSubscriptionCellPresent() {
