@@ -1078,24 +1078,21 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         }
     }
 
-    public int getDistanceBetweenElements(ExtendedWebElement webElement1, ExtendedWebElement webElement2) {
-        Point point1 = getElementLocation(webElement1);
-        Point point2 = getElementLocation(webElement2);
-        double pointXSqr = Math.pow((double) point2.getX() - (double) point1.getX(), 2);
-        double pointYSqr = Math.pow((double) point2.getY() - (double) point1.getY(), 2);
-
+    public int getDistanceBetweenElements(ExtendedWebElement element1, ExtendedWebElement element2) {
+        Point position1 = getElementLocation(element1);
+        Point position2 = getElementLocation(element2);
+        double pointXSqr = Math.pow((double) position2.getX() - (double) position1.getX(), 2);
+        double pointYSqr = Math.pow((double) position2.getY() - (double) position1.getY(), 2);
         return (int) Math.sqrt(pointXSqr + pointYSqr);
     }
 
-    public Point getElementLocation(ExtendedWebElement webElement) {
-        int startX = webElement.getLocation().getX();
-        int startY = webElement.getLocation().getY();
-        int width = webElement.getSize().getWidth();
-        int height = webElement.getSize().getHeight();
-
+    public Point getElementLocation(ExtendedWebElement element) {
+        int startX = element.getLocation().getX();
+        int startY = element.getLocation().getY();
+        int width = element.getSize().getWidth();
+        int height = element.getSize().getHeight();
         int centerX = startX + (width / 2);
         int centerY = startY + (height / 2);
-
         return new Point(centerX, centerY);
     }
 
