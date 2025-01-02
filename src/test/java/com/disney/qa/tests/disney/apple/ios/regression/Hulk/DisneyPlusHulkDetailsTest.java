@@ -250,6 +250,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         //Kids
         homePage.clickMoreTab();
         whoseWatchingPage.clickProfile(JUNIOR_PROFILE);
+        sa.assertTrue(homePage.isKidsHomePageOpen(), "Kids home page did not open");
         homePage.clickSearchIcon();
         searchPage.searchForMedia("I Am Groot");
         searchPage.getDisplayedTitles().get(0).click();
