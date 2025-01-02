@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
-import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.DisneyAccount;
