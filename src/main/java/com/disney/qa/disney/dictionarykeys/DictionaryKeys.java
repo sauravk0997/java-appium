@@ -584,7 +584,7 @@ public enum DictionaryKeys {
     WATCHLIST_BTN("details_watchlist"),
     WATCHLIST_COPY("watchlist_copy"),
     WATCHLIST_EMPTY("watchlist_empty"),
-    WATCHLIST_PAGE_HEADER("watchlist_pageload"),
+    WATCHLIST_SCREEN("watchlist_pageload"),
     WATCHLIST_SUBCOPY("watchlist_subcopy"),
     WATCHLIST_TITLE("watchlist_title"),
     WELCOME_BASE_TEXT("welcome_tagline_copy"),
