@@ -3,11 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -17,6 +13,9 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.List;
+
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
@@ -409,5 +408,53 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Download not started, icon has not changed to in progress");
         Assert.assertTrue(detailsPage.getDownloadsTabNotificationBadge().isPresent(),
                 "Downloads tab footer has no elements in progress");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69545"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadScreenHidesDownloadsThatExceedContentRating() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_pumbaa_deeplink"));
+        String firstSeriesName = detailsPage.getMediaTitle();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getEpisodeToDownload("1", "1").click();
+        downloadsPage.waitForDownloadToStart();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_daredevil_deeplink"));
+        String secondSeriesName = detailsPage.getMediaTitle();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getEpisodeToDownload("1", "1").click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(firstSeriesName).isPresent(),
+                firstSeriesName + " series title was not present");
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(secondSeriesName).isPresent(),
+                secondSeriesName + " series title was not present");
+
+        //Set lower rating
+        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(ratingSystemValues.size() - 3));
+
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+
+        homePage.waitForHomePageToOpen();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(firstSeriesName).isPresent(),
+                firstSeriesName + " series title was not present");
+        Assert.assertFalse(downloadsPage.getDownloadAssetFromListView(secondSeriesName).isPresent(THREE_SEC_TIMEOUT),
+                secondSeriesName + " series title was present");
     }
 }
