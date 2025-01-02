@@ -564,7 +564,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
         detailsPage.getRestartButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
-        int remainingTimeAfterRestartClick = videoPlayer.getCurrentTime();
+        int currentTimeAfterRestartClick = videoPlayer.getCurrentTime();
         LOGGER.info("remainingTimeAfterRestartClick {}", remainingTimeAfterRestartClick);
         Assert.assertTrue((remainingTimeAfterRestartClick < remainingTimeBeforeRestartClick)
                         && (remainingTimeAfterRestartClick < limitTime),
