@@ -155,6 +155,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Season %s Episode %s'`]/" +
             "**/XCUIElementTypeStaticText[`name CONTAINS 'titleLabel'`]")
     private ExtendedWebElement dynamicEpisodeCellTitle;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='progressBar'$]" +
+            "/**/XCUIElementTypeStaticText[$name CONTAINS 'remaining'$]")
+    protected ExtendedWebElement continueWatchingRemainingTime;
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -1163,5 +1166,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                 IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());
         return getTypeButtonByLabel(dictValue);
+    }
+
+    public ExtendedWebElement getContinueWatchingRemainingTime() {
+        return continueWatchingRemainingTime;
     }
  }
