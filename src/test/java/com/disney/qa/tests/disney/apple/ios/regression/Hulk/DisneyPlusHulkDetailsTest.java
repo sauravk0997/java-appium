@@ -547,6 +547,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         int limitTime = 25;
 
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
@@ -556,7 +558,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
         int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
-        LOGGER.info("remainingTimeBeforeRestartClick {}", remainingTimeBeforeRestartClick);
+        LOGGER.info("currentTimeBeforeRestartClick {}", currentTimeBeforeRestartClick);
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
@@ -565,9 +567,9 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.getRestartButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         int currentTimeAfterRestartClick = videoPlayer.getCurrentTime();
-        LOGGER.info("remainingTimeAfterRestartClick {}", remainingTimeAfterRestartClick);
-        Assert.assertTrue((remainingTimeAfterRestartClick < remainingTimeBeforeRestartClick)
-                        && (remainingTimeAfterRestartClick < limitTime),
+        LOGGER.info("currentTimeAfterRestartClick {}", currentTimeAfterRestartClick);
+        Assert.assertTrue((currentTimeAfterRestartClick < currentTimeBeforeRestartClick)
+                        && (currentTimeAfterRestartClick < limitTime),
                 "Restart button did not restarted the video");
     }
 
