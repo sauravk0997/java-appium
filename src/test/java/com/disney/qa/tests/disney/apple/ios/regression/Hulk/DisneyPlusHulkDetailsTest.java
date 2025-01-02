@@ -557,7 +557,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
-        int remainingTimeBeforeRestartClick = videoPlayer.getCurrentTime();
+        int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
         LOGGER.info("remainingTimeBeforeRestartClick {}", remainingTimeBeforeRestartClick);
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(),DETAILS_PAGE_DID_NOT_OPEN);
