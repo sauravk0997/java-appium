@@ -211,10 +211,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         loginAndStartPlayback(SPIDERMAN_THREE);
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(TEN_SEC_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT),
                 String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
-        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         videoPlayer.clickBackButton();
         detailsPage.waitForDetailsPageToOpen();
         sa.assertTrue(detailsPage.isOpened(),
