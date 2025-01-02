@@ -414,10 +414,10 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifySignUpDeeplink() {
         DisneyPlusApplePageBase commonPage = initPage(DisneyPlusApplePageBase.class);
         terminateApp(sessionBundles.get(DISNEY));
-        launchDeeplink(R.TESTDATA.get("disney_prod_sign_up"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_sign_up_deeplink"));
         Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to webview");
         Assert.assertTrue(commonPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent(),
-                "Sign Up webview was not present");
+                "Sign Up webview was not opened");
     }
 }
