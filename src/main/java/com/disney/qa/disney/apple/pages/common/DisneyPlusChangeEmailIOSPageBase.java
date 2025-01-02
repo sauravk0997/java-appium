@@ -73,13 +73,13 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isAlreadyInUseEmailErrorMessageDisplayed() {
-        return getStaticTextByLabelContains(getLocalizationUtils()
+        return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_IN_USE_ERROR.getText())).isPresent();
     }
 
     public boolean isEmailNotProperlyFormattedErrorMessageDisplayed() {
-        return getStaticTextByLabelContains(getLocalizationUtils()
+        return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_FORMAT_ERROR.getText())).isPresent();
     }
