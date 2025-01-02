@@ -569,7 +569,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.getRestartButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         int currentTimeAfterRestartClick = videoPlayer.getCurrentTime();
-        LOGGER.info("remainingTimeAfterRestartClick {}", currentTimeAfterRestartClick);
+        LOGGER.info("currentTimeAfterRestartClick {}", currentTimeAfterRestartClick);
         Assert.assertTrue((currentTimeAfterRestartClick < currentTimeBeforeRestartClick)
                         && (currentTimeAfterRestartClick < limitTime),
                 "Restart button did not restarted the video");
