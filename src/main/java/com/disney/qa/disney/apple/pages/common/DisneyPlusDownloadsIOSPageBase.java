@@ -106,6 +106,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				"Download tab notification badge was not present")
 				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
 	}
+
 	public void tapDownloadedAsset(String downloadedAsset) {
 		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
 	}
