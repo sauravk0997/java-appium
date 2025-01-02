@@ -23,6 +23,8 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
@@ -978,6 +980,45 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
                 season1 + " " + titleErrorMessage);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75573"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadedEpisodePlayback() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int seasonNumber = 1;
+        int episodeNumber = 1;
+        String episodeTitle;
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getEpisodeToDownload(Integer.toString(seasonNumber), Integer.toString(episodeNumber)).click();
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            episodeTitle = seriesApiContent.getSeasons().get(seasonNumber - 1).getItems().get(episodeNumber - 1)
+                    .getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test because of unexpected exception getting episode title");
+        }
+        if (episodeTitle == null) {
+            throw new SkipException("No episode title found for the desired series episode in Explore API");
+        }
+        detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.getHuluSeriesDownloadCompleteButton().click();
+        detailsPage.getDownloadModalPlayButton().click();
+
+        Assert.assertTrue(videoPlayer.isOpened(),
+                "Video player did not open after choosing a downloaded episode");
+        videoPlayer.waitForVideoToStart();
+        String playerSubtitle = videoPlayer.getSubTitleLabel();
+        Assert.assertTrue(playerSubtitle.contains(episodeTitle),
+                "Video player title does not match with expected title: " + episodeTitle);
     }
 
     private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
