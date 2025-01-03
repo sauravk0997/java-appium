@@ -13,10 +13,9 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.List;
-
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
@@ -416,6 +415,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String seasonNumber = "1";
+        String episodeNumber = "1";
 
         setAppToHomeScreen(getAccount());
 
@@ -432,7 +433,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
         }
-        detailsPage.getEpisodeToDownload("1", "1").click();
+        detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
         detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
@@ -442,10 +443,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 secondSeriesName + " series title was not present");
 
         //Set lower rating
-        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
-                .getParentalControls().getMaturityRating().getRatingSystemValues();
         getAccountApi().editContentRatingProfileSetting(getAccount(),
-                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(ratingSystemValues.size() - 3));
+                getLocalizationUtils().getRatingSystem(), TV_14.getContentRating());
 
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
