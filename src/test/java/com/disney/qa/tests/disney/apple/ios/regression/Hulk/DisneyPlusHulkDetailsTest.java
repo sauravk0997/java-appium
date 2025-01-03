@@ -576,6 +576,41 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
                 "Restart button did not restarted the video");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75023"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySeriesDetailsVideoPlayerRestartButton() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int limitTime = 25;
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Deeplink a series episode, scrub and get current time
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
+        LOGGER.info("currentTimeBeforeRestartClick {}", currentTimeBeforeRestartClick);
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        // Validate and click restart button, get current time and validate restart button
+        Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
+        detailsPage.getRestartButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        int currentTimeAfterRestartClick = videoPlayer.getCurrentTime();
+        LOGGER.info("currentTimeAfterRestartClick {}", currentTimeAfterRestartClick);
+        Assert.assertTrue((currentTimeAfterRestartClick < currentTimeBeforeRestartClick)
+                        && (currentTimeAfterRestartClick < limitTime),
+                "Restart button did not restarted the video");
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
