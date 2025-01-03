@@ -237,6 +237,20 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return movieDownloadButton;
     }
 
+    public ExtendedWebElement getStopOrPauseDownloadIcon() {
+        return stopOrPauseDownloadButton;
+    }
+
+    public ExtendedWebElement getPauseDownloadButton() {
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+    }
+
+    public ExtendedWebElement getRemoveDownloadButton() {
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText()));
+    }
+
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for series download to complete");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
