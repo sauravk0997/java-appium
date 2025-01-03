@@ -135,6 +135,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isElementPresent(PlayerControl control) {
+        waitForPresenceOfAnElement(playerView);
         displayVideoController();
         return getElementFor(control).isElementPresent();
     }
