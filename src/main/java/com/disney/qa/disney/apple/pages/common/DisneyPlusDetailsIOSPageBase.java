@@ -1169,4 +1169,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS.getText());
         return getTypeButtonByLabel(dictValue);
     }
+
+    public void tapAboveDownloadModal() {
+        int screenWidth = getDriver().manage().window().getSize().getWidth();
+        int downloadModalStartY = viewAlert.getLocation().getY();
+        tap(screenWidth/2, downloadModalStartY/2);
+    }
+
+    public boolean isDownloadPausedInDownloadModal() {
+        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DOWNLOAD_PAUSED.getText());
+        return getStaticTextByLabel(dictValue).isPresent();
+    }
  }
