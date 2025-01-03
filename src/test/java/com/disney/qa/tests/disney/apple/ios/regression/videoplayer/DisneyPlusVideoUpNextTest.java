@@ -279,23 +279,24 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     }
 
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        disneyPlusHomeIOSPageBase.waitForHomePageToOpen();
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusHomeIOSPageBase.getSearchNav().click();
-        disneyPlusSearchIOSPageBase.searchForMedia(content);
-        List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        homePage.waitForHomePageToOpen();
+        homePage.clickSearchIcon();
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(content);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        disneyPlusDetailsIOSPageBase.clickPlayButton();
-        Assert.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(), "Video Player did not open");
-        disneyPlusVideoPlayerIOSPageBase.waitForVideoToStart();
-        disneyPlusVideoPlayerIOSPageBase.clickPauseButton();
-        disneyPlusVideoPlayerIOSPageBase.scrubToPlaybackPercentage(percentage);
-        disneyPlusVideoPlayerIOSPageBase.clickPlayButton();
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        videoPlayer.scrubToPlaybackPercentage(percentage);
+        videoPlayer.clickPlayButton();
     }
 
     private void toggleAutoPlay(String value) {
