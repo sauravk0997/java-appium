@@ -216,10 +216,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
-        //ratings are shown on downloaded content
-        if (!detailsPage.getEpisodesTab().isPresent()) {
-            swipePageTillElementPresent(detailsPage.getEpisodesTab(), 2, detailsPage.getContentDetailsPage(), Direction.DOWN, 500);
-        }
+        swipePageTillElementTappable(detailsPage.getEpisodesTab(), 2, detailsPage.getContentDetailsPage(),
+                    Direction.DOWN, 1000);
+
         detailsPage.getEpisodesTab().click();
         if (!detailsPage.getDownloadAllSeasonButton().isPresent()) {
             swipe(detailsPage.getDownloadAllSeasonButton());
