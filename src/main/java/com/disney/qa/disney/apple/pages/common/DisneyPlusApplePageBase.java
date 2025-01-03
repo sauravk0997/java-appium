@@ -1021,9 +1021,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return progressBar;
     }
 
-
-
-
     public ExtendedWebElement scrollToItem(String item) {
         ExtendedWebElement override = getStaticTextByLabel(item);
         swipe(override);
