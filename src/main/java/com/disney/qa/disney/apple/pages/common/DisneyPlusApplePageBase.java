@@ -525,6 +525,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeCellNameContains.format(name);
     }
 
+    public  ExtendedWebElement getViewAlert() {
+        return viewAlert;
+    }
+
     public String getErrorMessageString() {
         return labelError.getText();
     }
