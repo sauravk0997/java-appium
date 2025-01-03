@@ -578,6 +578,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_content_dumbo_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.getMovieDownloadButton().click();
         String movieTitle = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_movie_dumbo_entity_id")).getTitle();
         if (movieTitle == null) {
