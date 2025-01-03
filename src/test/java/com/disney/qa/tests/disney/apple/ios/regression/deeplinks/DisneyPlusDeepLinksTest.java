@@ -1,10 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -405,5 +407,17 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 "'Content not available' error modal was not present ");
         homePage.getUnavailableOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75744"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySignUpDeeplink() {
+        DisneyPlusApplePageBase commonPage = initPage(DisneyPlusApplePageBase.class);
+        terminateApp(sessionBundles.get(DISNEY));
+        launchDeeplink(R.TESTDATA.get("disney_prod_sign_up_deeplink"));
+        Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to webview");
+        Assert.assertTrue(commonPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent(),
+                "Sign Up webview was not opened");
     }
 }
