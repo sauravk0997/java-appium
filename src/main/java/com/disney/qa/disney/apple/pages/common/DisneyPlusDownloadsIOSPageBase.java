@@ -268,16 +268,4 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 						DictionaryKeys.DOWNLOAD_QUEUED.getText())).isPresent();
 	}
-
-	public boolean isAdTierDownloadTitleDisplayed() {
-		return getStaticTextByLabel(getLocalizationUtils()
-				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-						DictionaryKeys.DOWNLOAD_TITLE_FOR_AD_TIER.getText())).isPresent();
-	}
-
-	public boolean isAdTierDownloadBodyTextDisplayed() {
-		return getStaticTextByLabel(getLocalizationUtils()
-				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-						DictionaryKeys.DOWNLOAD_BODY_FOR_AD_TIER.getText())).isPresent();
-	}
 }

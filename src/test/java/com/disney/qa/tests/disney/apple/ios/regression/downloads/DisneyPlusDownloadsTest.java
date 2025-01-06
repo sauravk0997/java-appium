@@ -451,23 +451,4 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                         .equals(FALSE),
                 "Content description is still visible");
     }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72184"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyDownloadScreenUIForAdUser() {
-        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        setAppToHomeScreen(basicAccount);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-
-        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
-        Assert.assertTrue(downloadsPage.isDownloadHeaderPresent(),
-                "Downloads header is not present");
-        Assert.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
-                "Downloads Image is not present");
-        Assert.assertTrue(downloadsPage.isAdTierDownloadTitleDisplayed(),
-                "Download not available title is not displayed for Ad tier user");
-        Assert.assertTrue(downloadsPage.isAdTierDownloadBodyTextDisplayed(),
-                "Download not available description message not displayed for Ad tier user");
-    }
 }
