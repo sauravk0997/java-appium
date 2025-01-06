@@ -155,6 +155,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Season %s Episode %s'`]/" +
             "**/XCUIElementTypeStaticText[`name CONTAINS 'titleLabel'`]")
     private ExtendedWebElement dynamicEpisodeCellTitle;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='progressBar'$]" +
+            "/XCUIElementTypeStaticText[$label CONTAINS 'remaining'$]")
+    protected ExtendedWebElement continueWatchingTimeRemaining;
     //FUNCTIONS
 
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -959,20 +962,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabelContains(DETAILS_DURATION_SUFFIX).getText();
     }
 
-    public String getContinueWatchingHours() {
-        String[] time = getStaticTextByLabelContains(DETAILS_DURATION_SUFFIX).getText().split(" ");
-        return time[0].split("h")[0];
-    }
-
-    public String getContinueWatchingMinutes() {
-        String[] time = getStaticTextByLabelContains(DETAILS_DURATION_SUFFIX).getText().split(" ");
-        return time[1].split("m")[0];
-    }
-
     public ExtendedWebElement getContinueWatchingTimeRemaining() {
-        String continueWatchingHours = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CONTINUE_WATCHING_HOURS.getText()),
-                Map.of("hours_remaining", getContinueWatchingHours(), "minutes_remaining", getContinueWatchingMinutes()));
-        return getDynamicAccessibilityId(continueWatchingHours);
+        return continueWatchingTimeRemaining;
     }
 
     public boolean isDurationTimeLabelPresent() {
