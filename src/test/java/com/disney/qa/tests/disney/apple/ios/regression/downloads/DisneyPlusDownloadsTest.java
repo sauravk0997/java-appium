@@ -468,6 +468,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(downloadsPage.isAdTierDownloadTitleDisplayed(),
                 "'Downloads not available' title is not displayed for Ad tier user");
         Assert.assertTrue(downloadsPage.isAdTierDownloadBodyTextDisplayed(),
-                "Download not available description message not displayed for Ad tier user");
+                "'Downloads not available' description message is not displayed for Ad tier user");
     }
 }
