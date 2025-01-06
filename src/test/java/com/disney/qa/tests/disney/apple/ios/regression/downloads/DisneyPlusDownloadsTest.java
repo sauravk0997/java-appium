@@ -1,7 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.qa.api.disney.*;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
@@ -409,5 +411,63 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Download not started, icon has not changed to in progress");
         Assert.assertTrue(detailsPage.getDownloadsTabNotificationBadge().isPresent(),
                 "Downloads tab footer has no elements in progress");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66734"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDescriptionOnDownloadAsset() {
+        String description = null;
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            description = movieApiContent.getDescription().getFull().split("\n")[0];
+        } catch (Exception e) {
+            Assert.fail(String.format("content Description not found: %s", e.getMessage()));
+        }
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String movieTitle = detailsPage.getMediaTitle();
+
+        //Start download
+        detailsPage.getMovieDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+
+        downloadsPage.getStaticTextByLabel(movieTitle).click();
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(description)
+                        .getAttribute(Attributes.VISIBLE.getAttribute())
+                        .equals(TRUE),
+                "Content description is not visible");
+
+        downloadsPage.getStaticTextByLabel(movieTitle).click();
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(description)
+                        .getAttribute(Attributes.VISIBLE.getAttribute())
+                        .equals(FALSE),
+                "Content description is still visible");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72184"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadScreenUIForAdUser() {
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(downloadsPage.isDownloadHeaderPresent(),
+                "Downloads header is not present");
+        Assert.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
+                "Downloads Image is not present");
+        Assert.assertTrue(downloadsPage.isAdTierDownloadTitleDisplayed(),
+                "Download not available title is not displayed for Ad tier user");
+        Assert.assertTrue(downloadsPage.isAdTierDownloadBodyTextDisplayed(),
+                "Download not available description message not displayed for Ad tier user");
     }
 }
