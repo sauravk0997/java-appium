@@ -413,6 +413,45 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Downloads tab footer has no elements in progress");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66734"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDescriptionOnDownloadAsset() {
+        String description = null;
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            description = movieApiContent.getDescription().getFull().split("\n")[0];
+        } catch (Exception e) {
+            Assert.fail(String.format("content Description not found: %s", e.getMessage()));
+        }
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String movieTitle = detailsPage.getMediaTitle();
+
+        //Start download
+        detailsPage.getMovieDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+
+        downloadsPage.getStaticTextByLabel(movieTitle).click();
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(description)
+                        .getAttribute(Attributes.VISIBLE.getAttribute())
+                        .equals(TRUE),
+                "Content description is not visible");
+
+        downloadsPage.getStaticTextByLabel(movieTitle).click();
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(description)
+                        .getAttribute(Attributes.VISIBLE.getAttribute())
+                        .equals(FALSE),
+                "Content description is still visible");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72184"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadScreenUIForAdUser() {
