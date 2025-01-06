@@ -25,6 +25,8 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
+import java.util.List;
+
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     //Test constants
@@ -320,7 +322,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         swipe(details.getSeasonSelectorButton());
-        Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(), 
+        Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(),
                 "Download all season button displayed for ad tier user");
         Assert.assertFalse(details.getEpisodeToDownload().isPresent(),
                 "Episode Download button is displayed for ad tier user");
@@ -392,6 +394,27 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloadsPage.isDownloadInProgressTextPresent(),
                 "Download start/in-progress text not found");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73971"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologyMaturityRatingRestrictionErrorMessage() {
+        String contentUnavailableError = "content-unavailable";
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        //set lower rating
+        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertFalse(details.isOpened(), "Details page should not open");
+        //At the moment Parental control error message is not supported somehow and hence verifying generic
+        // error message
+        Assert.assertTrue(homePage.getTextViewByLabelContains(contentUnavailableError).isPresent(),
+                "Content Unavailable generic error not displayed");
     }
 
     private void searchAndOpenDWTSDetails() {
