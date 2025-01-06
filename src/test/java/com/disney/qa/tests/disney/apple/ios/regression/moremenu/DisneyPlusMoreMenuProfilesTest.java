@@ -51,6 +51,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String KID_PROOF_EXIT_SCREEN_DID_NOT_OPEN = "Kid Proof Exit code screen was not displayed";
     private final static String UPDATED_TOAST_WAS_NOT_DISPLAYED = "'Updated' toast was not displayed";
     private final static String KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON = "'kids proof exit' toggle is not 'On'";
+    private final static String WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED = "Who is watching screen did not open";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -145,6 +146,27 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.toggleAutoplayButton("OFF");
         sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66794"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void  verifyEditProfileName() {
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        String updatedUserName = "New Test User";
+
+        setAppToHomeScreen(getAccount());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(getAccount().getFirstName());
+
+        editProfile.enterProfileName(updatedUserName);
+        editProfile.clickDoneBtn();
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        Assert.assertTrue(whoIsWatching.isProfileIconPresent(updatedUserName),
+                "Profile name is not updated as expected");
+
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76067"})
@@ -939,7 +961,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String code = kidProofExitIOSPageBase.parseExitDigitsCode();
         kidProofExitIOSPageBase.getCodeInputField().type(code);
 
-        Assert.assertTrue(whoIsWatching.isOpened(), "Who is watching screen did not open");
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66832"})
