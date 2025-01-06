@@ -207,7 +207,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				.getWidth();
 		ValueRange range = ValueRange.of(-latency, latency);
 		return range.isValidIntValue((long) (expectedWidth - actualWidth));
-  }
+	}
 
 	public boolean isDownloadInProgressTextPresent() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
