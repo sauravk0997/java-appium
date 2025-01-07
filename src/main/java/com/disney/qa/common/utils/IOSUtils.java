@@ -867,9 +867,13 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         }
 
         int maxHeight = getDriver().manage().window().getSize().getHeight();
+        int minThreshold = (int) (maxHeight * .1);
         int threshold = (int) (maxHeight - maxHeight * .05);
-        if (element.getLocation().getY() > threshold) {
+        int yCoordinate = element.getLocation().getY();
+        if (yCoordinate > threshold) {
             swipeUp(1, 1000);
+        } else if (yCoordinate < minThreshold) {
+            swipeDown(1, 1000);
         }
     }
 
