@@ -101,17 +101,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return resumeDownload;
 	}
 
-	public void waitForDownloadToStart(boolean... areMultipleDownloads) {
-		boolean multipleDownloads = areMultipleDownloads.length > 0 && areMultipleDownloads[0];
-		if (multipleDownloads) {
-			fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-					"Download tab notification badge for multiple downloads was not present")
-					.until(it -> multipleDownloadsBadge.isPresent(ONE_SEC_TIMEOUT));
-		} else {
-			fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-					"Download tab notification badge was not present")
-					.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
-		}
+	public void waitForDownloadToStart() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download tab notification badge was not present")
+				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
 	}
 
 	public void tapDownloadedAsset(String downloadedAsset) {
@@ -276,5 +269,11 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return getStaticTextByLabel(getLocalizationUtils()
 				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 						DictionaryKeys.DOWNLOAD_QUEUED.getText())).isPresent();
+	}
+
+	public void waitForMultipleDownloadsToStart() {
+		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+				"Download tab notification badge for multiple downloads was not present")
+				.until(it -> Integer.parseInt(getElementText(downloadsTabNotificationBadge)) > 1);
 	}
 }
