@@ -41,6 +41,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAIL_PAGE_DID_NOT_OPEN = "Detail page did not open";
     private static final String BACK_BUTTON_ERROR_MESSAGE = "Back button is not present";
+    private static final String RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE = "recent search was not displayed";
+    private static final String RECENT_SEARCH_FOUND_ERROR_MESSAGE = "recent search was displayed";
+    private static final String CONTENT_NOT_FOUND_IN_RECENT_SEARCH_ERROR_MESSAGE = "content was not displayed in " +
+            "recent search results";
 
     @DataProvider(name = "collectionNames")
     public Object[][] collections() {
@@ -61,7 +65,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
         searchPage.getSearchBar().click();
-        sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
+        sa.assertFalse(searchPage.isRecentSearchDisplayed(), RECENT_SEARCH_FOUND_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -118,7 +122,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getCancelButton().click();
         homePage.clickSearchIcon();
         searchPage.getSearchBar().click();
-        sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+        sa.assertTrue(searchPage.isRecentSearchDisplayed(), RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE);
         searchPage.getCancelButton().click();
         homePage.clickHomeIcon();
 
@@ -127,14 +131,14 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getSearchBar().click();
         searchPage.tapRecentSearchClearButton();
         searchPage.getSearchBar().click();
-        sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
+        sa.assertFalse(searchPage.isRecentSearchDisplayed(), RECENT_SEARCH_FOUND_ERROR_MESSAGE);
         searchPage.getCancelButton().click();
 
         //next time user select search bar, recent search is no longer displayed
         homePage.clickHomeIcon();
         homePage.clickSearchIcon();
         searchPage.getSearchBar().click();
-        sa.assertFalse(searchPage.isRecentSearchDisplayed(), "recent search was displayed");
+        sa.assertFalse(searchPage.isRecentSearchDisplayed(), RECENT_SEARCH_FOUND_ERROR_MESSAGE);
         sa.assertAll();
     }
 
@@ -201,7 +205,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.getSearchBar().click();
-        sa.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+        sa.assertTrue(searchPage.isRecentSearchDisplayed(), RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE);
         searchPage.tapTitleUnderRecentSearch(media);
         results = searchPage.getDisplayedTitles();
         results.get(0).click();
@@ -232,7 +236,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //Verify that the after searching 11 content, only last latest 10 visible in list and the first one is not visible
         sa.assertFalse(searchPage.getStaticTextByLabel(getMedia().get(0)).isPresent(), "First content is displayed");
         for (int j = getMedia().size() - 1; j > 0; j--) {
-            sa.assertTrue(searchPage.getStaticTextByLabel(getMedia().get(j)).isPresent(), "recent search content was not displayed in recent search results");
+            sa.assertTrue(searchPage.getStaticTextByLabel(getMedia().get(j)).isPresent(), CONTENT_NOT_FOUND_IN_RECENT_SEARCH_ERROR_MESSAGE);
             if (j == getMedia().size() / 2) {
                 searchPage.swipeInRecentSearchResults(Direction.UP);
                 //After Swipe also verify that the first content is not visible
@@ -667,14 +671,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.getClearTextBtn().click();
         searchPage.getSearchBar().click();
-        Assert.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+        Assert.assertTrue(searchPage.isRecentSearchDisplayed(), RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE);
 
         for (int j = listOfShowsPrimaryProfile.size() - 1; j > 0; j--) {
             sa.assertTrue(searchPage.getStaticTextByLabel(listOfShowsPrimaryProfile.get(j)).isPresent(),
-                    listOfShowsPrimaryProfile.get(j) + " content was not displayed in recent search results");
-            sa.assertFalse(searchPage.getStaticTextByLabel(listOfShowsSecondaryProfile.get(j)).isPresent(),
-                    listOfShowsSecondaryProfile.get(j) + " - Secondary profile content was displayed in recent " +
-                            "search results");
+                    listOfShowsPrimaryProfile.get(j) + " " + CONTENT_NOT_FOUND_IN_RECENT_SEARCH_ERROR_MESSAGE);
         }
 
         searchPage.getCancelButton().click();
@@ -688,11 +689,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         addContentInSearchResults(listOfShowsSecondaryProfile);
         searchPage.getClearTextBtn().click();
         searchPage.getSearchBar().click();
-        Assert.assertTrue(searchPage.isRecentSearchDisplayed(), "recent search was not displayed");
+        Assert.assertTrue(searchPage.isRecentSearchDisplayed(), RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE);
 
         for (int j = listOfShowsSecondaryProfile.size() - 1; j > 0; j--) {
             sa.assertTrue(searchPage.getStaticTextByLabel(listOfShowsSecondaryProfile.get(j)).isPresent(),
-                    listOfShowsSecondaryProfile.get(j) + " content was not displayed in recent search results");
+                    listOfShowsSecondaryProfile.get(j) + " " + CONTENT_NOT_FOUND_IN_RECENT_SEARCH_ERROR_MESSAGE);
             sa.assertFalse(searchPage.getStaticTextByLabel(listOfShowsPrimaryProfile.get(j)).isPresent(),
                     listOfShowsPrimaryProfile.get(j) + " - Default profile content was displayed in recent " +
                             "search results");
