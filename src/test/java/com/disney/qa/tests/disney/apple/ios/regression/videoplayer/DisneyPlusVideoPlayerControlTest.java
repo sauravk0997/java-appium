@@ -455,7 +455,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         // Login and open deeplink to series Timon and Puumba
         setAppToHomeScreen(getAccount());
-        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_pumbaa_deeplink"));
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
         detailsPage.clickDetailsTab();
