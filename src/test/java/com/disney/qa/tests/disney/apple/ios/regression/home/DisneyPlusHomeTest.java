@@ -672,7 +672,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
 
         addContentInContinueWatchingWithExpectedRemainingTime(
-                R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"),
+                R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
                 expectedRemainingTimeInSec);
         homePage.waitForHomePageToOpen();
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
@@ -688,7 +688,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
         addContentInContinueWatchingWithExpectedRemainingTime(
-                R.TESTDATA.get("disney_prod_series_detail_party_animals_deeplink"),
+                R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
                 expectedRemainingTimeInSec);
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
@@ -722,8 +722,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplink(url);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
         videoPlayer.clickBackButton();
