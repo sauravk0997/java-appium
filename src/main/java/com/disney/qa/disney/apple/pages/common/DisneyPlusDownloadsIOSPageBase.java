@@ -209,7 +209,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				.getWidth();
 		ValueRange range = ValueRange.of(-latency, latency);
 		return range.isValidIntValue((long) (expectedWidth - actualWidth));
-  }
+	}
 
 	public boolean isDownloadInProgressTextPresent() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
@@ -275,5 +275,17 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
 				"Download tab notification badge for multiple downloads was not present")
 				.until(it -> Integer.parseInt(getElementText(downloadsTabNotificationBadge)) > 1);
+  }
+  
+	public boolean isAdTierDownloadTitleDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils()
+				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.DOWNLOAD_TITLE_FOR_AD_TIER.getText())).isPresent();
+	}
+
+	public boolean isAdTierDownloadBodyTextDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils()
+				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.DOWNLOAD_BODY_FOR_AD_TIER.getText())).isPresent();
 	}
 }
