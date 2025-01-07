@@ -88,8 +88,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement keyboardClear;
     @ExtendedFindBy(accessibilityId = "unlockedProfileCell")
     public ExtendedWebElement unlockedProfileCell;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText")
-    protected ExtendedWebElement staticTextField;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"%s\"`]")
     protected ExtendedWebElement staticTextByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"%s\"`]")
@@ -482,9 +480,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeOtherContainsName(String name) {
         return dynamicOtherFindByNameContains.format(name);
-    }
-    public ExtendedWebElement getStaticTextField(){
-        return staticTextField;
     }
 
     public ExtendedWebElement getStaticTextByLabel(String label) {

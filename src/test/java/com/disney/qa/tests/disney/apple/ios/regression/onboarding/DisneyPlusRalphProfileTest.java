@@ -462,6 +462,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
 
         setupForRalph();
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
