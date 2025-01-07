@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
@@ -10,6 +11,7 @@ import com.disney.qa.api.utils.DisneyCountryData;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -32,9 +34,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     private static final int[] AGE_VALUES_GERMANY = {5, 11, 15, 17};
     private static final int[] AGE_VALUES_CANADA = {0, 5, 8, 11, 13, 15, 17, 18};
     private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17, 18};
+    private static final String CODE = "code";
     private static final String RATING_VALUES = "ratingValues";
     private static final String RECOMMENDED_RATING_ERROR_MESSAGE = "Recommended rating is not present";
-    private static final String CODE = "code";
+    public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
@@ -448,6 +451,32 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(editProfile.verifyProfileSettingsMaturityRating(ratingChoose), "Profile rating is not as expected");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73829"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
+    public void testRalphDOBScreenStandardDateFormat () {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
+                initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
+
+        setupForRalph();
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+
+        welcomePage.clickLogInButton();
+        loginPage.submitEmail(getAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+        passwordPage.getTextEntryField().click();
+        Assert.assertTrue(passwordPage.getDynamicAccessibilityId(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText())).isPresent(),
+                "DOB format is not standard for the jurisdiction");
+    }
+
     private void navigateToContentRating() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -502,14 +531,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         // 3. Don't add the DOB param in test to set the default DOB from the account api
         if (null!= DOB && DOB.length > 0) {
             createDisneyAccountRequest.setDateOfBirth(DOB[0]);
-        } else if(DOB == null) {
+        } else if(DOB.length == 0) {
             createDisneyAccountRequest.setDateOfBirth(null);
         }
         DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Disney Plus Standard W Ads Monthly - DE - Web");
         DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
         createDisneyAccountRequest.addEntitlement(entitlement);
         DisneyAccount testAccount = getAccountApi().createAccount(createDisneyAccountRequest);
-        getAccountApi().addFlex(testAccount);
         setAccount(testAccount);
         handleAlert();
     }
