@@ -55,12 +55,13 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void clickBackToDisneyBtn() {
-        getStaticTextByLabelContains(getLocalizationUtils()
+        getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_BACK_TO_SERVICE_BTN.getText())).click();
     }
+
     public void clickLogoutBtn() {
-        getStaticTextByLabelContains(getLocalizationUtils()
+        getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.LOG_OUT_LABEL.getText())).click();
     }
