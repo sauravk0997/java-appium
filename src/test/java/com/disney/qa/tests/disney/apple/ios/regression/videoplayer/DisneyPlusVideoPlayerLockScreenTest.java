@@ -28,7 +28,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open");
         videoPlayer.waitForVideoToStart();
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
-        videoPlayer.waitForVideoLockTooltip();
+        videoPlayer.waitForVideoLockTooltipToAppear();
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         sa.assertFalse(videoPlayer.getLockScreenToolTip().isPresent(), "Video player tooltip is still present");
         videoPlayer.clickBackButton();
