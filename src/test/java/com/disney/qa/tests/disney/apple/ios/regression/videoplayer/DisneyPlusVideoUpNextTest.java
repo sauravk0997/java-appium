@@ -27,7 +27,6 @@ import java.time.Duration;
 import java.util.*;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest.VIDEO_PLAYER_DID_NOT_OPEN;
 
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
@@ -345,6 +344,6 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfile.toggleAutoplay(getAccount().getFirstName(), value.toUpperCase());
-        //navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
     }
 }
