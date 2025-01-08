@@ -795,7 +795,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForVideoLockTooltipToAppear() {
         fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls lock tooltip did not appear")
-                .until(it -> getLockScreenToolTip(). isPresent(ONE_SEC_TIMEOUT));
+                .until(it -> getLockScreenToolTip().isPresent(ONE_SEC_TIMEOUT));
     }
 
     public ExtendedWebElement getLockScreenToolTip() {
