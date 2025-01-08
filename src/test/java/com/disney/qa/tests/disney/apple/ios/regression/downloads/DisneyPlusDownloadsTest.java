@@ -123,7 +123,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         //Download one episode
         detailsPage.getEpisodeToDownload(one, one).click();
-
+        downloads.waitForDownloadToStart();
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
@@ -133,6 +133,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Start download of 2 episodes
         detailsPage.getEpisodeToDownload(one, two).click();
         detailsPage.getEpisodeToDownload(one, three).click();
+        downloads.waitForMultipleDownloadsToStart();
 
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
