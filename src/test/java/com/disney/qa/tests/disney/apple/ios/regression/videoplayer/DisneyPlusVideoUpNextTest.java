@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.config.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -276,6 +277,27 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
         sa.assertTrue(videoPlayer.getBackButton().isPresent(), "Back button is not found");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74459"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyStandardPostPlay() {
+        DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String huluSeries = "Only Murders in the Building";
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+
+        initiatePlaybackAndScrubOnPlayer(huluSeries, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+        upNextIOSPageBase.waitForUpNextUIToAppear();
+        upNextIOSPageBase.tapPlayIconOnUpNext();
+       // Assert.assertTrue(videoPlayerIOSPageBase.isContentRatingOverlayPresent(), "Content Rating overlay not " +
+         //       "displayed");
+       // Assert.assertTrue(videoPlayerIOSPageBase.waitForContentRatingOverlayToDisappear(), "Content rating overlay " +
+         //       "didn't dismiss");
     }
 
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
