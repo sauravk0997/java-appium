@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.*;
 
 public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
 
@@ -21,7 +20,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        // Login and open deeplink to movie
+        // Login and open deeplink to movie and validate lock controls tooltip
         setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
@@ -35,14 +34,14 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         detailsPage.getBackButton().click();
         detailsPage.clickHomeIcon();
-        // Open deeplink to another content
+        // Open deeplink to another content and validate lock controls
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
         detailsPage.clickPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open");
         videoPlayer.waitForVideoToStart();
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
-        videoPlayer.waitForVideoLockTooltip();
+        sa.assertFalse(videoPlayer.getLockScreenTooltip().isPresent(), "Video player tooltip is present");
 
         sa.assertAll();
     }
