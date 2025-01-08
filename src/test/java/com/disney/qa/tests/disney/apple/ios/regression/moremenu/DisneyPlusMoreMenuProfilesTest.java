@@ -1092,7 +1092,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         for (int i=0; i < navElements.size() - 1; i++)
             distanceSet.add(getDistanceBetweenElements(navElements.get(i), navElements.get(i + 1)));
 
-        if(getDevice().getDeviceType().equals(DeviceType.Type.IOS_PHONE)) {
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
         } else if (getDevice().getDeviceType().equals(DeviceType.Type.IOS_TABLET)) {
             Assert.assertEquals(distanceSet.size(), 2,
