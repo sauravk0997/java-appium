@@ -30,7 +30,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         videoPlayer.waitForVideoLockTooltip();
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
-        sa.assertFalse(videoPlayer.getLockScreenTooltip().isPresent(), "Video player tooltip is still present");
+        sa.assertFalse(videoPlayer.getLockScreenToolTip().isPresent(), "Video player tooltip is still present");
         videoPlayer.clickBackButton();
         detailsPage.getBackButton().click();
         detailsPage.clickHomeIcon();
@@ -41,7 +41,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open");
         videoPlayer.waitForVideoToStart();
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
-        sa.assertFalse(videoPlayer.getLockScreenTooltip().isPresent(), "Video player tooltip is present");
+        sa.assertFalse(videoPlayer.getLockScreenToolTip().isPresent(), "Video player tooltip is present");
 
         sa.assertAll();
     }
