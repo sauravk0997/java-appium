@@ -420,6 +420,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         String otp = getOTPFromApi(startTime, otpAccount);
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
 
+        Assert.assertTrue(changePasswordPage.isPasswordPagePresent(), "Password page did not open");
         changePasswordPage.clickLogoutAllDevices();
         getAccount().setUserPass(NEW_PASSWORD);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
