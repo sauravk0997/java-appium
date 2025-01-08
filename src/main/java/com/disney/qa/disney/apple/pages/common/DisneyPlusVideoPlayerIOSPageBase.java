@@ -793,7 +793,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return contentRatingInfoView;
     }
 
-    public void waitForVideoLockTooltip() {
+    public void waitForVideoLockTooltipToAppear() {
         fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls lock tooltip did not appear")
                 .until(it -> getTextElementValue(getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
