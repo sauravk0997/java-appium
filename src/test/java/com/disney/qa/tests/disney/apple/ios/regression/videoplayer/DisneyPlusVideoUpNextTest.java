@@ -311,6 +311,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
 
         //Tap on Next episode and verify that the next episode has started playing
+        videoPlayer.displayVideoController();
         videoPlayer.getElementFor(PlayerControl.NEXT_EPISODE).click();
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(apiSecondEpisodeTitle),
