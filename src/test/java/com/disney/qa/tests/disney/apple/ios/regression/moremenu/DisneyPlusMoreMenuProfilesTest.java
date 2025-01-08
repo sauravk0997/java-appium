@@ -1076,9 +1076,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
-                .avatarId(DARTH_MAUL).kidsModeEnabled(true).kidProofExitEnabled(true).isStarOnboarded(true).build());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getAccount(), KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
@@ -1094,7 +1099,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
-        } else if (getDevice().getDeviceType().equals(DeviceType.Type.IOS_TABLET)) {
+        } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             Assert.assertEquals(distanceSet.size(), 2,
                     "Junior mode navigation menu is not correctly aligned in tablet");
         }
