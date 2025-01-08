@@ -397,6 +397,43 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User was not directed back to 'Account Settings' after changing their password");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68917"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void testChangePasswordWithLogout() {
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusChangePasswordIOSPageBase changePasswordPage = initPage(DisneyPlusChangePasswordIOSPageBase.class);
+        DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
+        setAppToAccountSettings(otpAccount);
+
+        Date startTime = getEmailApi().getStartTime();
+        accountPage.clickManageWithMyDisneyButton();
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.getEditPasswordButton().click();
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        String otp = getOTPFromApi(startTime, otpAccount);
+        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
+
+        changePasswordPage.clickLogoutAllDevices();
+        getAccount().setUserPass(NEW_PASSWORD);
+        changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
+        changePasswordPage.getKeyboardDoneButton().clickIfPresent();
+
+        changeEmailPage.clickLogoutBtn();
+        Assert.assertTrue(welcomePage.isOpened(),
+                "User was not logged out and returned to the Welcome screen after submitting the new password");
+
+        setAppToHomeScreen(otpAccount, otpAccount.getProfiles().get(0).getProfileName());
+        Assert.assertTrue(homePage.isOpened(),
+                "User was not able to log in successfully with the new email");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67134"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangeEmailUI() {
@@ -511,6 +548,49 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "User was not able to log in successfully with the new email");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68921"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void testChangeEmailWithLogout() {
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
+                initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage =
+                initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
+        setAppToAccountSettings(otpAccount);
+
+        accountPage.clickManageWithMyDisneyButton();
+        Date startTime = getEmailApi().getStartTime();
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
+                "Manage your MyDisney account overlay didn't open");
+        accountPage.tapEditEmailButton();
+
+        String otp = getOTPFromApi(startTime, otpAccount);
+        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
+
+        Assert.assertTrue(changeEmailPage.isOpened(), "'Change Email' screen was not opened");
+
+        hideKeyboard();
+
+        changeEmailPage.clickLogoutAllDevices();
+        String newEmail = generateGmailAccount();
+        otpAccount.setEmail(newEmail);
+
+        changeEmailPage.submitNewEmailAddress(newEmail);
+        changeEmailPage.clickLogoutBtn();
+        Assert.assertTrue(welcomePage.isOpened(),
+                "User was not logged out and returned to the Welcome screen after submitting the new email");
+
+        setAppToHomeScreen(otpAccount, otpAccount.getProfiles().get(0).getProfileName());
+
+        Assert.assertTrue(homePage.isOpened(),
+                "User was not able to log in successfully with the new email");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67138"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangeEmailSelectCancel() {
@@ -559,49 +639,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Inline error message for OTP is not displayed");
         Assert.assertTrue(oneTimePasscodePage.isOpened(),
                 "Screen transitioned away from the One time passcode screen");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68921"})
-    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void testChangeEmailWithLogout() {
-        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
-                initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
-        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
-        DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage =
-                initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-
-        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage());
-        setAppToAccountSettings(otpAccount);
-
-        accountPage.clickManageWithMyDisneyButton();
-        Date startTime = getEmailApi().getStartTime();
-        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
-                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
-        accountPage.tapEditEmailButton();
-
-        String otp = getOTPFromApi(startTime, otpAccount);
-        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
-
-        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
-
-        hideKeyboard();
-
-        changeEmailPage.clickLogoutAllDevices();
-        String newEmail = generateGmailAccount();
-        otpAccount.setEmail(newEmail);
-
-        changeEmailPage.submitNewEmailAddress(newEmail);
-        changeEmailPage.clickLogoutBtn();
-        Assert.assertTrue(welcomePage.isOpened(),
-                "User was not logged out and returned to the Welcome screen after submitting the new email");
-
-        setAppToHomeScreen(otpAccount, otpAccount.getProfiles().get(0).getProfileName());
-
-        Assert.assertTrue(homePage.isOpened(),
-                "User was not able to log in successfully with the new email");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67140"})
