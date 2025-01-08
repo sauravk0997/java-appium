@@ -52,7 +52,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isChooseNewPasswordPageOpen() {
-        return getDynamicAccessibilityId(getLocalizationUtils().
+        return getStaticTextByLabel(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_CHANGE_PASSWORD_HEADER.getText())).isElementPresent();
     }
