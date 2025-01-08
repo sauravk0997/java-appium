@@ -1074,7 +1074,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileNavigationBarAlignment() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
