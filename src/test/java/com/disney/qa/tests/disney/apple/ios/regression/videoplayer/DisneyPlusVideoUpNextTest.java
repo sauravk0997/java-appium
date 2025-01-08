@@ -27,6 +27,7 @@ import java.time.Duration;
 import java.util.*;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest.VIDEO_PLAYER_DID_NOT_OPEN;
 
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
@@ -278,6 +279,45 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72263"})
+    @Test(groups = {TestGroup.SERIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySeriesPlaybackNextEpisode() {
+        String apiSecondEpisodeTitle;
+        int firstSeasonIndex = 0;
+        int secondEpisodeIndex = 1;
+
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        ExploreContent seriesApiContent = getSeriesApi(
+                R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            apiSecondEpisodeTitle = seriesApiContent.getSeasons()
+                    .get(firstSeasonIndex)
+                    .getItems()
+                    .get(secondEpisodeIndex)
+                    .getVisuals()
+                    .getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, next episode title is not found" + e.getMessage());
+        }
+        setAppToHomeScreen(getAccount());
+
+        //Turn OFF autoplay
+        toggleAutoPlay("OFF");
+
+        // Deeplink series episode
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        videoPlayer.waitForVideoToStart();
+
+        //Tap on Next episode and verify that the next episode has started playing
+        videoPlayer.getElementFor(PlayerControl.NEXT_EPISODE).click();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(apiSecondEpisodeTitle),
+                "Next episode didn't play");
+    }
+
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -305,6 +345,6 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfile.toggleAutoplay(getAccount().getFirstName(), value.toUpperCase());
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
+        //navigateToTab(DisneyPlusApplePageBase.FooterTabs.HOME);
     }
 }
