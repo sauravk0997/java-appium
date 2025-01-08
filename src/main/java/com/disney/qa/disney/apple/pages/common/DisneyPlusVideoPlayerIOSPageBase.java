@@ -738,6 +738,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> !getPlayerView().isPresent());
     }
 
+    public boolean waitUntilRemainingTimeLessThan(int waitTime, int polling, int expectedRemainingTimeInSec) {
+        return fluentWait(getDriver(), waitTime, polling,
+                "Video player remaining time not matched with expected remaining time")
+                .until(it -> isRemainingTimeLessThanExpected(expectedRemainingTimeInSec));
+    }
+
+    public boolean isRemainingTimeLessThanExpected(int expectedRemainingTimeInSec) {
+        int remainingtime = getRemainingTime();
+        return remainingtime <= expectedRemainingTimeInSec;
+    }
+
     public boolean isAdPodPresent() {
         return adPod.isPresent();
     }
