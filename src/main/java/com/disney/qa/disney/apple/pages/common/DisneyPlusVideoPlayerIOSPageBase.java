@@ -800,7 +800,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.PLAYER_CONTROLS_LOCK_TOOLTIP.getText())).isPresent(ONE_SEC_TIMEOUT));
     }
 
-    public ExtendedWebElement getLockScreenTooltip() {
+    public ExtendedWebElement getLockScreenToolTip() {
         return getTextElementValue(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAYER_CONTROLS_LOCK_TOOLTIP.getText()));
     }
