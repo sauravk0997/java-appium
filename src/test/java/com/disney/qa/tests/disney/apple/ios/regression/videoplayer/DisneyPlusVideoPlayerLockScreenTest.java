@@ -45,5 +45,4 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
-
 }
