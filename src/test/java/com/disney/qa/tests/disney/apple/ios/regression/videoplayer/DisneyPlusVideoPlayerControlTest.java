@@ -353,7 +353,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_NOT_DISPLAYED_ERROR_MESSAGE);
         // Launch deeplink Dead Pool rated R
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"));
-        Assert.assertTrue(homePage.getRatingRestrictionPlaybackMessage().isPresent(),
+        Assert.assertTrue(homePage.getUnavailableContentError().isPresent(),
                 "Rating playback message error is not present");
         homePage.clickAlertConfirm();
         Assert.assertTrue(homePage.isOpened(), HOME_NOT_DISPLAYED_ERROR_MESSAGE);
@@ -455,7 +455,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         // Login and open deeplink to series Timon and Puumba
         setAppToHomeScreen(getAccount());
-        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_puumba_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_pumbaa_deeplink"));
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         Assert.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
         detailsPage.clickDetailsTab();
