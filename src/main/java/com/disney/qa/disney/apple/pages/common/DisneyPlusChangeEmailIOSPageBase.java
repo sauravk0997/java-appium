@@ -4,8 +4,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Map;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
@@ -15,7 +13,9 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     @Override
     public boolean isOpened() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_HEADER.getText())).isElementPresent();
+        return getDynamicAccessibilityId(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_HEADER.getText())).isElementPresent();
     }
 
     public boolean isCurrentEmailShown(String email) {
