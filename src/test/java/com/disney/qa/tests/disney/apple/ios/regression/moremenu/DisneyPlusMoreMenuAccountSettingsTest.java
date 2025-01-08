@@ -413,7 +413,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Date startTime = getEmailApi().getStartTime();
         accountPage.clickManageWithMyDisneyButton();
-        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
                 "Manage your MyDisney account overlay didn't open");
         accountPage.getEditPasswordButton().click();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
@@ -422,7 +422,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Assert.assertTrue(changePasswordPage.isPasswordPagePresent(), "Password page did not open");
         changePasswordPage.clickLogoutAllDevices();
-        getAccount().setUserPass(NEW_PASSWORD);
+        otpAccount.setUserPass(NEW_PASSWORD);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
         changePasswordPage.getKeyboardDoneButton().clickIfPresent();
 
@@ -430,7 +430,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(welcomePage.isOpened(),
                 "User was not logged out and returned to the Welcome screen after submitting the new password");
 
-        setAppToHomeScreen(otpAccount, otpAccount.getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(otpAccount);
         Assert.assertTrue(homePage.isOpened(),
                 "User was not able to log in successfully with the new email");
     }
