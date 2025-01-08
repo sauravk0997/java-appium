@@ -169,11 +169,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void swipeTillContinueWatchingCarouselPresent() {
-        String wordSeparator = " ";
-        String continueWatchingText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
-        String expectedTitle = convertToTitleCase(continueWatchingText, wordSeparator);
-        ExtendedWebElement continueWatchingHeader = getDynamicAccessibilityId(expectedTitle);
-        Assert.assertTrue(swipe(continueWatchingHeader, Direction.UP, 3, 400), "Couldn't scroll to continue watching carousel");
+        CollectionConstant.Collection continueWatching = CollectionConstant.Collection.CONTINUE_WATCHING;
+        swipeTillCollectionTappable(continueWatching, Direction.UP, 5);
     }
 
     public void goToDetailsPageFromContinueWatching(String title) {

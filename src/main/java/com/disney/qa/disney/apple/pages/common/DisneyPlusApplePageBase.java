@@ -502,6 +502,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return textViewByLabel.format(label);
     }
 
+    public ExtendedWebElement getTextViewByLabelContains(String label) {
+        return textViewByLabelContains.format(label);
+    }
+
     public ExtendedWebElement getTextViewByName(String name) {
         return textViewByName.format(name);
     }
@@ -1020,9 +1024,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getProgressBar() {
         return progressBar;
     }
-
-
-
 
     public ExtendedWebElement scrollToItem(String item) {
         ExtendedWebElement override = getStaticTextByLabel(item);

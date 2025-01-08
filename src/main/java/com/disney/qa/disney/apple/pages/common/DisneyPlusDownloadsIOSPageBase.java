@@ -106,6 +106,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				"Download tab notification badge was not present")
 				.until(it -> downloadsTabNotificationBadge.isPresent(ONE_SEC_TIMEOUT));
 	}
+
 	public void tapDownloadedAsset(String downloadedAsset) {
 		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
 	}
@@ -207,7 +208,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				.getWidth();
 		ValueRange range = ValueRange.of(-latency, latency);
 		return range.isValidIntValue((long) (expectedWidth - actualWidth));
-  }
+	}
 
 	public boolean isDownloadInProgressTextPresent() {
 		return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
@@ -267,5 +268,17 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return getStaticTextByLabel(getLocalizationUtils()
 				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
 						DictionaryKeys.DOWNLOAD_QUEUED.getText())).isPresent();
+	}
+
+	public boolean isAdTierDownloadTitleDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils()
+				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.DOWNLOAD_TITLE_FOR_AD_TIER.getText())).isPresent();
+	}
+
+	public boolean isAdTierDownloadBodyTextDisplayed() {
+		return getStaticTextByLabel(getLocalizationUtils()
+				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+						DictionaryKeys.DOWNLOAD_BODY_FOR_AD_TIER.getText())).isPresent();
 	}
 }
