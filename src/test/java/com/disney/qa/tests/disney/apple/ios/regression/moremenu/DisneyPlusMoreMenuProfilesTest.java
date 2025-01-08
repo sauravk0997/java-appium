@@ -1088,11 +1088,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
         Set<Integer> distanceSet = new HashSet<>();
-        List<ExtendedWebElement> navElements = new ArrayList<>();
-        navElements.add(moreMenu.getHomeNav());
-        navElements.add(moreMenu.getSearchNav());
-        navElements.add(moreMenu.getDownloadNav());
-        navElements.add(moreMenu.getMoreMenuTab());
+        List<ExtendedWebElement> navElements = addNavigationBarElements();
 
         for (int i=0; i < navElements.size() - 1; i++)
             distanceSet.add(getDistanceBetweenElements(navElements.get(i), navElements.get(i + 1)));
@@ -1103,6 +1099,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             Assert.assertEquals(distanceSet.size(), 2,
                     "Junior mode navigation menu is not correctly aligned in tablet");
         }
+    }
+
+    public List<ExtendedWebElement> addNavigationBarElements() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        List<ExtendedWebElement> navElements = new ArrayList<>();
+        navElements.add(moreMenu.getHomeNav());
+        navElements.add(moreMenu.getSearchNav());
+        navElements.add(moreMenu.getDownloadNav());
+        navElements.add(moreMenu.getMoreMenuTab());
+        return navElements;
     }
 
     public int getDistanceBetweenElements(ExtendedWebElement element1, ExtendedWebElement element2) {
@@ -1122,7 +1129,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         int centerY = startY + (height / 2);
         return new Point(centerX, centerY);
     }
-
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
         List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
