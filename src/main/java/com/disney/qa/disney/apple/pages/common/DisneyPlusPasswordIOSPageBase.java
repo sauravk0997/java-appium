@@ -46,19 +46,32 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isPasswordPagePresent() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_HEADER.getText())).isElementPresent();
+        return getDynamicAccessibilityId(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_HEADER.getText())).isElementPresent();
     }
+
+    public boolean isChooseNewPasswordPageOpen() {
+        return getDynamicAccessibilityId(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_CHANGE_PASSWORD_HEADER.getText())).isElementPresent();
+    }
+
 
     public boolean isDisneyLogoDisplayed() {
         return dPlusLogo.isPresent();
     }
 
     public boolean isHeaderTextDisplayed() {
-        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ENTER_YOUR_PASSWORD.getText())).isPresent();
+        return staticTextByLabel.format(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.ENTER_YOUR_PASSWORD.getText())).isPresent();
     }
 
     public boolean isConfirmWithPasswordTitleDisplayed() {
-        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_PASSWORD_TITLE.getText())).isPresent();
+        return staticTextByLabel.format(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                        DictionaryKeys.MATURITY_PASSWORD_TITLE.getText())).isPresent();
     }
 
     public boolean isPasswordFieldDisplayed() {
@@ -75,16 +88,8 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return isPresent && showHidePasswordIndicator.getAttribute("label").equals("hidePasswordDisneyAuth");
     }
 
-    public boolean isPasswordHintTextDisplayed() {
-        return passwordHintText.isPresent();
-    }
-
     public boolean isLoginButtonDisplayed() {
         return getLoginButton().isPresent();
-    }
-
-    public boolean isForgotPasswordLinkDisplayed() {
-        return forgotPasswordLink.isPresent();
     }
 
     public void clickForgotPasswordLink() {
@@ -125,8 +130,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String getPasswordText() {
-        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_PASSWORD_HINT.getText()))
+        return getStaticTextByLabelContains(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_HINT.getText()))
                 .getText();
     }
 
@@ -156,7 +162,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isAuthPasswordKidsProfileBodyDisplayed() {
-        return textViewByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.AUTH_PASSWORD_KIDS_PROFILE_OFF_BODY.getText())).isPresent();
+        return textViewByLabel.format(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.AUTH_PASSWORD_KIDS_PROFILE_OFF_BODY.getText())).isPresent();
     }
 
     public boolean isMyDisneyLogoDisplayed() {
@@ -164,19 +172,24 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isStep2LabelDisplayed() {
-        String step2Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", "2"));
+        String step2Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", "2"));
         return getStaticTextByLabel(step2Label).isPresent();
     }
 
     public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
-        String enterYourPasswordBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail, "link_1", "(edit)"));
+        String enterYourPasswordBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail,
+                "link_1", "(edit)"));
         return getDynamicAccessibilityId(enterYourPasswordBody).isPresent();
     }
 
     public boolean isCaseSensitiveHintPresent() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                MY_DISNEY_ENTER_YOUR_PASSWORD_HINT2.getText())).isPresent();
+        return getDynamicAccessibilityId(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_ENTER_YOUR_PASSWORD_HINT2.getText())).isPresent();
     }
 
     public boolean isForgotPasswordButtonPresent() {

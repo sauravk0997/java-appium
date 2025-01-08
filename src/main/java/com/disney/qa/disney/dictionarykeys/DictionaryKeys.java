@@ -344,6 +344,7 @@ public enum DictionaryKeys {
     MY_DISNEY_CHANGE_EMAIL_IN_USE_ERROR("mydisney_change_email_in_use_error"),
     MY_DISNEY_CHANGE_EMAIL_SUCCESS_HEADER("mydisney_change_email_success_header"),
     MY_DISNEY_CHANGE_PASSWORD_BODY("mydisney_change_password_body"),
+    MY_DISNEY_CHANGE_PASSWORD_HEADER("mydisney_change_password_header"),
     MY_DISNEY_CHANGE_PASSWORD_HINT("mydisney_change_password_hint"),
     MY_DISNEY_CONTINUE_BTN("mydisney_continue_btn"),
     MY_DISNEY_CREATE_PASSWORD_BODY("mydisney_create_password_body"),
