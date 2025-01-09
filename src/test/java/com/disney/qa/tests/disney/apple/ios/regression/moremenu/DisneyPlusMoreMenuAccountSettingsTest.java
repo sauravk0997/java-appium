@@ -667,7 +667,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75516"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyEmailChangeErrorWhenEmailInUse() {
+    public void verifyChangeEmailErrorUseExistingEmail() {
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
                 initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
