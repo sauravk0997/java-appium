@@ -564,6 +564,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         searchPage.searchForMedia(content);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
     }
 }
