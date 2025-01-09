@@ -135,6 +135,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isElementPresent(PlayerControl control) {
+        waitForPresenceOfAnElement(playerView);
         displayVideoController();
         return getElementFor(control).isElementPresent();
     }
@@ -735,6 +736,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for R21 Pause timeout to end");
         fluentWait(getDriver(), waitTime, polling, "Video player is visible after R21 Pause timeout")
                 .until(it -> !getPlayerView().isPresent());
+    }
+
+    public boolean waitUntilRemainingTimeLessThan(int waitTime, int polling, int expectedRemainingTimeInSec) {
+        return fluentWait(getDriver(), waitTime, polling,
+                "Video player remaining time not matched with expected remaining time")
+                .until(it -> isRemainingTimeLessThanExpected(expectedRemainingTimeInSec));
+    }
+
+    public boolean isRemainingTimeLessThanExpected(int expectedRemainingTimeInSec) {
+        int remainingtime = getRemainingTime();
+        return remainingtime <= expectedRemainingTimeInSec;
     }
 
     public boolean isAdPodPresent() {

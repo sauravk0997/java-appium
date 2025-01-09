@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
@@ -8,6 +9,7 @@ import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Test;
@@ -22,6 +24,8 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
+
+import java.util.List;
 
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
@@ -163,10 +167,15 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         details.clickPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.scrubToPlaybackPercentage(20);
+        videoPlayer.waitForVideoToStart();
 
         videoPlayer.clickBackButton();
+        details.waitForDetailsPageToOpen();
         sa.assertTrue(details.isContinueButtonPresent(), "Continue button was not found.");
         sa.assertTrue(details.getProgressBar().isPresent(), "Progress found not found.");
+        sa.assertTrue(details.getContinueWatchingTimeRemaining().isPresent(TEN_SEC_TIMEOUT),
+                "Continue watching time remaining is not present");
         sa.assertAll();
     }
 
@@ -313,10 +322,99 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         swipe(details.getSeasonSelectorButton());
-        Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(), 
+        Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(),
                 "Download all season button displayed for ad tier user");
         Assert.assertFalse(details.getEpisodeToDownload().isPresent(),
                 "Episode Download button is displayed for ad tier user");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73790"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyPlaybackOfDownloadedEpisodeOnAnthologyDetailsPage() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        String seasonNumber = "32";
+        String episodeNumber = "10";
+
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel("Season " + seasonNumber).click();
+        ExtendedWebElement episodeToDownload = detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber);
+        detailsPage.swipePageTillElementPresent(episodeToDownload, 10,
+                detailsPage.getContentDetailsPage(), Direction.UP, 1500);
+        episodeToDownload.click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber);
+        detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
+
+        Assert.assertTrue(videoPlayer.isOpened(),
+                "Video player did not open after choosing a downloaded episode");
+        videoPlayer.waitForVideoToStart();
+        String playerSubtitle = videoPlayer.getSubTitleLabel();
+        Assert.assertTrue(playerSubtitle.contains(episodeTitle),
+                "Video player title does not match with expected title: " + episodeTitle);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72675"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologySeriesPromotionLabel() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        String promoLabelHeader = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_series_dwts_entity_id"))
+                .getPromoLabel().getHeader();
+        if (promoLabelHeader == null) {
+            throw new SkipException("No promo label header found for the anthology content in Content API");
+        }
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertEquals(detailsPage.getPromoLabelText(), promoLabelHeader,
+                "API promo label header and UI promo label header text did not match");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72727"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologyDetailsPageFeatureAreaDownloadsSupportVOD() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        String seasonLabel = "Season 32";
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(seasonLabel).click();
+        swipe(detailsPage.getFirstEpisodeDownloadButton(), 5);
+        Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
+                "First episode download button was not present");
+
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.isDownloadInProgressTextPresent(),
+                "Download start/in-progress text not found");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73971"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologyMaturityRatingRestrictionErrorMessage() {
+        String contentUnavailableError = "content-unavailable";
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        //set lower rating
+        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertFalse(details.isOpened(), "Details page should not open");
+        //At the moment Parental control error message is not supported somehow and hence verifying generic
+        // error message
+        Assert.assertTrue(homePage.getTextViewByLabelContains(contentUnavailableError).isPresent(),
+                "Content Unavailable generic error not displayed");
     }
 
     private void searchAndOpenDWTSDetails() {

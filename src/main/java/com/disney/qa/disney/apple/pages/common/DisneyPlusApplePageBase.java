@@ -502,6 +502,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return textViewByLabel.format(label);
     }
 
+    public ExtendedWebElement getTextViewByLabelContains(String label) {
+        return textViewByLabelContains.format(label);
+    }
+
     public ExtendedWebElement getTextViewByName(String name) {
         return textViewByName.format(name);
     }
@@ -1021,9 +1025,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return progressBar;
     }
 
-
-
-
     public ExtendedWebElement scrollToItem(String item) {
         ExtendedWebElement override = getStaticTextByLabel(item);
         swipe(override);
@@ -1152,13 +1153,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             (CollectionConstant.Collection collection, Direction direction, int count) {
         ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
 
-        swipe(element, direction, count, 900);
-
-        int maxHeight = getDriver().manage().window().getSize().getHeight();
-        int threshold = (int) (maxHeight - maxHeight * .25);
-        if (element.getLocation().getY() > threshold) {
-            swipeUp(1, 1000);
-        }
+        swipePageTillElementTappable(element, count, null, direction, 900);
     }
 
     public boolean isCollectionVisibleAfterSwiping
@@ -1539,5 +1534,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.CANCEL.getText());
         return getTypeButtonByLabel(cancelButtonText);
+    }
+
+    public ExtendedWebElement getDownloadsTabNotificationBadge() {
+        return downloadsTabNotificationBadge;
     }
 }

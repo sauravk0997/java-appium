@@ -1,13 +1,11 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.qa.api.disney.*;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -17,7 +15,9 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
@@ -123,7 +123,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         //Download one episode
         detailsPage.getEpisodeToDownload(one, one).click();
-
+        downloads.waitForDownloadToStart();
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
@@ -133,6 +133,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Start download of 2 episodes
         detailsPage.getEpisodeToDownload(one, two).click();
         detailsPage.getEpisodeToDownload(one, three).click();
+        downloads.waitForMultipleDownloadsToStart();
 
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
@@ -372,7 +373,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyMovieIconDownloads() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
-        String downloadInProgress = "download in progress";
 
         // Launch movie details page
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
@@ -383,7 +383,138 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getMovieDownloadButton().click();
         Assert.assertTrue(detailsPage.getDownloadStartedButton().isPresent(),
                 "Download not started, icon has not changed to in progress");
-        Assert.assertTrue(detailsPage.getElementTypeCellByLabel(downloadInProgress).isPresent(),
+        Assert.assertTrue(detailsPage.getDownloadsTabNotificationBadge().isPresent(),
                 "Downloads tab footer has no elements in progress");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67381"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadIconOnSeriesEpisode() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String one = "1";
+
+        setAppToHomeScreen(getAccount());
+        // Launch series details page
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+
+        // Download first episode and validate icons
+        Assert.assertTrue(detailsPage.isSeriesDownloadButtonPresent(one, one),
+                "Series download button is not present");
+        detailsPage.getEpisodeToDownload(one, one).click();
+        Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
+                "Download not started, icon has not changed to in progress");
+        Assert.assertTrue(detailsPage.getDownloadsTabNotificationBadge().isPresent(),
+                "Downloads tab footer has no elements in progress");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66734"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDescriptionOnDownloadAsset() {
+        String description = null;
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            description = movieApiContent.getDescription().getFull().split("\n")[0];
+        } catch (Exception e) {
+            Assert.fail(String.format("content Description not found: %s", e.getMessage()));
+        }
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String movieTitle = detailsPage.getMediaTitle();
+
+        //Start download
+        detailsPage.getMovieDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+
+        downloadsPage.getStaticTextByLabel(movieTitle).click();
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(description)
+                        .getAttribute(Attributes.VISIBLE.getAttribute())
+                        .equals(TRUE),
+                "Content description is not visible");
+
+        downloadsPage.getStaticTextByLabel(movieTitle).click();
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(description)
+                        .getAttribute(Attributes.VISIBLE.getAttribute())
+                        .equals(FALSE),
+                "Content description is still visible");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72184"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadScreenUIForAdUser() {
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(downloadsPage.isDownloadHeaderPresent(),
+                "Downloads header is not present");
+        Assert.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
+                "Downloads Image is not present");
+        Assert.assertTrue(downloadsPage.isAdTierDownloadTitleDisplayed(),
+                "'Downloads not available' title is not displayed for Ad tier user");
+        Assert.assertTrue(downloadsPage.isAdTierDownloadBodyTextDisplayed(),
+                "'Downloads not available' description message is not displayed for Ad tier user");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69545"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadScreenHidesDownloadsThatExceedContentRating() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String seasonNumber = "1";
+        String episodeNumber = "1";
+
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_pumbaa_deeplink"));
+        String firstSeriesName = detailsPage.getMediaTitle();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getEpisodeToDownload("1", "1").click();
+        downloadsPage.waitForDownloadToStart();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_daredevil_deeplink"));
+        String secondSeriesName = detailsPage.getMediaTitle();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(firstSeriesName).isPresent(),
+                firstSeriesName + " series title was not present");
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(secondSeriesName).isPresent(),
+                secondSeriesName + " series title was not present");
+
+        //Set lower rating
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(), TV_14.getContentRating());
+
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+
+        homePage.waitForHomePageToOpen();
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(firstSeriesName).isPresent(),
+                firstSeriesName + " series title was not present");
+        Assert.assertFalse(downloadsPage.getDownloadAssetFromListView(secondSeriesName).isPresent(THREE_SEC_TIMEOUT),
+                secondSeriesName + " series title was present");
     }
 }
