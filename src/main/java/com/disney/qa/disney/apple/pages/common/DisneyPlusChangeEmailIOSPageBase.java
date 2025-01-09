@@ -71,7 +71,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
                         DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText())).click();
     }
 
-    public boolean isEmailNotProperlyFormattedErrorMessageDisplayed() {
+    public boolean isChangeEmailFormatErrorDisplayed() {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_FORMAT_ERROR.getText())).isPresent();

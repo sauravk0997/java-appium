@@ -690,11 +690,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changeEmailPage.isOpened(), "'Change Email' screen was not opened");
         changeEmailPage.submitNewEmailAddress(emailWithoutAtSymbol);
-        sa.assertTrue(changeEmailPage.isEmailNotProperlyFormattedErrorMessageDisplayed(),
+        sa.assertTrue(changeEmailPage.isChangeEmailFormatErrorDisplayed(),
                 "Email Properly not formatted error message not displayed");
 
         changeEmailPage.submitNewEmailAddress(emailWithoutDot);
-        sa.assertTrue(changeEmailPage.isEmailNotProperlyFormattedErrorMessageDisplayed(),
+        sa.assertTrue(changeEmailPage.isChangeEmailFormatErrorDisplayed(),
                 "Email Properly not formatted error message not displayed");
         sa.assertAll();
     }
