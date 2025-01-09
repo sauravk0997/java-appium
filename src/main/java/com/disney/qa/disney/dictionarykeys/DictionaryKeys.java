@@ -146,6 +146,7 @@ public enum DictionaryKeys {
     CREATE_PROFILE_AUTOPLAY("create_profile_autoplay"),
     DATE_OF_BIRTH_DESCRIPTION("date_of_birth_description"),
     DATE_OF_BIRTH_LABEL("date_of_birth_label"),
+    DATE_OF_BIRTH_PLACEHOLDER("date_of_birth_placeholder"),
     DATE_OF_BIRTH_TITLE("date_of_birth_title"),
     DELETE_ACCOUNT_MENU_ITEM("delete_account_menu_item"),
     DELETE_DOWNLOADS_DELETE_BTN("btn_delete_all_downloads_delete"),
