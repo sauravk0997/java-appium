@@ -12,6 +12,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 
 public class DisneyPlusBrandsTest extends DisneyBaseTest {
 
@@ -30,7 +31,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         homePage.clickOnBrandCell(brandPage.getBrand(brand));
         sa.assertTrue(brandPage.isOpened(),
                 brandPage.getBrand(brand) + "Brand page did not open");
-        sa.assertTrue(brandPage.getBrandLogoImage().isPresent(10),
+        sa.assertTrue(brandPage.getBrandLogoImage().isPresent(TEN_SEC_TIMEOUT),
                 brandPage.getBrand(brand) + "Brand logo image is not present");
         sa.assertTrue(brandPage.getBrandFeaturedImage().isPresent(),
                 brandPage.getBrand(brand) + "Brand featured image is not present");
@@ -52,7 +53,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
 
         brandPage.swipePageTillElementPresent(brandPage.getBrandLogoImage(),
                 5, null, Direction.DOWN, 500);
-        sa.assertTrue(brandPage.getBrandLogoImage().isPresent(10),
+        sa.assertTrue(brandPage.getBrandLogoImage().isPresent(TEN_SEC_TIMEOUT),
                 brandPage.getBrand(brand) + "Brand logo image is not present");
         brandPage.tapBackButton();
         homePage.waitForHomePageToOpen();
