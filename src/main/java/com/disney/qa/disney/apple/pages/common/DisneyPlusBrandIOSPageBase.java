@@ -115,6 +115,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void validateSwipeNavigation(CollectionConstant.Collection collection, SoftAssert sa) {
+        swipeTillCollectionTappable(collection, Direction.UP, 1);
         BufferedImage beginningOfCollection = getElementImage(getCollection(collection));
         swipeLeftInCollectionNumOfTimes(5, collection);
         BufferedImage closeToEndOfCollection = getElementImage(getCollection(collection));
