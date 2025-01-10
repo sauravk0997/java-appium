@@ -1118,7 +1118,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         LOGGER.info("percentageToValidate size: {} ", percentageToValidate);
         switch(alignment) {
             case RIGHT:
-                Assert.assertTrue(elementPosition >= percentageToValidate,
+                Assert.assertTrue(elementPosition > percentageToValidate,
                         "Element is not at the right position");
                 break;
             case LEFT:
