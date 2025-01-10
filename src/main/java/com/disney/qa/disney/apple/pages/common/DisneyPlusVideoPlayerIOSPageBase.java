@@ -63,7 +63,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "skipIntroButton")
     private ExtendedWebElement skipIntroButton;
     @FindBy(name = "subtitleLabel")
-    private ExtendedWebElement subtitleLabel;
+    protected ExtendedWebElement subtitleLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]/XCUIElementTypeImage")
     private ExtendedWebElement networkWatermarkLogo;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"adPod\"`]")
