@@ -636,6 +636,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getDolbyBadge().isPresent(), "Dolby not present");
         sa.assertTrue(detailsPage.getUHDBadge().isPresent(), "UHD not present");
         sa.assertTrue(detailsPage.getHDRBadge().isPresent(), "HDR not present");
+        sa.assertAll();
     }
 
     protected ArrayList<String> getMedia() {
