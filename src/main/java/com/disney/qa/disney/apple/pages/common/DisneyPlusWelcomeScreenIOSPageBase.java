@@ -74,7 +74,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isLogInButtonDisplayed() {
-        return loginButton.isPresent();
+        return loginButton.isPresent(TEN_SEC_TIMEOUT);
     }
 
     public boolean isCompleteSubscriptionButtonDisplayed() {
