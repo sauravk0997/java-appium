@@ -41,7 +41,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String MERCADOLIBRE_URL = "mercadolibre.com";
     private DisneyEntitlement disneyEntitlements;
     private static final String EDIT_ICON = "editIcon";
-    private static final String OTP_SCREEN_DID_NOT_OPEN = "One time passcode screen is not displayed";
+    private static final String ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED = "One time passcode screen is not displayed";
     private static final String CHANGE_EMAIL_SCREEN_DID_NOT_OPEN = "'Change Email' screen did not open";
     private static final String MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN =
             "Manage your MyDisney account overlay didn't open";
@@ -301,7 +301,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         disneyPlusAccountIOSPageBase.clickVerifyAccountLink();
 
         sa.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
-                OTP_SCREEN_DID_NOT_OPEN);
+                ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
 
         sa.assertAll();
     }
@@ -481,7 +481,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
 
         String otp = getOTPFromApi(startTime, otpAccount);
 
@@ -526,7 +526,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
 
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
         changeEmailPage.clickCancelBtn();
 
         Assert.assertTrue(accountPage.isOpened(),
@@ -552,7 +552,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
 
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
         oneTimePasscodePage.enterOtp(incorrectOTP);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(oneTimePasscodePage.isOtpIncorrectErrorPresent(),
@@ -660,7 +660,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.getEditPasswordButton().click();
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
         oneTimePasscodePage.enterOtp(incorrectOTP);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(oneTimePasscodePage.isOtpIncorrectErrorPresent(),
@@ -686,7 +686,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
         String otp = getOTPFromApi(startTime, otpAccount);
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
