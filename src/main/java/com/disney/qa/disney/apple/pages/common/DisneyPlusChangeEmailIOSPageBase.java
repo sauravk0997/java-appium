@@ -4,8 +4,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Map;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
@@ -71,6 +69,12 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText())).click();
+    }
+
+    public boolean isChangeEmailFormatErrorDisplayed() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_FORMAT_ERROR.getText())).isPresent();
     }
 
     public boolean isAlreadyInUseEmailErrorMessageDisplayed() {

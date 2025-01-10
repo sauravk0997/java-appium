@@ -669,6 +669,39 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Screen transitioned away from the One time passcode screen");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75515"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEmailChangeErrorWhenEmailNotFormatted() {
+        String emailWithoutAtSymbol = "qait.disneystreaminggmail.com";
+        String emailWithoutDot = "qaitdisneystreaminggmail";
+        String emailNotFormattedErrorMessage = "Email Properly not formatted error message not displayed";
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
+                initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
+        setAppToAccountSettings(otpAccount);
+
+        accountPage.clickManageWithMyDisneyButton();
+        Date startTime = getEmailApi().getStartTime();
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
+        accountPage.tapEditEmailButton();
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
+        String otp = getOTPFromApi(startTime, otpAccount);
+        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
+        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
+        changeEmailPage.submitNewEmailAddress(emailWithoutAtSymbol);
+        sa.assertTrue(changeEmailPage.isChangeEmailFormatErrorDisplayed(), emailNotFormattedErrorMessage);
+
+        changeEmailPage.submitNewEmailAddress(emailWithoutDot);
+        sa.assertTrue(changeEmailPage.isChangeEmailFormatErrorDisplayed(), emailNotFormattedErrorMessage);
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75516"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyChangeEmailErrorUseExistingEmail() {
