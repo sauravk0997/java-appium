@@ -57,7 +57,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     @Override
     public boolean isOpened() {
-        return loginButton.isPresent();
+        return loginButton.isPresent(FIVE_SEC_TIMEOUT);
     }
 
     public boolean isMainTextDisplayed() {
