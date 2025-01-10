@@ -421,7 +421,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         sa.assertTrue(passwordIOSPageBase.isPasswordPagePresent(), "Password page did not open");
         Assert.assertTrue(passwordIOSPageBase.getLearnMoreAboutMyDisney().isPresent(),
                 "Learn more about my disney Link is not displayed");
-        passwordIOSPageBase.getLearnMoreAboutMyDisney().click();
         clickElementAtLocation(passwordIOSPageBase.getLearnMoreAboutMyDisney(), 50, 50);
         sa.assertTrue(passwordIOSPageBase.getStaticTextByLabel(learnMoreHeader).isPresent(),
                 "'Disney+ is part of The Walt Disney Family of Companies' text should be displayed");
