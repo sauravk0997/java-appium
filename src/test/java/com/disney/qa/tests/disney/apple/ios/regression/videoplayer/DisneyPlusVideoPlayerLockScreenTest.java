@@ -43,7 +43,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    public void openDeeplinkAndPlayContent(String deeplink) {
+    private void openDeeplinkAndPlayContent(String deeplink) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
