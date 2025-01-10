@@ -590,7 +590,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         changeEmailPage.submitNewEmailAddress(newEmail);
         changeEmailPage.clickLogoutBtn();
-        welcomePage.isLogInButtonDisplayed();
         Assert.assertTrue(welcomePage.isOpened(),
                 "User was not logged out and returned to the Welcome screen after submitting the new email");
 
