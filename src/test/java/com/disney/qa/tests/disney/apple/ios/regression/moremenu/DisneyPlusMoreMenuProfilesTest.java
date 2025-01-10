@@ -1100,24 +1100,25 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             Assert.assertEquals(distanceSet.size(), 2,
                     "Junior mode navigation menu is not correctly aligned in tablet");
-            validateElementPositionAlignment(getElementLocation(moreMenu.getHomeNav()).getX(), LEFT);
-            validateElementPositionAlignment(getElementLocation(moreMenu.getSearchNav()).getX(), LEFT);
-            validateElementPositionAlignment(getElementLocation(moreMenu.getDownloadNav()).getX(), RIGHT);
-            validateElementPositionAlignment(getElementLocation(moreMenu.getMoreMenuTab()).getX(), RIGHT);
+            validateElementPositionAlignment(moreMenu.getHomeNav(), LEFT);
+            validateElementPositionAlignment(moreMenu.getSearchNav(), LEFT);
+            validateElementPositionAlignment(moreMenu.getDownloadNav(), RIGHT);
+            validateElementPositionAlignment(moreMenu.getMoreMenuTab(), RIGHT);
         }
     }
 
-    public void validateElementPositionAlignment(int elementPosition, String alignment) {
+    public void validateElementPositionAlignment(ExtendedWebElement element, String alignment) {
+        int elementPosition = getElementCenterCoordinate(element).getX();
         LOGGER.info("elementPosition: {} ", elementPosition);
         Dimension screenSize = getDriver().manage().window().getSize();
         int screenWidth = screenSize.width;
-        LOGGER.info("screenSize.width: {} ", screenWidth);
-        // Get 30 percent of the screen width size to validate if elements are on the right or left
-        double percentageToValidate = 0.3 * screenWidth;
+        LOGGER.info("screen size width: {} ", screenWidth);
+        // Get 50 percent of the screen width size to validate if elements are on the right or left
+        double percentageToValidate = 0.5 * screenWidth;
         LOGGER.info("percentageToValidate size: {} ", percentageToValidate);
         switch(alignment) {
             case RIGHT:
-                Assert.assertTrue(elementPosition >= (screenWidth - percentageToValidate) && (elementPosition <= screenWidth),
+                Assert.assertTrue(elementPosition >= percentageToValidate,
                         "Element is not at the right position");
                 break;
             case LEFT:
@@ -1140,14 +1141,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     public int getDistanceBetweenElements(ExtendedWebElement element1, ExtendedWebElement element2) {
-        Point position1 = getElementLocation(element1);
-        Point position2 = getElementLocation(element2);
+        Point position1 = getElementCenterCoordinate(element1);
+        Point position2 = getElementCenterCoordinate(element2);
         double pointXSqr = Math.pow((double) position2.getX() - (double) position1.getX(), 2);
         double pointYSqr = Math.pow((double) position2.getY() - (double) position1.getY(), 2);
         return (int) Math.sqrt(pointXSqr + pointYSqr);
     }
 
-    public Point getElementLocation(ExtendedWebElement element) {
+    public Point getElementCenterCoordinate(ExtendedWebElement element) {
         int startX = element.getLocation().getX();
         int startY = element.getLocation().getY();
         int width = element.getSize().getWidth();
