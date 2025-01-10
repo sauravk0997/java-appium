@@ -613,7 +613,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76389"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifySeriesDetailsTabBadges() {
+    public void verifyHuluSeriesDetailsTabContentBadges() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
