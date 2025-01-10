@@ -28,6 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusLoginTest extends DisneyBaseTest {
@@ -421,14 +422,14 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         sa.assertTrue(passwordIOSPageBase.isPasswordPagePresent(), "Password page did not open");
         Assert.assertTrue(passwordIOSPageBase.getLearnMoreAboutMyDisney().isPresent(),
                 "Learn more about my disney Link is not displayed");
-        clickElementAtLocation(passwordIOSPageBase.getLearnMoreAboutMyDisney(), 50, 50);
+        passwordIOSPageBase.getLearnMoreAboutMyDisney().click();
         sa.assertTrue(passwordIOSPageBase.getStaticTextByLabel(learnMoreHeader).isPresent(),
                 "'Disney+ is part of The Walt Disney Family of Companies' text should be displayed");
         sa.assertTrue(passwordIOSPageBase.getStaticTextByLabel(learnMoreBody).isPresent(),
                 "'MyDisney lets you seamlessly log in to services' text should be displayed");
 
-        clickElementAtLocation(passwordIOSPageBase.getLearnMoreAboutMyDisney(), 50, 50);
-        sa.assertFalse(passwordIOSPageBase.getStaticTextByLabel(learnMoreHeader).isPresent(),
+        passwordIOSPageBase.getLearnMoreAboutMyDisney().click();
+        sa.assertFalse(passwordIOSPageBase.getStaticTextByLabel(learnMoreHeader).isPresent(TEN_SEC_TIMEOUT),
                 "Learn more modal did not close");
         sa.assertAll();
     }
