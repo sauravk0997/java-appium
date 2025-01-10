@@ -419,7 +419,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         welcomeScreen.clickLogInButton();
         loginIOSPageBase.submitEmail(getAccount().getEmail());
         sa.assertTrue(passwordIOSPageBase.isPasswordPagePresent(), "Password page did not open");
-        sa.assertTrue(passwordIOSPageBase.getLearnMoreAboutMyDisney().isPresent(),
+        Assert.assertTrue(passwordIOSPageBase.getLearnMoreAboutMyDisney().isPresent(),
                 "Learn more about my disney Link is not displayed");
         passwordIOSPageBase.getLearnMoreAboutMyDisney().click();
         sa.assertTrue(passwordIOSPageBase.getStaticTextByLabel(learnMoreHeader).isPresent(),
