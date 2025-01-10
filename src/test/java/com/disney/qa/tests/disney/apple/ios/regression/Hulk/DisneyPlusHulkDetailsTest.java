@@ -633,9 +633,10 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
         }
-        sa.assertTrue(detailsPage.getDolbyBadge().isPresent(), "Dolby not present");
-        sa.assertTrue(detailsPage.getUHDBadge().isPresent(), "UHD not present");
-        sa.assertTrue(detailsPage.getHDRBadge().isPresent(), "HDR not present");
+        sa.assertTrue(detailsPage.getFormatDetailsText().isPresent(), "Details formats text section is not present");
+        sa.assertTrue(detailsPage.getDolbyBadge().isPresent(), "Dolby badge is not present");
+        sa.assertTrue(detailsPage.getUHDBadge().isPresent(), "4K badge is not present");
+        sa.assertTrue(detailsPage.getHDRBadge().isPresent(), "HDR badge not present");
         sa.assertAll();
     }
 

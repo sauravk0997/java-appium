@@ -159,6 +159,7 @@ public enum DictionaryKeys {
     DETAILS_DOWNLOAD_REMOVE_BTN("details_download_remove"),
     DETAILS_FEATURE_AUDIO_DESCRIPTIONS("feature_audio_descriptions"),
     DETAILS_FEATURE_SDH("feature_sdh"),
+    DETAIL_FORMATS("detail_formats"),
     DETAILS_FULL_DETAILS("details_fulldetails"),
     DETAILS_HERITAGE_COUNTDOWN("details_heritage_countdown"),
     DETAILS_IMAX_ENHANCED_PROMO_LABEL("promo_imax_header"),

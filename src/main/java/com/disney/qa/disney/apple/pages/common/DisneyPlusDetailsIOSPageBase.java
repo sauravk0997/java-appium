@@ -1156,6 +1156,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonByLabel(dictValue);
     }
 
+    public ExtendedWebElement getFormatDetailsText() {
+        return getTypeOtherContainsLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DETAIL_FORMATS.getText()));
+    }
+
     public ExtendedWebElement getDolbyBadge() {
         return getTypeOtherContainsLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 MEDIA_FEATURE_DOLBY_VISION.getText()));
