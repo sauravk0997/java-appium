@@ -41,6 +41,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String MERCADOLIBRE_URL = "mercadolibre.com";
     private DisneyEntitlement disneyEntitlements;
     private static final String EDIT_ICON = "editIcon";
+    private static final String OTP_SCREEN_DID_NOT_OPEN = "One time passcode screen is not displayed";
+    private static final String CHANGE_EMAIL_SCREEN_DID_NOT_OPEN = "'Change Email' screen did not open";
+    private static final String MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN =
+            "Manage your MyDisney account overlay didn't open";
 
     @BeforeMethod
     public void handleAlert() {
@@ -297,7 +301,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         disneyPlusAccountIOSPageBase.clickVerifyAccountLink();
 
         sa.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
-                "XMOBQA-62568 -  OTP Page was not opened");
+                OTP_SCREEN_DID_NOT_OPEN);
 
         sa.assertAll();
     }
@@ -408,7 +412,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
-                "Manage your MyDisney account overlay didn't open");
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
 
         String otp = getOTPFromApi(startTime, otpAccount);
@@ -419,7 +423,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
 
         Assert.assertTrue(changeEmailPage.isOpened(),
-                "'Change Email' screen was not opened");
+                CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
 
         hideKeyboard();
 
@@ -475,9 +479,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
-                "Manage your MyDisney account overlay didn't open");
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
 
         String otp = getOTPFromApi(startTime, otpAccount);
 
@@ -519,10 +523,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.waitForAccountPageToOpen();
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
-                "Manage your MyDisney account overlay didn't open");
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
 
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
         changeEmailPage.clickCancelBtn();
 
         Assert.assertTrue(accountPage.isOpened(),
@@ -545,10 +549,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.waitForAccountPageToOpen();
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
-                "Manage your MyDisney account overlay didn't open");
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
 
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
         oneTimePasscodePage.enterOtp(incorrectOTP);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(oneTimePasscodePage.isOtpIncorrectErrorPresent(),
@@ -574,13 +578,13 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
-                "Manage your MyDisney account overlay didn't open");
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
 
         String otp = getOTPFromApi(startTime, otpAccount);
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
 
-        Assert.assertTrue(changeEmailPage.isOpened(), "'Change Email' screen was not opened");
+        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
 
         hideKeyboard();
 
@@ -654,9 +658,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getAccount()),
-                "Manage your MyDisney account overlay didn't open");
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.getEditPasswordButton().click();
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
         oneTimePasscodePage.enterOtp(incorrectOTP);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(oneTimePasscodePage.isOtpIncorrectErrorPresent(),
@@ -680,12 +684,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
-                "Manage your MyDisney account overlay didn't open");
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), OTP_SCREEN_DID_NOT_OPEN);
         String otp = getOTPFromApi(startTime, otpAccount);
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
-        Assert.assertTrue(changeEmailPage.isOpened(), "'Change Email' screen was not opened");
+        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         changeEmailPage.submitNewEmailAddress(otpAccount.getEmail());
         Assert.assertTrue(changeEmailPage.isAlreadyInUseEmailErrorMessageDisplayed(),
                 "Already In Use Email Error message not displayed");
