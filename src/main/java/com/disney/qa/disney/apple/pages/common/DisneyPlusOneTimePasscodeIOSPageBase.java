@@ -70,4 +70,10 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
                         MY_DISNEY_OTP_INCORRECT_ERROR.getText()))
                 .isPresent();
     }
+
+    @Override
+    public void clickCancelBtn() {
+        getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText())).click();
+    }
 }
