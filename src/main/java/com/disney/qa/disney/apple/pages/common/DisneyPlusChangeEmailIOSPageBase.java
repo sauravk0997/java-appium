@@ -45,6 +45,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText())).isElementPresent();
     }
+
     public boolean isConfirmationPageOpen() {
         return getStaticTextByLabelContains(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
