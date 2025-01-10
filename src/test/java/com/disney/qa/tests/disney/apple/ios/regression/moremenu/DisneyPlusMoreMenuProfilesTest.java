@@ -1107,7 +1107,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         }
     }
 
-    public void validateElementPositionAlignment(ExtendedWebElement element, String alignment) {
+    private void validateElementPositionAlignment(ExtendedWebElement element, String alignment) {
         int elementPosition = getElementCenterCoordinate(element).getX();
         LOGGER.info("elementPosition: {} ", elementPosition);
         Dimension screenSize = getDriver().manage().window().getSize();
@@ -1129,7 +1129,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         }
     }
 
-    public List<ExtendedWebElement> addNavigationBarElements() {
+    private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         List<ExtendedWebElement> navElements = new ArrayList<>();
@@ -1140,7 +1140,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         return navElements;
     }
 
-    public int getDistanceBetweenElements(ExtendedWebElement element1, ExtendedWebElement element2) {
+    private int getDistanceBetweenElements(ExtendedWebElement element1, ExtendedWebElement element2) {
         Point position1 = getElementCenterCoordinate(element1);
         Point position2 = getElementCenterCoordinate(element2);
         double pointXSqr = Math.pow((double) position2.getX() - (double) position1.getX(), 2);
@@ -1148,7 +1148,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         return (int) Math.sqrt(pointXSqr + pointYSqr);
     }
 
-    public Point getElementCenterCoordinate(ExtendedWebElement element) {
+    private Point getElementCenterCoordinate(ExtendedWebElement element) {
         int startX = element.getLocation().getX();
         int startY = element.getLocation().getY();
         int width = element.getSize().getWidth();
