@@ -14,9 +14,9 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +57,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private final static String UPDATED_TOAST_WAS_NOT_DISPLAYED = "'Updated' toast was not displayed";
     private final static String KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON = "'kids proof exit' toggle is not 'On'";
     private final static String WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED = "Who is watching screen did not open";
+    private final static String RIGHT = "RIGHT";
+    private final static String LEFT = "LEFT";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -1074,6 +1076,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileNavigationBarAlignment() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
@@ -1097,6 +1100,31 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             Assert.assertEquals(distanceSet.size(), 2,
                     "Junior mode navigation menu is not correctly aligned in tablet");
+            validateElementPositionAlignment(getElementLocation(moreMenu.getHomeNav()).getX(), LEFT);
+            validateElementPositionAlignment(getElementLocation(moreMenu.getSearchNav()).getX(), LEFT);
+            validateElementPositionAlignment(getElementLocation(moreMenu.getDownloadNav()).getX(), RIGHT);
+            validateElementPositionAlignment(getElementLocation(moreMenu.getMoreMenuTab()).getX(), RIGHT);
+        }
+    }
+
+    public void validateElementPositionAlignment(int elementPosition, String alignment) {
+        LOGGER.info("elementPosition: {} ", elementPosition);
+        Dimension screenSize = getDriver().manage().window().getSize();
+        int screenWidth = screenSize.width;
+        LOGGER.info("screenSize.width: {} ", screenWidth);
+        // Get 30 percent of the screen width size to validate if elements are on the right or left
+        double percentageToValidate = 0.3 * screenWidth;
+        LOGGER.info("percentageToValidate size: {} ", percentageToValidate);
+        switch(alignment) {
+            case RIGHT:
+                Assert.assertTrue(elementPosition >= (screenWidth - percentageToValidate) && (elementPosition <= screenWidth),
+                        "Element is not at the right position");
+                break;
+            case LEFT:
+                Assert.assertTrue(elementPosition < percentageToValidate, "Element is not at the left position");
+                break;
+            default: throw new IllegalArgumentException(
+                    String.format("Invalid alignment String"));
         }
     }
 
