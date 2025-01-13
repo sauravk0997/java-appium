@@ -195,4 +195,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isHavingTroubleLoggingInPresent() {
         return getDynamicAccessibilityId(getHavingTroubleLoggingInText()).isPresent();
     }
+
+    public ExtendedWebElement getLearnMoreAboutMyDisney() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText()));
+    }
 }
