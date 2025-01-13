@@ -96,19 +96,12 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                 getAccount().getProfileId(),
                 getWatchlistInfoBlock(DisneyEntityIds.SOUL.getEntityId()));
 
-//        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
         homePage.clickMenuTimes(1,1);
         if (!homePage.isGlobalNavExpanded()) {
-            LOGGER.info("Global nav is not expanded, restarting app, trying to expand again next");
+            LOGGER.info("Restarting app, global nav did not expand");
             terminateApp(sessionBundles.get(DISNEY));
             startApp(sessionBundles.get(DISNEY));
-//            homePage.clickMenuTimes(1, 1);
         }
-//        homePage.navigateToOneGlobalNavMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
-//        homePage.clickSelect();
-//        if (homePage.isGlobalNavExpanded()) {
-//            homePage.clickSelect();
-//        }
         Assert.assertTrue(homePage.isOpened(), "Home page is not open");
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
