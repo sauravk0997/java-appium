@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.tvos.regression.watchlist;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
-import com.disney.qa.api.explore.request.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
@@ -12,8 +11,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.*;
-import org.apache.commons.collections4.set.ListOrderedSet;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -23,10 +20,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
+    private static final String WATCHLIST_NOT_OPEN = "Watchlist page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.SMOKE, US})
@@ -65,7 +62,8 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         titles.forEach(title ->
             infoBlockList.add(getWatchlistInfoBlock(title.getEntityId())));
 
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
 
@@ -75,16 +73,18 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         logInTemp(getAccount());
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
-        Assert.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_NOT_OPEN);
         int watchlistItems = watchListPage.getNumberOfItemsByCell();
 
         sa.assertTrue(titles.size() == watchlistItems, "Number of added items did not match.");
-        Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_NOT_OPEN);
         IntStream.range(0, titles.size()).forEach(i -> {
             String title = titles.get(i).getTitle();
-            sa.assertTrue(watchListPage.getTypeCellLabelContains(title).isElementPresent(), String.format("%s not found", title));
+            sa.assertTrue(watchListPage.getTypeCellLabelContains(title).isElementPresent(),
+                    String.format("%s not found", title));
         });
-        sa.assertTrue(watchListPage.isContentShownCertainNumberPerRow(0, 3), "watchlist items are not arranged 4 per row");
+        sa.assertTrue(watchListPage.isContentShownCertainNumberPerRow(0, 3),
+                "Watchlist items are not arranged 4 per row");
 
         getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(), getAccount().getAccountToken(),
                 getAccount().getProfileId(),
@@ -94,10 +94,11 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(homePage.isOpened(), "Home page is not open");
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
-        Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_NOT_OPEN);
 
         String firstItem = watchListPage.getContentItems(0).get(0).split(",")[0];
-        Assert.assertEquals(DisneyEntityIds.SOUL.getTitle(), firstItem, String.format("Newly added Soul content is not the first item in Watchlist but found: %s", firstItem));
+        Assert.assertEquals(DisneyEntityIds.SOUL.getTitle(), firstItem,
+                String.format("Newly added Soul content is not the first item in Watchlist but found: %s", firstItem));
         sa.assertAll();
     }
 
