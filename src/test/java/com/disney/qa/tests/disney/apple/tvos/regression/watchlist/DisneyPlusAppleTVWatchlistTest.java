@@ -1,8 +1,10 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.watchlist;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
@@ -11,10 +13,13 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +28,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String WATCHLIST_NOT_OPEN = "Watchlist page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89594"})
@@ -90,7 +96,19 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                 getAccount().getProfileId(),
                 getWatchlistInfoBlock(DisneyEntityIds.SOUL.getEntityId()));
 
-        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
+//        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
+        homePage.clickMenuTimes(1,1);
+        if (!homePage.isGlobalNavExpanded()) {
+            LOGGER.info("Global nav is not expanded, restarting app, trying to expand again next");
+            terminateApp(sessionBundles.get(DISNEY));
+            startApp(sessionBundles.get(DISNEY));
+//            homePage.clickMenuTimes(1, 1);
+        }
+//        homePage.navigateToOneGlobalNavMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText());
+//        homePage.clickSelect();
+//        if (homePage.isGlobalNavExpanded()) {
+//            homePage.clickSelect();
+//        }
         Assert.assertTrue(homePage.isOpened(), "Home page is not open");
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
