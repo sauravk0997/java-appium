@@ -627,8 +627,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         // Open a hulu series and validate badges in details tab
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickDetailsTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
