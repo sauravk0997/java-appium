@@ -16,7 +16,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
 
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
-    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73738"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
