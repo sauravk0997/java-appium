@@ -611,6 +611,35 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
                 "Restart button did not restarted the video");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76389"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluSeriesDetailsTabContentBadges() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Open a hulu series and validate badges in details tab
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickDetailsTab();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        sa.assertTrue(detailsPage.getFormatDetailsText().isPresent(), "Details formats text section is not present");
+        sa.assertTrue(detailsPage.getDolbyBadge().isPresent(), "Dolby badge is not present");
+        sa.assertTrue(detailsPage.getUHDBadge().isPresent(), "4K badge is not present");
+        sa.assertTrue(detailsPage.getHDRBadge().isPresent(), "HDR badge not present");
+        sa.assertAll();
+    }
+
     protected ArrayList<String> getMedia() {
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
