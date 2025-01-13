@@ -488,7 +488,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String ratingChoose = "TV-Y";
+        String ratingChoose = "12";
         int age = 59;
 
         createAccountAndAddSecondaryProfile(DE, ENGLISH_LANG);
@@ -513,7 +513,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.getStaticTextByLabelContains(ratingChoose).click();
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
         editProfile.getStaticTextByLabelContains(ratingSelected).click();
-        editProfile.getStaticTextByLabelContains(ratingChoose).click();
 
         updateProfilePage.tapSaveButton();
         passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
