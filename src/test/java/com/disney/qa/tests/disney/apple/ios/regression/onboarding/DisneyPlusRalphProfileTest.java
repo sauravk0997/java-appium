@@ -478,6 +478,50 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 "DOB format is not standard for the jurisdiction");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74085"})
+    @Test(groups = {TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
+    public void testRalphEditProfileAndSelectMatureContentRatingDifferentFromRecommended() {
+        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String ratingChoose = "TV-Y";
+        int age = 59;
+
+        createAccountAndAddSecondaryProfile(DE, ENGLISH_LANG);
+        String ratingSelected = getRecommendedContentRating(DE, age, AGE_VALUES_GERMANY);
+
+        String recommendedContentRatingByAge = getLocalizationUtils()
+                .formatPlaceholderString(contentRating.getRecommendedRating(),
+                        Map.of("content_rating", getRecommendedContentRating(DE, age, AGE_VALUES_GERMANY)));
+        LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+
+        whoIsWatching.clickProfile(JUNIOR_PROFILE);
+        editProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+
+        // Select a different rating
+        editProfile.getStaticTextByLabelContains(ratingChoose).click();
+        sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
+        editProfile.getStaticTextByLabelContains(ratingSelected).click();
+        editProfile.getStaticTextByLabelContains(ratingChoose).click();
+
+        updateProfilePage.tapSaveButton();
+        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        sa.assertTrue(whoIsWatching.isOpened(), "User was not saved correctly");
+
+    }
+
+
     private void navigateToContentRating() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
