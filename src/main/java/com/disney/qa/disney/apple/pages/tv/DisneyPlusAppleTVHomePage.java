@@ -291,6 +291,9 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     public void openGlobalNavAndSelectOneMenu(String menu) {
         clickMenuTimes(1,1);
+        if (!new DisneyPlusApplePageBase(getDriver()).isGlobalNavExpanded()) {
+            clickMenu();
+        }
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         navigateToOneGlobalNavMenu(menu);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
