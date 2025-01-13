@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -22,11 +23,15 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
     public void verifyPlaybackLockControlsTooltip() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         // Login and open deeplink to movie and validate lock controls tooltip
         setAppToHomeScreen(getAccount());
-        openDeeplinkAndPlayContent("disney_prod_movie_detail_dr_strange_deeplink");
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
 
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         Assert.assertTrue(videoPlayer.waitForVideoLockTooltipToAppear(), "Video controls tooltip did not appear");
@@ -36,21 +41,12 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         detailsPage.getBackButton().click();
         detailsPage.clickHomeIcon();
         // Open deeplink to another content and validate lock controls
-        openDeeplinkAndPlayContent("disney_prod_series_detail_loki_deeplink");
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         sa.assertFalse(videoPlayer.getLockScreenToolTip().isPresent(), "Video player tooltip is present");
 
         sa.assertAll();
-    }
-
-    private void openDeeplinkAndPlayContent(String deeplink) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-
-        launchDeeplink(R.TESTDATA.get(deeplink));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
-        videoPlayer.waitForVideoToStart();
     }
 }
