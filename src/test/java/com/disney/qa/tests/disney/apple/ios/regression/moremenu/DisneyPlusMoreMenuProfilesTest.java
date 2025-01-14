@@ -1083,6 +1083,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         updateProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
         sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
+        sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(),
+                "Privacy Policy Link is not present on Consent screen");
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Scrolling down to view all of Minor Consent Page");
             parentalConsent.scrollConsentContent(4);
