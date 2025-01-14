@@ -37,8 +37,12 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
         return staticTextByLabel.format(updateProfileTitle).isPresent(THREE_SEC_TIMEOUT);
     }
 
-    public boolean doesCompleteProfileDescExist() {
+    public boolean isCompleteProfileDescriptionPresent() {
         return staticTextByLabel.format(completeProfileDescription).isPresent();
+    }
+
+    public ExtendedWebElement getSaveButton(){
+        return saveButton;
     }
 
     public void tapSaveButton(){

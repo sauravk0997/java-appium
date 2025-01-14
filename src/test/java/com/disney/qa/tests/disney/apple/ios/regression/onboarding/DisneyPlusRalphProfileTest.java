@@ -487,37 +487,51 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+
         SoftAssert sa = new SoftAssert();
-        String ratingChoose = "12";
+        String darthMaulAvatarId = R.TESTDATA.get("disney_darth_maul_avatar_id");
+        String ratingByDefault = "12";
+        String ratingToChoose = "16";
         int age = 59;
 
         createAccountAndAddSecondaryProfile(DE, ENGLISH_LANG);
-        String ratingSelected = getRecommendedContentRating(DE, age, AGE_VALUES_GERMANY);
 
         String recommendedContentRatingByAge = getLocalizationUtils()
                 .formatPlaceholderString(contentRating.getRecommendedRating(),
                         Map.of("content_rating", getRecommendedContentRating(DE, age, AGE_VALUES_GERMANY)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
+
         setAppToHomeScreen(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
 
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        editProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
 
-        // Select a different rating
-        editProfile.getStaticTextByLabelContains(ratingChoose).click();
+        // Validate Update Profile UI
+        sa.assertTrue(updateProfilePage.isOpened(), "Update profile did not open");
+        sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(), "Header is not present");
+        sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Sub header is not present");
+        sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
+        sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
+        sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating field is not present");
+        sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(),"Profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT),"Pencil icon is not displayed");
+        sa.assertTrue(updateProfilePage.getSaveButton().isPresent(), "Save button is not present");
+        sa.assertTrue(updateProfilePage.getStaticTextByLabelContains("Learn More").isPresent(), "Learn More link is not present");
+
+        // Enter DOB and select a different rating
+        editProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        editProfile.getStaticTextByLabelContains(ratingByDefault).click();
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
-        editProfile.getStaticTextByLabelContains(ratingSelected).click();
+        sa.assertTrue(contentRating.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
+                "Content rating recommended not displayed");
+        editProfile.getStaticTextByLabelContains(ratingToChoose).click();
 
         updateProfilePage.tapSaveButton();
         passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
         sa.assertTrue(whoIsWatching.isOpened(), "User was not saved correctly");
-
+        sa.assertAll();
     }
 
 
