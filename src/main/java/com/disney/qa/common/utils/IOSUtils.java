@@ -973,7 +973,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         return (int) Math.sqrt(pointXSqr + pointYSqr);
     }
 
-    private Point getCenterCoordinate(ExtendedWebElement element) {
+    default Point getCenterCoordinate(ExtendedWebElement element) {
         int startX = element.getLocation().getX();
         int startY = element.getLocation().getY();
         int width = element.getSize().getWidth();
