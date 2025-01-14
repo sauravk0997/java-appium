@@ -1085,12 +1085,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
         sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(),
                 "Privacy Policy Link is not present on Consent screen");
+        sa.assertTrue(parentalConsent.validateConsentText(), "Consent text doesn't match with the expected values");
+        sa.assertTrue(parentalConsent.isMinorDisclaimerPresent(), "Consent disclaimer not found");
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Scrolling down to view all of Minor Consent Page");
             parentalConsent.scrollConsentContent(4);
         }
-        sa.assertTrue(parentalConsent.validateConsentText(), "Consent text doesn't match with the expected values");
-        sa.assertTrue(parentalConsent.isMinorDisclaimerPresent(), "Consent disclaimer not found");
         sa.assertTrue(parentalConsent.isAgreeButtonPresent(), "Agree button is not present");
         sa.assertTrue(parentalConsent.isDeclineButtonPresent(), "Decline button is not present");
 
