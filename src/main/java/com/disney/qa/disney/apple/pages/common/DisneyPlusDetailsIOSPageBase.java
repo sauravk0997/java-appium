@@ -1170,12 +1170,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonByLabel(dictValue);
     }
 
-    public void tapAboveDownloadModal() {
-        int screenWidth = getDriver().manage().window().getSize().getWidth();
-        int downloadModalStartY = viewAlert.getLocation().getY();
-        tap(screenWidth/2, downloadModalStartY/2);
-    }
-
     public boolean isDownloadPausedInDownloadModal() {
         String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DOWNLOAD_PAUSED.getText());
