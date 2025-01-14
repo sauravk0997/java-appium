@@ -15,6 +15,8 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusChangePasswordIOSPageBase extends DisneyPlusPasswordIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    private static final String TEXT_FIELD_INPUT_CODE = "textFieldInputCode";
+
     private final ExtendedWebElement logoutAllDevicesTitle = staticTextByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                     DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText()));
