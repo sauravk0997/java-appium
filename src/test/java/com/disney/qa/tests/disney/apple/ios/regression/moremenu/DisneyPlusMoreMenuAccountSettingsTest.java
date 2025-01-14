@@ -625,7 +625,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         changeEmailPage.clickCancelBtn();
-        Assert.assertTrue(accountPage.isOpened(), "User is not taken back to the account's page");
+        Assert.assertTrue(accountPage.isOpened(), "User is not taken back to the account page");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75208"})
