@@ -1129,7 +1129,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             distanceSet.add(getDistanceBetweenElements(navElements.get(i), navElements.get(i + 1)));
 
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            // All elements in iPhone should be equally spaced
+             // All tabs in iPhone will be equally spaced, therefore HasSet will have just one entry
             Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
         } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             // Element's distance in tablet should differ
