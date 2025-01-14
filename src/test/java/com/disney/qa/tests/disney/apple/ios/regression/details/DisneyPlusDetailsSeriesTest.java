@@ -1066,7 +1066,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickStopOrPauseDownload();
         Assert.assertTrue(detailsPage.getViewAlert().isElementPresent(),
                 "Download modal was not present");
-        detailsPage.tapAboveDownloadModal();
+        detailsPage.clickAlertDismissBtn();
         Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
                 "Download Modal was still visible");
         Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
