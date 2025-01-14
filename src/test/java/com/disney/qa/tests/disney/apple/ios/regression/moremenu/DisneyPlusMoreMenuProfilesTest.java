@@ -1121,6 +1121,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
+        // Creating HashSet to store unique elements distance
         Set<Integer> distanceSet = new HashSet<>();
         List<ExtendedWebElement> navElements = addNavigationBarElements();
 
@@ -1128,8 +1129,10 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             distanceSet.add(getDistanceBetweenElements(navElements.get(i), navElements.get(i + 1)));
 
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            // All elements in iPhone should be equally spaced
             Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
         } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            // Elements in tablet should de differently spaced
             Assert.assertEquals(distanceSet.size(), 2,
                     "Junior mode navigation menu is not correctly aligned in tablet");
             validateElementPositionAlignment(moreMenu.getHomeNav(), LEFT);
