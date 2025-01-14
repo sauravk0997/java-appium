@@ -8,7 +8,7 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_14,iPhone_12,iPhone_12_Pro,iPhone_Xs,iPhone_13_Pro;deviceType=Phone;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_14,iPhone_12_Pro,iPhone_Xs,iPhone_13_Pro;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="choiceParam::groups::Test Group selection"
                value=",AI,APAC,DJCTQ,EMEA,FSK,KCC,Kijkwijzer,KMRB,LATAM,MDA,MPAATVPG,NCS,OFLC,R21"/>
@@ -17,7 +17,7 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields"
                value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=300"/>
-    <parameter name="jenkinsBuild" value="4.0.0.74899"/>
+    <parameter name="jenkinsBuild" value="4.0.0.75122"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset APAC Ratings" parallel="methods">
         <classes>

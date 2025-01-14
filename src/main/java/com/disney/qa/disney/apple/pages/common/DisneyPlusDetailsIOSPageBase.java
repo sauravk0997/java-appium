@@ -1170,6 +1170,26 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonByLabel(dictValue);
     }
 
+    public ExtendedWebElement getFormatDetailsText() {
+        return getTypeOtherContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAIL_FORMATS.getText()));
+    }
+
+    public ExtendedWebElement getDolbyBadge() {
+        return getTypeOtherContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, MEDIA_FEATURE_DOLBY_VISION.getText()));
+    }
+
+    public ExtendedWebElement getUHDBadge() {
+        return getTypeOtherContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,MEDIA_FORMAT_UHD.getText()));
+    }
+
+    public ExtendedWebElement getHDRBadge() {
+        return getTypeOtherContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, MEDIA_FEATURE_HDR_10.getText()));
+    }
+
     public boolean isDownloadPausedInDownloadModal() {
         String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DOWNLOAD_PAUSED.getText());
