@@ -1132,7 +1132,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             // All elements in iPhone should be equally spaced
             Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
         } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
-            // Elements in tablet should de differently spaced
+            // Element's distance in tablet should differ
             Assert.assertEquals(distanceSet.size(), 2,
                     "Junior mode navigation menu is not correctly aligned in tablet");
             validateElementPositionAlignment(moreMenu.getHomeNav(), LEFT);
