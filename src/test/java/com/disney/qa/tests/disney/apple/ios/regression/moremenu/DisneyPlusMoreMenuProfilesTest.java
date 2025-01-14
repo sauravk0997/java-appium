@@ -1143,7 +1143,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     private void validateElementPositionAlignment(ExtendedWebElement element, String alignment) {
-        int elementPosition = getElementCenterCoordinate(element).getX();
+        int elementPosition = getCenterCoordinate(element).getX();
         LOGGER.info("elementPosition: {} ", elementPosition);
         Dimension screenSize = getDriver().manage().window().getSize();
         int screenWidth = screenSize.width;
@@ -1176,14 +1176,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     private int getDistanceBetweenElements(ExtendedWebElement element1, ExtendedWebElement element2) {
-        Point position1 = getElementCenterCoordinate(element1);
-        Point position2 = getElementCenterCoordinate(element2);
+        Point position1 = getCenterCoordinate(element1);
+        Point position2 = getCenterCoordinate(element2);
         double pointXSqr = Math.pow((double) position2.getX() - (double) position1.getX(), 2);
         double pointYSqr = Math.pow((double) position2.getY() - (double) position1.getY(), 2);
         return (int) Math.sqrt(pointXSqr + pointYSqr);
     }
 
-    private Point getElementCenterCoordinate(ExtendedWebElement element) {
+    private Point getCenterCoordinate(ExtendedWebElement element) {
         int startX = element.getLocation().getX();
         int startY = element.getLocation().getY();
         int width = element.getSize().getWidth();
