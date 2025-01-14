@@ -1132,7 +1132,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
              // All tabs in iPhone will be equally spaced, therefore HasSet will have just one entry
             Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
         } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
-            // Element's distance in tablet should differ
+            // In iPads, two tabs are on the right and other 2 are left aligned. Therefore there will be 2 unique distances, hence HashSet will have 2 entries.
             Assert.assertEquals(distanceSet.size(), 2,
                     "Junior mode navigation menu is not correctly aligned in tablet");
             validateElementPositionAlignment(moreMenu.getHomeNav(), LEFT);
