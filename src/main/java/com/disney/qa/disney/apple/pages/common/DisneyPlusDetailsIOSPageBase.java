@@ -1198,4 +1198,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeOtherContainsLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, MEDIA_FEATURE_HDR_10.getText()));
     }
+
+    public boolean isDownloadPausedInDownloadModal() {
+        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DOWNLOAD_PAUSED.getText());
+        return getStaticTextByLabel(dictValue).isPresent();
+    }
  }
