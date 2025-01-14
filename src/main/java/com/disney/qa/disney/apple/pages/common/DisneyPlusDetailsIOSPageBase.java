@@ -1118,6 +1118,19 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
     }
 
+    public boolean isPauseDownloadButtonDisplayedForMovie() {
+        int count = 5;
+        ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+        while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+            clickAlertDismissBtn();
+            downloadStartedButton.click();
+            count--;
+        }
+        return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
+    }
+
     public boolean isRemoveDownloadButtonDisplayed() {
         return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText())).isPresent();
