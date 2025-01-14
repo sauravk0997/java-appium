@@ -1000,8 +1000,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
             case LEFT_POSITION:
                 Assert.assertTrue(elementPosition < percentageToValidate, "Element is not at the left position");
                 break;
-            default: throw new IllegalArgumentException(
-                    String.format("Invalid alignment String"));
+            default: throw new IllegalArgumentException("Invalid alignment String");
         }
     }
 }
