@@ -595,6 +595,59 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 "Video player title does not match with expected title: " + movieTitle);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67389"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.DOWNLOADS, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadModalWhenMovieDownloadIsInProgress() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.getMovieDownloadButton().click();
+        Assert.assertTrue(detailsPage.getDownloadStartedButton().isElementPresent(),
+                "Download not started, Stop or Pause Download button not displayed");
+        detailsPage.getDownloadStartedButton().click();
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayedForMovie(),
+                "Pause Download button not displayed on Download modal");
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(),
+                "Remove Download button not displayed on Download modal");
+        sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
+                "Download in Progress status not displayed on Download modal");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on Download modal");
+
+        detailsPage.getPauseDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getMovieDownloadButton().isElementPresent(),
+                "Download was not paused. Download icon was not present");
+        detailsPage.getMovieDownloadButton().click();
+        Assert.assertTrue(detailsPage.isDownloadPausedInDownloadModal(),
+                "Download state did not change to Paused");
+
+        detailsPage.getRemoveDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getMovieDownloadButton().isElementPresent(),
+                "Download was not removed. Download icon was not present");
+        Assert.assertFalse(detailsPage.getDownloadStartedButton().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download was not removed. Stop/Pause Download icon was still displayed");
+
+        detailsPage.getMovieDownloadButton().click();
+        Assert.assertTrue(detailsPage.getDownloadStartedButton().isElementPresent(),
+                "Download not started, Stop or Pause Download button not displayed");
+        detailsPage.getDownloadStartedButton().click();
+        Assert.assertTrue(detailsPage.getViewAlert().isElementPresent(),
+                "Download modal was not present");
+        detailsPage.clickAlertDismissBtn();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getDownloadStartedButton().isElementPresent(),
+                "Download is not in progress. Stop/Pause Download icon was not displayed");
+
+        sa.assertAll();
+    }
+
     private Map<String, Object> getMoviesMetaDataFromAPI(Visuals visualsResponse) {
         Map<String, Object> exploreAPIMetaData = new HashMap<>();
 
