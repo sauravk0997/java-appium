@@ -602,14 +602,20 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_dumbo_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.getMovieDownloadButton().click();
         Assert.assertTrue(detailsPage.getDownloadStartedButton().isElementPresent(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.getDownloadStartedButton().click();
 
-        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayedForMovie(),
+        String movieTitle = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_movie_dumbo_entity_id")).getTitle();
+        if (movieTitle == null) {
+            throw new SkipException("No movie title was found in Explore API");
+        }
+        sa.assertTrue(detailsPage.getStaticTextByLabel(movieTitle).isElementPresent(),
+                "Content Title was not displayed on Download modal");
+        sa.assertTrue(detailsPage.isMoviePauseDownloadButtonDisplayed(),
                 "Pause Download button not displayed on Download modal");
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(),
                 "Remove Download button not displayed on Download modal");
