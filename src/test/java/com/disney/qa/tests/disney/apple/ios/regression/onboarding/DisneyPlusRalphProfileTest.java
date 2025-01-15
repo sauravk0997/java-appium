@@ -518,7 +518,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(),"Profile icon is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT),"Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.getSaveButton().isPresent(), "Save button is not present");
-        sa.assertTrue(updateProfilePage.getStaticTextByLabelContains("Learn More").isPresent(), "Learn More link is not present");
+        sa.assertTrue(updateProfilePage.getStaticTextByLabelContains("Learn more").isPresent(),
+                "Learn More link is not present");
 
         // Enter DOB and select a different rating
         editProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
