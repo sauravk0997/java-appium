@@ -1122,7 +1122,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
     }
 
-    public boolean isPauseDownloadButtonDisplayedForMovie() {
+    public boolean isMoviePauseDownloadButtonDisplayed() {
         int count = 5;
         while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
             clickAlertDismissBtn();
