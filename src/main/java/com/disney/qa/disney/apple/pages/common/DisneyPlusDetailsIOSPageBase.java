@@ -158,8 +158,17 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='progressBar'$]" +
             "/XCUIElementTypeStaticText[$label CONTAINS 'remaining'$]")
     protected ExtendedWebElement continueWatchingTimeRemaining;
-    //FUNCTIONS
+    private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
+            getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+    private final ExtendedWebElement removeDownloadButton = getTypeButtonByLabel(getLocalizationUtils()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText()));
+    private final ExtendedWebElement downloadPausedLabel = getStaticTextByLabel(getLocalizationUtils()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.DOWNLOAD_PAUSED.getText()));
 
+    //FUNCTIONS
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -242,13 +251,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getPauseDownloadButton() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+        return pauseDownloadButton;
     }
 
     public ExtendedWebElement getRemoveDownloadButton() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText()));
+        return removeDownloadButton;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
@@ -1111,9 +1118,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isPauseDownloadButtonDisplayed() {
         int count = 5;
-        ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
         while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
             clickAlertDismissBtn();
             clickStopOrPauseDownload();
@@ -1122,9 +1126,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
     }
 
+    public boolean isMoviePauseDownloadButtonDisplayed() {
+        int count = 5;
+        while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+            clickAlertDismissBtn();
+            downloadStartedButton.click();
+            count--;
+        }
+        return pauseDownloadButton.isPresent(ONE_SEC_TIMEOUT);
+    }
+
     public boolean isRemoveDownloadButtonDisplayed() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText())).isPresent();
+        return removeDownloadButton.isPresent();
     }
 
     public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episodeTitle) {
@@ -1191,8 +1204,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isDownloadPausedInDownloadModal() {
-        String dictValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DOWNLOAD_PAUSED.getText());
-        return getStaticTextByLabel(dictValue).isPresent();
+        return downloadPausedLabel.isPresent();
     }
  }
