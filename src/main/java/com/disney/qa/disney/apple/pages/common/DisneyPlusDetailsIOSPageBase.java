@@ -246,6 +246,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return movieDownloadButton;
     }
 
+    public ExtendedWebElement getStopOrPauseDownloadIcon() {
+        return stopOrPauseDownloadButton;
+    }
+
     public ExtendedWebElement getPauseDownloadButton() {
         return pauseDownloadButton;
     }
