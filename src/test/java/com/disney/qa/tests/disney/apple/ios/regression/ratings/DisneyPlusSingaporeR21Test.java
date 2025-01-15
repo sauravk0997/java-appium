@@ -385,6 +385,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
 
         ratingsSetup(SINGAPORE);
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.startDownload();
 
         verifyAgePage.clickIAm21PlusButton();
