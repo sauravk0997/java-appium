@@ -161,6 +161,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+    private final ExtendedWebElement removeDownloadButton = getTypeButtonByLabel(getLocalizationUtils()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText()));
 
     //FUNCTIONS
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -245,8 +248,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getRemoveDownloadButton() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText()));
+        return removeDownloadButton;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
@@ -1128,8 +1130,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isRemoveDownloadButtonDisplayed() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.REMOVE_DOWNLOAD_BTN.getText())).isPresent();
+        return removeDownloadButton.isPresent();
     }
 
     public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episodeTitle) {
