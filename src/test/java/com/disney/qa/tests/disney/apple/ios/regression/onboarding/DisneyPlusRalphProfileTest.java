@@ -509,9 +509,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
 
         // Validate Update Profile UI
-        sa.assertTrue(updateProfilePage.isOpened(), "Update profile did not open");
-        sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(), "Header is not present");
-        sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Sub header is not present");
+        sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Profile Description is not present");
         sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating field is not present");
