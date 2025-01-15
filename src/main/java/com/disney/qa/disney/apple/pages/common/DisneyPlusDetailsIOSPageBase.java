@@ -158,8 +158,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='progressBar'$]" +
             "/XCUIElementTypeStaticText[$label CONTAINS 'remaining'$]")
     protected ExtendedWebElement continueWatchingTimeRemaining;
-    //FUNCTIONS
+    private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
+            getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
 
+    //FUNCTIONS
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -238,8 +241,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getPauseDownloadButton() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
+        return pauseDownloadButton;
     }
 
     public ExtendedWebElement getRemoveDownloadButton() {
@@ -1107,9 +1109,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isPauseDownloadButtonDisplayed() {
         int count = 5;
-        ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
         while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
             clickAlertDismissBtn();
             clickStopOrPauseDownload();
@@ -1120,9 +1119,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isPauseDownloadButtonDisplayedForMovie() {
         int count = 5;
-        ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
-                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
         while (!pauseDownloadButton.isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
             clickAlertDismissBtn();
             downloadStartedButton.click();
