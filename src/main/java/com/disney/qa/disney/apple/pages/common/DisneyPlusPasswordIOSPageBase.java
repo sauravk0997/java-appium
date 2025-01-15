@@ -57,7 +57,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.MY_DISNEY_CHANGE_PASSWORD_HEADER.getText())).isElementPresent();
     }
 
-
     public boolean isDisneyLogoDisplayed() {
         return dPlusLogo.isPresent();
     }
