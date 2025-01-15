@@ -384,16 +384,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Date startTime = getEmailApi().getStartTime();
         accountPage.clickChangePasswordCell();
-//        accountPage.getDynamicRowButtonLabel(EDIT_ICON, 2).click();
-        //        accountPage.getEditPasswordButton().click();
         accountPage.clickElementAtLocation(accountPage.getEditPasswordButton(), 50, 50);
 
         String otp = getOTPFromApi(startTime, otpAccount);
-
         accountPage.clickElementAtLocation(accountPage.getTextInputCodeField(), 50, 50);
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickElementAtLocation(oneTimePasscodePage.getPrimaryButton(), 50, 50);
-//        oneTimePasscodePage.clickPrimaryButton();
         changePasswordPage.clickElementAtLocation(changeEmailPage.getSecureTextEntryField(), 50,50);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
         changeEmailPage.getKeyboardDoneButton().clickIfPresent();
