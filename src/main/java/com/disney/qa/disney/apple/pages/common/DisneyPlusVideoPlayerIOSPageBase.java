@@ -792,4 +792,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getContentRatingInfoView() {
         return contentRatingInfoView;
     }
+
+    public boolean waitForVideoLockTooltipToAppear() {
+       return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+               "Player controls lock tooltip did not appear")
+                .until(it -> getLockScreenToolTip().isPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public ExtendedWebElement getLockScreenToolTip() {
+        return getTextElementValue(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAYER_CONTROLS_LOCK_TOOLTIP.getText()));
+    }
+
 }
