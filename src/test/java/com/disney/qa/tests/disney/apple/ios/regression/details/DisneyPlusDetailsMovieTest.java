@@ -600,19 +600,16 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     public void verifyDownloadModalWhenMovieDownloadIsInProgress() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String movieTitle = "Doctor Strange";
         setAppToHomeScreen(getAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_content_dumbo_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.getMovieDownloadButton().click();
         Assert.assertTrue(detailsPage.getDownloadStartedButton().isElementPresent(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.getDownloadStartedButton().click();
 
-        String movieTitle = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_movie_dumbo_entity_id")).getTitle();
-        if (movieTitle == null) {
-            throw new SkipException("No movie title was found in Explore API");
-        }
         sa.assertTrue(detailsPage.getStaticTextByLabel(movieTitle).isElementPresent(),
                 "Content Title was not displayed on Download modal");
         sa.assertTrue(detailsPage.isMoviePauseDownloadButtonDisplayed(),
