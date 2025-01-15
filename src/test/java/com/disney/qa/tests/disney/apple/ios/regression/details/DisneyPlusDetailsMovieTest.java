@@ -608,6 +608,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getDownloadStartedButton().isElementPresent(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.getDownloadStartedButton().click();
+
         sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayedForMovie(),
                 "Pause Download button not displayed on Download modal");
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(),
