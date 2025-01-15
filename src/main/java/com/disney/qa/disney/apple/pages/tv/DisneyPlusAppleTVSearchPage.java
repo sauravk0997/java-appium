@@ -70,7 +70,7 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     }
 
     public void clearSearchBar() {
-        moveDown(8, 1);
+        moveDown(5, 1);
         moveRight(2, 1);
         keyPressTimes(IRemoteControllerAppleTV::clickSelect, 1, 5);
     }
