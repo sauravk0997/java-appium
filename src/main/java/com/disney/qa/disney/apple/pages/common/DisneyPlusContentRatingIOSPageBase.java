@@ -85,4 +85,11 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
     public boolean isContentRatingPresent() {
         return contentRatingText.isPresent();
     }
+
+    public boolean isLearnMoreLinkPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.LEARN_MORE_CONTENT_RATINGS_LINK_1_TEXT.getText())).isPresent();
+    }
+
 }

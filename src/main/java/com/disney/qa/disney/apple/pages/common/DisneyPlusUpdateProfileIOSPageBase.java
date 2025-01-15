@@ -48,4 +48,9 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
     public void tapSaveButton(){
         saveButton.click();
     }
+
+    public boolean isHeaderPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.COMPLETE_PROFILE_TITLE.getText())).isPresent();
+    }
 }

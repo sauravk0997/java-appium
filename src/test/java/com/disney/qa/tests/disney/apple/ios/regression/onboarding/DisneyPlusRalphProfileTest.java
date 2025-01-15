@@ -479,26 +479,25 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74085"})
-    @Test(groups = {TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
     public void testRalphEditProfileAndSelectRatingDifferentFromRecommended() {
         DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
         String darthMaulAvatarId = R.TESTDATA.get("disney_darth_maul_avatar_id");
-        String ratingByDefault = "12";
-        String ratingToChoose = "16";
+        String ratingByDefault = "TV-14";
+        String ratingToChoose = "TV-Y7";
         int age = 59;
 
-        createAccountAndAddSecondaryProfile(DE, ENGLISH_LANG);
+        createAccountAndAddSecondaryProfile(CA, ENGLISH_LANG);
 
         String recommendedContentRatingByAge = getLocalizationUtils()
                 .formatPlaceholderString(contentRating.getRecommendedRating(),
-                        Map.of("content_rating", getRecommendedContentRating(DE, age, AGE_VALUES_GERMANY)));
+                        Map.of("content_rating", getRecommendedContentRating(CA, age, AGE_VALUES_CANADA)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
 
         setAppToHomeScreen(getAccount());
@@ -509,17 +508,17 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
 
         // Validate Update Profile UI
+        sa.assertTrue(updateProfilePage.isHeaderPresent(), "Header profile is not present");
         sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Profile Description is not present");
         sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
+        sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(),"Profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating field is not present");
-        sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(),"Profile icon is not displayed");
-        sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT),"Pencil icon is not displayed");
+        sa.assertTrue(contentRating.isLearnMoreLinkPresent(),"Learn More link is not present");
         sa.assertTrue(updateProfilePage.getSaveBtn().isPresent(), "Save button is not present");
-        sa.assertTrue(updateProfilePage.getStaticTextByLabelContains("Learn more").isPresent(),
-                "Learn More link is not present");
 
-        // Enter DOB and select a different rating
+        // Enter DOB and select a different rating to save
         editProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         editProfile.getStaticTextByLabelContains(ratingByDefault).click();
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
@@ -528,8 +527,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.getStaticTextByLabelContains(ratingToChoose).click();
 
         updateProfilePage.tapSaveButton();
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
-        sa.assertTrue(whoIsWatching.isOpened(), "User was not saved correctly");
+        sa.assertTrue(whoIsWatching.isOpened(), "Who is watching screen was not opened");
+
         sa.assertAll();
     }
 
