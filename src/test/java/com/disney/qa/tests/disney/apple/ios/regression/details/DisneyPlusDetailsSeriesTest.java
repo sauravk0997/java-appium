@@ -1024,6 +1024,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadModalWhenEpisodeDownloadIsInProgress() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String firstEpisodeTitle = "Glorious Purpose";
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
@@ -1035,6 +1036,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
                 "Download not started, Stop or Pause Download button not displayed");
         detailsPage.clickStopOrPauseDownload();
+
+        sa.assertTrue(detailsPage.getStaticTextByLabel(firstEpisodeTitle).isElementPresent(),
+                "Content Title was not displayed on Download modal");
         sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(),
                 "Pause Download button not displayed on Download modal");
         sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(),
