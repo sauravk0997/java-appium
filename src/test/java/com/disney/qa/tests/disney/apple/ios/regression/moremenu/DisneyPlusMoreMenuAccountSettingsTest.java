@@ -393,7 +393,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changePasswordPage.isChooseNewPasswordPageOpen(),
                 "Choose new password page did not open");
-        otpAccount.setUserPass(NEW_PASSWORD);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
         changeEmailPage.getKeyboardDoneButton().clickIfPresent();
         changeEmailPage.clickBackToDisneyBtn();
