@@ -503,8 +503,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         if (timeout.length > 0) {
             waitTime = timeout[0];
         }
-        String adLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getStaticTextByLabel(adLabel).isPresent(waitTime);
+        return getAdBadge().isPresent(waitTime);
     }
 
     public ExtendedWebElement getAdBadge() {
@@ -513,9 +512,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
-        String adLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
         displayVideoController();
-        return getStaticTextByLabel(adLabel).isElementPresent();
+        return getAdBadge().isElementPresent();
     }
 
     public ExtendedWebElement getNetworkWatermarkLogo(String network) {
