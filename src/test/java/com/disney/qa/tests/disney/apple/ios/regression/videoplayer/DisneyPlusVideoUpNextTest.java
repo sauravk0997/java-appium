@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.config.*;
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -323,26 +324,39 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyStandardPostPlay() {
         DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String huluSeries = "Only Murders in the Building";
+        String huluSeries = "The Bear";
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         setAppToHomeScreen(getAccount());
 
+        // Get the second episode title of The Bear series
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_the_bear_deeplink"));
+        sa.assertTrue(detailsPage.isOpened(), "Details did not open");
+        String secondEpisodeTitle = detailsPage.getEpisodeTitleLabel(2)
+                .getText().split("\\.")[1];
+        LOGGER.info("Second episode {}", secondEpisodeTitle);
+
+        // Initiate series tests
         initiatePlaybackAndScrubOnPlayer(huluSeries, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         upNextIOSPageBase.waitForUpNextUIToAppear();
-       // upNextIOSPageBase.tapPlayIconOnUpNext();
 
+        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(secondEpisodeTitle).isPresent(),
+                "Second title is not present");
         sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        videoPlayer.clickBackButton();
+        detailsPage.clickCloseButton();
+        detailsPage.clickHomeIcon();
+        // Initiate movie tests
+        initiatePlaybackAndScrubOnPlayer("Palm Springs", PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+        upNextIOSPageBase.waitForUpNextUIToAppear();
+        sa.assertTrue(upNextIOSPageBase.isNextRecommendationTextPresent(),
+                      "You may also like text is not present");
         sa.assertAll();
-        // Assert.assertTrue(videoPlayerIOSPageBase.isContentRatingOverlayPresent(), "Content Rating overlay not " +
-        //       "displayed");
-        // Assert.assertTrue(videoPlayerIOSPageBase.waitForContentRatingOverlayToDisappear(), "Content rating overlay " +
-        //       "didn't dismiss");
-
     }
 
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
