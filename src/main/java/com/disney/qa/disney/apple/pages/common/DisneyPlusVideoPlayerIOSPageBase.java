@@ -507,6 +507,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(adLabel).isPresent(waitTime);
     }
 
+    public ExtendedWebElement getAdBadge() {
+        String adLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
+        return getStaticTextByLabel(adLabel);
+    }
+
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
         String adLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
         displayVideoController();
