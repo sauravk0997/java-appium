@@ -532,7 +532,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-
     private void navigateToContentRating() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
