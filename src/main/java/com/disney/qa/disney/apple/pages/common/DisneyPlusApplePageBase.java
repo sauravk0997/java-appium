@@ -269,7 +269,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "saveProfileButton")
     private ExtendedWebElement saveProfileButton;
     @ExtendedFindBy(accessibilityId = "viewAlert")
-    private ExtendedWebElement viewAlert;
+    protected ExtendedWebElement viewAlert;
     @ExtendedFindBy(accessibilityId = "buttonForgotPassword")
     protected ExtendedWebElement forgotPasswordBtn;
 
@@ -527,6 +527,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeCellNameContains(String name) {
         return typeCellNameContains.format(name);
+    }
+
+    public  ExtendedWebElement getViewAlert() {
+        return viewAlert;
     }
 
     public String getErrorMessageString() {
@@ -1153,13 +1157,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             (CollectionConstant.Collection collection, Direction direction, int count) {
         ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
 
-        swipe(element, direction, count, 900);
-
-        int maxHeight = getDriver().manage().window().getSize().getHeight();
-        int threshold = (int) (maxHeight - maxHeight * .25);
-        if (element.getLocation().getY() > threshold) {
-            swipeUp(1, 1000);
-        }
+        swipePageTillElementTappable(element, count, null, direction, 900);
     }
 
     public boolean isCollectionVisibleAfterSwiping

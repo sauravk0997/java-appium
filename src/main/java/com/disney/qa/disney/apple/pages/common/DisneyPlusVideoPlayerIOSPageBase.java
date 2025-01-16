@@ -738,6 +738,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> !getPlayerView().isPresent());
     }
 
+    public boolean waitUntilRemainingTimeLessThan(int waitTime, int polling, int expectedRemainingTimeInSec) {
+        return fluentWait(getDriver(), waitTime, polling,
+                "Video player remaining time not matched with expected remaining time")
+                .until(it -> isRemainingTimeLessThanExpected(expectedRemainingTimeInSec));
+    }
+
+    public boolean isRemainingTimeLessThanExpected(int expectedRemainingTimeInSec) {
+        int remainingtime = getRemainingTime();
+        return remainingtime <= expectedRemainingTimeInSec;
+    }
+
     public boolean isAdPodPresent() {
         return adPod.isPresent();
     }
@@ -781,4 +792,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getContentRatingInfoView() {
         return contentRatingInfoView;
     }
+
+    public boolean waitForVideoLockTooltipToAppear() {
+       return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+               "Player controls lock tooltip did not appear")
+                .until(it -> getLockScreenToolTip().isPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public ExtendedWebElement getLockScreenToolTip() {
+        return getTextElementValue(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAYER_CONTROLS_LOCK_TOOLTIP.getText()));
+    }
+
 }
