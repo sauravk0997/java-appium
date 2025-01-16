@@ -523,6 +523,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.getStaticTextByLabelContains(ratingByDefault).click();
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
         sa.assertTrue(contentRating.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
+                "Recommended rating by age is not present");
 
         editProfile.getStaticTextByLabelContains(ratingToChoose).click();
 
