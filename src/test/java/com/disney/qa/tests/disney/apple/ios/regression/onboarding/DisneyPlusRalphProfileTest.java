@@ -523,7 +523,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.getStaticTextByLabelContains(ratingByDefault).click();
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
-            swipe(editProfile.getStaticTextByLabelContains(ratingToChoose), Direction.UP, 1, 900);
+            contentRating.scrollToItem("R");
+            contentRating.scrollToItem(contentRating.getStaticTextByLabelContains(recommendedContentRatingByAge).getText());
         } else if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             sa.assertTrue(contentRating.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                     "Content rating recommended not displayed");
