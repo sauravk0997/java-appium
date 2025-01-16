@@ -6,7 +6,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.JUNIOR_MODE_LEARN_MORE;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LEARN_MORE_CONTENT_RATINGS_LINK_1_TEXT;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
