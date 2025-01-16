@@ -192,6 +192,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         passwordPage.moveDown(1, 1);
         passcodePage.clickLoginWithPasswordButton();
 
+        passwordPage.waitForPresenceOfAnElement(passwordPage.getEnterYourPasswordHeader());
         new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
         sa.assertTrue(passwordPage.isEnterYourPasswordHeaderPresent(),
                 "Enter your password header was not found.");
