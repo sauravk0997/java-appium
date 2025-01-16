@@ -110,6 +110,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement dynamicIosClassChainElementTypeImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value == '%s'`]")
     protected ExtendedWebElement staticTypeTextViewValue;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value CONTAINS \"%s\"`]")
+    protected ExtendedWebElement staticTypeTextViewValueContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value == \"%s\"`]")
     protected ExtendedWebElement staticTypeTextViewValueDoubleQuotes;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]")
@@ -527,6 +529,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getTypeCellNameContains(String name) {
         return typeCellNameContains.format(name);
+    }
+
+    public ExtendedWebElement getStaticTextViewValueContains(String value) {
+        return staticTypeTextViewValueContains.format(value);
     }
 
     public String getErrorMessageString() {

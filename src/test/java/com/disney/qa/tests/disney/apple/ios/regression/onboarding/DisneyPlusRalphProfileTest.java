@@ -515,7 +515,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating field is not present");
-        sa.assertTrue(contentRating.isLearnMoreLinkPresent(),"Learn More link is not present");
+        sa.assertTrue(contentRating.getStaticTextViewValueContains("Learn More").isPresent(),"Learn More link is not present");
         sa.assertTrue(updateProfilePage.getSaveBtn().isPresent(), "Save button is not present");
 
         // Enter DOB and select a different rating to save

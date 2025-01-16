@@ -498,7 +498,6 @@ public enum DictionaryKeys {
     SETTINGS_PAUSED("settings_paused"),
     SETTINGS_TITLE("settings_title"),
     SET_PROFILE_ENTRY_PIN_BODY("set_profile_entry_pin_body"),
-    SETUP_PRIMARY_PROFILE_DISCLAIMER_RALPH_LINK_1_TEXT("setup_primary_profile_disclaimer_ralph_link_1_text"),
     SHOW_PASSWORD("onboardingpw_btn_showpassword"),
     SIGN_UP("sign_up"),
     SIGN_UP_BTN("btn_welcome_signup_cta"),
