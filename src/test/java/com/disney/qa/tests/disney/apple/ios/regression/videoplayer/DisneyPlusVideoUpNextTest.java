@@ -324,6 +324,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     public void verifyStandardPostPlay() {
         DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         String huluSeries = "Only Murders in the Building";
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
@@ -333,7 +334,10 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
         initiatePlaybackAndScrubOnPlayer(huluSeries, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         upNextIOSPageBase.waitForUpNextUIToAppear();
-        upNextIOSPageBase.tapPlayIconOnUpNext();
+       // upNextIOSPageBase.tapPlayIconOnUpNext();
+
+        sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        sa.assertAll();
         // Assert.assertTrue(videoPlayerIOSPageBase.isContentRatingOverlayPresent(), "Content Rating overlay not " +
         //       "displayed");
         // Assert.assertTrue(videoPlayerIOSPageBase.waitForContentRatingOverlayToDisappear(), "Content rating overlay " +
