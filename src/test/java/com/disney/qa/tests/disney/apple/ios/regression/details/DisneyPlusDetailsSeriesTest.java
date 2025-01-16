@@ -1090,6 +1090,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(seriesDeeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
         }
