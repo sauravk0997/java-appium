@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.watchlist;
 
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.utils.DisneySkuParameters;
