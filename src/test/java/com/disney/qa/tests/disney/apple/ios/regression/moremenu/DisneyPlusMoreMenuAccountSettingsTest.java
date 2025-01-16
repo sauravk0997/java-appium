@@ -383,14 +383,17 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(otpAccount);
 
         Date startTime = getEmailApi().getStartTime();
-        accountPage.clickChangePasswordCell();
-        accountPage.clickElementAtLocation(accountPage.getEditPasswordButton(), 50, 50);
+        accountPage.clickManageWithMyDisneyButton();
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
+        accountPage.getEditPasswordButton().click();
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
 
         String otp = getOTPFromApi(startTime, otpAccount);
-        accountPage.clickElementAtLocation(accountPage.getTextInputCodeField(), 50, 50);
-        oneTimePasscodePage.getTextInputCodeField().type(otp);
-        oneTimePasscodePage.clickElementAtLocation(oneTimePasscodePage.getPrimaryButton(), 50, 50);
-        changePasswordPage.clickElementAtLocation(changeEmailPage.getSecureTextEntryField(), 50,50);
+        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
+        Assert.assertTrue(changePasswordPage.isChooseNewPasswordPageOpen(),
+                "Choose new password page did not open");
+        otpAccount.setUserPass(NEW_PASSWORD);
         changePasswordPage.submitNewPasswordValue(NEW_PASSWORD);
         changeEmailPage.getKeyboardDoneButton().clickIfPresent();
         changeEmailPage.clickBackToDisneyBtn();
