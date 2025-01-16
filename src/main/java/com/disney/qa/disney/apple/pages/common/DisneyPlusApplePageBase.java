@@ -1543,17 +1543,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getDownloadsTabNotificationBadge() {
         return downloadsTabNotificationBadge;
     }
-
-
-    public ExtendedWebElement getPrimaryButton() {
-        return primaryButton;
-    }
-
-    public ExtendedWebElement getTextInputCodeField() {
-        return getDynamicTextEntryFieldByName("textFieldInputCode");
-    }
-
-    public ExtendedWebElement getSecureTextEntryField() {
-        return secureTextEntryField;
-    }
 }
