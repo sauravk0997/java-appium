@@ -508,7 +508,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
 
         // Validate Update Profile UI
-        sa.assertTrue(updateProfilePage.isHeaderPresent(), "Header profile is not present");
+        sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(), "Header profile is not present");
         sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Profile Description is not present");
         sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
         sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(),"Profile icon is not displayed");
