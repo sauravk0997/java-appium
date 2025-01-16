@@ -1089,6 +1089,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
+        //Open series detail page, download first episode, pause download and re-open download modal
         launchDeeplink(seriesDeeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
@@ -1105,6 +1106,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Download Modal was still visible");
         detailsPage.getFirstEpisodeDownloadButton().click();
 
+        //Validate download modal elements presence when download is paused
         sa.assertTrue(detailsPage.getStaticTextByLabel(firstEpisodeTitle).isElementPresent(),
                 "Content Title was not displayed on Download modal");
         sa.assertTrue(detailsPage.isDownloadPausedInDownloadModal(),
@@ -1115,43 +1117,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Remove Download button was not displayed on Download modal");
         sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on Download modal");
 
-        detailsPage.getResumeDownloadButton().click();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
-        Assert.assertTrue(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(),
-                "Download was not resumed. Stop/Pause Download icon was not present");
-        detailsPage.clickStopOrPauseDownload();
-        Assert.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
-                "Download state did not change to Download in progress");
-        detailsPage.getPauseDownloadButton().click();
-
-        detailsPage.getFirstEpisodeDownloadButton().click();
-        detailsPage.getRemoveDownloadButton().click();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
-        Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
-                "Download was not removed. Download icon was not present");
-        Assert.assertFalse(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download was not removed. Stop/Pause Download icon was still displayed");
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        Assert.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
-                "Downloads Image is not present");
-        Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
-                "Downloads empty header is not present");
-
-        launchDeeplink(seriesDeeplink);
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
-        }
-        detailsPage.getFirstEpisodeDownloadButton().click();
-        Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
-                "Download not started, Stop or Pause Download button not displayed");
-        detailsPage.clickStopOrPauseDownload();
-        Assert.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(),
-                "Pause Download button was not displayed on Download modal");
-        detailsPage.getPauseDownloadButton().click();
-
-        detailsPage.getFirstEpisodeDownloadButton().click();
+        //Validate Dismiss button behavior when download is paused
         detailsPage.clickAlertDismissBtn();
         Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
                 "Download Modal was still visible");
@@ -1160,6 +1126,30 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getFirstEpisodeDownloadButton().click();
         Assert.assertTrue(detailsPage.isDownloadPausedInDownloadModal(),
                 "Download did not remained paused. Download Paused status not displayed on Download modal");
+
+        //Validate Resume Download button does resume the download when the download was paused
+        detailsPage.getResumeDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(),
+                "Download was not resumed. Stop/Pause Download icon was not present");
+        detailsPage.clickStopOrPauseDownload();
+        Assert.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
+                "Download state did not change to Download in progress");
+
+        //Pause the download again, open modal and validate Remove Download button behavior when download is paused
+        detailsPage.getPauseDownloadButton().click();
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        detailsPage.getRemoveDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertFalse(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download was not removed. Stop/Pause Download icon was displayed");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
+                "Downloads Image is not present");
+        Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
+                "Downloads empty header is not present");
 
         sa.assertAll();
     }
