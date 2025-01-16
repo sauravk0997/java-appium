@@ -172,7 +172,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90701"})
-    @Test(description = "Log In Password screen details verification", groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyPasswordScreenDetails() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -180,7 +180,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusOneTimePasscodeIOSPageBase passcodePage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         selectAppleUpdateLaterAndDismissAppTracking();
         Assert.assertTrue(welcomeScreen.isOpened(), "Welcome screen did not launch");
@@ -192,13 +193,17 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         passcodePage.clickLoginWithPasswordButton();
 
         new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
-        sa.assertTrue(passwordPage.isEnterYourPasswordHeaderPresent(), "Enter your password header was not found.");
-        sa.assertTrue(passwordPage.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Log in to Disney+ with your MyDisney account text was not found.");
+        sa.assertTrue(passwordPage.isEnterYourPasswordHeaderPresent(),
+                "Enter your password header was not found.");
+        sa.assertTrue(passwordPage.isEnterYourPasswordBodyPresent(getAccount().getEmail()),
+                "Log in to Disney+ with your MyDisney account text was not found.");
         sa.assertTrue(passwordPage.isEnterYourPasswordHintPresent(), "Enter your password hint was not found.");
         sa.assertTrue(passwordPage.isCaseSensitiveHintPresent(), "Case Sensitive hint was not found.");
-        sa.assertTrue(passwordPage.isHavingTroubleLoggingInPresent(), "Having Trouble Logging In button was not found.");
+        sa.assertTrue(passwordPage.isHavingTroubleLoggingInPresent(),
+                "Having Trouble Logging In button was not found.");
         sa.assertTrue(passwordPage.isLoginNavigationButtonPresent(), "Login navigation button was not found.");
-        sa.assertTrue(passwordPage.isLearnMoreAboutMyDisneyButtonPresent(), "Learn more about MyDisney button was not found.");
+        sa.assertTrue(passwordPage.isLearnMoreAboutMyDisneyButtonPresent(),
+                "Learn more about MyDisney button was not found.");
         sa.assertAll();
     }
 
