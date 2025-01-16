@@ -6,6 +6,9 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.JUNIOR_MODE_LEARN_MORE;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LEARN_MORE_CONTENT_RATINGS_LINK_1_TEXT;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOSPageBase {
 
@@ -47,5 +50,10 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
 
     public void tapSaveButton(){
         saveButton.click();
+    }
+
+    public boolean isLearnMoreLinkTextPresent() {
+        return getStaticTextViewValueContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                LEARN_MORE_CONTENT_RATINGS_LINK_1_TEXT.getText())).isPresent();
     }
 }
