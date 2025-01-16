@@ -50,7 +50,8 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
     }
 
     public boolean isHeaderPresent() {
-        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.COMPLETE_PROFILE_TITLE.getText())).isPresent();
     }
 }
