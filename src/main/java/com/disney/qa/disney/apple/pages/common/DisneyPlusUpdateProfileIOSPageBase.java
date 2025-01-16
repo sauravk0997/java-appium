@@ -53,6 +53,7 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
 
     public boolean isLearnMoreLinkTextPresent() {
         return getStaticTextViewValueContains(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, LEARN_MORE_CONTENT_RATINGS_LINK_1_TEXT.getText())).isPresent();
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                LEARN_MORE_CONTENT_RATINGS_LINK_1_TEXT.getText())).isPresent();
     }
 }
