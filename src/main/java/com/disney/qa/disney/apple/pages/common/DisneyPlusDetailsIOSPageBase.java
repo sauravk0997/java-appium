@@ -167,6 +167,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private final ExtendedWebElement downloadPausedLabel = getStaticTextByLabel(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.DOWNLOAD_PAUSED.getText()));
+    private final ExtendedWebElement resumeDownloadButton = getTypeButtonByLabel(getLocalizationUtils()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    DictionaryKeys.BTN_RESUME_DOWNLOAD.getText()));
 
     //FUNCTIONS
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -256,6 +259,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getRemoveDownloadButton() {
         return removeDownloadButton;
+    }
+
+    public ExtendedWebElement getResumeDownloadButton() {
+        return resumeDownloadButton;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
