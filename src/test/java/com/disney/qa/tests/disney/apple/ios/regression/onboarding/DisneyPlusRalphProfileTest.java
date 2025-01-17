@@ -606,7 +606,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         }
     }
 
-    private void  setupForRalph(String... DOB) {
+    private void setupForRalph(String... DOB) {
         String locale = getLocalizationUtils().getLocale();
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
 
