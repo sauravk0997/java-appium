@@ -766,4 +766,27 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getContentRatingInfoView() {
         return contentRatingInfoView;
     }
+
+    public boolean isConcurrencyMessageErrorPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.STREAMCONCURRENCY.getText())).isPresent();
+    }
+
+    public boolean isConcurrencyTitleErrorPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.STREAMCONCURRENCY_TITLE.getText())).isPresent();
+    }
+
+    public boolean isConcurrencyCTAButtonPresent() {
+        return getTypeButtonContainsLabel(getCtaButtonDismiss().getText()).isPresent();
+    }
+
+    public ExtendedWebElement getCtaButtonDismiss() {
+        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.DISMISS_BTN.getText()));
+    }
+
 }
