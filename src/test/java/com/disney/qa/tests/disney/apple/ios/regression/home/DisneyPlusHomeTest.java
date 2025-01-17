@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -24,8 +25,12 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
-import static com.disney.qa.common.constant.IConstantHelper.SG;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -139,12 +144,16 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyRatingRestrictionTravelingMessage() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
 
+        welcomePage.clickLogInButton();
+        login(getAccount());
+        homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
         Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
         Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");
         Assert.assertTrue(homePage.getTravelAlertOk().isPresent(), "Travel alert ok button was not present");
@@ -380,6 +389,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         // Populate Continue Watching assets
@@ -397,13 +407,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(THE_AVENGERS.getTitle()),
                 "Title didn't play from continue watching shelf");
-        videoPlayer.scrubToPlaybackPercentage(99);
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(95);
+        upNextPage.waitForUpNextUIToAppear();
         videoPlayer.clickBackButton();
-        Assert.assertFalse(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+        homePage.waitForElementToDisappear(
+                homePage.getCollection(CollectionConstant.Collection.CONTINUE_WATCHING), FIFTEEN_SEC_TIMEOUT);
+        Assert.assertFalse(
+                homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING, FIVE_SEC_TIMEOUT),
                 "Continue Watching Container found after content completed");
-        Assert.assertFalse(homePage.getCellElementFromContainer(CollectionConstant.Collection.CONTINUE_WATCHING,
-                THE_AVENGERS.getTitle()).isPresent(), "Title found in Continue watching container");
+        Assert.assertFalse(homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.CONTINUE_WATCHING, THE_AVENGERS.getTitle()).isPresent(FIVE_SEC_TIMEOUT),
+                "Title found in Continue watching container");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
@@ -574,8 +588,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        String email = "robert.walters+6740c5ea@disneyplustesting.com";
-        loginForHuluHub(email);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
 
         //Open Hulu brand page
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
@@ -638,6 +652,57 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             homePage.getElementTypeCellByLabel(contentTitle).click();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68163"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
+        int swipeCount = 5;
+        int expectedRemainingTimeInSec = 50;
+        String lessThanOneMinMessage = "Less than 1m remaining";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .build());
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+
+        addContentInContinueWatchingWithExpectedRemainingTime(
+                R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
+                expectedRemainingTimeInSec);
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found for Adult profile");
+        sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
+                        CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING),
+                        lessThanOneMinMessage),
+                lessThanOneMinMessage + " message not displayed on tile for Adult profile");
+
+        // Verify for KIDS profile
+        homePage.clickMoreTab();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        homePage.waitForHomePageToOpen();
+        addContentInContinueWatchingWithExpectedRemainingTime(
+                R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
+                expectedRemainingTimeInSec);
+
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        homePage.waitForHomePageToOpen();
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found for Kid profile");
+        sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
+                        CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING),
+                        lessThanOneMinMessage),
+                lessThanOneMinMessage + " message not displayed on tile for Kid profile");
+        sa.assertAll();
+    }
+
     private void addContentInContinueWatching(String url, int scrubPercentage) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -648,6 +713,19 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+    }
+
+    private void addContentInContinueWatchingWithExpectedRemainingTime(String url, int expectedRemainingTime) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        launchDeeplink(url);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
     }

@@ -54,6 +54,9 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     String DEVICE_TYPE = "capabilities.deviceType";
 
     String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
+    Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    String RIGHT_POSITION = "RIGHT";
+    String LEFT_POSITION = "LEFT";
 
     enum ButtonStatus {
         ON, OFF, INVALID
@@ -867,9 +870,13 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         }
 
         int maxHeight = getDriver().manage().window().getSize().getHeight();
+        int minThreshold = (int) (maxHeight * .1);
         int threshold = (int) (maxHeight - maxHeight * .05);
-        if (element.getLocation().getY() > threshold) {
+        int yCoordinate = element.getLocation().getY();
+        if (yCoordinate > threshold) {
             swipeUp(1, 1000);
+        } else if (yCoordinate < minThreshold) {
+            swipeDown(1, 1000);
         }
     }
 
@@ -956,5 +963,44 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
                         : Character.toTitleCase(word.charAt(0)) + word.substring(1).toLowerCase()
                 )
                 .collect(Collectors.joining(separator));
+    }
+
+    default int getDistanceBetweenElements(ExtendedWebElement element1, ExtendedWebElement element2) {
+        Point position1 = getCenterCoordinate(element1);
+        Point position2 = getCenterCoordinate(element2);
+        double pointXSqr = Math.pow((double) position2.getX() - (double) position1.getX(), 2);
+        double pointYSqr = Math.pow((double) position2.getY() - (double) position1.getY(), 2);
+        return (int) Math.sqrt(pointXSqr + pointYSqr);
+    }
+
+    default Point getCenterCoordinate(ExtendedWebElement element) {
+        int startX = element.getLocation().getX();
+        int startY = element.getLocation().getY();
+        int width = element.getSize().getWidth();
+        int height = element.getSize().getHeight();
+        int centerX = startX + (width / 2);
+        int centerY = startY + (height / 2);
+        return new Point(centerX, centerY);
+    }
+
+    default void validateElementPositionAlignment(ExtendedWebElement element, String alignment) {
+        int elementPosition = getCenterCoordinate(element).getX();
+        LOGGER.info("elementPosition: {} ", elementPosition);
+        Dimension screenSize = getDriver().manage().window().getSize();
+        int screenWidth = screenSize.width;
+        LOGGER.info("screen size width: {} ", screenWidth);
+        // Get 50 percent of the screen width size to validate if elements are on the right or left
+        double percentageToValidate = 0.5 * screenWidth;
+        LOGGER.info("percentageToValidate size: {} ", percentageToValidate);
+        switch(alignment) {
+            case RIGHT_POSITION:
+                Assert.assertTrue(elementPosition > percentageToValidate,
+                        "Element is not at the right position");
+                break;
+            case LEFT_POSITION:
+                Assert.assertTrue(elementPosition < percentageToValidate, "Element is not at the left position");
+                break;
+            default: throw new IllegalArgumentException("Invalid alignment String");
+        }
     }
 }

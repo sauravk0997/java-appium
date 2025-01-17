@@ -88,6 +88,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String R21_PAUSE_TIMEOUT = "r21PauseTimeoutSeconds";
     public static final String DISABLED = "disabled";
     public static final String HULU = "Hulu";
+    public static final String DEEPLINKURL = "disneyplus://www.disneyplus.com/browse/";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -172,17 +173,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
         }
-    }
-
-    public void loginForHuluHub(String Email) {
-        initialSetup();
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(Email);
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("Test123!");
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
-        Assert.assertTrue(initPage(DisneyPlusHomeIOSPageBase.class).isOpened(),
-                "Couldn't login into the Hulu-sub account");
     }
 
     /**

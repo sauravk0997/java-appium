@@ -20,7 +20,8 @@
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Pro_Gen_3,iPad_Gen_9,iPad_Pro_Gen_3_1,iPad_8_Gen,iPad_Mini_5_Gen,iPad_8_Gen_1;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
-    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=300,capabilities.newCommandTimeout=240,init_retry_count=2,init_retry_interval=15"/>
+    <parameter name="overrideFields"
+               value="JOB_MAX_RUN_TIME=300,capabilities.newCommandTimeout=300,init_retry_count=2,init_retry_interval=15"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding1" parallel="methods">
         <classes>

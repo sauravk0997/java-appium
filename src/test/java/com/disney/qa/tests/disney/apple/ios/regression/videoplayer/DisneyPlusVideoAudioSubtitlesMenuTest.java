@@ -98,7 +98,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68452"})
-    @Test(description = "Video Player Controls - Audio & Subtitles Menu - Backgrounding the App from the player", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAudioAndSubtitleMenuBackgroundingApp() {
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -106,16 +106,21 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
 
         loginAndDeeplinkToPlayerAudioSubtitleMenu(MULAN_DEEPLINK, sa);
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
+
         lockDevice(Duration.ofSeconds(5));
         handleAlert();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         sa.assertTrue(subtitlePage.isOpened(), AUDIO_SUBTITLE_MENU_DID_NOT_OPEN);
+
         subtitlePage.chooseAudioLanguage(DEUTSCH);
         subtitlePage.chooseSubtitlesLanguage(DEUTSCH);
         subtitlePage.tapCloseButton();
         sa.assertTrue(videoPlayer.verifyVideoPaused(), VIDEO_NOT_PAUSED);
+
         videoPlayer.tapAudioSubtitleMenu();
         sa.assertTrue(subtitlePage.verifySelectedAudioIs(DEUTSCH), CHECKMARK_NOT_PRESENT_FOR_SELECTED_LANG);
-        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(DEUTSCH), SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED + DEUTSCH);
+        sa.assertTrue(subtitlePage.verifySelectedSubtitleLangIs(DEUTSCH),
+                SELECTED_SUBTITLE_LANG_NOT_AS_EXPECTED + DEUTSCH);
         sa.assertAll();
     }
 
@@ -206,16 +211,20 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     }
 
     private void initiatePlaybackFor(String content) {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusHomeIOSPageBase.getSearchNav().click();
-        disneyPlusSearchIOSPageBase.searchForMedia(content);
-        List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
+        homePage.clickSearchIcon();
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(content);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        disneyPlusDetailsIOSPageBase.clickPlayButton().isOpened();
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
     }
 
     private void loginAndDeeplinkToPlayerAudioSubtitleMenu(String deeplink, SoftAssert sa) {

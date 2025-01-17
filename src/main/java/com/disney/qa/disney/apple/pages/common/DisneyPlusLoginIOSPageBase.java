@@ -42,10 +42,6 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return headlineHeader.isElementPresent();
     }
 
-    public boolean isBackArrowDisplayed() {
-        return getBackArrow().isPresent();
-    }
-
     public boolean isEmailFieldDisplayed() {
         return getTextEntryField().format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText())).isPresent();
     }
@@ -66,10 +62,6 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         //To hide the keyboard, passing \n at the end of username value
         fillOutEmailField(userEmailAddress + "\n");
         Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(continueButton.getBy()), TEN_SEC_TIMEOUT), "Continue button was present after 10 sec on 'enter email' page");
-    }
-
-    public String getErrorMessageString() {
-        return labelError.getText();
     }
 
     public boolean isTryAgainAlertButtonDisplayed() {

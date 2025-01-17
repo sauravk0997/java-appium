@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -13,13 +14,13 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 
-import static com.disney.qa.common.constant.IConstantHelper.CA;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     static final String DISNEY_CONTENT = "Percy Jackson";
     static final String HULU_CONTENT = "Only Murders in the Building";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
+    private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page did not open";
     static final String UNLOCK = "Unlock";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
@@ -116,6 +117,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
@@ -123,8 +125,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         //verify empty watch list
-        sa.assertTrue(moreMenu.isWatchlistHeaderDisplayed(),
-                "'Watchlist' header was not displayed");
+        sa.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_DID_NOT_OPEN);
         sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not displayed");
         moreMenu.clickBackArrowFromWatchlist();
@@ -157,6 +158,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
@@ -182,8 +184,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         //verify empty watch list
-        sa.assertTrue(moreMenu.isWatchlistHeaderDisplayed(),
-                "'Watchlist' header was not displayed");
+        sa.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_DID_NOT_OPEN);
         sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not displayed");
         sa.assertAll();
@@ -218,8 +219,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        String email = "alekhya.rallapalli+6740c467@disneyplustesting.com";
-        loginForHuluHub(email);
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
@@ -235,10 +236,12 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     public void verifyEntitleAndNonEntitleHuluContentForNonBundleUser() {
         String entitleHuluContent = "Solar Opposites";
         String notEntitleHuluContent = "Only Murders in the Building";
-        String email = "robert.walters+6740c4f3@disneyplustesting.com";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        loginForHuluHub(email);
+
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
+
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
@@ -263,10 +266,11 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77874"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifySearchHuluContentForBundleUser() {
-        String email = "alekhya.rallapalli+6740d29d@disneyplustesting.com ";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        loginForHuluHub(email);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
+        setAppToHomeScreen(getAccount());
+
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
 
@@ -281,14 +285,16 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, CA})
-    public void verifySearchHuluContentForStandaloneUserInNonEligibleCountry() {
-        String userEmailAddress = "alekhya.rallapalli+6745f17f@disneyplustesting.com";
+    public void verifySearchHuluContentForStandaloneUserInEligible() {
         String unavailableContentInCA = "Normal People";
 
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-
-        loginForHuluHub(userEmailAddress);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                CA,
+                getLocalizationUtils().getUserLanguage()));
+        handleAlert();
+        setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);

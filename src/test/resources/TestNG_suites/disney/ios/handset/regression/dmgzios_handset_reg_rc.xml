@@ -12,15 +12,16 @@
     <parameter name="choiceParam::env::Test ENV" value="Prod,Preview"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_14,iPhone_12,iPhone_12_Pro,iPhone_Xs,iPhone_13_Pro,iPhone_11_2;deviceType=Phone;timeoutMs=120000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_14,iPhone_12_Pro,iPhone_Xs,iPhone_13_Pro;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
+    <parameter name="overrideFields"
+               value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=300"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Smoke,Anthology,Ariel,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
+               value=",Smoke,Anthology,Ariel,Deeplinks,DetailsPage,Downloads,Home,Hulk,HuluHub,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>
@@ -85,6 +86,7 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerLockScreenTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Home" parallel="methods">

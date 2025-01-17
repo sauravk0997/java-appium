@@ -52,7 +52,11 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isBackArrowPresent(){ return backBtn.isPresent(); }
 
     public String getValueOfConsentSwitch(){
-        return consentSwitch.getAttribute("value");
+        return getSellingLegalContentSwitch().getAttribute("value");
+    }
+
+    public ExtendedWebElement getSellingLegalContentSwitch() {
+        return consentSwitch;
     }
 
     public boolean isLegaltextPresent(){
@@ -101,7 +105,7 @@ public class DisneyplusSellingLegalIOSPageBase extends DisneyPlusApplePageBase {
         backBtn.click();
     }
 
-    public void clickSellingSharingTargatedAdvertisingConsentSwitch(){
-        consentSwitch.click();
+    public void clickSellingSharingTargetedAdvertisingConsentSwitch(){
+        getSellingLegalContentSwitch().click();
     }
 }

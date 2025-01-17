@@ -23,6 +23,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
@@ -977,6 +978,179 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 season2 + " " + titleErrorMessage);
         sa.assertTrue(downloads.getStaticTextByLabel(season1).isPresent(),
                 season1 + " " + titleErrorMessage);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75573"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadedEpisodePlayback() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int seasonNumber = 1;
+        int episodeNumber = 1;
+        String episodeTitle;
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getEpisodeToDownload(Integer.toString(seasonNumber), Integer.toString(episodeNumber)).click();
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            episodeTitle = seriesApiContent.getSeasons().get(seasonNumber - 1).getItems().get(episodeNumber - 1)
+                    .getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test because of unexpected exception getting episode title");
+        }
+        if (episodeTitle == null) {
+            throw new SkipException("No episode title found for the desired series episode in Explore API");
+        }
+        detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.getHuluSeriesDownloadCompleteButton().click();
+        detailsPage.getDownloadModalPlayButton().click();
+
+        Assert.assertTrue(videoPlayer.isOpened(),
+                "Video player did not open after choosing a downloaded episode");
+        videoPlayer.waitForVideoToStart();
+        String playerSubtitle = videoPlayer.getSubTitleLabel();
+        Assert.assertTrue(playerSubtitle.contains(episodeTitle),
+                "Video player title does not match with expected title: " + episodeTitle);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75577"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadModalWhenEpisodeDownloadIsInProgress() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String firstEpisodeTitle = "Glorious Purpose";
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
+                "Download not started, Stop or Pause Download button not displayed");
+        detailsPage.clickStopOrPauseDownload();
+
+        sa.assertTrue(detailsPage.getStaticTextByLabel(firstEpisodeTitle).isElementPresent(),
+                "Content Title was not displayed on Download modal");
+        sa.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(),
+                "Pause Download button not displayed on Download modal");
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(),
+                "Remove Download button not displayed on Download modal");
+        sa.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
+                "Download in Progress status not displayed on Download modal");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on Download modal");
+
+        detailsPage.getPauseDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
+                "Download was not paused. Download icon was not present");
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        Assert.assertTrue(detailsPage.isDownloadPausedInDownloadModal(),
+                "Download state did not change to Paused");
+
+        detailsPage.getRemoveDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
+                "Download was not removed. Download icon was not present");
+        Assert.assertFalse(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download was not removed. Stop/Pause Download icon was still displayed");
+
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
+                "Download not started, Stop or Pause Download button not displayed");
+        detailsPage.clickStopOrPauseDownload();
+        Assert.assertTrue(detailsPage.getViewAlert().isElementPresent(),
+                "Download modal was not present");
+        detailsPage.clickAlertDismissBtn();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
+                "Download is not in progress. Stop/Pause Download icon was not displayed");
+
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67415"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.DOWNLOADS, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadModalWhenEpisodeDownloadIsPaused() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        String firstEpisodeTitle = "Glorious Purpose";
+        String seriesDeeplink = R.TESTDATA.get("disney_prod_series_detail_loki_deeplink");
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        //Open series detail page, download first episode, pause download and re-open download modal
+        launchDeeplink(seriesDeeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        Assert.assertTrue(detailsPage.isStopOrPauseDownloadIconDisplayed(),
+                "Download not started, Stop or Pause Download button not displayed");
+        detailsPage.clickStopOrPauseDownload();
+        Assert.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(),
+                "Pause Download button was not displayed on Download modal");
+        detailsPage.getPauseDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        detailsPage.getFirstEpisodeDownloadButton().click();
+
+        //Validate download modal elements presence when download is paused
+        sa.assertTrue(detailsPage.getStaticTextByLabel(firstEpisodeTitle).isElementPresent(),
+                "Content Title was not displayed on Download modal");
+        sa.assertTrue(detailsPage.isDownloadPausedInDownloadModal(),
+                "Download Paused status not displayed on Download modal");
+        sa.assertTrue(detailsPage.getResumeDownloadButton().isDisplayed(),
+                "Resume Download button was not displayed on Download modal");
+        sa.assertTrue(detailsPage.isRemoveDownloadButtonDisplayed(),
+                "Remove Download button was not displayed on Download modal");
+        sa.assertTrue(detailsPage.isAlertDismissBtnPresent(), "Dismiss button not found on Download modal");
+
+        //Validate Dismiss button behavior when download is paused
+        detailsPage.clickAlertDismissBtn();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
+                "Download is not paused. Download icon was not displayed");
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        Assert.assertTrue(detailsPage.isDownloadPausedInDownloadModal(),
+                "Download did not remained paused. Download Paused status not displayed on Download modal");
+
+        //Validate Resume Download button does resume the download when the download was paused
+        detailsPage.getResumeDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(),
+                "Download was not resumed. Stop/Pause Download icon was not present");
+        detailsPage.clickStopOrPauseDownload();
+        Assert.assertTrue(detailsPage.isDownloadInProgressStatusDisplayed(),
+                "Download state did not change to Download in progress");
+
+        //Pause the download again, open modal and validate Remove Download button behavior when download is paused
+        detailsPage.getPauseDownloadButton().click();
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        detailsPage.getRemoveDownloadButton().click();
+        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download Modal was still visible");
+        Assert.assertFalse(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(THREE_SEC_TIMEOUT),
+                "Download was not removed. Stop/Pause Download icon was displayed");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
+                "Downloads Image is not present");
+        Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(),
+                "Downloads empty header is not present");
+
         sa.assertAll();
     }
 

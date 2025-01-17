@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.disney.DisneyEntityIds;
-import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -25,12 +24,16 @@ import java.util.stream.IntStream;
 
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
+import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     private static final String PREY = "Prey";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
+    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
+    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
@@ -196,6 +199,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             detailsPage.swipeUp(1500);
         }
+        sa.assertTrue(detailsPage.isTabSelected(detailsPage.getExtrasTab().getAttribute(Attributes.NAME.getAttribute())),
+                "EXTRAS Tab is not selected");
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Extras tab play icon was not found");
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "First extras title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "First extras description was not found");
@@ -208,6 +213,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
         detailsPage.clickSuggestedTab();
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getExtrasTab());
         detailsPage.clickExtrasTab();
         sa.assertTrue(detailsPage.isProgressBarPresent(), "Duration not displayed on extras trailer.");
         sa.assertAll();
@@ -244,6 +250,7 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         //Kids
         homePage.clickMoreTab();
         whoseWatchingPage.clickProfile(JUNIOR_PROFILE);
+        sa.assertTrue(homePage.isKidsHomePageOpen(), "Kids home page did not open");
         homePage.clickSearchIcon();
         searchPage.searchForMedia("I Am Groot");
         searchPage.getDisplayedTitles().get(0).click();
@@ -512,6 +519,125 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
                 "Hulu title was present in the Watchlist");
         Assert.assertTrue(moreMenu.getTypeCellLabelContains(WANDA_VISION).isPresent(),
                 "Disney Plus title was not present in the Watchlist");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74586"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluDetailsPageRatings() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_teen_titans_go_deeplink"));
+        detailsPage.verifyRatingsInDetailsFeaturedArea(TV_PG.getContentRating(), sa);
+        detailsPage.validateRatingsInDetailsTab(TV_PG.getContentRating(), sa);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_bohemian_rhapsody_deeplink"));
+        detailsPage.verifyRatingsInDetailsFeaturedArea(PG_13.getContentRating(), sa);
+        detailsPage.validateRatingsInDetailsTab(PG_13.getContentRating(), sa);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75022"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMovieDetailsVideoPlayerRestartButton() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int limitTime = 25;
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Deeplink a movie, scrub and get current time
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(),DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
+        LOGGER.info("currentTimeBeforeRestartClick {}", currentTimeBeforeRestartClick);
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(),DETAILS_PAGE_DID_NOT_OPEN);
+
+        // Validate and click restart button, get current time and validate restart button
+        Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
+        detailsPage.getRestartButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        int currentTimeAfterRestartClick = videoPlayer.getCurrentTime();
+        LOGGER.info("currentTimeAfterRestartClick {}", currentTimeAfterRestartClick);
+        Assert.assertTrue((currentTimeAfterRestartClick < currentTimeBeforeRestartClick)
+                        && (currentTimeAfterRestartClick < limitTime),
+                "Restart button did not restarted the video");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75023"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySeriesDetailsVideoPlayerRestartButton() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int limitTime = 25;
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Deeplink a series episode, scrub and get current time
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
+        LOGGER.info("currentTimeBeforeRestartClick {}", currentTimeBeforeRestartClick);
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        // Validate and click restart button, get current time and validate restart button
+        Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
+        detailsPage.getRestartButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        int currentTimeAfterRestartClick = videoPlayer.getCurrentTime();
+        LOGGER.info("currentTimeAfterRestartClick {}", currentTimeAfterRestartClick);
+        Assert.assertTrue((currentTimeAfterRestartClick < currentTimeBeforeRestartClick)
+                        && (currentTimeAfterRestartClick < limitTime),
+                "Restart button did not restarted the video");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76389"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluSeriesDetailsTabContentBadges() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Open a hulu series and validate badges in details tab
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickDetailsTab();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        sa.assertTrue(detailsPage.getFormatDetailsText().isPresent(), "Details formats text section is not present");
+        sa.assertTrue(detailsPage.getDolbyBadge().isPresent(), "Dolby badge is not present");
+        sa.assertTrue(detailsPage.getUHDBadge().isPresent(), "4K badge is not present");
+        sa.assertTrue(detailsPage.getHDRBadge().isPresent(), "HDR badge not present");
+        sa.assertAll();
     }
 
     protected ArrayList<String> getMedia() {

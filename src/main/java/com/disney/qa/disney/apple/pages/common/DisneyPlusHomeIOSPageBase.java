@@ -31,7 +31,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement nationalGeographicTile;
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
-    @ExtendedFindBy(accessibilityId = "Mickey and Friends")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Mickey Mouse and Friends'`]")
     private ExtendedWebElement mickeyAndFriends;
     @ExtendedFindBy(accessibilityId = "TabBar/Home/active")
     private ExtendedWebElement activeHomeIcon;
@@ -169,11 +169,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void swipeTillContinueWatchingCarouselPresent() {
-        String wordSeparator = " ";
-        String continueWatchingText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CONTINUE_WATCHING_TITLE.getText());
-        String expectedTitle = convertToTitleCase(continueWatchingText, wordSeparator);
-        ExtendedWebElement continueWatchingHeader = getDynamicAccessibilityId(expectedTitle);
-        Assert.assertTrue(swipe(continueWatchingHeader, Direction.UP, 3, 400), "Couldn't scroll to continue watching carousel");
+        CollectionConstant.Collection continueWatching = CollectionConstant.Collection.CONTINUE_WATCHING;
+        swipeTillCollectionTappable(continueWatching, Direction.UP, 5);
     }
 
     public void goToDetailsPageFromContinueWatching(String title) {

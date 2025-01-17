@@ -135,6 +135,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isElementPresent(PlayerControl control) {
+        waitForPresenceOfAnElement(playerView);
         displayVideoController();
         return getElementFor(control).isElementPresent();
     }
@@ -327,12 +328,15 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
         LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
         displayVideoController();
-        int seekBarWidth = seekBar.getSize().getWidth();
-        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
-        int destinationX = (int) (seekBarWidth * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
+        int destinationX = seekBar.getLocation().getX() +
+                (int)(seekBar.getSize().getWidth() * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
         displayVideoController();
-        scrollFromTo(currentTimeMarker.getLocation().getX(),
-                currentTimeMarkerLocation.getY(), destinationX, currentTimeMarkerLocation.getY());
+        Point currentTimeMarkerLocation = currentTimeMarker.getLocation();
+        LOGGER.info("Scrubbing from X:{},Y:{} to X:{},Y:{}",
+                currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
+                destinationX, currentTimeMarkerLocation.getY());
+        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
+                destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
@@ -376,10 +380,21 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public int getRemainingTimeThreeIntegers() {
         displayVideoController();
-        String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) * 60
-                + Integer.parseInt(remainingTime[1]) * 60
-                + (Integer.parseInt(remainingTime[2]));
+        String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
+        int remainingTimeInSec;
+
+        if (remainingTimeParts.length == 3) {
+            int hours = Integer.parseInt(remainingTimeParts[0]);
+            int minutes = Integer.parseInt(remainingTimeParts[1]);
+            int sec = Integer.parseInt(remainingTimeParts[2]);
+            remainingTimeInSec = (hours * 60 * 60) + minutes * 60 + sec;
+        } else if (remainingTimeParts.length == 2) {
+            int minutes = Integer.parseInt(remainingTimeParts[0]);
+            int sec = Integer.parseInt(remainingTimeParts[1]);
+            remainingTimeInSec = minutes * 60 + sec;
+        } else {
+            remainingTimeInSec = Integer.parseInt(remainingTimeParts[0]);
+        }
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
@@ -488,14 +503,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         if (timeout.length > 0) {
             waitTime = timeout[0];
         }
+        return getAdBadge().isPresent(waitTime);
+    }
+
+    public ExtendedWebElement getAdBadge() {
         String adLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
-        return getStaticTextByLabel(adLabel).isPresent(waitTime);
+        return getStaticTextByLabel(adLabel);
     }
 
     public boolean isAdBadgeLabelPresentWhenControlDisplay() {
-        String adLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.AD_BADGE_LABEL.getText());
         displayVideoController();
-        return getStaticTextByLabel(adLabel).isElementPresent();
+        return getAdBadge().isElementPresent();
     }
 
     public ExtendedWebElement getNetworkWatermarkLogo(String network) {
@@ -723,6 +741,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> !getPlayerView().isPresent());
     }
 
+    public boolean waitUntilRemainingTimeLessThan(int waitTime, int polling, int expectedRemainingTimeInSec) {
+        return fluentWait(getDriver(), waitTime, polling,
+                "Video player remaining time not matched with expected remaining time")
+                .until(it -> isRemainingTimeLessThanExpected(expectedRemainingTimeInSec));
+    }
+
+    public boolean isRemainingTimeLessThanExpected(int expectedRemainingTimeInSec) {
+        int remainingtime = getRemainingTime();
+        return remainingtime <= expectedRemainingTimeInSec;
+    }
+
     public boolean isAdPodPresent() {
         return adPod.isPresent();
     }
@@ -767,6 +796,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return contentRatingInfoView;
     }
 
+    public boolean waitForVideoLockTooltipToAppear() {
+        return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                "Player controls lock tooltip did not appear")
+                .until(it -> getLockScreenToolTip().isPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public ExtendedWebElement getLockScreenToolTip() {
+        return getTextElementValue(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAYER_CONTROLS_LOCK_TOOLTIP.getText()));
+    }
+
     public boolean isConcurrencyMessageErrorPresent() {
         return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
@@ -788,5 +828,4 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.DISMISS_BTN.getText()));
     }
-
 }

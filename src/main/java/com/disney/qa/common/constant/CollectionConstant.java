@@ -29,7 +29,8 @@ public class CollectionConstant {
         TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
         TRENDING,
-        UNLOCK_TO_STREAM_MORE_HULU
+        UNLOCK_TO_STREAM_MORE_HULU,
+        WATCHLIST
     }
 
     public static String getCollectionName(Collection collection) {
@@ -73,7 +74,7 @@ public class CollectionConstant {
             case HULU_FEATURED:
                 return "a4af2864-302e-499e-adf5-88ed1735976f";
             case HULU_ORIGINALS:
-                return "e0121aa5-d18c-4db0-88fe-6edd30a01224";
+                return "3b31ecf1-9816-4d91-bcdf-197d69fdd58a";
             case KIDS_CAROUSEL:
                 return "2821d7a3-1146-4ca5-8333-e2c565edf79d";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
@@ -86,6 +87,8 @@ public class CollectionConstant {
                 return "43a35f2b-3788-4449-a54d-cd37263f0940";
             case UNLOCK_TO_STREAM_MORE_HULU:
                 return "ab0bba56-0738-4348-b29b-ed2ae2d51130";
+            case WATCHLIST:
+                return "6f3e3200-ce38-4865-8500-a9f463c1971e";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection is not found", collection));
         }

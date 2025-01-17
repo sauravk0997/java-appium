@@ -7,6 +7,7 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.MY_DISNEY_OTP_INCORRECT_ERROR;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.RESEND_EMAIL_COPY_2;
 
 /*
@@ -61,5 +62,18 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
 
     public ExtendedWebElement getLoginButtonWithPassword() {
         return loginWithPassword;
+    }
+
+    public boolean isOtpIncorrectErrorPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        MY_DISNEY_OTP_INCORRECT_ERROR.getText()))
+                .isPresent();
+    }
+
+    @Override
+    public void clickCancelBtn() {
+        getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText())).click();
     }
 }
