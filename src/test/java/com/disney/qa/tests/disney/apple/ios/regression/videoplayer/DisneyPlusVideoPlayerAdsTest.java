@@ -193,6 +193,8 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int timeout = 20;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(SPIDERMAN_THREE);
+
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getAdBadge());
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(timeout), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         int adTimeRemainingBeforeControlAction = videoPlayer.getAdRemainingTimeInSeconds();
         int contentTimeRemaining = videoPlayer.getRemainingTime();
@@ -309,7 +311,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(MS_MARVEL);
 
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getAdBadge());
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(2);
         Assert.assertTrue(videoPlayer.isRatingPresent(DictionaryKeys.RATING_TVPG_TV_PG),  "rating was" +
@@ -380,6 +382,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int nextAdScrubPercentage = 65;
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getAdBadge());
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Wait to be outside grace period
