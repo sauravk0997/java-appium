@@ -150,6 +150,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     public void verifyHulkUpsellStandaloneUserInEligibleFlow() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         int swipeCount = 5;
@@ -157,13 +158,14 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM);
         setAppToHomeScreen(basicAccount);
 
-        homePage.tapHuluBrandTile();
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
 
         //Verify user can play some Hulu content
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
         homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayOrContinue();
+        videoPlayer.skipPromoIfPresent();
         videoPlayer.verifyThreeIntegerVideoPlaying(sa);
         videoPlayer.clickBackButton();
 
