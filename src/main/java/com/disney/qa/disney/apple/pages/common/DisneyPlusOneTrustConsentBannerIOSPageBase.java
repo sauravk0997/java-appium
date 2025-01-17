@@ -11,6 +11,15 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
         super(driver);
     }
 
+    @ExtendedFindBy(accessibilityId = "bannerTitle")
+    protected ExtendedWebElement bannerTitle;
+
+    @ExtendedFindBy(accessibilityId = "bannerDescriptions")
+    protected ExtendedWebElement bannerDescriptions;
+
+    @ExtendedFindBy(accessibilityId = "bannerDPDTitle")
+    protected ExtendedWebElement bannerDPDTitle;
+
     @ExtendedFindBy(accessibilityId = "bannerDPDDescriptions")
     protected ExtendedWebElement bannerDPDDescriptions;
 
