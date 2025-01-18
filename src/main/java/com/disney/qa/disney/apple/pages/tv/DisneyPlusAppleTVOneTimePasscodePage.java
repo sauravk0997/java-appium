@@ -28,4 +28,8 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
         }
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
+
+    public void clickLoginWithPassword() {
+        getTypeButtonByName("buttonLoginWithPassword").click();
+    }
 }
