@@ -57,6 +57,8 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
     }
 
     public void clickLoginWithPasswordButton() {
+        pause(5);
+        System.out.println(getDriver().getPageSource());
         loginWithPassword.click();
     }
 
