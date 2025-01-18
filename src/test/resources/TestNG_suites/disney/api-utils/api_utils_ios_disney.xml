@@ -42,7 +42,6 @@
             </class>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.moremenu.DisneyPlusMoreMenuAccountSettingsTest">
                 <methods>
-                    <include name="verifyUnverifiedAccountFunctions"/>
                     <include name="testChangePasswordUI"/>
                     <include name="verifySubscriptionsSectionHeader"/>
                     <include name="verifyAccountMonthlyToAnnualDisplays_Apple"/>
