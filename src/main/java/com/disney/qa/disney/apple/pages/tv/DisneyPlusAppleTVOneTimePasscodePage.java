@@ -30,6 +30,8 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
     }
 
     public void clickLoginWithPassword() {
-        getTypeButtonByName("buttonLoginWithPassword").click();
+        moveDown(2, 1);
+        System.out.println(getDriver().getPageSource());
+        clickSelect();
     }
 }
