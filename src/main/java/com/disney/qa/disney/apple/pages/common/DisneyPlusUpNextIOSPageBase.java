@@ -97,9 +97,4 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getUpNextImageView() {
         return upNextImageView;
     }
-
-    public boolean isNextRecommendationTextPresent() {
-        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.POSTPLAY_RECOMMENDATION.getText())).isPresent();
-    }
 }

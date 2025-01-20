@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.config.*;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -321,41 +320,58 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74459"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyStandardPostPlay() {
+    @Test(groups = {TestGroup.HULK, TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyStandardHuluPostPlay() {
         DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         String huluSeries = "The Bear";
+        String huluMovie = "Palm Springs";
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         setAppToHomeScreen(getAccount());
 
-        // Get the second episode title of The Bear series
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_the_bear_deeplink"));
-        sa.assertTrue(detailsPage.isOpened(), "Details did not open");
-        String secondEpisodeTitle = detailsPage.getEpisodeTitleLabel(2)
-                .getText().split("\\.")[1];
-        LOGGER.info("Second episode {}", secondEpisodeTitle);
+        ExploreContent seriesApiContent = getSeriesApi("entity-05eb6a8e-90ed-4947-8c0b-e6536cbddd5f",
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
+        String episodeTitle = "";
+        String seasonNumber = "";
+        try {
+            episodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+            seasonNumber = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getSeasonNumber();
+        } catch (Exception e) {
+            Assert.fail("Exception occurred: " + e.getMessage());
+        }
 
-        // Initiate series tests
+        if(episodeTitle == null || seasonNumber == null){
+            throw new SkipException("Skipping test, failed to get episodeTitles or seasonNumber from the api");
+        }
+
+        String upNextTitlePlaceHolder = String.format(REGEX_UPNEXT_SERIES_TITLE, seasonNumber, "2", episodeTitle);
+
+        //Enable autoplay
+        toggleAutoPlay("ON");
+
+        // Initiate Hulu series tests
         initiatePlaybackAndScrubOnPlayer(huluSeries, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         upNextIOSPageBase.waitForUpNextUIToAppear();
-
-        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(secondEpisodeTitle).isPresent(),
-                "Second title is not present");
+        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
+                "Up Next meta data title not displayed");
+        sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
         sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
         videoPlayer.clickBackButton();
         detailsPage.clickCloseButton();
         detailsPage.clickHomeIcon();
-        // Initiate movie tests
-        initiatePlaybackAndScrubOnPlayer("Palm Springs", PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+
+        // Initiate Hulu movie tests
+        initiatePlaybackAndScrubOnPlayer(huluMovie, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         upNextIOSPageBase.waitForUpNextUIToAppear();
-        sa.assertTrue(upNextIOSPageBase.isNextRecommendationTextPresent(),
-                      "You may also like text is not present");
+        sa.assertTrue(upNextIOSPageBase.isUpNextViewPresent() ,
+                "Countdown progress icon is not present");
+        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabelContains("You may also like").isPresent(),
+                "You may also like text is not present");
         sa.assertAll();
     }
 

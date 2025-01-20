@@ -427,7 +427,6 @@ public enum DictionaryKeys {
     PLAYBACK_LANGUAGE_HEADER("profile_settings_playback_language_header"),
     PLAYER_CONTROLS_LOCK_TOOLTIP("player_controls_lock_tooltip"),
     POSTPLAY_NEXTEPISODE_HEADER("btn_upnextlite_play"),
-    POSTPLAY_RECOMMENDATION("postplay_recommendation"),
     POSTPLAY_SNEAK_PEEK("postplay_sneakpeek"),
     POSTPLAY_UPNEXT("postplay_upnext"),
     PREMIER_ACCESS_HEADLINE_MOVIE("ea_headline_neutral_movie"),
