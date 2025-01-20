@@ -35,8 +35,7 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
 
@@ -1140,6 +1139,46 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             validateElementPositionAlignment(moreMenu.getDownloadNav(), RIGHT);
             validateElementPositionAlignment(moreMenu.getMoreMenuTab(), RIGHT);
         }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72466"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyProfileValidateUpdate() {
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().
+                disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).
+                dateOfBirth(null).language(getLocalizationUtils().getUserLanguage()).gender(null).
+                avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        sa.assertTrue(updateProfilePage.isOpened(),
+                "'Let's update your profile' page is not opened");
+
+        // Validate the update profile UI
+        sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(),
+                "Profile title is not present");
+        sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(),
+                "Profile subtitle is not present");
+        sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
+        sa.assertTrue(editProfile.getDynamicCellByName(MICKEY_MOUSE).isPresent(),"Profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"Pencil icon is not displayed");
+        sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
+        sa.assertTrue(updateProfilePage.isGenderFieldPresent(), "DOB field is not present");
+
+        // Select DOB and gender
+        updateProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        updateProfilePage.chooseGender();
+        updateProfilePage.tapSaveButton();
+        whoIsWatching.clickProfile(JUNIOR_PROFILE);
+        sa.assertTrue(homePage.isOpened(), "Home page did not open");
+
+        sa.assertAll();
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
