@@ -275,6 +275,7 @@ public enum DictionaryKeys {
     KIDPROOF_DIGIT_ZERO("kidproof_digit_zero"),
     KIDPROOF_INCORRECT_CODE_ERROR_MESSAGE("kidproof_dialog_error_incorrect_code_1"),
     KIDS_PROFILE_SUBCOPY("kidsprofile_subcopy"),
+    LEARN_MORE_CONTENT_RATINGS_LINK_1_TEXT("learn_more_content_ratings_link_1_text"),
     LEGAL_TITLE("legalcenter_title"),
     LIVE_PROGRESS("live_progress"),
     LIVE_PROGRESS_TIME("live_progress_time"),
