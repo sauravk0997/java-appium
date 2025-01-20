@@ -16,8 +16,6 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -35,7 +33,9 @@ import java.util.Set;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MICKEY_MOUSE;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
 
