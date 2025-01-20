@@ -2,9 +2,9 @@
 <suite verbose="1" name="dmgzios_handset_reg_rc" annotations="JDK" configfailurepolicy="continue" thread-count="6" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-3.9.5-rc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78140"/>
-    <parameter name="jenkinsBuild" value="3.9.5.74194"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.0.0-rc"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78355"/>
+    <parameter name="jenkinsBuild" value="4.0.0.75465"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Editorial-Preview-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_handset_reg_rc"/>
@@ -86,6 +86,7 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerAdsTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerLockScreenTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Home" parallel="methods">

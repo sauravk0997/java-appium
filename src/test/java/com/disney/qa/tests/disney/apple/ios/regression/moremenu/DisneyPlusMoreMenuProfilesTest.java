@@ -16,6 +16,8 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -26,7 +28,10 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -49,9 +54,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String MORE_MENU_NOT_DISPLAYED_ERROR = "More Menu is not displayed";
     private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String KID_PROOF_EXIT_SCREEN_DID_NOT_OPEN = "Kid Proof Exit code screen was not displayed";
-    private final static String UPDATED_TOAST_WAS_NOT_DISPLAYED = "'Updated' toast was not displayed";
-    private final static String KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON = "'kids proof exit' toggle is not 'On'";
-    private final static String WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED = "Who is watching screen did not open";
+    private static final String UPDATED_TOAST_WAS_NOT_DISPLAYED = "'Updated' toast was not displayed";
+    private static final String KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON = "'kids proof exit' toggle is not 'On'";
+    private static final String WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED = "Who is watching screen did not open";
+    private static final String RIGHT = "RIGHT";
+    private static final String LEFT = "LEFT";
 
     private void onboard() {
         setAppToHomeScreen(getAccount());
@@ -1063,6 +1070,87 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Rating Restriction message Header not displayed");
         Assert.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
                 "Rating Restriction message was not displayed");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72350"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyProfileMinorConsentUI() {
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().
+                disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).
+                dateOfBirth(null).language(getLocalizationUtils().getUserLanguage()).
+                avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+
+        updateProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        updateProfilePage.tapSaveButton();
+        sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
+        sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(),
+                "Privacy Policy Link is not present on Consent screen");
+        sa.assertTrue(parentalConsent.validateConsentText(), "Consent text doesn't match with the expected values");
+        sa.assertTrue(parentalConsent.isMinorDisclaimerPresent(), "Consent disclaimer not found");
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Scrolling down to view all of Minor Consent Page");
+            parentalConsent.scrollConsentContent(4);
+        }
+        sa.assertTrue(parentalConsent.isAgreeButtonPresent(), "Agree button is not present");
+        sa.assertTrue(parentalConsent.isDeclineButtonPresent(), "Decline button is not present");
+
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67785"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyJuniorProfileNavigationBarAlignment() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getAccount(), KIDS_PROFILE);
+        homePage.waitForHomePageToOpen();
+        // Creating HashSet to store unique elements distance
+        Set<Integer> distanceSet = new HashSet<>();
+        List<ExtendedWebElement> navElements = addNavigationBarElements();
+
+        for (int i=0; i < navElements.size() - 1; i++)
+            distanceSet.add(getDistanceBetweenElements(navElements.get(i), navElements.get(i + 1)));
+
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+             // All tabs in iPhone will be equally spaced, therefore HashSet will have just one entry
+            Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
+        } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            // In iPads, two tabs are on the right and other 2 are left aligned. Therefore there will be 2 unique distances, hence HashSet will have 2 entries.
+            Assert.assertEquals(distanceSet.size(), 2,
+                    "Junior mode navigation menu is not correctly aligned in tablet");
+            validateElementPositionAlignment(moreMenu.getHomeNav(), LEFT);
+            validateElementPositionAlignment(moreMenu.getSearchNav(), LEFT);
+            validateElementPositionAlignment(moreMenu.getDownloadNav(), RIGHT);
+            validateElementPositionAlignment(moreMenu.getMoreMenuTab(), RIGHT);
+        }
+    }
+
+    private List<ExtendedWebElement> addNavigationBarElements() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        List<ExtendedWebElement> navElements = new ArrayList<>();
+        navElements.add(moreMenu.getHomeNav());
+        navElements.add(moreMenu.getSearchNav());
+        navElements.add(moreMenu.getDownloadNav());
+        navElements.add(moreMenu.getMoreMenuTab());
+        return navElements;
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {

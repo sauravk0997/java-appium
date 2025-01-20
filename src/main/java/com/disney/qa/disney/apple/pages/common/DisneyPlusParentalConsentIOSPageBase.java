@@ -88,4 +88,22 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     public boolean validateConsentHeader() {
         return consentMinorHeader.getText().equalsIgnoreCase(consentHeaderText);
     }
+
+    public boolean isMinorDisclaimerPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.CONSENT_MINOR_DISCLAIMER.getText())).isPresent();
+    }
+
+    public boolean isAgreeButtonPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.BTN_CONSENT_ACCEPT.getText())).isPresent();
+    }
+
+    public boolean isDeclineButtonPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.BTN_CONSENT_DECLINE.getText())).isPresent();
+    }
 }
