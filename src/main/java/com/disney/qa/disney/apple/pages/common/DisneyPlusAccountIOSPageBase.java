@@ -24,8 +24,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2" +
-            "]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeButton[1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[1]")
     private ExtendedWebElement editEmailButton;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2" +
@@ -707,7 +706,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         String acctMgmtFaqText = "Account Management FAQ";
         return staticTextByLabel.format(acctMgmtFaqText).isPresent();
     }
-    
+
     public ExtendedWebElement getAccountManagementTextElement() {
         String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
