@@ -152,9 +152,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {""})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122531"})
     @Test(groups = {TestGroup.HULU_HUB, US})
-    public void verifyHuluLicenseAttribute() {
+    public void verifyHuluLicenseAttributeForStandAloneUser() {
         String contentTitle = "Solar Opposites";
         String licenseAttributionText = "Provided by Hulu";
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
