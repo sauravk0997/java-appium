@@ -14,9 +14,11 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
         super(driver);
     }
 
+    private static final String ONE_TIME_PASSCODE = "oneTimePasscode";
+
     @Override
     public boolean isOpened() {
-        return getLoginButtonWithPassword().isPresent();
+        return getTypeOtherByName(ONE_TIME_PASSCODE).isPresent();
     }
 
     //TODO: QAA-16993 - Move OneTimePasscode identifiers and elements from ForgotPasswordPage
