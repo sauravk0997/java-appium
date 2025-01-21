@@ -148,26 +148,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61575"})
-    @Test(description = "Verify that the correct description for Hulu Bundle displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifySubscriptionDetails_HuluBundle() {
-        setAccount(createAccountWithSku(DisneySkuParameters.HULU_EXTERNAL_HULU_SUPER_BUNDLE_LIVE_NOAH, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        setAppToAccountSettings();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isHuluBundleSubscriptionMessagePresent(),
-                "Hulu Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openHuluBundleWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(HULU_URL),
-                "Webview did not open to the expected url");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
     @Test(description = "Verify that the correct description for Google displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySubscriptionDetails_GooglePlay() {
