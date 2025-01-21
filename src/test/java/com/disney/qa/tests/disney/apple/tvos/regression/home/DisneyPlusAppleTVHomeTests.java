@@ -140,6 +140,39 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112733"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    public void verifyHuluHubPageUI() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        String studiosAndNetworksCollectionName =
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS);
+
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE);
+        logIn(basicAccount);
+
+        homePage.waitForHomePageToOpen();
+
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).isPresent(),
+                "Hulu brand tile was not present on home page screen");
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
+                "ESPN brand tile was not present on home page screen");
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
+        Assert.assertTrue(
+                brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)),
+                "Hulu Hub page did not open");
+        Assert.assertTrue(brandPage.getBrandLogoImage().isPresent(),
+                "Hulu logo was not present");
+        Assert.assertTrue(brandPage.getBrandFeaturedImage().isPresent(),
+                "Hulu background artwork was not present");
+
+        brandPage.moveDownUntilCollectionContentIsFocused(studiosAndNetworksCollectionName, 10);
+        Assert.assertTrue(brandPage.getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent(),
+                "Studios and Networks collection was not present");
+    }
+
     private List<Container> getCollectionsHome() {
             return getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
