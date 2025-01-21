@@ -209,18 +209,22 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90703"})
-    @Test(description = "Navigation of Log In Password Screen without password entered", groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void passwordScreenNavigation() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage =
+                new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =
+                new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
 
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        String passwordGhost = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, PASSWORD.getText());
+        String passwordGhost = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                PASSWORD.getText());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -229,21 +233,24 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getAccount().getEmail());
 
         Assert.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
-        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(), "Password field is not focused on landing");
+        oneTimePasscodeIOSPageBase.clickLoginWithPasswordButton();
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldFocused(),
+                "Password field is not focused on landing");
         sa.assertEquals(disneyPlusAppleTVPasswordPage.getPasswordText(), passwordGhost);
         disneyPlusAppleTVPasswordPage.clickDown();
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isLogInBtnFocused(), "Log In button is not focused");
         disneyPlusAppleTVPasswordPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isHavingTroubleLogginInBtnFocused(), "Having trouble logging in button is not focused");
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isHavingTroubleLogginInBtnFocused(),
+                "Having trouble logging in button is not focused");
         disneyPlusAppleTVPasswordPage.clickDown();
-        sa.assertTrue(disneyPlusAppleTVPasswordPage.isLearnMoreAboutMyDisneyButtonPresent(), "Learn more about MyDisney button is not focused");
+        sa.assertTrue(disneyPlusAppleTVPasswordPage.isLearnMoreAboutMyDisneyButtonPresent(),
+                "Learn more about MyDisney button is not focused");
 
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90705"})
-    @Test(description = "On Password Screen selecting enter your password displays on screen keyboard", groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyPasswordOnScreenKeyboard() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -251,7 +258,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
@@ -261,7 +269,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVLoginPage.moveDown(1,1);
 
         Assert.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
-        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
+        oneTimePasscodeIOSPageBase.clickLoginWithPasswordButton();
         disneyPlusAppleTVPasswordPage.clickPassword();
 
         sa.assertTrue(disneyPlusAppleTVPasswordPage.isPasswordFieldDisplayed(), "Password field is not displayed");
@@ -276,7 +284,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707", "XCDQA-90709", "XCDQA-90711"})
-    @Test(description = "Verifying hide/show button on the password entry onscreen keyboard", groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void passwordEntryEncryptionVerification() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -284,7 +292,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         String encryptedPassword = "••••";
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(welcomeScreen.isOpened(), "Welcome screen did not launch");
@@ -293,7 +302,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
         Assert.assertTrue(oneTimePasscodeIOSPageBase.isOpened(), "Log In password screen did not launch");
 
-        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();;
+        oneTimePasscodeIOSPageBase.clickLoginWithPasswordButton();
         passwordPage.clickPassword();
         sa.assertTrue(loginPage.isKeyboardPresent(), "KeyboardScreen did not launch");
 
@@ -312,7 +321,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         passwordPage.moveUp(2, 1);
         passwordPage.moveRight(1, 1);
         passwordPage.getHidePassword().click();
-        sa.assertTrue(passwordPage.getStaticTextByLabelContains("abcd").isPresent(), "XCDQA-90709 - Password was not displayed");
+        sa.assertTrue(passwordPage.getStaticTextByLabelContains("abcd").isPresent(),
+                "XCDQA-90709 - Password was not displayed");
         sa.assertTrue(passwordPage.getShowPassword().isPresent(), "`Show password` was not present.");
 
         //Click hide password button and it should turn into show password
@@ -346,7 +356,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90699"})
-    @Test(description = "When user enters an incorrect password an appropriate error message is prompted to the user", groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyIncorrectPasswordErrorMessage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -355,20 +365,21 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodeIOSPageBase =  new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
 
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(welcomeScreenPage.isOpened(), "Welcome screen did not launch");
 
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
-        oneTimePasscodeIOSPageBase.getLoginButtonWithPassword().click();
+        oneTimePasscodeIOSPageBase.clickLoginWithPasswordButton();
         passwordPage.logInWithPassword(RandomStringUtils.randomAlphabetic(6));
         sa.assertTrue(passwordPage.isInvalidCredentialsDisplayed(), "Invalid Password error not displayed.");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90691"})
-    @Test(description = "User logging in with a single profile account will be taken directly to home page", groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void singleProfileAccountIsTakenToHomePage() {
         DisneyOffer offer = new DisneyOffer();
         DisneyAccount entitledUser = getAccountApi().createAccount(offer, getCountry(), getLanguage(), SUB_VERSION);
