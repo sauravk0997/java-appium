@@ -328,28 +328,17 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String huluSeries = "The Bear";
         String huluMovie = "Palm Springs";
+        String secondEpisodeTitle= "Hands";
+        String recommendationText = "You may also like";
+        String season = "1";
+        String episode = "2";
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         setAppToHomeScreen(getAccount());
 
-        ExploreContent seriesApiContent = getSeriesApi("entity-05eb6a8e-90ed-4947-8c0b-e6536cbddd5f",
-                DisneyPlusBrandIOSPageBase.Brand.HULU);
-        String episodeTitle = "";
-        String seasonNumber = "";
-        try {
-            episodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
-            seasonNumber = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getSeasonNumber();
-        } catch (Exception e) {
-            Assert.fail("Exception occurred: " + e.getMessage());
-        }
-
-        if(episodeTitle == null || seasonNumber == null){
-            throw new SkipException("Skipping test, failed to get episodeTitles or seasonNumber from the api");
-        }
-
-        String upNextTitlePlaceHolder = String.format(REGEX_UPNEXT_SERIES_TITLE, seasonNumber, "2", episodeTitle);
+        String upNextTitlePlaceHolder = String.format(REGEX_UPNEXT_SERIES_TITLE, season, episode, secondEpisodeTitle);
 
         //Enable autoplay
         toggleAutoPlay("ON");
@@ -370,7 +359,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         upNextIOSPageBase.waitForUpNextUIToAppear();
         sa.assertTrue(upNextIOSPageBase.isUpNextViewPresent() ,
                 "Countdown progress icon is not present");
-        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabelContains("You may also like").isPresent(),
+        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabelContains(recommendationText).isPresent(),
                 "You may also like text is not present");
         sa.assertAll();
     }
