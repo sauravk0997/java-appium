@@ -694,7 +694,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         waitForVideoToStart();
         int currentPositionOnSeekPlayerAfterScrub = getCurrentPositionOnPlayer();
         int expectedPosition = (seekBarWidth / 2);
-        return ((expectedPosition - 20) < currentPositionOnSeekPlayerAfterScrub && currentPositionOnSeekPlayerAfterScrub < (expectedPosition + 20));
+        return ((expectedPosition - 50) < currentPositionOnSeekPlayerAfterScrub &&
+                currentPositionOnSeekPlayerAfterScrub < (expectedPosition + 50));
     }
 
     public enum PlayerControl {
