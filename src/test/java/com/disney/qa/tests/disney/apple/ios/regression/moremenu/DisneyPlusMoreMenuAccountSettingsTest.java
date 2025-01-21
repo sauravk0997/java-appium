@@ -252,60 +252,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Webview did not open to the expected url");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67166", "XMOBQA-75307", "XMOBQA-67142"})
-    @Test(description = "Verify the 'Unverified email badge is displayed in the More Menu and Account submenu", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyUnverifiedAccountFunctions() throws InterruptedException {
-        SoftAssert sa = new SoftAssert();
-        //Builds a DisneyAccount object with existing credentials that are already configured for test needs
-        DisneyProfile profile = new DisneyProfile();
-        profile.setProfileName("Profile");
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        DisneyOffer offer = getAccountApi().lookupOfferToUse("monthly");
-        request.addEntitlement(new DisneyEntitlement().setOffer(offer));
-        DisneyAccount unverifiedAccount = getAccountApi().createAccount(request);
-        getAccountApi().patchAccountVerified(unverifiedAccount, false, PatchType.ACCOUNT, null);
-        //Add pause cause patch takes a little while
-        pause(15);
-        setAccount(unverifiedAccount);
-
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-        if (homePage.getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText())).isPresent()) {
-            sa.assertTrue(oneTrustPage.isOpened(), "One trust page did not open.");
-            oneTrustPage.tapCloseButton();
-        }
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-
-        sa.assertTrue(disneyPlusMoreMenuIOSPageBase.isAccountUnverifiedBadgeDisplayed(),
-                "XMOBQA-62564 - Unverified Account badge was not displayed");
-
-        disneyPlusMoreMenuIOSPageBase.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isVerifyAccountHeaderPresent(),
-                "XMOBQA-62566 - Verify Account header was not displayed");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isVerifyAccountLinkPresent(),
-                "XMOBQA-62566 - Verify Account link was not present");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isChangeLinkPresent(getAccount().getEmail()),
-                "XMOBQA-62570 - Change Email link was not displayed");
-
-        sa.assertFalse(disneyPlusAccountIOSPageBase.isChangeLinkActive(getAccount().getEmail()),
-                "XMOBQA-62570 - Change Email link was not disabled");
-
-        disneyPlusAccountIOSPageBase.clickVerifyAccountLink();
-
-        sa.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
-                ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67144", "XMOBQA-67150", "XMOBQA-75512"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangePasswordUI() {
