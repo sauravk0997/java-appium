@@ -1168,7 +1168,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getDynamicCellByName(MICKEY_MOUSE).isPresent(),"Profile icon is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
-        sa.assertTrue(updateProfilePage.isGenderFieldPresent(), "DOB field is not present");
+        sa.assertTrue(updateProfilePage.isGenderFieldPresent(), "Gender field is not present");
 
         // Select DOB and gender
         updateProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
