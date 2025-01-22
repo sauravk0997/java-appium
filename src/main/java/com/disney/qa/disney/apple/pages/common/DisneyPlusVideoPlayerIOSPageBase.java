@@ -810,7 +810,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean waitForNetworkWatermarkLogoToDisappear() {
         String network =  "FX";
-        return fluentWait(getDriver(), 60, ONE_SEC_TIMEOUT, "Network Watermark Logo is present")
+        return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Network Watermark Logo is present")
                 .until(it -> getNetworkWatermarkLogo(network).isElementNotPresent(ONE_SEC_TIMEOUT));
     }
 }
