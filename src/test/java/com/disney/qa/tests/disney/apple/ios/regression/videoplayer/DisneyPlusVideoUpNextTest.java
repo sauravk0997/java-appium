@@ -326,6 +326,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        double playerPercentageForRecommendation = 98;
         String huluSeries = "The Bear";
         String huluMovie = "Palm Springs";
         String secondEpisodeTitle= "Hands";
@@ -355,7 +356,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         detailsPage.clickHomeIcon();
 
         // Initiate Hulu movie tests
-        initiatePlaybackAndScrubOnPlayer(huluMovie, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+        initiatePlaybackAndScrubOnPlayer(huluMovie, playerPercentageForRecommendation);
         upNextIOSPageBase.waitForUpNextUIToAppear();
         sa.assertTrue(upNextIOSPageBase.isUpNextViewPresent() ,
                 "Countdown progress icon is not present");
