@@ -251,12 +251,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
 
-        homePage.isOpened();
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
         homePage.clickSearchIcon();
         searchPage.searchForMedia(FOUR_EVER);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
-        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found");
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found");
 
         detailsPage.clickExtrasTab();
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
@@ -278,7 +278,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getPlayIcon().click();
         videoPlayer.isOpened();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         sa.assertAll();
     }
 
