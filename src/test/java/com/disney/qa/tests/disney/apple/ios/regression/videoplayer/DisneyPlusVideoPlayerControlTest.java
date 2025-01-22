@@ -564,10 +564,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         StopWatch stopWatch = new StopWatch();
-        int minimumSecondsLogoDuration = 15;
         // This is the 1 percent of first episode duration in seconds
-        int networkEpisodeLogoDuration = 46;
-        String network =  "FX";
+        int minimumNetworkEpisodeLogoDuration = 46;
+        String network = "FX";
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
@@ -589,11 +588,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         sa.assertFalse(videoPlayer.getTypeOtherContainsLabel(network).isPresent(2), "Network watermark is present");
         // Wait for network watermark to disappear and validate time after stop timer
+        videoPlayer.waitForVideoControlToDisappear();
         sa.assertTrue(videoPlayer.waitForNetworkWatermarkLogoToDisappear(), "Watermark network is present");
         stopWatch.stop();
         long totalTime = stopWatch.getTime(TimeUnit.SECONDS);
-        LOGGER.info(" totalTime {}, networkWatermarkLogoDuration {}", totalTime, networkEpisodeLogoDuration);
-        sa.assertTrue(totalTime >= minimumSecondsLogoDuration && totalTime <= networkEpisodeLogoDuration,
+        LOGGER.info("totalTime {}, minimumNetworkEpisodeLogoDuration {}", totalTime, minimumNetworkEpisodeLogoDuration);
+        sa.assertTrue(totalTime >= minimumNetworkEpisodeLogoDuration,
                 "Network watermark was not displayed within expected duration: {}" + totalTime);
 
         sa.assertAll();
