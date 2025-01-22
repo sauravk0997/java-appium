@@ -557,7 +557,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74453"})
-    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.VIDEO_PLAYER, US})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HULK, TestGroup.VIDEO_PLAYER, US})
     public void testNetworkWatermarkUserInterrupted() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
