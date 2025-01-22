@@ -365,6 +365,29 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77871"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpNextLiteAutoPlayOFFAppInBG() {
+        DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(getAccount());
+        //Turn ON autoplay
+        toggleAutoPlay("OFF");
+        //Bring up upNext UI
+        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
+        disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
+        sa.assertTrue(upNext.isOpened(), "Up Next UI was not displayed");
+        //This will lock the device for 5 seconds then unlock it
+        lockDevice(Duration.ofSeconds(5));
+        //After backgrounding the app, video player should exit
+        Assert.assertFalse(videoPlayer.isOpened(), "Video player did not exit after backgrounding the app");
+        Assert.assertTrue(detailsPage.isOpened(), "Details Page was not displayed");
+        sa.assertAll();
+    }
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -375,8 +398,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
+        searchPage.getDynamicAccessibilityId(content).click();
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
