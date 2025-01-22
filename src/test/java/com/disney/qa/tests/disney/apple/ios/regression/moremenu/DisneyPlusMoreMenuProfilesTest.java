@@ -1147,16 +1147,15 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().
-                disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).
-                dateOfBirth(null).language(getLocalizationUtils().getUserLanguage()).gender(null).
-                avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
+                disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).
+                dateOfBirth(null).language(getLocalizationUtils().getUserLanguage()).
+                avatarId(MICKEY_MOUSE).kidsModeEnabled(false).isStarOnboarded(false).build());
 
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
         sa.assertTrue(updateProfilePage.isOpened(),
                 "'Let's update your profile' page is not opened");
 
@@ -1175,7 +1174,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         updateProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         updateProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
-        whoIsWatching.clickProfile(JUNIOR_PROFILE);
+        // Dismiss full catalog message
+        updateProfilePage.getStaticTextByLabelContains("NOT NOW").click();
         sa.assertTrue(homePage.isOpened(), "Home page did not open");
 
         sa.assertAll();
