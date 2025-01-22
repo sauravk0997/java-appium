@@ -1147,7 +1147,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-
+        String dismissCatalog = "NOT NOW";
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().
@@ -1175,7 +1175,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         updateProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
         // Dismiss full catalog message
-        updateProfilePage.getStaticTextByLabelContains("NOT NOW").click();
+        updateProfilePage.getStaticTextByLabelContains(dismissCatalog).click();
         sa.assertTrue(homePage.isOpened(), "Home page did not open");
 
         sa.assertAll();
