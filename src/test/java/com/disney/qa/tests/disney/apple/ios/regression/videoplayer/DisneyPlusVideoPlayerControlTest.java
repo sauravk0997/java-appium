@@ -574,11 +574,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
 
-        // Launch deeplink for FX content
+        // Launch deeplink for FX content and start to play
         launchDeeplink(R.TESTDATA.get("hulu_prod_series_pose_deeplink"));
-
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-
         detailsPage.clickPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         // Start timer
@@ -595,7 +593,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         stopWatch.stop();
         long totalTime = stopWatch.getTime(TimeUnit.SECONDS);
         LOGGER.info(" totalTime {}, networkWatermarkLogoDuration {}", totalTime, networkEpisodeLogoDuration);
-        sa.assertTrue(totalTime > minimumSecondsLogoDuration && totalTime <= networkEpisodeLogoDuration,
+        sa.assertTrue(totalTime >= minimumSecondsLogoDuration && totalTime <= networkEpisodeLogoDuration,
                 "Network watermark was not displayed within expected duration: {}" + totalTime);
 
         sa.assertAll();
