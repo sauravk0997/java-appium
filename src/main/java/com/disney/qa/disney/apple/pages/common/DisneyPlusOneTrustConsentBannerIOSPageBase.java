@@ -11,6 +11,15 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
         super(driver);
     }
 
+    @ExtendedFindBy(accessibilityId = "bannerTitle")
+    protected ExtendedWebElement bannerTitle;
+
+    @ExtendedFindBy(accessibilityId = "bannerDescriptions")
+    protected ExtendedWebElement bannerDescriptions;
+
+    @ExtendedFindBy(accessibilityId = "bannerDPDTitle")
+    protected ExtendedWebElement bannerDPDTitle;
+
     @ExtendedFindBy(accessibilityId = "bannerDPDDescriptions")
     protected ExtendedWebElement bannerDPDDescriptions;
 
@@ -34,6 +43,22 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
 
     @Override
     public boolean isOpened() {
+        return bannerDPDDescriptions.isPresent();
+    }
+
+    public boolean isBannerTitlePresent() {
+        return bannerTitle.isPresent();
+    }
+
+    public boolean isBannerDescriptionsPresent() {
+        return bannerDescriptions.isPresent();
+    }
+
+    public boolean isBannerDPDTitlePresent() {
+        return bannerDPDTitle.isPresent();
+    }
+
+    public boolean isBannerDPDDescriptionsPresent() {
         return bannerDPDDescriptions.isPresent();
     }
 
