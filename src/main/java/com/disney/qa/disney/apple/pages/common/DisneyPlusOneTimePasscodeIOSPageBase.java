@@ -23,9 +23,6 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
     @FindBy(id = "oneTimePasscodeContainerInputView")
     protected ExtendedWebElement otpInputField;
 
-    @ExtendedFindBy(accessibilityId = "buttonLoginWithPassword")
-    private ExtendedWebElement loginWithPassword;
-
     private ExtendedWebElement resendButton = xpathNameOrName.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                             RESEND_EMAIL_COPY_2.getText()),
@@ -54,14 +51,6 @@ public class DisneyPlusOneTimePasscodeIOSPageBase extends DisneyPlusApplePageBas
 
     public void enterOtp(String value) {
         otpInputField.type(value);
-    }
-
-    public void clickLoginWithPasswordButton() {
-        loginWithPassword.click();
-    }
-
-    public ExtendedWebElement getLoginButtonWithPassword() {
-        return loginWithPassword;
     }
 
     public boolean isOtpIncorrectErrorPresent() {
