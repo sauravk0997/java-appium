@@ -10,12 +10,14 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.apache.commons.lang3.time.StopWatch;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
@@ -553,6 +555,52 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74453"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.VIDEO_PLAYER, US})
+    public void testNetworkWatermarkUserInterrupted() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        StopWatch stopWatch = new StopWatch();
+        int minimumSecondsLogoDuration = 15;
+        // This is the 1 percent of first episode duration in seconds
+        int networkEpisodeLogoDuration = 46;
+        String network =  "FX";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Launch deeplink for FX content
+        launchDeeplink(R.TESTDATA.get("hulu_prod_series_pose_deeplink"));
+
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        detailsPage.clickPlayButton();
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        // Start timer
+        stopWatch.start();
+        // Validate that content rating overlay and FX logo are present
+        sa.assertTrue(videoPlayer.isContentRatingOverlayPresent(), "Rating overlay is not present");
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(network), "Network watermark is not present");
+        // Wait for video controls to disappear and click on the screen to validate FX logo is not present
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        sa.assertFalse(videoPlayer.getTypeOtherContainsLabel(network).isPresent(2), "Network watermark is present");
+        // Wait for network watermark to disappear and validate time after stop timer
+        sa.assertTrue(videoPlayer.waitForNetworkWatermarkLogoToDisappear(), "Watermark network is present");
+        stopWatch.stop();
+        long totalTime = stopWatch.getTime(TimeUnit.SECONDS);
+        LOGGER.info(" totalTime {}, networkWatermarkLogoDuration {}", totalTime, networkEpisodeLogoDuration);
+        sa.assertTrue(totalTime > minimumSecondsLogoDuration && totalTime <= networkEpisodeLogoDuration,
+                "Network watermark was not displayed within expected duration: {}" + totalTime);
+
+        sa.assertAll();
+    }
+
 
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
