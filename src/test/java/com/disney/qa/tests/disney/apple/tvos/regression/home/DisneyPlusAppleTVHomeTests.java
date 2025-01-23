@@ -145,11 +145,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyHuluHubPageUI() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
-        String studiosAndNetworksCollectionName =
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS);
+        SoftAssert sa = new SoftAssert();
 
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE);
-        logIn(basicAccount);
+        DisneyAccount bundleAccount = createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE);
+        logIn(bundleAccount);
 
         homePage.waitForHomePageToOpen();
 
@@ -163,14 +162,17 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)),
                 "Hulu Hub page did not open");
-        Assert.assertTrue(brandPage.getBrandLogoImage().isPresent(),
+        sa.assertTrue(brandPage.getBrandLogoImage().isPresent(),
                 "Hulu logo was not present");
-        Assert.assertTrue(brandPage.getBrandFeaturedImage().isPresent(),
+        sa.assertTrue(brandPage.getBrandFeaturedImage().isPresent(),
                 "Hulu background artwork was not present");
 
-        brandPage.moveDownUntilCollectionContentIsFocused(studiosAndNetworksCollectionName, 10);
+        brandPage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), 10);
         Assert.assertTrue(brandPage.getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent(),
                 "Studios and Networks collection was not present");
+
+        sa.assertAll();
     }
 
     private List<Container> getCollectionsHome() {
