@@ -278,9 +278,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void validateElementsInGenderDropdown() {
         DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
         Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList())
-                .forEach(item -> {
-                    Assert.assertTrue(dynamicBtnFindByLabelContains.format(editGenderIOSPageBase.selectGender(item)).isPresent(),
-                            "Gender " + item + " is not present" );
-                        });
+                .forEach(item ->
+                    Assert.assertTrue(dynamicBtnFindByLabelContains.format(
+                            editGenderIOSPageBase.selectGender(item)).isPresent(),"Gender " + item + " is not present" ));
     }
 }
