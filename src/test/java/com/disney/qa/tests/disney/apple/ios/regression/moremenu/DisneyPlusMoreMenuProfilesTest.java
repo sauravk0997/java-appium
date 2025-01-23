@@ -1156,7 +1156,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 avatarId(MICKEY_MOUSE).kidsModeEnabled(false).isStarOnboarded(false).build());
 
         setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
-        pause(5);
         Assert.assertTrue(updateProfilePage.isOpened(),
                 "'Let's update your profile' page is not opened");
 
