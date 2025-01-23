@@ -1148,6 +1148,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage =initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         String dismissCatalog = "NOT NOW";
+        String cancelButton = "Cancel";
         SoftAssert sa = new SoftAssert();
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().
@@ -1169,6 +1170,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
         sa.assertTrue(updateProfilePage.isGenderFieldPresent(), "Gender field is not present");
+        sa.assertTrue(updateProfilePage.isGenderFieldEnabled() ,
+                "Gender dropdown is not enabled");
+        updateProfilePage.clickGenderDropDown();
+        updateProfilePage.validateElementsInGenderDropdown();
+        updateProfilePage.getTypeButtonContainsLabel(cancelButton).click();
 
         // Select DOB and gender
         updateProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -1176,7 +1182,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
         // Dismiss full catalog message
         updateProfilePage.getStaticTextByLabelContains(dismissCatalog).click();
-        sa.assertTrue(homePage.isOpened(), "Home page did not open");
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
 
         sa.assertAll();
     }
