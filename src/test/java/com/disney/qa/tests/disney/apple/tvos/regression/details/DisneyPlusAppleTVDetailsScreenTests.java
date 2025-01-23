@@ -10,13 +10,11 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.zebrunner.carina.appcenter.AppCenterManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -155,6 +153,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122531"})
     @Test(groups = {TestGroup.HULU_HUB, US})
     public void verifyHuluLicenseAttributeForStandAloneUser() {
+        installApp(AppCenterManager.getInstance()
+                .getAppInfo(String.format("appcenter://Disney-Non-IAP-PreProd-Enterprise-tvOS/iOS/PreProd/latest"))
+                .getDirectLink());
         String contentTitle = "Solar Opposites";
         String licenseAttributionText = "Provided by Hulu";
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
