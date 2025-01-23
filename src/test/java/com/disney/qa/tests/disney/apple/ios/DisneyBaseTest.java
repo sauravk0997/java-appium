@@ -727,4 +727,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
         }
     }
+
+    public void jarvisEnableOfflineExpiredLicenseOverride() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+
+        removeJarvis();
+        installAndLaunchJarvis();
+
+        //Enable Playback > Offline Expired License Override toggle
+        applePageBase.scrollToItem(JARVIS_PLAYBACK).click();
+        applePageBase.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE).click();
+
+        //Relaunch Disney app
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+    }
 }
