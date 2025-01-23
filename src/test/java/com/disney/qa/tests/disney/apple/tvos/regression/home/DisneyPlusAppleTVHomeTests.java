@@ -140,6 +140,41 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112733"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    public void verifyHuluHubPageUI() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        DisneyAccount bundleAccount = createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE);
+        logIn(bundleAccount);
+
+        homePage.waitForHomePageToOpen();
+
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).isPresent(),
+                "Hulu brand tile was not present on home page screen");
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
+                "ESPN brand tile was not present on home page screen");
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
+        Assert.assertTrue(
+                brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)),
+                "Hulu Hub page did not open");
+        sa.assertTrue(brandPage.getBrandLogoImage().isPresent(),
+                "Hulu logo was not present");
+        sa.assertTrue(brandPage.getBrandFeaturedImage().isPresent(),
+                "Hulu background artwork was not present");
+
+        brandPage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), 10);
+        Assert.assertTrue(brandPage.getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent(),
+                "Studios and Networks collection was not present");
+
+        sa.assertAll();
+    }
+
     private List<Container> getCollectionsHome() {
             return getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
