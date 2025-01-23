@@ -167,7 +167,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyDeepLinkNewURLStructureHuluNetworkPage(String deepLink) {
+    public void verifyDeepLinkNewURLStructureHuluNetworkPage() {
         String abcNetwork = "ABC";
         String abcNetworkDeepLink = R.TESTDATA.get("disney_prod_hulu_abc_network_language_deeplink");
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
