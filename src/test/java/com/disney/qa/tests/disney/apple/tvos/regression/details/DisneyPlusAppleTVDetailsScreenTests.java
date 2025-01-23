@@ -153,10 +153,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122531"})
     @Test(groups = {TestGroup.HULU_HUB, US})
     public void verifyHuluLicenseAttributeForStandAloneUser() {
-        removeApp(BuildType.ENTERPRISE.getDisneyBundle());
         installApp(AppCenterManager.getInstance()
-                .getAppInfo(String.format("appcenter://Disney-Non-IAP-PreProd-Enterprise-tvOS/iOS/PreProd/3.9.6.74241" +
-                        ".3"))
+                .getAppInfo(String.format("appcenter://Disney-Non-IAP-PreProd-Enterprise-tvOS/iOS/PreProd/latest"))
                 .getDirectLink());
         String contentTitle = "Solar Opposites";
         String licenseAttributionText = "Provided by Hulu";
