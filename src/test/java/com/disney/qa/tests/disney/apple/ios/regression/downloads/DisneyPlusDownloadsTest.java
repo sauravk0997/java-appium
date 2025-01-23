@@ -517,4 +517,37 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertFalse(downloadsPage.getDownloadAssetFromListView(secondSeriesName).isPresent(THREE_SEC_TIMEOUT),
                 secondSeriesName + " series title was present");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75725"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExpiredDownloadModalUI() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        jarvisEnableOfflineExpiredLicenseOverride();
+
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        downloadsPage.clickSeriesMoreInfoButton();
+        Assert.assertTrue(downloadsPage.getDownloadErrorButton().isElementPresent(SIXTY_SEC_TIMEOUT),
+                "Download Error button (Expired Download CTA) was not present");
+
+        downloadsPage.getDownloadErrorButton().click();
+        sa.assertTrue(downloadsPage.getContentExpiredAlertTitle().isElementPresent(),
+                "Content expired title was not present on Content expired alert");
+        sa.assertTrue(downloadsPage.getRenewLicenseButton().isElementPresent(),
+                "Renew license button was not present on Content expired alert");
+        sa.assertTrue(downloadsPage.isAlertDismissBtnPresent(),
+                "Cancel button was not present on Content expired alert");
+
+        sa.assertAll();
+    }
 }
