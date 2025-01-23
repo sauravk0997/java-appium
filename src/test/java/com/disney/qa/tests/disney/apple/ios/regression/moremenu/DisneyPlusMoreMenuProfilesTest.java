@@ -1145,7 +1145,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyProfileValidateUpdate() {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage =initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         String dismissCatalog = "NOT NOW";
         SoftAssert sa = new SoftAssert();
@@ -1156,7 +1156,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 avatarId(MICKEY_MOUSE).kidsModeEnabled(false).isStarOnboarded(false).build());
 
         setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
-        sa.assertTrue(updateProfilePage.isOpened(),
+        pause(5);
+        Assert.assertTrue(updateProfilePage.isOpened(),
                 "'Let's update your profile' page is not opened");
 
         // Validate the update profile UI
