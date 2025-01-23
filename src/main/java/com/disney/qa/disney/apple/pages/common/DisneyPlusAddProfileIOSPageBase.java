@@ -280,6 +280,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList())
                 .forEach(item ->
                     Assert.assertTrue(dynamicBtnFindByLabelContains.format(
-                            editGenderIOSPageBase.selectGender(item)).isPresent(),"Gender " + item + " is not present" ));
+                            editGenderIOSPageBase.selectGender(item)).isPresent(),
+                            "Gender " + item + " is not present" ));
     }
 }
