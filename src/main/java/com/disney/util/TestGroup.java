@@ -14,6 +14,7 @@ public final class TestGroup {
     public static final String ANTHOLOGY = "Anthology";
     public static final String ARIEL = "Ariel";
     public static final String BG_IMAGE = "BGImage";
+    public static final String CONCURRENCY = "Concurrency";
     public static final String DEEPLINKS = "Deeplinks";
     public static final String DETAILS_PAGE = "DetailsPage";
     public static final String DOWNLOADS = "Downloads";
