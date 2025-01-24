@@ -1173,7 +1173,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(updateProfilePage.isGenderFieldEnabled() ,
                 "Gender dropdown is not enabled");
         updateProfilePage.clickGenderDropDown();
-        updateProfilePage.validateElementsInGenderDropdown();
+        updateProfilePage.validateOptionsInGenderDropdown();
         updateProfilePage.getTypeButtonContainsLabel(cancelButton).click();
 
         // Select DOB and gender

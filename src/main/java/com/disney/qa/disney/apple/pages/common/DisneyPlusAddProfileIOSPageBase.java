@@ -275,7 +275,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
                   .equalsIgnoreCase(Boolean.TRUE.toString());
     }
 
-    public void validateElementsInGenderDropdown() {
+    public void validateOptionsInGenderDropdown() {
         DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
         Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList())
                 .forEach(item ->
