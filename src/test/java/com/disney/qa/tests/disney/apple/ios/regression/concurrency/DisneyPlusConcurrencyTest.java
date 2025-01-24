@@ -23,7 +23,6 @@ public class DisneyPlusConcurrencyTest extends DisneyBaseTest {
 
         loginIn(System.getenv("accountEmail"), System.getenv("accountPassword"));
 
-        homePage.waitForHomePageToOpen();
         sa.assertTrue(homePage.isOpened(), "Home page did not open");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
