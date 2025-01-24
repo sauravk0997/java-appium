@@ -54,6 +54,4 @@ public class DisneyPlusConcurrencyTest extends DisneyBaseTest {
         passwordPage.submitPasswordForLogin(password);
         homePage.waitForHomePageToOpen();
     }
-
-
 }
