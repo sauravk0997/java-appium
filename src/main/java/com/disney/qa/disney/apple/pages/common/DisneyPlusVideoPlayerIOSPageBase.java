@@ -829,4 +829,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.DISMISS_BTN.getText()));
     }
+
+    public boolean waitForNetworkWatermarkLogoToDisappear(String network) {
+        return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Network Watermark Logo is present")
+                .until(it -> getNetworkWatermarkLogo(network).isElementNotPresent(ONE_SEC_TIMEOUT));
+    }
 }
