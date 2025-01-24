@@ -1,7 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_handset_concurrency_fc" annotations="JDK" configfailurepolicy="continue"
-       thread-count="6"
-       parallel="tests">
+<suite verbose="1" name="dmgzios_handset_concurrency_fc" annotations="JDK" configfailurepolicy="continue" thread-count="6" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobName" value="dmgzios_handset_concurrency"/>
