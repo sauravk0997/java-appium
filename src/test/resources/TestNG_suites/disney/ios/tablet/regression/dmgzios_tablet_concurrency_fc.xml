@@ -8,7 +8,6 @@
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
     <parameter name="scheduling" value="H 4 * * 1-5"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
