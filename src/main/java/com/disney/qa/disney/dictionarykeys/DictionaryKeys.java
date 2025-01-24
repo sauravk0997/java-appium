@@ -510,6 +510,8 @@ public enum DictionaryKeys {
     SIZE_RUNTIME_PLACEHOLDER("size_runtime_placeholder"),
     SMOKING_DISCLAIMER("smoking_disclaimer"),
     STREAM_WIFI_ONLY("settings_datausage_wifionly"),
+    STREAMCONCURRENCY("streamconcurrency"),
+    STREAMCONCURRENCY_TITLE("streamconcurrency_title"),
     SUBSCRIBER_AGREEMENT_HEADER("subscriber_agreement_header"),
     SUBSCRIBE_EXPIRED_COPY("subscribe_expired_copy"),
     SUBSCRIPTIONS_BUNDLE_MESSAGE("account_subscription_message_bamtech_disney_bundle"),
