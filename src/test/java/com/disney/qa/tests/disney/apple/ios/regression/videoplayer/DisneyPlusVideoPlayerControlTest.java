@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -10,12 +11,15 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.apache.commons.lang3.time.StopWatch;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.temporal.ValueRange;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
@@ -551,6 +555,56 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT);
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74453"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HULK, TestGroup.VIDEO_PLAYER, US})
+    public void testNetworkWatermarkUserInterrupted() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        StopWatch stopWatch = new StopWatch();
+        int uiLatency = 30;
+        String network = "FX";
+        String entitySeries = "entity-6bf318d8-f506-4e7f-a58f-0c5cc09b6c90";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        //Get one percent of the first episode duration
+        ExploreContent seriesApiContent = getSeriesApi(entitySeries,
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
+        Visuals episodeDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        int minimumNetworkEpisodeLogoDuration = (int)Math.round((episodeDetails.getDurationMs() / 1000) * .01);
+
+        // Launch deeplink for FX content and start to play
+        launchDeeplink(R.TESTDATA.get("hulu_prod_series_pose_deeplink"));
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayButton();
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        // Start timer
+        stopWatch.start();
+        // Validate that content rating overlay and FX logo are present
+        sa.assertTrue(videoPlayer.isContentRatingOverlayPresent(), "Rating overlay is not present");
+        sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(network), "Network watermark is not present");
+        // Wait for video controls to disappear and click on the screen to validate FX logo is not present
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        sa.assertFalse(videoPlayer.getTypeOtherContainsLabel(network).isPresent(2), "Network watermark is present");
+        // Wait for network watermark to disappear and validate time after stop timer
+        videoPlayer.waitForVideoControlToDisappear();
+        sa.assertTrue(videoPlayer.waitForNetworkWatermarkLogoToDisappear(network), "Watermark network is present");
+        stopWatch.stop();
+        long totalTime = stopWatch.getTime(TimeUnit.SECONDS);
+        LOGGER.info("totalTime {}, minimumNetworkEpisodeLogoDuration {}", totalTime, minimumNetworkEpisodeLogoDuration);
+        int playDuration = ((int)totalTime - minimumNetworkEpisodeLogoDuration);
+        ValueRange range = ValueRange.of(0, uiLatency);
+        sa.assertTrue(range.isValidIntValue(playDuration), "Network watermark was not displayed within expected duration");
+
         sa.assertAll();
     }
 
