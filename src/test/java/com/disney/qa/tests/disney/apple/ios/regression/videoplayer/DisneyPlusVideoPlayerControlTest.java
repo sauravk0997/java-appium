@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -16,6 +17,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.temporal.ValueRange;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -37,6 +39,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String CONTINUE_BUTTON_NOT_PRESENT =
             "Continue button is not present after exiting video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    private static final int UI_LATENCY = 30;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -564,14 +567,19 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         StopWatch stopWatch = new StopWatch();
-        // This is the 1 percent of first episode duration in seconds
-        int minimumNetworkEpisodeLogoDuration = 46;
         String network = "FX";
+        String entitySeries = "entity-6bf318d8-f506-4e7f-a58f-0c5cc09b6c90";
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
+
+        //Get one percent of the first episode duration
+        ExploreContent seriesApiContent = getSeriesApi(entitySeries,
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
+        Visuals episodeDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        int minimumNetworkEpisodeLogoDuration = (int)Math.round((episodeDetails.getDurationMs() / 1000) * .01);
 
         // Launch deeplink for FX content and start to play
         launchDeeplink(R.TESTDATA.get("hulu_prod_series_pose_deeplink"));
@@ -593,12 +601,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         stopWatch.stop();
         long totalTime = stopWatch.getTime(TimeUnit.SECONDS);
         LOGGER.info("totalTime {}, minimumNetworkEpisodeLogoDuration {}", totalTime, minimumNetworkEpisodeLogoDuration);
-        sa.assertTrue(totalTime >= minimumNetworkEpisodeLogoDuration,
-                "Network watermark was not displayed within expected duration: {}" + totalTime);
+        int playDuration = ((int)totalTime - minimumNetworkEpisodeLogoDuration);
+        ValueRange range = ValueRange.of(0, UI_LATENCY);
+        sa.assertTrue(range.isValidIntValue(playDuration), "Network watermark was not displayed within expected duration");
 
         sa.assertAll();
     }
-
 
     private void loginAndStartPlayback(String content) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
