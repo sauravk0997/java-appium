@@ -5,6 +5,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -18,10 +19,12 @@ public class DisneyPlusConcurrencyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String email = "accountEmail";
+        String password =  "accountPassword";
 
         SoftAssert sa = new SoftAssert();
 
-        loginIn(System.getenv("accountEmail"), System.getenv("accountPassword"));
+        loginIn(System.getenv(email), System.getenv(password));
 
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
 
