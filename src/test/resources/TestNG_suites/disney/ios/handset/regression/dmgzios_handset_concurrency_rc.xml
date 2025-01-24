@@ -9,7 +9,6 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Handset-Pipeline"/>
-    <!--    <parameter name="scheduling" value="H 7 * * 1-5"/>-->
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
