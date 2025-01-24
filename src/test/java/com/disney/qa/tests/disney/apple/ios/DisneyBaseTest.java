@@ -729,14 +729,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void jarvisEnableOfflineExpiredLicenseOverride() {
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisIOSPageBase jarvisPage = initPage(JarvisIOSPageBase.class);
 
         removeJarvis();
         installAndLaunchJarvis();
 
         //Enable Playback > Offline Expired License Override toggle
-        applePageBase.scrollToItem(JARVIS_PLAYBACK).click();
-        applePageBase.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE).click();
+        jarvisPage.scrollToItem(JARVIS_PLAYBACK).click();
+        jarvisPage.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE);
+
+        if (!jarvisPage.isToggleEnabled(jarvisPage.getOfflineExpiredLicenseOverrideToggle())) {
+            jarvisPage.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE).click();
+        }
+        Assert.assertTrue(jarvisPage.isToggleEnabled(jarvisPage.getOfflineExpiredLicenseOverrideToggle()),
+                JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE + " Jarvis toggle was not enabled");
 
         //Relaunch Disney app
         terminateApp(sessionBundles.get(DISNEY));
