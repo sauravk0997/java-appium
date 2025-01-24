@@ -2,7 +2,7 @@
 <suite verbose="1" name="dmgzios_handset_concurrency_fc" annotations="JDK" configfailurepolicy="continue" thread-count="6" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="jenkinsJobName" value="dmgzios_handset_concurrency"/>
+    <parameter name="jenkinsJobName" value="dmgzios_handset_concurrency_fc"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
