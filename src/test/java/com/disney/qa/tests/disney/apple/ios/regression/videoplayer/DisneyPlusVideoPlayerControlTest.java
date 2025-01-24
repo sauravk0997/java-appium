@@ -39,7 +39,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     private static final String CONTINUE_BUTTON_NOT_PRESENT =
             "Continue button is not present after exiting video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final int UI_LATENCY = 30;
 
     @DataProvider(name = "contentType")
     public Object[][] contentType() {
@@ -567,6 +566,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         StopWatch stopWatch = new StopWatch();
+        int uiLatency = 30;
         String network = "FX";
         String entitySeries = "entity-6bf318d8-f506-4e7f-a58f-0c5cc09b6c90";
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
@@ -602,7 +602,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         long totalTime = stopWatch.getTime(TimeUnit.SECONDS);
         LOGGER.info("totalTime {}, minimumNetworkEpisodeLogoDuration {}", totalTime, minimumNetworkEpisodeLogoDuration);
         int playDuration = ((int)totalTime - minimumNetworkEpisodeLogoDuration);
-        ValueRange range = ValueRange.of(0, UI_LATENCY);
+        ValueRange range = ValueRange.of(0, uiLatency);
         sa.assertTrue(range.isValidIntValue(playDuration), "Network watermark was not displayed within expected duration");
 
         sa.assertAll();
