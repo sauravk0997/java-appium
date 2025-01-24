@@ -26,7 +26,7 @@ public class DisneyPlusConcurrencyTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
-        sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
         detailsPage.clickPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open");
         sa.assertTrue(videoPlayer.isConcurrencyTitleErrorPresent(),
