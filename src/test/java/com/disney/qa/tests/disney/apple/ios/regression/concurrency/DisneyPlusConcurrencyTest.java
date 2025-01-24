@@ -40,7 +40,7 @@ public class DisneyPlusConcurrencyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    public void loginIn(String email, String password) {
+    private void loginIn(String email, String password) {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
