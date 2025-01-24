@@ -16,8 +16,6 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Point;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -37,6 +35,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MICKEY_MOUSE;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
 
@@ -1140,6 +1139,52 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             validateElementPositionAlignment(moreMenu.getDownloadNav(), RIGHT);
             validateElementPositionAlignment(moreMenu.getMoreMenuTab(), RIGHT);
         }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72466"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyProfileValidateUpdate() {
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage =initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        String dismissCatalog = "NOT NOW";
+        String cancelButton = "Cancel";
+        SoftAssert sa = new SoftAssert();
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().
+                disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).
+                dateOfBirth(null).language(getLocalizationUtils().getUserLanguage()).
+                avatarId(MICKEY_MOUSE).kidsModeEnabled(false).isStarOnboarded(false).build());
+
+        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
+        Assert.assertTrue(updateProfilePage.isOpened(),
+                "'Let's update your profile' page is not opened");
+
+        // Validate the update profile UI
+        sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(),
+                "Profile title is not present");
+        sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(),
+                "Profile subtitle is not present");
+        sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
+        sa.assertTrue(editProfile.getDynamicCellByName(MICKEY_MOUSE).isPresent(),"Profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"Pencil icon is not displayed");
+        sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
+        sa.assertTrue(updateProfilePage.isGenderFieldPresent(), "Gender field is not present");
+        sa.assertTrue(updateProfilePage.isGenderFieldEnabled() ,
+                "Gender dropdown is not enabled");
+        updateProfilePage.clickGenderDropDown();
+        updateProfilePage.validateOptionsInGenderDropdown();
+        updateProfilePage.getTypeButtonContainsLabel(cancelButton).click();
+
+        // Select DOB and gender
+        updateProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        updateProfilePage.chooseGender();
+        updateProfilePage.tapSaveButton();
+        // Dismiss full catalog message
+        updateProfilePage.getStaticTextByLabelContains(dismissCatalog).click();
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+
+        sa.assertAll();
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
