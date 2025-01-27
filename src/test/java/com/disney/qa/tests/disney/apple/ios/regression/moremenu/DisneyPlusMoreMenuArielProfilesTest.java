@@ -369,10 +369,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editGenderPage.clickGenderDropDown();
 
         // verify all gender option
-        for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
-            sa.assertTrue(editGenderPage.getTypeButtonByLabel(editGenderPage.selectGender(genderItem)).isPresent(),
-                    "Expected: " + genderItem + " option should be present");
-        }
+        editProfilePage.validateOptionsInGenderDropdown();
 
         editGenderPage.getTypeButtonByLabel(editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN)).click();
         editGenderPage.tapSaveButton();
