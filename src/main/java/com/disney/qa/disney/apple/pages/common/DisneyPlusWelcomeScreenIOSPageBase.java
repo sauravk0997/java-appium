@@ -62,13 +62,13 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
 
     public boolean isMainTextDisplayed() {
         return staticTextLabelContains.format(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE_ONBOARDING,
                         DictionaryKeys.WELCOME_UNAUTHENTICATED_TITLE.getText())).isPresent();
     }
 
     public boolean isSubCopyDirectTextPresent() {
         String subCopyDirectText = getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE_ONBOARDING,
                         DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
         return staticTextNameContains.format(subCopyDirectText).isPresent();
     }
