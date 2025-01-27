@@ -158,7 +158,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 .getAppInfo(String.format("appcenter://Disney-Non-IAP-PreProd-Enterprise-tvOS/iOS/PreProd/latest"))
                 .getDirectLink());
         launchApp(BuildType.ENTERPRISE.getDisneyBundle());
-        String contentTitle = "Solar Opposites";
+        String contentTitle = "Shogun";
         String licenseAttributionText = "Provided by Hulu";
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
