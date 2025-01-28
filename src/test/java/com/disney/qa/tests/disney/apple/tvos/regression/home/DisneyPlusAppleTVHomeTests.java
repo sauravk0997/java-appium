@@ -195,7 +195,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
-        LOGGER.info("**** homeCollections {} ", homeCollections.subList(0, 2));
+        LOGGER.info("**** homeCollections {} ", homeCollections);
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
