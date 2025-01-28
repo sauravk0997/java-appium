@@ -149,7 +149,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122531"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122644"})
     @Test(groups = {TestGroup.HULU_HUB_PHASE_2, US})
     public void verifyHuluLicenseAttributeForStandAloneUser() {
         String contentTitle = "Under the Bridge";
