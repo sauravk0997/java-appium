@@ -22,21 +22,10 @@
     <parameter name="jenkinsBuild" value="4.0.0.75492"/>
     <parameter name="hiddenParam::groups::group Name" value="HuluHub2"/>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet Details" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsSeriesTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsMovieTest"/>
-        </classes>
-    </test>
-
-    <test verbose="1" name="DisneyPlus iOS Tablet Search" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.search.DisneyPlusSearchTest"/>
-        </classes>
-    </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Home" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
         </classes>
     </test>
 </suite>

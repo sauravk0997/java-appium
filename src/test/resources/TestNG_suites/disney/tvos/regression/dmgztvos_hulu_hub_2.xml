@@ -15,12 +15,7 @@
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
     <parameter name="jenkinsBuild" value="4.0.0.75492"/>
     <parameter name="hiddenParam::groups::group Name" value="HuluHub2"/>
-
-    <test verbose="1" name="DisneyPlus tvOS Details" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.tvos.regression.details.DisneyPlusAppleTVDetailsScreenTests"/>
-        </classes>
-    </test>
+    
     <test verbose="1" name="DisneyPlus tvOS Home" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.home.DisneyPlusAppleTVHomeTests"/>
