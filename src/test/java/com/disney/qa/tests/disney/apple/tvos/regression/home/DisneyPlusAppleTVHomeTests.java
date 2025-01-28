@@ -50,6 +50,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.moveRight(2, 1);
 
         verifyHomeCollectionsAndContent(homeCollections, sa);
+        homePage.moveDown(20, 1);
         sa.assertAll();
     }
 
