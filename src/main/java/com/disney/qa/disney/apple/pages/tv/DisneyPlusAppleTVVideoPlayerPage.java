@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,5 +59,11 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         LOGGER.info("Pause/play player to see title..");
         clickSelect();
         return titleLabel.getText();
+    }
+
+    public ExtendedWebElement getServiceAttributionLabel(){
+        LOGGER.info("Pause/play player to see title..");
+        clickSelect();
+        return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
     }
 }
