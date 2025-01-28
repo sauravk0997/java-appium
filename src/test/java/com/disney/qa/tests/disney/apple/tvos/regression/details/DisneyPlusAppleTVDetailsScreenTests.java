@@ -173,8 +173,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 licenseAttributionText + " License Attribute text is not displayed on details page");
 
         detailsPage.clickPlayButton();
-        pause(2);
-        //videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForVideoToStart();
+        pause(3);
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(licenseAttributionText),
                 licenseAttributionText + " License Attribute text is not displayed on video player");
     }
