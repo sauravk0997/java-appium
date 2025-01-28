@@ -57,7 +57,14 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     public String getTitleLabel() {
         LOGGER.info("Pause/play player to see title..");
         clickSelect();
-        LOGGER.info("Video Player Issue:- " + getDriver().getPageSource());
         return titleLabel.getText();
+    }
+
+    @Override
+    public String getSubTitleLabel() {
+        LOGGER.info("Pause/play player to see description..");
+        clickSelect();
+        LOGGER.info("Video Player Issue:- " + getDriver().getPageSource());
+        return subtitleLabel.getText();
     }
 }
