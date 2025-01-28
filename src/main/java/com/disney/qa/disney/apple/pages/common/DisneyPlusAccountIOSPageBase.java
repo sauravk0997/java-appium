@@ -20,7 +20,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private static final String MONTHLY = "Monthly";
     private static final String ANNUAL = "Annual";
     private static final String PREMIUM = "Premium";
-    private static final String LEGACY_DISNEY_BUNDLE_SUB_TEXT = "Some account management features are only available " +
+    private static final String SUBSCRIPTION_MESSAGE = "Some account management features are only available " +
             "via the website. Create a Disney+ account and more at disneyplus.com/next";
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
@@ -51,6 +51,11 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/**/XCUIElementTypeButton[2]")
+    private ExtendedWebElement subscriptionChangeMessage;
+
+
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -330,7 +335,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         String title = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS,
                 DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
-        return getStaticTextByLabel(title).isPresent();
+        return getTypeButtonByLabel(title).isPresent(TEN_SEC_TIMEOUT);
     }
 
     public void openBamtechBundleWebview() {
@@ -723,11 +728,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return editPasswordButton;
     }
 
-    public ExtendedWebElement getLegacyDisneyBundleSubText() {
-        return getDynamicAccessibilityId(LEGACY_DISNEY_BUNDLE_SUB_TEXT);
-    }
-
-    public boolean isLegacyDisneyBundleSubTextPresent() {
-        return getLegacyDisneyBundleSubText().isPresent();
+    public boolean isSubscriptionMessagePresent() {
+        return subscriptionChangeMessage.getText().equals(SUBSCRIPTION_MESSAGE);
     }
 }
