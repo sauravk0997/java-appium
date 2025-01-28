@@ -24,7 +24,7 @@
     <parameter name="overrideFields"
                value="JOB_MAX_RUN_TIME=300,capabilities.newCommandTimeout=300,init_retry_count=2,init_retry_interval=15"/>
 
-    <test verbose="1" name="DisneyPlus iOS Tablet Home" parallel="methods">
+    <test verbose="1" name="DisneyPlus iOS Handset Home" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusHomeTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkHomeTest"/>
