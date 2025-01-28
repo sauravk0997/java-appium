@@ -71,9 +71,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
+    @Override
     public ExtendedWebElement getContinueButton() {
-        return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_CONTINUE_DETAILS.getText()));
+        return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_CONTINUE_DETAILS.getText()));
     }
 
     @Override
