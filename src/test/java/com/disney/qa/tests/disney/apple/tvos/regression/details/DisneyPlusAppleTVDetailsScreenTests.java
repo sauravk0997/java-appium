@@ -160,10 +160,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         launchApp(BuildType.ENTERPRISE.getDisneyBundle());
         String contentTitle = "Under The Bridge";
         String licenseAttributionText = "Provided by Hulu";
-        DisneyPlusAppleTVSearchPage searchPage = initPage(DisneyPlusAppleTVSearchPage.class);
-        DisneyPlusAppleTVHomePage home = initPage(DisneyPlusAppleTVHomePage.class);
-        DisneyPlusAppleTVDetailsPage detailsPage = initPage(DisneyPlusAppleTVDetailsPage.class);
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = initPage(DisneyPlusAppleTVVideoPlayerPage.class);
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
         logIn(getAccount());
