@@ -20,15 +20,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private static final String MONTHLY = "Monthly";
     private static final String ANNUAL = "Annual";
     private static final String PREMIUM = "Premium";
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
-    private ExtendedWebElement changeLink;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[1]")
-    private ExtendedWebElement editEmailButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[2]")
-    private ExtendedWebElement editPasswordButton;
+    private static final String SUBSCRIPTION_MESSAGE = "Some account management features are only available via the " +
+            "website. " +
+            "Create a Disney+ account and more at disneyplus.com/next";
 
     private ExtendedWebElement accountDetailsSection = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()));
 
@@ -44,11 +38,20 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement directBillingMonthlyPausedContainer = getDynamicCellByLabel(String.format(CONTAINER_TEXT, "Disney+ Basic Monthly", getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SETTINGS_PAUSED.getText())));
     private ExtendedWebElement disneyPlusPremiumSubscription = getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.DISNEYPLUS_PREMIUM.getText()));
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
+    private ExtendedWebElement changeLink;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[1]")
+    private ExtendedWebElement editEmailButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[2]")
+    private ExtendedWebElement editPasswordButton;
     @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
     private ExtendedWebElement changePasswordCell;
 
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/**/XCUIElementTypeButton[2]")
+    private ExtendedWebElement subscriptionMessage;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -56,6 +59,14 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private final ExtendedWebElement manageDevicesText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                     DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText()));
+
+    public ExtendedWebElement getSubscriptionMessage() {
+        return subscriptionMessage;
+    }
+
+    public boolean isSubscriptionMessageDisplayed() {
+        return getSubscriptionMessage().getText().equals(SUBSCRIPTION_MESSAGE);
+    }
 
     public boolean isMovistarSubscriptionTitlePresent() {
         String title = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MOVISTAR.getText());
