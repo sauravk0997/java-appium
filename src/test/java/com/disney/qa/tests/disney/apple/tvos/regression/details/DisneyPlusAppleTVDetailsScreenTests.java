@@ -152,7 +152,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122531"})
     @Test(groups = {TestGroup.HULU_HUB, US})
     public void verifyHuluLicenseAttributeForStandAloneUser() {
-        String contentTitle = "Shogun";
+        String contentTitle = "Under The Bridge";
         String licenseAttributionText = "Provided by Hulu";
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
