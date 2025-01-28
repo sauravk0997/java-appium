@@ -153,7 +153,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112611"})
-    @Test(groups = {TestGroup.HULU_HUB_2, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifyNetworkAttributionWithBundleUserAccount() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
         logIn(getAccount());
@@ -177,7 +177,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         searchPage.clearSearchBar();
         searchPage.typeInSearchField(content);
         searchPage.clickSearchResult(content);
-        Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(),
+        sa.assertTrue(detailsPage.getServiceAttribution().isPresent(),
                 "Service attribution was not found on Hulu series detail page");
     }
 }
