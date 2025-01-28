@@ -63,7 +63,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
 
     public ExtendedWebElement getServiceAttributionLabel(){
         fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Service Attribution is not visible")
-                .until(it -> getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent());
+                .until(it -> getStaticTextByName(SERVICE_ATTRIBUTION).isPresent(ONE_SEC_TIMEOUT));
         return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
     }
 }
