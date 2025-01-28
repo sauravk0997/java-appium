@@ -143,7 +143,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionTitlePresent(),
                 "Legacy Disney Bundle subscription title was not displayed");
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(),
+//        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(),
+//                "Legacy Disney Bundle subscription message was not displayed");
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isLegacyDisneyBundleSubTextPresent(),
                 "Legacy Disney Bundle subscription message was not displayed");
         sa.assertAll();
     }

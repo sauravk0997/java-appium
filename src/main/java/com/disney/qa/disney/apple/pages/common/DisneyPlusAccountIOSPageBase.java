@@ -20,6 +20,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private static final String MONTHLY = "Monthly";
     private static final String ANNUAL = "Annual";
     private static final String PREMIUM = "Premium";
+    private static final String LEGACY_DISNEY_BUNDLE_SUB_TEXT = "Some account management features are only available " +
+            "via the website. Create a Disney+ account and more at disneyplus.com/next";
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"changeEmailCell\"`]/**/XCUIElementTypeButton")
     private ExtendedWebElement changeLink;
@@ -719,5 +721,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getEditPasswordButton() {
         return editPasswordButton;
+    }
+
+    public ExtendedWebElement getLegacyDisneyBundleSubText() {
+        return getDynamicAccessibilityId(LEGACY_DISNEY_BUNDLE_SUB_TEXT);
+    }
+
+    public boolean isLegacyDisneyBundleSubTextPresent() {
+        return getLegacyDisneyBundleSubText().isPresent();
     }
 }
