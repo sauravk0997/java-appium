@@ -10,7 +10,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -153,7 +152,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122531"})
     @Test(groups = {TestGroup.HULU_HUB, US})
     public void verifyHuluLicenseAttributeForStandAloneUser() {
-        String contentTitle = "Under The Bridge";
+        String contentTitle = "Shogun";
         String licenseAttributionText = "Provided by Hulu";
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());

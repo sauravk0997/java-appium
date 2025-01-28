@@ -51,6 +51,7 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
 
     public List<ExtendedWebElement> getSearchResults(String assetName) {
         List<ExtendedWebElement> searchResults = findExtendedWebElements(getSearchResultsContainers(assetName).getBy());
+        LOGGER.info("Search locator issue:- " + getDriver().getPageSource());
         if (!searchResults.isEmpty()) {
             return searchResults;
         } else {
