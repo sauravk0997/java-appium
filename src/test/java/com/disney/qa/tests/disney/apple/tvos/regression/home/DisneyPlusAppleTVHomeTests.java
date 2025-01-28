@@ -176,9 +176,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     private List<Container> getCollectionsHome() {
-            return getDisneyAPIPage(HOME_PAGE.getEntityId(),
-                    getLocalizationUtils().getLocale(),
-                    getLocalizationUtils().getUserLanguage());
+        return getDisneyAPIPage(HOME_PAGE.getEntityId(),
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
     }
 
     private void verifyBrandDetails(String brandCollectionID, DisneyPlusAppleTVHomePage homePage, SoftAssert sa) {
@@ -194,6 +194,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
+        LOGGER.info("**** homeCollections {} ", homeCollections.subList(0, 2));
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
@@ -203,12 +204,16 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homeCollections.forEach(homeCollectionId -> {
             //Verify shelf title
             String shelfTitle = homeCollectionId.getVisuals().getName();
+            LOGGER.info("**** title {} ", shelfTitle);
+
             if(!Arrays.asList(homeShelf,watchlistShelf).contains(shelfTitle)) {
                 sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
                         "Shelf title not found: " + shelfTitle);
             }
             if (!homeCollectionId.getItems().isEmpty()) {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
+                LOGGER.info("**** firstContentTitle {} ", firstContentTitle);
+
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
                 //Verify content title
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
