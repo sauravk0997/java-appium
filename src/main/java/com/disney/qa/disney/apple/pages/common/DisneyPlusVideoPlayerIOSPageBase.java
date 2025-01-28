@@ -157,14 +157,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return skipIntroButton;
     }
 
+    public ExtendedWebElement getServiceAttributionLabel(){
+        return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
+    }
+
     public boolean isServiceAttributionLabelVisible() {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
-                .until(it -> getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent(SIXTY_SEC_TIMEOUT)));
+                .until(it -> getServiceAttributionLabel().isPresent(SIXTY_SEC_TIMEOUT)));
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {
         displayVideoController();
-        return getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent();
+        return getServiceAttributionLabel().isPresent();
     }
 
     public boolean isCurrentTimeLabelVisible() {

@@ -59,11 +59,4 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         clickSelect();
         return titleLabel.getText();
     }
-
-    @Override
-    public String getSubTitleLabel() {
-        LOGGER.info("Video Player Issue:- " + getDriver().getPageSource());
-        subtitleLabel.isPresent(FIVE_SEC_TIMEOUT);
-        return subtitleLabel.getText();
-    }
 }
