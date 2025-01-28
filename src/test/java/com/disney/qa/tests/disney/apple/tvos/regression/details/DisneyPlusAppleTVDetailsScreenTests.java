@@ -167,7 +167,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @Test(groups = {TestGroup.HULU_HUB_2, US})
     public void verifyHuluLicenseAttributeForStandAloneUser() {
         String contentTitle = "Under the Bridge";
-        String licenseAttributionText = "Provided by Hulu";
+        String licenseeAttributionText = "Provided by Hulu";
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -183,12 +183,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         searchPage.typeInSearchField(contentTitle);
         searchPage.clickSearchResult(contentTitle);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(licenseAttributionText).isPresent(),
-                licenseAttributionText + " License Attribute text is not displayed on details page");
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(licenseeAttributionText).isPresent(),
+                licenseeAttributionText + " Licensee Attribute text is not displayed on details page");
 
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(licenseAttributionText),
-                licenseAttributionText + " License Attribute text is not displayed on video player");
+        Assert.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(licenseeAttributionText),
+                licenseeAttributionText + " Licensee Attribute text is not displayed on video player");
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {
