@@ -1521,6 +1521,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         throw new NoSuchElementException("Desired collection was not focused");
     }
 
+    public void moveRightUntilElementIsFocused(ExtendedWebElement element, int count) {
+        LOGGER.info("Moving right until desired collection content is focused");
+        if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
+            LOGGER.info("Desired element was already focused");
+            return;
+        }
+        while (count > 0) {
+            moveRight(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT) &&
+                    isFocused(element)) {
+                LOGGER.info("Reached desired element");
+                return;
+            }
+            count--;
+        }
+        throw new NoSuchElementException("Desired element was not focused after '" + count + "' retries");
+    }
+
     public void waitForLoaderToDisappear(int timeout) {
         LOGGER.info("Waiting for loader to disappear");
         fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Loader was still visible")

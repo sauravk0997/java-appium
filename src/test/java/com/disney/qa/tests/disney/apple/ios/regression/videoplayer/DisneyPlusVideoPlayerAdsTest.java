@@ -113,11 +113,11 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found during first ad.");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
-        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was found after scrubbing forward past new ad pod.");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(), "Ad badge label was found after scrubbing forward past new ad pod.");
         sa.assertAll();
     }
 
@@ -249,18 +249,18 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
-        videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found during first ad.");
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
-        videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(SHORT_TIMEOUT), "Ad badge label was not found after scrubbing forward after an ad grace period");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was not found after scrubbing forward " +
+                "after an ad grace period");
 
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
-        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge label was found after scrubbing during grace period");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
+                "Ad badge label was found after scrubbing during grace period");
         sa.assertAll();
     }
 
@@ -370,12 +370,12 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         String adBoundaryPresentMessage = "Ad boundary is present";
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_IS_NOT_PRESENT_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Rewind to the beginning and validate Ad should not be playing
         videoPlayer.scrubToPlaybackPercentage(0);
         Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(), adBoundaryPresentMessage);
-        Assert.assertFalse(videoPlayer.isAdBadgeLabelPresent(), AD_IS_PRESENT_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(), AD_IS_PRESENT_MESSAGE);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72568"})
@@ -407,13 +407,13 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_NOT_PRESENT_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_IS_NOT_PRESENT_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         // Need to be inside grace period
         pause(TEN_SEC_TIMEOUT);
         // Rewind to zero percentage and validate ad is not present
         videoPlayer.scrubToPlaybackPercentage(0);
-        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(6), AD_IS_PRESENT_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(), AD_IS_PRESENT_MESSAGE);
         sa.assertFalse(videoPlayer.isAdPodPresent(), AD_POD_PRESENT_MESSAGE);
         sa.assertAll();
     }
