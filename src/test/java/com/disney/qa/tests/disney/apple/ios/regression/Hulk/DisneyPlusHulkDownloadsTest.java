@@ -92,7 +92,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
 
         // Online + next episode is downloaded
         launchDeeplink(R.TESTDATA.get("hulu_prod_series_drifters_deeplink"));
-        sa.assertTrue(detailsPage.isOpened(), detailsNotOpen);
+        Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
         detailsPage.getEpisodeToDownload(one,one).click();
         detailsPage.waitForOneEpisodeDownloadToComplete(shortEpisodeTimeout, polling);
         detailsPage.getEpisodeToDownload(one,two).click();
