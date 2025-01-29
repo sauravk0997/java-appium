@@ -41,6 +41,8 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement renewLicenseButton =
 			getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
 					DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_LICENSE_EXPIRED_RENEW.getText()));
+	private ExtendedWebElement downloadErrorButton = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+			DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_ERROR.getText()));
 
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
@@ -68,9 +70,6 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
 			"%s]\"`]/**/XCUIElementTypeButton")
 	private ExtendedWebElement episodeDownloadButton;
-
-	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == 'Download error'`]")
-	private ExtendedWebElement downloadErrorButton;
 
 	//FUNCTIONS
 	@Override
