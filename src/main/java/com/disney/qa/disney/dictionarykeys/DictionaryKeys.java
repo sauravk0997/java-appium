@@ -196,6 +196,7 @@ public enum DictionaryKeys {
     DOWNLOADS_TITLE("downloads_title"),
     DOWNLOAD_TITLE_FOR_AD_TIER("downloads_tab_not_available_ad_tier_title"),
     DOWNLOAD_COMPLETE("download_complete"),
+    DOWNLOAD_ERROR("download_error"),
     DOWNLOAD_IN_PROGRESS("download_inprogress"),
     DOWNLOAD_IN_PROGRESS_PLURAL("download_inprogress_plural"),
     DOWNLOAD_IN_PROGRESS_PERCENT("download_inprogress_percent"),
