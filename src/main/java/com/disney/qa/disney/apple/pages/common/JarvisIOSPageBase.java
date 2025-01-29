@@ -3,9 +3,9 @@ package com.disney.qa.disney.apple.pages.common;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.testng.SkipException;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class JarvisIOSPageBase extends DisneyPlusApplePageBase{
@@ -25,11 +25,11 @@ public class JarvisIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isToggleEnabled(ExtendedWebElement toggle) {
         if (!toggle.isPresent()) {
-            throw new SkipException("Given Jarvis toggle was not present");
+            throw new NoSuchElementException("Given Jarvis toggle was not present");
         }
         List<ExtendedWebElement> toggleSubElements = toggle.findExtendedWebElements(typeOtherElements.getBy());
-        if (toggleSubElements.isEmpty()) {
-            throw new SkipException("Unable to find given Jarvis toggle track and slider");
+        if (toggleSubElements.isEmpty() || toggleSubElements.size() < 2) {
+            throw new IndexOutOfBoundsException("Unable to find given Jarvis toggle track and slider");
         }
         ExtendedWebElement toggleTrack = toggleSubElements.get(0);
         ExtendedWebElement toggleSlider = toggleSubElements.get(1);
