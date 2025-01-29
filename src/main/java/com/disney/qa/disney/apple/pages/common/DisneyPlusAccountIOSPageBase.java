@@ -20,9 +20,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private static final String MONTHLY = "Monthly";
     private static final String ANNUAL = "Annual";
     private static final String PREMIUM = "Premium";
-    private static final String SUBSCRIPTION_MESSAGE = "Some account management features are only available via the " +
-            "website. " +
-            "Create a Disney+ account and more at disneyplus.com/next";
+    private static final String SUBSCRIPTION_MESSAGE = "Some account management features are only available " +
+            "via the website. Create a Disney+ account and more at disneyplus.com/next";
 
     private ExtendedWebElement accountDetailsSection = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_ACCOUNT.getText()));
 
@@ -50,7 +49,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/**/XCUIElementTypeButton[2]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
+            "**/XCUIElementTypeButton[2]")
     private ExtendedWebElement subscriptionMessage;
 
     private final ExtendedWebElement accessAndSecurityText =
@@ -339,7 +339,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         String title = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS,
                 DictionaryKeys.ACCOUNT_SUBSCRIPTION_TITLE_BAMTECH_HYBRID_BUNDLE.getText());
-        return getStaticTextByLabel(title).isPresent();
+        return getTypeButtonByLabel(title).isPresent(TEN_SEC_TIMEOUT);
     }
 
     public void openBamtechBundleWebview() {
