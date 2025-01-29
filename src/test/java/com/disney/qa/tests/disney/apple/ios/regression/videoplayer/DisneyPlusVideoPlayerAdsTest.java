@@ -81,6 +81,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
                         " is not greater than remaining time after ad" + remainingTimeAfterAd);
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdTimeDurationPresentWithVideoControls(),
                 "Ad time duration wasn't shown when video controls were present");
         sa.assertAll();
