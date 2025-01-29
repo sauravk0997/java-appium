@@ -70,7 +70,6 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         int remainingTimeBeforeAd = videoPlayer.getRemainingTime();
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad time duration wasn't shown when video controls were not present");
-        sa.assertTrue(videoPlayer.isAdTimeDurationPresentWithVideoControls(), "Ad time duration wasn't shown when video controls were present");
         videoPlayer.waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT);
         videoPlayer.waitForAdToCompleteIfPresent(6);
         videoPlayer.skipPromoIfPresent();
@@ -80,6 +79,11 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(range.isValidIntValue(playDuration),
                 "Remaining time before ad" + remainingTimeBeforeAd +
                         " is not greater than remaining time after ad" + remainingTimeAfterAd);
+        videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdTimeDurationPresentWithVideoControls(),
+                "Ad time duration wasn't shown when video controls were present");
         sa.assertAll();
     }
 
