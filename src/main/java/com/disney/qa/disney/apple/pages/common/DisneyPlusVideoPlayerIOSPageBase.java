@@ -798,8 +798,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean waitForVideoLockTooltipToAppear() {
-       return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
-               "Player controls lock tooltip did not appear")
+        return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                "Player controls lock tooltip did not appear")
                 .until(it -> getLockScreenToolTip().isPresent(ONE_SEC_TIMEOUT));
     }
 
@@ -808,4 +808,30 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PLAYER_CONTROLS_LOCK_TOOLTIP.getText()));
     }
 
+    public boolean isConcurrencyMessageErrorPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.STREAMCONCURRENCY.getText())).isPresent();
+    }
+
+    public boolean isConcurrencyTitleErrorPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.STREAMCONCURRENCY_TITLE.getText())).isPresent();
+    }
+
+    public boolean isConcurrencyCTAButtonPresent() {
+        return getTypeButtonContainsLabel(getCtaButtonDismiss().getText()).isPresent();
+    }
+
+    public ExtendedWebElement getCtaButtonDismiss() {
+        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.DISMISS_BTN.getText()));
+    }
+
+    public boolean waitForNetworkWatermarkLogoToDisappear(String network) {
+        return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Network Watermark Logo is present")
+                .until(it -> getNetworkWatermarkLogo(network).isElementNotPresent(ONE_SEC_TIMEOUT));
+    }
 }

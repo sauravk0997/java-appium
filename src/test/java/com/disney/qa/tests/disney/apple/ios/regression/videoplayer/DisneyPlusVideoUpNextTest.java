@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.config.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -318,6 +319,74 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
                 "Next episode didn't play");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74459"})
+    @Test(groups = {TestGroup.HULK, TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyStandardHuluPostPlay() {
+        DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        double playerPercentageForRecommendation = 98;
+        String huluSeries = "The Bear";
+        String huluMovie = "Palm Springs";
+        String secondEpisodeTitle= "Hands";
+        String recommendationText = "You may also like";
+        String season = "1";
+        String episode = "2";
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+
+        String upNextTitlePlaceHolder = String.format(REGEX_UPNEXT_SERIES_TITLE, season, episode, secondEpisodeTitle);
+
+        //Enable autoplay
+        toggleAutoPlay("ON");
+
+        // Initiate Hulu series tests
+        initiatePlaybackAndScrubOnPlayer(huluSeries, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+        upNextIOSPageBase.waitForUpNextUIToAppear();
+        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
+                "Up Next meta data title not displayed");
+        sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
+        sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        videoPlayer.clickBackButton();
+        detailsPage.clickCloseButton();
+        detailsPage.clickHomeIcon();
+
+        // Initiate Hulu movie tests
+        initiatePlaybackAndScrubOnPlayer(huluMovie, playerPercentageForRecommendation);
+        upNextIOSPageBase.waitForUpNextUIToAppear();
+        sa.assertTrue(upNextIOSPageBase.isUpNextViewPresent() ,
+                "Countdown progress icon is not present");
+        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabelContains(recommendationText).isPresent(),
+                "You may also like text is not present");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75101"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpNextLiteAutoPlayOFFAppInBG() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(getAccount());
+        //Turn OFF autoplay
+        toggleAutoPlay("OFF");
+        //Bring up upNext UI
+        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
+        upNext.waitForUpNextUIToAppear();
+        sa.assertTrue(upNext.isOpened(), "Up Next UI was not displayed");
+        //This will lock the device for 5 seconds then unlock it
+        lockDevice(Duration.ofSeconds(5));
+        //After backgrounding the app, video player should exit
+        Assert.assertFalse(videoPlayer.isOpened(), "Video player did not exit after backgrounding the app");
+        Assert.assertTrue(detailsPage.isOpened(), "Details Page was not displayed");
+        sa.assertAll();
+    }
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -328,8 +397,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
+        searchPage.getDynamicAccessibilityId(content).click();
         Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");

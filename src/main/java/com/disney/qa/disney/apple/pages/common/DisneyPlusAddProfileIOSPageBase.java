@@ -10,11 +10,14 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.*;
+import org.testng.Assert;
 
 import java.lang.invoke.*;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.ERROR_DUPLICATE_PROFILE_NAME;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -270,5 +273,14 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isContentRatingDropdownEnabled(String value) {
           return getTypeButtonContainsLabel(value).getAttribute(IOSUtils.Attributes.ENABLED.getAttribute())
                   .equalsIgnoreCase(Boolean.TRUE.toString());
+    }
+
+    public void validateOptionsInGenderDropdown() {
+        DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
+        Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList())
+                .forEach(item ->
+                    Assert.assertTrue(dynamicBtnFindByLabelContains.format(
+                            editGenderIOSPageBase.selectGender(item)).isPresent(),
+                            "Gender " + item + " is not present" ));
     }
 }

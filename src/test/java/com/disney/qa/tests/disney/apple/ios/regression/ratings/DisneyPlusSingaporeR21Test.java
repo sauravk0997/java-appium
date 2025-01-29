@@ -790,6 +790,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         pause(halfPauseTimeoutInSeconds);
         videoPlayer.runAppInBackground(halfPauseTimeoutInSeconds);
         Assert.assertFalse(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_EXIT);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getLogoImage());
         Assert.assertTrue(detailsPage.getMediaTitle().equals(OUT_TITLE),
                 "User is not navigated to the details page after pause timeout");
     }
@@ -809,6 +810,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         detailsPage.clickPlayButton();
         Assert.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
