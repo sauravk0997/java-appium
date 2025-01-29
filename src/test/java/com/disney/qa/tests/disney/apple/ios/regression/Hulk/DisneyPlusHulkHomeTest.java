@@ -11,6 +11,7 @@ import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -189,6 +190,32 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78296"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB_2, US})
+    public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        DisneyAccount account = getAccount();
+        account.setEmail("alekhya.rallapalli+p2.standalone2@disney.com");
+        account.setUserPass("Test123!");
+        setAppToHomeScreen(account);
+
+        ExtendedWebElement huluTitleCell = homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.TRENDING, "Hulu Original Series");
+
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.TRENDING,
+                Direction.UP,
+                10);
+        homePage.swipeUp(3000);
+        homePage.swipeInContainerTillElementIsPresent(
+                homePage.getCollection(CollectionConstant.Collection.TRENDING),
+                huluTitleCell,
+                20,
+                Direction.LEFT);
+        Assert.assertTrue(huluTitleCell.isElementPresent(),
+                "Hulu title cell was not present under Trending collection");
     }
 
     private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
