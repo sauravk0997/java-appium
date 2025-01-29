@@ -648,6 +648,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                     getLocalizationUtils().getUserLanguage());
             collectionID = collections.get(2).getId();
             contentTitle = collections.get(2).getItems().get(0).getVisuals().getTitle();
+            if (contentTitle == null) {
+                throw new SkipException("First API Collection item did not have a title");
+            }
             swipe(homePage.getDynamicAccessibilityId(collectionID));
             homePage.getElementTypeCellByLabel(contentTitle).click();
     }
