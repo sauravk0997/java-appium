@@ -467,7 +467,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
 
         videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(95);
-        videoPlayer.waitForVideoToStart();
         videoPlayer.displayVideoController();
         videoPlayer.clickPlayButton();
         upNextPage.waitForUpNextUIToAppear();
