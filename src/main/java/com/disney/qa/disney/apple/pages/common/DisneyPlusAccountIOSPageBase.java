@@ -54,9 +54,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
             "**/XCUIElementTypeButton[2]")
-    private ExtendedWebElement subscriptionChangeMessage;
-
-
+    private ExtendedWebElement subscriptionMessage;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -64,6 +62,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private final ExtendedWebElement manageDevicesText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                     DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText()));
+
+    public boolean isSubscriptionMessagePresent() {
+        return subscriptionMessage.getText().equals(SUBSCRIPTION_MESSAGE);
+    }
 
     public boolean isMovistarSubscriptionTitlePresent() {
         String title = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_MOVISTAR.getText());
@@ -727,9 +729,5 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getEditPasswordButton() {
         return editPasswordButton;
-    }
-
-    public boolean isSubscriptionMessagePresent() {
-        return subscriptionChangeMessage.getText().equals(SUBSCRIPTION_MESSAGE);
     }
 }
