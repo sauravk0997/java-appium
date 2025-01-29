@@ -864,7 +864,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
      * @param duration
      */
     default void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
-        while (!element.isElementPresent() && swipes > 0) {
+        while (!element.isElementPresent(5) && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
         }
