@@ -8,7 +8,7 @@ import org.testng.SkipException;
 import java.util.List;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
-public class JarvisIOSPageBase extends DisneyPlusApplePageBase{
+public class JarvisIOSPageBase extends DisneyPlusApplePageBase {
     //LOCATORS
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label == 'Offline Expired License Override'$]" +
             "/**/XCUIElementTypeOther[`name == 'toggleView'`]")
