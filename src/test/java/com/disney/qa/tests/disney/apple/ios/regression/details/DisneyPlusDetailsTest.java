@@ -283,6 +283,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         detailsPage.clickContinueButton();
         sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
+        videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.scrubToPlaybackPercentage(95);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
         videoPlayerPage.clickPauseButton();
