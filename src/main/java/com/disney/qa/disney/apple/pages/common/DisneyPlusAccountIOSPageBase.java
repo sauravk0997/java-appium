@@ -52,7 +52,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/**/XCUIElementTypeButton[2]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
+            "**/XCUIElementTypeButton[2]")
     private ExtendedWebElement subscriptionChangeMessage;
 
 
