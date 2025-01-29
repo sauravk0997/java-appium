@@ -93,6 +93,9 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         // Online + next episode is downloaded
         launchDeeplink(R.TESTDATA.get("hulu_prod_series_futurama_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
         detailsPage.getEpisodeToDownload(one,one).click();
         detailsPage.waitForOneEpisodeDownloadToComplete(episodeTimeout, polling);
         detailsPage.getEpisodeToDownload(one,two).click();
