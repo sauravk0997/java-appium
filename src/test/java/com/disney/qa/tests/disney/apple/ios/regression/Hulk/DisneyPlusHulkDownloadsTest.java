@@ -7,7 +7,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -101,7 +100,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
         videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
-        sa.assertTrue(videoPlayer.getDeleteAndPlayButton(),
+        sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), detailsNotOpen);
@@ -116,7 +115,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
-        sa.assertTrue(videoPlayer.getDeleteAndPlayButton(),
+        sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
         sa.assertAll();
     }
