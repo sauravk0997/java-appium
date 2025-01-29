@@ -739,8 +739,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void jarvisEnableOfflineExpiredLicenseOverride() {
         JarvisIOSPageBase jarvisPage = initPage(JarvisIOSPageBase.class);
 
-        removeJarvis();
-        installAndLaunchJarvis();
+        launchJarvis(true);
 
         //Enable Playback > Offline Expired License Override toggle
         jarvisPage.scrollToItem(JARVIS_PLAYBACK).click();
