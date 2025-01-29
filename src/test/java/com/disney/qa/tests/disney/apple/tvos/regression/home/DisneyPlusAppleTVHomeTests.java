@@ -8,6 +8,7 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -173,6 +174,28 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "Studios and Networks collection was not present");
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122646"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB_2, US})
+    public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+
+        DisneyAccount account = getAccount();
+        account.setEmail("alekhya.rallapalli+p2.standalone2@disney.com");
+        account.setUserPass("Test123!");
+        logIn(account);
+
+        homePage.waitForHomePageToOpen();
+
+        ExtendedWebElement huluTitleCell = homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.TRENDING, "Hulu Original Series");
+
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 15);
+        homePage.moveRightUntilElementIsFocused(huluTitleCell, 30);
+        Assert.assertTrue(huluTitleCell.isElementPresent(),
+                "Hulu title cell was not present under Trending collection");
     }
 
     private List<Container> getCollectionsHome() {
