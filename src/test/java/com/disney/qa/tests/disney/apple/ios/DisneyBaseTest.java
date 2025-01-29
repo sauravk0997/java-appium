@@ -115,6 +115,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
+    @BeforeMethod(alwaysRun = true)
+    public void removeJarvisAppIfInstalled() {
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        if(isInstalled){
+            removeJarvis();
+        }
+    }
+
     @Getter
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
