@@ -845,7 +845,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean waitForDeleteAndPlayButton() {
         try {
-            fluentWait(getDriver(), ONE_HUNDRED_TWENTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+            return fluentWait(getDriver(), ONE_HUNDRED_TWENTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
                     "Delete and play button is not present")
                     .until(it -> getStaticTextByLabelContains(getLocalizationUtils()
                             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
