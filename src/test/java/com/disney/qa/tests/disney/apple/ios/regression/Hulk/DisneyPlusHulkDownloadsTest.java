@@ -98,7 +98,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         detailsPage.getEpisodeToDownload(one,two).click();
         detailsPage.waitForOneEpisodeDownloadToComplete(shortEpisodeTimeout, polling);
         detailsPage.clickPlayButton();
-        sa.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
+        Assert.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
         videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
         sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
