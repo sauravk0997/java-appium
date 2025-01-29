@@ -120,7 +120,6 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-
     private Integer getEpisodeDownloadsOfSeason() {
         Map<List<String>, List<String>> params = new HashMap<>();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
