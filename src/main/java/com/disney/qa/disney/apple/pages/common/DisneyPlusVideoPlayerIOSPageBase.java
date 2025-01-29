@@ -836,10 +836,16 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean waitForDeleteAndPlayButton() {
-        return fluentWait(getDriver(), ONE_HUNDRED_TWENTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
-                "Delete and play button is not present")
-                .until(it -> getStaticTextByLabelContains(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.BTN_DELETE_PLAY_NEXT.getText())).isPresent());
+        try {
+            fluentWait(getDriver(), ONE_HUNDRED_TWENTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                    "Delete and play button is not present")
+                    .until(it -> getStaticTextByLabelContains(getLocalizationUtils()
+                            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                    DictionaryKeys.BTN_DELETE_PLAY_NEXT.getText())).isPresent());
+        } catch(TimeoutException e) {
+            LOGGER.info("Exception occurred attempting to wait for delete and play button");
+            return false;
+        }
+        return true;
     }
 }

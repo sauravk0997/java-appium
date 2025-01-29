@@ -77,7 +77,6 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         int polling = 5;
         int episodeTimeout = 120;
-        int shortEpisodeTimeout = 20;
         int percentageForNextTitle = 97;
         String one = "1";
         String two = "2";
@@ -92,14 +91,15 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         // Online + next episode is downloaded
-        launchDeeplink(R.TESTDATA.get("hulu_prod_series_drifters_deeplink"));
+        launchDeeplink(R.TESTDATA.get("hulu_prod_series_futurama_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
         detailsPage.getEpisodeToDownload(one,one).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(shortEpisodeTimeout, polling);
+        detailsPage.waitForOneEpisodeDownloadToComplete(episodeTimeout, polling);
         detailsPage.getEpisodeToDownload(one,two).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(shortEpisodeTimeout, polling);
+        detailsPage.waitForOneEpisodeDownloadToComplete(episodeTimeout, polling);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
+        videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
         sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
