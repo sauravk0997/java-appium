@@ -103,7 +103,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), detailsNotOpen);
+        Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
         detailsPage.clickCloseButton();
 
         // Online + next episode is NOT downloaded
