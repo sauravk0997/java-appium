@@ -8,13 +8,12 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
-public class JarvisIOSPageBase extends DisneyPlusApplePageBase{
+public class JarvisIOSPageBase extends DisneyPlusApplePageBase {
     //LOCATORS
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label == 'Offline Expired License Override'$]" +
             "/**/XCUIElementTypeOther[`name == 'toggleView'`]")
     private ExtendedWebElement offlineExpiredLicenseOverrideToggle;
 
-    //FUNCTIONS
     public JarvisIOSPageBase(WebDriver driver) {
         super(driver);
     }
