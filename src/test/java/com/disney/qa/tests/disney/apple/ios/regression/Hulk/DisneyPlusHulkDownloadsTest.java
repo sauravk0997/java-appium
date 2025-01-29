@@ -108,7 +108,7 @@ public class DisneyPlusHulkDownloadsTest extends DisneyBaseTest {
 
         // Online + next episode is NOT downloaded
         launchDeeplink(R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"));
-        sa.assertTrue(detailsPage.isOpened(), detailsNotOpen);
+        Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
         detailsPage.getEpisodeToDownload(one,one).click();
         detailsPage.waitForOneEpisodeDownloadToComplete(episodeTimeout, polling);
         detailsPage.clickPlayButton();
