@@ -910,7 +910,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         String titleErrorMessage = "title not found";
         String sizeIdentifier = "MB";
         int pollingInSeconds = 6;
-        int timeoutInSeconds = 120;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -937,7 +936,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickAlertConfirm();
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(season1).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(timeoutInSeconds, pollingInSeconds);
+        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, pollingInSeconds);
 
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
