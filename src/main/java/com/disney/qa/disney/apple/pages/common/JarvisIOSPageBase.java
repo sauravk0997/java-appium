@@ -14,7 +14,6 @@ public class JarvisIOSPageBase extends DisneyPlusApplePageBase{
             "/**/XCUIElementTypeOther[`name == 'toggleView'`]")
     private ExtendedWebElement offlineExpiredLicenseOverrideToggle;
 
-    //FUNCTIONS
     public JarvisIOSPageBase(WebDriver driver) {
         super(driver);
     }
