@@ -205,10 +205,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         ExtendedWebElement huluTitleCell = homePage.getCellElementFromContainer(
                 CollectionConstant.Collection.TRENDING, "Hulu Original Series");
 
-        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.TRENDING,
-                Direction.UP,
-                10);
-        homePage.swipeUp(3000);
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.TRENDING, 10);
         homePage.swipeInContainerTillElementIsPresent(
                 homePage.getCollection(CollectionConstant.Collection.TRENDING),
                 huluTitleCell,
