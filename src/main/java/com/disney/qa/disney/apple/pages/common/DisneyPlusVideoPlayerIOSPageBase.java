@@ -854,6 +854,5 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             LOGGER.info("Exception occurred attempting to wait for delete and play button");
             return false;
         }
-        return true;
     }
 }
