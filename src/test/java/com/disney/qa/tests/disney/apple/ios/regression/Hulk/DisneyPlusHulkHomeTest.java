@@ -216,8 +216,6 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
                 Direction.LEFT);
         Assert.assertTrue(huluTitleCell.isElementPresent(),
                 "Hulu title cell was not present under Trending collection");
-
-        homePage.waitForHomePageToOpen();
     }
 
     private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
