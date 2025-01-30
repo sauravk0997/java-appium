@@ -370,7 +370,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTime() {
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
+        int remainingTimeInSec =
+                (Math.abs(Integer.parseInt(remainingTime[0])) * 60) + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
@@ -503,11 +504,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isAdBadgeLabelPresent(int...timeout) {
-        int waitTime = 10;
-        if (timeout.length > 0) {
-            waitTime = timeout[0];
-        }
-        return getAdBadge().isPresent(waitTime);
+        int waitTime = timeout.length > 0 ? timeout[0] : FIFTEEN_SEC_TIMEOUT;
+        return fluentWait(getDriver(), waitTime, THREE_SEC_TIMEOUT, "Ad badge label not present")
+                .until(it -> isAdBadgePresent(ONE_SEC_TIMEOUT));
     }
 
     public ExtendedWebElement getAdBadge() {
@@ -634,7 +633,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public void waitForAdToCompleteIfPresent(int polling) {
         if (isAdBadgeLabelPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
-            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime).until(it -> !isAdBadgeLabelPresent(ONE_SEC_TIMEOUT));
+            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime)
+                    .until(it -> getAdBadge().isElementNotPresent(ONE_SEC_TIMEOUT));
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
         }
@@ -837,5 +837,27 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean waitForNetworkWatermarkLogoToDisappear(String network) {
         return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Network Watermark Logo is present")
                 .until(it -> getNetworkWatermarkLogo(network).isElementNotPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public boolean isAdBadgePresent(int timeout) {
+        return getAdBadge().isPresent(timeout);
+    }
+
+    public boolean isAdBadgeLabelNotPresent() {
+        return fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Ad badge label was present")
+                .until(it -> getAdBadge().isElementNotPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public boolean waitForDeleteAndPlayButton() {
+        try {
+            return fluentWait(getDriver(), ONE_HUNDRED_TWENTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                    "Delete and play button is not present")
+                    .until(it -> getStaticTextByLabelContains(getLocalizationUtils()
+                            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                    DictionaryKeys.BTN_DELETE_PLAY_NEXT.getText())).isPresent());
+        } catch (TimeoutException e) {
+            LOGGER.info("Exception occurred attempting to wait for delete and play button");
+            return false;
+        }
     }
 }
