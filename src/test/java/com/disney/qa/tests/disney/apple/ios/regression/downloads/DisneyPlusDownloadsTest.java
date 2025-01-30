@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
@@ -12,6 +13,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -548,5 +550,13 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Cancel button was not present on Content expired alert");
 
         sa.assertAll();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void removeJarvisApp(){
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        if(isInstalled){
+            removeJarvis();
+        }
     }
 }

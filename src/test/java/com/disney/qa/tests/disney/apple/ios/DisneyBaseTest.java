@@ -117,14 +117,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
     }
 
-    @BeforeMethod(alwaysRun = true)
-    public void removeJarvisAppIfInstalled() {
-        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
-        if(isInstalled){
-            removeJarvis();
-        }
-    }
-
     @Getter
     public enum Person {
         ADULT(DateHelper.Month.NOVEMBER, "5", "1955"),
@@ -739,18 +731,18 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public void jarvisEnableOfflineExpiredLicenseOverride() {
-        JarvisIOSPageBase jarvisPage = initPage(JarvisIOSPageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
 
         launchJarvis(true);
 
         //Enable Playback > Offline Expired License Override toggle
-        jarvisPage.scrollToItem(JARVIS_PLAYBACK).click();
-        jarvisPage.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE);
+        jarvis.scrollToItem(JARVIS_PLAYBACK).click();
+        jarvis.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE);
 
-        if (!jarvisPage.isToggleEnabled(jarvisPage.getOfflineExpiredLicenseOverrideToggle())) {
-            jarvisPage.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE).click();
+        if (!isToggleEnabled(jarvis.getOverrideToggle(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE))) {
+            jarvis.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE).click();
         }
-        Assert.assertTrue(jarvisPage.isToggleEnabled(jarvisPage.getOfflineExpiredLicenseOverrideToggle()),
+        Assert.assertTrue(isToggleEnabled(jarvis.getOverrideToggle(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE)),
                 JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE + " Jarvis toggle was not enabled");
 
         //Relaunch Disney app
