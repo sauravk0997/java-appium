@@ -475,8 +475,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
         passwordPage.getTextEntryField().click();
         Assert.assertTrue(passwordPage.getDynamicAccessibilityId(
-                        getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText())).isPresent(),
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText())).isPresent(),
                 "DOB format is not standard for the jurisdiction");
     }
 
