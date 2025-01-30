@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
@@ -15,7 +16,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
@@ -121,6 +121,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 4)),
         U13(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 12)),
         U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16)),
+        AGE_17(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 17)),
         OLDERTHAN125(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 130)),
         OLDERTHAN200(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 205));
 
@@ -146,6 +147,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             }
         }
 
+    }
+
+    /**
+     * Calculates person's age based on month, day, year provided from Person enum
+     *
+     * @param personMonth - Person's birth month
+     * @param personDay  - Person's birthday
+     * @param personYear - Person's birth year
+     */
+    public int calculateAge(DateHelper.Month personMonth, String personDay, String personYear) {
+        int month = Integer.parseInt(personMonth.getNum());
+        int day = Integer.parseInt(personDay);
+        int year = Integer.parseInt(personYear);
+        return Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears();
     }
 
     /**
