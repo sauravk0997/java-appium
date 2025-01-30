@@ -158,6 +158,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='progressBar'$]" +
             "/XCUIElementTypeStaticText[$label CONTAINS 'remaining'$]")
     protected ExtendedWebElement continueWatchingTimeRemaining;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name='titleLabel_0'$]/**/XCUIElementTypeButton[`name " +
+            "CONTAINS 'Offline'`]")
+    protected ExtendedWebElement firstEpisodeDownloadComplete;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -856,7 +860,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void waitForFirstEpisodeToCompleteDownload(int timeOut, int polling) {
         LOGGER.info("Waiting for the download of the first episode to complete.");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
-                .until(it -> getFirstEpisodeDownloadButton().isPresent());
+                .until(it -> getFirstEpisodeDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
@@ -1217,5 +1221,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isDownloadPausedInDownloadModal() {
         return downloadPausedLabel.isPresent();
+    }
+
+    public ExtendedWebElement getFirstEpisodeDownloadCompleteButton() {
+        return firstEpisodeDownloadComplete;
     }
  }
