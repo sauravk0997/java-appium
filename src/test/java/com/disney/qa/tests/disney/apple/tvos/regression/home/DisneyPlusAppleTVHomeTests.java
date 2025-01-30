@@ -217,9 +217,13 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
                 //Verify content title
+                if (homePage.getTypeCellNameContains(firstContentTitle).isElementNotPresent(SHORT_TIMEOUT)) {
+                    homePage.moveRight(7, 1);
+                }
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
                         "Content title not found: " + firstContentTitle);
             }
+            homePage.moveLeft(7, 1);
             homePage.moveDown(1, 1);
 
             if (homePage.getTypeOtherContainsName("airingBadgeContainerView").isPresent(SHORT_TIMEOUT)) {
