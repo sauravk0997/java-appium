@@ -465,7 +465,9 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
-        videoPlayer.scrubToPlaybackPercentage(95);
+        videoPlayer.clickPauseButton();
+        videoPlayer.scrubToPlaybackPercentage(90);
+        videoPlayer.clickPlayButton();
         upNextPage.waitForUpNextUIToAppear();
         String expectedNextEpisodesTitle = upNextPage.getNextEpisodeInfo();
         LOGGER.info("Expected next episode title: {}", expectedNextEpisodesTitle);

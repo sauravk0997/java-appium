@@ -57,6 +57,7 @@ public enum DictionaryKeys {
     BTN_DATE_OF_BIRTH_LOG_OUT("btn_date_of_birth_log_out"),
     BTN_DELETE("btn_delete"),
     BTN_DELETE_ALL_DOWNLOADS("btn_delete_all_downloads"),
+    BTN_DELETE_PLAY_NEXT("btn_delete_play_next"),
     BTN_DELETE_PROFILE("btn_delete_profile"),
     BTN_DETAILS_RESTART("btn_details_restart"),
     BTN_EDIT_PROFILE("btn_edit_profile"),
