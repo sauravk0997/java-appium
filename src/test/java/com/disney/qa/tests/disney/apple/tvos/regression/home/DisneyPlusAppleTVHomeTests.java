@@ -217,21 +217,22 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
                 //Verify content title
                 if (!homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
+                    // Navigates horizontally in case the title is not found in the first 5 places
                     shouldNavigateBack.set(true);
                     homePage.moveRight(9, 1);
                 }
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
                         "Content title not found: " + firstContentTitle);
             }
+            if (shouldNavigateBack.get().equals(true)) {
+                homePage.moveLeft(8, 1);
+                shouldNavigateBack.set(false);
+            }
             /*
              The next part is to avoid 3 shelf banners that are not coming from Api that break sequence navigation
              from homeCollections Api shelf titles
              The banners are Live and upcoming from ESPN, More ESPN+ Live Events and Streams Non Stop Playlists
              */
-            if (shouldNavigateBack.get().equals(true)) {
-                homePage.moveLeft(8, 1);
-                shouldNavigateBack.set(false);
-            }
             if (shelfTitle.contains(newlyAddedShelf)) {
                 homePage.moveDown(2, 1);
             } else if (shelfTitle.contains(topTenHuluShelf)) {
