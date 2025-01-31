@@ -3,8 +3,8 @@
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.0.0-rc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78388"/>
-    <parameter name="jenkinsBuild" value="4.0.0.75492"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78441"/>
+    <parameter name="jenkinsBuild" value="4.0.1.75501"/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_reg_rc"/>
@@ -68,6 +68,11 @@
     <test verbose="1" name="DisneyPlus tvOS Anthology" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.anthology.DisneyPlusAppleTVAnthologyTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus tvOS Deeplinks" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.deeplinks.DisneyPlusAppleTVDeepLinksTests"/>
         </classes>
     </test>
 </suite>

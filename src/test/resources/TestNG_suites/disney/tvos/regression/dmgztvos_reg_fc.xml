@@ -71,4 +71,9 @@
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.anthology.DisneyPlusAppleTVAnthologyTest"/>
         </classes>
     </test>
+    <test verbose="1" name="DisneyPlus tvOS Deeplinks" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.deeplinks.DisneyPlusAppleTVDeepLinksTests"/>
+        </classes>
+    </test>
 </suite>

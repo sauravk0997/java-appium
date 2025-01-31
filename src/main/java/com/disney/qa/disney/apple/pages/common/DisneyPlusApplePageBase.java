@@ -1166,6 +1166,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         swipePageTillElementTappable(element, count, null, direction, 900);
     }
 
+    public void swipeUpTillCollectionCompletelyVisible
+            (CollectionConstant.Collection collection, int count) {
+        ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
+        int screenHeight = getDriver().manage().window().getSize().getHeight();
+
+        swipe(element, Direction.UP, count, 900);
+        int elementCurrentYMaxBoundary = element.getLocation().getY() + element.getSize().getHeight();
+        if (elementCurrentYMaxBoundary > screenHeight) {
+            swipeUp(900);
+        }
+    }
+
     public boolean isCollectionVisibleAfterSwiping
             (CollectionConstant.Collection collection, Direction direction, int count) {
         ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
@@ -1519,6 +1531,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             count--;
         }
         throw new NoSuchElementException("Desired collection was not focused");
+    }
+
+    public void moveRightUntilElementIsFocused(ExtendedWebElement element, int count) {
+        LOGGER.info("Moving right until desired collection content is focused");
+        if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
+            LOGGER.info("Desired element was already focused");
+            return;
+        }
+        while (count > 0) {
+            moveRight(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT) &&
+                    isFocused(element)) {
+                LOGGER.info("Reached desired element");
+                return;
+            }
+            count--;
+        }
+        throw new NoSuchElementException("Desired element was not focused after '" + count + "' retries");
     }
 
     public void waitForLoaderToDisappear(int timeout) {

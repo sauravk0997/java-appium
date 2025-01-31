@@ -143,9 +143,22 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionTitlePresent(),
                 "Legacy Disney Bundle subscription title was not displayed");
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isBamtechBundleSubscriptionMessagePresent(),
+        sa.assertTrue(disneyPlusAccountIOSPageBase.isSubscriptionMessageDisplayed(),
                 "Legacy Disney Bundle subscription message was not displayed");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67132"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySubscriptionDetails_DirectBillingWeb() {
+        setAccount(createAccountWithSku(
+                DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage()));
+        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
+        setAppToAccountSettings();
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isSubscriptionMessageDisplayed(),
+                "Direct Billing Web subscription message was not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
