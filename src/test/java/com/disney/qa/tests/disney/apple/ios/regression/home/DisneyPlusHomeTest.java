@@ -648,8 +648,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                     getLocalizationUtils().getUserLanguage());
             collectionID = collections.get(2).getId();
             contentTitle = collections.get(2).getItems().get(0).getVisuals().getTitle();
+            ExtendedWebElement contentTitleElement = homePage.getElementTypeCellByLabel(contentTitle);
+
             swipe(homePage.getDynamicAccessibilityId(collectionID));
-            homePage.getElementTypeCellByLabel(contentTitle).click();
+            if (contentTitleElement.isPresent()){
+                contentTitleElement.click();
+            } else {
+                swipeInContainerTillElementIsPresent(homePage.getCollection(collectionID), contentTitleElement,
+                        30,
+                        Direction.LEFT);
+                contentTitleElement.click();
+            }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68163"})

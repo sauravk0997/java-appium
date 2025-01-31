@@ -1166,6 +1166,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         swipePageTillElementTappable(element, count, null, direction, 900);
     }
 
+    public void swipeUpTillCollectionCompletelyVisible
+            (CollectionConstant.Collection collection, int count) {
+        ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
+        int screenHeight = getDriver().manage().window().getSize().getHeight();
+
+        swipe(element, Direction.UP, count, 900);
+        int elementCurrentYMaxBoundary = element.getLocation().getY() + element.getSize().getHeight();
+        if (elementCurrentYMaxBoundary > screenHeight) {
+            swipeUp(900);
+        }
+    }
+
     public boolean isCollectionVisibleAfterSwiping
             (CollectionConstant.Collection collection, Direction direction, int count) {
         ExtendedWebElement element = collectionCell.format(CollectionConstant.getCollectionName(collection));
