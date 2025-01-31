@@ -10,14 +10,10 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.webdriver.decorator.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.*;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.lang.invoke.MethodHandles;
 import java.util.*;
 import java.util.stream.*;
 
@@ -33,6 +29,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String HOME_PAGE_ERROR_MESSAGE = "Home page did not open";
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
+    private static final String WATCHLIST_SCREEN_ERROR_MESSAGE = "Watchlist page did not open";
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90964", "XCDQA-107758", "XCDQA-90972", "XCDQA-90974"})
     @Test(description = "Verify movie details screen appearance", groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE,
             US})
@@ -54,7 +52,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         List<String> tabs = Stream.of("SUGGESTED", "EXTRAS", "DETAILS").collect(Collectors.toList());
         logInTemp(getAccount());
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
-        sa.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
+        sa.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
 
         watchListPage.clickSelect();
         sa.assertTrue(detailsPage.isOpened(), "Movies details page did not launch");
@@ -89,24 +87,24 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
 
-        sa.assertTrue(disneyPlusAppleTVSearchPage.isOpened(), "Search page didn't launch");
+        sa.assertTrue(disneyPlusAppleTVSearchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
 
         disneyPlusAppleTVSearchPage.typeInSearchField("endgame");
         disneyPlusAppleTVSearchPage.clickSearchResult(END_GAME.getTitle());
 
-        sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), "Details page did not launch");
+        sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
 
         disneyPlusAppleTVDetailsPage.clickWatchlistButton();
 
         disneyPlusAppleTVDetailsPage.clickMenuTimes(2, 1);
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
 
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page did not launch");
+        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         sa.assertTrue(disneyPlusAppleTVWatchListPage.getTypeCellLabelContains(END_GAME.getTitle()).isElementPresent(), "The following asset was not found in watchlist " + END_GAME.getTitle());
 
         disneyPlusAppleTVWatchListPage.clickSelect();
 
-        sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), "Details page did not launch");
+        sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
 
         disneyPlusAppleTVDetailsPage.clickWatchlistButton();
 
@@ -115,7 +113,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         disneyPlusAppleTVDetailsPage.clickMenuTimes(1, 1);
         collapseGlobalNav();
 
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), "Watchlist page did not launch");
+        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
 
         sa.assertFalse(disneyPlusAppleTVWatchListPage.getDynamicCellByLabel(END_GAME.getTitle()).isElementPresent(), "The following asset was  found in watchlist " + END_GAME.getTitle());
 
@@ -137,12 +135,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
 
-        sa.assertTrue(disneyPlusAppleTVSearchPage.isOpened(), "Search page didn't launch");
+        sa.assertTrue(disneyPlusAppleTVSearchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
 
         disneyPlusAppleTVSearchPage.typeInSearchField("endgame");
         disneyPlusAppleTVSearchPage.clickSearchResult(END_GAME.getTitle());
 
-        sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), "Details page did not launch");
+        sa.assertTrue(disneyPlusAppleTVDetailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
 
         disneyPlusAppleTVDetailsPage.getTrailerButton().click();
         sa.assertTrue(disneyPlusAppleTVVideoPlayerPage.isOpened(), "Video player page did not launch");
@@ -163,6 +161,34 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         launchApp(sessionBundles.get(DISNEY));
         verifyServiceAttribution(PREY, sa);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122644"})
+    @Test(groups = {TestGroup.HULU_HUB_2, US}, enabled = false)
+    public void verifyHuluLicenseAttributeForStandAloneUser() {
+        String contentTitle = "Under the Bridge";
+        String licenseeAttributionText = "Provided by Hulu";
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+        logIn(getAccount());
+
+        Assert.assertTrue(home.isOpened(), "Home page did not open");
+        home.moveDownFromHeroTileToBrandTile();
+        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(contentTitle);
+        searchPage.clickSearchResult(contentTitle);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(licenseeAttributionText).isPresent(),
+                licenseeAttributionText + " Licensee Attribute text is not displayed on details page");
+
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(licenseeAttributionText),
+                licenseeAttributionText + " Licensee Attribute text is not displayed on video player");
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {
