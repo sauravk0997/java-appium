@@ -234,19 +234,11 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             }
             if (!homeCollectionId.getItems().isEmpty()) {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
-                if (!homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
-                    // Navigates horizontally in case the title is not found in the first 5 places
-                    shouldNavigateBack.set(true);
-                    homePage.moveRight(9, 1);
-                }
+                LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
+                //Verify content title
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
-                        "Content title not found: " + firstContentTitle + " shelfTitle:" + shelfTitle);
+                        "Content title not found: " + firstContentTitle);
             }
-            if (shouldNavigateBack.get().equals(true)) {
-                homePage.moveLeft(7, 1);
-                shouldNavigateBack.set(false);
-            }
-
             homePage.moveDown(1, 1);
 
             if (homePage.getTypeOtherContainsName("airingBadgeContainerView").isPresent(SHORT_TIMEOUT)) {
