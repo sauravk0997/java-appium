@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    private static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
+    protected static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
@@ -157,14 +157,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return skipIntroButton;
     }
 
+    public ExtendedWebElement getServiceAttributionLabel(){
+        return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
+    }
+
     public boolean isServiceAttributionLabelVisible() {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
-                .until(it -> getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent(SIXTY_SEC_TIMEOUT)));
+                .until(it -> getServiceAttributionLabel().isPresent(SIXTY_SEC_TIMEOUT)));
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {
         displayVideoController();
-        return getStaticTextByNameContains(SERVICE_ATTRIBUTION).isPresent();
+        return getServiceAttributionLabel().isPresent();
     }
 
     public boolean isCurrentTimeLabelVisible() {
@@ -366,7 +370,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTime() {
         displayVideoController();
         String[] remainingTime = timeRemainingLabel.getText().split(":");
-        int remainingTimeInSec = (Integer.parseInt(remainingTime[0]) * -60) + (Integer.parseInt(remainingTime[1]));
+        int remainingTimeInSec =
+                (Math.abs(Integer.parseInt(remainingTime[0])) * 60) + (Integer.parseInt(remainingTime[1]));
         LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
         return remainingTimeInSec;
     }
@@ -841,5 +846,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isAdBadgeLabelNotPresent() {
         return fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Ad badge label was present")
                 .until(it -> getAdBadge().isElementNotPresent(ONE_SEC_TIMEOUT));
+    }
+
+    public boolean waitForDeleteAndPlayButton() {
+        try {
+            return fluentWait(getDriver(), ONE_HUNDRED_TWENTY_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                    "Delete and play button is not present")
+                    .until(it -> getStaticTextByLabelContains(getLocalizationUtils()
+                            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                    DictionaryKeys.BTN_DELETE_PLAY_NEXT.getText())).isPresent());
+        } catch (TimeoutException e) {
+            LOGGER.info("Exception occurred attempting to wait for delete and play button");
+            return false;
+        }
     }
 }
