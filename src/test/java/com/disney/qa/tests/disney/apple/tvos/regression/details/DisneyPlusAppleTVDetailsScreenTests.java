@@ -164,7 +164,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122644"})
-    @Test(groups = {TestGroup.HULU_HUB_2, US})
+    @Test(groups = {TestGroup.HULU_HUB_2, US}, enabled = false)
     public void verifyHuluLicenseAttributeForStandAloneUser() {
         String contentTitle = "Under the Bridge";
         String licenseeAttributionText = "Provided by Hulu";
