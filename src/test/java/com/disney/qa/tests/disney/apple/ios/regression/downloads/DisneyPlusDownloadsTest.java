@@ -64,6 +64,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForBookmarkToRefresh(SCRUB_PERCENTAGE_FIFTY, latency);
         detailsPage.startDownload();
         detailsPage.waitForMovieDownloadComplete(timeoutInSeconds, pollingInSeconds);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
@@ -84,6 +85,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForBookmarkToRefresh(SCRUB_PERCENTAGE_FIFTY, latency);
         swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
                 detailsPage.getContentDetailsPage(), Direction.UP, 1200);
 
