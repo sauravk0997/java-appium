@@ -244,10 +244,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                     homePage.moveRight(9, 1);
                 }
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
-                        "Content title not found: " + firstContentTitle);
+                        "Content title not found: " + firstContentTitle + " shelfTitle:" + shelfTitle);
             }
             if (shouldNavigateBack.get().equals(true)) {
-                homePage.moveLeft(8, 1);
+                homePage.moveLeft(7, 1);
                 shouldNavigateBack.set(false);
             }
             /*
