@@ -25,6 +25,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 import java.net.URISyntaxException;
+import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -158,6 +159,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='progressBar'$]" +
             "/XCUIElementTypeStaticText[$label CONTAINS 'remaining'$]")
     protected ExtendedWebElement continueWatchingTimeRemaining;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name='titleLabel_0'$]/**/XCUIElementTypeButton[`name " +
+            "CONTAINS 'Offline'`]")
+    protected ExtendedWebElement firstEpisodeDownloadComplete;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'progressBar'`]/XCUIElementTypeOther")
+    private ExtendedWebElement progressBarBookmark;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -856,7 +864,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public void waitForFirstEpisodeToCompleteDownload(int timeOut, int polling) {
         LOGGER.info("Waiting for the download of the first episode to complete.");
         fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
-                .until(it -> getFirstEpisodeDownloadButton().isPresent());
+                .until(it -> getFirstEpisodeDownloadCompleteButton().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
@@ -1217,5 +1225,22 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isDownloadPausedInDownloadModal() {
         return downloadPausedLabel.isPresent();
+    }
+
+    public ExtendedWebElement getFirstEpisodeDownloadCompleteButton() {
+        return firstEpisodeDownloadComplete;
+    }
+
+    public void waitForBookmarkToRefresh(double scrubPercentage, int latency) {
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+                "Bookmark is not indicating correct position on details page")
+                .until(it -> isBookmarkRefreshed(scrubPercentage, latency));
+    }
+
+    public boolean isBookmarkRefreshed(double scrubPercentage, int latency) {
+        double bookmarkWidth = progressBarBookmark.getSize().getWidth();
+        double expectedWidth = progressBar.getSize().getWidth() / (100 / scrubPercentage);
+        ValueRange range = ValueRange.of(-latency, latency);
+        return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
     }
  }

@@ -54,6 +54,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     String DEVICE_TYPE = "capabilities.deviceType";
 
     String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
+    String TYPE_OTHER_ELEMENTS_CLASS_CHAIN = "**/XCUIElementTypeOther";
     Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String RIGHT_POSITION = "RIGHT";
     String LEFT_POSITION = "LEFT";
@@ -1002,5 +1003,19 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
                 break;
             default: throw new IllegalArgumentException("Invalid alignment String");
         }
+    }
+
+    default boolean isToggleEnabled(ExtendedWebElement toggle) {
+        if (!toggle.isPresent()) {
+            throw new java.util.NoSuchElementException("Given Jarvis toggle was not present");
+        }
+        List<ExtendedWebElement> toggleSubElements = toggle.findExtendedWebElements(
+                AppiumBy.iOSClassChain(TYPE_OTHER_ELEMENTS_CLASS_CHAIN));
+        if (toggleSubElements.isEmpty() || toggleSubElements.size() < 2) {
+            throw new IndexOutOfBoundsException("Unable to find given Jarvis toggle track and slider");
+        }
+        ExtendedWebElement toggleTrack = toggleSubElements.get(0);
+        ExtendedWebElement toggleSlider = toggleSubElements.get(1);
+        return toggleSlider.getLocation().getX() > toggleTrack.getLocation().getX();
     }
 }
