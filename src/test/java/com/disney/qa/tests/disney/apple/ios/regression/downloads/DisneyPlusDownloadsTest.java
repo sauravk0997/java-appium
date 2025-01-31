@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
@@ -12,6 +13,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -517,5 +519,45 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 firstSeriesName + " series title was not present");
         Assert.assertFalse(downloadsPage.getDownloadAssetFromListView(secondSeriesName).isPresent(THREE_SEC_TIMEOUT),
                 secondSeriesName + " series title was present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75725"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExpiredDownloadModalUI() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        jarvisEnableOfflineExpiredLicenseOverride();
+
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 900);
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        downloadsPage.clickSeriesMoreInfoButton();
+        Assert.assertTrue(downloadsPage.getDownloadErrorButton().isElementPresent(SIXTY_SEC_TIMEOUT),
+                "Download Error button (Expired Download CTA) was not present");
+
+        downloadsPage.getDownloadErrorButton().click();
+        sa.assertTrue(downloadsPage.getContentExpiredAlertTitle().isElementPresent(),
+                "Content expired title was not present on Content expired alert");
+        sa.assertTrue(downloadsPage.getRenewLicenseButton().isElementPresent(),
+                "Renew license button was not present on Content expired alert");
+        sa.assertTrue(downloadsPage.isAlertDismissBtnPresent(),
+                "Cancel button was not present on Content expired alert");
+
+        sa.assertAll();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void removeJarvisApp() {
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        if(isInstalled){
+            removeJarvis();
+        }
     }
 }
