@@ -252,7 +252,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             }
             /*
              The next part is to avoid 3 shelf banners that are not coming from Api that break sequence navigation from
-             homeCollections Api results, and it was found during tests that until now they are always in the same position
+             homeCollections Api results, and it was found during tests that they are always in the same position
              The banners are Live and upcoming from ESPN, More ESPN+ Live Events and Streams Non Stop Playlists
              */
             if (shelfTitle.contains(newlyAddedShelf)) {
