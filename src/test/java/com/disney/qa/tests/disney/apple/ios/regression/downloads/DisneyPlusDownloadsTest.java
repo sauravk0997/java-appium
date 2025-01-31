@@ -47,7 +47,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() {
         int latency = 20;
         int pollingInSeconds = 5;
-        int timeoutInSeconds = 180;
+        int timeoutInSeconds = 300;
         String zero = "0";
         String one = "1";
         String two = "2";
@@ -66,6 +66,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForBookmarkToRefresh(SCRUB_PERCENTAGE_FIFTY, latency);
         detailsPage.startDownload();
         detailsPage.waitForMovieDownloadComplete(timeoutInSeconds, pollingInSeconds);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
@@ -78,7 +79,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 bookmarkErrorMessage);
 
         //Series
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String episodeTitle = detailsPage.getEpisodeContentTitle();
         detailsPage.clickPlayButton();
@@ -86,12 +87,12 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForBookmarkToRefresh(SCRUB_PERCENTAGE_FIFTY, latency);
         swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
                 detailsPage.getContentDetailsPage(), Direction.UP, 1200);
 
         //Download episode
         detailsPage.getEpisodeToDownload(one, one).click();
-        detailsPage.getEpisodeToDownload(one, two).click();
         detailsPage.waitForFirstEpisodeToCompleteDownload(timeoutInSeconds, pollingInSeconds);
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
