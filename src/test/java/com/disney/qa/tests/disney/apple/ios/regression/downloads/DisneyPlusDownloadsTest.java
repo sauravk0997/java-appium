@@ -13,7 +13,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -552,8 +552,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.DOWNLOAD_EXPIRED)
-    public void removeJarvisApp(){
+    @AfterMethod(alwaysRun = true)
+    public void removeJarvisApp() {
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
         if(isInstalled){
             removeJarvis();
