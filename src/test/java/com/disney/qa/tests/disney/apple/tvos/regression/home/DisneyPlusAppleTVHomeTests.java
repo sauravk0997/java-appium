@@ -50,7 +50,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.moveRight(2, 1);
 
         verifyHomeCollectionsAndContent(homeCollections, sa);
-        homePage.moveDown(20, 1);
         sa.assertAll();
     }
 
@@ -195,7 +194,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
-        LOGGER.info("**** homeCollections {} ", homeCollections);
+        String newlyAddedShelf = "Newly Added";
+        String topTenHuluShelf = "Top 10 in the US Today";
+        ThreadLocal<Boolean> shouldNavigateBack = new ThreadLocal<>();
+        shouldNavigateBack.set(false);
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
@@ -205,7 +207,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homeCollections.forEach(homeCollectionId -> {
             //Verify shelf title
             String shelfTitle = homeCollectionId.getVisuals().getName();
-            LOGGER.info("**** title {} ", shelfTitle);
 
             if(!Arrays.asList(homeShelf,watchlistShelf).contains(shelfTitle)) {
                 sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
@@ -213,20 +214,29 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             }
             if (!homeCollectionId.getItems().isEmpty()) {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
-                LOGGER.info("**** firstContentTitle {} ", firstContentTitle);
-
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
                 //Verify content title
-                if (homePage.getTypeCellNameContains(firstContentTitle).isElementNotPresent(SHORT_TIMEOUT)) {
-                    homePage.moveRight(7, 1);
+                if (!homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
+                    shouldNavigateBack.set(true);
+                    homePage.moveRight(9, 1);
                 }
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
                         "Content title not found: " + firstContentTitle);
             }
-            homePage.moveLeft(7, 1);
-            homePage.moveDown(1, 1);
-
-            if (homePage.getTypeOtherContainsName("airingBadgeContainerView").isPresent(SHORT_TIMEOUT)) {
+            /*
+             The next part is to avoid 3 shelf banners that are not coming from Api that break sequence navigation
+             from homeCollections Api shelf titles
+             The banners are Live and upcoming from ESPN, More ESPN+ Live Events and Streams Non Stop Playlists
+             */
+            if (shouldNavigateBack.get().equals(true)) {
+                homePage.moveLeft(8, 1);
+                shouldNavigateBack.set(false);
+            }
+            if (shelfTitle.contains(newlyAddedShelf)) {
+                homePage.moveDown(2, 1);
+            } else if (shelfTitle.contains(topTenHuluShelf)) {
+                homePage.moveDown(3, 1);
+            } else {
                 homePage.moveDown(1, 1);
             }
         });
