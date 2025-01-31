@@ -217,8 +217,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
-        ThreadLocal<Boolean> shouldNavigateBack = new ThreadLocal<>();
-        shouldNavigateBack.set(false);
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
