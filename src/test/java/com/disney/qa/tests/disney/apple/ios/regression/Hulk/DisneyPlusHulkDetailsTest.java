@@ -354,7 +354,8 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.displayVideoController();
-        sa.assertFalse(videoPlayer.isAdBadgeLabelPresent(), "Ad badge found on Kids profile video content.");
+        sa.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
+                "Ad badge found on Kids profile video content.");
         sa.assertAll();
     }
 
