@@ -217,6 +217,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
+        ThreadLocal<Boolean> shouldNavigateBack = new ThreadLocal<>();
+        shouldNavigateBack.set(false);
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
@@ -232,11 +234,19 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             }
             if (!homeCollectionId.getItems().isEmpty()) {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
-                LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
-                //Verify content title
+                if (!homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
+                    // Navigates horizontally in case the title is not found in the first 5 places
+                    shouldNavigateBack.set(true);
+                    homePage.moveRight(9, 1);
+                }
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
-                        "Content title not found: " + firstContentTitle);
+                        "Content title not found: " + firstContentTitle + " shelfTitle:" + shelfTitle);
             }
+            if (shouldNavigateBack.get().equals(true)) {
+                homePage.moveLeft(7, 1);
+                shouldNavigateBack.set(false);
+            }
+
             homePage.moveDown(1, 1);
 
             if (homePage.getTypeOtherContainsName("airingBadgeContainerView").isPresent(SHORT_TIMEOUT)) {
