@@ -81,7 +81,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90922"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-65772"})
     @Test(description = "Profiles - Exit from Select profile to edit view", groups = {TestGroup.PROFILES, US})
     public void exitFromSelectProfileToEdit() {
         SoftAssert sa = new SoftAssert();
