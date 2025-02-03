@@ -40,7 +40,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     private static final String NO_EMAIL_INPUT_ERROR_FOUND_ERROR_MESSAGE = "No email input error was found";
     private static final String LOG_IN_SCREEN_NOT_LAUNCH_ERROR_MESSAGE = "Log In password screen did not launch";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90606", "XCDQA-90604"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66483", "XCDQA-66481"})
     @Test(description = "Email Input screen: Navigate Back", groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void verifyReturnToWelcomeScreen() {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -56,8 +56,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90608"})
-    @Test(description = "Email Input screen: Screen details/appearance", groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66485"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void emailInputScreenAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
