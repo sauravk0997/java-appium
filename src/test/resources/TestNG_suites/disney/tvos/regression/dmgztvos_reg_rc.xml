@@ -20,12 +20,6 @@
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=0,init_retry_interval=15,capabilities.newCommandTimeout=360"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
 
-    <test verbose="1" name="DisneyPlus tvOS Basic" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.tvos.regression.basic.DisneyPlusAppleTVAppLaunchTest">
-            </class>
-        </classes>
-    </test>
     <test verbose="1" name="DisneyPlus tvOS Details" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.details.DisneyPlusAppleTVDetailsScreenTests"/>
