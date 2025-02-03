@@ -297,7 +297,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), ES_LANG, true);
         } else if (groups.contains(EMEA)) {
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), REUNION, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), FRANCE, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
         } else if (groups.contains(MPAA)) {
             country = getMPAACountryCode();
@@ -316,18 +316,19 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     private String getEMEACountryCode() {
-        List<String> countryCodeList = Arrays.asList(HAITI, MAURITIUS, MAYOTTE, REUNION, UNITED_KINGDOM);
+        List<String> countryCodeList = Arrays.asList(GERMANY, FRANCE, SPAIN, UNITED_KINGDOM);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
     private String getEMEACountryLanguage(String countryCode) {
         switch (countryCode.toUpperCase()) {
-            case MAURITIUS:
-            case MAYOTTE:
-            case REUNION:
+            case GERMANY:
+                return DE_LANG;
+            case FRANCE:
                 return FR_LANG;
-            case HAITI:
+            case SPAIN:
+                return ES_LANG;
             case UNITED_KINGDOM:
                 return EN_LANG;
             default:
