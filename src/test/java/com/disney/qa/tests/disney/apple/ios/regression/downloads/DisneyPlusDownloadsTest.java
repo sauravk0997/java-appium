@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
@@ -12,6 +13,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -45,7 +47,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() {
         int latency = 20;
         int pollingInSeconds = 5;
-        int timeoutInSeconds = 180;
+        int timeoutInSeconds = 300;
         String zero = "0";
         String one = "1";
         String two = "2";
@@ -64,6 +66,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForBookmarkToRefresh(SCRUB_PERCENTAGE_FIFTY, latency);
         detailsPage.startDownload();
         detailsPage.waitForMovieDownloadComplete(timeoutInSeconds, pollingInSeconds);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
@@ -76,7 +79,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 bookmarkErrorMessage);
 
         //Series
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String episodeTitle = detailsPage.getEpisodeContentTitle();
         detailsPage.clickPlayButton();
@@ -84,12 +87,12 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
+        detailsPage.waitForBookmarkToRefresh(SCRUB_PERCENTAGE_FIFTY, latency);
         swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
                 detailsPage.getContentDetailsPage(), Direction.UP, 1200);
 
         //Download episode
         detailsPage.getEpisodeToDownload(one, one).click();
-        detailsPage.getEpisodeToDownload(one, two).click();
         detailsPage.waitForFirstEpisodeToCompleteDownload(timeoutInSeconds, pollingInSeconds);
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
@@ -516,5 +519,45 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 firstSeriesName + " series title was not present");
         Assert.assertFalse(downloadsPage.getDownloadAssetFromListView(secondSeriesName).isPresent(THREE_SEC_TIMEOUT),
                 secondSeriesName + " series title was present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75725"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExpiredDownloadModalUI() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        jarvisEnableOfflineExpiredLicenseOverride();
+
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 900);
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        downloadsPage.clickSeriesMoreInfoButton();
+        Assert.assertTrue(downloadsPage.getDownloadErrorButton().isElementPresent(SIXTY_SEC_TIMEOUT),
+                "Download Error button (Expired Download CTA) was not present");
+
+        downloadsPage.getDownloadErrorButton().click();
+        sa.assertTrue(downloadsPage.getContentExpiredAlertTitle().isElementPresent(),
+                "Content expired title was not present on Content expired alert");
+        sa.assertTrue(downloadsPage.getRenewLicenseButton().isElementPresent(),
+                "Renew license button was not present on Content expired alert");
+        sa.assertTrue(downloadsPage.isAlertDismissBtnPresent(),
+                "Cancel button was not present on Content expired alert");
+
+        sa.assertAll();
+    }
+
+    @AfterMethod(alwaysRun = true)
+    public void removeJarvisApp() {
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        if(isInstalled){
+            removeJarvis();
+        }
     }
 }
