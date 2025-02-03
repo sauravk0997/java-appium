@@ -553,6 +553,38 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75723"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyRemovedExpiredDownload() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        jarvisEnableOfflineExpiredLicenseOverride();
+
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 900);
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        downloadsPage.waitForDownloadToStart();
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        downloadsPage.clickSeriesMoreInfoButton();
+        Assert.assertTrue(downloadsPage.getDownloadErrorButton().isElementPresent(SIXTY_SEC_TIMEOUT),
+                "Download Error button (Expired Download CTA) was not present");
+
+        downloadsPage.clickEditButton();
+        downloadsPage.clickUncheckedCheckbox();
+        downloadsPage.clickDeleteDownloadButton();
+        sa.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
+                "Empty Downloads image is not present");
+        sa.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(), "Empty Downloads header is not present");
+        sa.assertTrue(downloadsPage.isDownloadsEmptyCopyPresent(), "Empty Downloads copy is not present");
+
+        sa.assertAll();
+    }
+
     @AfterMethod(alwaysRun = true)
     public void removeJarvisApp() {
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
