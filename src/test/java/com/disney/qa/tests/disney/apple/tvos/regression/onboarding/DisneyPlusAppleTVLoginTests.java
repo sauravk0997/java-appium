@@ -40,7 +40,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     private static final String NO_EMAIL_INPUT_ERROR_FOUND_ERROR_MESSAGE = "No email input error was found";
     private static final String LOG_IN_SCREEN_NOT_LAUNCH_ERROR_MESSAGE = "Log In password screen did not launch";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66483", "XCDQA-66481"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66483"})
     @Test(description = "Email Input screen: Navigate Back", groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void verifyReturnToWelcomeScreen() {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -75,8 +75,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90610"})
-    @Test(description = "Email Input screen: Navigation", groups = {TestGroup.ONBOARDING, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66481"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void emailInputNavigation() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -136,8 +136,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90602"})
-    @Test(description = "Check for error message with invalid email input", groups = {TestGroup.ONBOARDING, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66489"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyErrorMessageWithInvalidEmailInput() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -151,7 +151,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90598"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66469"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void registeredEmailTakenToLoginPassword() {
         DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -172,7 +172,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(passwordPage.isOpened(), LOG_IN_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90701"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-65734"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyPasswordScreenDetails() {
         SoftAssert sa = new SoftAssert();
@@ -250,7 +250,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90705"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-65740"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyPasswordOnScreenKeyboard() {
         SoftAssert sa = new SoftAssert();
@@ -284,7 +284,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707", "XCDQA-90709", "XCDQA-90711"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707", "XCDQA-65736"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void passwordEntryEncryptionVerification() {
         SoftAssert sa = new SoftAssert();
@@ -358,7 +358,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90699"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66556"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyIncorrectPasswordErrorMessage() {
         SoftAssert sa = new SoftAssert();
@@ -381,7 +381,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90691"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66553"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void singleProfileAccountIsTakenToHomePage() {
         DisneyOffer offer = new DisneyOffer();
@@ -390,8 +390,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90693"})
-    @Test(description = "User logging in with multiple profile account will be taken Who's Watching", groups = {TestGroup.ONBOARDING, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66554"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void multipleProfileAccountIsTakenToProfileSelection() {
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyOffer offer = new DisneyOffer();
@@ -433,7 +433,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         logIn(entitledUser);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91059", "XCDQA-91061"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68209"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyMultipleProfilesDefaultLanding() {
         SoftAssert sa = new SoftAssert();
