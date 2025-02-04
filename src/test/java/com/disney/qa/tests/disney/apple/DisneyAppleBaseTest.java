@@ -336,7 +336,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     private String getMPAACountryCode() {
         List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, GUAM,
-                PUERTO_RICO, MARSHALL_ISLANDS, UNITED_STATES_OUTLYING_ISLANDS);
+                PUERTO_RICO, MARSHALL_ISLANDS);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
