@@ -34,6 +34,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "CONTINUE")
     protected ExtendedWebElement continueButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeOther/XCUIElementTypeOther")
+    protected ExtendedWebElement loginLoader;
+
     public DisneyPlusPasswordIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -114,8 +117,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public void submitPasswordForLogin(String userPassword) {
         //To hide the keyboard, passing \n at the end of password value
         enterLogInPassword(userPassword + "\n");
-        Assert.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getLoginButton().getBy()), DEFAULT_EXPLICIT_TIMEOUT),
-                "Login button is visible after entering password.");
+        Assert.assertTrue(fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                "Login button loader is not visible").until(it -> getLoginLoader().isPresent()));
+        Assert.assertTrue(fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                "Login button loader is visible").until(it -> getLoginLoader().isElementNotPresent(ONE_SEC_TIMEOUT)));
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
@@ -212,5 +217,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText()));
+    }
+
+    public ExtendedWebElement getLoginLoader() {
+        return loginLoader;
     }
 }
