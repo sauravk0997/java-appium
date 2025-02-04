@@ -206,7 +206,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
 
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),

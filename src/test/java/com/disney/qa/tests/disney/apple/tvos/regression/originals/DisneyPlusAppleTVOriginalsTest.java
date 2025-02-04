@@ -18,7 +18,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90978", "XCDQA-90980", "XCDQA-90982"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67316", "XCDQA-90980", "XCDQA-90982"})
     @Test(groups = {TestGroup.SMOKE, TestGroup.DETAILS_PAGE, US})
     public void originalsAppearance() {
         int originalTitleIndex = 3;
