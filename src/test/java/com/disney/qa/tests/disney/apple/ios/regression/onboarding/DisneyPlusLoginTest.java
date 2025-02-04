@@ -28,6 +28,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
@@ -380,6 +381,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         //Close and Reopen
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
+        handleAlert();
         Assert.assertTrue(enforceDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Save DOB
@@ -393,6 +395,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         addProfileBannerPage.tapDismissButton();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
+        moreMenuPage.waitForLoaderToDisappear(FORTY_FIVE_SEC_TIMEOUT);
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         welcomePage.clickLogInButton();
