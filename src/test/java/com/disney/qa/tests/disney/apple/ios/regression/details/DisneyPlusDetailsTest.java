@@ -12,6 +12,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
@@ -61,7 +62,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.clickMoviesTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
-            swipe(searchPage.getStaticTextByLabel(filterValue));
+            swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 5, null,
+                    IMobileUtils.Direction.UP, 600);
             searchPage.getStaticTextByLabel(filterValue).click();
         } else {
             searchPage.getTypeButtonByLabel(filterValue).click();
