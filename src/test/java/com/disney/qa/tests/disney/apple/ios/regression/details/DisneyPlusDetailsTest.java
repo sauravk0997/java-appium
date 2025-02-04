@@ -27,7 +27,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
-import static com.zebrunner.carina.utils.mobile.IMobileUtils.Direction.UP;
 
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
@@ -62,8 +61,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.clickMoviesTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
-            swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 5, null,
-                    UP, 600);
+            swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 2, null,
+                    Direction.DOWN, 100);
             searchPage.getStaticTextByLabel(filterValue).click();
         } else {
             searchPage.getTypeButtonByLabel(filterValue).click();
@@ -307,7 +306,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String contentTitle = detailsPage.getContentTitle();
-        swipeInContainer(detailsPage.getContentDetailsPage(), UP, 500);
+        swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
         Assert.assertTrue(detailsPage.getStaticTextByLabel(contentTitle).isPresent(),
                 "Content title is not found in navigation bar");
     }
