@@ -31,7 +31,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
                 "Login Button is not focused after navigating down from Sign up");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-89343"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-99228"})
     @Test(groups = {TestGroup.SMOKE, TestGroup.ONBOARDING, US})
     public void welcomeScreenAppearance() {
         SoftAssert sa = new SoftAssert();
