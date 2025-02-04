@@ -301,8 +301,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
         } else if (groups.contains(MPAA)) {
             country = getMPAACountryCode();
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), UNITED_STATES_OUTLYING_ISLANDS, true);
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), country, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), getMPAACountryLanguage(country), true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
         }
@@ -336,8 +336,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     private String getMPAACountryCode() {
-        List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, UNITED_STATES_VIRGIN_ISLANDS, GUAM,
-                PUERTO_RICO, AMERICAN_SAMOA, MARSHALL_ISLANDS, NORTHERN_MARINA_ISLANDS, UNITED_STATES_OUTLYING_ISLANDS);
+        List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, GUAM,
+                PUERTO_RICO, MARSHALL_ISLANDS, NORTHERN_MARINA_ISLANDS, UNITED_STATES_OUTLYING_ISLANDS);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
@@ -346,10 +346,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         switch (countryCode.toUpperCase()) {
             case CANADA:
             case UNITED_STATES:
-            case UNITED_STATES_VIRGIN_ISLANDS:
             case GUAM:
             case PUERTO_RICO:
-            case AMERICAN_SAMOA:
             case MARSHALL_ISLANDS:
             case UNITED_STATES_OUTLYING_ISLANDS:
                 return EN_LANG;
