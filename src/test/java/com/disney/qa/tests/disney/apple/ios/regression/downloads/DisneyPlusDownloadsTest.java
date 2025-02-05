@@ -567,11 +567,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.waitForDetailsPageToOpen();
         swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 900);
         detailsPage.getFirstEpisodeDownloadButton().click();
-        downloadsPage.waitForDownloadToStart();
+        detailsPage.waitForFirstEpisodeToCompleteDownloadAndShowAsExpired(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloadsPage.clickSeriesMoreInfoButton();
-        Assert.assertTrue(downloadsPage.getDownloadErrorButton().isElementPresent(SIXTY_SEC_TIMEOUT),
+        Assert.assertTrue(downloadsPage.getDownloadErrorButton().isElementPresent(),
                 "Download Error button (Expired Download CTA) was not present");
 
         downloadsPage.clickEditButton();
