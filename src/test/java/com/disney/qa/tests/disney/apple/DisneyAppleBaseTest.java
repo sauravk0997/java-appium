@@ -297,8 +297,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), ES_LANG, true);
         } else if (groups.contains(EMEA)) {
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), FR, true);
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEACountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(MPAA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getMPAACountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
@@ -315,24 +315,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     private String getEMEACountryCode() {
-        List<String> countryCodeList = Arrays.asList(GERMANY, FRANCE, SPAIN, UNITED_KINGDOM);
+        List<String> countryCodeList = Arrays.asList(FRANCE);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
-    }
-
-    private String getEMEACountryLanguage(String countryCode) {
-        switch (countryCode.toUpperCase()) {
-            case GERMANY:
-                return DE_LANG;
-            case FRANCE:
-                return FR_LANG;
-            case SPAIN:
-                return ES_LANG;
-            case UNITED_KINGDOM:
-                return EN_LANG;
-            default:
-                throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
-        }
     }
 
     private String getMPAACountryCode() {

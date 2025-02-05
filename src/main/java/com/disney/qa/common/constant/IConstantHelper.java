@@ -30,7 +30,6 @@ public interface IConstantHelper {
     String CA = "CA";
     String CH = "CH";
     String DE = "DE";
-    String FR = "FR";
     String JP = "JP";
     String KR = "KR";
     String NL = "NL";
