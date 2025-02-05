@@ -29,12 +29,12 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyHomeScreenLayout() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-
+/*
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInWithoutHomeCheck(getAccount());
         collapseGlobalNav();
-
+*/
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
 
@@ -218,35 +218,35 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
         String newlyAddedShelf = "Newly Added";
-        String topTenHuluShelf = "Top 10 in the US Today";
-
+        String topTenHuluShelf = "Black Joy";
+        int times = 25;
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
 
         LOGGER.info("Home collection size: {}", homeCollections.size());
 
-        homeCollections.forEach(homeCollectionId -> {
-            //Verify shelf title
+        for (Container homeCollectionId : homeCollections) {//Verify shelf title
             String shelfTitle = homeCollectionId.getVisuals().getName();
-            if(!Arrays.asList(homeShelf,watchlistShelf).contains(shelfTitle)) {
+            if (!Arrays.asList(homeShelf, watchlistShelf).contains(shelfTitle)) {
                 sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
                         "Shelf title not found: " + shelfTitle);
             }
             if (!homeCollectionId.getItems().isEmpty()) {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
-                //Verify content title
-                if (!homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
-                    // Navigates horizontally in case the title is not found in the first 5 places
+                //Verify content title and navigates horizontally in case the title is not found in the first 5 places
+                while (times > 0 && !homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
                     shouldNavigateBack = true;
-                    homePage.moveRight(9, 1);
+                    homePage.moveRight(3, 1);
+                    times--;
                 }
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
                         "Content title not found: " + firstContentTitle + " shelfTitle:" + shelfTitle);
+
             }
             if (shouldNavigateBack) {
-                homePage.moveLeft(7, 1);
+                homePage.moveLeft(3, 1);
                 shouldNavigateBack = false;
             }
             /*
@@ -254,13 +254,13 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
              homeCollections Api results, and it was found during tests that they are always in the same position
              The banners are Live and upcoming from ESPN, More ESPN+ Live Events and Streams Non Stop Playlists
              */
-            if (shelfTitle.contains(newlyAddedShelf)) {
+            if (Arrays.asList(newlyAddedShelf, topTenHuluShelf).contains(shelfTitle)) {
+                LOGGER.info("**1 {}", shelfTitle);
                 homePage.moveDown(2, 1);
-            } else if (shelfTitle.contains(topTenHuluShelf)) {
-                homePage.moveDown(3, 1);
             } else {
+                LOGGER.info("**2 {}", shelfTitle);
                 homePage.moveDown(1, 1);
             }
-        });
+        }
     }
 }
