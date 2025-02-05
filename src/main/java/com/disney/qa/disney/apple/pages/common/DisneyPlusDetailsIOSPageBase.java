@@ -1243,4 +1243,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         ValueRange range = ValueRange.of(-latency, latency);
         return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
     }
+
+    public ExtendedWebElement getTabBar() {
+        return tabBar;
+    }
  }
