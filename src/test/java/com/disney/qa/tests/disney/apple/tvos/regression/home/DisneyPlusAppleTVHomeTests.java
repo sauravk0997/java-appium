@@ -23,7 +23,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
+    private static boolean shouldNavigateBack = false;
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68873"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyHomeScreenLayout() {
@@ -219,8 +219,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String watchlistShelf = "My Watchlist";
         String newlyAddedShelf = "Newly Added";
         String topTenHuluShelf = "Top 10 in the US Today";
-        ThreadLocal<Boolean> shouldNavigateBack = new ThreadLocal<>();
-        shouldNavigateBack.set(false);
+
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
@@ -240,15 +239,15 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 //Verify content title
                 if (!homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
                     // Navigates horizontally in case the title is not found in the first 5 places
-                    shouldNavigateBack.set(true);
+                    shouldNavigateBack = true;
                     homePage.moveRight(9, 1);
                 }
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
                         "Content title not found: " + firstContentTitle + " shelfTitle:" + shelfTitle);
             }
-            if (shouldNavigateBack.get().equals(true)) {
+            if (shouldNavigateBack) {
                 homePage.moveLeft(7, 1);
-                shouldNavigateBack.set(false);
+                shouldNavigateBack = false;
             }
             /*
              The next part is to avoid 3 shelf banners that are not coming from Api that break sequence navigation from
