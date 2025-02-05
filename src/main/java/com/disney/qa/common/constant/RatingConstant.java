@@ -38,6 +38,7 @@ public class RatingConstant {
     public static final String REUNION = "RE";
     public static final String SINGAPORE = "SG";
     public static final String SPAIN = "ES";
+    public static final String SWEDEN = "SE";
     public static final String TURKEY = "TR";
     public static final String URUGUAY = "UY";
     public static final String UNITED_KINGDOM = "GB";
