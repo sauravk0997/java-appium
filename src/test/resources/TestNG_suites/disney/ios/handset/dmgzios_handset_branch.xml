@@ -10,7 +10,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities"
-               value="platformName=iOS;deviceName=iPhone_14,iPhone_12_Pro,iPhone_Xs,iPhone_13_Pro;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
+               value="platformName=iOS;deviceName=iPhone_14,iPhone_12_Pro,iPhone_Xs,iPhone_Xr,iPhone_13_Pro;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>

@@ -129,8 +129,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-91703", "XCDQA-91701" })
-    @Test(description = "Global Nav Menu appearance - kids mode", groups = { TestGroup.HOME, TestGroup.SMOKE, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-67248", "XCDQA-67250"})
+    @Test(groups = { TestGroup.HOME, TestGroup.SMOKE, US})
     public void globalNavAppearanceKidsProfile() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
