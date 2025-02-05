@@ -214,7 +214,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90650"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66522"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void otpDoesNotWorkAfterFifteenMinutes() {
         SoftAssert sa = new SoftAssert();
