@@ -218,8 +218,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String homeShelf = "Home";
         String watchlistShelf = "My Watchlist";
         String newlyAddedShelf = "Newly Added";
-        String topTenHuluShelf = "Black Joy";
-        int times = 25;
+        String topTenHuluShelf = "Top 10 in the US Today";
 
         //This removes first 2 collections from the home collection
         homeCollections.subList(0, 2).clear();
@@ -235,18 +234,17 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             if (!homeCollectionId.getItems().isEmpty()) {
                 String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
                 LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
-                //Verify content title and navigates horizontally in case the title is not found in the first 5 places
-                while (times > 0 && !homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
+                //Verify content title
+                if (!homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
+                    // Navigates horizontally in case the title is not found in the first 5 places
                     shouldNavigateBack = true;
-                    homePage.moveRight(3, 1);
-                    times--;
+                    homePage.moveRight(9, 1);
                 }
                 sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
                         "Content title not found: " + firstContentTitle + " shelfTitle:" + shelfTitle);
-
             }
             if (shouldNavigateBack) {
-                homePage.moveLeft(3, 1);
+                homePage.moveLeft(7, 1);
                 shouldNavigateBack = false;
             }
             /*
@@ -255,10 +253,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
              The banners are Live and upcoming from ESPN, More ESPN+ Live Events and Streams Non Stop Playlists
              */
             if (Arrays.asList(newlyAddedShelf, topTenHuluShelf).contains(shelfTitle)) {
-                LOGGER.info("**1 {}", shelfTitle);
                 homePage.moveDown(2, 1);
             } else {
-                LOGGER.info("**2 {}", shelfTitle);
                 homePage.moveDown(1, 1);
             }
         }
