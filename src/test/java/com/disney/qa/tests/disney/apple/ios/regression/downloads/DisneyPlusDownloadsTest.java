@@ -556,9 +556,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75723"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRemovedExpiredDownload() {
+        String seriesName = "Bluey";
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
 
         jarvisEnableOfflineExpiredLicenseOverride();
 
@@ -577,12 +577,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         downloadsPage.clickEditButton();
         downloadsPage.clickUncheckedCheckbox();
         downloadsPage.clickDeleteDownloadButton();
-        sa.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
-                "Empty Downloads image is not present");
-        sa.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(), "Empty Downloads header is not present");
-        sa.assertTrue(downloadsPage.isDownloadsEmptyCopyPresent(), "Empty Downloads copy is not present");
-
-        sa.assertAll();
+        Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(), "Empty Downloads header is not present");
+        Assert.assertFalse(downloadsPage.getStaticTextByLabelContains(seriesName).isPresent(FIVE_SEC_TIMEOUT),
+                String.format("Series '%s' is present after deleting content", seriesName));
     }
 
     @AfterMethod(alwaysRun = true)
