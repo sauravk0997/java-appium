@@ -10,7 +10,7 @@ import org.openqa.selenium.support.FindBy;
 public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/" +
-            "XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
+            "XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement huluBrandImageExpanded;
 
     @FindBy(xpath = "//XCUIElementTypeButton[@name=\"buttonBack\"]/parent::XCUIElementTypeOther/following-sibling::XCUIElementTypeOther//XCUIElementTypeImage")
@@ -53,7 +53,7 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isHuluBrandImageCollapsed() {
-        return huluBrandImageCollapsed.isPresent() && !huluBrandImageExpanded.isPresent(THREE_SEC_TIMEOUT);
+        return huluBrandImageCollapsed.isPresent(FIVE_SEC_TIMEOUT) && !huluBrandImageExpanded.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isNetworkLogoPresent(String logoName) {
