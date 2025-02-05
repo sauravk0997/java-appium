@@ -29,12 +29,12 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyHomeScreenLayout() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-/*
+
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         logInWithoutHomeCheck(getAccount());
         collapseGlobalNav();
-*/
+
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
 
