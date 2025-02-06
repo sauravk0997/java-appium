@@ -579,7 +579,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         downloadsPage.clickDeleteDownloadButton();
         Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(), "Empty Downloads header is not present");
         Assert.assertFalse(downloadsPage.getStaticTextByLabelContains(seriesName).isPresent(FIVE_SEC_TIMEOUT),
-                String.format("Series '%s' is present after deleting content", seriesName));
+                String.format("Title '%s' is present after deleting content", seriesName));
     }
 
     @AfterMethod(alwaysRun = true)
