@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,9 @@ import org.openqa.selenium.support.FindBy;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+import static com.disney.qa.common.constant.IConstantHelper.LABEL;
+import static com.disney.qa.common.constant.IConstantHelper.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBase {
@@ -21,7 +25,10 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'segmentedControl'`]" +
             "/XCUIElementTypeScrollView/XCUIElementTypeButton[1]")
-    private ExtendedWebElement firstContentPageFilterButton;
+    protected ExtendedWebElement defaultContentPageFilterButtonForTablet;
+
+    @ExtendedFindBy(accessibilityId = "selectorButton")
+    protected ExtendedWebElement defaultContentPageFilterButtonForHandset;
 
     @FindBy(id = "selectorButton")
     private ExtendedWebElement mediaCategoryDropdown;
@@ -56,8 +63,11 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
         return moviesHeader;
     }
 
-    public ExtendedWebElement getFirstContentPageFilterButton() {
-        return firstContentPageFilterButton;
+    public String getSelectedCategoryFilterName() {
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            return defaultContentPageFilterButtonForHandset.getAttribute(LABEL);
+        }
+        return defaultContentPageFilterButtonForTablet.getAttribute(LABEL);
     }
 
     public List<String> getCollectionTitles() {
@@ -68,7 +78,7 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
             throw new NoSuchElementException("Collection titles list is empty");
         }
         return collectionTitles.stream()
-                .map(element -> element.getAttribute("label").split(",")[0])
+                .map(element -> element.getAttribute(LABEL).split(",")[0])
                 .collect(Collectors.toList());
     }
 }

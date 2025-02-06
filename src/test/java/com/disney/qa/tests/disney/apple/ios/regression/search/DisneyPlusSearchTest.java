@@ -714,7 +714,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.clickMoviesTab();
         mediaCollectionPage.waitForPresenceOfAnElement(mediaCollectionPage.getMoviesHeader());
 
-        String selectedCategory = mediaCollectionPage.getFirstContentPageFilterButton().getAttribute("label");
+        //Compare default movies displayed in the UI against Explore API movies for TV-Y rating
+        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
         String setId = getSetIdFromApi(DisneyEntityIds.MOVIES.getEntityId(), selectedCategory);
         List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(setId, 500,
                 RatingConstant.Rating.TV_Y.getContentRating());
