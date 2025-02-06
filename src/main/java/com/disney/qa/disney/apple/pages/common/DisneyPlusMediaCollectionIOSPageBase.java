@@ -3,14 +3,25 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBase {
 
+    private static final String MOVIES_COLLECTION_LABEL = "On the Movies screen.";
+
     @FindBy(id = "segmentedControl")
     private ExtendedWebElement categoryScroller;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'segmentedControl'`]" +
+            "/XCUIElementTypeScrollView/XCUIElementTypeButton[1]")
+    private ExtendedWebElement firstContentPageFilterButton;
 
     @FindBy(id = "selectorButton")
     private ExtendedWebElement mediaCategoryDropdown;
@@ -43,5 +54,21 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
 
     public ExtendedWebElement getMoviesHeader() {
         return moviesHeader;
+    }
+
+    public ExtendedWebElement getFirstContentPageFilterButton() {
+        return firstContentPageFilterButton;
+    }
+
+    public List<String> getCollectionTitles() {
+        waitForPresenceOfAnElement(collectionCellNoRow.format(MOVIES_COLLECTION_LABEL));
+        List<ExtendedWebElement> collectionTitles =
+                findExtendedWebElements(collectionCellNoRow.format(MOVIES_COLLECTION_LABEL).getBy());
+        if (collectionTitles.isEmpty()) {
+            throw new NoSuchElementException("Collection titles list is empty");
+        }
+        return collectionTitles.stream()
+                .map(element -> element.getAttribute("label").split(",")[0])
+                .collect(Collectors.toList());
     }
 }
