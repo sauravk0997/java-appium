@@ -11,6 +11,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -31,9 +32,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String WATCHLIST_SCREEN_ERROR_MESSAGE = "Watchlist page did not open";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90964", "XCDQA-107758", "XCDQA-90972", "XCDQA-90974"})
-    @Test(description = "Verify movie details screen appearance", groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE,
-            US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66642"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
     public void verifyMovieDetailsPageAppearance() {
         SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
@@ -72,7 +72,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90968", "XCDQA-90970"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64740"})
     @Test(groups = {TestGroup.DETAILS_PAGE, US})
     public void addAndRemoveAssetFromWatchlist() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -163,32 +163,33 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122644"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122531"})
     @Test(groups = {TestGroup.HULU_HUB_2, US}, enabled = false)
     public void verifyHuluLicenseAttributeForStandAloneUser() {
-        String contentTitle = "Under the Bridge";
-        String licenseeAttributionText = "Provided by Hulu";
-        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
-        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
-        logIn(getAccount());
-
-        Assert.assertTrue(home.isOpened(), "Home page did not open");
-        home.moveDownFromHeroTileToBrandTile();
-        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
-        searchPage.typeInSearchField(contentTitle);
-        searchPage.clickSearchResult(contentTitle);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
-        Assert.assertTrue(detailsPage.getStaticTextByLabel(licenseeAttributionText).isPresent(),
-                licenseeAttributionText + " Licensee Attribute text is not displayed on details page");
-
-        detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(licenseeAttributionText),
-                licenseeAttributionText + " Licensee Attribute text is not displayed on video player");
+        throw new SkipException("Licensee Attribution feature was not released to PROD during HHP2.");
+//        String contentTitle = "Under the Bridge";
+//        String licenseeAttributionText = "Provided by Hulu";
+//        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+//        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+//        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+//        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+//
+//        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+//        logIn(getAccount());
+//
+//        Assert.assertTrue(home.isOpened(), "Home page did not open");
+//        home.moveDownFromHeroTileToBrandTile();
+//        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+//        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+//        searchPage.typeInSearchField(contentTitle);
+//        searchPage.clickSearchResult(contentTitle);
+//        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+//        Assert.assertTrue(detailsPage.getStaticTextByLabel(licenseeAttributionText).isPresent(),
+//                licenseeAttributionText + " Licensee Attribute text is not displayed on details page");
+//
+//        detailsPage.clickPlayButton();
+//        Assert.assertEquals(licenseeAttributionText, videoPlayer.getServiceAttributionLabel().getText(),
+//                licenseeAttributionText + " Licensee Attribute text is not displayed on video player");
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {

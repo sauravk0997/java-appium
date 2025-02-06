@@ -27,7 +27,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     private static final String WELCOME_SCREEN_DID_NOT_OPEN = "Welcome screen did not launch";
     private static final String LOG_IN_SCREEN_DID_NOT_LAUNCH = "Log In screen did not launch";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90618"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66523"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void menuFromForgotPasswordBringsBackToEnterPassword() {
         DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -52,7 +52,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
                 "Pressing menu from one time passcode page did not take user back to login page");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90620"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66513"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void forgotPasswordScreenDetails() {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -115,7 +115,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         Assert.assertTrue(loginPage.isOpened(), LOG_IN_SCREEN_DID_NOT_LAUNCH);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90628"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66546"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyEmailResentWithDifferentCode() {
         SoftAssert sa = new SoftAssert();
@@ -214,7 +214,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90650"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66522"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void otpDoesNotWorkAfterFifteenMinutes() {
         SoftAssert sa = new SoftAssert();
@@ -257,7 +257,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90685"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66516"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void resettingPasswordTakesUserToHome() {
         SoftAssert sa = new SoftAssert();

@@ -868,6 +868,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
+    public void waitForFirstEpisodeToCompleteDownloadAndShowAsExpired(int timeOut, int polling) {
+        LOGGER.info("Waiting for the download of the first episode to start");
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "First episode download did not start")
+                .until(it -> stopOrPauseDownloadButton.isPresent(ONE_SEC_TIMEOUT));
+        LOGGER.info("Waiting for the download of the first episode to complete and show as expired");
+        fluentWait(getDriver(), timeOut, polling, "First episode download expired icon was not present")
+                .until(it -> firstEpisodeDownloadButton.isPresent(ONE_SEC_TIMEOUT));
+        LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+
     public ExtendedWebElement getHuluContinueButton() {
         return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText()));
     }
@@ -1242,5 +1252,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         double expectedWidth = progressBar.getSize().getWidth() / (100 / scrubPercentage);
         ValueRange range = ValueRange.of(-latency, latency);
         return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
+    }
+
+    public ExtendedWebElement getTabBar() {
+        return tabBar;
     }
  }
