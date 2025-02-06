@@ -168,6 +168,8 @@ public class RatingConstant {
                 return "23065";
             case "DE":
                 return "23117";
+            case "FR":
+                return "23115";
             case "JP":
                 return "23098";
             case "KR":

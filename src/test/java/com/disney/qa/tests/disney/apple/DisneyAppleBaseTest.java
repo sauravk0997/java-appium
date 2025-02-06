@@ -315,7 +315,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     private String getEMEACountryCode() {
-        List<String> countryCodeList = Arrays.asList(SPAIN, SWEDEN);
+        List<String> countryCodeList = Arrays.asList(FRANCE, SPAIN, SWEDEN);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
