@@ -55,4 +55,7 @@ public interface IConstantHelper {
 
     //capabilities
     String CAPABILITIES_DEVICE_NAME = "capabilities.deviceName";
+
+    //element attributes
+    String LABEL = "label";
 }
