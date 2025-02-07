@@ -11,6 +11,7 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -487,11 +488,27 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getEditProfileLink().isElementPresent();
     }
 
-    public void tapEditProfilesLink() {
-        ExtendedWebElement element = getEditProfileLink();
-        Dimension dimension = element.getSize();
-        Point location = element.getLocation();
-        tap(location.getX() + 5, location.getY() + dimension.getHeight() / 2);
+    public ExtendedWebElement getEditProfilesHyperlink() {
+        String editProfiles = "Edit Profiles";
+        // Fetch the localized string
+        String editProfileText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.ACCOUNT_EDIT_PROFILE.getText()
+        );
+
+        // Define the regex pattern to find "Edit Profiles"
+        boolean isTextPresent = Pattern.compile("\\bEdit Profiles\\b").matcher(editProfileText).find();
+        if (!isTextPresent) {
+            throw new IllegalStateException(editProfiles + " text not found in: " + editProfileText);
+        }
+        return staticTextLabelContains.format(editProfiles);
+    }
+
+    public boolean isEditProfilesHyperlinkPresent() {
+        return getEditProfilesHyperlink().isElementPresent();
+    }
+
+    public void clickOnEditProfilesHyperlink(){
+        getEditProfilesHyperlink().click();
     }
 
     public boolean isEditProfilesTextPresent() {
