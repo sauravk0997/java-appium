@@ -755,7 +755,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         List<String> filteredTitlesFromApi = new ArrayList<>();
         setItemsFromApi.stream()
                 .filter(item -> item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText()
-                        .contains(expectedRating))
+                        .equals(expectedRating))
                 .forEach(item -> filteredTitlesFromApi.add(item.getVisuals().getTitle()));
         return filteredTitlesFromApi;
     }
