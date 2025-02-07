@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.client.responses.identity.Hulu;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.DisneyAbstractPage;
@@ -27,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
+import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.util.*;
@@ -1269,11 +1271,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {
-        swipePageTillElementPresent(getCollection(collection), 10, brandLandingView, Direction.UP, 500);
-        List<ExtendedWebElement> titles1 = getAllCollectionCells(collection);
-        swipeLeftInCollection(collection);
-        List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);
-        return titles1 != titles2;
+        DisneyPlusHuluIOSPageBase huluIOSPageBase = initPage(DisneyPlusHuluIOSPageBase.class);
+        ExtendedWebElement huluOriginalsLabel = getHuluOriginals();
+        swipePageTillElementPresent(huluOriginalsLabel, 5, brandLandingView, Direction.UP, 1000);
+        Assert.assertTrue(huluIOSPageBase.getTypeOtherContainsName("Hulu Originals").isPresent(),
+                "Hulu Originals collection was not found");
+        huluIOSPageBase.waitForLoaderToDisappear(5);
+        huluIOSPageBase.swipeLeftInCollectionNumOfTimes(1, CollectionConstant.Collection.HULU_ORIGINALS);
+        BufferedImage recommendedForYouLastTileInView = getElementImage(
+                huluIOSPageBase.getCollection(CollectionConstant.Collection.HULU_ORIGINALS));
+        huluIOSPageBase.swipeRightInCollectionNumOfTimes(1, CollectionConstant.Collection.HULU_ORIGINALS);
+        BufferedImage recommendedForYouFirstTileInView = getElementImage(
+                huluIOSPageBase.getCollection(CollectionConstant.Collection.HULU_ORIGINALS));
+
+        return areImagesDifferent(recommendedForYouFirstTileInView, recommendedForYouLastTileInView);
+    }
+
+    public ExtendedWebElement getHuluOriginals() {
+        return staticTextByLabel.format("Hulu Originals");
     }
 
     public boolean isBackButtonPresent() {

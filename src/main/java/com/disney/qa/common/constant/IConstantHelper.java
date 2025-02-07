@@ -23,6 +23,9 @@ public interface IConstantHelper {
     String SUBSCRIPTION_PRODUCT_SKU_KEY = "sku";
     String UNIFIED_ORDER = "UNIFIED-ORDER";
 
+    String STUDIOS_AND_NETWORKS_NOT_DISPLAYED = "Studio And Networks is not displayed";
+    String ARTWORK_IMAGE_NOT_DISPLAYED = "Artwork Image is not displayed";
+
     //country codes
     String AT = "AT";
     String AU = "AU";

@@ -21,7 +21,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
 
@@ -77,7 +77,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), HULU_BRAND_LOGO_NOT_EXPANDED);
         sa.assertTrue(huluPage.getBackButton().isPresent(), BACK_BUTTON_NOT_PRESENT);
-        sa.assertTrue(huluPage.isArtworkBackgroundPresent(), "Artwork images is not present");
+        sa.assertTrue(huluPage.isArtworkBackgroundPresent(), ARTWORK_IMAGE_NOT_DISPLAYED);
 
         huluPage.swipeInHuluBrandPage(Direction.UP);
         sa.assertTrue(huluPage.isHuluBrandImageCollapsed(), "Hulu brand logo is not collapsed");
@@ -90,8 +90,9 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isHuluTileVisible(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
 
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
-        sa.assertTrue(huluPage.validateScrollingInHuluCollection(), "User cannot scroll horizontally");
-        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network logos are not present");
+        sa.assertTrue(huluPage.validateScrollingInHuluCollection(CollectionConstant.Collection.HULU_ORIGINALS),
+                "Unable to validate Scrolling in Hulu Collection");
+        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
         verifyNetworkLogoValues(sa, huluPage);
         sa.assertAll();
     }
