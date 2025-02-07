@@ -3,14 +3,20 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBase {
 
+    public static final String LABEL = "label";
+
     @FindBy(id = "segmentedControl")
     private ExtendedWebElement categoryScroller;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'headerViewTitleLabel'`]")
+    protected ExtendedWebElement defaultContentPageFilterButton;
 
     @FindBy(id = "selectorButton")
     private ExtendedWebElement mediaCategoryDropdown;
@@ -43,5 +49,9 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
 
     public ExtendedWebElement getMoviesHeader() {
         return moviesHeader;
+    }
+
+    public String getSelectedCategoryFilterName() {
+        return defaultContentPageFilterButton.getAttribute(LABEL);
     }
 }
