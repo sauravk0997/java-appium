@@ -2,15 +2,26 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+
+import static com.disney.qa.common.constant.IConstantHelper.LABEL;
+import static com.disney.qa.common.constant.IConstantHelper.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBase {
 
     @FindBy(id = "segmentedControl")
     private ExtendedWebElement categoryScroller;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'headerViewTitleLabel'`]")
+    protected ExtendedWebElement defaultContentPageFilterButtonForTablet;
+
+    @ExtendedFindBy(accessibilityId = "selectorButton")
+    protected ExtendedWebElement defaultContentPageFilterButtonForHandset;
 
     @FindBy(id = "selectorButton")
     private ExtendedWebElement mediaCategoryDropdown;
@@ -43,5 +54,12 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
 
     public ExtendedWebElement getMoviesHeader() {
         return moviesHeader;
+    }
+
+    public String getSelectedCategoryFilterName() {
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            return defaultContentPageFilterButtonForHandset.getAttribute(LABEL);
+        }
+        return defaultContentPageFilterButtonForTablet.getAttribute(LABEL);
     }
 }

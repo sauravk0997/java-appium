@@ -7,13 +7,8 @@ import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusOriginalsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusWhoseWatchingIOSPageBase;
+import com.disney.qa.common.constant.RatingConstant;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -699,6 +694,67 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                             "search results");
         }
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75501"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyOriginalsLandingPageContentMaturityRatingRestriction() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
+        DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+        // Edit to get TV-Y maturity rating content
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RatingConstant.Rating.TV_Y.getContentRating());
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+
+        searchPage.clickOriginalsTab();
+        sa.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
+
+        //Compare default movies displayed in the UI against Explore API originals for TV-Y rating
+        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
+        LOGGER.info(" setId {}", selectedCategory);
+
+        String setId = getSetIdFromApi(DisneyEntityIds.ORIGINALS_PAGE.getEntityId(), selectedCategory);
+        LOGGER.info(" setId {}", setId);
+
+        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(setId, 500,
+                RatingConstant.Rating.TV_Y.getContentRating());
+        LOGGER.info(" filteredListOfTitlesByRating {}", filteredListOfTitlesByRating);
+        if(!filteredListOfTitlesByRating.isEmpty()) {
+            filteredListOfTitlesByRating.forEach(item -> {
+                sa.assertTrue(originalsPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
+            });
+        } else {
+            LOGGER.info("Originals Collection Api results are empty");
+            sa.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
+                    "PCON restricted title message was not as expected");
+            sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+                    "PCON restricted title message was not as expected");
+        }
+
+        sa.assertAll();
+    }
+
+    public String getSetIdFromApi(String pageId, String containerName) {
+        if (pageId == null || containerName == null) {
+            throw new IllegalArgumentException("pageId or containerName parameters were null");
+        }
+        ArrayList<Container> pageContainers = getDisneyAPIPage(pageId);
+        if (pageContainers.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException("Containers for given page were not found");
+        }
+        for (Container container : pageContainers) {
+            if (containerName.contains(container.getVisuals().getName())) {
+                return container.getId();
+            }
+        }
+        throw new org.openqa.selenium.NoSuchElementException("Given container was not found on given page using Explore API");
     }
 
     protected ArrayList<String> getMedia() {
