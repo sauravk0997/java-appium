@@ -39,8 +39,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(),
                 "Video player did not open after choosing a downloaded episode");
         videoPlayer.waitForVideoToStart();
-        String playerSubtitle = videoPlayer.getSubTitleLabel();
-        Assert.assertTrue(playerSubtitle.contains(episodeTitle),
+        Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Video player title does not match with expected title: " + episodeTitle);
     }
 }
