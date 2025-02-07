@@ -21,6 +21,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +32,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BA
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
-    private static final int[] AGE_VALUES_GERMANY = {5, 11, 13, 15, 17};
+    private static final int[] AGE_VALUES_GERMANY = {5, 11, 15, 17};
     private static final int[] AGE_VALUES_CANADA = {0, 5, 8, 11, 13, 15, 17, 18};
     private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17, 18};
     private static final String CODE = "code";
