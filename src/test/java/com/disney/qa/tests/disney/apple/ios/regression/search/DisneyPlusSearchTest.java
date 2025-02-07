@@ -16,6 +16,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -25,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
@@ -715,19 +717,32 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickDisneyTile();
         sa.assertTrue(brandPage.isOpened(), "Disney brand page was not opened");
 
+        // Get Container ID
+        ArrayList<Container> collections = getDisneyAPIPage(DisneyEntityIds.DISNEY_PAGE.getEntityId());
+        String heroCarouselId = "";
+        try{
+            heroCarouselId = collections.get(0).getId();
+        } catch (Exception e){
+            throw new SkipException("Skipping test, hero carousel collection id not found:- " +  e.getMessage());
+        }
+
         //Compare default content displayed in the UI against Explore API originals for TV-Y rating
         String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
-        LOGGER.info(" setId {}", selectedCategory);
+        LOGGER.info("selectedCategory {}", selectedCategory);
 
         String setId = getSetIdFromApi(DisneyEntityIds.DISNEY_PAGE.getEntityId(), selectedCategory);
-        LOGGER.info(" setId {}", setId);
+        LOGGER.info("setId {}", setId);
 
         List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(setId, 500,
                 RatingConstant.Rating.TV_Y.getContentRating());
-        LOGGER.info(" filteredListOfTitlesByRating {}", filteredListOfTitlesByRating);
+        LOGGER.info("filteredListOfTitlesByRating {}", filteredListOfTitlesByRating);
 
         if(!filteredListOfTitlesByRating.isEmpty()) {
+            String finalHeroCarouselId = heroCarouselId;
             filteredListOfTitlesByRating.forEach(item -> {
+                if (originalsPage.getTypeCellLabelContains(item).isElementNotPresent(THREE_SEC_TIMEOUT)) {
+                    swipeInContainer(homePage.getHeroCarouselContainer(finalHeroCarouselId), Direction.LEFT, 500);
+                }
                 sa.assertTrue(originalsPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
             });
         } else {
