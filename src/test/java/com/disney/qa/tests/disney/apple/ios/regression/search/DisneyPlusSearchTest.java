@@ -716,7 +716,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.clickOriginalsTab();
         sa.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
 
-        //Compare default movies displayed in the UI against Explore API originals for TV-Y rating
+        //Compare default content displayed in the UI against Explore API originals for TV-Y rating
         String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
         LOGGER.info(" setId {}", selectedCategory);
 
@@ -726,6 +726,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(setId, 500,
                 RatingConstant.Rating.TV_Y.getContentRating());
         LOGGER.info(" filteredListOfTitlesByRating {}", filteredListOfTitlesByRating);
+
         if(!filteredListOfTitlesByRating.isEmpty()) {
             filteredListOfTitlesByRating.forEach(item -> {
                 sa.assertTrue(originalsPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
@@ -733,9 +734,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         } else {
             LOGGER.info("Originals Collection Api results are empty");
             sa.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
-                    "PCON restricted title message was not as expected");
+                    "PCON restricted title message was not present");
             sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
-                    "PCON restricted title message was not as expected");
+                    "PCON restricted title message was not present");
         }
 
         sa.assertAll();
