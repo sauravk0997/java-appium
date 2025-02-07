@@ -10,8 +10,6 @@ import org.openqa.selenium.support.FindBy;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBase {
 
-    public static final String LABEL = "label";
-
     @FindBy(id = "segmentedControl")
     private ExtendedWebElement categoryScroller;
 
@@ -52,6 +50,7 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
     }
 
     public String getSelectedCategoryFilterName() {
-        return defaultContentPageFilterButton.getAttribute(LABEL);
+        String label = "label";
+        return defaultContentPageFilterButton.getAttribute(label);
     }
 }
