@@ -488,6 +488,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getEditProfileLink().isElementPresent();
     }
 
+    public void tapEditProfilesLink() {
+        ExtendedWebElement element = getEditProfileLink();
+        Dimension dimension = element.getSize();
+        Point location = element.getLocation();
+        tap(location.getX() + 5, location.getY() + dimension.getHeight() / 2);
+    }
+
     public ExtendedWebElement getEditProfilesHyperlink() {
         String editProfiles = "Edit Profiles";
         // Fetch the localized string
