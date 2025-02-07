@@ -863,7 +863,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         configureKidsProfileProofExit();
 
-        moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
@@ -957,7 +956,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(true).isStarOnboarded(true).build());
 
         configureKidsProfileProofExit();
-        moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
@@ -982,7 +980,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(true).isStarOnboarded(true).build());
         configureKidsProfileProofExit();
 
-        moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         // Click on Exit Kids Profile and validates that screen elements
