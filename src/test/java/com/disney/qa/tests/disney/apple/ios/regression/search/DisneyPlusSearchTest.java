@@ -726,7 +726,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             throw new SkipException("Skipping test, hero carousel collection id not found:- " +  e.getMessage());
         }
 
-        //Compare default content displayed in the UI against Explore API originals for TV-Y rating
+        //Compare default content displayed in the UI against Explore API Disney brand page for TV-Y rating
         String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
         LOGGER.info("selectedCategory {}", selectedCategory);
 
@@ -740,10 +740,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         if(!filteredListOfTitlesByRating.isEmpty()) {
             String finalHeroCarouselId = heroCarouselId;
             filteredListOfTitlesByRating.forEach(item -> {
-                if (originalsPage.getTypeCellLabelContains(item).isElementNotPresent(THREE_SEC_TIMEOUT)) {
+                if (brandPage.getTypeCellLabelContains(item).isElementNotPresent(THREE_SEC_TIMEOUT)) {
                     swipeInContainer(homePage.getHeroCarouselContainer(finalHeroCarouselId), Direction.LEFT, 500);
                 }
-                sa.assertTrue(originalsPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
+                sa.assertTrue(brandPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
             });
         } else {
             LOGGER.info("Originals Collection Api results are empty");
