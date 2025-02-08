@@ -162,6 +162,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         int month = Integer.parseInt(personMonth.getNum());
         int day = Integer.parseInt(personDay);
         int year = Integer.parseInt(personYear);
+        LOGGER.info("Calculated age returned: {}", Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears());
         return Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears();
     }
 
