@@ -167,7 +167,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         verifyAudioLanguage(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"), DEUTSCH);
 
         // Open content with no preferred language and verify English audio is selected
-        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_temple_of_inca_playback_deeplink"), ENGLISH);
+        verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_brave_playback_deeplink"), ENGLISH);
 
         // Open content that do not have English audio and verify default is selected
         verifyAudioLanguage(R.TESTDATA.get("disney_prod_content_spanish_playback_deeplink"), spanishLang);
