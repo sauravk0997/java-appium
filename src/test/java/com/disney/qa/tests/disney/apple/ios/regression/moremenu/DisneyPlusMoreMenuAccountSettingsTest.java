@@ -113,24 +113,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
-    @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifySubscriptionDetailsDisneyPlus() {
-        setAppToAccountSettings(getAccount());
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isDisneyPlusPremiumSubscriptionPresent(),
-                "D+ Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openDisneyPlusPremiumWebView();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL),
-                "Webview did not open to the expected url");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySubscriptionDetails_LegacyDisneyBundle() {
