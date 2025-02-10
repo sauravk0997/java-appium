@@ -166,6 +166,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'progressBar'`]/XCUIElementTypeOther")
     private ExtendedWebElement progressBarBookmark;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label =[c] 'Included with your ESPN+ subscription'`]")
+    private ExtendedWebElement espnPlusEntitlementAttributionText;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -318,6 +321,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .split("[.]")[1]
                 .split("\\d+", 2)[0]
                 .trim();
+    }
+
+    public ExtendedWebElement getESPNPlusEntitlementAttributionText() {
+        return espnPlusEntitlementAttributionText;
     }
 
     public void waitForWatchlistButtonToAppear() {
