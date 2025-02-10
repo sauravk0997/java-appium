@@ -86,7 +86,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().forEach(searchResult -> firstResultList.add(searchResult.getText()));
 
         searchPage.getDynamicAccessibilityId(content).click();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), SEARCH_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.getBackArrow().click();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
