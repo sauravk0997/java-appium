@@ -165,7 +165,6 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         moreMenu.dismissNotificationsPopUp();
         editProfilePage.clickDoneBtn();
         //Scenario: Verify Learn More on Kids profile
-        moreMenu.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         editProfilePage.clickJuniorModeLearnMoreLink();
