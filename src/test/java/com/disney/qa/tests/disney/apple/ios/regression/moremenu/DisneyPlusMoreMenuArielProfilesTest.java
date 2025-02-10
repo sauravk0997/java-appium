@@ -1003,7 +1003,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private void switchAndValidateAutoplay(String state, SoftAssert sa, String errorMessage) {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         editProfilePage.toggleAutoplayButton(state);
         passwordPage.enterPassword(getAccount());
@@ -1011,7 +1010,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
         editProfilePage.waitForUpdatedToastToDisappear();
         editProfilePage.getDoneButton().click();
-        homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
