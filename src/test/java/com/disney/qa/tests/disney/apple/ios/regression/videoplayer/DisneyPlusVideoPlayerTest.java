@@ -42,4 +42,23 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Video player title does not match with expected title: " + episodeTitle);
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77676"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNPlusEntitlementAttribution() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.getESPNPlusEntitlementAttributionText().isElementPresent(),
+                "ESPN+ entitlement attribution is not present on Details page");
+
+        detailsPage.clickPlayButton().waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getServiceAttributionLabel().isElementPresent(),
+                "ESPN+ entitlement attribution is not present on the video player");
+    }
 }
