@@ -490,7 +490,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         Dimension dimension = element.getSize();
         Point location = element.getLocation();
         if (element.getSize().getWidth() > 150) {
-            tap(location.getX(), location.getY() + (dimension.getHeight()));
+            tap(25 , 684);
         } else {
             tap(location.getX(), location.getY());
         }
