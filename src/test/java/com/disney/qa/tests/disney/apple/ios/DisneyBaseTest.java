@@ -155,8 +155,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * Calculates person's age based on month, day, year provided from Person enum
      *
      * @param personMonth - Person's birth month
-     * @param personDay  - Person's birthday
-     * @param personYear - Person's birth year
+     * @param person  - Person for day and year
      */
     public int calculateAge(DateHelper.Month personMonth, Person person) {
         int month = Integer.parseInt(personMonth.getNum());
