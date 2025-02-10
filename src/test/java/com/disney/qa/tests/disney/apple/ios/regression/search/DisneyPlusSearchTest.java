@@ -114,7 +114,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.searchForMedia(BLUEY);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.getBackArrow().click();
         //Empty string to clear the keys
         searchPage.searchForMedia("");
@@ -189,12 +189,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.searchForMedia(BLUEY);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.getBackArrow().click();
         searchPage.searchForMedia(media);
         results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.getBackArrow().click();
 
         terminateApp(sessionBundles.get(DISNEY));
@@ -210,7 +210,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         results.get(0).click();
 
         //verify selected recent search item opened
-        sa.assertTrue(detailsPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getMediaTitle().equals(media), "selected recent search item was not opened");
         sa.assertAll();
     }
