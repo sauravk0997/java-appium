@@ -57,7 +57,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getESPNPlusEntitlementAttributionText().isElementPresent(),
                 "ESPN+ entitlement attribution is not present on Details page");
 
-        detailsPage.clickPlayButton().waitForVideoToStart();
+        detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.getServiceAttributionLabel().isElementPresent(),
                 "ESPN+ entitlement attribution is not present on the video player");
     }
