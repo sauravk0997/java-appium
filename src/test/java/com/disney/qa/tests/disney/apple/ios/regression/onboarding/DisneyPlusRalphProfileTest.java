@@ -292,7 +292,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
 
-        int under13Age = calculateAge(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        int under13Age = calculateAge(Person.U13.getMonth(), Person.U13, Person.U13);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(GERMANY, under13Age, AGE_VALUES_GERMANY)));
         LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
@@ -318,7 +318,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
 
-        int under18Age = calculateAge(Person.AGE_17.getMonth(), Person.AGE_17.getDay(), Person.AGE_17.getYear());
+        int under18Age = calculateAge(Person.AGE_17.getMonth(), Person.AGE_17, Person.AGE_17);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(CANADA, under18Age, AGE_VALUES_CANADA)));
         LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
@@ -344,7 +344,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
 
-        int minorAge = calculateAge(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
+        int minorAge = calculateAge(Person.MINOR.getMonth(), Person.MINOR, Person.MINOR);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, minorAge, AGE_VALUES_EMEA)));
         LOGGER.info("Recommended Content Rating: {} ", recommendedContentRatingByAge);
