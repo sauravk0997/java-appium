@@ -23,6 +23,11 @@ public interface IConstantHelper {
     String SUBSCRIPTION_PRODUCT_SKU_KEY = "sku";
     String UNIFIED_ORDER = "UNIFIED-ORDER";
 
+    String DETAILS_PAGE_NOT_DISPLAYED = "Details Page is not displayed";
+    String MORE_MENU_NOT_DISPLAYED = "More Menu is not displayed";
+    String SEARCH_PAGE_NOT_DISPLAYED = "Search page is not displayed";
+    String WATCHLIST_PAGE_NOT_DISPLAYED = "Watchlist is not displayed";
+
     //country codes
     String AT = "AT";
     String AU = "AU";
