@@ -158,10 +158,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * @param personDay  - Person's birthday
      * @param personYear - Person's birth year
      */
-    public int calculateAge(DateHelper.Month personMonth, Person personDay, Person personYear) {
+    public int calculateAge(DateHelper.Month personMonth, Person person) {
         int month = Integer.parseInt(personMonth.getNum());
-        int day = Integer.parseInt(personDay.day);
-        int year = Integer.parseInt(personYear.year);
+        int day = Integer.parseInt(person.day);
+        int year = Integer.parseInt(person.year);
         LOGGER.info("Calculated age returned: {}", Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears());
         return Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears();
     }
