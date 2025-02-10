@@ -620,8 +620,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getAccount());
         accountPage.waitForAccountPageToOpen();
 
-        Assert.assertTrue(accountPage.isEditProfilesHyperlinkPresent(), "Edit Profiles link was not displayed");
-        accountPage.clickOnEditProfilesHyperlink();
+        Assert.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
+        accountPage.tapEditProfilesLink();
 
         Assert.assertTrue(editProfilePage.isEditProfilesTitlePresent(), "Edit profile screen is not displayed");
         Assert.assertTrue(editProfilePage.isEditModeProfileIconPresent(DEFAULT_PROFILE),

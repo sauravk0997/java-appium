@@ -11,7 +11,6 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
-import java.util.regex.Pattern;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -49,6 +48,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
+    @ExtendedFindBy(accessibilityId = "manageParentalControls")
+    private ExtendedWebElement manageParentalControls;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
             "**/XCUIElementTypeButton[2]")
@@ -477,11 +478,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getEditProfileLink() {
-        String dictValOfEditProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
-        //To manage parental controls for profiles on your account, visit [Edit Profiles](https://www.disneyplus.com/edit-profiles) and select a Profile.
-        //Extracting the link text which is inside the '[]'
-        String expectedHyperLinkText = dictValOfEditProfile.substring(dictValOfEditProfile.indexOf('[') + 1, dictValOfEditProfile.indexOf(']'));
-        return customHyperlinkByLabel.format(expectedHyperLinkText);
+        return manageParentalControls;
     }
 
     public boolean isEditProfilesLinkPresent() {
@@ -492,30 +489,11 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         ExtendedWebElement element = getEditProfileLink();
         Dimension dimension = element.getSize();
         Point location = element.getLocation();
-        tap(location.getX() + 5, location.getY() + dimension.getHeight() / 2);
-    }
-
-    public ExtendedWebElement getEditProfilesHyperlink() {
-        String editProfiles = "Edit Profiles";
-        // Fetch the localized string
-        String editProfileText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                DictionaryKeys.ACCOUNT_EDIT_PROFILE.getText()
-        );
-
-        // Define the regex pattern to find "Edit Profiles"
-        boolean isTextPresent = Pattern.compile("\\bEdit Profiles\\b").matcher(editProfileText).find();
-        if (!isTextPresent) {
-            throw new IllegalStateException(editProfiles + " text not found in: " + editProfileText);
+        if (element.getSize().getWidth() > 150) {
+            tap(location.getX(), location.getY() + (dimension.getHeight()));
+        } else {
+            tap(location.getX(), location.getY());
         }
-        return staticTextLabelContains.format(editProfiles);
-    }
-
-    public boolean isEditProfilesHyperlinkPresent() {
-        return getEditProfilesHyperlink().isElementPresent();
-    }
-
-    public void clickOnEditProfilesHyperlink(){
-        getEditProfilesHyperlink().click();
     }
 
     public boolean isEditProfilesTextPresent() {
