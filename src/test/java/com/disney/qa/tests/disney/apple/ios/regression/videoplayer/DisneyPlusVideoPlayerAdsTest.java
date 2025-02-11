@@ -128,7 +128,8 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SPIDERMAN_THREE);
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
-        videoPlayer.waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT);
+        Assert.assertTrue(videoPlayer.waitUntil(ExpectedConditions.invisibilityOfElementLocated(
+                videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT), "Seek bar visible.");
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART),
                 "Restart button is not visible on ad player overlay");
