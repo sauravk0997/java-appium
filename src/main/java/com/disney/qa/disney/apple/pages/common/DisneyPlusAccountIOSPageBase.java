@@ -489,10 +489,10 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         ExtendedWebElement element = getEditProfileLink();
         Dimension dimension = element.getSize();
         Point location = element.getLocation();
-        if (element.getSize().getWidth() > 150) {
-            tap(25 , 684);
+        if (element.getSize().getHeight() > 60) {
+            tap(location.getX() + 25 , location.getY() + dimension.getHeight()*2/3, 2);
         } else {
-            tap(location.getX(), location.getY());
+            element.click();
         }
     }
 
