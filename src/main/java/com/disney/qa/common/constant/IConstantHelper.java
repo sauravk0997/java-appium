@@ -23,6 +23,14 @@ public interface IConstantHelper {
     String SUBSCRIPTION_PRODUCT_SKU_KEY = "sku";
     String UNIFIED_ORDER = "UNIFIED-ORDER";
 
+    String BACK_BUTTON_NOT_DISPLAYED = "Back button is not present";
+    String DETAILS_PAGE_NOT_DISPLAYED = "Details Page is not displayed";
+    String HOME_PAGE_NOT_DISPLAYED = "Home Page is not displayed";
+    String MORE_MENU_NOT_DISPLAYED = "More Menu is not displayed";
+    String ORIGINALS_PAGE_NOT_DISPLAYED = "Originals Page did not open";
+    String SEARCH_PAGE_NOT_DISPLAYED = "Search page is not displayed";
+    String WATCHLIST_PAGE_NOT_DISPLAYED = "Watchlist is not displayed";
+
     //country codes
     String AT = "AT";
     String AU = "AU";
@@ -50,7 +58,12 @@ public interface IConstantHelper {
 
     //device
     String DEVICE_TYPE_TVOS = "tvOS";
+    String PHONE = "Phone";
+    String TABLET = "Tablet";
 
     //capabilities
     String CAPABILITIES_DEVICE_NAME = "capabilities.deviceName";
+
+    //element attributes
+    String LABEL = "label";
 }
