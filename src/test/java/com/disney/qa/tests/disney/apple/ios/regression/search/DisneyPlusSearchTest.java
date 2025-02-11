@@ -711,7 +711,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
 
         searchPage.clickOriginalsTab();
-        sa.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
+        Assert.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
 
         //Compare default content displayed in the UI against Explore API originals for TV-Y rating
         String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
