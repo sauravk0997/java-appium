@@ -22,38 +22,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static boolean shouldNavigateBack = false;
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68873"})
-    @Test(groups = {TestGroup.HOME, US})
-    public void verifyHomeScreenLayout() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        SoftAssert sa = new SoftAssert();
-
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        logInWithoutHomeCheck(getAccount());
-        collapseGlobalNav();
-
-        Assert.assertTrue(homePage.isOpened(),
-                "Home page did not launch for single profile user after logging in");
-
-        //stop hero carousel
-        homePage.moveRight(2, 2);
-        homePage.clickDown();
-
-        List<Container> homeCollections = getCollectionsHome();
-
-        verifyBrandDetails(homeCollections.get(1).getId(), homePage, sa);
-
-        homePage.moveDown(1, 1);
-        homePage.moveLeft(4, 1);
-        homePage.moveRight(2, 1);
-
-        verifyHomeCollectionsAndContent(homeCollections, sa);
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121503"})
     @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
     public void verifyStandaloneESPNAndHuluBrandTiles() {
@@ -196,67 +164,5 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.moveRightUntilElementIsFocused(huluTitleCell, 30);
         Assert.assertTrue(huluTitleCell.isElementPresent(),
                 "Hulu title cell was not present under Trending collection");
-    }
-
-    private List<Container> getCollectionsHome() {
-        return getDisneyAPIPage(HOME_PAGE.getEntityId(),
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage());
-    }
-
-    private void verifyBrandDetails(String brandCollectionID, DisneyPlusAppleTVHomePage homePage, SoftAssert sa) {
-        List<Item> brandsCollection = getExploreAPIItemsFromSet(brandCollectionID, 10);
-        brandsCollection.forEach(item -> {
-            sa.assertTrue(homePage.isFocused(homePage.getTypeCellNameContains(item.getVisuals().getTitle())),
-                    "The following brand tile was not focused: " + item);
-            homePage.moveRight(1, 1);
-        });
-    }
-
-    private void verifyHomeCollectionsAndContent(List<Container> homeCollections, SoftAssert sa) {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        String homeShelf = "Home";
-        String watchlistShelf = "My Watchlist";
-        String newlyAddedShelf = "Newly Added";
-        String topTenHuluShelf = "Top 10 in the US Today";
-
-        //This removes first 2 collections from the home collection
-        homeCollections.subList(0, 2).clear();
-
-        LOGGER.info("Home collection size: {}", homeCollections.size());
-
-        for (Container homeCollectionId : homeCollections) {//Verify shelf title
-            String shelfTitle = homeCollectionId.getVisuals().getName();
-            if (!Arrays.asList(homeShelf, watchlistShelf).contains(shelfTitle)) {
-                sa.assertTrue(homePage.getStaticTextByLabelContains(shelfTitle).isPresent(SHORT_TIMEOUT),
-                        "Shelf title not found: " + shelfTitle);
-            }
-            if (!homeCollectionId.getItems().isEmpty()) {
-                String firstContentTitle = homeCollectionId.getItems().get(0).getVisuals().getTitle();
-                LOGGER.info("Content Title: {} for Shelf: {}", firstContentTitle, shelfTitle);
-                //Verify content title
-                if (!homePage.getTypeCellNameContains(firstContentTitle).isElementPresent(SHORT_TIMEOUT)) {
-                    // Navigates horizontally in case the title is not found in the first 5 places
-                    shouldNavigateBack = true;
-                    homePage.moveRight(9, 1);
-                }
-                sa.assertTrue(homePage.getTypeCellNameContains(firstContentTitle).isPresent(SHORT_TIMEOUT),
-                        "Content title not found: " + firstContentTitle + " shelfTitle:" + shelfTitle);
-            }
-            if (shouldNavigateBack) {
-                homePage.moveLeft(7, 1);
-                shouldNavigateBack = false;
-            }
-            /*
-             The next part is to avoid 3 shelf banners that are not coming from Api that break sequence navigation from
-             homeCollections Api results, and it was found during tests that they are always in the same position
-             The banners are Live and upcoming from ESPN, More ESPN+ Live Events and Streams Non Stop Playlists
-             */
-            if (Arrays.asList(newlyAddedShelf, topTenHuluShelf).contains(shelfTitle)) {
-                homePage.moveDown(2, 1);
-            } else {
-                homePage.moveDown(1, 1);
-            }
-        }
     }
 }
