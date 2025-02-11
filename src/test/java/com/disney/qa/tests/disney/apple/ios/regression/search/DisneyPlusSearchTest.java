@@ -744,7 +744,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
 
         //Compare default content displayed in the UI against Explore API originals for TV-Y rating
-        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
+        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterNameForOriginals();
         LOGGER.info(" setId {}", selectedCategory);
 
         String setId = getSetIdFromApi(DisneyEntityIds.ORIGINALS_PAGE.getEntityId(), selectedCategory);

@@ -71,13 +71,16 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
     }
 
     public String getSelectedCategoryFilterName() {
-        return defaultContentPageFilterButton.getAttribute(LABEL);
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             LOGGER.info("Getting selected category name using Handset element");
             return defaultContentPageFilterButtonForHandset.getAttribute(LABEL);
         }
         LOGGER.info("Getting selected category name using Tablet element");
         return defaultContentPageFilterButtonForTablet.getAttribute(LABEL);
+    }
+
+    public String getSelectedCategoryFilterNameForOriginals() {
+        return defaultContentPageFilterButton.getAttribute(LABEL);
     }
 
     public List<String> getCollectionTitles() {
