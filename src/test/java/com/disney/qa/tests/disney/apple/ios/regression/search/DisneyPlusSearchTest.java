@@ -734,6 +734,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = new DisneyPlusBrandIOSPageBase(getDriver());
 
         SoftAssert sa = new SoftAssert();
+        int apiTitlesSearchLimit = 400;
+
         // Edit to get TV-Y maturity rating content
         getAccountApi().editContentRatingProfileSetting(getAccount(),
                 getLocalizationUtils().getRatingSystem(),
@@ -754,14 +756,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         //Compare default content displayed in the UI against Explore API Disney brand page for TV-Y rating
         String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterNameForOriginalsAndBrands();
-        LOGGER.info("selectedCategory {}", selectedCategory);
-
         String setId = getSetIdFromApi(DisneyEntityIds.DISNEY_PAGE.getEntityId(), selectedCategory);
-        LOGGER.info("setId {}", setId);
-
-        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(setId, 500,
-                RatingConstant.Rating.TV_Y.getContentRating());
-        LOGGER.info("filteredListOfTitlesByRating {}", filteredListOfTitlesByRating);
+        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
+                setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
 
         if(!filteredListOfTitlesByRating.isEmpty()) {
             String finalHeroCarouselId = heroCarouselId;
