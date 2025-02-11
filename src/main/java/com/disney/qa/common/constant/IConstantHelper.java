@@ -58,7 +58,12 @@ public interface IConstantHelper {
 
     //device
     String DEVICE_TYPE_TVOS = "tvOS";
+    String PHONE = "Phone";
+    String TABLET = "Tablet";
 
     //capabilities
     String CAPABILITIES_DEVICE_NAME = "capabilities.deviceName";
+
+    //element attributes
+    String LABEL = "label";
 }

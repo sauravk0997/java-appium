@@ -693,6 +693,36 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75502"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMoviesLandingPageContentMaturityRatingRestriction() {
+        int apiTitlesSearchLimit = 400;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
+
+        //Assign TV-Y content maturity rating
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RatingConstant.Rating.TV_Y.getContentRating());
+
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.clickMoviesTab();
+        mediaCollectionPage.waitForPresenceOfAnElement(mediaCollectionPage.getMoviesHeader());
+
+        //Compare default movies displayed in the UI against Explore API movies for TV-Y rating
+        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
+        String setId = getSetIdFromApi(DisneyEntityIds.MOVIES.getEntityId(), selectedCategory);
+        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
+                setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
+        Assert.assertTrue(mediaCollectionPage.getCollectionTitles().stream()
+                        .anyMatch(filteredListOfTitlesByRating::contains),
+                "API fetched titles don't contain UI titles");
+    }
+
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75501"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyOriginalsLandingPageContentMaturityRatingRestriction() {
@@ -737,22 +767,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         }
 
         sa.assertAll();
-    }
-
-    public String getSetIdFromApi(String pageId, String containerName) {
-        if (pageId == null || containerName == null) {
-            throw new IllegalArgumentException("pageId or containerName parameters were null");
-        }
-        ArrayList<Container> pageContainers = getDisneyAPIPage(pageId);
-        if (pageContainers.isEmpty()) {
-            throw new ArrayIndexOutOfBoundsException("Containers for given page were not found");
-        }
-        for (Container container : pageContainers) {
-            if (containerName.contains(container.getVisuals().getName())) {
-                return container.getId();
-            }
-        }
-        throw new org.openqa.selenium.NoSuchElementException("Given container was not found on given page using Explore API");
     }
 
     protected ArrayList<String> getMedia() {
