@@ -741,7 +741,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
         homePage.clickDisneyTile();
-        sa.assertTrue(brandPage.isOpened(), "Disney brand page was not opened");
+        Assert.assertTrue(brandPage.isOpened(), "Disney brand page was not opened");
 
         // Get Container ID
         ArrayList<Container> collections = getDisneyAPIPage(DisneyEntityIds.DISNEY_PAGE.getEntityId());
