@@ -21,6 +21,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +32,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BA
 
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
-    private static final int THIRTEEN_YEARS_AGE = 13;
     private static final int[] AGE_VALUES_GERMANY = {5, 11, 15, 17};
     private static final int[] AGE_VALUES_CANADA = {0, 5, 8, 11, 13, 15, 17, 18};
     private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17, 18};
@@ -291,11 +292,12 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
 
+        int under13Age = calculateAge(Person.U13.getMonth(), Person.U13);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
-                Map.of("content_rating", getRecommendedContentRating(GERMANY, THIRTEEN_YEARS_AGE, AGE_VALUES_GERMANY)));
-        LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
+                Map.of("content_rating", getRecommendedContentRating(GERMANY, under13Age, AGE_VALUES_GERMANY)));
+        LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
         jarvisDisableOneTrustBanner();
-        createAccountAndAddSecondaryProfile(GERMANY, ENGLISH_LANG);
+        createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
@@ -316,15 +318,16 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
 
+        int under18Age = calculateAge(Person.AGE_17.getMonth(), Person.AGE_17);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
-                Map.of("content_rating", getRecommendedContentRating(CANADA, 17, AGE_VALUES_CANADA)));
-        LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
+                Map.of("content_rating", getRecommendedContentRating(CANADA, under18Age, AGE_VALUES_CANADA)));
+        LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
         jarvisDisableOneTrustBanner();
-        createAccountAndAddSecondaryProfile(CANADA, ENGLISH_LANG);
+        createAccountAndAddSecondaryProfile(CANADA, getLocalizationUtils().getUserLanguage());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
+        addProfile.enterDOB(Person.AGE_17.getMonth(), Person.AGE_17.getDay(), Person.AGE_17.getYear());
         updateProfilePage.tapSaveButton();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         navigateToContentRating();
@@ -341,15 +344,16 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
 
+        int minorAge = calculateAge(Person.MINOR.getMonth(), Person.MINOR);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
-                Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, 5, AGE_VALUES_EMEA)));
-        LOGGER.info("RecommendedContentRating {} ", recommendedContentRatingByAge);
+                Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, minorAge, AGE_VALUES_EMEA)));
+        LOGGER.info("Recommended Content Rating: {} ", recommendedContentRatingByAge);
         // Validation for 0 Rating because in screen appears AL Rating in slider
         if(recommendedContentRatingByAge.contains("0 (Recommended)")) {
             recommendedContentRatingByAge = "AL (Recommended)";
         }
         jarvisDisableOneTrustBanner();
-        createAccountAndAddSecondaryProfile(UNITED_KINGDOM, ENGLISH_LANG);
+        createAccountAndAddSecondaryProfile(UNITED_KINGDOM, getLocalizationUtils().getLocale());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getAccount());
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
