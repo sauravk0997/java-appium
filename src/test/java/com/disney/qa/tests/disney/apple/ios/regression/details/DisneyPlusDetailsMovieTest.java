@@ -10,6 +10,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -34,8 +35,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
     private static final String CONTENT_TITLE = "Content_Title";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
-    private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
-    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String DOWNLOAD_MODAL_STILL_VISIBLE = "Download Modal was still visible";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448"})
@@ -47,34 +46,36 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
 
+        setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.clickMoviesTab();
         searchPage.selectRandomTitle();
         String contentTitle = detailsPage.getMediaTitle();
+
         //Add to watchlist
         detailsPage.addToWatchlist();
         Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "remove from watchlist button wasn't displayed");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
 
         moreMenu.getDynamicCellByLabel(
                 moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        watchlistPage.waitForWatchlistPageToOpen();
-
+        Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(watchlistPage.isWatchlistTitlePresent(contentTitle), "D+ Media title was not " +
                 "added to the watchlist");
         //Remove from watchlist
         watchlistPage.tapWatchlistContent(contentTitle);
-        Assert.assertTrue(detailsPage.isOpened(),
-                "Details page did not open after tapping the title on the watchlist page");
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickRemoveFromWatchlistButton();
         detailsPage.waitForWatchlistButtonToAppear();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
         moreMenu.getDynamicCellByLabel(
                 moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-
+        Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
         sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
@@ -179,7 +180,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         detailsPage.clickOnCopyShareLink();
         detailsPage.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_hocus_pocus_share_link");
@@ -303,7 +304,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(HOCUS_POCUS);
         searchPage.getDynamicAccessibilityId(HOCUS_POCUS).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Play Trailer
         detailsPage.getTrailerActionButton().click();
@@ -346,7 +347,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         String entityID = R.TESTDATA.get("disney_prod_movie_moana_2_entity_id");
         String deeplink = R.TESTDATA.get("disney_prod_movie_moana_2_deeplink");
         launchDeeplink(deeplink);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
 
         Map<String, Object> exploreAPIMetaData = getMoviesMetaDataFromAPI(visualsResponse);
@@ -373,7 +374,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(),
                 "Content title is missing from the extra tab");
         detailsPage.clickDetailsTab();
-        sa.assertTrue(detailsPage.getDetailsTabTitle().contains(contentTitle), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.getDetailsTabTitle().contains(contentTitle), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Subscriber can share link to title over social media
         detailsPage.getShareBtn().click();
@@ -381,7 +382,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 String.format("'%s | Disney+' title was not found on share actions", contentTitle));
         detailsPage.clickOnCopyShareLink();
         detailsPage.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_movie_moana_2_deeplink");
@@ -404,7 +405,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 
         launchDeeplink(deeplink);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIData.get(CONTENT_PROMO_TITLE),
                 "Promo title didn't match with api promo title");
@@ -489,7 +490,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 
         launchDeeplink(deeplink);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Verify main details page UI elements
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
@@ -553,7 +554,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(HOCUS_POCUS);
         searchPage.getDynamicAccessibilityId(HOCUS_POCUS).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab was not found");
 
         detailsPage.clickExtrasTab();
