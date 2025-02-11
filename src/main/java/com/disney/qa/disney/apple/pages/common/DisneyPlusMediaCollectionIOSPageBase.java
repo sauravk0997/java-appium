@@ -7,7 +7,10 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -17,6 +20,7 @@ import static com.disney.qa.common.constant.IConstantHelper.PHONE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBase {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static final String MOVIES_COLLECTION_LABEL = "On the Movies screen.";
 
@@ -65,8 +69,10 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
 
     public String getSelectedCategoryFilterName() {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            LOGGER.info("Getting selected category name using Handset element");
             return defaultContentPageFilterButtonForHandset.getAttribute(LABEL);
         }
+        LOGGER.info("Getting selected category name using Tablet element");
         return defaultContentPageFilterButtonForTablet.getAttribute(LABEL);
     }
 

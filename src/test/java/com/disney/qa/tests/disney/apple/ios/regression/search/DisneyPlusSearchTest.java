@@ -696,6 +696,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75502"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMoviesLandingPageContentMaturityRatingRestriction() {
+        int apiTitlesSearchLimit = 400;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
@@ -714,8 +715,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         //Compare default movies displayed in the UI against Explore API movies for TV-Y rating
         String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterName();
         String setId = getSetIdFromApi(DisneyEntityIds.MOVIES.getEntityId(), selectedCategory);
-        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(setId, 500,
-                RatingConstant.Rating.TV_Y.getContentRating());
+        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
+                setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
         Assert.assertTrue(mediaCollectionPage.getCollectionTitles().stream()
                         .anyMatch(filteredListOfTitlesByRating::contains),
                 "API fetched titles don't contain UI titles");

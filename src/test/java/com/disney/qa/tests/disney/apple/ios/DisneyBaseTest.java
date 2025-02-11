@@ -628,6 +628,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .filter(item -> item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText()
                         .contains(expectedRating))
                 .forEach(item -> filteredTitlesFromApi.add(item.getVisuals().getTitle()));
+        if (filteredTitlesFromApi.isEmpty()) {
+            throw new NoSuchElementException("No titles found from Explore API using given rating");
+        }
         return filteredTitlesFromApi;
     }
 
@@ -635,7 +638,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         if (pageId == null || containerName == null) {
             throw new IllegalArgumentException("pageId or containerName parameters were null");
         }
-        ArrayList<Container> pageContainers = getDisneyAPIPage(pageId);
+        List<Container> pageContainers = getDisneyAPIPage(pageId);
         if (pageContainers.isEmpty()) {
             throw new ArrayIndexOutOfBoundsException("Containers for given page were not found");
         }
@@ -644,7 +647,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 return container.getId();
             }
         }
-        throw new org.openqa.selenium.NoSuchElementException("Given container was not found on given page using Explore API");
+        throw new IllegalArgumentException("Given container was not found on given page using Explore API");
     }
 
     public void setOverrideValue(String newValue) {
