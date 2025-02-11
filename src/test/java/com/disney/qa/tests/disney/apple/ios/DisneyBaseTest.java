@@ -621,6 +621,35 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return titlesFromApi;
     }
 
+    public List<String> getContainerTitlesWithGivenRatingFromApi(String setID, int limit, String expectedRating) {
+        List<Item> setItemsFromApi = getExploreAPIItemsFromSet(setID, limit);
+        List<String> filteredTitlesFromApi = new ArrayList<>();
+        setItemsFromApi.stream()
+                .filter(item -> item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText()
+                        .equals(expectedRating))
+                .forEach(item -> filteredTitlesFromApi.add(item.getVisuals().getTitle()));
+        if (filteredTitlesFromApi.isEmpty()) {
+            throw new NoSuchElementException("No titles found from Explore API using given rating");
+        }
+        return filteredTitlesFromApi;
+    }
+
+    public String getSetIdFromApi(String pageId, String containerName) {
+        if (pageId == null || containerName == null) {
+            throw new IllegalArgumentException("pageId or containerName parameters were null");
+        }
+        List<Container> pageContainers = getDisneyAPIPage(pageId);
+        if (pageContainers.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException("Containers for given page were not found");
+        }
+        for (Container container : pageContainers) {
+            if (containerName.contains(container.getVisuals().getName())) {
+                return container.getId();
+            }
+        }
+        throw new IllegalArgumentException("Given container was not found on given page using Explore API");
+    }
+
     public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         applePageBase.removeDomainIdentifier();
@@ -763,31 +792,5 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         //Relaunch Disney app
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-    }
-
-    public List<String> getContainerTitlesWithGivenRatingFromApi(String setID, int limit, String expectedRating) {
-        List<Item> setItemsFromApi = getExploreAPIItemsFromSet(setID, limit);
-        List<String> filteredTitlesFromApi = new ArrayList<>();
-        setItemsFromApi.stream()
-                .filter(item -> item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText()
-                        .equals(expectedRating))
-                .forEach(item -> filteredTitlesFromApi.add(item.getVisuals().getTitle()));
-        return filteredTitlesFromApi;
-    }
-
-    public String getSetIdFromApi(String pageId, String containerName) {
-        if (pageId == null || containerName == null) {
-            throw new IllegalArgumentException("pageId or containerName parameters were null");
-        }
-        ArrayList<Container> pageContainers = getDisneyAPIPage(pageId);
-        if (pageContainers.isEmpty()) {
-            throw new ArrayIndexOutOfBoundsException("Containers for given page were not found");
-        }
-        for (Container container : pageContainers) {
-            if (containerName.contains(container.getVisuals().getName())) {
-                return container.getId();
-            }
-        }
-        throw new org.openqa.selenium.NoSuchElementException("Given container was not found on given page using Explore API");
     }
 }
