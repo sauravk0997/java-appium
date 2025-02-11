@@ -79,7 +79,7 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
         return defaultContentPageFilterButtonForTablet.getAttribute(LABEL);
     }
 
-    public String getSelectedCategoryFilterNameForOriginals() {
+    public String getSelectedCategoryFilterNameForOriginalsAndBrands() {
         return defaultContentPageFilterButton.getAttribute(LABEL);
     }
 

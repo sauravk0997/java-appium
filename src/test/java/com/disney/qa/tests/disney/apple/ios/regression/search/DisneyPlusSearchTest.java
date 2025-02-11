@@ -745,7 +745,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.clickOriginalsTab();
         Assert.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
 
-        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterNameForOriginals();
+        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterNameForOriginalsAndBrands();
         String setId = getSetIdFromApi(DisneyEntityIds.ORIGINALS_PAGE.getEntityId(), selectedCategory);
         List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
                 setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
