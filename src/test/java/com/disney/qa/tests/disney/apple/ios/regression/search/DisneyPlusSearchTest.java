@@ -732,6 +732,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
+        int apiTitlesSearchLimit = 400;
+
         // Edit to get TV-Y maturity rating content
         getAccountApi().editContentRatingProfileSetting(getAccount(),
                 getLocalizationUtils().getRatingSystem(),
@@ -743,17 +745,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.clickOriginalsTab();
         Assert.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
 
-        //Compare default content displayed in the UI against Explore API originals for TV-Y rating
         String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterNameForOriginals();
-        LOGGER.info(" setId {}", selectedCategory);
-
         String setId = getSetIdFromApi(DisneyEntityIds.ORIGINALS_PAGE.getEntityId(), selectedCategory);
-        LOGGER.info(" setId {}", setId);
+        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
+                setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
 
-        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(setId, 500,
-                RatingConstant.Rating.TV_Y.getContentRating());
-        LOGGER.info(" filteredListOfTitlesByRating {}", filteredListOfTitlesByRating);
-
+        //Compare default content displayed in the UI against Explore API originals for TV-Y rating
         if(!filteredListOfTitlesByRating.isEmpty()) {
             filteredListOfTitlesByRating.forEach(item -> {
                 sa.assertTrue(originalsPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
@@ -765,7 +762,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
                     "PCON restricted title message was not present");
         }
-
         sa.assertAll();
     }
 
