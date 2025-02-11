@@ -398,7 +398,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);
         searchPage.getDynamicAccessibilityId(content).click();
-        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open");
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), "Details page did not open");
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
         videoPlayer.waitForVideoToStart();
