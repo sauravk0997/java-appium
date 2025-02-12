@@ -87,10 +87,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
                 "Home is not focused by default -1");
 
-//        aliceDriver.screenshotAndRecognize()
-//                .assertLabelContainsCaption(sa, disneyPlusAppleTVHomePage.getNavigationMenuValue(DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME).toUpperCase(),
-//                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
-
         disneyPlusAppleTVHomePage.clickSelect();
         LOGGER.info("Collapsing Global Nav menu by clicking select");
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
@@ -119,8 +115,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertTrue(disneyPlusAppleTVHomePage.isFocused(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu)),
                         String.format("%s is not focused on expanded global nav", menu));
                 sa.assertEquals(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu).getText().toUpperCase(), menuText.toUpperCase());
-//                aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(sa, menuText.toUpperCase(),
-//                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
 
             } else {
                 LOGGER.info("Checking for profile button focus");
