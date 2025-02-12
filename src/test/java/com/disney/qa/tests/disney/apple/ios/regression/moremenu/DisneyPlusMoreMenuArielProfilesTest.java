@@ -660,6 +660,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        ednaDOBCollectionPageBase.waitForPresenceOfAnElement(ednaDOBCollectionPageBase.getSaveAndContinueButton());
         ednaDOBCollectionPageBase.clickElementAtLocation(ednaDOBCollectionPageBase.getSaveAndContinueButton(),
                 50, 50);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
@@ -752,6 +753,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
 
         ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        ednaDOBCollectionPageBase.waitForPresenceOfAnElement(ednaDOBCollectionPageBase.getSaveAndContinueButton());
         ednaDOBCollectionPageBase.clickElementAtLocation(ednaDOBCollectionPageBase.getSaveAndContinueButton(), 50, 50);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         updateProfilePage.chooseGender();
