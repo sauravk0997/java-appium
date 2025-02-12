@@ -246,7 +246,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .setProfileId(getUnifiedAccount().getProfileId());
 
         String errorMessage = getExploreAPIResponseOrErrorMsg(exploreSearchRequest);
-
+        LOGGER.info("Error message string:" + errorMessage);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         welcomePage.clickLogInButton();
         login(getUnifiedAccount());
