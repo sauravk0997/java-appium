@@ -1,8 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -19,6 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -218,17 +221,41 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void testDeeplinkJuniorModeHuluHubContentUnavailable() {
+        String trioBasicPlan = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
-                .avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(trioBasicPlan)));
 
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(R.TESTDATA.get("disney_darth_maul_avatar_id"))
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true).build());
+
+        ExploreSearchRequest exploreSearchRequest = getHuluExploreSearchRequest()
+                .setEntityId(HULU_PAGE.getEntityId())
+                .setKidsMode(true)
+                .setCountryCode(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage())
+                .setLimit(30)
+                .setUnifiedAccount(getUnifiedAccount())
+                .setProfileId(getUnifiedAccount().getProfileId());
+
+        String errorMessage = getExploreAPIResponseOrErrorMsg(exploreSearchRequest);
+
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        welcomePage.clickLogInButton();
+        login(getUnifiedAccount());
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        whoIsWatching.clickProfile(JUNIOR_PROFILE);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_hub"));
-        Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
+        Assert.assertTrue(homePage.getStaticTextByLabelContains(errorMessage).isPresent(), CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
 
         homePage.getUnavailableOkButton().click();
