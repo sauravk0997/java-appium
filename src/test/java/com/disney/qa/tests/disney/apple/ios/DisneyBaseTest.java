@@ -4,6 +4,7 @@ import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
 
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
@@ -15,7 +16,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
@@ -123,6 +123,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 4)),
         U13(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 12)),
         U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16)),
+        AGE_17(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 17)),
         OLDERTHAN125(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 130)),
         OLDERTHAN200(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 205));
 
@@ -148,6 +149,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             }
         }
 
+    }
+
+    /**
+     * Calculates person's age based on month, day, year provided from Person enum
+     *
+     * @param personMonth - Person's birth month
+     * @param person  - Person for day and year
+     */
+    public int calculateAge(DateHelper.Month personMonth, Person person) {
+        int month = Integer.parseInt(personMonth.getNum());
+        int day = Integer.parseInt(person.day);
+        int year = Integer.parseInt(person.year);
+        LOGGER.info("Calculated age returned: {}", Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears());
+        return Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears();
     }
 
     /**
@@ -606,6 +621,35 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return titlesFromApi;
     }
 
+    public List<String> getContainerTitlesWithGivenRatingFromApi(String setID, int limit, String expectedRating) {
+        List<Item> setItemsFromApi = getExploreAPIItemsFromSet(setID, limit);
+        List<String> filteredTitlesFromApi = new ArrayList<>();
+        setItemsFromApi.stream()
+                .filter(item -> item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText()
+                        .equals(expectedRating))
+                .forEach(item -> filteredTitlesFromApi.add(item.getVisuals().getTitle()));
+        if (filteredTitlesFromApi.isEmpty()) {
+            throw new NoSuchElementException("No titles found from Explore API using given rating");
+        }
+        return filteredTitlesFromApi;
+    }
+
+    public String getSetIdFromApi(String pageId, String containerName) {
+        if (pageId == null || containerName == null) {
+            throw new IllegalArgumentException("pageId or containerName parameters were null");
+        }
+        List<Container> pageContainers = getDisneyAPIPage(pageId);
+        if (pageContainers.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException("Containers for given page were not found");
+        }
+        for (Container container : pageContainers) {
+            if (containerName.contains(container.getVisuals().getName())) {
+                return container.getId();
+            }
+        }
+        throw new IllegalArgumentException("Given container was not found on given page using Explore API");
+    }
+
     public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         applePageBase.removeDomainIdentifier();
@@ -748,5 +792,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         //Relaunch Disney app
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
+    }
+
+    public String getExploreAPIResponseOrErrorMsg(ExploreSearchRequest exploreSearchRequest) {
+        try {
+            ExplorePageResponse explorePageResponse = getExploreApi().getPage(exploreSearchRequest);
+            return explorePageResponse.getData().toString().split("message=")[1].split(", iconType=")[0];
+        } catch (Exception e) {
+            return e.getMessage().split("description=")[1].split("\\)")[0];
+        }
     }
 }

@@ -636,7 +636,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67081"})
-    @Test(description = "Profiles > Existing Subs -> Add Profile Banner for Primary Profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAddProfileBannerForPrimaryProfiles() {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
@@ -660,7 +660,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         loginPage.submitEmail(getAccount().getEmail());
         passwordPage.submitPasswordForLogin(getAccount().getUserPass());
         ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        ednaDOBCollectionPageBase.tapSaveAndContinueButton();
+        ednaDOBCollectionPageBase.waitForPresenceOfAnElement(ednaDOBCollectionPageBase.getSaveAndContinueButton());
+        ednaDOBCollectionPageBase.clickElementAtLocation(ednaDOBCollectionPageBase.getSaveAndContinueButton(),
+                50, 50);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         updateProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
 
@@ -750,7 +753,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
 
         ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        ednaDOBCollectionPageBase.tapSaveAndContinueButton();
+        ednaDOBCollectionPageBase.waitForPresenceOfAnElement(ednaDOBCollectionPageBase.getSaveAndContinueButton());
+        ednaDOBCollectionPageBase.clickElementAtLocation(ednaDOBCollectionPageBase.getSaveAndContinueButton(), 50, 50);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         updateProfilePage.chooseGender();
         updateProfilePage.tapSaveButton();
         sa.assertTrue(whoIsWatching.isOpened(), "Who is watching page did not open");
