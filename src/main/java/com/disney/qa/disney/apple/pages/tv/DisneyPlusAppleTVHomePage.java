@@ -69,9 +69,6 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'settingsTab'`]")
     private ExtendedWebElement navMenuSettings;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label='%s'$]")
-    private ExtendedWebElement profileNameWebElement;
-
     //When QAE-124 is fixed remove this element and related method
     @FindBy(xpath = "//XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]")
     private ExtendedWebElement carouselFocusedElement;
@@ -362,13 +359,5 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         if(expectedBrandTileIsFocused) { clickSelect(); }
         else { throw new SkipException(brandLabel + " brand tile was not focused"); }
 
-    }
-
-    public boolean isTVProfileNameDisplayed(String profileName) {
-        try {
-            return profileNameWebElement.format(profileName).isElementPresent();
-        } catch (Exception e) {
-            return false;
-        }
     }
 }

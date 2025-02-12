@@ -422,8 +422,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(disneyPlusAppleTVHomePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         disneyPlusAppleTVHomePage.clickMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME_SECONDARY);
-        Assert.assertTrue(disneyPlusAppleTVHomePage.isTVProfileNameDisplayed(PROFILE_NAME_SECONDARY),
-                "Expected Profile is not displayed as active");
+        Assert.assertTrue(disneyPlusAppleTVHomePage.isProfileNamePresent(PROFILE_NAME_SECONDARY),
+                "Expected Profile is not displayed");
 
         sa.assertAll();
     }
