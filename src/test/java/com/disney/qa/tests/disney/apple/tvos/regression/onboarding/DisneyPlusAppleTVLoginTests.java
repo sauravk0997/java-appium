@@ -408,6 +408,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 .profileName(PROFILE_NAME_SECONDARY)
                 .language(getAccount().getProfileLang())
                 .avatarId(AVATAR_BUZZ)
+                .isStarOnboarded(true)
                 .kidsModeEnabled(false)
                 .dateOfBirth(DOB_1990).build());
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage =
