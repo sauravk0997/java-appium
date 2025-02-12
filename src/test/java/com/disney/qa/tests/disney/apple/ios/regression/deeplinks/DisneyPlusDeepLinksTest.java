@@ -223,6 +223,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void testDeeplinkJuniorModeHuluHubContentUnavailable() {
         String trioBasicPlan = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(trioBasicPlan)));
 
@@ -246,9 +247,13 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         String errorMessage = getExploreAPIResponseOrErrorMsg(exploreSearchRequest);
 
-        loginToHome(getUnifiedAccount());
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        welcomePage.clickLogInButton();
+        login(getUnifiedAccount());
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_hub"));
         Assert.assertTrue(homePage.getStaticTextByLabelContains(errorMessage).isPresent(), CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
