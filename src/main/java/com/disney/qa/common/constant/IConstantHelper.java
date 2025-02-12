@@ -30,6 +30,9 @@ public interface IConstantHelper {
     String ORIGINALS_PAGE_NOT_DISPLAYED = "Originals Page did not open";
     String SEARCH_PAGE_NOT_DISPLAYED = "Search page is not displayed";
     String WATCHLIST_PAGE_NOT_DISPLAYED = "Watchlist is not displayed";
+    String WHOS_WATCHING_NOT_DISPLAYED = "Who's Watching Page is not displayed";
+
+    String PROFILE_NAME_SECONDARY = "Secondary";
 
     //country codes
     String AT = "AT";

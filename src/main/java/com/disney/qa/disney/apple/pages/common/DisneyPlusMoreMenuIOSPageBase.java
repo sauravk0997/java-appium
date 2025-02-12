@@ -80,6 +80,9 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label='%s'$]")
 	private ExtendedWebElement deleteAllDownloadsCell;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label='%s'$]")
+	private ExtendedWebElement profileNameWebElement;
+
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS '%s'$]")
 	private ExtendedWebElement deleteOneDownload;
 
@@ -445,6 +448,14 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 			return phoneWebviewAddressBar;
 		} else {
 			return tabletWebviewAddressBar;
+		}
+	}
+
+	public boolean isTVProfileNameDisplayed(String profileName) {
+		try {
+			return profileNameWebElement.format(profileName).isElementPresent();
+		} catch (Exception e) {
+			return false;
 		}
 	}
 }
