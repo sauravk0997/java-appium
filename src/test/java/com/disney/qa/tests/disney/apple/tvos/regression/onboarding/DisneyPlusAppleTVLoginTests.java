@@ -402,18 +402,18 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90695"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void profileNameRetention() {
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage =
-                new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
                 .profileName(PROFILE_NAME_SECONDARY)
                 .language(getAccount().getProfileLang())
                 .avatarId(AVATAR_BUZZ)
                 .kidsModeEnabled(false)
                 .dateOfBirth(DOB_1990).build());
+        DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage =
+                new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
+        SoftAssert sa = new SoftAssert();
 
         logInWithoutHomeCheck(getAccount());
         Assert.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
