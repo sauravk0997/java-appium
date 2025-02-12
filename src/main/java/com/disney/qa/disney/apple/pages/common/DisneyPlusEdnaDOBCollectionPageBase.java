@@ -62,8 +62,8 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
     }
 
     public ExtendedWebElement getSaveAndContinueButton() {
-        String enforceDateOfBirthLogOutButton = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText());
+        String enforceDateOfBirthLogOutButton = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText());
         return dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton);
     }
 
