@@ -41,6 +41,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String RECENT_SEARCH_FOUND_ERROR_MESSAGE = "recent search was displayed";
     private static final String CONTENT_NOT_FOUND_IN_RECENT_SEARCH_ERROR_MESSAGE = "content was not displayed in " +
             "recent search results";
+    private static final String PCON_HEADER_ERROR_NOT_FOUND = "PCON restricted title message was not present";
+    private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
 
     @DataProvider(name = "collectionNames")
     public Object[][] collections() {
@@ -760,9 +762,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         } else {
             LOGGER.info("Originals Collection Api results are empty");
             sa.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
-                    "PCON restricted title message was not present");
+                    PCON_HEADER_ERROR_NOT_FOUND);
             sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
-                    "PCON restricted title message was not present");
+                    PCON_ERROR_MESSAGE_NOT_FOUND);
         }
         sa.assertAll();
     }
@@ -813,9 +815,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         } else {
             LOGGER.info("Originals Collection Api results are empty");
             sa.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
-                    "PCON restricted title message was not present");
+                    PCON_HEADER_ERROR_NOT_FOUND);
             sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
-                    "PCON restricted title message was not present");
+                    PCON_ERROR_MESSAGE_NOT_FOUND);
         }
 
         sa.assertAll();
