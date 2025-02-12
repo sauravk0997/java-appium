@@ -27,6 +27,9 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
     @FindBy(id = "segmentedControl")
     private ExtendedWebElement categoryScroller;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'headerViewTitleLabel'`]")
+    protected ExtendedWebElement defaultContentPageFilterButton;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'segmentedControl'`]" +
             "/XCUIElementTypeScrollView/XCUIElementTypeButton[1]")
     protected ExtendedWebElement defaultContentPageFilterButtonForTablet;
@@ -74,6 +77,10 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
         }
         LOGGER.info("Getting selected category name using Tablet element");
         return defaultContentPageFilterButtonForTablet.getAttribute(LABEL);
+    }
+
+    public String getSelectedCategoryFilterNameForOriginalsAndBrands() {
+        return defaultContentPageFilterButton.getAttribute(LABEL);
     }
 
     public List<String> getCollectionTitles() {
