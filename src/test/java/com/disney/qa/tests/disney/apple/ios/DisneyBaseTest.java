@@ -626,7 +626,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         List<String> filteredTitlesFromApi = new ArrayList<>();
         setItemsFromApi.stream()
                 .filter(item -> item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText()
-                        .contains(expectedRating))
+                        .equals(expectedRating))
                 .forEach(item -> filteredTitlesFromApi.add(item.getVisuals().getTitle()));
         if (filteredTitlesFromApi.isEmpty()) {
             throw new NoSuchElementException("No titles found from Explore API using given rating");
@@ -792,5 +792,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         //Relaunch Disney app
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
+    }
+
+    public String getExploreAPIResponseOrErrorMsg(ExploreSearchRequest exploreSearchRequest) {
+        try {
+            ExplorePageResponse explorePageResponse = getExploreApi().getPage(exploreSearchRequest);
+            return explorePageResponse.getData().toString().split("message=")[1].split(", iconType=")[0];
+        } catch (Exception e) {
+            return e.getMessage().split("description=")[1].split("\\)")[0];
+        }
     }
 }
