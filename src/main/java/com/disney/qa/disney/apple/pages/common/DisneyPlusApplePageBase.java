@@ -1262,7 +1262,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dragFromToForDuration(int startX, int startY, int endX, int endY, double duration) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
         Map<String, Object> params = new HashMap<>();
         params.put("duration", duration);
         params.put("fromX", startX);
