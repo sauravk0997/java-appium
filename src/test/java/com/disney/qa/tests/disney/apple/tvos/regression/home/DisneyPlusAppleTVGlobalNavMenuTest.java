@@ -84,13 +84,9 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         LOGGER.info("Opening global nav by clicking Menu button");
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
 
-        LOGGER.info("IS DYNAMIC ACCESSIBILITY ELEMENT PRESENT? " + disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()));
-//        sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
-//                "Home is not focused by default -1");
+        sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
+                "Home is not focused by default -1");
 
-        LOGGER.info("IS ALICE SCREENSHOT VERTICAL MENU ITEM VISIBLE? " + aliceDriver.screenshotAndRecognize()
-                .assertLabelContainsCaption(sa, disneyPlusAppleTVHomePage.getNavigationMenuValue(DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME).toUpperCase(),
-                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText()));
 //        aliceDriver.screenshotAndRecognize()
 //                .assertLabelContainsCaption(sa, disneyPlusAppleTVHomePage.getNavigationMenuValue(DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME).toUpperCase(),
 //                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
@@ -125,16 +121,15 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertEquals(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu).getText().toUpperCase(), menuText.toUpperCase());
 //                aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(sa, menuText.toUpperCase(),
 //                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
-                LOGGER.info("IS ALICE SCREENSHOT VERTICAL MENU ITEM HOVERED VISIBLE? " + aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(sa, menuText.toUpperCase(),
-                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText()));
+
             } else {
                 LOGGER.info("Checking for profile button focus");
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnFocused());
             }
         });
-        LOGGER.info("IS NAV ALICE LABEL VISIBLE? " + aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new)));
 
+//        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
         sa.assertAll();
     }
 
