@@ -413,7 +413,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingIOSPageBase =
                 initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
                 .profileName(PROFILE_NAME_SECONDARY)
                 .language(getAccount().getProfileLang())
@@ -428,7 +427,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(disneyPlusAppleTVHomePage.isHomeBtnPresent(), "Home button is not displayed");
 
         disneyPlusAppleTVHomePage.moveUp(2,1);
-        moreMenuPageBase.isTVProfileNameDisplayed(PROFILE_NAME_SECONDARY);
+        Assert.assertTrue(moreMenuPageBase.isTVProfileNameDisplayed(PROFILE_NAME_SECONDARY));
 
         sa.assertAll();
     }
