@@ -792,10 +792,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         // Get Container ID
         List<Container> collections = getDisneyAPIPage(DisneyEntityIds.DISNEY_PAGE.getEntityId());
         String heroCarouselId = "";
-        try {
+        if(!collections.isEmpty()) {
             heroCarouselId = collections.get(0).getId();
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, hero carousel collection id not found:- " +  e.getMessage());
+        } else {
+            throw new RuntimeException("No collections found for brand");
         }
 
         //Compare default content displayed in the UI against Explore API Disney brand page for TV-Y rating
