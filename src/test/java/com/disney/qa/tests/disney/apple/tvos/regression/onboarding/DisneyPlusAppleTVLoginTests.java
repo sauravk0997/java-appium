@@ -118,7 +118,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90600"})
-    @Test(description = "Check for the error message with no email input", groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyErrorMessageWithNoEmailInput() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
