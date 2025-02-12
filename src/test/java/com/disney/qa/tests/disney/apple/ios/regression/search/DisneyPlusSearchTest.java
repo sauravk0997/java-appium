@@ -790,9 +790,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         // Get Container ID
         ArrayList<Container> collections = getDisneyAPIPage(DisneyEntityIds.DISNEY_PAGE.getEntityId());
         String heroCarouselId = "";
-        try{
+        try {
             heroCarouselId = collections.get(0).getId();
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new SkipException("Skipping test, hero carousel collection id not found:- " +  e.getMessage());
         }
 
