@@ -418,6 +418,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getAccount());
         Assert.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         disneyPlusAppleTVWhoIsWatchingPage.clickProfile(PROFILE_NAME_SECONDARY);
+        Assert.assertTrue(disneyPlusAppleTVHomePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         disneyPlusAppleTVHomePage.clickMenu();
         Assert.assertTrue(disneyPlusAppleTVHomePage.isHomeBtnPresent(), "Home button is not displayed");
 
