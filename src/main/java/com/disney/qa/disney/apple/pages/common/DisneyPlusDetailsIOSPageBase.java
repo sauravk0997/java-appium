@@ -166,7 +166,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'progressBar'`]/XCUIElementTypeOther")
     private ExtendedWebElement progressBarBookmark;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label =[c] 'Included with your ESPN+ subscription'`]")
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeStaticText[`label =[c] 'Included with your ESPN+ subscription'`]")
     private ExtendedWebElement espnPlusEntitlementAttributionText;
 
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
