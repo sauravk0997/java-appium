@@ -8,6 +8,7 @@ public enum DisneyEntityIds {
     SOUL("Soul", "entity-02a00d44-4607-4866-862f-9d260a8dbdca"),
     WANDA_VISION("WandaVision", "entity-90affd1f-0851-48bc-9cab-c142d5c9c20c"),
     MARVELS("Marvels", "entity-75c90eca-8969-4edb-ac1a-7165cff2671c"),
+    MOVIES("Movies", "page-c44952c4-c788-44c3-bdf7-e99fca172f36"),
     SERIES("Series", "entity-cac75c8f-a9e2-4d95-ac73-1cf1cc7b9568"),
     SERIES_EXTRA("Series Extra","entity-aa7bff48-41cd-4fe3-9eaa-b9951bb316d6"),
     IMAX_ENHANCED_SET("IMAX Enhanced Set","7cd344eb-73db-4b5f-9359-f51cead40e23"),

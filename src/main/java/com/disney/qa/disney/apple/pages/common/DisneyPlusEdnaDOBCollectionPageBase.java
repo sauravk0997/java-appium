@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -58,6 +59,12 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
                 DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText());
         dynamicBtnFindByLabel.format(enforceDateOfBirthLogOutButton).click();
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+    }
+
+    public ExtendedWebElement getSaveAndContinueButton() {
+        String enforceDateOfBirthLogOutButton = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText());
+        return getTypeButtonContainsLabel(enforceDateOfBirthLogOutButton);
     }
 
     public void tapLogOutButton() {
