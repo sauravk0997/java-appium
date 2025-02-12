@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
@@ -225,9 +226,14 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(trioBasicPlan)));
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
-                .avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(R.TESTDATA.get("disney_darth_maul_avatar_id"))
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true).build());
 
         ExploreSearchRequest exploreSearchRequest = getHuluExploreSearchRequest()
                 .setEntityId(HULU_PAGE.getEntityId())
