@@ -788,7 +788,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(brandPage.isOpened(), "Disney brand page was not opened");
 
         // Get Container ID
-        ArrayList<Container> collections = getDisneyAPIPage(DisneyEntityIds.DISNEY_PAGE.getEntityId());
+        List<Container> collections = getDisneyAPIPage(DisneyEntityIds.DISNEY_PAGE.getEntityId());
         String heroCarouselId = "";
         try {
             heroCarouselId = collections.get(0).getId();
