@@ -2,7 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.client.responses.identity.Hulu;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.DisneyAbstractPage;
