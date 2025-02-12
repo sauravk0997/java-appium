@@ -1287,12 +1287,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         Assert.assertTrue(huluIOSPageBase.getTypeOtherContainsName("Hulu Originals").isPresent(),
                 "Hulu Originals collection was not found");
         huluIOSPageBase.waitForLoaderToDisappear(5);
-        huluIOSPageBase.swipeLeftInCollectionNumOfTimes(1, CollectionConstant.Collection.HULU_ORIGINALS);
+        huluIOSPageBase.swipeLeftInCollectionNumOfTimes(1, collection);
         BufferedImage recommendedForYouLastTileInView = getElementImage(
-                huluIOSPageBase.getCollection(CollectionConstant.Collection.HULU_ORIGINALS));
-        huluIOSPageBase.swipeRightInCollectionNumOfTimes(1, CollectionConstant.Collection.HULU_ORIGINALS);
+                huluIOSPageBase.getCollection(collection));
+        huluIOSPageBase.swipeRightInCollectionNumOfTimes(1, collection);
         BufferedImage recommendedForYouFirstTileInView = getElementImage(
-                huluIOSPageBase.getCollection(CollectionConstant.Collection.HULU_ORIGINALS));
+                huluIOSPageBase.getCollection(collection));
 
         return areImagesDifferent(recommendedForYouFirstTileInView, recommendedForYouLastTileInView);
     }
