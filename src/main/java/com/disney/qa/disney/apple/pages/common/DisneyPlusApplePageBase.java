@@ -1237,8 +1237,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
         int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
 
-        this.swipe(startX, startY, endX, endY, 500);
+        dragFromToForDuration(startX, startY, endX, endY, 0.5);
     }
+
 
     public void swipeLeftInCollectionNumOfTimes(int number, CollectionConstant.Collection collection) {
         int count = number;
@@ -1258,8 +1259,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         int startX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
         int endX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
 
+        dragFromToForDuration(startX, startY, endX, endY, 0.5);
+    }
 
-        this.swipe(startX, startY, endX, endY, 500);
+    public void dragFromToForDuration(int startX, int startY, int endX, int endY, double duration) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        Map<String, Object> params = new HashMap<>();
+        params.put("duration", duration);
+        params.put("fromX", startX);
+        params.put("fromY", startY);
+        params.put("toX", endX);
+        params.put("toY", endY);
+        js.executeScript("mobile: dragFromToForDuration", params);
     }
 
     public void swipeRightInCollectionNumOfTimes(int number, CollectionConstant.Collection collection) {
