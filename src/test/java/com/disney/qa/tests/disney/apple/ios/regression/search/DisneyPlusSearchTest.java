@@ -725,6 +725,48 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75501"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyOriginalsLandingPageContentMaturityRatingRestriction() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
+        DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+        int apiTitlesSearchLimit = 400;
+
+        // Edit to get TV-Y maturity rating content
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RatingConstant.Rating.TV_Y.getContentRating());
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.clickOriginalsTab();
+        Assert.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
+
+        //Compare default content displayed in the UI against Explore API originals for TV-Y ratings
+        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterNameForOriginalsAndBrands();
+        String setId = getSetIdFromApi(DisneyEntityIds.ORIGINALS_PAGE.getEntityId(), selectedCategory);
+        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
+                setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
+
+        if(!filteredListOfTitlesByRating.isEmpty()) {
+            filteredListOfTitlesByRating.forEach(item -> {
+                sa.assertTrue(originalsPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
+            });
+        } else {
+            LOGGER.info("Originals Collection Api results are empty");
+            sa.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
+                    "PCON restricted title message was not present");
+            sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+                    "PCON restricted title message was not present");
+        }
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69557"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyBrandPageContentMaturityRatingRestriction() {
