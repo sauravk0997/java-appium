@@ -409,25 +409,24 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        DisneyPlusMoreMenuIOSPageBase moreMenuPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingIOSPageBase =
-                initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage =
+                new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
                 .profileName(PROFILE_NAME_SECONDARY)
                 .language(getAccount().getProfileLang())
-                .avatarId(null)
+                .avatarId(AVATAR_BUZZ)
                 .kidsModeEnabled(false)
-                .dateOfBirth(null).build());
+                .dateOfBirth(DOB_1990).build());
 
         logIn(getAccount());
-        Assert.assertTrue(whoseWatchingIOSPageBase.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoseWatchingIOSPageBase.clickProfile(PROFILE_NAME_SECONDARY);
+        Assert.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        disneyPlusAppleTVWhoIsWatchingPage.clickProfile(PROFILE_NAME_SECONDARY);
         disneyPlusAppleTVHomePage.clickMenu();
         Assert.assertTrue(disneyPlusAppleTVHomePage.isHomeBtnPresent(), "Home button is not displayed");
 
         disneyPlusAppleTVHomePage.moveUp(2,1);
-        Assert.assertTrue(moreMenuPageBase.isTVProfileNameDisplayed(PROFILE_NAME_SECONDARY));
+        Assert.assertTrue(disneyPlusAppleTVHomePage.isTVProfileNameDisplayed(PROFILE_NAME_SECONDARY));
 
         sa.assertAll();
     }
