@@ -741,7 +741,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.clickOriginalsTab();
         Assert.assertTrue(originalsPage.isOpened(), "Original content page was not opened");
 
