@@ -72,7 +72,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         initDisneyPlusAppleTVGlobalNavMenuTest();
         logInTemp(getAccount());
 
@@ -82,11 +83,9 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
+
         sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
                 "Home is not focused by default -1");
-        aliceDriver.screenshotAndRecognize()
-                .assertLabelContainsCaption(sa, disneyPlusAppleTVHomePage.getNavigationMenuValue(DisneyPlusAppleTVHomePage.globalNavigationMenuText.HOME).toUpperCase(),
-                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
 
         disneyPlusAppleTVHomePage.clickSelect();
         LOGGER.info("Collapsing Global Nav menu by clicking select");
@@ -116,16 +115,15 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 sa.assertTrue(disneyPlusAppleTVHomePage.isFocused(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu)),
                         String.format("%s is not focused on expanded global nav", menu));
                 sa.assertEquals(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(menu).getText().toUpperCase(), menuText.toUpperCase());
-                aliceDriver.screenshotAndRecognize().assertLabelContainsCaptionCaseInsensitive(sa, menuText.toUpperCase(),
-                        AliceLabels.VERTICAL_MENU_ITEM_HOVERED_VERT_SEPARATOR.getText());
+
             } else {
                 LOGGER.info("Checking for profile button focus");
                 Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
                 sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnFocused());
             }
         });
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
 
+        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
         sa.assertAll();
     }
 

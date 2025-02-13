@@ -152,6 +152,7 @@ public class RatingConstant {
             case "UY":
             case "ES":
             case "SE":
+            case "FR":
                 return "1850";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
@@ -169,7 +170,7 @@ public class RatingConstant {
             case "DE":
                 return "23117";
             case "FR":
-                return "23115";
+                return "23090";
             case "JP":
                 return "23098";
             case "KR":
