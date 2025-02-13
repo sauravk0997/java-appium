@@ -18,8 +18,7 @@ import org.testng.asserts.SoftAssert;
 import java.io.File;
 import java.util.*;
 
-import static com.disney.qa.common.constant.IConstantHelper.STUDIOS_AND_NETWORKS_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
 
