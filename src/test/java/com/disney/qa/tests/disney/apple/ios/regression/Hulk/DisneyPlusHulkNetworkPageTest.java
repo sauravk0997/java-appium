@@ -18,7 +18,7 @@ import org.testng.asserts.SoftAssert;
 import java.io.File;
 import java.util.*;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
 
@@ -35,7 +35,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
                     "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
-    @Test(description = "Validate of the UI and functional items of the Collection and Network page", groups = {TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyHulkCollectionPagesNetworkPageUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -47,7 +47,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
         sa.assertTrue(huluPage.isBackButtonPresent(), "Back button is not present");
         sa.assertTrue(huluPage.isArtworkBackgroundPresent(), "Artwork images is not present");
-        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
+        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
 
         networkLogos.forEach(item -> {
             sa.assertTrue(huluPage.isNetworkLogoPresent(item), String.format("%s Network logo is not present", item));
@@ -68,7 +68,7 @@ public class DisneyPlusHulkNetworkPageTest extends DisneyBaseTest {
                     imageSimilarityPercentage >= imageSimilarityPercentageThreshold,
                     String.format("Similarity Percentage score was %,.2f or lower in %s Network logo {%,.2f}.", imageSimilarityPercentageThreshold, item, imageSimilarityPercentage));
             huluPage.clickOnNetworkBackButton();
-            sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section are not present");
+            sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
         });
 
         sa.assertAll();
