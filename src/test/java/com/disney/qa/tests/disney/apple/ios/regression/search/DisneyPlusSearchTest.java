@@ -790,11 +790,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         // Get Container ID
         List<Container> collections = getDisneyAPIPage(DisneyEntityIds.DISNEY_PAGE.getEntityId());
-        String heroCarouselId = "";
-        if(!collections.isEmpty()) {
-            heroCarouselId = collections.get(0).getId();
-        } else {
-            throw new RuntimeException("No collections found for brand");
+        if (collections.isEmpty()) {
+            throw new IllegalArgumentException("No collections found for brand");
         }
 
         //Compare default content displayed in the UI against Explore API Disney brand page for TV-Y rating
@@ -804,7 +801,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
 
         if(!filteredListOfTitlesByRating.isEmpty()) {
-            String finalHeroCarouselId = heroCarouselId;
+            String finalHeroCarouselId = collections.get(0).getId();
             filteredListOfTitlesByRating.forEach(item -> {
                 if (brandPage.getTypeCellLabelContains(item).isElementNotPresent(THREE_SEC_TIMEOUT)) {
                     swipeInContainer(homePage.getHeroCarouselContainer(finalHeroCarouselId), Direction.LEFT, 500);
