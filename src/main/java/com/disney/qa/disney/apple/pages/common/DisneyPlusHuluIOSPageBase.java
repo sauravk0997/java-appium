@@ -67,8 +67,8 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
         return typeCellLabelContains.format(logoName).isPresent(THREE_SEC_TIMEOUT);
     }
 
-    public boolean validateScrollingInHuluCollection() {
-        return validateScrollingInCollections(CollectionConstant.Collection.HULU_ORIGINALS);
+    public boolean validateScrollingInHuluCollection(CollectionConstant.Collection collection) {
+        return validateScrollingInCollections(collection);
     }
 
     public void clickOnNetworkLogo(String network){
