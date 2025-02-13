@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
-import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.*;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -9,15 +8,10 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.slf4j.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.lang.invoke.*;
-import java.util.*;
-
-import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
