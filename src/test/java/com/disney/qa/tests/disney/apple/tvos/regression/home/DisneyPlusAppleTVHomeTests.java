@@ -148,11 +148,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB_2, US})
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-
-        DisneyAccount account = getAccount();
-        account.setEmail("alekhya.rallapalli+p2.standalone2@disney.com");
-        account.setUserPass("Test123!");
-        logIn(account);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
+        logIn(getAccount());
 
         homePage.waitForHomePageToOpen();
 
