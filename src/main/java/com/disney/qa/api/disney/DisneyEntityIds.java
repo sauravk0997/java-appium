@@ -17,7 +17,8 @@ public enum DisneyEntityIds {
     HULU_PAGE("Hulu Page", "page-ff723d29-20d5-4303-9cce-4a9aac8e269e"),
     THE_AVENGERS("Marvel Studios' The Avengers", "entity-3a5596d6-5133-4a8e-8d21-00e1531a4e0f"),
     DANCING_WITH_THE_STARS("Dancing with the Stars", "38c1eef7-aa8b-4fa4-8bdc-88e596ea565f"),
-    DISNEY_PAGE("Disney Brand", "page-4c4b78ed-4a17-43eb-8221-14a3959e4517");
+    DISNEY_PAGE("Disney Brand", "page-4c4b78ed-4a17-43eb-8221-14a3959e4517"),
+    SPORTS_PAGE("ESPN Sports", "4e177574-aed4-4ad5-8d01-6fc7513bd3e5");
 
     private final String title;
     private final String entityId;

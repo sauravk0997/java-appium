@@ -1,6 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
@@ -12,6 +14,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusUpNextIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -21,8 +24,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -353,28 +359,25 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEspnHubSportPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         String sportsLabel = "Sports";
-        String sportToFind = "Golf";
         String leagues = "Leagues";
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
         setAppToHomeScreen(getAccount());
 
         homePage.clickEspnTile();
         Assert.assertTrue(homePage.isEspnBrandPageOpen(), "ESPN brand page did not open");
-     //   swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 4, null,
-       //         Direction.UP, 800);
 
         swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
                 homePage.getBrandLandingView(), Direction.UP, 1000);
 
-    //    if (homePage.getTypeCellLabelContains(sportToFind).isElementNotPresent(THREE_SEC_TIMEOUT)) {
-            // swipeInContainer(homePage.getHeroCarouselContainer(DisneyEntityIds.SPORTS_PAGE.getEntityId()), Direction.LEFT, 500);
-      //      swipeInContainer(homePage.getTypeCellNameContains(DisneyEntityIds.SPORTS_PAGE.getEntityId()), Direction.LEFT, 500);
-
-       // }
-        homePage.getTypeCellLabelContains(sportToFind).click();
-        Assert.assertTrue(homePage.isSportTitlePresent(sportToFind), "Soccer screen did not open");
-        Assert.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
+        // Get first sport and validate page
+        sa.assertTrue(homePage.getCollection(DisneyEntityIds.SPORTS_PAGE.getEntityId()).isPresent(), "Sports container was not found");
+        String sportTitle = getContainerTitlesFromApi(DisneyEntityIds.SPORTS_PAGE.getEntityId(), 5).get(0);
+        homePage.getTypeCellLabelContains(sportTitle).click();
+        sa.assertTrue(homePage.isSportTitlePresent(sportTitle), "Sport title was not found");
+        sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
+        sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
+        sa.assertAll();
     }
-
 }

@@ -214,6 +214,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isSportTitlePresent(String sport) {
             return findExtendedWebElement(
                     AppiumBy.iOSClassChain(String
-                            .format("**/XCUIElementTypeImage[`label CONTAINS \"On the %s screen.\"`]", sport))).isPresent();
+                            .format("**/XCUIElementTypeStaticText[`label CONTAINS \"On the %s screen.\"`]", sport))).isPresent();
     }
 }
