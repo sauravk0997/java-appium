@@ -42,8 +42,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther" +
             "[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement espnBrandPage;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`label == \"On the Soccer screen.\"`]")
-    protected ExtendedWebElement soccerScreenTitle;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
