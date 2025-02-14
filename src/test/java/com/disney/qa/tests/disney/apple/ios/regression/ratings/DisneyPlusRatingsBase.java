@@ -216,7 +216,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
-        swipePageTillElementTappable(detailsPage.getTabBar(), 2, null, Direction.DOWN, 1000);
+        swipe(detailsPage.getLogoImage(), Direction.DOWN, 2, 1000);
+        swipe(detailsPage.getTabBar(), Direction.UP, 2, 1000);
         swipeInContainerTillElementIsPresent(detailsPage.getTabBar(), detailsPage.getEpisodesTab(), 1,
                 Direction.RIGHT);
         detailsPage.getEpisodesTab().click();
