@@ -5,11 +5,11 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.*;
 
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
@@ -29,6 +29,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement starWarsTile;
     @ExtendedFindBy(accessibilityId = "National Geographic, Select for details on this title.")
     private ExtendedWebElement nationalGeographicTile;
+    @ExtendedFindBy(accessibilityId = "ESPN, Select for details on this title.")
+    private ExtendedWebElement espnTile;
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Mickey Mouse and Friends'`]")
@@ -37,6 +39,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement activeHomeIcon;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name = 'brandTileContentView'$]")
     private ExtendedWebElement brandTileCell;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther" +
+            "[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
+    protected ExtendedWebElement espnBrandPage;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -105,6 +110,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickNatGeoTile() {
         nationalGeographicTile.click();
+    }
+
+    public void clickEspnTile() {
+        espnTile.click();
     }
 
     public boolean isStarTilePresent() {
@@ -194,5 +203,16 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public List<ExtendedWebElement> getBrandCells() {
         return findExtendedWebElements(brandTileCell.getBy());
+    }
+
+    public boolean isEspnBrandPageOpen() {
+        return espnBrandPage.isPresent();
+    }
+
+    public boolean isSportTitlePresent(String sport) {
+            return findExtendedWebElement(
+                    AppiumBy.iOSClassChain(String
+                            .format("**/XCUIElementTypeStaticText[`label CONTAINS \"On the %s screen.\"`]",
+                                    sport))).isPresent();
     }
 }
