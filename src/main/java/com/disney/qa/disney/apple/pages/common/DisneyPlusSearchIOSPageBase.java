@@ -14,8 +14,6 @@ import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.List;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_RATING;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
