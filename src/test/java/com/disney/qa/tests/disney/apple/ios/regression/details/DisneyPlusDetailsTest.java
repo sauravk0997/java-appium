@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
@@ -347,4 +348,33 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77990"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEspnHubSportPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String sportsLabel = "Sports";
+        String sportToFind = "Golf";
+        String leagues = "Leagues";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickEspnTile();
+        Assert.assertTrue(homePage.isEspnBrandPageOpen(), "ESPN brand page did not open");
+     //   swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 4, null,
+       //         Direction.UP, 800);
+
+        swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
+
+    //    if (homePage.getTypeCellLabelContains(sportToFind).isElementNotPresent(THREE_SEC_TIMEOUT)) {
+            // swipeInContainer(homePage.getHeroCarouselContainer(DisneyEntityIds.SPORTS_PAGE.getEntityId()), Direction.LEFT, 500);
+      //      swipeInContainer(homePage.getTypeCellNameContains(DisneyEntityIds.SPORTS_PAGE.getEntityId()), Direction.LEFT, 500);
+
+       // }
+        homePage.getTypeCellLabelContains(sportToFind).click();
+        Assert.assertTrue(homePage.isSportTitlePresent(sportToFind), "Soccer screen did not open");
+        Assert.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
+    }
+
 }
