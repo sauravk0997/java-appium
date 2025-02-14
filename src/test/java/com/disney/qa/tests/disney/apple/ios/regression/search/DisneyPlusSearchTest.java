@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -39,6 +40,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String RECENT_SEARCH_FOUND_ERROR_MESSAGE = "recent search was displayed";
     private static final String CONTENT_NOT_FOUND_IN_RECENT_SEARCH_ERROR_MESSAGE = "content was not displayed in " +
             "recent search results";
+    private static final String PCON_HEADER_ERROR_NOT_FOUND = "PCON restricted title message was not present";
+    private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
 
     @DataProvider(name = "collectionNames")
     public Object[][] collections() {
@@ -758,10 +761,61 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         } else {
             LOGGER.info("Originals Collection Api results are empty");
             sa.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
-                    "PCON restricted title message was not present");
+                    PCON_HEADER_ERROR_NOT_FOUND);
             sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
-                    "PCON restricted title message was not present");
+                    PCON_ERROR_MESSAGE_NOT_FOUND);
         }
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69557"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyBrandPageContentMaturityRatingRestriction() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = new DisneyPlusBrandIOSPageBase(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        int apiTitlesSearchLimit = 400;
+
+        // Edit to get TV-Y maturity rating content
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RatingConstant.Rating.TV_Y.getContentRating());
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+        homePage.clickDisneyTile();
+        Assert.assertTrue(brandPage.isOpened(), "Disney brand page was not opened");
+
+        // Get Container ID
+        List<Container> collections = getDisneyAPIPage(DisneyEntityIds.DISNEY_PAGE.getEntityId());
+        if (collections.isEmpty()) {
+            throw new IllegalArgumentException("No collections found for brand");
+        }
+
+        //Compare default content displayed in the UI against Explore API Disney brand page for TV-Y rating
+        String selectedCategory = mediaCollectionPage.getSelectedCategoryFilterNameForOriginalsAndBrands();
+        String setId = getSetIdFromApi(DisneyEntityIds.DISNEY_PAGE.getEntityId(), selectedCategory);
+        List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
+                setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
+
+        if(!filteredListOfTitlesByRating.isEmpty()) {
+            String finalHeroCarouselId = collections.get(0).getId();
+            filteredListOfTitlesByRating.forEach(item -> {
+                if (brandPage.getTypeCellLabelContains(item).isElementNotPresent(THREE_SEC_TIMEOUT)) {
+                    swipeInContainer(homePage.getHeroCarouselContainer(finalHeroCarouselId), Direction.LEFT, 500);
+                }
+                sa.assertTrue(brandPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
+            });
+        } else {
+            LOGGER.info("Originals Collection Api results are empty");
+            sa.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
+                    PCON_HEADER_ERROR_NOT_FOUND);
+            sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+                    PCON_ERROR_MESSAGE_NOT_FOUND);
+        }
+
         sa.assertAll();
     }
 
