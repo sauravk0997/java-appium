@@ -374,10 +374,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         // Get first sport and validate page
         sa.assertTrue(homePage.getCollection(DisneyEntityIds.SPORTS_PAGE.getEntityId()).isPresent(), "Sports container was not found");
         String sportTitle = getContainerTitlesFromApi(DisneyEntityIds.SPORTS_PAGE.getEntityId(), 5).get(0);
-        homePage.getTypeCellLabelContains(sportTitle).click();
-        sa.assertTrue(homePage.isSportTitlePresent(sportTitle), "Sport title was not found");
-        sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
-        sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
+        if(!sportTitle.isEmpty()) {
+            homePage.getTypeCellLabelContains(sportTitle).click();
+            sa.assertTrue(homePage.isSportTitlePresent(sportTitle), "Sport title was not found");
+            sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
+            sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
+        } else {
+            throw new IllegalArgumentException("No containers titles found for Sports");
+        }
         sa.assertAll();
     }
 }
