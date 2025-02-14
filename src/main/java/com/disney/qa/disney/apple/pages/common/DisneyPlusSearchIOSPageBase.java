@@ -44,10 +44,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement itemPickerView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
     private ExtendedWebElement firstCollectionTitle;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s' AND label CONTAINS '%s'$]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s' " +
-            "AND label CONTAINS '%s'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s'`]")
     private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -251,14 +250,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isRatingPresentInSearchResults(String rating) {
         LOGGER.info("Verifying Ratings in search results");
-        String ratingText = getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText());
-        return searchResults.format(ratingText, rating).isPresent();
+        return searchResults.format(rating).isPresent();
     }
 
     public ExtendedWebElement getTitleContainer(String titleName, String titleRating) {
-        String ratingText = getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText());
-        return searchResultCellwithTitleAndRatingValues.format(titleName, ratingText, titleRating);
+        return searchResultCellwithTitleAndRatingValues.format(titleName, titleRating);
     }
 }
