@@ -27,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 
+import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.util.*;
@@ -1235,8 +1236,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         int startX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
         int endX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
 
-        this.swipe(startX, startY, endX, endY, 500);
+        dragFromToForDuration(startX, startY, endX, endY, 0.5);
     }
+
 
     public void swipeLeftInCollectionNumOfTimes(int number, CollectionConstant.Collection collection) {
         int count = number;
@@ -1256,8 +1258,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         int startX = (int) (elementLocation.getX() + Math.round(0.25 * elementDimensions.getWidth()));
         int endX = (int) (elementLocation.getX() + Math.round(0.8 * elementDimensions.getWidth()));
 
+        dragFromToForDuration(startX, startY, endX, endY, 0.5);
+    }
 
-        this.swipe(startX, startY, endX, endY, 500);
+    public void dragFromToForDuration(int startX, int startY, int endX, int endY, double duration) {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        Map<String, Object> params = new HashMap<>();
+        params.put("duration", duration);
+        params.put("fromX", startX);
+        params.put("fromY", startY);
+        params.put("toX", endX);
+        params.put("toY", endY);
+        js.executeScript("mobile: dragFromToForDuration", params);
     }
 
     public void swipeRightInCollectionNumOfTimes(int number, CollectionConstant.Collection collection) {
@@ -1269,11 +1281,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {
-        swipePageTillElementPresent(getCollection(collection), 10, brandLandingView, Direction.UP, 500);
-        List<ExtendedWebElement> titles1 = getAllCollectionCells(collection);
-        swipeLeftInCollection(collection);
-        List<ExtendedWebElement> titles2 = getAllCollectionCells(collection);
-        return titles1 != titles2;
+        DisneyPlusHuluIOSPageBase huluIOSPageBase = initPage(DisneyPlusHuluIOSPageBase.class);
+        ExtendedWebElement huluOriginalsLabel = getHuluOriginals();
+        swipePageTillElementPresent(huluOriginalsLabel, 5, brandLandingView, Direction.UP, 1000);
+        Assert.assertTrue(huluIOSPageBase.getTypeOtherContainsName("Hulu Originals").isPresent(),
+                "Hulu Originals collection was not found");
+        huluIOSPageBase.waitForLoaderToDisappear(5);
+        huluIOSPageBase.swipeLeftInCollectionNumOfTimes(1, collection);
+        BufferedImage recommendedForYouLastTileInView = getElementImage(
+                huluIOSPageBase.getCollection(collection));
+        huluIOSPageBase.swipeRightInCollectionNumOfTimes(1, collection);
+        BufferedImage recommendedForYouFirstTileInView = getElementImage(
+                huluIOSPageBase.getCollection(collection));
+
+        return areImagesDifferent(recommendedForYouFirstTileInView, recommendedForYouLastTileInView);
+    }
+
+    public ExtendedWebElement getHuluOriginals() {
+        return staticTextByLabel.format("Hulu Originals");
     }
 
     public boolean isBackButtonPresent() {

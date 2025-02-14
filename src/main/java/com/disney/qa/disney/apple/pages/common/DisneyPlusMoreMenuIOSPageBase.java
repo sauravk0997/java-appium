@@ -14,7 +14,6 @@ import java.util.regex.Pattern;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.constant.CollectionConstant;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -182,10 +181,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return profileContainer;
 	}
 
-	public By getEditProfilesBtnBy() {
-		return editProfilesBtn.getBy();
-	}
-
 	public ExtendedWebElement getProfileAvatar(String profile) {
 		return profileAvatar.format(profile);
 	}
@@ -236,14 +231,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return getProfileCell(profileName, false).isElementPresent();
 	}
 
-	public boolean isSecureProfileSwitchDisplayed(String profileName) {
-		return getProfileCell(profileName, true).isElementPresent();
-	}
-
-	public void swipeCells(String profile, int swipes, Direction direction) {
-		swipeInContainer(getProfileCell(profile, false), direction, swipes, 500);
-	}
-
 	public boolean isHelpWebviewOpen() {
 		ExtendedWebElement addressBar = getAddressBar();
 		return fluentWait(getDriver(), TEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Help Webview is not open")
@@ -265,13 +252,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		ExtendedWebElement wifiContainer = getDynamicXpathContainsName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.STREAM_WIFI_ONLY.getText()));
 		if(!wifiContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
 			clickElementAtLocation(wifiContainer, 50, 90);
-		}
-	}
-
-	public void toggleDownloadOverWifiOnly(IOSUtils.ButtonStatus status) {
-		ExtendedWebElement downloadContainer = getDynamicXpathContainsName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText()));
-		if(!downloadContainer.getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-			clickElementAtLocation(downloadContainer, 50, 90);
 		}
 	}
 
@@ -425,11 +405,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	public void clickBackArrowFromWatchlist() {
 		//TEMP solution for bugged watchlist
 		backButton.click();
-	}
-
-	public boolean isBackArrowInWatchlistPresent() {
-		//TEMP solution for bugged watchlist
-		return getTypeButtonByLabel("iconNavBack24LightActive").isPresent();
 	}
 
 	public ExtendedWebElement getProfileSelectionCollectionView() {

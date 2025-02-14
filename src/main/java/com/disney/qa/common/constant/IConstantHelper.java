@@ -23,13 +23,30 @@ public interface IConstantHelper {
     String SUBSCRIPTION_PRODUCT_SKU_KEY = "sku";
     String UNIFIED_ORDER = "UNIFIED-ORDER";
 
+    String ARTWORK_IMAGE_NOT_DISPLAYED = "Artwork Image is not displayed";
     String BACK_BUTTON_NOT_DISPLAYED = "Back button is not present";
     String DETAILS_PAGE_NOT_DISPLAYED = "Details Page is not displayed";
     String HOME_PAGE_NOT_DISPLAYED = "Home Page is not displayed";
     String MORE_MENU_NOT_DISPLAYED = "More Menu is not displayed";
     String ORIGINALS_PAGE_NOT_DISPLAYED = "Originals Page did not open";
     String SEARCH_PAGE_NOT_DISPLAYED = "Search page is not displayed";
+    String STUDIOS_AND_NETWORKS_NOT_DISPLAYED = "Studio And Networks is not displayed";
     String WATCHLIST_PAGE_NOT_DISPLAYED = "Watchlist is not displayed";
+    String WELCOME_SCREEN_NOT_DISPLAYED = "Welcome screen did not launch";
+    String WHOS_WATCHING_NOT_DISPLAYED = "Who's Watching Page is not displayed";
+
+    //Profile Names
+    String PROFILE_NAME_SECONDARY = "Secondary";
+
+    //Profile Avatars
+    String AVATAR_BUZZ = "a3860164-54df-5722-864b-54612e3b0adf";
+    String AVATAR_CHILD = "a7ca5c71-68f8-5b46-95e0-c3c15a89bde0";
+    String AVATAR_DIFFERENT = "d7a334d2-035c-5b18-a4dd-ac11f2448c95";
+    String AVATAR_ID = "e995032f-630e-54c6-9520-6f0959152115";
+    String AVATAR_WITCH = "daef63d8-da01-52c0-a631-4fce48ccfd74";
+
+    //DOB
+    String DOB_1990 = "1990-01-01";
 
     //country codes
     String AT = "AT";
