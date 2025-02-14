@@ -194,13 +194,28 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        DisneyAccount account = getAccount();
-        account.setEmail("alekhya.rallapalli+p2.standalone2@disney.com");
-        account.setUserPass("Test123!");
-        setAppToHomeScreen(account);
+        setAppToHomeScreen(getAccount());
+
+        List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();
+        List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
+        if (trendingTitlesFromApi.isEmpty()) {
+            throw new NoSuchElementException("Failed to get Trending collection titles from Explore API");
+        }
+
+        Optional<Item> matchingTitle = trendingTitlesFromApi.stream()
+                .filter(trendingTitle -> availableHuluTitlesForStandaloneUserFromApi.stream()
+                        .anyMatch(availableHuluTitle ->
+                                availableHuluTitle.getVisuals().getTitle().equals(trendingTitle.getVisuals().getTitle())
+                        ))
+                .findFirst();
+        if (matchingTitle.isEmpty()) {
+            throw new NoSuchElementException("Failed to find a title in Trending collection that matches " +
+                    "the available Hulu titles using Explore API");
+        }
 
         ExtendedWebElement huluTitleCell = homePage.getCellElementFromContainer(
-                CollectionConstant.Collection.TRENDING, "Hulu Original Series");
+                CollectionConstant.Collection.TRENDING, matchingTitle.get().getVisuals().getTitle());
 
         homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.TRENDING, 10);
         homePage.swipeInContainerTillElementIsPresent(
@@ -209,7 +224,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
                 20,
                 Direction.LEFT);
         Assert.assertTrue(huluTitleCell.isElementPresent(),
-                "Hulu title cell was not present under Trending collection");
+                "Hulu title cell was not present under Trending collection UI");
     }
 
     private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
