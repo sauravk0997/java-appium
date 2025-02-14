@@ -14,6 +14,8 @@ import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.List;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_RATING;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -42,10 +44,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement itemPickerView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
     private ExtendedWebElement firstCollectionTitle;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS 'Rated' AND label CONTAINS '%s'$]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s' AND label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeCell[`label CONTAINS \"%s\" AND label CONTAINS \"Rated %s\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s %s'`]")
     private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -249,10 +250,14 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isRatingPresentInSearchResults(String rating) {
         LOGGER.info("Verifying Ratings in search results");
-        return searchResults.format(rating).isPresent();
+        String ratingText = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText());
+        return searchResults.format(ratingText, rating).isPresent();
     }
 
     public ExtendedWebElement getTitleContainer(String titleName, String titleRating) {
-        return searchResultCellwithTitleAndRatingValues.format(titleName, titleRating);
+        String ratingText = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText());
+        return searchResultCellwithTitleAndRatingValues.format(titleName, ratingText, titleRating);
     }
 }
