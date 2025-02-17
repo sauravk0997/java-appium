@@ -21,7 +21,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeImage[1]")
     private ExtendedWebElement brandFeaturedImage;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandLogoImage;
 
 
@@ -115,7 +115,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void validateSwipeNavigation(CollectionConstant.Collection collection, SoftAssert sa) {
-        swipeTillCollectionTappable(collection, Direction.UP, 1);
+        swipeTillCollectionTappable(collection, Direction.UP, 8);
         BufferedImage beginningOfCollection = getElementImage(getCollection(collection));
         swipeLeftInCollectionNumOfTimes(5, collection);
         BufferedImage closeToEndOfCollection = getElementImage(getCollection(collection));
