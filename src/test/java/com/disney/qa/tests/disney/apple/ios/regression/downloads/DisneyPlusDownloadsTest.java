@@ -582,6 +582,47 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 String.format("Title '%s' is present after deleting content", seriesName));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78059"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadNumberedEpisodes() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        String firstSeason = "Season 1";
+        String thirdSeason = "Season 3";
+        String one = "1";
+        String two = "2";
+        String three = "3";
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String seriesName = detailsPage.getMediaTitle();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+
+        // Download episode from season 1
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(firstSeason).click();
+        detailsPage.getEpisodeToDownload(one, one).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
+
+        // Download episode from season 2
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(thirdSeason).click();
+        detailsPage.getEpisodeToDownload(three, two).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
+        detailsPage.getEpisodeToDownload(three, three).click();
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
+                seriesName + " series title was not present");
+
+    }
+
     @AfterMethod(alwaysRun = true)
     public void removeJarvisApp() {
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
