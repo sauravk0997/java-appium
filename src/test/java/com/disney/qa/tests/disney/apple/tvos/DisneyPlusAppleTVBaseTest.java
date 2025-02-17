@@ -56,6 +56,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
 
                 launchJarvis(true);
+                selectAppleUpdateLaterAndDismissAppTracking();
 
                 jarvis.navigateToConfig(APP_CONFIG.getText(), Direction.DOWN);
                 jarvis.navigateToConfig(EDIT_CONFIG.getText(), Direction.DOWN);
