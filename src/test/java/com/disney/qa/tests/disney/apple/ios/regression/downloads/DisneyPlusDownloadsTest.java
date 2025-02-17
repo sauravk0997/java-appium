@@ -617,7 +617,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
         detailsPage.getEpisodeToDownload(three, three).click();
 
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        detailsPage.clickDownloadsIcon();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
                 seriesName + " series title was not present");
 
