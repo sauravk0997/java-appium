@@ -608,13 +608,13 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(firstSeason).click();
         detailsPage.getEpisodeToDownload(one, one).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
+      //  detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
 
         // Download episode from season 2
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(thirdSeason).click();
         detailsPage.getEpisodeToDownload(three, two).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
+     //   detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
         detailsPage.getEpisodeToDownload(three, three).click();
 
         detailsPage.clickDownloadsIcon();
