@@ -1604,4 +1604,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getDownloadsTabNotificationBadge() {
         return downloadsTabNotificationBadge;
     }
+
+    public ExtendedWebElement getBrandLandingView() {
+        return brandLandingView;
+    }
 }
