@@ -620,7 +620,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickDownloadsIcon();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
                 seriesName + " series title was not present");
-
+        pause(5);
     }
 
     @AfterMethod(alwaysRun = true)
