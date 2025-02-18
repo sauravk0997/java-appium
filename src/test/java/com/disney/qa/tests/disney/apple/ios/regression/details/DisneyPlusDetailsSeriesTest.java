@@ -367,19 +367,43 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         detailsPage.clickPlayButton();
-        sa.assertTrue(detailsPage.isOpened(), "Video player was not present");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.scrubToPlaybackPercentage(30);
-
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), "Video player was not closed");
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+        //Reset Page Position To Top Of Screen
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("FIRST TIME DOWN SWIPING");
+            detailsPage.swipeDown(1500);
+        }
+
         sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not present");
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present");
-        sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), "Prey media title not present.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), "Media Title not present");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not present");
         detailsPage.isDolbyVisionPresentOrNot(sa);
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not present");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not present");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not present");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not present");
+        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist button not present");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer button not present");
+        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present");
+
+        //Reset Page Position To Top Of Screen
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("SECOND TIME DOWN SWIPING");
+            detailsPage.swipeDown(1500);
+        }
+        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present");
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not present");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present");
 
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
                 "Release date from metadata label does not match release date from details tab");
@@ -387,24 +411,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Genre Thriller from metadata label does not match Genre Thriller from details tab");
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
                 "Genre Drama from metadata label does not match Genre Drama from details tab");
-        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not present");
-        sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present");
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
 
-        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
-        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist button not present");
-        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer button not present");
-
-        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present");
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present");
-
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            detailsPage.swipeUp(1500);
-        }
-        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present");
-        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present");
-        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not present");
-        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present");
         sa.assertAll();
     }
 
