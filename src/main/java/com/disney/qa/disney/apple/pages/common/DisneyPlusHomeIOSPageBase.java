@@ -42,6 +42,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther" +
             "[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement espnBrandPage;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Hulu, Select for details on this title.\"`]")
+    private ExtendedWebElement huluBrandLogo;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -54,6 +56,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getActiveHomeIcon() {
         return activeHomeIcon;
     }
+
 
     @Override
     public boolean isOpened() {
@@ -214,5 +217,13 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
                     AppiumBy.iOSClassChain(String
                             .format("**/XCUIElementTypeStaticText[`label CONTAINS \"On the %s screen.\"`]",
                                     sport))).isPresent();
+    }
+
+    public ExtendedWebElement getHuluBrandTile() {
+        return huluBrandLogo;
+    }
+
+    public void clickHuluBrandTile() {
+        getHuluBrandTile().click();
     }
 }
