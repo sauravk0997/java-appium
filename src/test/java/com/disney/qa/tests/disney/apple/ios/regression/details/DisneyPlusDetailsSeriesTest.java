@@ -369,6 +369,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.scrubToPlaybackPercentage(30);
+        videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
