@@ -21,7 +21,8 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeImage[1]")
     private ExtendedWebElement brandFeaturedImage;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]" +
+            "/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandLogoImage;
 
 
