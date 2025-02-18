@@ -372,12 +372,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
-        //Reset Page Position To Top Of Screen
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("FIRST TIME DOWN SWIPING");
-            detailsPage.swipeDown(1500);
-        }
-
         sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not present");
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present");
         sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), "Media Title not present");
@@ -397,8 +391,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Reset Page Position To Top Of Screen
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("SECOND TIME DOWN SWIPING");
-            detailsPage.swipeDown(1500);
+            LOGGER.info("SWIPING UP LINE 394 at 100 Duration");
+            detailsPage.swipeUp(100);
         }
         sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present");
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present");
