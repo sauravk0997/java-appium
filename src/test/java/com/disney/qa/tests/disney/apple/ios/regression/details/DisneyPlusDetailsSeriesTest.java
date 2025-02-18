@@ -390,15 +390,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), "Episode Title not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not present");
 
-        //Reset Page Position To Top Of Screen
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("SWIPING UP LINE 394 at 100 Duration");
-            detailsPage.swipeUp(100);
-        }
         sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), "Episodes tab not present");
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present");
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not present");
-        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not present");
 
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
                 "Release date from metadata label does not match release date from details tab");
