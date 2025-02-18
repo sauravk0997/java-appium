@@ -395,6 +395,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not present");
         sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not present");
 
+        //Swipe Details Tab into view
+        detailsPage.swipeTabBar(Direction.LEFT, 1000);
+
+        detailsPage.clickDetailsTab();
+
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
                 "Release date from metadata label does not match release date from details tab");
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
