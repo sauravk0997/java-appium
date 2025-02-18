@@ -166,7 +166,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isNetworkLogoImageVisible(String item) {
-        return getNetworkLogoImage(item).isPresent();
+        return getNetworkLogoImage(item).isPresent(TEN_SEC_TIMEOUT);
     }
 
     public boolean isProfileNameDisplayed(String name) {
