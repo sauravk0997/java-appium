@@ -17,6 +17,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,6 +103,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement suggestedTab;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[`name == \"tabBar\"`]")
+    protected ExtendedWebElement tabBarScrollView;
     @FindBy(name = "titleLabel_0")
     private ExtendedWebElement firstTitleLabel;
     @ExtendedFindBy(accessibilityId = "titleLabel_%s")
@@ -610,6 +613,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void swipeTillActorsElementPresent() {
         swipePageTillElementPresent(getActors(), 3, contentDetailsPage, Direction.UP, 500);
+    }
+
+    public void swipeToDetailsTabBar(int swipes, Direction direction, int duration) {
+        swipePageTillElementPresent(tabBarScrollView, swipes, contentDetailsPage, direction, duration);
     }
 
     public ExtendedWebElement getDetailsTab() {

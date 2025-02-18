@@ -23,7 +23,6 @@ public interface IConstantHelper {
     String SUBSCRIPTION_PRODUCT_SKU_KEY = "sku";
     String UNIFIED_ORDER = "UNIFIED-ORDER";
 
-
     //Common Error Messages
     String ARTWORK_IMAGE_NOT_DISPLAYED = "Artwork Image is not displayed";
     String BACK_BUTTON_NOT_DISPLAYED = "Back button is not present";
