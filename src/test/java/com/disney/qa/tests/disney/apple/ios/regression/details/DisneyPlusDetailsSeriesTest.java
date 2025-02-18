@@ -5,6 +5,7 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
+
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -381,7 +382,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not present");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not present");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not present");
-        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not present");
+        sa.assertTrue(detailsPage.isRatingPresent(RATING_TV14), "Rating not present");
         sa.assertTrue(detailsPage.isProgressBarPresent(), "Progress bar is not present");
         sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present");
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
