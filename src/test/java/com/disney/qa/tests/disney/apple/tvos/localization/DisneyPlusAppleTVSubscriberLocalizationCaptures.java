@@ -2,7 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.localization;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.client.responses.profile.DisneyProfile;
+import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -207,7 +207,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
         //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
-        user.setProfileId(getAccountApi().getDisneyProfiles(user).get(1).getProfileId());
+        user.setProfileId(getAccountApi().getProfiles(user).get(1).getProfileId());
         getAccountApi().patchStarOnboardingStatus(user, true);
         disneyPlusAppleTVWhoIsWatchingPage.getTypeCellLabelContains(ADULT_PROFILE_NAME).clickIfPresent();
         disneyPlusAppleTVHomePage.isOpened();
@@ -486,7 +486,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyAccount entitledUser = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage(), SUB_VERSION);
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(entitledUser).profileName(KIDS_PROFILE_NAME).language(getLocalizationUtils().getUserLanguage()).avatarId(null).kidsModeEnabled(true).dateOfBirth(null).build());
-        List<DisneyProfile> profiles = getAccountApi().getDisneyProfiles(entitledUser);
+        List<Profile> profiles = getAccountApi().getProfiles(entitledUser);
         entitledUser.setProfiles(profiles);
 
         //S6.5 Set the kid-proof exit in web or mobile.
@@ -500,7 +500,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         }
 
         //S6.3 Set the Content rating to the lowest level
-        List<DisneyProfile> profileList = getAccountApi().getDisneyProfiles(entitledUser);
+        List<Profile> profileList = getAccountApi().getProfiles(entitledUser);
         String system = profileList.get(0).getAttributes().getParentalControls().getMaturityRating().getRatingSystem();
         List<String> ratings = profileList.get(0).getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues();
         getAccountApi().editContentRatingProfileSetting(entitledUser, system, ratings.get(0));
