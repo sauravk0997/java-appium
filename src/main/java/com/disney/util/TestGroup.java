@@ -18,7 +18,7 @@ public final class TestGroup {
     public static final String DEEPLINKS = "Deeplinks";
     public static final String DETAILS_PAGE = "DetailsPage";
     public static final String DOWNLOADS = "Downloads";
-    public static final String EODPlus = "ESPNOnDisneyPlus";
+    public static final String EODPLUS = "ESPNOnDisneyPlus";
     public static final String HOME = "Home";
     public static final String HULK = "Hulk";
     public static final String HULU_HUB = "HuluHub";
