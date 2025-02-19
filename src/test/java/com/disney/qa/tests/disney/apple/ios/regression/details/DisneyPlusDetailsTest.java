@@ -313,6 +313,48 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Content title is not found in navigation bar");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77990"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEspnHubSportPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String sportsLabel = "Sports";
+        String leagues = "Leagues";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickEspnTile();
+        Assert.assertTrue(homePage.isEspnBrandPageOpen(), "ESPN brand page did not open");
+
+        swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
+
+        // Get first sport and validate page
+        sa.assertTrue(homePage.getCollection(DisneyEntityIds.SPORTS_PAGE.getEntityId()).isPresent(), "Sports container was not found");
+        String sportTitle = getContainerTitlesFromApi(DisneyEntityIds.SPORTS_PAGE.getEntityId(), 5).get(0);
+        if(!sportTitle.isEmpty()) {
+            homePage.getTypeCellLabelContains(sportTitle).click();
+            sa.assertTrue(homePage.isSportTitlePresent(sportTitle), "Sport title was not found");
+            sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
+            sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
+        } else {
+            throw new IllegalArgumentException("No containers titles found for Sports");
+        }
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78017"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExtrasTabForESPNContent() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
+        setAppToHomeScreen(getAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+
+    }
+
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -348,35 +390,5 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77990"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyEspnHubSportPage() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        String sportsLabel = "Sports";
-        String leagues = "Leagues";
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
-        setAppToHomeScreen(getAccount());
-
-        homePage.clickEspnTile();
-        Assert.assertTrue(homePage.isEspnBrandPageOpen(), "ESPN brand page did not open");
-
-        swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
-                homePage.getBrandLandingView(), Direction.UP, 1000);
-
-        // Get first sport and validate page
-        sa.assertTrue(homePage.getCollection(DisneyEntityIds.SPORTS_PAGE.getEntityId()).isPresent(), "Sports container was not found");
-        String sportTitle = getContainerTitlesFromApi(DisneyEntityIds.SPORTS_PAGE.getEntityId(), 5).get(0);
-        if(!sportTitle.isEmpty()) {
-            homePage.getTypeCellLabelContains(sportTitle).click();
-            sa.assertTrue(homePage.isSportTitlePresent(sportTitle), "Sport title was not found");
-            sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
-            sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
-        } else {
-            throw new IllegalArgumentException("No containers titles found for Sports");
-        }
-        sa.assertAll();
     }
 }
