@@ -105,10 +105,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void clickPinProtectedProfile(String name) {
-        dynamicAccessProfileIcon.format(
-                        getLocalizationUtils().formatPlaceholderString(
-                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)))
-                .click();
+        waitForPresenceOfAnElement(getCellPinProtectedProfileIcon(name));
+        getCellPinProtectedProfileIcon(name).click();
     }
 
     public boolean isAccessModeProfileIconPresent(String username) {
@@ -126,11 +124,5 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
                         getLocalizationUtils().formatPlaceholderString(
                                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-    }
-
-    public void waitForPinProtectedProfile(String username) {
-        LOGGER.info("Waiting for profiles to load");
-        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Profile is not present")
-                .until(it -> getCellPinProtectedProfileIcon(username). isElementPresent());
     }
 }
