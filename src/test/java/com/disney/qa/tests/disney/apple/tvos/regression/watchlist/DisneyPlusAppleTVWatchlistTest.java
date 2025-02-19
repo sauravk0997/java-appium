@@ -112,9 +112,54 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67728"})
+    @Test(groups = {TestGroup.WATCHLIST, US})
+    public void verifyWatchlistRefresh() {
+
+
+    }
+
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64991"})
+    @Test(groups = {TestGroup.WATCHLIST, US})
+    public void verifyWatchlistAddRemoveSeriesContent() {
+        List<DisneyEntityIds> titles =
+                new ArrayList<>(Arrays.asList(
+                        DisneyEntityIds.DANCING_WITH_THE_STARS,
+                        DisneyEntityIds.SKELETON_CREW));
+
+        List<String> infoBlockList = new ArrayList<>();
+        titles.forEach(title ->
+                infoBlockList.add(getWatchlistInfoBlock(title.getEntityId())));
+
+        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(),
+                getAccount().getAccountToken(),getAccount().getProfileId(), infoBlockList.get(i)));
+
+        logInTemp(getAccount());
+        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), "Watchlist page is not open");
+
+        watchListPage.getTypeCellLabelContains(titles.get(0).getTitle()).click();
+        Assert.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+
+        detailsPage.clickWatchlistButton();
+        Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
+        watchListPage.clickMenuTimes(1, 2);
+        Assert.assertTrue(watchListPage.getTypeCellLabelContains(DisneyEntityIds.SKELETON_CREW.getTitle()).isElementPresent(),
+                "Ironman content is not present in Watchlist");
+        Assert.assertFalse(watchListPage.getTypeCellLabelContains(DisneyEntityIds.DANCING_WITH_THE_STARS.getTitle()).isElementPresent(),
+                "Removed Luca content is present in Watchlist");
+    }
+
    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64740"})
     @Test(groups = {TestGroup.WATCHLIST, US})
-    public void verifyRemoveWatchlistContent() {
+    public void verifyWatchlistAddRemoveMovieContent() {
         List<DisneyEntityIds> titles =
                 new ArrayList<>(Arrays.asList(
                         DisneyEntityIds.LUCA,
