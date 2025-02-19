@@ -105,10 +105,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public void clickPinProtectedProfile(String name) {
-        dynamicAccessProfileIcon.format(
-                        getLocalizationUtils().formatPlaceholderString(
-                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, name)))
-                .click();
+        waitForPresenceOfAnElement(getCellPinProtectedProfileIcon(name));
+        getCellPinProtectedProfileIcon(name).click();
     }
 
     public boolean isAccessModeProfileIconPresent(String username) {
