@@ -149,7 +149,8 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public void tapHuluBrandTile() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusBrandIOSPageBase brandPage = new DisneyPlusBrandIOSPageBase(getDriver());
-        homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).click();
+//        homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).click();
+        homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU)).click();
     }
 
     public ExtendedWebElement getBrandTile(String brand) {
