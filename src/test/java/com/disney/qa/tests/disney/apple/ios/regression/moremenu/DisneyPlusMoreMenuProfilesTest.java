@@ -507,6 +507,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         //Validate selecting pin protected profile from More Menu
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.waitForPinProtectedProfile(SECONDARY_PROFILE);
         whoIsWatching.clickPinProtectedProfile(SECONDARY_PROFILE);
         sa.assertTrue(pinPage.isOpened(), "Profile pin page was not opened after clicking secondary pin protected profile.");
         sa.assertAll();
