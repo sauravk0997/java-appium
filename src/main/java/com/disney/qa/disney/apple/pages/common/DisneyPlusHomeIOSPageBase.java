@@ -2,6 +2,8 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVBrandsPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -42,8 +44,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther" +
             "[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement espnBrandPage;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Hulu, Select for details on this title.\"`]")
-    private ExtendedWebElement huluBrandLogo;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -147,7 +147,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void tapHuluBrandTile() {
-        getElementTypeCellByLabel("Hulu").click();
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusBrandIOSPageBase brandPage = new DisneyPlusBrandIOSPageBase(getDriver());
+        homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).click();
     }
 
     public ExtendedWebElement getBrandTile(String brand) {
@@ -217,13 +219,5 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
                     AppiumBy.iOSClassChain(String
                             .format("**/XCUIElementTypeStaticText[`label CONTAINS \"On the %s screen.\"`]",
                                     sport))).isPresent();
-    }
-
-    public ExtendedWebElement getHuluBrandTile() {
-        return huluBrandLogo;
-    }
-
-    public void clickHuluBrandTile() {
-        getHuluBrandTile().click();
     }
 }

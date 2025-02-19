@@ -189,7 +189,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage(abcNetwork));
         homePage.clickHomeIcon();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        homePage.clickHuluBrandTile();
+        homePage.tapHuluBrandTile();
         Assert.assertTrue(huluPage.isOpened(), HULU_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
 
