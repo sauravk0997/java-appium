@@ -5,6 +5,7 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import java.util.Date;
 import java.util.List;
 
+import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.util.TestGroup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
@@ -12,7 +13,6 @@ import org.testng.annotations.Test;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.content.CollectionRequest;
 import com.disney.qa.api.client.responses.content.ContentCollection;
-import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -555,7 +555,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyAccount testAccount = getAccount();
-        DisneyProfile profile = getAccount().getProfile(DEFAULT_PROFILE);
+        Profile profile = getAccount().getProfile(DEFAULT_PROFILE);
         String ratingSystem = profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem();
 
         //create a second account for a later step
@@ -567,7 +567,8 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyAccount testAccountTwoProfiles = getAccountApi().createAccount(request);
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccountTwoProfiles).profileName(SECONDARY_PROFILE).dateOfBirth("2018-01-01").language(getLocalizationUtils().getUserLanguage()).avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
         //set account to the lowest rating for a step later on
-        getAccountApi().editContentRatingProfileSetting(testAccount, getAccountApi().getDisneyProfiles(testAccountTwoProfiles).get(1).getProfileId(),
+        getAccountApi().editContentRatingProfileSetting(testAccount,
+                getAccountApi().getProfiles(testAccountTwoProfiles).get(1).getProfileId(),
                 ratingSystem,
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(0));
 

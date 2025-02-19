@@ -1,6 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
-import com.disney.qa.api.client.responses.profile.DisneyProfile;
+import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -204,7 +204,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return staticTextByLabel.format(birthdateHeader).isPresent();
     }
 
-    public boolean isBirthdateDisplayed(DisneyProfile profile) {
+    public boolean isBirthdateDisplayed(Profile profile) {
         String dob = profile.getAttributes().getDateOfBirth();
         String monthName = getMonthName(dob.split("-")[1]);
         String date = dob.split("-")[2].startsWith("0") ? dob.split("-")[2].replace("0", "") : dob.split("-")[2];
@@ -427,7 +427,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return staticTextByLabel.format(genderTitle).isElementPresent();
     }
 
-    public boolean isGenderValuePresent(DisneyProfile profile) {
+    public boolean isGenderValuePresent(Profile profile) {
         String genderValue = getDynamicCellByName("Gender Selection").getText().split(",")[1].toLowerCase().replace(" ", "");
         return genderValue.equalsIgnoreCase(profile.getAttributes().getGender().toLowerCase());
     }
