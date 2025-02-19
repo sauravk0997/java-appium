@@ -16,8 +16,6 @@ import java.util.Map;
 public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusAccountIsMinorIOSPageBase(WebDriver driver) { super(driver); }
 
-    private ExtendedWebElement notEligibleHeader = getStaticTextByName("Sorry, you're not eligible to use this service.");
-
     private ExtendedWebElement helpCenterButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.BTN_HELP_CENTER);
 
     private ExtendedWebElement dismissButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_DISMISS_BTN);
@@ -26,7 +24,7 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
     protected ExtendedWebElement blockedDescription;
 
     @Override
-    public boolean isOpened() { return notEligibleHeader.isElementPresent(); }
+    public boolean isOpened() { return helpCenterButton.isElementPresent(); }
 
     public ExtendedWebElement getBlockedDescription(String name) {
         return blockedDescription.format(name);
