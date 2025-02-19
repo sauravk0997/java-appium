@@ -2,7 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVBrandsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -149,7 +148,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public void tapHuluBrandTile() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusBrandIOSPageBase brandPage = new DisneyPlusBrandIOSPageBase(getDriver());
-//        homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).click();
         homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU)).click();
     }
 
