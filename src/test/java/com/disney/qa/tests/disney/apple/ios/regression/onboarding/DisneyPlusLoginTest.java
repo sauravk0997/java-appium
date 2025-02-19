@@ -315,25 +315,27 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67266"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMinorLogInBlocked() throws InterruptedException {
-        SoftAssert softAssert = new SoftAssert();
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusAccountIsMinorIOSPageBase disneyPlusAccountIsMinorIOSPageBase = initPage(DisneyPlusAccountIsMinorIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusAccountIsMinorIOSPageBase cssPage = initPage(DisneyPlusAccountIsMinorIOSPageBase.class);
+        String blockedHeader = "Sorry, you're not eligible to use this service.";
+        String blockedDescription = "Please visit our Help Center to find out more or for further assistance if you no longer wish to have a MyDisney account. If you think this is an error, please contact Customer Support.";
 
         DisneyAccount minorAccount = getAccountApi().createAccount("Yearly", "US", "en", "V1");
         getAccountApi().patchAccountBlock(minorAccount, AccountBlockReasons.MINOR);
 
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
+        welcomeScreen.clickLogInButton();
         login(minorAccount);
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getNotEligibleHeader().isPresent(),
-                "Account Ineligibility Header not present");
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getNotEligibleDescription().isPresent(),
-                "Account Ineligibility Text not present");
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getHelpCenterButton().isPresent(),
+        Assert.assertTrue(cssPage.getStaticTextByName(blockedHeader).isPresent(),
+                "CSS Header not displayed");
+        sa.assertTrue(cssPage.getBlockedDescription(blockedDescription).isPresent(),
+                "CSS Description not displayed");
+        sa.assertTrue(cssPage.getHelpCenterButton().isPresent(),
                 "Help Center Button not present");
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getDismissButton().isPresent(),
+        sa.assertTrue(cssPage.getDismissButton().isPresent(),
                 "Dismiss Button not present");
 
-        softAssert.assertAll();
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72163"})
