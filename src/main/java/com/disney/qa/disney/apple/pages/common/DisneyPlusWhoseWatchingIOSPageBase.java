@@ -130,10 +130,7 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
 
     public void waitForPinProtectedProfile(String username) {
         LOGGER.info("Waiting for loading of profile button");
-        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Profile button is not present")
-                .until(it -> dynamicAccessProfileIcon.format(getLocalizationUtils().formatPlaceholderString(
-                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                                        DictionaryKeys.ACCESS_PIN_PROFILE.getText()), Map.of(USER_PROFILE, username)))
-                        .isElementPresent());
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Waiting for profiles to load")
+                .until(it -> getCellPinProtectedProfileIcon(username). isElementPresent());
     }
 }
