@@ -318,17 +318,12 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusAccountIsMinorIOSPageBase disneyPlusAccountIsMinorIOSPageBase = initPage(DisneyPlusAccountIsMinorIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
 
         DisneyAccount minorAccount = getAccountApi().createAccount("Yearly", "US", "en", "V1");
         getAccountApi().patchAccountBlock(minorAccount, AccountBlockReasons.MINOR);
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        loginPage.submitEmail(minorAccount.getEmail());
-        passwordPage.submitPasswordForLogin(minorAccount.getUserPass());
-        pause(5);
-
+        login(minorAccount);
         softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getNotEligibleHeader().isPresent(),
                 "Account Ineligibility Header not present");
         softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getNotEligibleDescription().isPresent(),
