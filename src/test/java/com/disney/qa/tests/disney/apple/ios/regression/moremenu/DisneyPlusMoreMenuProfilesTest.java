@@ -1054,6 +1054,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        String contentUnavailableError = "content-unavailable";
+        String contentUnavailableHeader = "No Titles Available";
         //set lower rating
         List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
                 .getParentalControls().getMaturityRating().getRatingSystemValues();
@@ -1062,9 +1064,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
         launchDeeplink(R.TESTDATA.get("disney_prod_loki_collection_deeplink"));
-        Assert.assertTrue(searchPage.isPCONRestrictedErrorHeaderPresent(),
+        Assert.assertTrue(homePage.getStaticTextByLabel(contentUnavailableHeader).isPresent(),
                 "Rating Restriction message Header not displayed");
-        Assert.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+        Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(),
                 "Rating Restriction message was not displayed");
     }
 
