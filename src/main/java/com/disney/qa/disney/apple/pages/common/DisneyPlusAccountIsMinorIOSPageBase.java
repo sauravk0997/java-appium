@@ -15,7 +15,9 @@ import java.util.Map;
 public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusAccountIsMinorIOSPageBase(WebDriver driver) { super(driver); }
 
-    private ExtendedWebElement notEligibleHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_HEADER);
+    private ExtendedWebElement notEligibleHeader = getStaticTextByName("Sorry, you're not eligible to use this service.");
+
+    private ExtendedWebElement notEligibleDescription = getStaticTextByName("Please visit our Help Center to find out more or for further assistance if you no longer wish to have a MyDisney account.    If you think this is an error, please contact Customer Support.");
 
     private ExtendedWebElement helpCenterButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.BTN_HELP_CENTER);
 
@@ -25,6 +27,8 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
     public boolean isOpened() { return notEligibleHeader.isElementPresent(); }
 
     public ExtendedWebElement getNotEligibleHeader() { return notEligibleHeader; }
+
+    public ExtendedWebElement getNotEligibleDescription() { return notEligibleDescription; }
 
     public ExtendedWebElement getHelpCenterButton() { return helpCenterButton; }
 
@@ -38,8 +42,4 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
         dismissButton.click();
     }
 
-    public ExtendedWebElement getNotEligibleSubText() {
-        String subscribeText = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_BODY.getText()), Map.of("link_1", "here"));
-        return staticTextByLabel.format(subscribeText);
-    }
 }

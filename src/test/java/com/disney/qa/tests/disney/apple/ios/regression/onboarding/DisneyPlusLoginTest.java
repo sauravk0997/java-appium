@@ -318,17 +318,25 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusAccountIsMinorIOSPageBase disneyPlusAccountIsMinorIOSPageBase = initPage(DisneyPlusAccountIsMinorIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
 
         DisneyAccount minorAccount = getAccountApi().createAccount("Yearly", "US", "en", "V1");
         getAccountApi().patchAccountBlock(minorAccount, AccountBlockReasons.MINOR);
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        login(minorAccount);
+        loginPage.submitEmail(minorAccount.getEmail());
+        passwordPage.submitPasswordForLogin(minorAccount.getUserPass());
+        pause(5);
 
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getNotEligibleHeader().isPresent(), "Account Ineligibility Header not present");
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getNotEligibleSubText().isPresent(), "Account Ineligibility Text not present");
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getHelpCenterButton().isPresent(), "Help Center Button not present");
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getDismissButton().isPresent(), "Dismiss Button not present");
+        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getNotEligibleHeader().isPresent(),
+                "Account Ineligibility Header not present");
+        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getNotEligibleDescription().isPresent(),
+                "Account Ineligibility Text not present");
+        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getHelpCenterButton().isPresent(),
+                "Help Center Button not present");
+        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.getDismissButton().isPresent(),
+                "Dismiss Button not present");
 
         softAssert.assertAll();
     }
