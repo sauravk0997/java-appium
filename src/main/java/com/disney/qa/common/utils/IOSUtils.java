@@ -866,18 +866,24 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
      */
     default void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
         while (!element.isElementPresent(5) && swipes > 0) {
+            System.out.println("Inside while conditon");
             swipeInContainer(container, direction, duration);
             swipes--;
         }
-
+        System.out.println("After while conditon");
         int maxHeight = getDriver().manage().window().getSize().getHeight();
         int minThreshold = (int) (maxHeight * .1);
         int threshold = (int) (maxHeight - maxHeight * .05);
         int yCoordinate = element.getLocation().getY();
+        System.out.println("Min Threshold"+ minThreshold);
+        System.out.println("Threshold"+ threshold);
+        System.out.println("y Coordinate"+ yCoordinate);
         if (yCoordinate > threshold) {
             swipeUp(1, 1000);
+            System.out.println("Inside if condition");
         } else if (yCoordinate < minThreshold) {
             swipeDown(1, 1000);
+            System.out.println("Inside else condition");
         }
     }
 
