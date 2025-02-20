@@ -735,4 +735,14 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     public ExtendedWebElement getEditPasswordButton() {
         return editPasswordButton;
     }
+
+    public void tapEAccountManagementLink() {
+        ExtendedWebElement element = getAccountManagementTextElement();
+        int maxHeight = getDriver().manage().window().getSize().getHeight();
+        int yCoordinate = element.getLocation().getY();
+        if (maxHeight- yCoordinate < 150) {
+            swipeUp(2, 1000);
+        }
+        element.click();
+    }
 }

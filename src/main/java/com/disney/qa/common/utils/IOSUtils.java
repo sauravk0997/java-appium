@@ -875,11 +875,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         int minThreshold = (int) (maxHeight * .1);
         int threshold = (int) (maxHeight - maxHeight * .05);
         int yCoordinate = element.getLocation().getY();
-        System.out.println(element.getText());
-        System.out.println("Max Height"+maxHeight);
-        System.out.println("Min Threshold"+ minThreshold);
-        System.out.println("Threshold"+ threshold);
-        System.out.println("y Coordinate"+ yCoordinate);
         if (yCoordinate > threshold) {
             swipeUp(1, 1000);
             System.out.println("Inside if condition");
