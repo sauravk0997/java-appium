@@ -98,6 +98,13 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         seasons.get(1).click();
 
         Assert.assertTrue(detailsPage.isSeasonButtonDisplayed("2"), "Season has not changed to Season 2");
+
+        if (getDevice().isTablet()) {
+            detailsPage.getSeasonSelectorButton().click();
+            detailsPage.tapOutsideOfSeasonPickerList();
+            Assert.assertFalse(detailsPage.isSeasonPickerPresent(), "Season picker list not closed");
+            Assert.assertTrue(detailsPage.isSeasonButtonDisplayed("2"), "Season has changed");
+        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71632"})
