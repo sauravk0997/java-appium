@@ -625,17 +625,19 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         accountPage.waitForAccountPageToOpen();
 //        accountPage.swipe(accountPage.getAccountManagementTextElement());
-        if (!accountPage.getAccountManagementTextElement().isElementPresent(TEN_SEC_TIMEOUT)) {
-            swipePageTillElementPresent(accountPage.getAccountManagementTextElement(), 5,
-                    null, Direction.UP, 1);
-            Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
-                    "Account Management link was not displayed");
-        } else {
-            Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
-                    "Account Management link was not displayed");
-        }
-//        Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
-//                "Account Management link was not displayed");
+        swipePageTillElementPresent(accountPage.getAccountManagementTextElement(), 5,
+                    null, Direction.DOWN, 1);
+//        if (!accountPage.getAccountManagementTextElement().isElementPresent(TEN_SEC_TIMEOUT)) {
+//            swipePageTillElementPresent(accountPage.getAccountManagementTextElement(), 5,
+//                    null, Direction.UP, 1);
+//            Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
+//                    "Account Management link was not displayed");
+//        } else {
+//            Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
+//                    "Account Management link was not displayed");
+//        }
+        Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
+                "Account Management link was not displayed");
 //        accountPage.getAccountManagementLink().click();
         accountPage.getAccountManagementTextElement().click();
         accountPage.waitForPresenceOfAnElement(accountPage.getWebviewUrlBar());
