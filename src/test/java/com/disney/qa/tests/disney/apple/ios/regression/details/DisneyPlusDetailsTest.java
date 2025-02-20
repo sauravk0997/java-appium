@@ -349,7 +349,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77920"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyEspnHuluContentWithDisneyUser() {
+    public void verifyUpsellDetailPageForEspnAndHuluContent() {
         String espnContent = "NFL MATCHUP";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
