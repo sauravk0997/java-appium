@@ -648,15 +648,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     public void validateDownloadsOrder(List<ExtendedWebElement> downloads, String [] expectedOrder) {
-       // for (int i=0; i<expectedOrder.length-1; i++) {
-          //  int finalI = i;
-      //  for (String element: expectedOrder) {
-            for (ExtendedWebElement item : downloads) {
-           //     LOGGER.info("item {} {}", item.getText(), expectedOrder[item.]);
-       //         Assert.assertTrue(item.getText().contains(element),
-         //               "Episode " + item.getText() + " is not at the expected order position");
-            }
-       // }
+
+
+        
     }
     @AfterMethod(alwaysRun = true)
     public void removeJarvisApp() {
