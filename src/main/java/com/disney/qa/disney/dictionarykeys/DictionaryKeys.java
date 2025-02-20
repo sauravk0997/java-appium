@@ -6,6 +6,7 @@ public enum DictionaryKeys {
     ACCESS_PROFILE("accessibility_whoswatching_selectprofile"),
     ACCESS_SECURITY_HEADER("access_security_header"),
     ACCOUNT_DETAILS_HEADER("account_details"),
+    ACCOUNT_EDIT_PROFILE("account_section_edit_profile"),
     ACCOUNT_EDIT_PROFILE_LINK("account_section_edit_profile_link"),
     ACCOUNT_HOLDER_EMAIL("account_holder_email"),
     ACCOUNT_HOLD_BAMTECH_DISNEY("account_hold_copy_bamtech_disney"),

@@ -48,6 +48,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
+    @ExtendedFindBy(accessibilityId = "manageParentalControls")
+    private ExtendedWebElement manageParentalControls;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
             "**/XCUIElementTypeButton[2]")
@@ -476,11 +478,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getEditProfileLink() {
-        String dictValOfEditProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
-        //To manage parental controls for profiles on your account, visit [Edit Profiles](https://www.disneyplus.com/edit-profiles) and select a Profile.
-        //Extracting the link text which is inside the '[]'
-        String expectedHyperLinkText = dictValOfEditProfile.substring(dictValOfEditProfile.indexOf('[') + 1, dictValOfEditProfile.indexOf(']'));
-        return customHyperlinkByLabel.format(expectedHyperLinkText);
+        return manageParentalControls;
     }
 
     public boolean isEditProfilesLinkPresent() {
@@ -488,10 +486,15 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void tapEditProfilesLink() {
+        int heightValue = 60;
         ExtendedWebElement element = getEditProfileLink();
         Dimension dimension = element.getSize();
         Point location = element.getLocation();
-        tap(location.getX() + 5, location.getY() + dimension.getHeight() / 2);
+        if (element.getSize().getHeight() > heightValue) {
+            tap(location.getX() + 55 , location.getY() + dimension.getHeight()*2/3, 2);
+        } else {
+            element.click();
+        }
     }
 
     public boolean isEditProfilesTextPresent() {
