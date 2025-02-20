@@ -2,7 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.Hulk;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.client.responses.profile.DisneyProfile;
+import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -34,8 +34,9 @@ public class DisneyPlusHulkProfilesTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(PG_13).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        DisneyProfile profile = getAccount().getProfile(PG_13);
-        getAccountApi().editContentRatingProfileSetting(getAccount(), getAccountApi().getDisneyProfiles(getAccount()).get(1).getProfileId(),
+        Profile profile = getAccount().getProfile(PG_13);
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getAccountApi().getProfiles(getAccount()).get(1).getProfileId(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(5));
 
