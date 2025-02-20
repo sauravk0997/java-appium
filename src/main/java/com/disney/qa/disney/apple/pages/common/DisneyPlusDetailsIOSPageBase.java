@@ -45,8 +45,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the PERKS tab to learn more.";
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
-    private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
-    private static final String UPGRADE_YOUR_PLAN = "Upgrade your plan to stream Hulu";
+    private static final String UNLOCK = "UNLOCK";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
@@ -670,6 +669,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getUpgradeNowButton() {
         return dynamicBtnFindByLabel.format(UPGRADE_NOW);
+    }
+
+    public ExtendedWebElement getUnlockButton() {
+        return dynamicBtnFindByLabel.format(UNLOCK);
     }
 
     public boolean isHeroImagePresent() {
