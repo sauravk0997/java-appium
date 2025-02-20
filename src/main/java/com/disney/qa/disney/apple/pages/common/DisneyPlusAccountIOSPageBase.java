@@ -712,7 +712,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isAccountManagementLinkPresent() {
-//        return getAccountManagementLink().isElementPresent();
         return getAccountManagementTextElement().isElementPresent();
     }
 
