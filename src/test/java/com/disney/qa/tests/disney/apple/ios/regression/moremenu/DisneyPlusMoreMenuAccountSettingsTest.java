@@ -625,8 +625,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         accountPage.waitForAccountPageToOpen();
 //        accountPage.swipe(accountPage.getAccountManagementTextElement());
-        swipePageTillElementPresent(accountPage.getAccountManagementTextElement(), 5,
-                    null, Direction.DOWN, 1);
+        swipePageTillElementTappable(accountPage.getAccountManagementTextElement(), 5,
+                    null, Direction.UP , 1000);
 //        if (!accountPage.getAccountManagementTextElement().isElementPresent(TEN_SEC_TIMEOUT)) {
 //            swipePageTillElementPresent(accountPage.getAccountManagementTextElement(), 5,
 //                    null, Direction.UP, 1);
