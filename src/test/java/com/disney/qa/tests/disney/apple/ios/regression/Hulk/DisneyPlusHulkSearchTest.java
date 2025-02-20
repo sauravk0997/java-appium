@@ -127,16 +127,16 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(HULU_CONTENT);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(HULU_CONTENT).click();
         detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.addToWatchlist();
-        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+        Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "remove from watchlist button wasn't displayed");
 
         //Verify watchlist is populated with the added titles
         homePage.clickMoreTab();
         moreMenu.clickMenuOption(MoreMenu.WATCHLIST);
-        sa.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),
+        Assert.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),
                 "Hulu media title was not added to the watchlist");
         moreMenu.clickBackArrowFromWatchlist();
         //Remove title from the watchlist
