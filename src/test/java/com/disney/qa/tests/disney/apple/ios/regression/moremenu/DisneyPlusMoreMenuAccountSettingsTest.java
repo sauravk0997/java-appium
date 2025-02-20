@@ -26,7 +26,6 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 
@@ -624,7 +623,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getAccount());
 
         accountPage.waitForAccountPageToOpen();
-        accountPage.swipeUp(2, 1000);
+//        accountPage.swipeUp(2, 1000);
+        accountPage.swipePageTillElementTappable(accountPage.getAccountManagementTextElement(), 3, null,
+                Direction.UP, 1000);
         Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
                 "Account Management link was not displayed");
         accountPage.getAccountManagementTextElement().click();
