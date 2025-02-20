@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.CacheLookup;
 
 import java.time.temporal.ValueRange;
+import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -87,6 +88,11 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getDownloadAssetFromListView(String downloadAsset) {
 		return staticTextByLabel.format(downloadAsset);
+	}
+
+	public List<ExtendedWebElement> getDownloadsList(String element) {
+		List<ExtendedWebElement> downloads = findExtendedWebElements(staticTextLabelContains.format(element).getBy());
+		return downloads;
 	}
 
 	public ExtendedWebElement getEditButton() {

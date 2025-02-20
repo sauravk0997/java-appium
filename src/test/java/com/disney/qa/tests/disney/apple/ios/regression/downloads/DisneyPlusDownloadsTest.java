@@ -11,11 +11,15 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -588,9 +592,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-
-        String firstSeason = "Season 1";
-        String thirdSeason = "Season 3";
+        SoftAssert sa = new SoftAssert();
+        String theSimpsonsSeries = "The Simpsons";
+        String [] seasonsToSelect = new String[]{"Season 1", "Season 3"};
+        String [] episodesExpectedOrder = new String[]{"1", "3", "2", "3"};
         String one = "1";
         String two = "2";
         String three = "3";
@@ -604,25 +609,55 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
         }
 
-        // Download episode from season 1
+        // Download episodes from season 1
         detailsPage.getSeasonSelectorButton().click();
-        detailsPage.getStaticTextByLabel(firstSeason).click();
+        detailsPage.getStaticTextByLabel(seasonsToSelect[0]).click();
         detailsPage.getEpisodeToDownload(one, one).click();
-      //  detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
+        detailsPage.getEpisodeToDownload(one, three).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
 
-        // Download episode from season 2
+        // Download episodes from Season 3
         detailsPage.getSeasonSelectorButton().click();
-        detailsPage.getStaticTextByLabel(thirdSeason).click();
+        detailsPage.getStaticTextByLabel(seasonsToSelect[1]).click();
         detailsPage.getEpisodeToDownload(three, two).click();
-     //   detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
         detailsPage.getEpisodeToDownload(three, three).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
 
-        detailsPage.clickDownloadsIcon();
+      //  detailsPage.clickDownloadsIcon();
+//        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        homePage.getDownloadNav().click();
+        detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
                 seriesName + " series title was not present");
+        // Get season and episodes list from UI
+        List<ExtendedWebElement> seasonNames = downloadsPage.getDownloadsList("Season");
+        LOGGER.info(" seasonNames {} {}", seasonNames.get(0).getText(), seasonNames.get(1).getText());
+        List<ExtendedWebElement> episodesNames = downloadsPage.getDownloadsList("Episode");
+        LOGGER.info(" episodesNames {} {} {}",
+                episodesNames.get(0).getText(), episodesNames.get(1).getText(), episodesNames.get(2).getText());
+
+        if (!seasonNames.isEmpty() && !episodesNames.isEmpty()) {
+            validateDownloadsOrder(seasonNames, seasonsToSelect);
+            validateDownloadsOrder(episodesNames, episodesExpectedOrder);
+        } else {
+            throw new IllegalArgumentException("Downloaded content was not found");
+        }
+
         pause(5);
     }
 
+    public void validateDownloadsOrder(List<ExtendedWebElement> downloads, String [] expectedOrder) {
+       // for (int i=0; i<expectedOrder.length-1; i++) {
+          //  int finalI = i;
+      //  for (String element: expectedOrder) {
+            for (ExtendedWebElement item : downloads) {
+           //     LOGGER.info("item {} {}", item.getText(), expectedOrder[item.]);
+       //         Assert.assertTrue(item.getText().contains(element),
+         //               "Episode " + item.getText() + " is not at the expected order position");
+            }
+       // }
+    }
     @AfterMethod(alwaysRun = true)
     public void removeJarvisApp() {
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
