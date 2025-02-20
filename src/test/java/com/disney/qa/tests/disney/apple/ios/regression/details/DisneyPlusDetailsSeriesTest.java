@@ -89,9 +89,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
 
         detailsPage.getSeasonSelectorButton().click();
-        Assert.assertTrue(detailsPage.isSeasonsPickerPresent(), "Season picker list not opened");
+        Assert.assertTrue(detailsPage.isSeasonPickerPresent(), "Season picker list not opened");
         detailsPage.getItemPickerClose().click();
-        Assert.assertFalse(detailsPage.isSeasonsPickerPresent(), "Season picker list not closed");
+        Assert.assertFalse(detailsPage.isSeasonPickerPresent(), "Season picker list not closed");
 
         detailsPage.getSeasonSelectorButton().click();
         List<ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();

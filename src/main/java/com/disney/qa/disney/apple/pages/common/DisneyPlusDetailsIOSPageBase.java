@@ -1266,7 +1266,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return tabBar;
     }
 
-    public boolean isSeasonsPickerPresent() {
+    public boolean isSeasonPickerPresent() {
         return seasonItemPicker.isPresent(THREE_SEC_TIMEOUT);
     }
  }
