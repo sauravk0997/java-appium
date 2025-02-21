@@ -1,12 +1,14 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -596,7 +598,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         String titleEpisodesDownloads = "Play";
         String theSimpsonsSeries = "The Simpsons";
         String seasonOne = "Season 1";
-        String downloadInProgress = "Downloads are in progress";
         String one = "1";
         String two = "2";
         String three = "3";
@@ -626,7 +627,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         // Navigate to the Downloads title and wait for downloads to finish in case they have not
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        detailsPage.waitForElementToDisappear(detailsPage.getStaticTextByLabelContains(downloadInProgress), SIXTY_SEC_TIMEOUT);
+        detailsPage.waitForElementToDisappear(
+                detailsPage.getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText())), SIXTY_SEC_TIMEOUT);
         detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
                 seriesName + " series title was not present");
