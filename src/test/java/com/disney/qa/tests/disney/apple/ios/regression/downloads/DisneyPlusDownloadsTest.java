@@ -2,12 +2,14 @@ package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.*;
+import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -24,6 +26,7 @@ import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
@@ -591,7 +594,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyUnnumberedEpisodesOrderInDownloads() {
         String disneyTrioPremiumMonthly = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
         String unnumberedSeries = "FX Short Films";
-        String downloadInProgress = "Downloads are in progress";
         String seasonOne = "1";
         int episodeOne = 1;
         int episodeTwo = 2;
@@ -623,8 +625,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getUnnumberedEpisodeToDownload(seasonOne, detailsPage.getEpisodeTitleLabel(episodeTwo).getText()).click();
         downloadedTitles.add(detailsPage.getEpisodeTitleLabel(episodeTwo).getText());
 
-        // Wait for downloads to finish in case they have not and navigate to the Downloads title
-        detailsPage.waitForElementToDisappear(detailsPage.getStaticTextByLabelContains(downloadInProgress), SIXTY_SEC_TIMEOUT);
+        // Wait for downloads to finish and navigate to the Downloads tab
+        detailsPage.waitForElementToDisappear(detailsPage.getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText())), SIXTY_SEC_TIMEOUT);
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         downloadsPage.getDownloadAssetFromListView(unnumberedSeries).click();
