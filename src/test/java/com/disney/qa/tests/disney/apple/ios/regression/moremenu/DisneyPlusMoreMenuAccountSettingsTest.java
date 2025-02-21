@@ -626,7 +626,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.swipe(accountPage.getAccountManagementTextElement());
         Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
                 "Account Management link was not displayed");
-        accountPage.tapEAccountManagementLink();
+        accountPage.tapAccountManagementLink();
         accountPage.waitForPresenceOfAnElement(accountPage.getWebviewUrlBar());
         Assert.assertTrue(accountPage.isAccountManagementFAQWebViewDisplayed(),
                 "Account Management FAQ web page did not open");

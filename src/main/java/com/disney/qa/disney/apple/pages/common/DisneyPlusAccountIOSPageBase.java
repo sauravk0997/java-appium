@@ -705,9 +705,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     public ExtendedWebElement getAccountManagementLink() {
         String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
-         String expectedHyperLinkText = dictValOfAccountManagement.substring(
+        String expectedHyperLinkText = dictValOfAccountManagement.substring(
                 dictValOfAccountManagement.indexOf('[') + 1, dictValOfAccountManagement.indexOf(']'));
-         System.out.println(expectedHyperLinkText);
         return customHyperlinkByLabel.format(expectedHyperLinkText);
     }
 
@@ -736,11 +735,12 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return editPasswordButton;
     }
 
-    public void tapEAccountManagementLink() {
+    public void tapAccountManagementLink() {
         ExtendedWebElement element = getAccountManagementTextElement();
         int maxHeight = getDriver().manage().window().getSize().getHeight();
         int yCoordinate = element.getLocation().getY();
         if (maxHeight- yCoordinate < 150) {
+            System.out.println("Inside if block");
             swipeUp(2, 1000);
         }
         element.click();
