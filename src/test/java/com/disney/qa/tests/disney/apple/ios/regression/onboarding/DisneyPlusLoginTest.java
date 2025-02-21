@@ -319,8 +319,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusAccountIsMinorIOSPageBase cssPage = initPage(DisneyPlusAccountIsMinorIOSPageBase.class);
         String blockedHeader = "Sorry, you're not eligible to use this service.";
-        String blockedDescription = "Please visit our Help Center to find out more or for further assistance if you no longer wish to have a MyDisney account. If you think this is an error, please contact Customer Support.";
-
+        String blockedDescriptionPart1 = "Please visit our Help Center to find out more or for further assistance if you no longer wish to have a MyDisney account.";
+        String blockedDescriptionPart2 = "If you think this is an error, please contact Customer Support.";
         DisneyAccount minorAccount = getAccountApi().createAccount("Yearly", "US", "en", "V1");
         getAccountApi().patchAccountBlock(minorAccount, AccountBlockReasons.MINOR);
 
@@ -328,8 +328,10 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         login(minorAccount);
         Assert.assertTrue(cssPage.getStaticTextByName(blockedHeader).isPresent(),
                 "CSS Header not displayed");
-        sa.assertTrue(cssPage.getBlockedDescription(blockedDescription).isPresent(),
-                "CSS Description not displayed");
+        sa.assertTrue(cssPage.getStaticTextByLabelContains(blockedDescriptionPart1).isPresent(),
+                "CSS Description part 1 is not displayed");
+        sa.assertTrue(cssPage.getStaticTextByLabelContains(blockedDescriptionPart2).isPresent(),
+                "CSS Description part 2 is not displayed");
         sa.assertTrue(cssPage.getHelpCenterButton().isPresent(),
                 "Help Center Button not present");
         sa.assertTrue(cssPage.getDismissButton().isPresent(),
