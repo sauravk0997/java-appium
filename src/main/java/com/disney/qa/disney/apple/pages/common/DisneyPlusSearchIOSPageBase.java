@@ -46,6 +46,12 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement searchResults;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s'`]")
     private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
+    private ExtendedWebElement firstUpcomingEventCell;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'airingBadgeLabel' AND label =[c] 'Upcoming'`]")
+    private ExtendedWebElement upcomingBadge;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == 'Unlock'`]")
+    private ExtendedWebElement unlockBadge;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_MOVIES_TITLE.getText()));
@@ -127,6 +133,18 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getMagnifyingGlassImage() {
         return magnifyingGlassImage;
+    }
+
+    public ExtendedWebElement getFirstUpcomingEventCell() {
+        return firstUpcomingEventCell;
+    }
+
+    public ExtendedWebElement getUpcomingBadgeForGivenSearchResult(ExtendedWebElement resultCell) {
+        return resultCell.findExtendedWebElement(upcomingBadge.getBy());
+    }
+
+    public ExtendedWebElement getUnlockBadgeForGivenSearchResult(ExtendedWebElement resultCell) {
+        return resultCell.findExtendedWebElement(unlockBadge.getBy());
     }
 
     public void clearText() {
