@@ -403,8 +403,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isExtrasTabPresent(), EXTRAS_TAB_NOT_DISPLAYED);
 
         //Swipe Details Tab into view on iPhones
-        detailsPage.swipeToDetailsTabBar(2, Direction.UP, 50);
-        pause(2000);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            detailsPage.swipeToDetailsTabBar(2, Direction.UP, 50);
+            pause(2000);
+        }
         //Swipe horizontally to bring Details Tab into view on iPhones
         detailsPage.swipeTabBar(Direction.LEFT, 1000);
         pause(200);
