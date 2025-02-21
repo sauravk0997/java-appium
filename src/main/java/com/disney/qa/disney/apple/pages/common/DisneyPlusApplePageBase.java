@@ -1608,8 +1608,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getBrandLandingView() {
         return brandLandingView;
     }
-
-    public void clickCell() {
-        cell.click();
-    }
 }
