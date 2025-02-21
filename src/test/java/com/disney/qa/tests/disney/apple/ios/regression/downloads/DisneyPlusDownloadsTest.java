@@ -657,7 +657,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     public boolean isDownloadsListOrdered(List<String> detailPageList, List<String> downloadPageList) {
-        for (int i = 0; i < detailPageList.size(); i++) {
+        for (int i = 0; i < downloadPageList.size(); i++) {
             LOGGER.info("details title: {}, downloads title: {}", detailPageList.get(i), downloadPageList.get(i));
             if (!downloadPageList.get(i).contains(detailPageList.get(i).substring(3))) {
                 return false;
