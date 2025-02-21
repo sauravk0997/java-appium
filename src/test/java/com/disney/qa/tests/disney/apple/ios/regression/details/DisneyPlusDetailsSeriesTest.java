@@ -75,24 +75,36 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73712"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesSeasonPicker() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
+        String series = "Jessie";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         //search series
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.searchForMedia("Jessie");
-        List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        results.get(0).click();
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(series);
+        searchPage.getDynamicAccessibilityId(series).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
 
-        disneyPlusDetailsIOSPageBase.clickSeasonsButton("1");
-        List<ExtendedWebElement> seasons = disneyPlusDetailsIOSPageBase.getSeasonsFromPicker();
+        detailsPage.getSeasonSelectorButton().click();
+        Assert.assertTrue(detailsPage.isSeasonPickerPresent(), "Season picker list not opened");
+        detailsPage.getItemPickerClose().click();
+        Assert.assertFalse(detailsPage.isSeasonPickerPresent(), "Season picker list not closed");
+
+        detailsPage.getSeasonSelectorButton().click();
+        List<ExtendedWebElement> seasons = detailsPage.getSeasonsFromPicker();
         seasons.get(1).click();
 
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isSeasonButtonDisplayed("2"), "Season has not changed to Season 2");
-        sa.assertAll();
+        Assert.assertTrue(detailsPage.isSeasonButtonDisplayed("2"), "Season has not changed to Season 2");
+
+        if (getDevice().isTablet()) {
+            detailsPage.getSeasonSelectorButton().click();
+            detailsPage.tapOutsideOfSeasonPickerList();
+            Assert.assertFalse(detailsPage.isSeasonPickerPresent(), "Season picker list not closed");
+            Assert.assertTrue(detailsPage.isSeasonButtonDisplayed("2"), "Season has changed");
+        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71632"})
