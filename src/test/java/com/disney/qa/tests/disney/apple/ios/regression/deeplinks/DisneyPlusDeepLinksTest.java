@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
+import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -513,5 +514,31 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to mobile web browser");
         Assert.assertTrue(commonPage.getWebviewUrl().contains(COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT),
                 "Webview did not open common Disney+ URL: " + COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77699"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpsellPageForESPNContent() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        CreateDisneyAccountRequest accountRequest = CreateDisneyAccountRequest.builder()
+                .country("US")
+                .isStarOnboarded(false)
+                .firstName(DEFAULT_PROFILE)
+                .dateOfBirth(Person.U18.getYear() + "-" + Person.U18.getMonth().getNum() + "-" + Person.U18.getDay(true))
+                .build();
+        setAccount(getAccountApi().createAccount(accountRequest));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE)
+                .language(getAccount().getProfileLang())
+                .avatarId(null)
+                .kidsModeEnabled(true)
+                .dateOfBirth(KIDS_DOB)
+                .build());
+        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+
     }
 }
