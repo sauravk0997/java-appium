@@ -740,7 +740,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         int maxHeight = getDriver().manage().window().getSize().getHeight();
         int yCoordinate = element.getLocation().getY();
         if (maxHeight- yCoordinate < 150) {
-            System.out.println("Inside if block");
             swipeUp(2, 1000);
         }
         element.click();
