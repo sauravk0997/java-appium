@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_tablet_smoke" annotations="JDK" configfailurepolicy="continue" thread-count="6" parallel="tests">
+<suite verbose="1" name="dmgzios_tablet_smoke" annotations="JDK" configfailurepolicy="continue" thread-count="14" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobName" value="dmgzios_tablet_smoke"/>
@@ -17,7 +17,7 @@
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="hiddenParam::groups::group Name" value="Smoke"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Pro_Gen_3,iPad_Gen_9,iPad_Pro_Gen_3_1,iPad_8_Gen,iPad_Mini_5_Gen,iPad_8_Gen_1;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Air_M2_1,iPad_Air_M2_2,iPad_Air_M2_3,iPad_Air_M2_4,iPad_Air_M2_5,iPad_Air_M2_6,iPad_Gen_10_1,iPad_Gen_10_2,iPad_Gen_10_3,iPad_Pro_M4_1,iPad_Pro_M4_3,iPad_Pro_M4_5,iPad_Pro_M4_2,iPad_Gen_9;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="overrideFields"
