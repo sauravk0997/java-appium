@@ -521,7 +521,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
 
-        searchPage.clickFirstCollection();
+        searchPage.clickSecondCollection();
         Assert.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
         sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
@@ -535,12 +535,13 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         brandIOSPageBase.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
         sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
         brandIOSPageBase.getBackArrow().click();
-        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        searchPage.clickFirstCollection();
+        searchPage.clickSecondCollection();
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
-        brandIOSPageBase.clickFirstNoLiveEvent();
-        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+        brandIOSPageBase.clickCell();
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
