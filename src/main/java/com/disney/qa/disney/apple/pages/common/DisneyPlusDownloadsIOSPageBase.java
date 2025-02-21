@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.CacheLookup;
 
 import java.time.temporal.ValueRange;
-import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
