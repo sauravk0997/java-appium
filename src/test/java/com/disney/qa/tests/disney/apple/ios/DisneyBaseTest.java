@@ -6,12 +6,15 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
@@ -648,6 +651,22 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             }
         }
         throw new IllegalArgumentException("Given container was not found on given page using Explore API");
+    }
+
+    public List<Item> getAvailableHuluTitlesForStandaloneUserFromApi() {
+        List<Item> huluSeriesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU),
+                        100);
+        List<Item> huluMoviesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_MOVIES_FROM_HULU),
+                        100);
+        List<Item> huluContentFromApi = Stream.concat(
+                        huluSeriesFromApi.stream(), huluMoviesFromApi.stream())
+                .collect(Collectors.toList());
+        if (huluContentFromApi.isEmpty()) {
+            throw new NoSuchElementException("No available Hulu Titles found for standalone user using Explore API");
+        }
+        return huluContentFromApi;
     }
 
     public void setOverrideValue(String newValue) {
