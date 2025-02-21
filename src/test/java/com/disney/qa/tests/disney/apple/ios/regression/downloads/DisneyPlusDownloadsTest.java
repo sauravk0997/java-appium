@@ -618,11 +618,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getEpisodeToDownload(one, three).click();
         // Need some time to appropriate populate downloads and have episodes to compare after
         detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
-        // Get episodes name from details page
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.DOWN, 1, 3800);
         }
-        // Get season and episodes list from Details UI
+        // Get episodes list from Details UI
         List<String> episodeTitleList = getListEpisodes(titleEpisodes);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
 
