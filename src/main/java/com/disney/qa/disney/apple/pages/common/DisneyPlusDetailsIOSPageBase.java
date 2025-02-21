@@ -1265,4 +1265,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTabBar() {
         return tabBar;
     }
+
+    public boolean isDetailsTabTitlePresent() {
+        return detailsTabTitle.isPresent();
+    }
  }
