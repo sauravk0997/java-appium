@@ -371,13 +371,13 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(SERIES_LOKI);
         searchPage.getDisplayedTitles().get(0).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isPlayButtonDisplayed(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.scrubToPlaybackPercentage(30);
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.getBackButton().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getBackButton().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), SHARE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), MEDIA_TITLE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not present");
