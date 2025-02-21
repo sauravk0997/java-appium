@@ -539,7 +539,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.clickSecondCollection();
         sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
-        brandIOSPageBase.clickFirstCarouselPoster();
+        brandIOSPageBase.clickFirstNoLiveEvent();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
