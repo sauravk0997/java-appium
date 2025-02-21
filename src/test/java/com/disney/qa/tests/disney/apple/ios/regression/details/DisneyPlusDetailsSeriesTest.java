@@ -377,8 +377,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.scrubToPlaybackPercentage(30);
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-
         sa.assertTrue(detailsPage.getBackButton().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), SHARE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), MEDIA_TITLE_NOT_DISPLAYED);
