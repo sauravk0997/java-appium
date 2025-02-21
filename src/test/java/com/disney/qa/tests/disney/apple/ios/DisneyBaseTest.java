@@ -654,19 +654,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public List<Item> getAvailableHuluTitlesForStandaloneUserFromApi() {
-        List<Item> enjoyTheseSeriesFromHuluTitlesFromApi = getExploreAPIItemsFromSet
+        List<Item> huluSeriesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU),
                         100);
-        List<Item> enjoyTheseMoviesFromHuluTitlesFromApi = getExploreAPIItemsFromSet
+        List<Item> huluMoviesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_MOVIES_FROM_HULU),
                         100);
-        List<Item> availableHuluTitlesForStandaloneUserFromApi = Stream.concat(
-                        enjoyTheseSeriesFromHuluTitlesFromApi.stream(), enjoyTheseMoviesFromHuluTitlesFromApi.stream())
+        List<Item> huluContentFromApi = Stream.concat(
+                        huluSeriesFromApi.stream(), huluMoviesFromApi.stream())
                 .collect(Collectors.toList());
-        if (availableHuluTitlesForStandaloneUserFromApi.isEmpty()) {
+        if (huluContentFromApi.isEmpty()) {
             throw new NoSuchElementException("No available Hulu Titles found for standalone user using Explore API");
         }
-        return availableHuluTitlesForStandaloneUserFromApi;
+        return huluContentFromApi;
     }
 
     public void setOverrideValue(String newValue) {

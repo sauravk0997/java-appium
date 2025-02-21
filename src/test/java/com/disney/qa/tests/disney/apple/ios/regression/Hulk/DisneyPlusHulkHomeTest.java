@@ -195,8 +195,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         setAppToHomeScreen(getAccount());
-
-        List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();
+        
         List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
         if (trendingTitlesFromApi.isEmpty()) {
@@ -204,7 +203,7 @@ public class DisneyPlusHulkHomeTest extends DisneyBaseTest {
         }
 
         Optional<Item> matchingTitle = trendingTitlesFromApi.stream()
-                .filter(trendingTitle -> availableHuluTitlesForStandaloneUserFromApi.stream()
+                .filter(trendingTitle -> getAvailableHuluTitlesForStandaloneUserFromApi().stream()
                         .anyMatch(availableHuluTitle ->
                                 availableHuluTitle.getVisuals().getTitle().equals(trendingTitle.getVisuals().getTitle())
                         ))
