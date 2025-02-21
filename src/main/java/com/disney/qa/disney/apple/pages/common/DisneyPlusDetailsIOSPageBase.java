@@ -172,6 +172,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "**/XCUIElementTypeStaticText[`label =[c] 'Included with your ESPN+ subscription'`]")
     private ExtendedWebElement espnPlusEntitlementAttributionText;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == 'itemPickerView'`]" +
+            "/XCUIElementTypeCell[1]")
+    private ExtendedWebElement firstItemPickerCell;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -1270,5 +1274,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getTabBar() {
         return tabBar;
+    }
+
+    public boolean isSeasonPickerPresent() {
+        return seasonItemPicker.isPresent(THREE_SEC_TIMEOUT);
+    }
+
+    public void tapOutsideOfSeasonPickerList() {
+        int xPoint = firstItemPickerCell.getLocation().getX();
+        int yPoint = firstItemPickerCell.getLocation().getY();
+        tapAtCoordinateNoOfTimes(xPoint, yPoint - 10, 1);
     }
  }
