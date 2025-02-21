@@ -90,11 +90,6 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 		return staticTextByLabel.format(downloadAsset);
 	}
 
-	public List<ExtendedWebElement> getDownloadsList(String element) {
-		List<ExtendedWebElement> downloads = findExtendedWebElements(staticTextLabelContains.format(element).getBy());
-		return downloads;
-	}
-
 	public ExtendedWebElement getEditButton() {
 		return editButton;
 	}
