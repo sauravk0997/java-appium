@@ -610,7 +610,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 1100);
         }
 
-        // Download three episodes from season 1 to avoid
+        // Download three episodes from season 1
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(seasonOne).click();
         detailsPage.getEpisodeToDownload(one,  one).click();
@@ -626,7 +626,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         List<String> episodeTitleList = getListEpisodes(titleEpisodes);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
 
-        // Wait for downloads to finish and navigate to Downloads title
+        // Wait for downloads to finish in case they have not and navigate to the Downloads title
         detailsPage.waitForElementToDisappear(detailsPage.getStaticTextByLabelContains(downloadInProgress), SIXTY_SEC_TIMEOUT);
         detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
@@ -637,7 +637,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         // Compare both lists
         if (!episodeTitleList.isEmpty() && !episodeTitleListDownloads.isEmpty()) {
             Assert.assertTrue(isDownloadsListOrdered(episodeTitleList, episodeTitleListDownloads),
-                    "Both lists are not in the same order");
+                    "Numbered episodes are not ordered");
         } else {
             throw new IllegalArgumentException("Details or downloads list are empty");
         }
