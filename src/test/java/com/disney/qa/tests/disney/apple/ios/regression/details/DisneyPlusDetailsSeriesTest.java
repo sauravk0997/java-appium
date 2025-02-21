@@ -408,8 +408,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
             pause(2000);
         }
         //Swipe horizontally to bring Details Tab into view on iPhones
-        detailsPage.swipeTabBar(Direction.LEFT, 1000);
-        pause(200);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            detailsPage.swipeTabBar(Direction.LEFT, 1000);
+            pause(200);
+        }
+
         detailsPage.clickDetailsTab();
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
                 "Release date from metadata label does not match release date from details tab");
