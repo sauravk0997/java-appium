@@ -314,6 +314,34 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Content title is not found in navigation bar");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78024"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpsellPromptPageForEspnContent() {
+        String espnContent = "NFL Matchup";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.getSearchBar().click();
+        searchPage.searchForMedia(espnContent);
+        searchPage.getDynamicAccessibilityId(espnContent).click();
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        detailsPage.getUnlockButton().click();
+
+        Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
+                "Ineligible Screen Hesder is not present");
+        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(),
+                "Ineligible Screen Body is not present");
+        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
+                "Ineligible Screen cta is not present");
+    }
+
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

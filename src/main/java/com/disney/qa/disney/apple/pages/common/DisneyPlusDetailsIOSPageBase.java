@@ -45,6 +45,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the PERKS tab to learn more.";
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
+    private static final String UNLOCK = "UNLOCK";
     private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
     private static final String UPGRADE_YOUR_PLAN = "Upgrade your plan to stream Hulu";
 
@@ -672,6 +673,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByLabel.format(UPGRADE_NOW);
     }
 
+    public ExtendedWebElement getUnlockButton() {
+        return dynamicBtnFindByLabel.format(UNLOCK);
+    }
+
     public boolean isHeroImagePresent() {
         return getTypeOtherByName("heroImage").isPresent();
     }
@@ -1264,5 +1269,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getTabBar() {
         return tabBar;
+    }
+
+    public boolean isOnlyAvailableWithESPNHeaderPresent() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER_TRIO.getText()))
+                .isPresent();
     }
  }
