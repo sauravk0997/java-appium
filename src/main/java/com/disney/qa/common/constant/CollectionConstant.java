@@ -16,6 +16,8 @@ public class CollectionConstant {
         CONTINUE_WATCHING,
         DISNEY_JUNIOR,
         DOCUMENTARIES_AND_REALITY,
+        ENJOY_THESE_MOVIES_FROM_HULU,
+        ENJOY_THESE_SERIES_FROM_HULU,
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
@@ -61,6 +63,10 @@ public class CollectionConstant {
                 return "aaab13b2-4e15-4e71-836e-debe6d004193";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
+            case ENJOY_THESE_MOVIES_FROM_HULU:
+                return "5c721a08-c7ed-4e57-86c4-d781d3727098";
+            case ENJOY_THESE_SERIES_FROM_HULU:
+                return "311c4088-0a61-4055-9af0-aefa56fa1f00";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
