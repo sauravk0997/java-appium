@@ -596,6 +596,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         String titleEpisodesDownloads = "Play";
         String theSimpsonsSeries = "The Simpsons";
         String seasonOne = "Season 1";
+        String downloadInProgress = "Downloads are in progress";
+        String one = "1";
+        String twe = "2";
+        String three = "3";
 
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
@@ -606,13 +610,12 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 1100);
         }
 
-        // Download three episodes from season 1
+        // Download three episodes from season 1 to avoid
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(seasonOne).click();
-        detailsPage.getEpisodeToDownload("1", "1").click();
-        detailsPage.getEpisodeToDownload("1", "2").click();
-        detailsPage.getEpisodeToDownload("1", "3").click();
-
+        detailsPage.getEpisodeToDownload(one,  one).click();
+        detailsPage.getEpisodeToDownload(one, twe).click();
+        detailsPage.getEpisodeToDownload(one, three).click();
         // Need some time to appropriate populate downloads and have episodes to compare after
         detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
         // Get episodes name from details page
@@ -623,6 +626,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         List<String> episodeTitleList = getListEpisodes(titleEpisodes);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
 
+        // Wait for downloads to finish and navigate to Downloads title
+        detailsPage.waitForElementToDisappear(detailsPage.getStaticTextByLabelContains(downloadInProgress), SIXTY_SEC_TIMEOUT);
         detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
                 seriesName + " series title was not present");
@@ -636,8 +641,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         } else {
             throw new IllegalArgumentException("Details or downloads list are empty");
         }
-
-        pause(5);
     }
 
     public List<String> getListEpisodes(String element) {
