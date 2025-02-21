@@ -117,10 +117,10 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public void submitPasswordForLogin(String userPassword) {
         //To hide the keyboard, passing \n at the end of password value
         enterLogInPassword(userPassword + "\n");
-        Assert.assertTrue(fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
-                "Login button loader is not visible").until(it -> getLoginLoader().isPresent(ONE_SEC_TIMEOUT)));
-        Assert.assertTrue(fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
-                "Login button loader is visible").until(it -> getLoginLoader().isElementNotPresent(ONE_SEC_TIMEOUT)));
+        fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                "Login button loader is not visible").until(it -> getLoginLoader().isPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), FORTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                "Login button loader is visible").until(it -> getLoginLoader().isElementNotPresent(ONE_SEC_TIMEOUT));
     }
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
