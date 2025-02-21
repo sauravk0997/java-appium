@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -54,6 +55,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getActiveHomeIcon() {
         return activeHomeIcon;
     }
+
 
     @Override
     public boolean isOpened() {
@@ -144,7 +146,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void tapHuluBrandTile() {
-        getElementTypeCellByLabel("Hulu").click();
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusBrandIOSPageBase brandPage = new DisneyPlusBrandIOSPageBase(getDriver());
+        homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU)).click();
     }
 
     public ExtendedWebElement getBrandTile(String brand) {
@@ -166,7 +170,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isNetworkLogoImageVisible(String item) {
-        return getNetworkLogoImage(item).isPresent();
+        return getNetworkLogoImage(item).isPresent(TEN_SEC_TIMEOUT);
     }
 
     public boolean isProfileNameDisplayed(String name) {
