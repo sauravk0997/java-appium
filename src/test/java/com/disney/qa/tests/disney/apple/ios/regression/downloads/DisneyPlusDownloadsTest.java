@@ -630,7 +630,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
                 seriesName + " series title was not present");
-        // Get season and episodes list from Downloads UI
+        // Get episodes list from Downloads UI
         List<String> episodeTitleListDownloads = getListEpisodes(titleEpisodesDownloads);
 
         // Compare both lists
