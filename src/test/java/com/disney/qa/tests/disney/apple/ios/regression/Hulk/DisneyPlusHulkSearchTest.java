@@ -4,6 +4,7 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase.MoreMenu;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -17,7 +18,6 @@ import java.util.List;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
-    static final String DISNEY_CONTENT = "Percy Jackson";
     static final String HULU_CONTENT = "Only Murders in the Building";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page did not open";
@@ -110,49 +110,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
-    @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyEmptyWatchlistAndAddToWatchlist() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
-
-        homePage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        //verify empty watch list
-        sa.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
-                "Empty Watchlist text/logo was not displayed");
-        moreMenu.clickBackArrowFromWatchlist();
-        //add D+ Title to watch list
-        homePage.clickSearchIcon();
-        homePage.getSearchNav().click();
-        searchPage.searchForMedia(DISNEY_CONTENT);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.waitForWatchlistButtonToAppear();
-        detailsPage.addToWatchlist();
-        //add Hulu Title to watch list
-        homePage.clickSearchIcon();
-        homePage.getSearchNav().click();
-        searchPage.searchForMedia(HULU_CONTENT);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.waitForWatchlistButtonToAppear();
-        detailsPage.addToWatchlist();
-        //Verify watchlist is populated with the added titles
-        homePage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(moreMenu.getTypeCellLabelContains(DISNEY_CONTENT).isPresent(), "D+ Media title was not added to the watchlist");
-        sa.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),"Hulu Media title was not added to the watchlist");
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74651"})
-    @Test(groups = {TestGroup.WATCHLIST, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyWatchlistAddAndRemoveItem() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -160,29 +119,32 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         //Add Hulu title to watch list
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(HULU_CONTENT);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(HULU_CONTENT).click();
         detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.addToWatchlist();
-        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(), "remove from watchlist button wasn't displayed");
+        Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+                "remove from watchlist button wasn't displayed");
 
         //Verify watchlist is populated with the added titles
         homePage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),"Hulu media title was not added to the watchlist");
+        moreMenu.clickMenuOption(MoreMenu.WATCHLIST);
+        Assert.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),
+                "Hulu media title was not added to the watchlist");
         moreMenu.clickBackArrowFromWatchlist();
         //Remove title from the watchlist
         homePage.clickSearchIcon();
         detailsPage.getRemoveFromWatchListButton().click();
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "add to watchlist button wasn't displayed");
         homePage.clickMoreTab();
-        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
+        moreMenu.clickMenuOption(MoreMenu.WATCHLIST);
         //verify empty watch list
         sa.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_DID_NOT_OPEN);
         sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
