@@ -78,10 +78,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //search series
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.searchForMedia(series);
         searchPage.getDynamicAccessibilityId(series).click();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.getSeasonSelectorButton().click();
         Assert.assertTrue(detailsPage.isSeasonPickerPresent(), "Season picker list not opened");
