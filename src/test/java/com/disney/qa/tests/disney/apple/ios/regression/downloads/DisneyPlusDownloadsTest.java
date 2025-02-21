@@ -623,9 +623,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         }
         // Get episodes list from Details UI
         List<String> episodeTitleList = getListEpisodes(titleEpisodes);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
 
-        // Wait for downloads to finish in case they have not and navigate to the Downloads title
+        // Navigate to the Downloads title and wait for downloads to finish in case they have not
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         detailsPage.waitForElementToDisappear(detailsPage.getStaticTextByLabelContains(downloadInProgress), SIXTY_SEC_TIMEOUT);
         detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
