@@ -203,6 +203,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "One or more season not displayed.");
 
         //Episode tab elements
+        swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 1200);
         sa.assertTrue(detailsPage.isSeasonButtonDisplayed("1"), "Season 1 not selected by default");
         sa.assertTrue(detailsPage.isContentImageViewPresent(), "Episode artwork not present");
         sa.assertTrue(detailsPage.isPlayIconPresent(), "Episode play icon not present");
