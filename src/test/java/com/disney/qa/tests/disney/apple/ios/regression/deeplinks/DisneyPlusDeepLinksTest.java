@@ -520,13 +520,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpsellPageForESPNContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        CreateDisneyAccountRequest accountRequest = CreateDisneyAccountRequest.builder()
-                .country("US")
-                .isStarOnboarded(false)
-                .firstName(DEFAULT_PROFILE)
-                .dateOfBirth(Person.U18.getYear() + "-" + Person.U18.getMonth().getNum() + "-" + Person.U18.getDay(true))
-                .build();
-        setAccount(getAccountApi().createAccount(accountRequest));
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(getAccount());
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
                 .profileName(JUNIOR_PROFILE)
@@ -535,10 +530,16 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .dateOfBirth(KIDS_DOB)
                 .build());
-        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
-        homePage.waitForHomePageToOpen();
 
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
 
+        Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
+                "Ineligible Screen Header is not present");
+        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(),
+                "Ineligible Screen Body is not present");
+        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
+                "Ineligible Screen cta is not present");
     }
 }
