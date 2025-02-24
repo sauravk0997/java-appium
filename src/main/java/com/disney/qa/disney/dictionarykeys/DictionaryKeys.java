@@ -264,6 +264,7 @@ public enum DictionaryKeys {
     IPS_BODY_INELIGIBLE_SCREEN_DISNEY_PLUS("ips_body_ineligible_screen_disneyplus"),
     IPS_CTAL_INELIGIBLE_SCREEN_DISNEY_PLUS("ips_cta1_ineligible_screen_disneyplus"),
     IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER("ips_messaging_only_experience_screen_header_duo"),
+    IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER_TRIO("ips_messaging_only_experience_screen_header_trio"),
     JUNIOR_MODE_LEARN_MORE("btn_junior_mode_learn_more_link_1_text"),
     KEYBOARD_CONTINUE("keyboard_continue"),
     KIDPROOF_DIALOG_TITLE("kidproof_dialog_title"),

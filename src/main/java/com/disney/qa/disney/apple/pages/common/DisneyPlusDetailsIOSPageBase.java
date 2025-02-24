@@ -46,6 +46,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK = "UNLOCK";
+    private static final String UNLOCK = "UNLOCK";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
@@ -1281,5 +1282,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         int xPoint = firstItemPickerCell.getLocation().getX();
         int yPoint = firstItemPickerCell.getLocation().getY();
         tapAtCoordinateNoOfTimes(xPoint, yPoint - 10, 1);
+    }
+
+    public boolean isOnlyAvailableWithESPNHeaderPresent() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER_TRIO.getText()))
+                .isPresent();
     }
  }

@@ -15,16 +15,12 @@ import java.util.Map;
 public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusAccountIsMinorIOSPageBase(WebDriver driver) { super(driver); }
 
-    private ExtendedWebElement notEligibleHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_HEADER);
-
     private ExtendedWebElement helpCenterButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.PAYWALL, DictionaryKeys.BTN_HELP_CENTER);
 
     private ExtendedWebElement dismissButton = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_DISMISS_BTN);
 
     @Override
-    public boolean isOpened() { return notEligibleHeader.isElementPresent(); }
-
-    public ExtendedWebElement getNotEligibleHeader() { return notEligibleHeader; }
+    public boolean isOpened() { return helpCenterButton.isElementPresent(); }
 
     public ExtendedWebElement getHelpCenterButton() { return helpCenterButton; }
 
@@ -36,10 +32,5 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
 
     public void clickDismissButton() {
         dismissButton.click();
-    }
-
-    public ExtendedWebElement getNotEligibleSubText() {
-        String subscribeText = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_BODY.getText()), Map.of("link_1", "here"));
-        return staticTextByLabel.format(subscribeText);
     }
 }
