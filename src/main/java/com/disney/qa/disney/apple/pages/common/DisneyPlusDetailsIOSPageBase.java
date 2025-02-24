@@ -1291,4 +1291,32 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER_TRIO.getText()))
                 .isPresent();
     }
+
+    public boolean isShareButtonPresent() {
+        return getShareBtn().isPresent();
+    }
+
+    public boolean isPlayIconPresent() {
+        return getPlayIcon().isPresent();
+    }
+
+    public boolean isTitleLabelPresent() {
+        return getFirstTitleLabel().isPresent();
+    }
+
+    public boolean isDurationLabelPresent() {
+        return getFirstDurationLabel().isPresent();
+    }
+
+    public boolean isEpisodeDownloadButtonPresent() {
+        return getFirstEpisodeDownloadButton().isPresent();
+    }
+
+    public boolean isDownloadSeasonButtonPresent() {
+        return getDownloadAllSeasonButton().isPresent();
+    }
+
+    public boolean isCloseButtonPresent() {
+        return getBackButton().isPresent();
+    }
  }
