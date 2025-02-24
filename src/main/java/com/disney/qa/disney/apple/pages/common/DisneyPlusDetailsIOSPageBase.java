@@ -844,6 +844,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonContainsLabel("Download Season " + seasonNumber + " Episode " + episodeNumber);
     }
 
+    public ExtendedWebElement getUnnumberedEpisodeToDownload(String seasonNumber, String title) {
+        return getTypeButtonContainsLabel("Download Season " + seasonNumber + " " + title);
+    }
+
     public ExtendedWebElement getEpisodeCell(String seasonNumber, String episodeNumber) {
         String desiredSeasonLabel = "Season " + seasonNumber;
         String desiredEpisodeLabel = "Episode " + episodeNumber;
