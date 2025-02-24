@@ -594,7 +594,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        String titleEpisodes = "titleLabel_";
         String titleEpisodesDownloads = "Play";
         String theSimpsonsSeries = "The Simpsons";
         String seasonOne = "Season 1";
