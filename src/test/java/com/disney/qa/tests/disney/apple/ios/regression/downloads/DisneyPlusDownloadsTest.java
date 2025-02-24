@@ -594,20 +594,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 String.format("Title '%s' is present after deleting content", seriesName));
     }
 
-
-    public List<String> getListEpisodes(String element) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        List<String> episodeTitleList = new ArrayList<>();
-
-        List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getDynamicXpathContainsName(element).getBy());
-        if (!episodeListElement.isEmpty()) {
-            for (WebElement title : episodeListElement) {
-                episodeTitleList.add(title.getText());
-            }
-        }
-        return episodeTitleList;
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77923"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUnnumberedEpisodesOrderInDownloads() {
@@ -720,6 +706,19 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         } else {
             throw new IllegalArgumentException("Details or downloads list are empty");
         }
+    }
+
+    public List<String> getListEpisodes(String element) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        List<String> episodeTitleList = new ArrayList<>();
+
+        List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getDynamicXpathContainsName(element).getBy());
+        if (!episodeListElement.isEmpty()) {
+            for (WebElement title : episodeListElement) {
+                episodeTitleList.add(title.getText());
+            }
+        }
+        return episodeTitleList;
     }
 
     public boolean isDownloadsListOrdered(List<String> detailPageList, List<String> downloadPageList) {
