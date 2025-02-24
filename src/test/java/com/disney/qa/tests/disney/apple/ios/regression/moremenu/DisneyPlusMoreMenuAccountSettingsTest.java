@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.api.account.*;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -626,7 +624,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.swipe(accountPage.getAccountManagementTextElement());
         Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
                 "Account Management link was not displayed");
-        accountPage.getAccountManagementLink().click();
+        accountPage.tapAccountManagementLink();
         accountPage.waitForPresenceOfAnElement(accountPage.getWebviewUrlBar());
         Assert.assertTrue(accountPage.isAccountManagementFAQWebViewDisplayed(),
                 "Account Management FAQ web page did not open");

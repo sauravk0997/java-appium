@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -8,7 +9,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusUpNextIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -121,8 +121,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyMaturityRatingRestrictionOnDetailPage() {
         SoftAssert sa = new SoftAssert();
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(TV_Y7).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        DisneyProfile profile = getAccount().getProfile(TV_Y7);
-        getAccountApi().editContentRatingProfileSetting(getAccount(), getAccountApi().getDisneyProfiles(getAccount()).get(1).getProfileId(),
+        Profile profile = getAccount().getProfile(TV_Y7);
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getAccountApi().getProfiles(getAccount()).get(1).getProfileId(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
 
@@ -311,6 +312,34 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
         Assert.assertTrue(detailsPage.getStaticTextByLabel(contentTitle).isPresent(),
                 "Content title is not found in navigation bar");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78024"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpsellPromptScreenForEspnContent() {
+        String espnContent = "NFL Matchup";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.getSearchBar().click();
+        searchPage.searchForMedia(espnContent);
+        searchPage.getDynamicAccessibilityId(espnContent).click();
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        detailsPage.getUnlockButton().click();
+
+        Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
+                "Ineligible Screen Hesder is not present");
+        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(),
+                "Ineligible Screen Body is not present");
+        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
+                "Ineligible Screen cta is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77990"})
