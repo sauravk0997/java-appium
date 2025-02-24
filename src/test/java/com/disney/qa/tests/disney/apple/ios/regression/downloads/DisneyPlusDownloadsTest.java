@@ -652,9 +652,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         String one = "1";
         String two = "2";
         String three = "3";
-        int first = 1;
-        int second = 2;
-        int third = 3;
+        int episodeOne = 1;
+        int episodeTwo = 2;
+        int episodeThree = 3;
 
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
@@ -678,9 +678,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         }
         // Get episodes list from Details UI
         List<String> episodeTitleList = new ArrayList<>();
-        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(first).getText());
-        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(second).getText());
-        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(third).getText());
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeOne).getText());
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeTwo).getText());
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeThree).getText());
 
         // Navigate to the Downloads title and wait for downloads to finish in case they have not
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
