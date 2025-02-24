@@ -710,7 +710,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 episodeTitleList.add(title.getText());
             }
         }
-
         for (int i = 0; i < episodeTitleList.size(); i++) {
             LOGGER.info("details title: {}, downloads title: {}", detailPageList.get(i), episodeTitleList.get(i));
             if (!episodeTitleList.get(i).contains(detailPageList.get(i).substring(3))) {
