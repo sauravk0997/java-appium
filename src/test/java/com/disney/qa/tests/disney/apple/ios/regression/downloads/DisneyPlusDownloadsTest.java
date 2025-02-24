@@ -1,23 +1,17 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
-<<<<<<< HEAD
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-=======
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.dictionary.*;
->>>>>>> origin/main
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
-<<<<<<< HEAD
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-=======
 import com.disney.qa.disney.dictionarykeys.*;
->>>>>>> origin/main
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -29,12 +23,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
-=======
 import java.util.*;
->>>>>>> origin/main
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
