@@ -646,15 +646,16 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        String titleEpisodesDownloads = "Play";
         String theSimpsonsSeries = "The Simpsons";
         String seasonOne = "Season 1";
-        String one = "1";
-        String two = "2";
-        String three = "3";
+        String firstSeason = "1";
+        String episodeOneString = "1";
+        String episodeTwoString = "2";
+        String episodeThreeString = "3";
         int episodeOne = 1;
         int episodeTwo = 2;
         int episodeThree = 3;
+        List<String> episodeTitleList = new ArrayList<>();
 
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
@@ -665,19 +666,19 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 1100);
         }
 
-        // Download three episodes from season 1
+        // Download three episodes from season 1 and populate episodes details list
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(seasonOne).click();
-        detailsPage.getEpisodeToDownload(one, two).click();
-        detailsPage.getEpisodeToDownload(one, one).click();
-        detailsPage.getEpisodeToDownload(one, three).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeTwoString).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeOneString).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeThreeString).click();
         // Need some time to appropriate populate downloads and have episodes to compare after
         detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.DOWN, 1, 3800);
         }
-        // Get episodes list from Details UI
-        List<String> episodeTitleList = new ArrayList<>();
+
+        // Get details episodes list
         episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeOne).getText());
         episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeTwo).getText());
         episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeThree).getText());
@@ -690,35 +691,31 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
                 seriesName + " series title was not present");
-        // Get episodes list from Downloads UI
-        List<String> episodeTitleListDownloads = getListEpisodes(titleEpisodesDownloads);
-
-        // Compare both lists
-        if (!episodeTitleList.isEmpty() && !episodeTitleListDownloads.isEmpty()) {
-            Assert.assertTrue(isDownloadsListOrdered(episodeTitleList, episodeTitleListDownloads),
+        // Get episodes list from Downloads UI and compare both lists
+        if (!episodeTitleList.isEmpty()) {
+            Assert.assertTrue(isDownloadsListOrdered(episodeTitleList),
                     "Numbered episodes are not ordered");
         } else {
             throw new IllegalArgumentException("Details or downloads list are empty");
         }
     }
 
-    public List<String> getListEpisodes(String element) {
+    public boolean isDownloadsListOrdered(List<String> detailPageList) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String titleEpisodesDownloads = "Play";
+
         List<String> episodeTitleList = new ArrayList<>();
 
-        List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getDynamicXpathContainsName(element).getBy());
+        List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getTypeButtonByName(titleEpisodesDownloads).getBy());
         if (!episodeListElement.isEmpty()) {
             for (WebElement title : episodeListElement) {
                 episodeTitleList.add(title.getText());
             }
         }
-        return episodeTitleList;
-    }
 
-    public boolean isDownloadsListOrdered(List<String> detailPageList, List<String> downloadPageList) {
-        for (int i = 0; i < downloadPageList.size(); i++) {
-            LOGGER.info("details title: {}, downloads title: {}", detailPageList.get(i), downloadPageList.get(i));
-            if (!downloadPageList.get(i).contains(detailPageList.get(i).substring(3))) {
+        for (int i = 0; i < episodeTitleList.size(); i++) {
+            LOGGER.info("details title: {}, downloads title: {}", detailPageList.get(i), episodeTitleList.get(i));
+            if (!episodeTitleList.get(i).contains(detailPageList.get(i).substring(3))) {
                 return false;
             }
         }
