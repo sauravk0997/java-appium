@@ -614,8 +614,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         // Download three episodes from season 1
         detailsPage.getSeasonSelectorButton().click();
         detailsPage.getStaticTextByLabel(seasonOne).click();
-        detailsPage.getEpisodeToDownload(one, one).click();
         detailsPage.getEpisodeToDownload(one, two).click();
+        detailsPage.getEpisodeToDownload(one, one).click();
         detailsPage.getEpisodeToDownload(one, three).click();
         // Need some time to appropriate populate downloads and have episodes to compare after
         detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
