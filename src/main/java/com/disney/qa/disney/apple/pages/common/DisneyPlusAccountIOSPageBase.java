@@ -702,16 +702,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return manageDevicesText.isElementPresent();
     }
 
-    public ExtendedWebElement getAccountManagementLink() {
-        String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
-         String expectedHyperLinkText = dictValOfAccountManagement.substring(
-                dictValOfAccountManagement.indexOf('[') + 1, dictValOfAccountManagement.indexOf(']'));
-        return customHyperlinkByLabel.format(expectedHyperLinkText);
-    }
-
     public boolean isAccountManagementLinkPresent() {
-        return getAccountManagementLink().isElementPresent();
+        return getAccountManagementTextElement().isElementPresent();
     }
 
     public boolean isAccountManagementFAQWebViewDisplayed() {
@@ -724,7 +716,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
         String editProfileText = dictValOfAccountManagement.
                 replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
-        return textViewByLabel.format(editProfileText);
+        return staticTextByLabel.format(editProfileText);
     }
 
     public boolean isAccountManagementTextPresent() {
@@ -733,5 +725,15 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getEditPasswordButton() {
         return editPasswordButton;
+    }
+
+    public void tapAccountManagementLink() {
+        ExtendedWebElement element = getAccountManagementTextElement();
+        int maxHeight = getDriver().manage().window().getSize().getHeight();
+        int yCoordinate = element.getLocation().getY();
+        if (maxHeight- yCoordinate < 150) {
+            swipeUp(2, 1000);
+        }
+        element.click();
     }
 }
