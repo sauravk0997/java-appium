@@ -703,9 +703,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public boolean isDownloadsListOrdered(List<String> detailPageList) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         String titleEpisodesDownloads = "Play";
-
         List<String> episodeTitleList = new ArrayList<>();
-
         List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getTypeButtonByName(titleEpisodesDownloads).getBy());
         if (!episodeListElement.isEmpty()) {
             for (WebElement title : episodeListElement) {
