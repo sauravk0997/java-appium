@@ -113,14 +113,17 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         //Navigate to All Metadata Movie
         homePage.clickSearchIcon();
         searchPage.searchForMedia(HOCUS_POCUS);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(HOCUS_POCUS).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickDetailsTab();
         detailsPage.swipeTillActorsElementPresent();
 
+        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Details Tab title not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
         sa.assertTrue(detailsPage.isDurationDisplayed(), "Detail Tab duration not present");
         sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
         sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
+        sa.assertTrue(detailsPage.isRatingPresent(), "Detail Tab rating not present");
         sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
         sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
         sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
