@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
+import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.*;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -11,6 +12,10 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
@@ -142,18 +147,35 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB_2, US})
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
-        logIn(getAccount());
 
+        logIn(getAccount());
         homePage.waitForHomePageToOpen();
 
+        List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();
+        List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
+        if (trendingTitlesFromApi.isEmpty()) {
+            throw new NoSuchElementException("Failed to get Trending collection titles from Explore API");
+        }
+
+        Optional<Item> matchingTitle = trendingTitlesFromApi.stream()
+                .filter(trendingTitle -> availableHuluTitlesForStandaloneUserFromApi.stream()
+                        .anyMatch(availableHuluTitle ->
+                                availableHuluTitle.getVisuals().getTitle().equals(trendingTitle.getVisuals().getTitle())
+                        ))
+                .findFirst();
+        if (matchingTitle.isEmpty()) {
+            throw new NoSuchElementException("Failed to find a title in Trending collection that matches " +
+                    "the available Hulu titles using Explore API");
+        }
+
         ExtendedWebElement huluTitleCell = homePage.getCellElementFromContainer(
-                CollectionConstant.Collection.TRENDING, "Hulu Original Series");
+                CollectionConstant.Collection.TRENDING, matchingTitle.get().getVisuals().getTitle());
 
         homePage.moveDownUntilCollectionContentIsFocused(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 15);
         homePage.moveRightUntilElementIsFocused(huluTitleCell, 30);
         Assert.assertTrue(huluTitleCell.isElementPresent(),
-                "Hulu title cell was not present under Trending collection");
+                "Hulu title cell was not present under Trending collection UI");
     }
 }
