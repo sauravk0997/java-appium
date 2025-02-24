@@ -1,12 +1,15 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.qa.api.client.requests.*;
+import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -17,9 +20,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.*;
+
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
@@ -580,6 +587,58 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(), "Empty Downloads header is not present");
         Assert.assertFalse(downloadsPage.getStaticTextByLabelContains(seriesName).isPresent(FIVE_SEC_TIMEOUT),
                 String.format("Title '%s' is present after deleting content", seriesName));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77923"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUnnumberedEpisodesOrderInDownloads() {
+        String disneyTrioPremiumMonthly = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
+        String unnumberedSeries = "FX Short Films";
+        String seasonOne = "1";
+        int episodeOne = 1;
+        int episodeTwo = 2;
+        int episodeThree = 3;
+
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(disneyTrioPremiumMonthly)));
+        loginToHome(getUnifiedAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(unnumberedSeries);
+        searchPage.getDynamicAccessibilityId(unnumberedSeries).click();
+
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+
+        //Start download in random order
+        List<String> downloadedTitles = new ArrayList<>();
+        detailsPage.getUnnumberedEpisodeToDownload(seasonOne, detailsPage.getEpisodeTitleLabel(episodeOne).getText()).click();
+        downloadedTitles.add(detailsPage.getEpisodeTitleLabel(episodeOne).getText());
+
+        detailsPage.getUnnumberedEpisodeToDownload(seasonOne, detailsPage.getEpisodeTitleLabel(episodeThree).getText()).click();
+        downloadedTitles.add(detailsPage.getEpisodeTitleLabel(episodeThree).getText());
+
+        detailsPage.getUnnumberedEpisodeToDownload(seasonOne, detailsPage.getEpisodeTitleLabel(episodeTwo).getText()).click();
+        downloadedTitles.add(detailsPage.getEpisodeTitleLabel(episodeTwo).getText());
+
+        // Wait for downloads to finish and navigate to the Downloads tab
+        detailsPage.waitForElementToDisappear(detailsPage.getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText())), SIXTY_SEC_TIMEOUT);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        downloadsPage.getDownloadAssetFromListView(unnumberedSeries).click();
+
+        //non-numbered episodes order will be based on recency
+        for (int i = 0; i < downloadedTitles.size(); i++) {
+            Assert.assertEquals(downloadedTitles.get(i),
+                    downloadsPage.getEpisodeDownloadCellTitle(seasonOne, String.valueOf(i + 1)),
+                    "Downloaded non-numbered episodes order is not based on recency at index:" + i);
+        }
     }
 
     @AfterMethod(alwaysRun = true)
