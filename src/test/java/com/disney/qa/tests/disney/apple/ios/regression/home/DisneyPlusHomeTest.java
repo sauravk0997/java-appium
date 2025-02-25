@@ -611,10 +611,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69662"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, SG})
     public void verifyStarBrandTile() {
+        getAccountApi().overrideLocations(getAccount(), SINGAPORE);
         int totalExpectedBrands = 6;
         Container brandCollection;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        getAccountApi().overrideLocations(getAccount(), SINGAPORE);
 
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
