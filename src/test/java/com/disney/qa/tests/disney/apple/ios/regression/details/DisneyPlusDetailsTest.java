@@ -376,12 +376,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExtrasTabForESPNContent() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
         setAppToHomeScreen(getAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
+        swipe(detailsPage.getSuggestedTab(), 2);
+        Assert.assertFalse(detailsPage.getSuggestedTab().isPresent(THREE_SEC_TIMEOUT), "Suggested Tab is present");
+        Assert.assertFalse(detailsPage.getExtrasTab().isPresent(THREE_SEC_TIMEOUT), "Extras Tab is present");
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
