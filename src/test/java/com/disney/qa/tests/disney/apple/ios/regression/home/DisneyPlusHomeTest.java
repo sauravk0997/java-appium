@@ -29,6 +29,7 @@ import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
@@ -609,13 +610,13 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69662"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, SG})
     public void verifyStarBrandTile() {
+        getAccountApi().overrideLocations(getAccount(), SINGAPORE);
         int totalExpectedBrands = 6;
         Container brandCollection;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+
         setAppToHomeScreen(getAccount());
         homePage.waitForHomePageToOpen();
-
         try {
             brandCollection = getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
@@ -625,11 +626,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         }
 
         int totalBrandTile = brandCollection.getItems().size();
-
         swipe(homePage.getHomePageMainElement());
-
-        Assert.assertEquals(totalBrandTile, totalExpectedBrands,
-                "Total number of brand does not match with expected");
+        Assert.assertEquals(totalBrandTile, totalExpectedBrands, "Total number of brand does not match with expected");
 
         IntStream.range(0, getExpectedBrand().size() - 1).forEach(i -> {
             Assert.assertTrue(homePage.getBrandCells().get(i).getText()
