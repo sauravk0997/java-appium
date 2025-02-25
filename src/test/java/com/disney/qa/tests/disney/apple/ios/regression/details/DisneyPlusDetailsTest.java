@@ -26,6 +26,7 @@ import java.util.List;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
@@ -40,6 +41,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
+    private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
+    private static final String AVAILABLE_WITH_ESPN_SUBSCRIPTION = "Available with ESPN+ Subscription";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -335,7 +338,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.getUnlockButton().click();
 
         Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
-                "Ineligible Screen Hesder is not present");
+                "Ineligible Screen Header is not present");
         Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(),
                 "Ineligible Screen Body is not present");
         Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
@@ -370,6 +373,38 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             throw new IllegalArgumentException("No containers titles found for Sports");
         }
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77920"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpsellDetailPageForEspnAndHuluContent() {
+        String espnContent = "NFL Matchup";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.getSearchBar().click();
+        searchPage.searchForMedia(espnContent);
+        searchPage.getDynamicAccessibilityId(espnContent).click();
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(AVAILABLE_WITH_ESPN_SUBSCRIPTION).isPresent(),
+                AVAILABLE_WITH_ESPN_SUBSCRIPTION + " upsell message not displayed");
+
+        detailsPage.getBackArrow().click();
+        searchPage.getClearTextBtn().clickIfPresent();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now Button not displayed");
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(UNLOCK_HULU_ON_DISNEY).isPresent(),
+                UNLOCK_HULU_ON_DISNEY + " upsell message not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78017"})
