@@ -43,21 +43,19 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement editEmailButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[2]")
     private ExtendedWebElement editPasswordButton;
-    @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
-    private ExtendedWebElement changePasswordCell;
-    @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
-    private ExtendedWebElement restrictProfileCreation;
-
-    @ExtendedFindBy(accessibilityId = "subscriptionChange")
-    private ExtendedWebElement subscriptionChange;
-    @ExtendedFindBy(accessibilityId = "manageParentalControls")
-    private ExtendedWebElement manageParentalControls;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
             "**/XCUIElementTypeButton[2]")
     private ExtendedWebElement subscriptionMessage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
     private ExtendedWebElement restrictedProfileToggle;
+    @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
+    private ExtendedWebElement changePasswordCell;
+    @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
+    private ExtendedWebElement restrictProfileCreation;
+    @ExtendedFindBy(accessibilityId = "subscriptionChange")
+    private ExtendedWebElement subscriptionChange;
+    @ExtendedFindBy(accessibilityId = "manageParentalControls")
+    private ExtendedWebElement manageParentalControls;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
