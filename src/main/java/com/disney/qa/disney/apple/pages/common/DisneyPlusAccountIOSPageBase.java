@@ -45,6 +45,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement editPasswordButton;
     @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
     private ExtendedWebElement changePasswordCell;
+    @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
+    private ExtendedWebElement restrictProfileCreation;
 
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
@@ -220,9 +222,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getRestrictProfileCreationContainer() {
-        return getDynamicCellByLabel(String.format(CONTAINER_TEXT,
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_DESCRIPTION.getText())));
+        return getDynamicAccessibilityId(String.valueOf(restrictProfileCreation));
     }
 
     private ExtendedWebElement verifyAccountHeader = getDynamicXpath(
