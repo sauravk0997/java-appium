@@ -612,7 +612,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
 
     public void swipeTillActorsElementPresent() {
-        swipePageTillElementPresent(getActors(), 3, contentDetailsPage, Direction.UP, 500);
+        ExtendedWebElement element = getActors().isPresent(THREE_SEC_TIMEOUT) ? getActors() :
+                dynamicOtherFindByNameContains.format("Starring");
+        swipe(element, Direction.UP, 2, 500);
     }
 
     public ExtendedWebElement getDetailsTab() {
@@ -838,6 +840,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download Season " + seasonNumber + " Episode " + episodeNumber);
+    }
+
+    public ExtendedWebElement getUnnumberedEpisodeToDownload(String seasonNumber, String title) {
+        return getTypeButtonContainsLabel("Download Season " + seasonNumber + " " + title);
     }
 
     public ExtendedWebElement getEpisodeCell(String seasonNumber, String episodeNumber) {
@@ -1272,7 +1278,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTabBar() {
         return tabBar;
     }
-
+  
+    public boolean isDetailsTabTitlePresent() {
+        return detailsTabTitle.isPresent();
+    }
+  
     public boolean isSeasonPickerPresent() {
         return seasonItemPicker.isPresent(THREE_SEC_TIMEOUT);
     }
