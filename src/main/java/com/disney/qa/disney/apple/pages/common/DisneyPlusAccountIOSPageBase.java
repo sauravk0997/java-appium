@@ -55,6 +55,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
             "**/XCUIElementTypeButton[2]")
     private ExtendedWebElement subscriptionMessage;
 
+    @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
+    private ExtendedWebElement manageWithMyDisney;
+
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                     DictionaryKeys.ACCESS_SECURITY_HEADER.getText()));
@@ -735,5 +738,12 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
             swipeUp(2, 1000);
         }
         element.click();
+    }
+
+    public ExtendedWebElement getManageWithMyDisneyButton() {
+        return manageWithMyDisney;
+    }
+    public void clickManageWithMyDisneyButton() {
+        getManageWithMyDisneyButton().click();
     }
 }
