@@ -224,7 +224,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getRestrictProfileCreationContainer() {
-        return getDynamicAccessibilityId(String.valueOf(restrictProfileCreation));
+        return restrictProfileCreation;
     }
 
     private ExtendedWebElement verifyAccountHeader = getDynamicXpath(
@@ -531,7 +531,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isRestrictProfileCreationEnabled() {
-        return getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(1);
+        return getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).equals(1);
     }
 
     public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
