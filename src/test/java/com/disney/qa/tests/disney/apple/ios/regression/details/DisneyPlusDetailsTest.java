@@ -4,8 +4,10 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -43,6 +45,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String BLUEY = "Bluey";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
+    private static final String AVAILABLE_WITH_HULU = "Available with Hulu Subscription";
     private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
     private static final String AVAILABLE_WITH_ESPN_SUBSCRIPTION = "Available with ESPN+ Subscription";
 
@@ -345,36 +348,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Ineligible Screen Body is not present");
         Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
                 "Ineligible Screen cta is not present");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77990"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyEspnHubSportPage() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        String sportsLabel = "Sports";
-        String leagues = "Leagues";
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
-        setAppToHomeScreen(getAccount());
-
-        homePage.clickEspnTile();
-        Assert.assertTrue(homePage.isEspnBrandPageOpen(), "ESPN brand page did not open");
-
-        swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
-                homePage.getBrandLandingView(), Direction.UP, 1000);
-
-        // Get first sport and validate page
-        sa.assertTrue(homePage.getCollection(DisneyEntityIds.SPORTS_PAGE.getEntityId()).isPresent(), "Sports container was not found");
-        String sportTitle = getContainerTitlesFromApi(DisneyEntityIds.SPORTS_PAGE.getEntityId(), 5).get(0);
-        if(!sportTitle.isEmpty()) {
-            homePage.getTypeCellLabelContains(sportTitle).click();
-            sa.assertTrue(homePage.isSportTitlePresent(sportTitle), "Sport title was not found");
-            sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
-            sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
-        } else {
-            throw new IllegalArgumentException("No containers titles found for Sports");
-        }
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77920"})
@@ -728,6 +701,52 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getDolbyBadge().isPresent(), "Dolby badge is not present");
         sa.assertTrue(detailsPage.getUHDBadge().isPresent(), "4K badge is not present");
         sa.assertTrue(detailsPage.getHDRBadge().isPresent(), "HDR badge not present");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77868"})
+    @Test(groups = {TestGroup.HULU_HUB, TestGroup.DETAILS_PAGE, US})
+    public void verifyHulkUpsellStandaloneUserInEligibleFlow() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        int swipeCount = 5;
+
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM);
+        setAppToHomeScreen(basicAccount);
+
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+
+        //Verify user can play some Hulu content
+        String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
+        homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.clickPlayOrContinue();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.skipPromoIfPresent();
+        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
+        videoPlayer.clickBackButton();
+
+        //Go back to the Hulu page
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.tapBackButton();
+
+        //Swipe to the "Unlock to stream more collection"
+        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU,
+                Direction.UP,
+                swipeCount);
+
+        homePage.getTypeCellLabelContains(AVAILABLE_WITH_HULU).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        detailsPage.getUpgradeNowButton().click();
+
+        //Verify that user is on the ineligible interstitial screen
+        sa.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Ineligible Screen Header is not present");
+        sa.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
+        sa.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
+
         sa.assertAll();
     }
 

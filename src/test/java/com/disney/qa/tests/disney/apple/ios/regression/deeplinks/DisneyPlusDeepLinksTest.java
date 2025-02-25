@@ -11,6 +11,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
@@ -20,6 +21,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.net.URISyntaxException;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
@@ -44,6 +46,13 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public Object[][] watchlistDeepLinks() {
         return new Object[][]{{R.TESTDATA.get("disney_prod_watchlist_deeplink_2")},
                 {R.TESTDATA.get("disney_prod_watchlist_deeplink_language")}
+        };
+    }
+
+    @DataProvider(name = "huluUnavailableDeepLinks")
+    public Object[][] huluUnavailableDeepLinks() {
+        return new Object[][]{{R.TESTDATA.get("disney_prod_hulu_unavailable_deeplink")},
+                {R.TESTDATA.get("disney_prod_hulu_unavailable_language_deeplink")}
         };
     }
 
@@ -513,5 +522,29 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to mobile web browser");
         Assert.assertTrue(commonPage.getWebviewUrl().contains(COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT),
                 "Webview did not open common Disney+ URL: " + COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
+    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
+    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
+        String unentitledSeriesId = "entity-7840bf30-f440-48d4-bf81-55d8cb24457a";
+        String platform = "apple";
+        String environment = "PROD";
+
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(deepLink);
+
+        sa.assertTrue(detailsPage.isContentAvailableWithHuluSubscriptionPresent(getAccount(), environment, platform, unentitledSeriesId),
+                "\"This content requires a Hulu subscription.\" message is displayed");
+        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
+        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
+        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), "Details tab is found.");
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+
+        sa.assertAll();
     }
 }

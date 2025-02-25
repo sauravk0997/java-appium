@@ -10,6 +10,7 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -20,11 +21,11 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
-import static com.disney.qa.api.disney.DisneyEntityIds.THE_AVENGERS;
+import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
@@ -37,6 +38,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
+    private static final String HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE = "Hulu tile is not visible on home page";
+    private static final String BACK_BUTTON_NOT_PRESENT = "Back button is not present";
+    private static final String HULU_BRAND_LOGO_NOT_EXPANDED = "Hulu brand logo is not expanded";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
@@ -710,6 +714,125 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74564"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluBrandTileOnHome() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
+                DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
+
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        Assert.assertTrue(huluPage.isOpened(), "Hulu page didn't open after navigating via brand tile");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74829"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluBrandPage() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
+                DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
+
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        sa.assertTrue(huluPage.isHuluBrandImageExpanded(), HULU_BRAND_LOGO_NOT_EXPANDED);
+        sa.assertTrue(huluPage.getBackButton().isPresent(), BACK_BUTTON_NOT_PRESENT);
+        sa.assertTrue(huluPage.isArtworkBackgroundPresent(), ARTWORK_IMAGE_NOT_DISPLAYED);
+        huluPage.swipeInHuluBrandPage(Direction.UP);
+        sa.assertTrue(huluPage.isHuluBrandImageCollapsed(), "Hulu brand logo is not collapsed");
+        huluPage.swipeInHuluBrandPage(Direction.DOWN);
+        sa.assertTrue(huluPage.isHuluBrandImageExpanded(), HULU_BRAND_LOGO_NOT_EXPANDED);
+        huluPage.tapBackButton();
+        Assert.assertTrue(homePage.isHuluTileVisible(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
+
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        sa.assertTrue(huluPage.validateScrollingInHuluCollection(CollectionConstant.Collection.HULU_ORIGINALS),
+                "Unable to validate Scrolling in Hulu Collection");
+        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
+        verifyNetworkLogoValues(sa, huluPage);
+
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74642"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluPageContent() throws URISyntaxException, JsonProcessingException {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
+                DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
+
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+
+        //To get the collections details of Hulu from API
+        ArrayList<Container> collections = getHuluAPIPage(HULU_PAGE.getEntityId());
+        //Click any title from collection
+        try {
+            String titleFromCollection = collections.get(0).getItems().get(0).getVisuals().getTitle();
+            huluPage.getTypeCellLabelContains(titleFromCollection).click();
+            Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), "Detail page did not open");
+            Assert.assertTrue(detailsPage.getMediaTitle().equals(titleFromCollection),
+                    titleFromCollection + " Content was not opened");
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78296"})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB_2, US})
+    public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+
+        List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
+        if (trendingTitlesFromApi.isEmpty()) {
+            throw new NoSuchElementException("Failed to get Trending collection titles from Explore API");
+        }
+
+        Optional<Item> matchingTitle = trendingTitlesFromApi.stream()
+                .filter(trendingTitle -> getAvailableHuluTitlesForStandaloneUserFromApi().stream()
+                        .anyMatch(availableHuluTitle ->
+                                availableHuluTitle.getVisuals().getTitle().equals(trendingTitle.getVisuals().getTitle())
+                        ))
+                .findFirst();
+        if (matchingTitle.isEmpty()) {
+            throw new NoSuchElementException("Failed to find a title in Trending collection that matches " +
+                    "the available Hulu titles using Explore API");
+        }
+
+        ExtendedWebElement huluTitleCell = homePage.getCellElementFromContainer(
+                CollectionConstant.Collection.TRENDING, matchingTitle.get().getVisuals().getTitle());
+
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.TRENDING, 10);
+        homePage.swipeInContainerTillElementIsPresent(
+                homePage.getCollection(CollectionConstant.Collection.TRENDING),
+                huluTitleCell,
+                20,
+                Direction.LEFT);
+        Assert.assertTrue(huluTitleCell.isElementPresent(),
+                "Hulu title cell was not present under Trending collection UI");
+    }
+
     private void addContentInContinueWatching(String url, int scrubPercentage) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -754,5 +877,18 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         contentList.add("National Geographic");
         contentList.add("STAR");
         return contentList;
+    }
+
+    private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
+        try {
+            // Items from index 5 indicates the list of Network Logos from the Hulu Brand page
+            ArrayList<Item> logoCollection = getHuluAPIPage(HULU_PAGE.getEntityId()).get(5).getItems();
+            for (Item item : logoCollection) {
+                String logoTitle = item.getVisuals().getTitle();
+                sa.assertTrue(huluPage.isNetworkLogoPresent(logoTitle), String.format("%s Network logo is not present", logoTitle));
+            }
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }
