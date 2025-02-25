@@ -49,6 +49,7 @@ import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
@@ -555,6 +556,25 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     .setLanguage(language)).getData().getPage().getContainers();
         }
         catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+        return container;
+    }
+
+    public ArrayList<Container> getDisneyAPIPageUnifiedAccount() {
+        ArrayList<Container> container;
+        try {
+            ExploreSearchRequest exploreSearchRequest = getDisneyExploreSearchRequest()
+                    .setEntityId(HOME_PAGE.getEntityId())
+                    .setKidsMode(false)
+                    .setCountryCode(getLocalizationUtils().getLocale())
+                    .setLanguage(getLocalizationUtils().getUserLanguage())
+                    .setLimit(30)
+                    .setUnifiedAccount(getUnifiedAccount())
+                    .setProfileId(getUnifiedAccount().getProfileId());
+
+            container = getExploreApi().getPage(exploreSearchRequest).getData().getPage().getContainers();
+        } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
         }
         return container;
