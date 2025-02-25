@@ -1381,7 +1381,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return navBackButton;
     }
 
-    public void clickNavBack24LightActive() {
+    public void clickNavBackBtn() {
         navBackButton.click();
     }
 
