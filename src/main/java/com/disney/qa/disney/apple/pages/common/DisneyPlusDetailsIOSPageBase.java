@@ -46,8 +46,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK = "UNLOCK";
-    private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
-    private static final String UPGRADE_YOUR_PLAN = "Upgrade your plan to stream Hulu";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
