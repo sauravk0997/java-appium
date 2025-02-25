@@ -11,7 +11,6 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
-import org.slf4j.Logger;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -532,9 +531,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isRestrictProfileCreationEnabled() {
-        IOSUtils.LOGGER.info("This is the value of the toggle {}",
-                getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).toString());
-        return getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).toString().equals(1);
+        return  getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).toString().equals("1");
     }
 
     public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
