@@ -46,8 +46,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK = "UNLOCK";
-    private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
-    private static final String UPGRADE_YOUR_PLAN = "Upgrade your plan to stream Hulu";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
@@ -842,6 +840,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getEpisodeToDownload(String seasonNumber, String episodeNumber) {
         return getTypeButtonContainsLabel("Download Season " + seasonNumber + " Episode " + episodeNumber);
+    }
+
+    public ExtendedWebElement getUnnumberedEpisodeToDownload(String seasonNumber, String title) {
+        return getTypeButtonContainsLabel("Download Season " + seasonNumber + " " + title);
     }
 
     public ExtendedWebElement getEpisodeCell(String seasonNumber, String episodeNumber) {
