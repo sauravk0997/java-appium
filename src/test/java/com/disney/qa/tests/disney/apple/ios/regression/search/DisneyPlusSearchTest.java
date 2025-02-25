@@ -836,7 +836,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         ExtendedWebElement firstUpcomingEventCell = searchPage.getFirstUpcomingEventCell();
         searchPage.hideKeyboard();
-        searchPage.swipe(firstUpcomingEventCell, 10);
+        searchPage.swipe(firstUpcomingEventCell, 20);
         Assert.assertTrue(firstUpcomingEventCell.isElementPresent(),
                 "No upcoming events found on search page");
         Assert.assertTrue(searchPage.getUpcomingBadgeForGivenSearchResult(firstUpcomingEventCell).isElementPresent(),
