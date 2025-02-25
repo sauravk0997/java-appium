@@ -19,7 +19,6 @@ import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-
 import java.awt.image.BufferedImage;
 import java.util.*;
 import java.util.stream.IntStream;
