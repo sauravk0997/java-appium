@@ -191,8 +191,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         //Verify main details page UI elements
-        sa.assertTrue(detailsPage.isShareButtonPresent(), "Share button not present");
-        sa.assertTrue(detailsPage.isCloseButtonPresent(), "Close button not present");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present");
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Close button not present");
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
@@ -206,11 +206,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 1200);
         sa.assertTrue(detailsPage.isSeasonButtonDisplayed("1"), "Season 1 not selected by default");
         sa.assertTrue(detailsPage.isContentImageViewPresent(), "Episode artwork not present");
-        sa.assertTrue(detailsPage.isPlayIconPresent(), "Episode play icon not present");
-        sa.assertTrue(detailsPage.isTitleLabelPresent(), "Episode title not present");
-        sa.assertTrue(detailsPage.isDurationLabelPresent(), "Episode duration not present");
-        sa.assertTrue(detailsPage.isEpisodeDownloadButtonPresent(), "Episode download button not present");
-        sa.assertTrue(detailsPage.isDownloadSeasonButtonPresent(), "Download season button not present");
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Episode play icon not present");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title not present");
+        sa.assertTrue(detailsPage.getFirstDurationLabel().isPresent(), "Episode duration not present");
+        sa.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isPresent(), "Episode download button not present");
+        sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download season button not present");
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
                 "Metadata year does not contain details tab year.");
         sa.assertAll();
