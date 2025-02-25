@@ -221,7 +221,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getRestrictProfileCreationContainer() {
         return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-//                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_DESCRIPTION.getText())));
     }
 
