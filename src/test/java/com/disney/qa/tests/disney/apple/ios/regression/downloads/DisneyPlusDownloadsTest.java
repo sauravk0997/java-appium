@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -29,7 +30,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
