@@ -646,6 +646,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String titleEpisodesDownloads = "Play";
         String theSimpsonsSeries = "The Simpsons";
         String seasonOne = "Season 1";
         String firstSeason = "1";
@@ -691,28 +692,35 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
         Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
                 seriesName + " series title was not present");
+        // Get episodes list from Downloads UI
+        List<String> episodeTitleListDownloads = getListEpisodes(titleEpisodesDownloads);
+
         // Get episodes list from Downloads UI and compare both lists
         if (!episodeTitleList.isEmpty()) {
-            Assert.assertTrue(isDownloadsListOrdered(episodeTitleList),
+            Assert.assertTrue(isDownloadsListOrdered(episodeTitleList, episodeTitleListDownloads),
                     "Numbered episodes are not ordered");
         } else {
             throw new IllegalArgumentException("Details or downloads list are empty");
         }
     }
 
-    public boolean isDownloadsListOrdered(List<String> detailPageList) {
+    public List<String> getListEpisodes(String element) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        String titleEpisodesDownloads = "Play";
         List<String> episodeTitleList = new ArrayList<>();
-        List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getTypeButtonByName(titleEpisodesDownloads).getBy());
+
+        List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getTypeButtonByName(element).getBy());
         if (!episodeListElement.isEmpty()) {
             for (WebElement title : episodeListElement) {
                 episodeTitleList.add(title.getText());
             }
         }
-        for (int i = 0; i < episodeTitleList.size(); i++) {
-            LOGGER.info("details title: {}, downloads title: {}", detailPageList.get(i), episodeTitleList.get(i));
-            if (!episodeTitleList.get(i).contains(detailPageList.get(i).substring(3))) {
+        return episodeTitleList;
+    }
+
+    public boolean isDownloadsListOrdered(List<String> detailPageList, List<String> downloadPageList) {
+        for (int i = 0; i < downloadPageList.size(); i++) {
+            LOGGER.info("details title: {}, downloads title: {}", detailPageList.get(i), downloadPageList.get(i));
+            if (!downloadPageList.get(i).contains(detailPageList.get(i).substring(3))) {
                 return false;
             }
         }
