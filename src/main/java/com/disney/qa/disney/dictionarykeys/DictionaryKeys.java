@@ -60,6 +60,7 @@ public enum DictionaryKeys {
     BTN_DELETE_ALL_DOWNLOADS("btn_delete_all_downloads"),
     BTN_DELETE_PLAY_NEXT("btn_delete_play_next"),
     BTN_DELETE_PROFILE("btn_delete_profile"),
+    BTN_DETAILS("btn_details"),
     BTN_DETAILS_RESTART("btn_details_restart"),
     BTN_EDIT_PROFILE("btn_edit_profile"),
     BTN_ERROR_MEDIAUNAVAILABLE("btn_error_mediaunavailable"),

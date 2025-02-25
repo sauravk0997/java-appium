@@ -82,7 +82,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement movieDownloadButton;
     @ExtendedFindBy(accessibilityId = "downloadButtonDownloaded")
     protected ExtendedWebElement movieDownloadCompletedButton;
-    @ExtendedFindBy(accessibilityId = "watch")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"WATCH\"`]")
     protected ExtendedWebElement watchButton;
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
