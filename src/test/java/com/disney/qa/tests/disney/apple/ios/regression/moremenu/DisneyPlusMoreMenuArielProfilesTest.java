@@ -25,7 +25,7 @@ import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_HUNDRED_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
@@ -245,14 +245,16 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.PROFILES, TestGroup.SMOKE, US})
     public void verifyProfileCreationRestrictedFunctionality() {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
         setAppToAccountSettings();
 
         accountPage.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
-        Assert.assertTrue(passwordPage.isOpened(),
-                "User was not directed to Password entry upon toggling 'Restrict Profile Creation'");
+        Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
 
         passwordPage.enterPassword(getAccount());
         editProfilePage.waitForUpdatedToastToDisappear();
@@ -261,8 +263,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         accountPage.getBackArrow().click();
         moreMenuPage.clickAddProfile();
-        Assert.assertTrue(passwordPage.isOpened(),
-                "User was not directed to Password entry upon clicking 'Add Profile'");
+        Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
 
         passwordPage.enterPassword(getAccount());
         editProfilePage.clickSkipBtn();
@@ -277,7 +278,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73220"})
-    @Test(description = "U13 profile, Password action grant for Welch with RES ON", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyU13RestrictionOnWelchActionGrant() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
@@ -319,7 +320,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72683"})
-    @Test(description = "Kids Profile new copy and rename to Junior Mode", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyJuniorModeCopy() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -351,7 +352,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75637"})
-    @Test(description = "Profiles > Existing Sub->edit gender", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditGenderPageUI() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -981,7 +982,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     private void setAppToAccountSettings() {
-        setAppToHomeScreen(getAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
