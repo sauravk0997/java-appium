@@ -56,6 +56,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
             "**/XCUIElementTypeButton[2]")
     private ExtendedWebElement subscriptionMessage;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
+    private ExtendedWebElement restrictedProfileToggle;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -534,7 +536,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
         if(!getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-            clickElementAtLocation(getRestrictProfileCreationContainer(), 35, 90);
+            restrictedProfileToggle.click();
         }
     }
 
