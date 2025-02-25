@@ -17,7 +17,6 @@ import org.openqa.selenium.*;
 public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     private static final String CONTAINER_TEXT = "%s, %s ";
-    private static final String CONTAINER_TEXT_NO_COMMA = "%s %s ";
     private static final String MONTHLY = "Monthly";
     private static final String ANNUAL = "Annual";
     private static final String PREMIUM = "Premium";
@@ -221,7 +220,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getRestrictProfileCreationContainer() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT_NO_COMMA,
+        return getDynamicCellByLabel(String.format(CONTAINER_TEXT,
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_DESCRIPTION.getText())));
     }
