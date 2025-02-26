@@ -154,13 +154,11 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomePage.clickLogInButton();
         login(getAccount());
-        //Dismiss CMP Banner
-        handleGenericPopup(5,1);
-        //Dismiss ATT Popup
-        handleGenericPopup(5,1);
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        //Dismiss ATT Popup
+        handleGenericPopup(5,1);
         if (homePage.isTravelAlertTitlePresent()) {
             homePage.getTravelAlertOk().click();
         }
