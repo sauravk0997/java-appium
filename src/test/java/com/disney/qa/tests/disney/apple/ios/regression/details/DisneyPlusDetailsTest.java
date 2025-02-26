@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
@@ -43,8 +43,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
-    private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
-    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String AVAILABLE_WITH_HULU = "Available with Hulu Subscription";
     private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
     private static final String AVAILABLE_WITH_ESPN_SUBSCRIPTION = "Available with ESPN+ Subscription";
@@ -67,7 +65,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.clickMoviesTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
@@ -79,7 +77,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         }
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isImaxEnhancedPresentInMediaFeaturesRow(), "IMAX Enhanced was not found in media features row");
 
         detailsPage.clickDetailsTab();
@@ -224,7 +222,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         //Verify Shop Promo for Series
         validateShopPromoLabelHeaderAndSubHeader(sa, SHOP_TAB_SERIES);
@@ -273,7 +271,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.getSearchNav().click();
         searchPage.searchForMedia(SPIDERMAN_THREE);
         searchPage.getDisplayedTitles().get(0).click();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayerPage.isOpened(), "Video player is not opened");
         videoPlayerPage.waitForVideoToStart();
@@ -315,7 +313,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         String contentTitle = detailsPage.getContentTitle();
         swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
         Assert.assertTrue(detailsPage.getStaticTextByLabel(contentTitle).isPresent(),
@@ -332,13 +330,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.getSearchBar().click();
         searchPage.searchForMedia(espnContent);
         searchPage.getDynamicAccessibilityId(espnContent).click();
 
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
         detailsPage.getUnlockButton().click();
 
@@ -360,13 +358,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.getSearchBar().click();
         searchPage.searchForMedia(espnContent);
         searchPage.getDynamicAccessibilityId(espnContent).click();
 
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
         Assert.assertTrue(detailsPage.getStaticTextByLabel(AVAILABLE_WITH_ESPN_SUBSCRIPTION).isPresent(),
                 AVAILABLE_WITH_ESPN_SUBSCRIPTION + " upsell message not displayed");
@@ -376,7 +374,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
 
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now Button not displayed");
         Assert.assertTrue(detailsPage.getStaticTextByLabel(UNLOCK_HULU_ON_DISNEY).isPresent(),
                 UNLOCK_HULU_ON_DISNEY + " upsell message not displayed");
@@ -498,10 +496,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         //Adult
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.searchForMedia(PREY);
         searchPage.getDynamicAccessibilityId(PREY).click();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
         detailsPage.getShareBtn().click();
         sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", PREY)).isPresent(),
@@ -512,7 +510,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.getShareBtn().click();
         detailsPage.clickOnCopyShareLink();
         detailsPage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         String actualUrl = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
         String expectedUrl = R.TESTDATA.get("disney_prod_hulu_movie_prey_share_link");
         Assert.assertTrue(expectedUrl.contains(actualUrl), "Deeplink is not correct");
@@ -522,10 +520,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         whoseWatchingPage.clickProfile(JUNIOR_PROFILE);
         Assert.assertTrue(homePage.isKidsHomePageOpen(), "Kids home page did not open");
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.searchForMedia(grootSeries);
         searchPage.getDynamicAccessibilityId(grootSeries).click();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertFalse(detailsPage.getShareBtn().isPresent(ONE_SEC_TIMEOUT),
                 "Share button was found on kids profile.");
         sa.assertAll();
@@ -586,7 +584,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         //Home
         moreMenu.clickHomeIcon();
-        homePage.isOpened();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.getKidsCarousels().forEach(element -> sa.assertFalse(element.getText().contains(HULU),
                 String.format("%s contains %s", element.getText(), HULU)));
         sa.assertFalse(homePage.isHuluTileVisible(), "Hulu tile was found on Kids home.");
@@ -706,7 +704,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickDetailsTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
@@ -736,7 +734,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //Verify user can play some Hulu content
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
         homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForVideoToStart();
         videoPlayer.skipPromoIfPresent();
@@ -744,7 +742,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         //Go back to the Hulu page
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.tapBackButton();
 
         //Swipe to the "Unlock to stream more collection"
@@ -753,7 +751,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 swipeCount);
 
         homePage.getTypeCellLabelContains(AVAILABLE_WITH_HULU).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.getUpgradeNowButton().click();
 
         //Verify that user is on the ineligible interstitial screen
@@ -770,7 +768,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(titleName);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isShopPromoLabelHeaderPresent());
         } catch (Exception e) {
