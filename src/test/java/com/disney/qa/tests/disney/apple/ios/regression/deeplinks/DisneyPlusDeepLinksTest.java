@@ -525,7 +525,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
-    @Test(description = "New URL Structure - Hulu Hub - Not Entitled For Hulu - Error Message", groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
     public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
         String unentitledSeriesId = "entity-7840bf30-f440-48d4-bf81-55d8cb24457a";
         String platform = "apple";

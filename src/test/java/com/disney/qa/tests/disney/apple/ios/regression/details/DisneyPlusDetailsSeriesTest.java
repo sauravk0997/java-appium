@@ -1167,7 +1167,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73825"})
-    @Test(description = "Hulk Series Details: Verify Tabs are visible", groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkDetailsTabs() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -1203,7 +1203,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75021"})
-    @Test(description = "Hulu Series Details Page - Restart Button", groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySeriesDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

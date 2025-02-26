@@ -24,7 +24,6 @@ import java.util.*;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
 
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
@@ -734,7 +733,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
-    @Test(description = "Hulk Movie Details: Verify Details Tab Metadata", groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkMovieDetailsTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -765,7 +764,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75020"})
-    @Test(description = "Hulu Movies Details Page - Restart Button", groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovieDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -792,7 +791,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74845"})
-    @Test(description = "Hulk Base UI - Movies - all attributes on base ui of movie details page", groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkBaseUIMovies() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -855,7 +854,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74450"})
-    @Test(description = "Hulu Movie Download - download metadata and playable", groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluMovieDownloadAsset() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
