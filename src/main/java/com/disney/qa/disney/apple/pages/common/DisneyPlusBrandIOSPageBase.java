@@ -25,8 +25,6 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
             "/XCUIElementTypeOther/XCUIElementTypeImage")
     private ExtendedWebElement brandLogoImage;
 
-
-
     public DisneyPlusBrandIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -50,10 +48,6 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     public void clickFirstCarouselPoster() {
         clickContent(3, 1);
         pause(5);
-    }
-
-    public void clickFirstNoLiveEvent() {
-        clickContent(4, 1);
     }
 
     public boolean isCollectionBrandImageExpanded() {
