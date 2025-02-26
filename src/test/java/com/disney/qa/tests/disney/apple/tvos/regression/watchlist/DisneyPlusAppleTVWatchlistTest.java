@@ -80,12 +80,14 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         IntStream.range(0, titles.size()).forEach(title -> {
             String name = titles.get(title).getTitle();
             sa.assertTrue(watchListPage.getTypeCellLabelContains(name).isElementPresent(SHORT_TIMEOUT),
-                    String.format("%s not found", name));
+                    String.format("%s Title was not found in Watchlist", name));
             watchListPage.getTypeCellLabelContains(name).click();
             Assert.assertTrue(detailsPage.isOpened(), DETAILS_NOT_OPEN);
             detailsPage.clickWatchlistButton();
             Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_BUTTON_NOT_PRESENT);
             watchListPage.clickMenuTimes(1, 2);
+            Assert.assertFalse(watchListPage.getTypeCellLabelContains(name).isElementPresent(SHORT_TIMEOUT),
+                    String.format("%s Title was not removed from Watchlist", name));
         });
         sa.assertAll();
     }
