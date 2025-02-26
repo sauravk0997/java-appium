@@ -24,7 +24,7 @@ import java.util.*;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     //Test constants
@@ -38,7 +38,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String CONTENT_TITLE = "Content_Title";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String DOWNLOAD_MODAL_STILL_VISIBLE = "Download Modal was still visible";
-    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
@@ -741,7 +740,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
-        homePage.isOpened();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
@@ -804,7 +803,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
 
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //media features - audio, video, accessibility
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
@@ -840,7 +839,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
         videoPlayer.clickBackButton();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
 
         //Tabs
@@ -868,11 +867,11 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.startDownload();
         detailsPage.waitForMovieDownloadComplete(350, 20);
         detailsPage.clickDownloadsIcon();
-        downloadsPage.isOpened();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
 
         //Downloaded movie asset metadata
         sa.assertTrue(downloadsPage.getStaticTextByLabelContains(PREY).isPresent(), PREY + " title was not found on downloads tab.");
@@ -903,7 +902,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         // Deeplink a movie, scrub and get current time
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(),DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
@@ -911,7 +910,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
         LOGGER.info("currentTimeBeforeRestartClick {}", currentTimeBeforeRestartClick);
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isOpened(),DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         // Validate and click restart button, get current time and validate restart button
         Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");

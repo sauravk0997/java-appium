@@ -28,7 +28,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
@@ -722,11 +722,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         //Movie download button
-        homePage.isOpened();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertTrue(detailsPage.getMovieDownloadButton().isPresent(),
                 "Movie download button was not found.");
 
@@ -750,7 +750,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickDownloadSeasonAlertButton();
         detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(250, 25);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        downloads.isOpened();
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         sa.assertTrue(downloads.getStaticTextByLabelContains("10 Episodes").isPresent(), "10 episode downloads were not found.");
         downloads.clickSeriesMoreInfoButton();
         sa.assertTrue(downloads.getStaticTextByLabelContains("Season 1").isPresent(), "Season 1 was not downloaded.");
@@ -907,7 +907,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeInContainer(null, Direction.UP, 2500);
         }
@@ -917,14 +917,14 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         searchPage.clearText();
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeInContainer(null, Direction.UP, 2500);
         }
         detailsPage.getMovieDownloadButton().click();
         detailsPage.waitForMovieDownloadComplete(300, 25);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        downloadsPage.isOpened();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
                 ONLY_MURDERS_IN_THE_BUILDING + "was not found present on Downloads screen.");
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isPresent(),

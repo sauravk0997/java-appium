@@ -12,13 +12,11 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
     private static final int SPLIT_TIME = 15;
-    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
-    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77674"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
@@ -106,10 +104,10 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton().isOpened();
 
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(network), String.format("Network (%s) Watermark logo is not present", network));
@@ -123,10 +121,10 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getContinueButton());
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.clickOnHuluContinueButton();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(network), String.format("Network (%s) Watermark logo is not present", network));
 
@@ -167,10 +165,10 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         searchPage.searchForMedia(networkTitle);
         searchPage.getDisplayedTitles().get(0).click();
 
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton().isOpened();
 
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.skipPromoIfPresent();
 
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(network),
@@ -190,7 +188,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), "Video player was not closed");
         detailsPage.clickContinueButton();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         videoPlayer.tapPlayerScreen(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.REWIND, 2);
         sa.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(network),
