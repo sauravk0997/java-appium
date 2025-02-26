@@ -967,7 +967,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77872"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifySearchHuluContentForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -985,7 +985,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77875"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifyEntitleAndNonEntitleHuluContentForNonBundleUser() {
         String entitleHuluContent = "Solar Opposites";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -1016,7 +1016,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77874"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifySearchHuluContentForBundleUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1036,7 +1036,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, CA})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, CA})
     public void verifySearchHuluContentForStandaloneUserInEligible() {
         String unavailableContentInCA = "Normal People";
 

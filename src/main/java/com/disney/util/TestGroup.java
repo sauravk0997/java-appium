@@ -21,7 +21,6 @@ public final class TestGroup {
     public static final String EODPLUS = "ESPNOnDisneyPlus";
     public static final String HOME = "Home";
     public static final String HULK = "Hulk";
-    public static final String HULU_HUB = "HuluHub";
     public static final String IAP = "IAP";
     public static final String LOG_IN = "LogIn";
     public static final String MORE_MENU = "MoreMenu";

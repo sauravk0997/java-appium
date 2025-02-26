@@ -150,7 +150,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112611"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifyNetworkAttributionWithBundleUserAccount() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
         logIn(getAccount());

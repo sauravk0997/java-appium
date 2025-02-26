@@ -25,7 +25,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121506"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifyHuluHubSearchContentWithStandaloneAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
@@ -42,7 +42,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121508"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifyHuluHubSearchContentWithBundleUserAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
@@ -63,7 +63,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121507"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, CA})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, CA})
     public void verifyHuluHubSearchContentInNonEligibleCountry() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
@@ -90,7 +90,7 @@ public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121509"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifyHuluHubSearchContentWithNonBundleUserAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());

@@ -22,7 +22,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121503"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
     public void verifyStandaloneESPNAndHuluBrandTiles() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
@@ -55,7 +55,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121502"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
     public void verifyHulkUpsellStandaloneUserInEligible() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
@@ -109,7 +109,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120609"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
     public void verifyHuluHubPageUI() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
