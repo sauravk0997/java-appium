@@ -735,7 +735,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         searchPage.clearText();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeUp(2500);
         }
