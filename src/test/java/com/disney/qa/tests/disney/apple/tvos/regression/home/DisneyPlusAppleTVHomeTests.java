@@ -144,7 +144,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122533"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB_2, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
