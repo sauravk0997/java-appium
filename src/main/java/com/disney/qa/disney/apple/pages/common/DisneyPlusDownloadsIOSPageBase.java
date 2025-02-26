@@ -56,6 +56,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement episodeDownloadCell;
 
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
+			"%s]\"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeStaticText")
+	private ExtendedWebElement episodeDownloadCellTitle;
+
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"offlineContentCell[%s, " +
 			"%s]\"`]/**/XCUIElementTypeOther[`name == \"progressBar\"`]")
 	private ExtendedWebElement progressBarOnDownload;
 
@@ -119,6 +123,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getRenewLicenseButton() {
 		return renewLicenseButton;
+	}
+
+	public String getEpisodeDownloadCellTitle(String season, String episode) {
+		return episodeDownloadCellTitle.format(season, episode).getText();
 	}
 
 	public void waitForDownloadToStart() {
