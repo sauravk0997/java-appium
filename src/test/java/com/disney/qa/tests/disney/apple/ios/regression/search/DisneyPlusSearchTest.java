@@ -35,6 +35,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String BLUEY = "Bluey";
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
+    private static final String ESPN_LEAGUE = "La Liga";
 
     private static final String RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE = "recent search was not displayed";
     private static final String RECENT_SEARCH_FOUND_ERROR_MESSAGE = "recent search was displayed";
@@ -826,6 +827,28 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         }
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77662"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNSportsUpcomingEventBadges() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.searchForMedia(ESPN_LEAGUE);
+
+        ExtendedWebElement firstUpcomingEventCell = searchPage.getFirstUpcomingEventCell();
+        searchPage.hideKeyboard();
+        searchPage.swipe(firstUpcomingEventCell, 20);
+        Assert.assertTrue(firstUpcomingEventCell.isElementPresent(),
+                "No upcoming events found on search page");
+        Assert.assertTrue(searchPage.getUpcomingBadgeForGivenSearchResult(firstUpcomingEventCell).isElementPresent(),
+                "Upcoming badge was not present for upcoming event search result");
+        Assert.assertTrue(searchPage.getUnlockBadgeForGivenSearchResult(firstUpcomingEventCell).isElementPresent(),
+                "Unlock badge was not present for upcoming event search result");
     }
 
     protected ArrayList<String> getMedia() {
