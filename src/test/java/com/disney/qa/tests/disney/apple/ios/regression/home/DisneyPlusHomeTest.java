@@ -150,10 +150,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
         initialSetup();
         handleAlert();
-        Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
+        Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
 
         welcomePage.clickLogInButton();
         login(getAccount());
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
         Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
         Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");

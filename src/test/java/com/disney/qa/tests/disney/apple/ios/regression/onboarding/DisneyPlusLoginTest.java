@@ -31,6 +31,7 @@ import java.util.Map;
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.WHOS_WATCHING_NOT_DISPLAYED;
 
 public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -110,15 +111,14 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testValidPasswordOneProfile() {
         SoftAssert softAssert = new SoftAssert();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
 
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
-        softAssert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        welcomeScreen.clickLogInButton();
+        login(getAccount());
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        softAssert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         softAssert.assertAll();
     }
@@ -127,16 +127,19 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testValidPasswordMultipleProfiles() {
         SoftAssert softAssert = new SoftAssert();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Prof2").language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
-        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isOpened(), "Who's Watching page should have been opened");
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whosWatchingPage = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName("Prof2")
+                .language(getAccount().getProfileLang())
+                .avatarId(null)
+                .kidsModeEnabled(false)
+                .dateOfBirth(null).build());
+        welcomeScreen.clickLogInButton();
+        login(getAccount());
+        pause(5);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        softAssert.assertTrue(whosWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
 
         softAssert.assertAll();
     }
