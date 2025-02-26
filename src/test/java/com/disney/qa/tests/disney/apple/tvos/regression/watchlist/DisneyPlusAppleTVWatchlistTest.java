@@ -117,7 +117,6 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     }
 
     private void validateAddRemoveWatchlistContent(List<DisneyEntityIds> titles) {
-        SoftAssert sa = new SoftAssert();
         DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
@@ -160,6 +159,5 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                         titles.get(0).getTitle()).isElementPresent(SHORT_TIMEOUT),
                 String.format("Removed %s content is present in Watchlist",
                         titles.get(0).getTitle()));
-        sa.assertAll();
     }
 }
