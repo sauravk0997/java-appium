@@ -18,13 +18,11 @@ import java.util.List;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
-    static final String HULU_CONTENT = "Only Murders in the Building";
-    private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
-    private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page did not open";
+    static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     static final String UNLOCK = "Unlock";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
-    @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchHuluContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -34,7 +32,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Naruto");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
@@ -50,44 +48,53 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69570"})
-    @Test(description = "Search > Empty Page State- Hide Restricted Title for TV-14 and Kids", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         getAccountApi().editContentRatingProfileSetting(getAccount(), "MPAAAndTVPG", "TV-14");
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .avatarId(null)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true).build());
 
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
         homePage.getSearchNav().click();
-        searchPage.searchForMedia("Only murders in the building");
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
         pause(2);
         sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
                 "PCON restricted title message was not as expected");
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Only murders in the building"),
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING),
                 "No results found message was not as expected for TV-14 profile");
-
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
         homePage.getSearchNav().click();
-        searchPage.searchForMedia("Only murders in the building");
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
         pause(2);
         sa.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
-        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent("Only murders in the building"), "No results found message was not as expected for kids profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING), "No results found message was not as expected " +
+                "for kids profile");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
-    @Test(description = "Search > Empty Page State- Max maturity rating", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchEmptyPageMaxMaturityRating() {
         String searchQuery = "robocop";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -98,7 +105,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         homePage.getSearchNav().click();
         searchPage.searchForMedia(searchQuery);
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
@@ -126,8 +133,8 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         //Add Hulu title to watch list
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
-        searchPage.searchForMedia(HULU_CONTENT);
-        searchPage.getDynamicAccessibilityId(HULU_CONTENT).click();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
         detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.addToWatchlist();
         Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
@@ -136,7 +143,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         //Verify watchlist is populated with the added titles
         homePage.clickMoreTab();
         moreMenu.clickMenuOption(MoreMenu.WATCHLIST);
-        Assert.assertTrue(moreMenu.getTypeCellLabelContains(HULU_CONTENT).isPresent(),
+        Assert.assertTrue(moreMenu.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
                 "Hulu media title was not added to the watchlist");
         moreMenu.clickBackArrowFromWatchlist();
         //Remove title from the watchlist
@@ -146,14 +153,14 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         moreMenu.clickMenuOption(MoreMenu.WATCHLIST);
         //verify empty watch list
-        sa.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
         sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not displayed");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74557"})
-    @Test(description = "Search Hulu Content", groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMaxLimitSearchQuery() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -162,7 +169,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         setAppToHomeScreen(getAccount());
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         homePage.getSearchNav().click();
         searchPage.searchForMedia(searchLimitQuery);
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
@@ -185,11 +192,11 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(basicAccount);
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
-        searchPage.searchForMedia(HULU_CONTENT);
-        Assert.assertTrue(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
                 "Hulu Content not found in search result");
-        Assert.assertTrue(searchPage.getTypeCellLabelContains(HULU_CONTENT).getText().contains(HULU),
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(HULU),
                 "Hulu brand name not found in content in search result");
     }
 
@@ -197,7 +204,6 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
     public void verifyEntitleAndNonEntitleHuluContentForNonBundleUser() {
         String entitleHuluContent = "Solar Opposites";
-        String notEntitleHuluContent = "Only Murders in the Building";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
@@ -205,7 +211,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(basicAccount);
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.searchForMedia(entitleHuluContent);
         Assert.assertTrue(searchPage.getDynamicAccessibilityId(entitleHuluContent).isPresent(),
@@ -216,12 +222,12 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
                 "Unlock 'upsell message' found in search result");
 
         searchPage.getClearTextBtn().click();
-        searchPage.searchForMedia(notEntitleHuluContent);
-        Assert.assertTrue(searchPage.getDynamicAccessibilityId(notEntitleHuluContent).isPresent(),
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
                 "Hulu Content not found in search result");
-        Assert.assertTrue(searchPage.getTypeCellLabelContains(notEntitleHuluContent).getText().contains(HULU),
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(HULU),
                 "Hulu brand name not found in content in search result");
-        Assert.assertTrue(searchPage.getTypeCellLabelContains(notEntitleHuluContent).getText().contains(UNLOCK),
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(UNLOCK),
                 "Unlock 'upsell message' not found in search result");
     }
 
@@ -234,14 +240,14 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        searchPage.searchForMedia(HULU_CONTENT);
-        Assert.assertTrue(searchPage.getDynamicAccessibilityId(HULU_CONTENT).isPresent(),
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
                 "Hulu Content not found in search result");
-        Assert.assertTrue(searchPage.getTypeCellLabelContains(HULU_CONTENT).getText().contains(HULU),
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(HULU),
                 "Hulu brand name not found in content in search result");
-        Assert.assertFalse(searchPage.getTypeCellLabelContains(HULU_CONTENT).getText().contains(UNLOCK),
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(UNLOCK),
                 "Unlock 'upsell message' found in search result");
     }
 
@@ -259,7 +265,7 @@ public class DisneyPlusHulkSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.searchForMedia(unavailableContentInCA);
         Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(unavailableContentInCA),
                 String.format("No results found message was not displayed for, '%s'", unavailableContentInCA));
