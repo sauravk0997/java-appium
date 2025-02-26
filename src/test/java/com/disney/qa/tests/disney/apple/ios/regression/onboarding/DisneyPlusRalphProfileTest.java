@@ -256,6 +256,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
                 .avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount());
+        //Dismiss ATT Popup
+        if (isAlertPresent()) {
+            handleGenericPopup(5, 1);
+        }
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
