@@ -59,10 +59,10 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         List<DisneyEntityIds> titles =
                 new ArrayList<>(Arrays.asList(
-                        DisneyEntityIds.AHSOKA,
-                        DisneyEntityIds.INCREDIBLES_2,
+                        DisneyEntityIds.WANDA_VISION,
+                        DisneyEntityIds.LOKI,
                         DisneyEntityIds.SKELETON_CREW,
-                        DisneyEntityIds.END_GAME));
+                        DisneyEntityIds.INCREDIBLES_2));
 
         List<String> infoBlockList = new ArrayList<>();
         titles.forEach(title ->
