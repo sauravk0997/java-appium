@@ -1,32 +1,31 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
-import com.disney.qa.api.client.requests.*;
-import com.disney.qa.api.dictionary.*;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.dictionarykeys.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
@@ -639,6 +638,93 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                     downloadsPage.getEpisodeDownloadCellTitle(seasonOne, String.valueOf(i + 1)),
                     "Downloaded non-numbered episodes order is not based on recency at index:" + i);
         }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78059"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadNumberedEpisodes() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String titleEpisodesDownloads = "Play";
+        String theSimpsonsSeries = "The Simpsons";
+        String seasonOne = "Season 1";
+        String firstSeason = "1";
+        String episodeOneString = "1";
+        String episodeTwoString = "2";
+        String episodeThreeString = "3";
+        int episodeOne = 1;
+        int episodeTwo = 2;
+        int episodeThree = 3;
+        List<String> episodeTitleList = new ArrayList<>();
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String seriesName = detailsPage.getMediaTitle();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 1100);
+        }
+
+        // Download three episodes from season 1 and populate episodes details list
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(seasonOne).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeTwoString).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeOneString).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeThreeString).click();
+        // Need some time to appropriate populate downloads and have episodes to compare after
+        detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.DOWN, 1, 3800);
+        }
+
+        // Get details episodes list
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeOne).getText());
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeTwo).getText());
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeThree).getText());
+
+        // Navigate to the Downloads title and wait for downloads to finish in case they have not
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        detailsPage.waitForElementToDisappear(
+                detailsPage.getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText())), SIXTY_SEC_TIMEOUT);
+        detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
+                seriesName + " series title was not present");
+        // Get episodes list from Downloads UI
+        List<String> episodeTitleListDownloads = getListEpisodes(titleEpisodesDownloads);
+
+        // Get episodes list from Downloads UI and compare both lists
+        if (!episodeTitleList.isEmpty()) {
+            Assert.assertTrue(isDownloadsListOrdered(episodeTitleList, episodeTitleListDownloads),
+                    "Numbered episodes are not ordered");
+        } else {
+            throw new IllegalArgumentException("Details or downloads list are empty");
+        }
+    }
+
+    public List<String> getListEpisodes(String element) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        List<String> episodeTitleList = new ArrayList<>();
+
+        List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getTypeButtonByName(element).getBy());
+        if (!episodeListElement.isEmpty()) {
+            for (WebElement title : episodeListElement) {
+                episodeTitleList.add(title.getText());
+            }
+        }
+        return episodeTitleList;
+    }
+
+    public boolean isDownloadsListOrdered(List<String> detailPageList, List<String> downloadPageList) {
+        for (int i = 0; i < downloadPageList.size(); i++) {
+            LOGGER.info("details title: {}, downloads title: {}", detailPageList.get(i), downloadPageList.get(i));
+            if (!downloadPageList.get(i).contains(detailPageList.get(i).substring(3))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @AfterMethod(alwaysRun = true)

@@ -54,7 +54,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement chromecastButton;
     @ExtendedFindBy(accessibilityId = "ucp.audioOutput")
     private ExtendedWebElement airplayButton;
-    @ExtendedFindBy(accessibilityId = "iconPinUnlocked")
+    @ExtendedFindBy(accessibilityId = "lockPlayerControlsButton")
     private ExtendedWebElement iconPinUnlocked;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
     private ExtendedWebElement currentlyPlayingTitle;
