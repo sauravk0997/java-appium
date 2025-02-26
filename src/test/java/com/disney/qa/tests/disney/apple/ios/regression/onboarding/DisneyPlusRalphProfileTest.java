@@ -264,6 +264,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
             handleGenericPopup(5, 1);
         }
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        //Dismiss ATT Popup
+        if (isAlertPresent()) {
+            handleGenericPopup(5, 1);
+        }
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
