@@ -183,6 +183,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
+        String entityID = R.TESTDATA.get("disney_prod_series_disney_high_school_musical_entity_id");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
+
         //Navigate to All Metadata Series
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
@@ -196,6 +200,19 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
+
+        //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
+                    sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                            String.format("Audio video badge %s is not present on details page featured area", badge)));
+        }
+        //Verify if ratings value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area");
+        }
+
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
