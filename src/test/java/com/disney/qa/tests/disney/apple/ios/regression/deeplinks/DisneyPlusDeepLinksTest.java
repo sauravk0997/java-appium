@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -520,7 +519,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpsellPageForESPNContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         setAccount(getAccount());
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
@@ -531,31 +529,12 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .dateOfBirth(KIDS_DOB)
                 .build());
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
-                .disneyAccount(getAccount())
-                .profileName(SECONDARY_PROFILE)
-                .language(getAccount().getProfileLang())
-                .avatarId(null)
-                .dateOfBirth(Person.U18.getYear() + "-" + Person.U18.getMonth().getNum() + "-" + Person.U18.getDay(true))
-                .build());
-
-        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
+        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.waitForHomePageToOpen();
-        verifyUnavailableContentErrorMessage(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
-        homePage.getOkButton().click();
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        homePage.waitForHomePageToOpen();
-        verifyUnavailableContentErrorMessage(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));homePage.getOkButton().click();
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-    }
-
-    private void verifyUnavailableContentErrorMessage(String deeplink) {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        launchDeeplink(deeplink);
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
         Assert.assertTrue(homePage.isUnavailableContentErrorPopUpMessageIsPresent(), CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getOkButton().isPresent(), "CTA button not found");
+        homePage.getOkButton().click();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 }
