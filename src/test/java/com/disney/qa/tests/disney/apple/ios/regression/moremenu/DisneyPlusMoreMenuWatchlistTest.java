@@ -20,6 +20,7 @@ import java.util.Arrays;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.UNIFIED_ORDER;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 
 public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
@@ -149,7 +150,6 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74651"})
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyWatchlistAddAndRemoveItem() {
-        String huluContent = "Only Murders in the Building";
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -163,8 +163,8 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         //Add Hulu title to watch list
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
-        searchPage.searchForMedia(huluContent);
-        searchPage.getDynamicAccessibilityId(huluContent).click();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
         detailsPage.waitForWatchlistButtonToAppear();
         detailsPage.addToWatchlist();
         Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
@@ -173,7 +173,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         //Verify watchlist is populated with the added titles
         homePage.clickMoreTab();
         moreMenu.clickMenuOption(MoreMenu.WATCHLIST);
-        Assert.assertTrue(moreMenu.getTypeCellLabelContains(huluContent).isPresent(),
+        Assert.assertTrue(moreMenu.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
                 "Hulu media title was not added to the watchlist");
         moreMenu.clickBackArrowFromWatchlist();
         //Remove title from the watchlist
