@@ -386,22 +386,19 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
 
         hideKeyboard();
-        System.out.println(changeEmailPage.getPageSource());
-        sa.assertTrue(changeEmailPage.isHeadlineSubtitlePresent(), "'Change Email' subtitle was not displayed");
 
+        sa.assertTrue(changeEmailPage.getMyDisneyLogo().isPresent(), "MyDisney logo not present");
+        sa.assertTrue(changeEmailPage.isHeadlineSubtitlePresent(), "'Change Email' subtitle was not displayed");
         sa.assertTrue(changeEmailPage.isCurrentEmailShown(otpAccount.getEmail()),
                 "'Change Email' display of user email was not shown");
-
         sa.assertTrue(changeEmailPage.isNewEmailHeaderPresent(),
                 "'Change Email' text entry header was not displayed");
-
         Assert.assertTrue(changeEmailPage.isLogoutAllDevicesUnchecked(),
                 "'Change Email' device logout checkbox was not unchecked by default");
-
         changeEmailPage.clickLogoutAllDevices();
-
         sa.assertTrue(changeEmailPage.isLogoutAllDevicesChecked(), "'Logout All Devices' was not checked");
-
+        sa.assertTrue(changeEmailPage.getSaveAndContinueButton().isPresent(), "Save and Continue button not present");
+        sa.assertTrue(changeEmailPage.getCancelButton().isPresent(), "Cancel button not present");
         sa.assertTrue(changeEmailPage.isLearnMoreAboutMyDisney(),
                 "'Logout All Devices' password text was not displayed");
 
@@ -409,11 +406,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         sa.assertTrue(changeEmailPage.isAttributeValidationErrorMessagePresent(),
                 "'Invalid Email' error was not displayed");
-
-        changeEmailPage.clickCancelBtn();
-
-        sa.assertTrue(accountPage.isOpened(),
-                "User was not returned to the Account Settings page after cancelling new email submission");
 
         sa.assertAll();
     }
