@@ -154,8 +154,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         welcomePage.clickLogInButton();
         login(getAccount());
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        handleGenericPopup(5,1);
         homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
         Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
         Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");

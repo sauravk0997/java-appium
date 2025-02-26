@@ -116,8 +116,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         welcomeScreen.clickLogInButton();
         login(getAccount());
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        handleGenericPopup(5,1);
         softAssert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         softAssert.assertAll();
@@ -137,8 +136,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
                 .dateOfBirth(null).build());
         welcomeScreen.clickLogInButton();
         login(getAccount());
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        handleGenericPopup(5,1);
         softAssert.assertTrue(whosWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
 
         softAssert.assertAll();

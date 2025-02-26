@@ -821,4 +821,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             return e.getMessage().split("description=")[1].split("\\)")[0];
         }
     }
+
+    public void handleGenericPopup(int timeout, int maxAttempts) {
+        pause(timeout);
+        handleSystemAlert(AlertButtonCommand.DISMISS, maxAttempts);
+    }
 }

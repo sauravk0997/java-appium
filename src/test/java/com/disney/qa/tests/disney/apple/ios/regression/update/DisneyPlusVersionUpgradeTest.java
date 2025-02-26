@@ -53,8 +53,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         installApplication(currentBuildVersion);
         startApp(sessionBundles.get(DISNEY));
         //Handle ATT Modal
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        handleGenericPopup(5,1);
         moreMenu.clickMoreTab();
         // Verify version is current FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
