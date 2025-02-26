@@ -13,7 +13,7 @@ import static com.disney.qa.common.constant.IConstantHelper.CA;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
-public class DisneyPlusAppleTVSearchHuluHubTests extends DisneyPlusAppleTVBaseTest {
+public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
     private static final String UNENTITLED_HULU_CONTENT = "Only Murders in the Building";
     private static final String ENTITLED_HULU_CONTENT = "The Bold Type";
