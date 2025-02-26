@@ -387,6 +387,51 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), "Details Page was not displayed");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67678"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpNextNewSeries() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String off = "OFF";
+        setAppToHomeScreen(getAccount());
+        // Turn OFF autoplay
+        toggleAutoPlay(off);
+        // Steps to click in SEE DETAILS button
+        deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
+        String nextEpisodesTitle = upNext.getNextEpisodeInfo();
+        upNext.tapSeeAllEpisodesButton();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), "Details page did not open");
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
+                "Details page from the expected series did not open");
+        // Steps to tap in Play content
+        deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
+        videoPlayer.getPlayerView().click();
+        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+        sa.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
+                "Details page from the expected series did not open");
+        sa.assertAll();
+    }
+
+    private void deeplinkContentAndScrubPlayback(String deeplink) {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
+        int percentage = 98;
+        launchDeeplink(R.TESTDATA.get(deeplink));
+        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+        videoPlayer.scrubToPlaybackPercentage(percentage);
+        upNext.waitForUpNextUIToAppear();
+        Assert.assertTrue(upNext.isOpened(), "Up Next UI was not displayed");
+        Assert.assertTrue(upNext.getSeeDetailsButton().isPresent(), "See details button is not present");
+        Assert.assertTrue(upNext.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
+        Assert.assertTrue(upNext.getBackButton().isPresent());
+    }
+
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
