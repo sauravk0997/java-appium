@@ -371,7 +371,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(SERIES_LOKI);
         searchPage.getDisplayedTitles().get(0).click();
-        Assert.assertTrue(detailsPage.isPlayButtonDisplayed(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details Play button not displayed");
 
         detailsPage.clickPlayButton();
         videoPlayer.skipPromoIfPresent();

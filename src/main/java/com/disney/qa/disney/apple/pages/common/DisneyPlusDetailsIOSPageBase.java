@@ -619,10 +619,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         swipe(element, Direction.UP, 2, 500);
     }
 
-    public void swipeToDetailsTabBar(int swipes, Direction direction, int duration) {
-        swipePageTillElementPresent(tabBarScrollView, swipes, contentDetailsPage, direction, duration);
-    }
-
     public ExtendedWebElement getDetailsTab() {
         return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_DETAILS.getText()));
     }
