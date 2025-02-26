@@ -256,14 +256,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
                 .avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
         //Dismiss ATT Popup
         if (isAlertPresent()) {
             handleGenericPopup(5, 1);
         }
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
-
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
