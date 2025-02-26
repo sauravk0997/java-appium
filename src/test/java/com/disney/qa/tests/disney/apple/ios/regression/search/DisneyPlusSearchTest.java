@@ -523,11 +523,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         searchPage.clickSecondCollection();
         Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+
         sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
         sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(brandPage.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(brandPage.isCollectionTitleDisplayed(), "Collection title not displayed");
-
         sa.assertTrue(brandPage.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt),
                 "Image not collapsed after swipe");
         sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
@@ -538,17 +538,22 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.clickSecondCollection();
-        sa.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+
+        //Click First Content Tile on Collection Page
         homePage.clickDynamicCollectionOrContent(2,1);
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+
         clickElementAtLocation(detailsPage.getBackArrow(), 50, 50);
-        sa.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+
         sa.assertAll();
     }
 
