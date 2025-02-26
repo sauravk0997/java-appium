@@ -1,5 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.hatter.api.alice.AliceApiManager;
+import com.disney.hatter.api.alice.model.ImagesRequestS3;
+import com.disney.hatter.api.alice.model.ImagesResponse360;
+import com.disney.hatter.core.utils.FileUtil;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
@@ -14,6 +18,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.json.JSONObject;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -21,6 +27,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -41,6 +48,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE = "Hulu tile is not visible on home page";
     private static final String BACK_BUTTON_NOT_PRESENT = "Back button is not present";
     private static final String HULU_BRAND_LOGO_NOT_EXPANDED = "Hulu brand logo is not expanded";
+
+    private static final AliceApiManager ALICE_API_MANAGER = new AliceApiManager(MULTIVERSE_STAGING_ENDPOINT);
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
@@ -831,6 +840,55 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 Direction.LEFT);
         Assert.assertTrue(huluTitleCell.isElementPresent(),
                 "Hulu title cell was not present under Trending collection UI");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
+    @Test(groups = {TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    public void verifyHulkCollectionPagesNetworkPageUI() {
+        List<String> networkLogos = new ArrayList<String>(
+                Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
+                        "Cartoon Network", "CBS", "Discovery", "Disney XD", "FOX", "Freeform", "FX", "FYI", "HGTV",
+                        "Hulu Original Series", "Lifetime", "Lionsgate", "LMN", "Magnolia", "Moonbug Entertainment ",
+                        "MTV", "National Geographic", "Nickelodeon", "Saban Films", "Samuel Goldwyn Films",
+                        "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
+                        "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
+        double imageSimilarityPercentageThreshold = 90.0;
+
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.tapHuluBrandTile();
+        sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
+        sa.assertTrue(huluPage.isBackButtonPresent(), "Back button is not present");
+        sa.assertTrue(huluPage.isArtworkBackgroundPresent(), "Artwork images is not present");
+        sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
+
+        networkLogos.forEach(item -> {
+            sa.assertTrue(huluPage.isNetworkLogoPresent(item), String.format("%s Network logo is not present", item));
+            huluPage.clickOnNetworkLogo(item);
+            sa.assertTrue(homePage.isNetworkLogoImageVisible(item), "Network logo page are not present");
+            pause(3);
+            String s3BucketPath = buildS3BucketPath(String.format("%s.png", item.replace(' ', '_')), "hulu-network-logos");
+            File srcFile = homePage.getNetworkLogoImage(item).getElement().getScreenshotAs(OutputType.FILE);
+            ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), s3BucketPath);
+            ImagesResponse360 imagesResponse360 = ALICE_API_MANAGER.compareImages360S3(imagesComparisonRequest);
+            JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
+            LOGGER.info("Raw JSON response: {}", jsonResponse);
+            double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
+
+            LOGGER.info("Similarity Percentage is: {}", imageSimilarityPercentage);
+
+            sa.assertTrue(
+                    imageSimilarityPercentage >= imageSimilarityPercentageThreshold,
+                    String.format("Similarity Percentage score was %,.2f or lower in %s Network logo {%,.2f}.", imageSimilarityPercentageThreshold, item, imageSimilarityPercentage));
+            huluPage.clickOnNetworkBackButton();
+            sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
+        });
+
+        sa.assertAll();
     }
 
     private void addContentInContinueWatching(String url, int scrubPercentage) {

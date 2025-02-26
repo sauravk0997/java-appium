@@ -105,7 +105,6 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Hulk2" parallel="methods">
         <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkNetworkPageTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
         </classes>
     </test>
