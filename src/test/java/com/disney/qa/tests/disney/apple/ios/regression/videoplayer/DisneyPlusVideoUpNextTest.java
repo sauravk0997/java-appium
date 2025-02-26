@@ -39,6 +39,8 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
     private static final String REGEX_UPNEXT_SERIES_TITLE = "Season %s Episode %s %s";
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES = 80;
+    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video Player did not open";
+    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
 
     @DataProvider(name = "autoplay-state")
     public Object[][] autoplayState(){
@@ -308,7 +310,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
         // Deeplink series episode
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
 
         //Tap on Next episode and verify that the next episode has started playing
@@ -403,7 +405,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
         String nextEpisodesTitle = upNext.getNextEpisodeInfo();
         upNext.tapSeeAllEpisodesButton();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), "Details page did not open");
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
         }
@@ -411,11 +413,10 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
                 "Details page from the expected series did not open");
         // Steps to tap in Play content
         deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
-        upNext.getContentTitleLabel().click();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+        upNext.getUpNextImageView().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         sa.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Details page from the expected series did not open");
-        pause(10);
         sa.assertAll();
     }
 
@@ -424,8 +425,9 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
         int percentage = 98;
         launchDeeplink(R.TESTDATA.get(deeplink));
-        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.scrubToPlaybackPercentage(percentage);
+        // Verify image and elements present in upNext screen
         upNext.waitForUpNextUIToAppear();
         Assert.assertTrue(upNext.isOpened(), "Up Next UI was not displayed");
         Assert.assertTrue(upNext.getSeeDetailsButton().isPresent(), "See details button is not present");
@@ -443,9 +445,9 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);
         searchPage.getDynamicAccessibilityId(content).click();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), "Details page did not open");
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentage);
