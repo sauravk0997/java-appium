@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.tvos.regression.watchlist;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSearchPage;
@@ -14,13 +13,10 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +25,6 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String WATCHLIST_NOT_OPEN = "Watchlist page did not open";
     private static final String DETAILS_NOT_OPEN = "Details page did not open";
     private static final String WATCHLIST_BUTTON_NOT_PRESENT = "Details page watchlist button not present";
@@ -120,7 +115,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         IntStream.range(0, titles.size()).forEach(i -> {
             searchPage.typeInSearchField(titles.get(i).getTitle());
             searchPage.clickSearchResult(titles.get(i).getTitle());
-//            Assert.assertTrue(detailsPage.isOpened(), DETAILS_NOT_OPEN);
+            Assert.assertTrue(detailsPage.isOpened(), DETAILS_NOT_OPEN);
             detailsPage.clickWatchlistButton();
             detailsPage.clickMenuTimes(2, 2);
             searchPage.moveDown(4, 1);
