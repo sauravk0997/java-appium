@@ -19,6 +19,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.*;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.openqa.selenium.Dimension;
 import org.testng.*;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -27,6 +28,7 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 import java.util.*;
 
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
@@ -387,6 +389,66 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), "Details Page was not displayed");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67640"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpNextAutoPlayTapsBackground() {
+        DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+        String seriesContentTitle = "Loki";
+        String episodeTitle = "";
+        String seasonNumber = "";
+
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+
+        try {
+            episodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+            seasonNumber = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getSeasonNumber();
+        } catch (Exception e) {
+            Assert.fail("Exception occurred: " + e.getMessage());
+        }
+
+        if(episodeTitle == null || seasonNumber == null){
+            throw new SkipException("Skipping test, failed to get episodeTitles or seasonNumber from the api");
+        }
+
+        String upNextTitlePlaceHolder = String.format(REGEX_UPNEXT_SERIES_TITLE, seasonNumber, "2", episodeTitle);
+
+        //Enable autoplay
+    //    toggleAutoPlay("ON");
+       // initiatePlaybackAndScrubOnPlayer(seriesContentTitle, 90);
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        detailsPage.isOpened();
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        videoPlayer.clickPlayButton();
+
+        upNextIOSPageBase.waitForUpNextUIToAppear();
+        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(THREE_SEC_TIMEOUT),
+                "Up Next meta data title not displayed");
+        sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
+
+        videoPlayer.waitForVideoControlToDisappear();
+        // Click at the background and verify up next is still visible
+        Dimension size = getDriver().manage().window().getSize();
+        tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
+        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(THREE_SEC_TIMEOUT),
+                "Up Next meta data title not displayed");
+        // Click at the background and verify up next is not visible
+        tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
+        sa.assertFalse(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
+                "Up Next meta data title is displayeddd");
+        sa.assertFalse(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is displayedddd");
+        sa.assertAll();
+    }
+
     private void initiatePlaybackAndScrubOnPlayer(String content, double percentage) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
