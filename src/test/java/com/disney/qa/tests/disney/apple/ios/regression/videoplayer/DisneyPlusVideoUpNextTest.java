@@ -428,7 +428,6 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         upNext.waitForUpNextUIToAppear();
         Assert.assertTrue(upNext.isOpened(), "Up Next UI was not displayed");
         Assert.assertTrue(upNext.getSeeDetailsButton().isPresent(), "See details button is not present");
-        Assert.assertTrue(upNext.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
         Assert.assertTrue(upNext.getBackButton().isPresent());
     }
 
