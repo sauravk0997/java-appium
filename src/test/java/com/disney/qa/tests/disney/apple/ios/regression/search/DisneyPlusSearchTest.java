@@ -824,7 +824,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77662"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNSportsUpcomingEventBadges() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -840,9 +840,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(firstUpcomingEventCell.isElementPresent(),
                 "No upcoming events found on search page");
         Assert.assertTrue(searchPage.getUpcomingBadgeForGivenSearchResult(firstUpcomingEventCell).isElementPresent(),
-                "Upcoming badge was not present for first upcoming event search result");
+                "Upcoming badge was not present for upcoming event search result");
         Assert.assertTrue(searchPage.getUnlockBadgeForGivenSearchResult(firstUpcomingEventCell).isElementPresent(),
-                "Unlock badge was not present for first upcoming event search result");
+                "Unlock badge was not present for upcoming event search result");
     }
 
     protected ArrayList<String> getMedia() {
