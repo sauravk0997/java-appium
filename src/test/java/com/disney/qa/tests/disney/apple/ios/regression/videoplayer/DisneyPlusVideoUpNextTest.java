@@ -417,6 +417,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         sa.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Details page from the expected series did not open");
+        pause(5);
         sa.assertAll();
     }
 
