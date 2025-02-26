@@ -520,7 +520,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpsellPageForESPNContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(getAccount());
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
@@ -535,11 +534,10 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
 
-        Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
-                "Ineligible Screen Header is not present");
-        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(),
-                "Ineligible Screen Body is not present");
-        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
-                "Ineligible Screen cta is not present");
+        Assert.assertTrue(homePage.isUnavailableContentErrorPopUpMessageIsPresent(), CONTENT_UNAVAILABLE_ERROR);
+        Assert.assertTrue(homePage.getOkButton().isPresent(), "CTA button not found");
+        homePage.getOkButton().click();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
     }
 }
