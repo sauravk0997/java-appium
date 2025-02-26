@@ -425,6 +425,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
 
         setAppToHomeScreen(getAccount());
+        //Dismiss ATT Popup
+        if (isAlertPresent()) {
+            handleGenericPopup(5, 1);
+        }
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
