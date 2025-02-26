@@ -411,7 +411,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
                 "Details page from the expected series did not open");
         // Steps to tap in Play content
         deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
-        videoPlayer.getPlayerView().click();
+        upNext.getContentTitleLabel().click();
         Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
         sa.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Details page from the expected series did not open");
