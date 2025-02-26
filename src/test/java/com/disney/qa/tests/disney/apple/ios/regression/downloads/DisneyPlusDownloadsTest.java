@@ -2,12 +2,15 @@ package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.constant.RatingConstant;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -28,8 +31,7 @@ import java.util.stream.Collectors;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
@@ -812,6 +814,33 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75082"})
+    @Test(description = "Downloads are filtered out on Junior profile ", groups = {TestGroup.PROFILES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyJuniorProfileHuluFilteredOutDownloads() {
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        validateHuluDownloadsNotOnLowerMaturityProfile(sa);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74903"})
+    @Test(description = "Downloads are filtered out on adult profile with lower maturity rating", groups = {TestGroup.PROFILES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyPCONProfileHuluFilteredOutDownloads() {
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(RatingConstant.Rating.PG_13.getContentRating()).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        Profile profile = getAccount().getProfile(RatingConstant.Rating.PG_13.getContentRating());
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getAccountApi().getProfiles(getAccount()).get(1).getProfileId(),
+                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
+                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(5));
+
+        validateHuluDownloadsNotOnLowerMaturityProfile(sa);
+        sa.assertAll();
+    }
+
     public List<String> getListEpisodes(String element) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         List<String> episodeTitleList = new ArrayList<>();
@@ -864,6 +893,52 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
             List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
             return allEpisodeDownloadButtonsNoDupes.size();
         }
+    }
+
+    private void validateHuluDownloadsNotOnLowerMaturityProfile(SoftAssert sa) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        //Download TV-MA content
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeInContainer(null, Direction.UP, 2500);
+        }
+        detailsPage.getEpisodeToDownload("1", "1").click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(180, 6);
+        searchPage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.isOpened();
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeInContainer(null, Direction.UP, 2500);
+        }
+        detailsPage.getMovieDownloadButton().click();
+        detailsPage.waitForMovieDownloadComplete(300, 25);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        downloadsPage.isOpened();
+        sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
+                ONLY_MURDERS_IN_THE_BUILDING + "was not found present on Downloads screen.");
+        sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isPresent(),
+                PREY + "was not found present on Downloads screen.");
+
+        //Validate on lower maturity rating profile downloaded assets not visible
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickProfile(getAccount().getProfiles().get(1).getProfileName());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isElementNotPresent(SHORT_TIMEOUT),
+                ONLY_MURDERS_IN_THE_BUILDING +  " was found present on " + getAccount().getProfiles().get(1) + " profile's Downloads screen.");
+        sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isElementNotPresent(SHORT_TIMEOUT),
+                PREY + " was found present on " + getAccount().getProfiles().get(1) + " profile's Downloads screen.");
     }
 
     @AfterMethod(alwaysRun = true)

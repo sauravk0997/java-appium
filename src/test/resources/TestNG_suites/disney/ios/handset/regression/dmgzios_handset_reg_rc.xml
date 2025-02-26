@@ -99,7 +99,6 @@
     <test verbose="1" name="DisneyPlus iOS Handset Hulk" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkSearchTest"/>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkProfilesTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus iOS Handset Hulk2" parallel="methods">
