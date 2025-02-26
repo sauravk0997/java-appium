@@ -97,11 +97,6 @@
             <class name="com.disney.qa.tests.disney.apple.ios.regression.home.DisneyPlusBrandsTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus iOS Handset Hulk2" parallel="methods">
-        <classes>
-            <class name="com.disney.qa.tests.disney.apple.ios.regression.Hulk.DisneyPlusHulkVideoPlayerTest"/>
-        </classes>
-    </test>
     <test verbose="1" name="DisneyPlus iOS Handset Anthology" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.anthology.DisneyPlusAnthologyTest"/>
