@@ -428,6 +428,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getLocalizationUtils().getUserLanguage());
         setAppToAccountSettings(otpAccount);
 
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_DID_NOT_OPEN);
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(otpAccount),
@@ -439,6 +440,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
 
+        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         String newEmail = generateGmailAccount();
         otpAccount.setEmail(newEmail);
         oneTimePasscodePage.getTextEntryField().click();
@@ -453,9 +455,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "The User's new email address was not displayed as expected");
 
         accountPage.clickMoreTab();
-        moreMenuPage.getDynamicCellByLabel(
-                moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT))
-                .click();
+        moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
+
         Assert.assertTrue(welcomePage.isOpened(),
                 "User was not logged out and returned to the Welcome screen after logout");
         setAppToHomeScreen(otpAccount, otpAccount.getProfiles().get(0).getProfileName());
