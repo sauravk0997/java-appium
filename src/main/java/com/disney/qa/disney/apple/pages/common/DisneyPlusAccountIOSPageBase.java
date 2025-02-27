@@ -528,8 +528,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         getDynamicCellByName("logOutAllDevicesCell").click();
     }
 
-    public boolean isRestrictProfileCreationEnabled() {
-        return getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).toString().equals("1");
+    public boolean isRestrictProfileCreationEnabled(String expectedValue) {
+        return getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).equals(expectedValue);
     }
 
     public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
