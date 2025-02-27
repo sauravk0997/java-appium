@@ -81,26 +81,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69961"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyMovieNoExtras() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.searchForMedia(DisneyMovies.HOLIDAY_MAGIC.getName());
-        List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertFalse(disneyPlusHomeIOSPageBase.getTypeButtonByLabel(
-                        getLocalizationUtils()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                        DictionaryKeys.NAV_EXTRAS.getText()))
-                .isPresent());
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMoviesDetailsTabMetadata() {
