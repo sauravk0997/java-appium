@@ -30,7 +30,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
     private static final String DETAILS_TAB_METADATA_SERIES = "Loki";
-    private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
@@ -183,15 +182,15 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
-        String entityID = R.TESTDATA.get("disney_prod_series_disney_high_school_musical_entity_id");
+        String entityID = R.TESTDATA.get("disney_prod_loki_entity_id");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
         //Navigate to All Metadata Series
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
-        searchPage.searchForMedia(ALL_METADATA_SERIES);
-        searchPage.getDynamicAccessibilityId(ALL_METADATA_SERIES).click();
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDynamicAccessibilityId(DETAILS_TAB_METADATA_SERIES).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         //Verify main details page UI elements
@@ -200,6 +199,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
+
+        //Verify if "Genre" value matches with api, if api has returned any value
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
 
         //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
@@ -211,6 +215,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         if (exploreAPIData.containsKey(RATING)) {
             sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
                     "Rating value is not present on details page featured area");
+        }
+        //Verify if release year value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
+                    "Release year value is not present on details page featured area");
         }
 
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
