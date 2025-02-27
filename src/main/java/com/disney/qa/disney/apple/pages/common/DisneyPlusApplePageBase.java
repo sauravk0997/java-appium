@@ -1323,6 +1323,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getUnavailableContentErrorPopUpMessage().isPresent();
     }
 
+    public ExtendedWebElement getMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage() {
+        // This element has hardcoded the text in the app and there is not a dictionary key with the same content
+        return getStaticTextByLabelContains("**/XCUIElementTypeStaticText[`label == \"More content may be available to " +
+                "you here depending on your location, content rating settings, or subscription details. " +
+                "For more information, visit disneyplus.com/content-unavailable.");
+    }
+
     public ExtendedWebElement getKeyboardDelete() {
         if (iPhoneKeyboardDelete.isPresent()) {
             return iPhoneKeyboardDelete;

@@ -532,7 +532,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
-        Assert.assertTrue(homePage.isUnavailableContentErrorPopUpMessageIsPresent(), CONTENT_UNAVAILABLE_ERROR);
+        Assert.assertTrue(homePage.getMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage().isPresent(),
+                CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getOkButton().isPresent(), "CTA button not found");
         homePage.getOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
