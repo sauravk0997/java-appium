@@ -27,7 +27,7 @@ public interface IConstantHelper {
     String ARTWORK_IMAGE_NOT_DISPLAYED = "Artwork Image is not displayed";
     String BACK_BUTTON_NOT_DISPLAYED = "Back button is not present";
     String CONTINUE_BTN_NOT_DISPLAYED = "Continue Button is not displayed";
-    String DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED = "Details' Content Description is not displayed";
+    String DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED = "Details Content Description is not displayed";
     String DETAILS_EPISODE_TITLE_NOT_DISPLAYED = "Details Episode Title is not displayed";
     String DETAILS_PAGE_NOT_DISPLAYED = "Details Page is not displayed";
     String DETAILS_TAB_NOT_DISPLAYED = "Details Tab is not displayed";
