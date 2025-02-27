@@ -393,14 +393,16 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "'Change Email' display of user email was not shown");
         sa.assertTrue(changeEmailPage.isNewEmailHeaderPresent(),
                 "'Change Email' text entry header was not displayed");
+        sa.assertTrue(changeEmailPage.getTextEntryField().isPresent(), "'Email field' not present");
         Assert.assertTrue(changeEmailPage.isLogoutAllDevicesUnchecked(),
                 "'Change Email' device logout checkbox was not unchecked by default");
+        sa.assertTrue(changeEmailPage.isLogoutOfAllDevicesTextPresent(), "'Logout of all devices' text not present");
         changeEmailPage.clickLogoutAllDevices();
         sa.assertTrue(changeEmailPage.isLogoutAllDevicesChecked(), "'Logout All Devices' was not checked");
-        sa.assertTrue(changeEmailPage.getSaveAndContinueButton().isPresent(), "Save and Continue button not present");
+        sa.assertTrue(changeEmailPage.getSaveAndContinueButton().isPresent(),
+                "'Save and Continue' button not present");
         sa.assertTrue(changeEmailPage.getCancelButton().isPresent(), "Cancel button not present");
-        sa.assertTrue(changeEmailPage.isLearnMoreAboutMyDisney(),
-                "'Logout All Devices' password text was not displayed");
+        sa.assertTrue(changeEmailPage.isLearnMoreAboutMyDisney(), "'Learn more about MyDisney' text not present");
 
         changeEmailPage.submitNewEmailAddress("invalid");
 

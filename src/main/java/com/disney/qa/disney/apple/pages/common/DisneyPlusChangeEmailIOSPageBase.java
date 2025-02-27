@@ -24,7 +24,10 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isCurrentEmailShown(String email) {
-        return getStaticTextByLabelContains(email).isElementPresent();
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_CURRENT.getText()).replace("{email}", email))
+                .isElementPresent();
     }
 
     public boolean isNewEmailHeaderPresent() {
@@ -98,5 +101,11 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         return getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText()));
+    }
+
+    public boolean isLogoutOfAllDevicesTextPresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText())).isPresent();
     }
 }
