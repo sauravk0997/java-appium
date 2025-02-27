@@ -1044,8 +1044,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void isDolbyVisionPresentOrNot(SoftAssert sa) {
-        List<String> dolbyVisionDeviceNames = Arrays.asList("iPhone_13_Pro", "iPhone_14", "iPhone_11", "iPhone_11_1", "iPhone_12", "iPhone_11_2", "iPad_Mini_5_Gen");
-        List<String> noDolbyVisionDeviceNames = List.of("iPad_8_Gen_1");
+        List<String> dolbyVisionDeviceNames = Arrays.asList("iPhone_13_Pro", "iPhone_14", "iPhone_11", "iPhone_11_1",
+                "iPhone_12", "iPhone_11_2", "iPhone_15_1", "iPhone_15_2", "iPhone_15_3", "iPhone_15_4", "iPhone_15_5",
+                "iPhone_15_Plus_1", "iPhone_15_Plus_2", "iPhone_15_Plus_3", "iPhone_16_Pro_1", "iPhone_11_Pro_Max",
+                "iPad_Mini_5_Gen", "iPad_Pro_M4_1", "iPad_Pro_M4_2", "iPad_Pro_M4_3", "iPad_Pro_M4_4", "iPad_Pro_M4_5",
+                "iPad_Air_M2_1", "iPad_Air_M2_2", "iPad_Air_M2_3", "iPad_Air_M2_4", "iPad_Air_M2_5");
+        List<String> noDolbyVisionDeviceNames = List.of("iPad_8_Gen_1", "iPad_Gen_10_1", "iPad_Gen_10_2",
+                "iPad_Gen_10_3");
         if (dolbyVisionDeviceNames.contains(R.CONFIG.get("capabilities.deviceName"))) {
             LOGGER.info("Validating Dolby Vision is present..");
             sa.assertTrue(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");
@@ -1276,11 +1281,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTabBar() {
         return tabBar;
     }
-  
+
     public boolean isDetailsTabTitlePresent() {
         return detailsTabTitle.isPresent();
     }
-  
+
     public boolean isSeasonPickerPresent() {
         return seasonItemPicker.isPresent(THREE_SEC_TIMEOUT);
     }

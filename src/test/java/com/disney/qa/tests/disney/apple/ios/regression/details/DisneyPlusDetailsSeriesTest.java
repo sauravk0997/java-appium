@@ -207,9 +207,13 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
-            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
-                    sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
-                            String.format("Audio video badge %s is not present on details page featured area", badge)));
+            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge -> {
+                if (badge.equalsIgnoreCase(DOLBY_VISION)) {
+                    detailsPage.isDolbyVisionPresentOrNot(sa);
+                }
+                sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                        String.format("Audio video badge %s is not present on details page featured area", badge));
+            });
         }
         //Verify if ratings value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RATING)) {
