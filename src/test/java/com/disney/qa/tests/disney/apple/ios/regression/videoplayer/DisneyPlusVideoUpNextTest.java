@@ -416,6 +416,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
         upNext.getUpNextImageView().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.displayVideoController();
         sa.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Playback from the expected series did not open");
         sa.assertAll();
