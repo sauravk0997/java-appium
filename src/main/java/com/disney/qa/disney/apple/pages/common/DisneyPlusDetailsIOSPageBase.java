@@ -1053,10 +1053,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 "iPad_Gen_10_3");
         if (dolbyVisionDeviceNames.contains(R.CONFIG.get("capabilities.deviceName"))) {
             LOGGER.info("Validating Dolby Vision is present..");
-            sa.assertTrue(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");
+            sa.assertTrue(getStaticTextByLabelContains(DOLBY_VISION).isPresent(),
+                    "`Dolby Vision` video quality is not found.");
         } else if (noDolbyVisionDeviceNames.contains(R.CONFIG.get("capabilities.deviceName"))) {
             LOGGER.info("Validating Dolby Vision is not present..");
-            sa.assertFalse(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");
+            sa.assertFalse(getStaticTextByLabelContains(DOLBY_VISION).isPresent(),
+                    "`Dolby Vision` video quality is found.");
         }
     }
 
