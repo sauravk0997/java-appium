@@ -529,7 +529,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isRestrictProfileCreationEnabled() {
-        return  getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).toString().equals("1");
+        return getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).toString().equals("1");
     }
 
     public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
