@@ -101,8 +101,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement suggestedTab;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]")
     protected ExtendedWebElement tabBar;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView[`name == \"tabBar\"`]")
-    protected ExtendedWebElement tabBarScrollView;
     @FindBy(name = "titleLabel_0")
     private ExtendedWebElement firstTitleLabel;
     @ExtendedFindBy(accessibilityId = "titleLabel_%s")
