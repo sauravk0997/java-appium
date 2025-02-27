@@ -41,6 +41,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES = 80;
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video Player did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
+    private static final String UP_NEXT_UI_WAS_NOT_PRESENT = "Up Next UI was not displayed";
 
     @DataProvider(name = "autoplay-state")
     public Object[][] autoplayState(){
@@ -153,11 +154,11 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         //Bring up upNext UI
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
-        sa.assertTrue(disneyPlusUpNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        sa.assertTrue(disneyPlusUpNextIOSPageBase.verifyUpNextUI(), UP_NEXT_UI_WAS_NOT_PRESENT);
         //This will lock the device for 5 seconds then unlock it
         lockDevice(Duration.ofSeconds(5));
         //After backgrounding the app, video should be paused, and we should see upNext UI
-        sa.assertTrue(disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear(), "Up Next UI was not displayed");
+        sa.assertTrue(disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear(), UP_NEXT_UI_WAS_NOT_PRESENT);
         sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.verifyVideoPaused(),"Play button is not visible on player view, " +
                 "video not paused");
         sa.assertAll();
@@ -177,7 +178,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         int remainingTime = disneyPlusVideoPlayerIOSPageBase.getRemainingTime();
         pause(remainingTime);
-        sa.assertTrue(disneyPlusUpNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        sa.assertTrue(disneyPlusUpNextIOSPageBase.verifyUpNextUI(), UP_NEXT_UI_WAS_NOT_PRESENT);
         //TODO:https://jira.disneystreaming.com/browse/IOS-6617
         //uncomment below line when the bug is resolved
         /*sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isElementPresent(PlayerControl.PAUSE),"Pause button is not visible on player view, " +
@@ -273,7 +274,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         toggleAutoPlay("ON");
         initiatePlaybackAndScrubOnPlayer(seriesContentTitle, PLAYER_PERCENTAGE_FOR_UP_NEXT);
         upNextIOSPageBase.waitForUpNextUIToAppear();
-        sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), UP_NEXT_UI_WAS_NOT_PRESENT);
         sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
                 "Up Next meta data title not displayed");
         sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
@@ -352,7 +353,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
                 "Up Next meta data title not displayed");
         sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
-        sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), "Up Next UI was not displayed");
+        sa.assertTrue(upNextIOSPageBase.verifyUpNextUI(), UP_NEXT_UI_WAS_NOT_PRESENT);
         videoPlayer.clickBackButton();
         detailsPage.clickCloseButton();
         detailsPage.clickHomeIcon();
@@ -381,7 +382,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         //Bring up upNext UI
         initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
         upNext.waitForUpNextUIToAppear();
-        sa.assertTrue(upNext.isOpened(), "Up Next UI was not displayed");
+        sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
         //This will lock the device for 5 seconds then unlock it
         lockDevice(Duration.ofSeconds(5));
         //After backgrounding the app, video player should exit
@@ -429,7 +430,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(percentage);
         // Verify image and elements present in upNext screen
         upNext.waitForUpNextUIToAppear();
-        Assert.assertTrue(upNext.isOpened(), "Up Next UI was not displayed");
+        Assert.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
         Assert.assertTrue(upNext.getSeeDetailsButton().isPresent(), "See details button is not present");
         Assert.assertTrue(upNext.getBackButton().isPresent());
     }
