@@ -520,6 +520,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyUnavailableContentPopUpForESPNContentJuniorProfile() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(getAccount());
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
@@ -540,19 +541,14 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
         homePage.waitForHomePageToOpen();
-        verifyMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage(
-                R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
+        Assert.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
+                "Parental Control Message not found");
 
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         homePage.waitForHomePageToOpen();
-        verifyMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage(
-                R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
-    }
-
-    private void verifyMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage(String contentDeeplink) {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        launchDeeplink(contentDeeplink);
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
         Assert.assertTrue(homePage.getMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage().isPresent(),
                 CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getOkButton().isPresent(), "CTA button not found");
