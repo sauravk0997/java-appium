@@ -1381,8 +1381,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return navBackButton;
     }
 
-    public boolean isNavBackArrowDisplayed() {
-        return navBackButton.isElementPresent();
+    public void clickNavBackBtn() {
+        navBackButton.click();
     }
 
     public boolean isCollectionViewScreenScrollableVertically(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
