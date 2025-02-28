@@ -519,7 +519,17 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUnavailableContentPopUpForESPNContentJuniorProfile() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         setAccount(getAccount());
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(SECONDARY_PROFILE)
+                .language(getAccount().getProfileLang())
+                .avatarId(null)
+                .kidsModeEnabled(true)
+                .dateOfBirth(Person.U18.getYear() + "-" + Person.U18.getMonth().getNum() + "-" + Person.U18.getDay(true))
+                .build());
+
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
                 .profileName(JUNIOR_PROFILE)
@@ -529,9 +539,21 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .dateOfBirth(KIDS_DOB)
                 .build());
 
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
+        verifyMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage(
+                R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
+
+        homePage.clickMoreTab();
+        whoIsWatching.clickProfile(JUNIOR_PROFILE);
+        homePage.waitForHomePageToOpen();
+        verifyMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage(
+                R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
+    }
+
+    private void verifyMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage(String contentDeeplink) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        launchDeeplink(contentDeeplink);
         Assert.assertTrue(homePage.getMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage().isPresent(),
                 CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getOkButton().isPresent(), "CTA button not found");
