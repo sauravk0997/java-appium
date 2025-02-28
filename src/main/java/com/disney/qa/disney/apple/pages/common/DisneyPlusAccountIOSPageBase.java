@@ -532,10 +532,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).equals(expectedValue);
     }
 
-    public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
-        if(!getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
+    public void toggleRestrictProfileCreation() {
             restrictedProfileToggle.click();
-        }
     }
 
     public boolean isDirectBillingPausedSubscriptionDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {

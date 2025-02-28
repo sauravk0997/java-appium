@@ -254,7 +254,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         setAppToAccountSettings();
         Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
 
-        accountPage.toggleRestrictProfileCreation(IOSUtils.ButtonStatus.ON);
+        accountPage.toggleRestrictProfileCreation();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
 
         passwordPage.enterPassword(getAccount());
