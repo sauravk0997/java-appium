@@ -1,10 +1,10 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_handset_reg_fc" annotations="JDK" configfailurepolicy="continue" thread-count="8" parallel="tests">
+<suite verbose="1" name="dmgzios_handset_reg_fc" annotations="JDK" configfailurepolicy="continue" thread-count="12" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.1.0-fc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78600"/>
-    <parameter name="jenkinsBuild" value="4.1.0.76339"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.1.5-dev"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78727"/>
+    <parameter name="jenkinsBuild" value="4.1.5.76387"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_handset_reg_fc"/>
@@ -12,7 +12,7 @@
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_Xs,iPhone_Xr,iPhone_11_Pro_Max,iPhone_15_1,iPhone_15_5,iPhone_15_Plus_2,iPhone_15_3,iPhone_13_Pro;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_Xs,iPhone_Xr,iPhone_11_Pro_Max,iPhone_15_1,iPhone_15_5,iPhone_15_Plus_2,iPhone_15_3,iPhone_13_Pro,iPhone_15_Plus_1,iPhone_15_2,iPhone_15_Plus_3,iPhone_15_4;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>

@@ -220,41 +220,55 @@ public class DisneyPlusHulkDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74254"})
-    @Test(description = "Hulk Details verify share on adult and kids profile", groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkShare() {
+        String grootSeries = "I Am Groot";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang()).avatarId(BABY_YODA)
+                .kidsModeEnabled(true).isStarOnboarded(true).build());
         setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
 
         //Adult
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.searchForMedia(PREY);
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        searchPage.getDynamicAccessibilityId(PREY).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel("Prey | Disney+").isPresent(), "'Prey | Disney+' title was not found on share actions.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Messages").isPresent(), "Share action 'Messages' was not found.");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Mail").isPresent(), "Share action 'Mail' was not found.");
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", PREY)).isPresent(),
+                String.format("'%s | Disney+' title was not found on share actions.", PREY));
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Mail").isPresent(),
+                "Share action 'Mail' was not found.");
 
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Tablet")) {
-            detailsPage.clickHomeIcon();
-        } else {
-            detailsPage.getTypeButtonByLabel("Close").click();
-        }
+        detailsPage.getShareBtn().click();
+        detailsPage.clickOnCopyShareLink();
+        detailsPage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        String actualUrl = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
+        String expectedUrl = R.TESTDATA.get("disney_prod_hulu_movie_prey_share_link");
+        Assert.assertTrue(expectedUrl.contains(actualUrl), "Deeplink is not correct");
 
         //Kids
-        homePage.clickMoreTab();
+        searchPage.clickMoreTab();
         whoseWatchingPage.clickProfile(JUNIOR_PROFILE);
-        sa.assertTrue(homePage.isKidsHomePageOpen(), "Kids home page did not open");
+        Assert.assertTrue(homePage.isKidsHomePageOpen(), "Kids home page did not open");
         homePage.clickSearchIcon();
-        searchPage.searchForMedia("I Am Groot");
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertFalse(detailsPage.getShareBtn().isPresent(), "Share button was found on kids profile.");
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(grootSeries);
+        searchPage.getDynamicAccessibilityId(grootSeries).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertFalse(detailsPage.getShareBtn().isPresent(ONE_SEC_TIMEOUT),
+                "Share button was found on kids profile.");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
