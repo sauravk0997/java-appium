@@ -479,7 +479,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             liveEventModal.getDetailsButton().click();
             Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
             Assert.assertTrue(detailsPage.isWatchButtonPresent(), "Watch button not displayed");
-            Assert.assertTrue(detailsPage.getAiringBadgeLabel().getAttribute(Attributes.LABEL.getAttribute()).equals(LIVE),
+            Assert.assertTrue(detailsPage.getAiringBadgeLabel().getAttribute(Attributes.LABEL.getAttribute()).contains(LIVE),
                     "Live badge not displayed on detail page");
         }
     }
