@@ -11,6 +11,7 @@ import com.disney.util.TestGroup;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.*;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -20,6 +21,7 @@ import java.util.*;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     //Test constants
@@ -745,6 +747,199 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 "Downloads empty header is not present");
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHulkMovieDetailsTab() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page did not open.");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab was not found");
+
+        detailsPage.clickDetailsTab();
+        scrollDown();
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Tablet")) {
+            detailsPage.swipeTillActorsElementPresent();
+        }
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
+        sa.assertTrue(detailsPage.isDurationDisplayed(), "Detail Tab duration is not present");
+        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
+        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75020"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMovieDetailsPageRestartButton() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        pause(5);
+        videoPlayer.clickBackButton();
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(detailsPage.getRestartButton().getBy()), SHORT_TIMEOUT);
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
+        detailsPage.getRestartButton().click();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.getCurrentPositionOnPlayer() < 50, "video didn't start from the beginning");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74845"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHulkBaseUIMovies() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        //media features - audio, video, accessibility
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not found.");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not found.");
+
+        //Validate Dolby Vision present / not present on certain devices
+        detailsPage.isDolbyVisionPresentOrNot(sa);
+
+        //back button, share button, title, description
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Back button is not found.");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        sa.assertTrue(detailsPage.getMediaTitle().contains(PREY), "Prey media title not found.");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Content Description not found.");
+
+        //Release date, duration, genres, rating
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Release date from metadata label does not match release date from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
+                "Genre Thriller from metadata label does not match Genre Thriller from details tab.");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
+                "Genre Drama from metadata label does not match Genre Drama from details tab.");
+        sa.assertTrue(detailsPage.getRating().isPresent(), "Rating not found.");
+
+        //CTAs
+        sa.assertTrue(detailsPage.getPlayButton().isPresent(), "Play CTA not found.");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Watchlist CTA not found.");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Trailer CTA not found.");
+
+        //Restart
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button was not found.");
+
+        //Tabs
+        sa.assertTrue(detailsPage.isSuggestedTabPresent(), "Suggested tab not found.");
+        sa.assertTrue(detailsPage.isExtrasTabPresent(), "Extras tab not found");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Details tab not found");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(1, detailsPage.getDuration(), 1),
+                "Duration from metadata label does not match duration from details tab.");
+
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74450"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluMovieDownloadAsset() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.startDownload();
+        detailsPage.waitForMovieDownloadComplete(350, 20);
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
+
+        //Downloaded movie asset metadata
+        sa.assertTrue(downloadsPage.getStaticTextByLabelContains(PREY).isPresent(), PREY + " title was not found on downloads tab.");
+        sa.assertTrue(downloadsPage.getDownloadedAssetImage(PREY).isPresent(), "Downloaded movie asset image was not found.");
+        sa.assertTrue(downloadsPage.getSizeAndRuntime().isPresent(), "Downloaded movie asset size and runtime are not found.");
+        sa.assertTrue(downloadsPage.getRating().getText().toLowerCase().contains("r"), "Movie downloaded asset rating not found.");
+
+        //Playback of downloaded movie asset
+        downloadsPage.tapDownloadedAsset(PREY);
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), "Video player did not launch.");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75022"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMovieDetailsVideoPlayerRestartButton() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        int limitTime = 25;
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Deeplink a movie, scrub and get current time
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(50);
+        int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
+        LOGGER.info("currentTimeBeforeRestartClick {}", currentTimeBeforeRestartClick);
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        // Validate and click restart button, get current time and validate restart button
+        Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
+        detailsPage.getRestartButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        int currentTimeAfterRestartClick = videoPlayer.getCurrentTime();
+        LOGGER.info("currentTimeAfterRestartClick {}", currentTimeAfterRestartClick);
+        Assert.assertTrue((currentTimeAfterRestartClick < currentTimeBeforeRestartClick)
+                        && (currentTimeAfterRestartClick < limitTime),
+                "Restart button did not restarted the video");
     }
 
     private Map<String, Object> getMoviesMetaDataFromAPI(Visuals visualsResponse) {
