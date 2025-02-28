@@ -2,17 +2,14 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.config.*;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.*;
-import com.disney.qa.api.search.assets.DisneyMovies;
 import com.disney.qa.api.utils.*;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.*;
 import org.testng.annotations.Test;
@@ -27,7 +24,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     //Test constants
     private static final String HOCUS_POCUS = "Hocus Pocus";
-    private static final String ALL_METADATA_MOVIE = "Turning Red";
     private static final String WORLDS_BEST = "World's Best";
     private static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
     private static final String RATING = "Rating";
@@ -36,6 +32,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String CONTENT_TITLE = "Content_Title";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String DOWNLOAD_MODAL_STILL_VISIBLE = "Download Modal was still visible";
+    private static final String RELEASE_YEAR_DETAILS = "Release_Year";
+
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
@@ -81,26 +79,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69961"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyMovieNoExtras() {
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
-
-        disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.searchForMedia(DisneyMovies.HOLIDAY_MAGIC.getName());
-        List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
-        results.get(0).click();
-        sa.assertFalse(disneyPlusHomeIOSPageBase.getTypeButtonByLabel(
-                        getLocalizationUtils()
-                                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                        DictionaryKeys.NAV_EXTRAS.getText()))
-                .isPresent());
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMoviesDetailsTabMetadata() {
@@ -133,30 +111,70 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69961"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovieDetailsUIElements() {
+        String contentTitle = DisneyEntityIds.IRONMAN.getTitle();
+        String entityID = DisneyEntityIds.IRONMAN.getEntityId();
+
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
+
         //Navigate to all metadata movie
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(ALL_METADATA_MOVIE);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDynamicAccessibilityId(contentTitle).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Verify main details page UI elements
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Close button not present");
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present");
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
+        sa.assertEquals(detailsPage.getMediaTitle(), visualsResponse.getTitle(), "Content title mismatch");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
+
+        //Verify if "Genre" value matches with api, if api has returned any value
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge -> {
+                if (badge.equalsIgnoreCase(DOLBY_VISION)) {
+                    detailsPage.isDolbyVisionPresentOrNot(sa);
+                } else {
+                    sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                            String.format("Audio video badge %s is not present on details page featured area", badge));
+                }
+            });
+        }
+        //Verify if ratings value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area");
+        }
+        //Verify if release year value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
+                    "Release year value is not present on details page featured area");
+        }
+
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
         sa.assertTrue(detailsPage.isMovieDownloadButtonDisplayed(), "Details page download button not present");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0,
-                        detailsPage.getReleaseDate(), 1),
-                "Metadata year does not contain details tab year");
+
+        //Tabs
+        sa.assertTrue(detailsPage.getSuggestedTab().isPresent(), "Details tab is not present");
+        sa.assertTrue(detailsPage.getExtrasTab().isPresent(), "Extras tab is not present");
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), "Suggested tab is not present");
 
         sa.assertAll();
     }
