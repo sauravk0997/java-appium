@@ -25,9 +25,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.RatingConstant.FRANCE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
@@ -843,6 +843,30 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 "Upcoming badge was not present for upcoming event search result");
         Assert.assertTrue(searchPage.getUnlockBadgeForGivenSearchResult(firstUpcomingEventCell).isElementPresent(),
                 "Unlock badge was not present for upcoming event search result");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77673"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, FRANCE})
+    public void verifySportsSearchForNonEligibleCountry() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
+                initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(ESPN_LEAGUE);
+        searchPage.getKeyboardSearchButton().click();
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(FIFTEEN_SEC_TIMEOUT),
+                "An ESPN+ title was found when searching for Sports content");
     }
 
     protected ArrayList<String> getMedia() {
