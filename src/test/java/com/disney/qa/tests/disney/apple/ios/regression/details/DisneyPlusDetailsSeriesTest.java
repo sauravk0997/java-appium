@@ -30,6 +30,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
     private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
+    private static final String DETAILS_TAB_METADATA_SERIES = "Loki";
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
@@ -178,22 +179,68 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
+        String entityID = R.TESTDATA.get("disney_prod_loki_entity_id");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
+
         //Navigate to All Metadata Series
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(ALL_METADATA_SERIES);
-        searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
+        searchPage.getDynamicAccessibilityId(DETAILS_TAB_METADATA_SERIES).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
         //Verify main details page UI elements
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present");
+        sa.assertTrue(detailsPage.getBackButton().isPresent(), "Close button not present");
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
+
+        //Verify if "Genre" value matches with api, if api has returned any value
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge -> {
+                if (badge.equalsIgnoreCase(DOLBY_VISION)) {
+                    detailsPage.isDolbyVisionPresentOrNot(sa);
+                } else {
+                    sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                            String.format("Audio video badge %s is not present on details page featured area", badge));
+                }
+            });
+        }
+        //Verify if ratings value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area");
+        }
+        //Verify if release year value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
+                    "Release year value is not present on details page featured area");
+        }
+
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
         sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
         sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
         sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "One or more season not displayed.");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1), "Metadata year does not contain details tab year.");
+
+        //Episode tab elements
+        swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 1200);
+        sa.assertTrue(detailsPage.isSeasonButtonDisplayed("1"), "Season 1 not selected by default");
+        sa.assertTrue(detailsPage.isContentImageViewPresent(), "Episode artwork not present");
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Episode play icon not present");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title not present");
+        sa.assertTrue(detailsPage.getFirstDurationLabel().isPresent(), "Episode duration not present");
+        sa.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isPresent(), "Episode download button not present");
+        sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download season button not present");
+        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
+                "Metadata year does not contain details tab year.");
         sa.assertAll();
     }
 
