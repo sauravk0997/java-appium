@@ -529,7 +529,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isRestrictProfileCreationValueExpected(String expectedValue) {
-        return getRestrictProfileCreationContainer().getAttribute(Attributes.VALUE.getAttribute()).equals(expectedValue);
+        return getRestrictProfileCreationContainer()
+                .getAttribute(Attributes.VALUE.getAttribute()).equals(expectedValue);
     }
 
     public void toggleRestrictProfileCreation() {
