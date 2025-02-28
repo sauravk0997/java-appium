@@ -32,6 +32,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     private static final String CONTENT_TITLE = "Content_Title";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String DOWNLOAD_MODAL_STILL_VISIBLE = "Download Modal was still visible";
+    private static final String RELEASE_YEAR_DETAILS = "Release_Year";
+
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68448"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
@@ -133,16 +135,31 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
 
+        //Verify if "Genre" value matches with api, if api has returned any value
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
         //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
-            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
+            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge -> {
+                if (badge.equalsIgnoreCase(DOLBY_VISION)) {
+                    detailsPage.isDolbyVisionPresentOrNot(sa);
+                } else {
                     sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
-                            String.format("Audio video badge %s is not present on details page featured area", badge)));
+                            String.format("Audio video badge %s is not present on details page featured area", badge));
+                }
+            });
         }
         //Verify if ratings value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RATING)) {
             sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
                     "Rating value is not present on details page featured area");
+        }
+        //Verify if release year value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
+                    "Release year value is not present on details page featured area");
         }
 
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
