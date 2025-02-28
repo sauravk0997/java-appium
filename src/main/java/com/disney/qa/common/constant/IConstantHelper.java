@@ -24,6 +24,7 @@ public interface IConstantHelper {
     String UNIFIED_ORDER = "UNIFIED-ORDER";
 
     //Common Error Messages
+    String ACCOUNT_PAGE_NOT_DISPLAYED = "Account Page is not displayed";
     String ARTWORK_IMAGE_NOT_DISPLAYED = "Artwork Image is not displayed";
     String BACK_BUTTON_NOT_DISPLAYED = "Back button is not present";
     String CONTINUE_BTN_NOT_DISPLAYED = "Continue Button is not displayed";
@@ -32,6 +33,7 @@ public interface IConstantHelper {
     String DETAILS_PAGE_NOT_DISPLAYED = "Details Page is not displayed";
     String DETAILS_TAB_NOT_DISPLAYED = "Details Tab is not displayed";
     String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
+    String ENTER_PASSWORD_PAGE_NOT_DISPLAYED = "Enter Password page is not displayed";
     String EPISODE_TAB_NOT_DISPLAYED = "Episode Tab is not displayed";
     String EXTRAS_TAB_NOT_DISPLAYED = "Extras Tab is not displayed";
     String MEDIA_TITLE_NOT_DISPLAYED = "Media Title is not displayed";
