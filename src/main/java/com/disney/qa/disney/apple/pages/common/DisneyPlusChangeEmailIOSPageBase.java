@@ -108,4 +108,11 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText())).isPresent();
     }
+
+    public boolean isNewEmailShownOnSuccessPage(String email) {
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_NEW_EMAIL.getText()).replace("{email}", email))
+                .isElementPresent();
+    }
 }

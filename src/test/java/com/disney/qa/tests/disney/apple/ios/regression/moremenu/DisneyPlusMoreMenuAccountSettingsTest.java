@@ -447,6 +447,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         changeEmailPage.submitNewEmailAddress(newEmail);
         Assert.assertTrue(changeEmailPage.isConfirmationPageOpen(),
                 "User was not directed to Confirmation Page");
+        Assert.assertTrue(changeEmailPage.isNewEmailShownOnSuccessPage(newEmail),
+                "New Email is not displayed on success page");
 
         changeEmailPage.clickBackToDisneyBtn();
         Assert.assertTrue(accountPage.isOpened(),
