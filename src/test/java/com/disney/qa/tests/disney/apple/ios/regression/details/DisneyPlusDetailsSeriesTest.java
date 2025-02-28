@@ -29,8 +29,6 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
-    private static final String ALL_METADATA_SERIES = "High School Musical: The Musical: The Series";
-    private static final String DETAILS_TAB_METADATA_SERIES = "Loki";
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
@@ -185,10 +183,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Navigate to All Metadata Series
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
-        searchPage.searchForMedia(DETAILS_TAB_METADATA_SERIES);
-        searchPage.getDynamicAccessibilityId(DETAILS_TAB_METADATA_SERIES).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(SERIES_LOKI);
+        searchPage.getDynamicAccessibilityId(SERIES_LOKI).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Verify main details page UI elements
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present");
