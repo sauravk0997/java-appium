@@ -12,7 +12,7 @@ import java.util.*;
 public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     private static final String IMAGES_ARE_THE_SAME_ERROR_MESSAGE = "Images are the same";
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[name == \"highEmphasisView\"]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement collectionBrandImageExpanded;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name = 'buttonBack'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[3]")
@@ -51,7 +51,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isCollectionBrandImageExpanded() {
-        return brandFeaturedImage.isPresent();
+        return collectionBrandImageExpanded.isPresent();
     }
 
     public boolean isCollectionBrandImageCollapsed() {
