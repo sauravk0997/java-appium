@@ -411,6 +411,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExtrasTabForESPNContent() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
@@ -419,6 +420,19 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         swipe(detailsPage.getSuggestedTab(), 2);
         Assert.assertFalse(detailsPage.getSuggestedTab().isPresent(THREE_SEC_TIMEOUT), "Suggested Tab is present");
         Assert.assertFalse(detailsPage.getExtrasTab().isPresent(THREE_SEC_TIMEOUT), "Extras Tab is present");
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_movie_shohei_ohtani_beyond_the_dream_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        swipe(detailsPage.getSuggestedTab(), 2);
+        Assert.assertTrue(detailsPage.getSuggestedTab().isPresent(), "Suggested Tab is not present");
+        Assert.assertTrue(detailsPage.getExtrasTab().isPresent(), "Extras Tab is not present");
+        detailsPage.clickExtrasTab();
+        String extrasContentTitle = detailsPage.getFirstTitleLabel().getText();
+        detailsPage.getFirstTitleLabel().click();
+        videoPlayer.isOpened();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(extrasContentTitle),
+                "Expected content title not playing");
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
