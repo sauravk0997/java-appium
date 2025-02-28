@@ -260,7 +260,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.enterPassword(getAccount());
         editProfilePage.waitForUpdatedToastToDisappear();
         Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(accountPage.isRestrictProfileCreationEnabled("1"),
+        Assert.assertTrue(accountPage.isRestrictProfileCreationValueExpected("1"),
                 "'Restrict Profile Creation' toggle was not enabled after submitting credentials");
 
         accountPage.clickNavBackBtn();
