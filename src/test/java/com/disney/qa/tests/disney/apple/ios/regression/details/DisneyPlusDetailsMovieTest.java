@@ -111,7 +111,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69961"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovieDetailsUIElements() {
-        String avengersMovie = DisneyEntityIds.IRONMAN.getTitle();
+        String contentTitle = DisneyEntityIds.IRONMAN.getTitle();
         String entityID = DisneyEntityIds.IRONMAN.getEntityId();
 
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -126,8 +126,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         //Navigate to all metadata movie
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        searchPage.searchForMedia(avengersMovie);
-        searchPage.getDynamicAccessibilityId(avengersMovie).click();
+        searchPage.searchForMedia(contentTitle);
+        searchPage.getDynamicAccessibilityId(contentTitle).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Verify main details page UI elements
