@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.config.*;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.utils.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -23,7 +24,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     //Test constants
     private static final String HOCUS_POCUS = "Hocus Pocus";
-    private static final String ALL_METADATA_MOVIE = "Turning Red";
     private static final String WORLDS_BEST = "World's Best";
     private static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
     private static final String RATING = "Rating";
@@ -111,27 +111,30 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69961"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovieDetailsUIElements() {
+        String avengersMovie = DisneyEntityIds.IRONMAN.getTitle();
+        String entityID = DisneyEntityIds.IRONMAN.getEntityId();
+
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
 
-        String entityID = R.TESTDATA.get("disney_prod_movie_turning_red_entity_id");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 
         //Navigate to all metadata movie
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        searchPage.searchForMedia(ALL_METADATA_MOVIE);
-        searchPage.getDynamicAccessibilityId(ALL_METADATA_MOVIE).click();
+        searchPage.searchForMedia(avengersMovie);
+        searchPage.getDynamicAccessibilityId(avengersMovie).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Verify main details page UI elements
         sa.assertTrue(detailsPage.getBackButton().isPresent(), "Close button not present");
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present");
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
+        sa.assertEquals(detailsPage.getMediaTitle(), visualsResponse.getTitle(), "Content title mismatch");
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Details page content description not present");
 
