@@ -25,9 +25,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.RatingConstant.FRANCE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 
@@ -1053,6 +1053,32 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.searchForMedia(unavailableContentInCA);
         Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(unavailableContentInCA),
                 String.format("No results found message was not displayed for, '%s'", unavailableContentInCA));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77673"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, FRANCE})
+    public void verifySportsSearchForNonEligibleCountry() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
+                initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(ESPN_LEAGUE);
+        searchPage.getKeyboardSearchButton().click();
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(TEN_SEC_TIMEOUT),
+                "An ESPN+ title was found when searching for Sports content");
+        Assert.assertFalse(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE).isElementPresent(TEN_SEC_TIMEOUT),
+                "Not results related to given ESPN League where found under the search results");
     }
 
     protected ArrayList<String> getMedia() {
