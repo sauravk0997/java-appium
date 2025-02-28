@@ -822,4 +822,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             return e.getMessage().split("description=")[1].split("\\)")[0];
         }
     }
+
+    protected List<String> getGenreMetadataLabels(Visuals visualsResponse) {
+        List<String> metadataArray = new ArrayList();
+        List<String> genreList = visualsResponse.getMetastringParts().getGenres().getValues();
+        //get only first two values of genre
+        if (genreList.size() > 2) {
+            genreList = genreList.subList(0, 2);
+        }
+        genreList.forEach(genre -> metadataArray.add(genre));
+        return metadataArray;
+    }
 }
