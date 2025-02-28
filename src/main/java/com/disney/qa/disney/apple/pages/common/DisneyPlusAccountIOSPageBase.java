@@ -43,17 +43,19 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement editEmailButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[2]")
     private ExtendedWebElement editPasswordButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
+            "**/XCUIElementTypeButton[2]")
+    private ExtendedWebElement subscriptionMessage;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
+    private ExtendedWebElement restrictedProfileToggle;
     @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
     private ExtendedWebElement changePasswordCell;
-
+    @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
+    private ExtendedWebElement restrictProfileCreation;
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
     @ExtendedFindBy(accessibilityId = "manageParentalControls")
     private ExtendedWebElement manageParentalControls;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
-            "**/XCUIElementTypeButton[2]")
-    private ExtendedWebElement subscriptionMessage;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -220,9 +222,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getRestrictProfileCreationContainer() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_DESCRIPTION.getText())));
+        return restrictProfileCreation;
     }
 
     private ExtendedWebElement verifyAccountHeader = getDynamicXpath(
@@ -528,14 +528,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         getDynamicCellByName("logOutAllDevicesCell").click();
     }
 
-    public boolean isRestrictProfileCreationEnabled() {
-        return getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(IOSUtils.ButtonStatus.ON.toString());
+    public boolean isRestrictProfileCreationValueExpected(String expectedValue) {
+        return getRestrictProfileCreationContainer()
+                .getAttribute(Attributes.VALUE.getAttribute()).equals(expectedValue);
     }
 
-    public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
-        if(!getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-            clickElementAtLocation(getRestrictProfileCreationContainer(), 35, 90);
-        }
+    public void toggleRestrictProfileCreation() {
+            restrictedProfileToggle.click();
     }
 
     public boolean isDirectBillingPausedSubscriptionDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
