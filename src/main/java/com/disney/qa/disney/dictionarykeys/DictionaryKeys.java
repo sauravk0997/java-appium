@@ -102,6 +102,7 @@ public enum DictionaryKeys {
     BTN_TRAILER("btn_trailer"),
     BTN_TRAVEL_MESSAGE_OK("btn_travel_message_ok"),
     BTN_UPDATE_APP("btn_update_app"),
+    BTN_WATCH("btn_watch"),
     CANCEL("cancel"),
     CANCEL_BTN_CAPS("btn_cancel"),
     CANCEL_BTN_NORMAL("btn_cancel_3"),

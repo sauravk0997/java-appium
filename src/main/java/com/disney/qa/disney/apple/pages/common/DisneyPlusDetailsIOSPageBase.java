@@ -82,8 +82,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement movieDownloadButton;
     @ExtendedFindBy(accessibilityId = "downloadButtonDownloaded")
     protected ExtendedWebElement movieDownloadCompletedButton;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"WATCH\"`]")
-    protected ExtendedWebElement watchButton;
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
@@ -185,6 +183,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private final ExtendedWebElement resumeDownloadButton = getTypeButtonByLabel(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_RESUME_DOWNLOAD.getText()));
+    protected final ExtendedWebElement watchButton = getTypeButtonByLabel(getLocalizationUtils()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    BTN_WATCH.getText()));
 
     //FUNCTIONS
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
