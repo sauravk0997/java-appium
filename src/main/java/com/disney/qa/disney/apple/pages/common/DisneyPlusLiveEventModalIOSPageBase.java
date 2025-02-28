@@ -14,7 +14,9 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
         super(driver);
     }
 
-    protected ExtendedWebElement watchLiveButton = dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PLAYBACK_MODAL_LIVE.getText()));
+    protected ExtendedWebElement watchLiveButton = dynamicBtnFindByLabel.format(
+            getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                    DictionaryKeys.BTN_PLAYBACK_MODAL_LIVE.getText()));
 
     protected ExtendedWebElement watchFromStartButton = dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PLAYBACK_MODAL_BEGINNING.getText()));
 
@@ -30,5 +32,11 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
     @Override
     public boolean isOpened() {
         return watchLiveButton.isElementPresent();
+    }
+
+    public ExtendedWebElement getDetailsButton() {
+        return dynamicBtnFindByLabel.format(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.BTN_DETAILS.getText()));
     }
 }

@@ -44,6 +44,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String AVAILABLE_WITH_HULU = "Available with Hulu Subscription";
     private static final String UNLOCK_HULU_ON_DISNEY = "Unlock Hulu on Disney+";
     private static final String AVAILABLE_WITH_ESPN_SUBSCRIPTION = "Available with ESPN+ Subscription";
+    public static final String UPCOMING = "Upcoming";
+    public static final String LIVE = "LIVE";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -786,6 +788,50 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(extrasContentTitle),
                 "Expected content title not playing");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78054"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEntitledDetailPageForEspnContent() {
+        int swipeCount = 5;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
+        CollectionConstant.Collection espnLiveAndUpcomingCollection =
+                CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING;
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickEspnTile();
+
+        Assert.assertTrue(homePage.isEspnBrandPageOpen(), "ESPN brand page did not open");
+        collectionPage.swipeTillCollectionTappable(espnLiveAndUpcomingCollection,
+                Direction.UP, swipeCount);
+        Assert.assertTrue(collectionPage.isCollectionPresent(espnLiveAndUpcomingCollection),
+                "ESPN+ Live and Upcoming Container not found");
+
+        String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
+                .getCollectionName(espnLiveAndUpcomingCollection)).getText();
+
+        collectionPage.getFirstCellFromCollection(CollectionConstant
+                .getCollectionName(espnLiveAndUpcomingCollection)).click();
+
+        if (airingBadge.equals(UPCOMING)) {
+            Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+            Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(),
+                    "Watchlist button is not displayed");
+            Assert.assertTrue(detailsPage.getAiringBadgeLabel().getText().contains(UPCOMING),
+                    "Upcoming badge not displayed on detail page");
+        } else {
+            Assert.assertTrue(liveEventModal.isOpened(), "Live event modal is not open");
+            liveEventModal.getDetailsButton().click();
+            Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+            Assert.assertTrue(detailsPage.isWatchButtonPresent(), "Watch button not displayed");
+            Assert.assertTrue(detailsPage.getAiringBadgeLabel().getAttribute(Attributes.LABEL.getAttribute()).contains(LIVE),
+                    "Live badge not displayed on detail page");
+        }
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
