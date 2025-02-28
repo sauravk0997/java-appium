@@ -47,6 +47,11 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
                 isNextEpisodeInfoPresent() &&
                 seeAllEpisodeButton.isElementPresent();
     }
+
+    public ExtendedWebElement getSeeDetailsButton() {
+        return seeAllEpisodeButton;
+    }
+
     public void tapSeeAllEpisodesButton() {
         LOGGER.info("Tapping on 'See All Episodes' button");
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Unable to see 'See All Episodes' button")
