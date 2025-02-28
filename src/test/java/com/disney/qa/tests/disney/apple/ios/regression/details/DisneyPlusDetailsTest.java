@@ -819,7 +819,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .getCollectionName(espnLiveAndUpcomingCollection)).click();
 
         if (airingBadge.equals(UPCOMING)) {
-            Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+            Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
             Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(),
                     "Watchlist button is not displayed");
             Assert.assertTrue(detailsPage.getAiringBadgeLabel().getText().contains(UPCOMING),
@@ -827,7 +827,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         } else {
             Assert.assertTrue(liveEventModal.isOpened(), "Live event modal is not open");
             liveEventModal.getDetailsButton().click();
-            Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+            Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
             Assert.assertTrue(detailsPage.isWatchButtonPresent(), "Watch button not displayed");
             Assert.assertTrue(detailsPage.getAiringBadgeLabel().getAttribute(Attributes.LABEL.getAttribute()).contains(LIVE),
                     "Live badge not displayed on detail page");
