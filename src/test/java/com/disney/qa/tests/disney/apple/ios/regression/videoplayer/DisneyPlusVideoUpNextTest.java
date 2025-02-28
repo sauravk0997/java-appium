@@ -407,9 +407,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         String nextEpisodesTitle = upNext.getNextEpisodeInfo();
         upNext.tapSeeAllEpisodesButton();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
-        }
+        swipe(detailsPage.getStaticTextByLabelContains(nextEpisodesTitle), Direction.UP, 1, 900);
         sa.assertTrue(detailsPage.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Details page from the expected series did not open");
         // Steps to tap in Play content
@@ -423,6 +421,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     }
 
     private void deeplinkContentAndScrubPlayback(String deeplink) {
+        LOGGER.info("Deeplink content and scrub playback {}", deeplink);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
         int percentage = 98;
