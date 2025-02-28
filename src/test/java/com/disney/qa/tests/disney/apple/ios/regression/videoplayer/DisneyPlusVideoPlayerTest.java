@@ -105,7 +105,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.clickPlayButton().isOpened();
+        detailsPage.clickPlayButton();
 
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
@@ -166,7 +166,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
 
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.clickPlayButton().isOpened();
+        detailsPage.clickPlayButton();
 
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.skipPromoIfPresent();

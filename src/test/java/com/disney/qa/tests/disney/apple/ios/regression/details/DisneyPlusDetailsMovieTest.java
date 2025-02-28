@@ -794,7 +794,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.clickPlayButton().isOpened();
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
         pause(5);

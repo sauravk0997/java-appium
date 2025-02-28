@@ -26,12 +26,10 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
@@ -770,14 +768,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         swipe(detailsPage.getSuggestedTab(), 2);
         Assert.assertFalse(detailsPage.getSuggestedTab().isPresent(THREE_SEC_TIMEOUT), "Suggested Tab is present");
         Assert.assertFalse(detailsPage.getExtrasTab().isPresent(THREE_SEC_TIMEOUT), "Extras Tab is present");
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_movie_shohei_ohtani_beyond_the_dream_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         swipe(detailsPage.getSuggestedTab(), 2);
         Assert.assertTrue(detailsPage.getSuggestedTab().isPresent(), "Suggested Tab is not present");
         Assert.assertTrue(detailsPage.getExtrasTab().isPresent(), "Extras Tab is not present");
