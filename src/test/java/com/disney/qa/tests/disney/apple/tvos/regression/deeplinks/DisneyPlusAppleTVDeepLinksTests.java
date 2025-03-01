@@ -14,7 +14,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusAppleTVDeepLinksTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112888"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.DEEPLINKS, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, US})
     public void verifyHuluHubDeeplinks() {
         DisneyPlusAppleTVCollectionPage collectionPage = new DisneyPlusAppleTVCollectionPage(getDriver());
         String networkName = "ABC";
