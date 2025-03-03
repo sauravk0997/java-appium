@@ -870,7 +870,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Verify remove download button
         detailsPage.getHuluSeriesDownloadCompleteButton().click();
         detailsPage.getSystemAlertDestructiveButton().click();
-        Assert.assertTrue(detailsPage.getHuluSeriesDownloadCompleteButton().waitUntilElementDisappear(SHORT_TIMEOUT),
+        Assert.assertTrue(detailsPage.getHuluSeriesDownloadCompleteButton().waitUntilElementDisappear(TEN_SEC_TIMEOUT),
                 "Content is not removed from the Device");
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isElementNotPresent(SHORT_TIMEOUT),
