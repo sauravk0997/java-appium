@@ -359,6 +359,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             "**/XCUIElementTypeCollectionView[`name == '43a35f2b-3788-4449-a54d-cd37263f0940'`]/" +
                     "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+:E.+'`]")
     private ExtendedWebElement firstCellElementFromCollectionEpisodeMetadata;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+                    "**/XCUIElementTypeStaticText[`name == 'airingBadgeLabel'`]")
+    private ExtendedWebElement firstCellElementFromCollectionAiringBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label " +
             "CONTAINS \"%s,\"$]")
     private ExtendedWebElement cellElementFromCollection;
@@ -1381,8 +1385,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return navBackButton;
     }
 
-    public boolean isNavBackArrowDisplayed() {
-        return navBackButton.isElementPresent();
+    public void clickNavBackBtn() {
+        navBackButton.click();
     }
 
     public boolean isCollectionViewScreenScrollableVertically(ExtendedWebElement firstCollection, ExtendedWebElement secondCollection, ExtendedWebElement container) {
@@ -1504,6 +1508,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
         return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
+    }
+
+    public ExtendedWebElement getAiringBadgeOfFirstCellElementFromCollection(String collectionName) {
+        return firstCellElementFromCollectionAiringBadge.format(collectionName);
     }
 
     public ExtendedWebElement getFirstCellFromCollection(String collectionName) {

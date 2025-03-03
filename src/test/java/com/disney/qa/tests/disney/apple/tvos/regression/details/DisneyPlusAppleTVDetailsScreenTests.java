@@ -11,7 +11,6 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
-import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -151,7 +150,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112611"})
-    @Test(groups = {TestGroup.HULU_HUB, TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifyNetworkAttributionWithBundleUserAccount() {
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
         logIn(getAccount());
@@ -161,35 +160,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         launchApp(sessionBundles.get(DISNEY));
         verifyServiceAttribution(PREY, sa);
         sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122531"})
-    @Test(groups = {TestGroup.HULU_HUB_2, US}, enabled = false)
-    public void verifyHuluLicenseAttributeForStandAloneUser() {
-        throw new SkipException("Licensee Attribution feature was not released to PROD during HHP2.");
-//        String contentTitle = "Under the Bridge";
-//        String licenseeAttributionText = "Provided by Hulu";
-//        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
-//        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-//        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-//        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-//
-//        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
-//        logIn(getAccount());
-//
-//        Assert.assertTrue(home.isOpened(), "Home page did not open");
-//        home.moveDownFromHeroTileToBrandTile();
-//        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-//        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
-//        searchPage.typeInSearchField(contentTitle);
-//        searchPage.clickSearchResult(contentTitle);
-//        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
-//        Assert.assertTrue(detailsPage.getStaticTextByLabel(licenseeAttributionText).isPresent(),
-//                licenseeAttributionText + " Licensee Attribute text is not displayed on details page");
-//
-//        detailsPage.clickPlayButton();
-//        Assert.assertEquals(licenseeAttributionText, videoPlayer.getServiceAttributionLabel().getText(),
-//                licenseeAttributionText + " Licensee Attribute text is not displayed on video player");
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {
