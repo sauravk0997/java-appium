@@ -52,7 +52,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement subscriptionMessage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
     private ExtendedWebElement restrictedProfileToggle;
-    @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
+    @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
     private ExtendedWebElement manageMyAcccountCell;
     @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
     private ExtendedWebElement restrictProfileCreation;

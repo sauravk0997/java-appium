@@ -26,7 +26,6 @@ import java.util.*;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
-
 public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String NEW_PASSWORD = "TestPass1234!";
@@ -70,6 +69,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         String manageDevicesTitle = "Manage Devices";
+        String manageParentalControlsText =
+                "To manage parental controls for profiles on your account, visit Edit Profiles and select a Profile.";
 
         accountPage.waitForAccountPageToOpen();
         sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), BACK_BUTTON_NOT_DISPLAYED);
@@ -102,7 +103,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(),
                 "Restrict Profile Creation container was not displayed");
         sa.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
-        sa.assertTrue(accountPage.isEditProfilesTextPresent(), "Edit Profiles text was not displayed");
+        sa.assertTrue(accountPage.getEditProfileLink().getText().equals(manageParentalControlsText),
+                "Edit Profiles text was not displayed");
         accountPage.swipe(accountPage.getAccountManagementTextElement());
         sa.assertTrue(accountPage.isAccountManagementLinkPresent(),
                 "Account Management link was not displayed");
