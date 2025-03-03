@@ -69,14 +69,16 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        String manageDevicesTitle = "Manage Devices";
+
         accountPage.waitForAccountPageToOpen();
         sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
+        sa.assertTrue(accountPage.getStaticTextByLabelContains(getAccount().getEmail()).isPresent(),
                 "User Email address was not displayed");
-        sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(),
+        sa.assertTrue(accountPage.getManageMyAccountCell().isPresent(),
                 "Manage with MyDisney link was not displayed");
         sa.assertTrue(
-                accountPage.getStaticTextByLabel(
+                accountPage.getStaticTextByLabelContains(
                         getLocalizationUtils().getDictionaryItem(
                                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 DictionaryKeys.HIDDEN_PASSWORD.getText()
@@ -89,7 +91,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                         )).isPresent(), "Subscriptions header not displayed");
         sa.assertTrue(accountPage.isSubscriptionCellPresent(), "Subscription cell was not displayed");
         sa.assertTrue(accountPage.isAccessAndSecurityTextPresent(), "Access & Security text was not displayed");
-        sa.assertTrue(accountPage.isManageDevicesTextPresent(), "Manage Devices text was not displayed");
+        sa.assertTrue(accountPage.getManageDevicesText().equals(manageDevicesTitle),
+                "Manage Devices text was not displayed");
         sa.assertTrue(
                 accountPage.getStaticTextByLabel(
                         getLocalizationUtils().getDictionaryItem(

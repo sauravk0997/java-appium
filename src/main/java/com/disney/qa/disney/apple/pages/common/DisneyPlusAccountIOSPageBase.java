@@ -11,6 +11,10 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+
+import java.awt.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -49,13 +53,15 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
     private ExtendedWebElement restrictedProfileToggle;
     @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
-    private ExtendedWebElement changePasswordCell;
+    private ExtendedWebElement manageMyAcccountCell;
     @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
     private ExtendedWebElement restrictProfileCreation;
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
     @ExtendedFindBy(accessibilityId = "manageParentalControls")
     private ExtendedWebElement manageParentalControls;
+    @ExtendedFindBy(accessibilityId = "manageDevices")
+    private ExtendedWebElement manageDevices;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -66,6 +72,18 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getSubscriptionMessage() {
         return subscriptionMessage;
+    }
+
+    public ExtendedWebElement getManageMyAccountCell() {
+        return manageMyAcccountCell;
+    }
+
+    public ExtendedWebElement getManageDevices() {
+        return manageDevices;
+    }
+
+    public String getManageDevicesText() {
+        return manageDevices.getText();
     }
 
     public boolean isSubscriptionMessageDisplayed() {
@@ -677,10 +695,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void tapEditEmailButton() {
         editEmailButton.click();
-    }
-
-    public void clickChangePasswordCell() {
-        changePasswordCell.click();
     }
 
     public boolean waitForManageMyDisneyAccountOverlayToOpen(DisneyAccount account) {
