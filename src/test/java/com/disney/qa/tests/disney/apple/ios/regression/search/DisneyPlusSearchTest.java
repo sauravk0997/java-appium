@@ -1087,7 +1087,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getKeyboardSearchButton().click();
         Assert.assertFalse(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(TEN_SEC_TIMEOUT),
                 "An ESPN+ title was found when searching for Sports content");
-        Assert.assertFalse(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE).isElementPresent(TEN_SEC_TIMEOUT),
+        Assert.assertFalse(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE_CONTENT_DESCRIPTION)
+                        .isElementPresent(TEN_SEC_TIMEOUT),
                 "Not results related to given ESPN League where found under the search results");
     }
 
