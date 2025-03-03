@@ -834,7 +834,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         SoftAssert sa = new SoftAssert();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_tangled_short_deeplink"));
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeUp(2500);
         }
@@ -870,7 +870,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Verify remove download button
         detailsPage.getHuluSeriesDownloadCompleteButton().click();
         detailsPage.getSystemAlertDestructiveButton().click();
-        Assert.assertTrue(detailsPage.getHuluSeriesDownloadCompleteButton().isElementNotPresent(SHORT_TIMEOUT),
+        Assert.assertTrue(detailsPage.getHuluSeriesDownloadCompleteButton().waitUntilElementDisappear(TEN_SEC_TIMEOUT),
                 "Content is not removed from the Device");
         navigateToTab((DisneyPlusApplePageBase.FooterTabs.DOWNLOADS));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(TANGLED_THE_SERIES).isElementNotPresent(SHORT_TIMEOUT),
