@@ -70,8 +70,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         String manageDeviceText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText());
-        String manageParentalControlsText =
-                "To manage parental controls for profiles on your account, visit Edit Profiles and select a Profile.";
+        String accountSectionEditProfileLinkText = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.ACCOUNT_EDIT_PROFILE.getText());
 
         accountPage.waitForAccountPageToOpen();
         sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), BACK_BUTTON_NOT_DISPLAYED);
@@ -104,7 +105,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(),
                 "Restrict Profile Creation container was not displayed");
         sa.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
-        sa.assertTrue(accountPage.getEditProfileLink().getText().equals(manageParentalControlsText),
+        sa.assertTrue(accountPage.getEditProfileLink().getText().equals(accountSectionEditProfileLinkText),
                 "Edit Profiles text was not displayed");
         accountPage.swipe(accountPage.getAccountManagementTextElement());
         sa.assertTrue(accountPage.isAccountManagementLinkPresent(),
