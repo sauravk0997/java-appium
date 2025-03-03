@@ -24,8 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import static com.disney.qa.common.constant.IConstantHelper.MORE_MENU_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 
 public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
@@ -71,7 +70,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         accountPage.waitForAccountPageToOpen();
-        sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), "Back arrow was not displayed");
+        sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), BACK_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
                 "User Email address was not displayed");
         sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(),
