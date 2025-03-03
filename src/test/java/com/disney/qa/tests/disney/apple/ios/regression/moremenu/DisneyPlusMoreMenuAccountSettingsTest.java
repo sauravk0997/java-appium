@@ -68,9 +68,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        String manageDevicesTitle = "Manage Devices";
-        String manageParentalControlsText =
-                "To manage parental controls for profiles on your account, visit Edit Profiles and select a Profile.";
+        String accountSectionEditProfileLinkText = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
+        String manageDeviceText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText());
 
         accountPage.waitForAccountPageToOpen();
         sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), BACK_BUTTON_NOT_DISPLAYED);
@@ -92,7 +94,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                         )).isPresent(), "Subscriptions header not displayed");
         sa.assertTrue(accountPage.isSubscriptionCellPresent(), "Subscription cell was not displayed");
         sa.assertTrue(accountPage.isAccessAndSecurityTextPresent(), "Access & Security text was not displayed");
-        sa.assertTrue(accountPage.getManageDevicesText().equals(manageDevicesTitle),
+        sa.assertTrue(accountPage.getManageDevicesText().equals(manageDeviceText),
                 "Manage Devices text was not displayed");
         sa.assertTrue(
                 accountPage.getStaticTextByLabel(
@@ -103,7 +105,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(),
                 "Restrict Profile Creation container was not displayed");
         sa.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
-        sa.assertTrue(accountPage.getEditProfileLink().getText().equals(manageParentalControlsText),
+        sa.assertTrue(accountPage.getEditProfileLink().getText().equals(accountSectionEditProfileLinkText),
                 "Edit Profiles text was not displayed");
         accountPage.swipe(accountPage.getAccountManagementTextElement());
         sa.assertTrue(accountPage.isAccountManagementLinkPresent(),
