@@ -384,6 +384,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEspnHubSportPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         String sportsLabel = "Sports";
         String leagues = "Leagues";
@@ -391,7 +392,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickEspnTile();
-        Assert.assertTrue(homePage.isEspnBrandPageOpen(), "ESPN brand page did not open");
+        Assert.assertTrue(espnPage.isEspnBrandPageOpen(), "ESPN brand page did not open");
 
         swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
                 homePage.getBrandLandingView(), Direction.UP, 1000);
@@ -401,7 +402,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String sportTitle = getContainerTitlesFromApi(DisneyEntityIds.SPORTS_PAGE.getEntityId(), 5).get(0);
         if(!sportTitle.isEmpty()) {
             homePage.getTypeCellLabelContains(sportTitle).click();
-            sa.assertTrue(homePage.isSportTitlePresent(sportTitle), "Sport title was not found");
+            sa.assertTrue(espnPage.isSportTitlePresent(sportTitle), "Sport title was not found");
             sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
             sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
         } else {
@@ -798,6 +799,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
+        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
         CollectionConstant.Collection espnLiveAndUpcomingCollection =
                 CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING;
 
@@ -806,7 +808,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         homePage.clickEspnTile();
 
-        Assert.assertTrue(homePage.isEspnBrandPageOpen(), "ESPN brand page did not open");
+        Assert.assertTrue(espnPage.isEspnBrandPageOpen(), "ESPN brand page did not open");
         collectionPage.swipeTillCollectionTappable(espnLiveAndUpcomingCollection,
                 Direction.UP, swipeCount);
         Assert.assertTrue(collectionPage.isCollectionPresent(espnLiveAndUpcomingCollection),

@@ -483,14 +483,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .setLanguage(getLocalizationUtils().getUserLanguage());
     }
 
-    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName, String locale, String language) {
-        return getDefaultCreateUnifiedAccountRequest()
-                .setPartner(Partner.DISNEY)
-                .addEntitlement(UnifiedEntitlement.builder().unifiedOffer(getUnifiedOffer(planName)).subVersion(UNIFIED_ORDER).build())
-                .setCountry(locale)
-                .setLanguage(language);
-    }
-
     public static DisneySearchApi getSearchApi() {
         try {
             return SEARCH_API.get();

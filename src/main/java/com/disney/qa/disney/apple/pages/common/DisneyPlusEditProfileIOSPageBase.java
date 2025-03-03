@@ -52,11 +52,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
     private ExtendedWebElement autoplayToggleCell;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
-    private ExtendedWebElement liveAndUnratedToggleCell;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"toggleView\"`][3]")
-    private ExtendedWebElement liveAndUnratedToggle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
     private ExtendedWebElement addProfileBtn;
 
@@ -406,17 +401,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return contentRatingHeader;
     }
 
-    public ExtendedWebElement getLiveAndUnratedToggleCell() {
-        String label = getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                        PROFILE_SETTINGS_LIVE_UNRATED_HEADER.getText());
-        return liveAndUnratedToggleCell.format(label);
-    }
-
-    public void tapLiveAndUnratedToggle() {
-        getLiveAndUnratedToggleCell().getElement().findElement(By.name("toggleView")).click();
-    }
-
     public ExtendedWebElement getPinSettingsCell() {
         return pinSettingsCell;
     }
@@ -548,28 +532,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public ExtendedWebElement getDeleteProfileCopy() {
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_COPY.getText()));
-    }
-
-    public ExtendedWebElement getProfileSettingLiveUnratedHeader() {
-        return getStaticTextByLabel(getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                        PROFILE_SETTINGS_LIVE_UNRATED_HEADER.getText()));
-    }
-
-    public ExtendedWebElement getProfileSettingLiveUnratedDesc() {
-        return getStaticTextViewValueContains(getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                        PROFILE_SETTINGS_LIVE_UNRATED_DESCRIPTION.getText()));
-    }
-
-    public ExtendedWebElement getProfileSettingLiveUnratedHelpLink() {
-        return getDynamicAccessibilityId(getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                        PROFILE_SETTINGS_LIVE_UNRATED_HELP_LINK.getText()));
-    }
-
-    public String getLiveAndUnratedToggleState() {
-        return getLiveAndUnratedToggleCell().getText();
     }
 
     public ExtendedWebElement getEditProfilePinSettingLabel(){
