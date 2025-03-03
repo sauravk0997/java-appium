@@ -71,7 +71,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         accountPage.waitForAccountPageToOpen();
-        sa.assertTrue(accountPage.getBackArrow().isElementPresent(), "Back arrow was not displayed");
+        sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), "Back arrow was not displayed");
         sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
                 "User Email address was not displayed");
         sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(),
