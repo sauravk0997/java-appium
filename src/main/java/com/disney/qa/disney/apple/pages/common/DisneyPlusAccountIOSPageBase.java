@@ -3,7 +3,6 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -515,13 +514,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         }
     }
 
-    public boolean isEditProfilesTextPresent() {
-        String dictValOfEditProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
-        //Removing the square bracket, rounded bracket and the link inside it to match the label displayed on the screen.
-        String editProfileText = dictValOfEditProfile.replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
-        return textViewByLabel.format(editProfileText).isElementPresent();
-    }
-
     public boolean isPrivacyChoicesLinkPresent() {
         return customHyperlinkByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_CHOICES_LINK.getText())).isElementPresent();
     }
@@ -689,10 +681,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
     }
 
-    public void clickEditEmail(String email) {
-        getStaticTextByLabelContains(email).click();
-    }
-
     public void tapEditEmailButton() {
         editEmailButton.click();
     }
@@ -709,10 +697,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isAccessAndSecurityTextPresent() {
         return accessAndSecurityText.isElementPresent();
-    }
-
-    public boolean isManageDevicesTextPresent() {
-        return manageDevicesText.isElementPresent();
     }
 
     public boolean isAccountManagementLinkPresent() {
