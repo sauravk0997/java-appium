@@ -24,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import static com.disney.qa.common.constant.IConstantHelper.MORE_MENU_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 
@@ -63,7 +64,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67128"})
-    @Test(description = "Verify the Account submenu display elements are present", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAccountDisplay() {
         setAppToAccountSettings(getAccount());
         SoftAssert sa = new SoftAssert();
@@ -106,8 +107,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(accountPage.isAccountManagementTextPresent(),
                 "Account Management text was not displayed");
 
-        accountPage.getBackArrow().click();
-        sa.assertTrue(moreMenuPage.isOpened(), "More Menu page was not displayed");
+        accountPage.clickNavBackBtn();
+        sa.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED);
         sa.assertAll();
     }
 
