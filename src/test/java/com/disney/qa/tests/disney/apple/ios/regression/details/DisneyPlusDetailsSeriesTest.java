@@ -834,7 +834,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
         SoftAssert sa = new SoftAssert();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_tangled_short_deeplink"));
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             swipeUp(2500);
         }
