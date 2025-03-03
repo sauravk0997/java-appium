@@ -36,6 +36,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
     private static final String ESPN_LEAGUE = "La Liga";
+    private static final String ESPN_LEAGUE_CONTENT_DESCRIPTION = "Spanish LALIGA";
     private static final String UNLOCK = "Unlock";
 
     private static final String RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE = "recent search was not displayed";
@@ -1087,6 +1088,30 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertFalse(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(TEN_SEC_TIMEOUT),
                 "An ESPN+ title was found when searching for Sports content");
         Assert.assertFalse(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE).isElementPresent(TEN_SEC_TIMEOUT),
+                "Not results related to given ESPN League where found under the search results");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77669"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySportsSearchForEligibleCountry() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
+                initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(ESPN_LEAGUE);
+        searchPage.getKeyboardSearchButton().click();
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(),
+                "An ESPN+ title was found when searching for Sports content");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE_CONTENT_DESCRIPTION).isElementPresent(),
                 "Not results related to given ESPN League where found under the search results");
     }
 
