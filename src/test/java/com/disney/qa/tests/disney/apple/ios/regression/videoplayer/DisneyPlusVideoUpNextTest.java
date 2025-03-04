@@ -27,7 +27,6 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 import java.util.*;
 
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
