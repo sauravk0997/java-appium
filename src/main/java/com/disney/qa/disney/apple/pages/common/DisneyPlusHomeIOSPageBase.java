@@ -40,9 +40,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement activeHomeIcon;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name = 'brandTileContentView'$]")
     private ExtendedWebElement brandTileCell;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther" +
-            "[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
-    protected ExtendedWebElement espnBrandPage;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -207,16 +204,5 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public List<ExtendedWebElement> getBrandCells() {
         return findExtendedWebElements(brandTileCell.getBy());
-    }
-
-    public boolean isEspnBrandPageOpen() {
-        return espnBrandPage.isPresent();
-    }
-
-    public boolean isSportTitlePresent(String sport) {
-            return findExtendedWebElement(
-                    AppiumBy.iOSClassChain(String
-                            .format("**/XCUIElementTypeStaticText[`label CONTAINS \"On the %s screen.\"`]",
-                                    sport))).isPresent();
     }
 }
