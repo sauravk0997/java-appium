@@ -1097,14 +1097,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     public void verifySportsSearchForEligibleCountry() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
-                initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
 
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
         setAppToHomeScreen(getAccount());
-        if (oneTrustPage.isOpened())
-            oneTrustPage.tapAcceptAllButton();
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
