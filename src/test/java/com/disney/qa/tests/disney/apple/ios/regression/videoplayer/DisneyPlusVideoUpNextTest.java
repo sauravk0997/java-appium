@@ -443,15 +443,15 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         // Steps to verify that taps in background makes disappear the upNext screen
-        sa.assertTrue(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), UP_NEXT_UI_WAS_NOT_PRESENT);
+        sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
         videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
-        sa.assertFalse(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), UP_NEXT_UI_WAS_PRESENT);
+        sa.assertFalse(upNext.isOpened(), UP_NEXT_UI_WAS_PRESENT);
         videoPlayer.clickPlayButton();
         upNext.waitForUpNextUIToAppear();
         sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_PRESENT);
         // Tap on background should not dismiss up next screen
         videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
-        sa.assertTrue(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), UP_NEXT_UI_WAS_NOT_PRESENT);
+        sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
         sa.assertAll();
     }
 
