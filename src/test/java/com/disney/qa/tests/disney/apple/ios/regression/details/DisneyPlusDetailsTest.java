@@ -392,7 +392,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         homePage.clickEspnTile();
-        Assert.assertTrue(espnPage.isEspnBrandPageOpen(), "ESPN brand page did not open");
+        Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
 
         swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
                 homePage.getBrandLandingView(), Direction.UP, 1000);
@@ -808,7 +808,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         homePage.clickEspnTile();
 
-        Assert.assertTrue(espnPage.isEspnBrandPageOpen(), "ESPN brand page did not open");
+        Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
         collectionPage.swipeTillCollectionTappable(espnLiveAndUpcomingCollection,
                 Direction.UP, swipeCount);
         Assert.assertTrue(collectionPage.isCollectionPresent(espnLiveAndUpcomingCollection),

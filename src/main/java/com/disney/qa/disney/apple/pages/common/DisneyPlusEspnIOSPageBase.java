@@ -20,15 +20,11 @@ public class DisneyPlusEspnIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return isEspnBrandPageOpen();
+        return espnBrandPage.isPresent();
     }
 
     public ExtendedWebElement getReplayLabel() {
         return replayLabel;
-    }
-
-    public boolean isEspnBrandPageOpen() {
-        return espnBrandPage.isPresent();
     }
 
     public boolean isSportTitlePresent(String sport) {
