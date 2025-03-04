@@ -1089,7 +1089,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 "An ESPN+ title was found when searching for Sports content");
         Assert.assertFalse(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE_CONTENT_DESCRIPTION)
                         .isElementPresent(TEN_SEC_TIMEOUT),
-                "Not results related to given ESPN League where found under the search results");
+                "Search did show titles related to the given ESPN League search");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77669"})
@@ -1106,9 +1106,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.searchForMedia(ESPN_LEAGUE);
         searchPage.getKeyboardSearchButton().click();
         Assert.assertTrue(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(),
-                "An ESPN+ title was found when searching for Sports content");
+                "An ESPN+ title was not found when searching for Sports content");
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE_CONTENT_DESCRIPTION).isElementPresent(),
-                "Not results related to given ESPN League where found under the search results");
+                "Search did not show titles related to the given ESPN League search");
     }
 
     protected ArrayList<String> getMedia() {
