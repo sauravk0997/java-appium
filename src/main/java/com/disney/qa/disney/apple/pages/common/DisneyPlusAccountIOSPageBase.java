@@ -3,7 +3,6 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -11,6 +10,10 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+
+import java.awt.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -48,14 +51,16 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement subscriptionMessage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
     private ExtendedWebElement restrictedProfileToggle;
-    @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
-    private ExtendedWebElement changePasswordCell;
+    @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
+    private ExtendedWebElement manageMyAcccountCell;
     @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
     private ExtendedWebElement restrictProfileCreation;
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
     @ExtendedFindBy(accessibilityId = "manageParentalControls")
     private ExtendedWebElement manageParentalControls;
+    @ExtendedFindBy(accessibilityId = "manageDevices")
+    private ExtendedWebElement manageDevices;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -66,6 +71,18 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getSubscriptionMessage() {
         return subscriptionMessage;
+    }
+
+    public ExtendedWebElement getManageMyAccountCell() {
+        return manageMyAcccountCell;
+    }
+
+    public ExtendedWebElement getManageDevices() {
+        return manageDevices;
+    }
+
+    public String getManageDevicesText() {
+        return manageDevices.getText();
     }
 
     public boolean isSubscriptionMessageDisplayed() {
@@ -497,13 +514,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         }
     }
 
-    public boolean isEditProfilesTextPresent() {
-        String dictValOfEditProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
-        //Removing the square bracket, rounded bracket and the link inside it to match the label displayed on the screen.
-        String editProfileText = dictValOfEditProfile.replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
-        return textViewByLabel.format(editProfileText).isElementPresent();
-    }
-
     public boolean isPrivacyChoicesLinkPresent() {
         return customHyperlinkByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_CHOICES_LINK.getText())).isElementPresent();
     }
@@ -671,16 +681,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
     }
 
-    public void clickEditEmail(String email) {
-        getStaticTextByLabelContains(email).click();
-    }
-
     public void tapEditEmailButton() {
         editEmailButton.click();
-    }
-
-    public void clickChangePasswordCell() {
-        changePasswordCell.click();
     }
 
     public boolean waitForManageMyDisneyAccountOverlayToOpen(DisneyAccount account) {
@@ -695,10 +697,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isAccessAndSecurityTextPresent() {
         return accessAndSecurityText.isElementPresent();
-    }
-
-    public boolean isManageDevicesTextPresent() {
-        return manageDevicesText.isElementPresent();
     }
 
     public boolean isAccountManagementLinkPresent() {
