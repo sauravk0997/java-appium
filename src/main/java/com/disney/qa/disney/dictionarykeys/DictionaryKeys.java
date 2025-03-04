@@ -38,6 +38,7 @@ public enum DictionaryKeys {
     BADGE_TEXT_DATE_TIME("badge_text_date_time"),
     BILLING_INFO_TITLE("billinginfo_title"),
     BRAND_LANDING_PAGE_LOAD("brandlanding_pageload"),
+    BROADCAST_MENU("videoplayer_broadcasts"),
     BROWSE_CONTENT_HIDDEN_BODY("browse_content_hidden_body"),
     BROWSE_CONTENT_HIDDEN_BODY_KIDS("browse_content_hidden_body_kids"),
     BROWSE_CONTENT_HIDDEN_HEADER("browse_content_hidden_header"),
