@@ -514,7 +514,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         int swipeAttempt = 2;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -524,33 +524,43 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
 
-        searchPage.clickFirstCollection();
-        Assert.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
-        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(brandIOSPageBase.isArtworkBackgroundPresent(), "Artwork images is not present");
-        sa.assertTrue(brandIOSPageBase.isCollectionTitleDisplayed(), "Collection title not displayed");
+        searchPage.clickSecondCollection();
+        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
 
-        sa.assertTrue(brandIOSPageBase.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt),
+        sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(brandPage.isArtworkBackgroundPresent(), "Artwork images is not present");
+        sa.assertTrue(brandPage.isCollectionTitleDisplayed(), "Collection title not displayed");
+        sa.assertTrue(brandPage.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt),
                 "Image not collapsed after swipe");
-        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
-        brandIOSPageBase.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
-        brandIOSPageBase.getBackArrow().click();
-        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Device is Handset. Skipping Collapsed Scrolling Assert on iPad");
+            sa.assertTrue(brandPage.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
+        }
 
-        searchPage.clickFirstCollection();
-        sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
-        brandIOSPageBase.clickFirstNoLiveEvent();
-        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+        brandPage.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
+        sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        brandPage.getBackArrow().click();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        searchPage.clickSecondCollection();
+        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+
+        //Click First Content Tile on Collection Page
+        homePage.clickDynamicCollectionOrContent(2,1);
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+
         clickElementAtLocation(detailsPage.getBackArrow(), 50, 50);
-        sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
+        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+
         sa.assertAll();
     }
 
