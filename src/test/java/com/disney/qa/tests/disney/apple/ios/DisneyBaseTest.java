@@ -94,6 +94,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEEPLINKURL = "disneyplus://www.disneyplus.com/browse/";
     public static final String JARVIS_PLAYBACK = "Playback";
     public static final String JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE = "Offline Expired License Override";
+    protected static final String DOLBY_VISION = "Dolby Vision";
+    public static final String ESPN_PLUS = "ESPN+";
+
+    //Common error messages
+    public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
+    public static final String VIDEO_PLAYER_NOT_DISPLAYED = "Video Player is not displayed";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -820,5 +826,16 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         } catch (Exception e) {
             return e.getMessage().split("description=")[1].split("\\)")[0];
         }
+    }
+
+    protected List<String> getGenreMetadataLabels(Visuals visualsResponse) {
+        List<String> metadataArray = new ArrayList();
+        List<String> genreList = visualsResponse.getMetastringParts().getGenres().getValues();
+        //get only first two values of genre
+        if (genreList.size() > 2) {
+            genreList = genreList.subList(0, 2);
+        }
+        genreList.forEach(genre -> metadataArray.add(genre));
+        return metadataArray;
     }
 }

@@ -25,16 +25,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.common.constant.RatingConstant.FRANCE;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private static final String BLUEY = "Bluey";
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
+    private static final String ESPN_LEAGUE = "La Liga";
+    private static final String UNLOCK = "Unlock";
 
     private static final String RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE = "recent search was not displayed";
     private static final String RECENT_SEARCH_FOUND_ERROR_MESSAGE = "recent search was displayed";
@@ -42,6 +44,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             "recent search results";
     private static final String PCON_HEADER_ERROR_NOT_FOUND = "PCON restricted title message was not present";
     private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
+    private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
 
     @DataProvider(name = "collectionNames")
     public Object[][] collections() {
@@ -511,7 +514,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         int swipeAttempt = 2;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandIOSPageBase = initPage(DisneyPlusBrandIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -521,33 +524,43 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
 
-        searchPage.clickFirstCollection();
-        Assert.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
-        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(brandIOSPageBase.isArtworkBackgroundPresent(), "Artwork images is not present");
-        sa.assertTrue(brandIOSPageBase.isCollectionTitleDisplayed(), "Collection title not displayed");
+        searchPage.clickSecondCollection();
+        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
 
-        sa.assertTrue(brandIOSPageBase.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt),
+        sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(brandPage.isArtworkBackgroundPresent(), "Artwork images is not present");
+        sa.assertTrue(brandPage.isCollectionTitleDisplayed(), "Collection title not displayed");
+        sa.assertTrue(brandPage.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt),
                 "Image not collapsed after swipe");
-        sa.assertTrue(brandIOSPageBase.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
-        brandIOSPageBase.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
-        sa.assertTrue(brandIOSPageBase.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
-        brandIOSPageBase.getBackArrow().click();
-        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Device is Handset. Skipping Collapsed Scrolling Assert on iPad");
+            sa.assertTrue(brandPage.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
+        }
 
-        searchPage.clickFirstCollection();
-        sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
-        brandIOSPageBase.clickFirstNoLiveEvent();
-        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+        brandPage.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
+        sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        brandPage.getBackArrow().click();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        searchPage.clickSecondCollection();
+        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+
+        //Click First Content Tile on Collection Page
+        homePage.clickDynamicCollectionOrContent(2,1);
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player didn't open");
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+
         clickElementAtLocation(detailsPage.getBackArrow(), 50, 50);
-        sa.assertTrue(brandIOSPageBase.isOpened(), collectionPageDidNotOpen);
+        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+
         sa.assertAll();
     }
 
@@ -820,6 +833,261 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         }
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77662"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNSportsUpcomingEventBadges() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
+        searchPage.searchForMedia(ESPN_LEAGUE);
+
+        ExtendedWebElement firstUpcomingEventCell = searchPage.getFirstUpcomingEventCell();
+        searchPage.hideKeyboard();
+        searchPage.swipe(firstUpcomingEventCell, 20);
+        Assert.assertTrue(firstUpcomingEventCell.isElementPresent(),
+                "No upcoming events found on search page");
+        Assert.assertTrue(searchPage.getUpcomingBadgeForGivenSearchResult(firstUpcomingEventCell).isElementPresent(),
+                "Upcoming badge was not present for upcoming event search result");
+        Assert.assertTrue(searchPage.getUnlockBadgeForGivenSearchResult(firstUpcomingEventCell).isElementPresent(),
+                "Unlock badge was not present for upcoming event search result");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySearchHuluContent() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia("Naruto");
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
+        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
+        results.get(0).click();
+        sa.assertTrue(detailsPage.isOpened(), "Details page didn't open after selecting the search result");
+        pause(3);
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.getDetailsTabTitle().contains("Naruto"), "Details page for 'Naruto' didn't open");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69570"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().editContentRatingProfileSetting(getAccount(), "MPAAAndTVPG", "TV-14");
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .avatarId(null)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
+        sa.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+                "PCON restricted title message was not as expected");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING),
+                "No results found message was not as expected for TV-14 profile");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
+        sa.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(), "PCON restricted title message was not as expected");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING), "No results found message was not as expected " +
+                "for kids profile");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySearchEmptyPageMaxMaturityRating() {
+        String searchQuery = "robocop";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().editContentRatingProfileSetting(getAccount(), "MPAAAndTVPG", "TV-MA");
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(searchQuery);
+        searchPage.getTypeButtonByLabel("search").clickIfPresent();
+        pause(2);
+        sa.assertFalse(searchPage.isPCONRestrictedErrorMessagePresent(),
+                "PCON restricted title message present for TV-MA profile");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchQuery),
+                "No results found message was not as expected for TV-MA profile");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74557"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyMaxLimitSearchQuery() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String searchLimitQuery = "automationsearchlongqueryformaximumSixtyfourcharacterlimittest!!";
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(searchLimitQuery);
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
+        sa.assertEquals(searchLimitQuery, searchPage.getSearchBarText(),
+                "Maximum number of characters is not allowed in search field.");
+        searchPage.searchForMedia(searchLimitQuery+"D");
+        sa.assertEquals(searchLimitQuery, searchPage.getSearchBarText(),
+                "character after 64 char is accepted in search bar");
+        sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77872"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    public void verifySearchHuluContentForStandaloneUser() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
+                "Hulu Content not found in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77875"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    public void verifyEntitleAndNonEntitleHuluContentForNonBundleUser() {
+        String entitleHuluContent = "Solar Opposites";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
+        setAppToHomeScreen(basicAccount);
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.searchForMedia(entitleHuluContent);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(entitleHuluContent).isPresent(),
+                "Hulu Content not found in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(entitleHuluContent).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(entitleHuluContent).getText().contains(UNLOCK),
+                "Unlock 'upsell message' found in search result");
+
+        searchPage.getClearTextBtn().click();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
+                "Hulu Content not found in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(UNLOCK),
+                "Unlock 'upsell message' not found in search result");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77874"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    public void verifySearchHuluContentForBundleUser() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        Assert.assertTrue(searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
+                "Hulu Content not found in search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(HULU),
+                "Hulu brand name not found in content in search result");
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(ONLY_MURDERS_IN_THE_BUILDING).getText().contains(UNLOCK),
+                "Unlock 'upsell message' found in search result");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, CA})
+    public void verifySearchHuluContentForStandaloneUserInEligible() {
+        String unavailableContentInCA = "Normal People";
+
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                CA,
+                getLocalizationUtils().getUserLanguage()));
+        handleAlert();
+        setAppToHomeScreen(getAccount());
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        searchPage.searchForMedia(unavailableContentInCA);
+        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(unavailableContentInCA),
+                String.format("No results found message was not displayed for, '%s'", unavailableContentInCA));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77673"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, FRANCE})
+    public void verifySportsSearchForNonEligibleCountry() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
+                initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isOpened())
+            oneTrustPage.tapAcceptAllButton();
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(ESPN_LEAGUE);
+        searchPage.getKeyboardSearchButton().click();
+        Assert.assertFalse(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(TEN_SEC_TIMEOUT),
+                "An ESPN+ title was found when searching for Sports content");
+        Assert.assertFalse(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE).isElementPresent(TEN_SEC_TIMEOUT),
+                "Not results related to given ESPN League where found under the search results");
     }
 
     protected ArrayList<String> getMedia() {

@@ -302,6 +302,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(MPAA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getMPAACountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(FRANCE)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), FRANCE, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
         }
