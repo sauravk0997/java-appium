@@ -23,9 +23,11 @@ public interface IConstantHelper {
     String SUBSCRIPTION_PRODUCT_SKU_KEY = "sku";
     String UNIFIED_ORDER = "UNIFIED-ORDER";
 
+    String ACCOUNT_PAGE_NOT_DISPLAYED = "Account Page is not displayed";
     String ARTWORK_IMAGE_NOT_DISPLAYED = "Artwork Image is not displayed";
     String BACK_BUTTON_NOT_DISPLAYED = "Back button is not present";
     String DETAILS_PAGE_NOT_DISPLAYED = "Details Page is not displayed";
+    String ENTER_PASSWORD_PAGE_NOT_DISPLAYED = "Enter Password page is not displayed";
     String HOME_PAGE_NOT_DISPLAYED = "Home Page is not displayed";
     String MORE_MENU_NOT_DISPLAYED = "More Menu is not displayed";
     String ORIGINALS_PAGE_NOT_DISPLAYED = "Originals Page did not open";

@@ -40,8 +40,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentPageFilterHeader;
     @ExtendedFindBy(accessibilityId = "itemPickerView")
     private ExtendedWebElement itemPickerView;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
-    private ExtendedWebElement firstCollectionTitle;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][2]")
+    private ExtendedWebElement secondCollectionTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s'`]")
@@ -258,8 +258,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
-    public void clickFirstCollection() {
-        firstCollectionTitle.format(
+    public void clickSecondCollection() {
+        secondCollectionTitle.format(
                 getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                         DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
