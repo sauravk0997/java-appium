@@ -1251,7 +1251,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
         detailsPage.getPlayIcon().click();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
         pause(5);
@@ -1279,18 +1279,18 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         // Deeplink a series episode, scrub and get current time
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
         int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
         LOGGER.info("currentTimeBeforeRestartClick {}", currentTimeBeforeRestartClick);
         videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         // Validate and click restart button, get current time and validate restart button
         Assert.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not present");
         detailsPage.getRestartButton().click();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         int currentTimeAfterRestartClick = videoPlayer.getCurrentTime();
         LOGGER.info("currentTimeAfterRestartClick {}", currentTimeAfterRestartClick);
         Assert.assertTrue((currentTimeAfterRestartClick < currentTimeBeforeRestartClick)
