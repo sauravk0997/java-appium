@@ -44,6 +44,8 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video Player did not open";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String UP_NEXT_UI_WAS_NOT_PRESENT = "Up Next UI was not displayed";
+    private static final String UP_NEXT_UI_WAS_PRESENT = "Up Next UI was displayed";
+
 
     @DataProvider(name = "autoplay-state")
     public Object[][] autoplayState(){
@@ -425,59 +427,42 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67640"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpNextAutoPlayTapsBackground() {
-        DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getAccount());
-        String seriesContentTitle = "Loki";
-        String episodeTitle = "";
-        String seasonNumber = "";
-
-        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
-                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-
-        try {
-            episodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
-            seasonNumber = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getSeasonNumber();
-        } catch (Exception e) {
-            Assert.fail("Exception occurred: " + e.getMessage());
-        }
-
-        if(episodeTitle == null || seasonNumber == null){
-            throw new SkipException("Skipping test, failed to get episodeTitles or seasonNumber from the api");
-        }
-
-        String upNextTitlePlaceHolder = String.format(REGEX_UPNEXT_SERIES_TITLE, seasonNumber, "2", episodeTitle);
 
         //Enable autoplay
-    //    toggleAutoPlay("ON");
-       // initiatePlaybackAndScrubOnPlayer(seriesContentTitle, 90);
+       // toggleAutoPlay("ON");
+
+        // Launch deeplink
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
-        detailsPage.isOpened();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video Player did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickPauseButton();
-        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_UP_NEXT);
-        videoPlayer.clickPlayButton();
-
-        upNextIOSPageBase.waitForUpNextUIToAppear();
-        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(THREE_SEC_TIMEOUT),
-                "Up Next meta data title not displayed");
-        sa.assertTrue(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is not displayed");
-
-        videoPlayer.waitForVideoControlToDisappear();
-        // Click at the background and verify up next is still visible
+        videoPlayer.scrubToPlaybackPercentage(95);
+      //  videoPlayer.clickPlayButton();
         Dimension size = getDriver().manage().window().getSize();
-        tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        sa.assertTrue(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(THREE_SEC_TIMEOUT),
-                "Up Next meta data title not displayed");
+        // Steps to verify that taps in background makes disappear the upNext screen
+       // upNext.waitForUpNextUIToAppear();
+      //  sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
+        sa.assertTrue(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), "lalalal ");//) UP_NEXT_UI_WAS_NOT_PRESENT);
+       // tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
+        videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
+       // sa.assertFalse(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
+        sa.assertFalse(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), "lelele ");
+        videoPlayer.clickPlayButton();// UP_NEXT_UI_WAS_PRESENT);
+        upNext.waitForUpNextUIToAppear();
+        sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_PRESENT);
+        videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
+        sa.assertFalse(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), "lililil ");
+
         // Click at the background and verify up next is not visible
-        tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        sa.assertFalse(upNextIOSPageBase.getStaticTextByLabel(upNextTitlePlaceHolder).isPresent(),
-                "Up Next meta data title is displayeddd");
-        sa.assertFalse(upNextIOSPageBase.isNextEpisodeHeaderPresent(), "Next Episode Header is displayedddd");
+      //  tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
+      //  sa.assertFalse(upNext.isOpened(), UP_NEXT_UI_WAS_PRESENT);
         sa.assertAll();
     }
 
