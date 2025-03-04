@@ -13,7 +13,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
@@ -40,7 +40,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         setAppToHomeScreen(getAccount());
-        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         moreMenu.clickMoreTab();
         // Assert that version installed it is the previous FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
@@ -51,6 +51,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         terminateApp(sessionBundles.get(DISNEY));
         installApplication(currentBuildVersion);
         startApp(sessionBundles.get(DISNEY));
+        //Handle ATT Modal
+        handleGenericPopup(5,1);
         moreMenu.clickMoreTab();
         // Verify version is current FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(),

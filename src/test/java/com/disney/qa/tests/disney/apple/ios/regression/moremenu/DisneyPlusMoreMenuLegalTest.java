@@ -21,7 +21,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -31,7 +31,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     private static final String PRIVACY_POLICY = "Privacy Policy";
     private static final String US_STATE_PRIVACY_RIGHTS_NOTICE = "US State Privacy Rights Notice";
     private static final String DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION = "Do Not Sell or Share My Personal Information";
-    private static final String MORE_MENU_NOT_DISPLAYED = "More Menu is not displayed";
     private static final String LEGAL_PAGE_HEADER_NOT_DISPLAYED = "Legal Page Header not displayed";
     private static final String ONE_TRUST_PAGE_NOT_DISPLAYED = "One Trust Page not displayed";
     private static final String TOGGLE_NOT_TURNED_OFF = "Toggle was not Turned Off";
@@ -152,13 +151,14 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
         getAccountApi().overrideLocations(getAccount(), country);
 
-        Assert.assertTrue(welcomePage.isOpened(), "Welcome page did not open");
-
+        Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomePage.clickLogInButton();
         login(getAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        //Dismiss ATT Popup
+        handleGenericPopup(5,1);
         if (homePage.isTravelAlertTitlePresent()) {
             homePage.getTravelAlertOk().click();
         }
