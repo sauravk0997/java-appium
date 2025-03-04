@@ -74,6 +74,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentRatingOverlayLabel;
     @ExtendedFindBy(accessibilityId = "contentRatingInfoView")
     private ExtendedWebElement contentRatingInfoView;
+    @ExtendedFindBy(accessibilityId = "broadcastCollectionView")
+    private ExtendedWebElement broadcastCollectionView;
+
 
     public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
           "depictions and/or mistreatment of people or cultures. These stereotypes were wrong then and are wrong now. Rather than remove this content, we want to acknowledge its harmful impact, learn from it and spark conversation to create a more inclusive future together.";
@@ -104,6 +107,26 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByName.format("buttonBack");
     }
 
+    public ExtendedWebElement getBroadcastMenu() {
+        String broadcastMenuLabel = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                DictionaryKeys.BROADCAST_MENU.getText());
+        return dynamicBtnFindByLabel.format(broadcastMenuLabel);
+    }
+
+    public ExtendedWebElement getSkipRecapButton() {
+        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SKIP_RECAP.getText()));
+    }
+
+    public ExtendedWebElement getContentRatingInfoView() {
+        return contentRatingInfoView;
+    }
+
+    public ExtendedWebElement getBroadcastCollectionView() {
+        return broadcastCollectionView;
+    }
+
     public ExtendedWebElement getElementFor(PlayerControl control) {
         switch (control) {
             case AIRPLAY:
@@ -112,6 +135,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 return audioSubtitleMenuButton;
             case BACK:
                 return getBackButton();
+            case BROADCAST_MENU:
+                return getBroadcastMenu();
             case CHROMECAST:
                 return chromecastButton;
             case FAST_FORWARD:
@@ -138,11 +163,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         waitForPresenceOfAnElement(playerView);
         displayVideoController();
         return getElementFor(control).isElementPresent();
-    }
-
-    public boolean isTitleLabelVisible() {
-        displayVideoController();
-        return titleLabel.isElementPresent();
     }
 
     public ExtendedWebElement getSeekbar() {
@@ -706,6 +726,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         AIRPLAY,
         AUDIO_SUBTITLE_BUTTON,
         BACK,
+        BROADCAST_MENU,
         CHROMECAST,
         FAST_FORWARD,
         LOCK_ICON,
@@ -781,24 +802,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
                 .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(ONE_SEC_TIMEOUT));
-    }
-
-    public void waitForVideoStereotypeMessageToDisappear() {
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Negative Stereotype message is present")
-                .until(it -> getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE).isElementNotPresent(ONE_SEC_TIMEOUT));
-    }
-
-    public boolean isNegativeStereotypeCountdownPresent() {
-        return getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE).isPresent(THREE_SEC_TIMEOUT);
-    }
-
-    public ExtendedWebElement getSkipRecapButton() {
-        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SKIP_RECAP.getText()));
-    }
-
-    public ExtendedWebElement getContentRatingInfoView() {
-        return contentRatingInfoView;
     }
 
     public boolean waitForVideoLockTooltipToAppear() {
