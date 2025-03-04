@@ -434,35 +434,25 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         //Enable autoplay
-       // toggleAutoPlay("ON");
-
-        // Launch deeplink
+        toggleAutoPlay("ON");
+        // Launch deeplink and scrub to up next screen
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickPauseButton();
-        videoPlayer.scrubToPlaybackPercentage(95);
-      //  videoPlayer.clickPlayButton();
-        Dimension size = getDriver().manage().window().getSize();
+        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
         // Steps to verify that taps in background makes disappear the upNext screen
-       // upNext.waitForUpNextUIToAppear();
-      //  sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
-        sa.assertTrue(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), "lalalal ");//) UP_NEXT_UI_WAS_NOT_PRESENT);
-       // tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
+        sa.assertTrue(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), UP_NEXT_UI_WAS_NOT_PRESENT);
         videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
-       // sa.assertFalse(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
-        sa.assertFalse(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), "lelele ");
-        videoPlayer.clickPlayButton();// UP_NEXT_UI_WAS_PRESENT);
+        sa.assertFalse(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), UP_NEXT_UI_WAS_PRESENT);
+        videoPlayer.clickPlayButton();
         upNext.waitForUpNextUIToAppear();
         sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_PRESENT);
+        // Tap on background should not dismiss up next screen
         videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
-        sa.assertFalse(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), "lililil ");
-
-        // Click at the background and verify up next is not visible
-      //  tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-      //  sa.assertFalse(upNext.isOpened(), UP_NEXT_UI_WAS_PRESENT);
+        sa.assertTrue(upNext.getUpNextImageView().isPresent(THREE_SEC_TIMEOUT), UP_NEXT_UI_WAS_NOT_PRESENT);
         sa.assertAll();
     }
 
