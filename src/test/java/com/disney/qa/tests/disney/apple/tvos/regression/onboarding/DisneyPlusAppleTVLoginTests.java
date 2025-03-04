@@ -40,6 +40,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     private static final String KEYBOARD_SCREEN_NOT_LAUNCH_ERROR_MESSAGE = "Keyboard Screen did not launch";
     private static final String LOGIN_SCREEN_NOT_LAUNCH_AFTER_PRESS_MENU_ERROR_MESSAGE =
             "Log In password screen did not launch after pressing menu from on screen keyboards screen";
+    private static final String PASSWORD_NOT_ENCRYPTED_ERROR_MESSAGE = "Password was not encrypted";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66483"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
@@ -292,9 +293,9 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        String encryptedPassword = "••••";
         selectAppleUpdateLaterAndDismissAppTracking();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
 
@@ -327,6 +328,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         //Click hide password button should turn into show password
         passwordPage.getShowPassword().click();
         Assert.assertTrue(passwordPage.getHidePassword().isPresent(), "`Hide password` was not present.");
+        Assert.assertEquals(passwordPage.getSecureTextEntryField().getText(), encryptedPassword,
+                PASSWORD_NOT_ENCRYPTED_ERROR_MESSAGE);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90707"})
@@ -336,8 +339,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         String encryptedPassword = "••••";
         selectAppleUpdateLaterAndDismissAppTracking();
@@ -359,7 +361,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         passwordPage.moveToContinueOrDoneBtnKeyboardEntry();
         passwordPage.clickSelect();
         Assert.assertTrue(passwordPage.isOpened(), LOG_IN_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
-        Assert.assertEquals(passwordPage.getSecureTextEntryField().getText(), encryptedPassword);
+        Assert.assertEquals(passwordPage.getSecureTextEntryField().getText(), encryptedPassword,
+                PASSWORD_NOT_ENCRYPTED_ERROR_MESSAGE);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90697"})
