@@ -259,4 +259,33 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
                 "Broadcast Menu did not open on video player");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77896"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER,TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNAlternateBroadcastSelectorTargetFeeds() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        //NHL collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+
+        collectionPage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.REPLAYS_COLLECTION, 5);
+        espnPage.getReplayLabel().click();
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player page did not open");
+        videoPlayer.displayVideoController();
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
+        Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
+                "Broadcast Menu did not open on video player");
+
+    }
 }
