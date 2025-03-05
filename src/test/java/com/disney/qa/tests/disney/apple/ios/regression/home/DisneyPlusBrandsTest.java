@@ -25,7 +25,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         sa.assertTrue(homePage.getBrandCell(brandPage.getBrand(brand)).isPresent(),
                 "The following brand tile was not present: " + brandPage.getBrand(brand));

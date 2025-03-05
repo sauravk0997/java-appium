@@ -4,7 +4,7 @@ import com.disney.hatter.api.alice.AliceApiManager;
 import com.disney.hatter.api.alice.model.ImagesRequestS3;
 import com.disney.hatter.api.alice.model.ImagesResponse360;
 import com.disney.hatter.core.utils.FileUtil;
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -56,7 +56,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyHomeUIElements() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Validate top of home
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found");
@@ -107,8 +107,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        DisneyAccount account = getAccount();
-        setAppToHomeScreen(account);
+
+        setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         homePage.swipeTillCollectionTappable(collection, Direction.UP, swipeCount);
@@ -160,13 +160,16 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_STARHUB_SG_STANDALONE, SG, ENGLISH_LANG));
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD, SG,
+                ENGLISH_LANG)));
+
         initialSetup();
         handleAlert();
         Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
 
         welcomePage.clickLogInButton();
-        login(getAccount());
+        login(getUnifiedAccount());
         handleGenericPopup(5,1);
         homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
         Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
@@ -181,7 +184,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyUserTapsOnHomeContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         goToFirstCollectionTitle(homePage);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickCloseButton();
@@ -193,7 +196,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyHeroAutoRotationOnHomeScreen() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
         ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
         String heroCarouselId = "";
@@ -235,7 +238,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         // Populate Continue Watching assets
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
@@ -344,7 +347,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyPlaybackForEpisodesInSetsByTappingOnMetadata() {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
         collectionPage.waitForCollectionPageToOpen(
@@ -370,7 +373,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         boolean isContinueWatchingContainerVisible = homePage.isCollectionVisibleAfterSwiping(
@@ -405,7 +408,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         // Populate Continue Watching assets
         addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
@@ -451,7 +454,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         int swipeCount = 5;
         int titlesLimit = 1;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         // Populate Continue Watching assets
         addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
@@ -492,7 +495,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         int thresholdInMins = 1;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         // Populate Continue Watching assets
         addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"), 50);
@@ -522,7 +525,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyPlaybackForEpisodesInSetsByTappingOnArtwork() {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
         collectionPage.waitForCollectionPageToOpen(
@@ -552,7 +555,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String collectionName = CollectionConstant.getCollectionName(
                 CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         Visuals firstEpisodeFromCollectionVisuals = getItemsFromCollection(
                 CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V, 1).get(0).getVisuals();
@@ -603,8 +606,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        setAppToHomeScreen(basicAccount);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Open Hulu brand page
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
@@ -653,26 +656,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         });
     }
 
-    private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
-        String collectionID, contentTitle;
-            ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
-                    getLocalizationUtils().getLocale(),
-                    getLocalizationUtils().getUserLanguage());
-            collectionID = collections.get(2).getId();
-            contentTitle = collections.get(2).getItems().get(0).getVisuals().getTitle();
-            ExtendedWebElement contentTitleElement = homePage.getElementTypeCellByLabel(contentTitle);
-
-            swipe(homePage.getDynamicAccessibilityId(collectionID));
-            if (contentTitleElement.isPresent()){
-                contentTitleElement.click();
-            } else {
-                swipeInContainerTillElementIsPresent(homePage.getCollection(collectionID), contentTitleElement,
-                        30,
-                        Direction.LEFT);
-                contentTitleElement.click();
-            }
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68163"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
@@ -682,15 +665,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
-                .disneyAccount(getAccount())
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
                 .profileName(KIDS_PROFILE)
                 .dateOfBirth(KIDS_DOB)
-                .language(getAccount().getProfileLang())
+                .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .build());
-        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+                .isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
 
         addContentInContinueWatchingWithExpectedRemainingTime(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
@@ -730,10 +715,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
                 DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
@@ -749,10 +732,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
                 DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
 
@@ -784,9 +767,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
                 DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
 
@@ -811,7 +794,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
@@ -859,8 +842,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.tapHuluBrandTile();
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
         sa.assertTrue(huluPage.isBackButtonPresent(), "Back button is not present");
@@ -948,6 +932,26 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             }
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
+        String collectionID, contentTitle;
+        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
+        collectionID = collections.get(2).getId();
+        contentTitle = collections.get(2).getItems().get(0).getVisuals().getTitle();
+        ExtendedWebElement contentTitleElement = homePage.getElementTypeCellByLabel(contentTitle);
+
+        swipe(homePage.getDynamicAccessibilityId(collectionID));
+        if (contentTitleElement.isPresent()){
+            contentTitleElement.click();
+        } else {
+            swipeInContainerTillElementIsPresent(homePage.getCollection(collectionID), contentTitleElement,
+                    30,
+                    Direction.LEFT);
+            contentTitleElement.click();
         }
     }
 }

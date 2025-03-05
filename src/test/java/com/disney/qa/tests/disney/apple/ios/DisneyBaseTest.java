@@ -50,6 +50,8 @@ import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
+import javax.annotation.*;
+
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
@@ -215,6 +217,17 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 "Home Page did not open after login");
     }
 
+    public void loginToHome(UnifiedAccount account, String... profileName) {
+        handleAlert();
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        login(account);
+        pause(2);
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
+            initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
+        }
+    }
+
     /**
      * Logs into the app by entering the provided account's credentials and username
      *
@@ -255,6 +268,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             loginToHome(account, profileName);
         } else {
             disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
+        }
+        pause(3);
+    }
+
+    public void setAppToHomeScreen(UnifiedAccount account, String... profileName) {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+
+        if (welcomePage.isOpened()) {
+            loginToHome(account, profileName);
+
+        } else {
+            restart();
+            handleAlert();
+            loginToHome(account, profileName);
         }
         pause(3);
     }
