@@ -1,10 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
-import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.dictionarykeys.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
