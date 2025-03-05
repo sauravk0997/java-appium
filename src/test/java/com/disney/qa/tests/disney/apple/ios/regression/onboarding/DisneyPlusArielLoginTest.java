@@ -12,7 +12,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusArielLoginTest extends DisneyBaseTest {
 
@@ -103,6 +103,7 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         String otp = getOTPFromApi(startTime, otpAccount);
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
-        Assert.assertTrue(homePage.isOpened(), "Home page is not open after entering otp");
+        handleGenericPopup(5,1);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 }
