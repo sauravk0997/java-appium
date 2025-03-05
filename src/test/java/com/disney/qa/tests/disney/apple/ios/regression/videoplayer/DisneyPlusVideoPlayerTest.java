@@ -265,7 +265,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77896"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyESPNAlternateBroadcastSelectorTargetFeeds() {
+    public void verifyESPNAlternateBroadcastSelectorFeedsOptions() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
