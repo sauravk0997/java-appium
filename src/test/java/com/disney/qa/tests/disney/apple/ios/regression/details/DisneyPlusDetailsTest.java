@@ -836,6 +836,26 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         }
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78066"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, JP})
+    public void verifyESPNUnavailableDetailsPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getAccount());
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+
+        Assert.assertTrue(homePage.isViewAlertPresent(),
+                "Alert was not present");
+        Assert.assertTrue(homePage.getStaticTextByLabelContains("content-unavailable").isElementPresent(),
+                "Content Unavailable error message was not present");
+        Assert.assertTrue(homePage.getOkButton().isElementPresent(),
+                "OK button text was not present");
+    }
+
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
