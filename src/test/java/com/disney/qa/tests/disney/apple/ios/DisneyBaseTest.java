@@ -828,6 +828,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public void handleGenericPopup(int timeout, int maxAttempts) {
+        pause(timeout);
+        handleSystemAlert(AlertButtonCommand.DISMISS, maxAttempts);
+    }
+
     protected List<String> getGenreMetadataLabels(Visuals visualsResponse) {
         List<String> metadataArray = new ArrayList();
         List<String> genreList = visualsResponse.getMetastringParts().getGenres().getValues();

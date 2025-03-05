@@ -1,7 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -228,5 +231,32 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
                 String.format("Network (%s) Watermark logo is not present after skipping recap", contentNetwork));
         Assert.assertTrue(videoPlayer.getContentRatingInfoView().isPresent(),
                 "Content rating info view is not present after skipping recap");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77740"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER,TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNAlternateBroadcastSelector() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        //NHL collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+
+        collectionPage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.REPLAYS_COLLECTION, 5);
+        espnPage.getReplayLabel().click();
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), "Video player page did not open");
+        videoPlayer.displayVideoController();
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
+        Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
+                "Broadcast Menu did not open on video player");
     }
 }

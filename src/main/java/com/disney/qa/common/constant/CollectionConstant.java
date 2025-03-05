@@ -28,6 +28,7 @@ public class CollectionConstant {
         ORIGINALS,
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
+        REPLAYS_COLLECTION,
         STUDIOS_AND_NETWORKS,
         TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
@@ -90,6 +91,8 @@ public class CollectionConstant {
                 return "a7b1bd9d-59ef-4345-b1a6-19c208b5357e";
             case KIDS_MICKEY_AND_FRIENDS:
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
+            case REPLAYS_COLLECTION:
+                return "971963b2-2bf5-4416-aa7d-41950d5760d7";
             case STUDIOS_AND_NETWORKS:
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
             case TREEHOUSE_OF_HORROR_I_TO_V:
@@ -117,6 +120,8 @@ public class CollectionConstant {
                 return "Unlock to Stream More Hulu";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "ESPN+ Live and Upcoming";
+            case REPLAYS_COLLECTION:
+                return "Replays";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }
