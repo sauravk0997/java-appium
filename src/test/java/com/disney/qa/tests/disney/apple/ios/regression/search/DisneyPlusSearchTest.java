@@ -35,8 +35,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String BLUEY = "Bluey";
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
-    private static final String ESPN_LEAGUE = "La Liga";
-    private static final String ESPN_LEAGUE_CONTENT_DESCRIPTION = "Spanish LALIGA";
+    private static final String ESPN_LEAGUE = "Spanish LALIGA";
     private static final String UNLOCK = "Unlock";
 
     private static final String RECENT_SEARCH_NOT_FOUND_ERROR_MESSAGE = "recent search was not displayed";
@@ -1087,7 +1086,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getKeyboardSearchButton().click();
         Assert.assertFalse(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(TEN_SEC_TIMEOUT),
                 "An ESPN+ title was found when searching for Sports content");
-        Assert.assertFalse(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE_CONTENT_DESCRIPTION)
+        Assert.assertFalse(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE)
                         .isElementPresent(TEN_SEC_TIMEOUT),
                 "Search did show titles related to the given ESPN League search");
     }
@@ -1107,7 +1106,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getKeyboardSearchButton().click();
         Assert.assertTrue(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(),
                 "An ESPN+ title was not found when searching for Sports content");
-        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE_CONTENT_DESCRIPTION).isElementPresent(),
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE).isElementPresent(),
                 "Search did not show titles related to the given ESPN League search");
     }
 
