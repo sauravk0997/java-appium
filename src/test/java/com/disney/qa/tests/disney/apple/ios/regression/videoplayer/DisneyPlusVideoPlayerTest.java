@@ -13,6 +13,9 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -261,7 +264,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77896"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER,TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNAlternateBroadcastSelectorTargetFeeds() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -281,11 +284,28 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player page did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.displayVideoController();
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
         Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
                 "Broadcast Menu did not open on video player");
+        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastFeedOptionText()),
+                "Target broadcasts feeds on UI are not as expected");
 
+        String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.displayVideoController();
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
+        Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedFeedOption),
+                "Target feed is not selected");
+    }
+
+    private ArrayList<String> broadcastsExpectedFeeds() {
+        ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
+        broadcastsExpectedFeeds.add("PRIMARY");
+        broadcastsExpectedFeeds.add("NATIONAL");
+        broadcastsExpectedFeeds.add("HOME");
+        broadcastsExpectedFeeds.add("AWAY");
+        return broadcastsExpectedFeeds;
     }
 }

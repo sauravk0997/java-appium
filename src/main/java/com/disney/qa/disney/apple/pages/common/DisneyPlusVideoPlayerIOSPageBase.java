@@ -19,6 +19,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
@@ -76,6 +77,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentRatingInfoView;
     @ExtendedFindBy(accessibilityId = "broadcastCollectionView")
     private ExtendedWebElement broadcastCollectionView;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[$type='XCUIElementTypeStaticText' AND label = '%s'$]")
+    private ExtendedWebElement feedOptionCheckmark;
 
 
     public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
@@ -862,5 +865,31 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             LOGGER.info("Exception occurred attempting to wait for delete and play button");
             return false;
         }
+    }
+
+    public List<String> getBroadcastFeedOptionText() {
+        List<String> feedOptionText = null;
+        List<ExtendedWebElement> feedCell =
+                findExtendedWebElements(collectionCellNoRow.format(broadcastCollectionView).getBy());
+        IntStream.range(0, feedCell.size()).forEach(i -> {
+            feedOptionText.add(feedCell.get(i).getText());
+        });
+        return feedOptionText;
+    }
+
+    public String selectAndGetBroadcastFeedOption() {
+        List<ExtendedWebElement> feedCell =
+                findExtendedWebElements(collectionCellNoRow.format(broadcastCollectionView).getBy());
+        if (feedCell.size() > 1) {
+            feedCell.get(1).click();
+            return feedCell.get(1).getText();
+        } else {
+            feedCell.get(0).click();
+            return feedCell.get(0).getText();
+        }
+    }
+
+    public boolean isFeedOptionSelected(String feedOption) {
+        return feedOptionCheckmark.format(feedOption).getAttribute(Attributes.LABEL.getAttribute()).equals("checkmark");
     }
 }
