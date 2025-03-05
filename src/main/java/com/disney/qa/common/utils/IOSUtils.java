@@ -1010,8 +1010,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         Dimension screenSize = getDriver().manage().window().getSize();
         int screenHeight = screenSize.height;
         double halfHeightScreen = 0.5 * screenHeight;
-        LOGGER.info("Screen size height: {} ", screenHeight);
-        LOGGER.info("Element position: {} ", elementPosition);
+        LOGGER.info("Screen size height: {}", screenHeight);
+        LOGGER.info("Element position: {}", elementPosition);
 
         switch (position) {
             case TOP:
