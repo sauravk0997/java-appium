@@ -78,7 +78,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentRatingInfoView;
     @ExtendedFindBy(accessibilityId = "broadcastCollectionView")
     private ExtendedWebElement broadcastCollectionView;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[$type='XCUIElementTypeStaticText' AND label = '%s'$]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label CONTAINS " +
+            "'%s'$]")
     private ExtendedWebElement feedOptionCheckmark;
 
 
@@ -884,10 +885,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         List<ExtendedWebElement> feedCell =
                 findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
         if (feedCell.size() > 1) {
-            selectedOption = feedCell.get(1).getText();
+            selectedOption = feedCell.get(1).getText().trim();
             feedCell.get(1).click();
         } else {
-            selectedOption = feedCell.get(0).getText();
+            selectedOption = feedCell.get(0).getText().trim();
             feedCell.get(0).click();
         }
         return selectedOption;
