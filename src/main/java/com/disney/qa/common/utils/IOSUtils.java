@@ -1,6 +1,5 @@
 package com.disney.qa.common.utils;
 
-import com.disney.config.DisneyConfiguration;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.messager.Messager;
@@ -14,7 +13,6 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.SupportsLegacyAppManagement;
 import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.TapOptions;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import lombok.Getter;
@@ -58,6 +56,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String RIGHT_POSITION = "RIGHT";
     String LEFT_POSITION = "LEFT";
+    String TOP = "TOP";
+    String BOTTOM = "BOTTOM";
 
     enum ButtonStatus {
         ON, OFF, INVALID
@@ -1002,6 +1002,26 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
                 Assert.assertTrue(elementPosition < percentageToValidate, "Element is not at the left position");
                 break;
             default: throw new IllegalArgumentException("Invalid alignment String");
+        }
+    }
+
+    default void validateElementExpectedHeightPosition(ExtendedWebElement element, String position) {
+        int elementPosition = getCenterCoordinate(element).getY();
+        Dimension screenSize = getDriver().manage().window().getSize();
+        int screenHeight = screenSize.height;
+        double halfHeightScreen = 0.5 * screenHeight;
+        LOGGER.info("Screen size height: {} ", screenHeight);
+        LOGGER.info("Element position: {} ", elementPosition);
+
+        switch (position) {
+            case TOP:
+                Assert.assertTrue(elementPosition < halfHeightScreen, "Element is not at the top position");
+                break;
+            case BOTTOM:
+                Assert.assertTrue(elementPosition > halfHeightScreen, "Element is not at the bottom position");
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid alignment String");
         }
     }
 
