@@ -16,6 +16,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
@@ -867,16 +868,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public List<String> getBroadcastFeedOptionText() {
-        List<String> feedOptionText = null;
+    public List<String> getBroadcastFeedOptionText(boolean isTargetFeed, boolean isLanguage) {
+        List<String> feedOptionText = new ArrayList<>();
         List<ExtendedWebElement> feedCell =
                 findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
-        LOGGER.info("Feed size:- " + feedCell.size());
-        IntStream.range(0, feedCell.size()).forEach(i -> {
-            LOGGER.info("Feed Text:- " + feedCell.get(i).getText());
-            LOGGER.info("Feed Element Text:- " + feedCell.get(i).getElement().getText());
-            feedOptionText.add(feedCell.get(i).getText());
-        });
+        if (isTargetFeed)
+            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim()));
+        else if (isLanguage)
+            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[1].trim()));
         return feedOptionText;
     }
 

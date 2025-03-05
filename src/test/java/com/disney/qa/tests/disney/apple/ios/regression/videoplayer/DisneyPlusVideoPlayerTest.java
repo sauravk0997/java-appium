@@ -289,7 +289,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
         Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
                 "Broadcast Menu did not open on video player");
-        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastFeedOptionText()),
+        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastFeedOptionText(true, false)),
                 "Target broadcasts feeds on UI are not as expected");
 
         String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
