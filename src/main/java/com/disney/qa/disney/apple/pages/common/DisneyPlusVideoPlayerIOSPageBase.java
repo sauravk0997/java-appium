@@ -871,7 +871,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         List<String> feedOptionText = null;
         List<ExtendedWebElement> feedCell =
                 findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
+        LOGGER.info("Feed size:- " + feedCell.size());
         IntStream.range(0, feedCell.size()).forEach(i -> {
+            LOGGER.info("Feed Text:- " + feedCell.get(i).getText());
+            LOGGER.info("Feed Element Text:- " + feedCell.get(i).getElement().getText());
             feedOptionText.add(feedCell.get(i).getText());
         });
         return feedOptionText;
