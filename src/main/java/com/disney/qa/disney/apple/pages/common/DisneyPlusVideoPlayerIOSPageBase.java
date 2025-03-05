@@ -873,9 +873,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         List<ExtendedWebElement> feedCell =
                 findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
         if (isTargetFeed)
-            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim()));
+            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim().toUpperCase()));
         else if (isLanguage)
-            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[1].trim()));
+            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[1].trim().toUpperCase()));
+        LOGGER.info(feedOptionText.toString().toUpperCase());
+        LOGGER.info("Feed option size:- " + feedOptionText.size());
         return feedOptionText;
     }
 
