@@ -101,6 +101,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
     public static final String VIDEO_PLAYER_NOT_DISPLAYED = "Video Player is not displayed";
 
+    //DOB
+    public static final String DOB_2015 = "2015-01-01";
+
+    //Offers
+    public static final String DISNEY_BASIC_PLAN = "Disney+ Basic";
+
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
