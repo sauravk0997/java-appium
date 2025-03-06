@@ -521,8 +521,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 secondSeriesName + " series title was not present");
 
         //Set lower rating
-        getAccountApi().editContentRatingProfileSetting(getAccount(),
-                getLocalizationUtils().getRatingSystem(), TV_14.getContentRating());
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RATING_TV14);
 
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
@@ -980,7 +981,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         //Validate on lower maturity rating profile downloaded assets not visible
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        whoIsWatching.clickProfile(getAccount().getProfiles().get(1).getProfileName());
+        whoIsWatching.clickProfile(getUnifiedAccountApi().getDisneyProfiles(getUnifiedAccount()).get(1).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isElementNotPresent(SHORT_TIMEOUT),
                 ONLY_MURDERS_IN_THE_BUILDING +  " was found present on " + getAccount().getProfiles().get(1) + " profile's Downloads screen.");
