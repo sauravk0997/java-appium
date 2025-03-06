@@ -2,12 +2,14 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.common.constant.RatingConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -853,6 +855,35 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Content Unavailable error message was not present");
         Assert.assertTrue(homePage.getOkButton().isElementPresent(),
                 "OK button text was not present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78064"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNUnavailableDetailsPagePCONError() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whosWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_PLAN)));
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder().unifiedAccount(getUnifiedAccount())
+                .profileName(PROFILE_NAME_SECONDARY).dateOfBirth(DOB_2015).language(getLocalizationUtils().getUserLanguage())
+                .avatarId(AVATAR_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
+
+        handleAlert();
+        welcomeScreen.clickLogInButton();
+        login(getUnifiedAccount());
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        Assert.assertTrue(whosWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whosWatchingPage.clickProfile(PROFILE_NAME_SECONDARY);
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
+
+        Assert.assertTrue(detailsPage.getEspnPlusGenericErrorText().isElementPresent(),
+                "Inline generic error message was not present");
+        Assert.assertFalse(detailsPage.getDetailsTab().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Details tab was present");
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
