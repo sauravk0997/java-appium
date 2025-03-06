@@ -877,15 +877,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public String selectAndGetBroadcastFeedOption() {
-        String selectedOption = "";
+        String selectedOption = null;
         List<ExtendedWebElement> feedCell =
                 findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
         if (feedCell.size() > 1) {
             selectedOption = feedCell.get(1).getText().trim();
             feedCell.get(1).click();
-        } else {
-            selectedOption = feedCell.get(0).getText().trim();
-            feedCell.get(0).click();
         }
         return selectedOption;
     }
