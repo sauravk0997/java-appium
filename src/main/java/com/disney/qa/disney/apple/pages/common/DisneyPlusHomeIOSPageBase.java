@@ -49,7 +49,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHomePageMainElement() {
-        return dynamicCellByLabel.format(disneyTile);
+        return disneyTile;
     }
 
     public ExtendedWebElement getActiveHomeIcon() {
