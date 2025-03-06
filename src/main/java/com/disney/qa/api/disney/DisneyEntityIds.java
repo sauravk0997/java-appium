@@ -19,7 +19,6 @@ public enum DisneyEntityIds {
     THE_AVENGERS("Marvel Studios' The Avengers", "entity-3a5596d6-5133-4a8e-8d21-00e1531a4e0f"),
     DANCING_WITH_THE_STARS("Dancing with the Stars", "entity-7d918be0-4130-4551-aab8-c7dcae85d35f"),
     DISNEY_PAGE("Disney Brand", "page-4c4b78ed-4a17-43eb-8221-14a3959e4517"),
-    SPORTS_PAGE("ESPN Sports", "4e177574-aed4-4ad5-8d01-6fc7513bd3e5"),
     SKELETON_CREW("Star Wars: Skeleton Crew", "entity-4a73a750-f18c-450a-b9f7-d9f40974ff9d");
 
     private final String title;
