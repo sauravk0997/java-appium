@@ -6,6 +6,7 @@ public class CollectionConstant {
         ACTION_AND_ADVENTURE,
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
+        BRANDS_COLLECTION,
         BRANDS_DISNEY_ORIGINALS,
         BRANDS_MARVEL_FEATURED,
         BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
@@ -45,6 +46,8 @@ public class CollectionConstant {
                 return "a221f47c-0e16-476b-bdc0-35ed038b72b8";
             case ANIMATED_SERIES:
                 return "d2ccd7df-a0ee-4251-a290-e25c05b852b5";
+            case BRANDS_COLLECTION:
+                return "5fc710db-490e-405e-b753-7c0a697696db";
             case BRANDS_DISNEY_ORIGINALS:
                 return "33b99ab4-5306-4099-9c4b-0845876a0834";
             case BRANDS_PIXAR_FEATURED:
