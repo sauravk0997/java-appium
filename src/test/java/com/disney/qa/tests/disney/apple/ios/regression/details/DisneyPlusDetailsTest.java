@@ -46,6 +46,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String AVAILABLE_WITH_ESPN_SUBSCRIPTION = "Available with ESPN+ Subscription";
     public static final String UPCOMING = "Upcoming";
     public static final String LIVE = "LIVE";
+    private static final String ESPN_CONTENT = "NFL 2025 Winter Classic";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -323,7 +324,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78024"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpsellPromptScreenForEspnContent() {
-        String espnContent = "NFL Matchup";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -333,8 +333,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.getSearchBar().click();
-        searchPage.searchForMedia(espnContent);
-        searchPage.getDynamicAccessibilityId(espnContent).click();
+        searchPage.searchForMedia(ESPN_CONTENT);
+        searchPage.getDynamicAccessibilityId(ESPN_CONTENT).click();
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
@@ -351,7 +351,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77920"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpsellDetailPageForEspnAndHuluContent() {
-        String espnContent = "NFL Matchup";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -361,8 +360,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.getSearchBar().click();
-        searchPage.searchForMedia(espnContent);
-        searchPage.getDynamicAccessibilityId(espnContent).click();
+        searchPage.searchForMedia(ESPN_CONTENT);
+        searchPage.getDynamicAccessibilityId(ESPN_CONTENT).click();
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
@@ -834,6 +833,26 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             Assert.assertTrue(detailsPage.getAiringBadgeLabel().getAttribute(Attributes.LABEL.getAttribute()).contains(LIVE),
                     "Live badge not displayed on detail page");
         }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78066"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, JP})
+    public void verifyESPNUnavailableDetailsPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getAccount());
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+
+        Assert.assertTrue(homePage.isViewAlertPresent(),
+                "Alert was not present");
+        Assert.assertTrue(homePage.getStaticTextByLabelContains("content-unavailable").isElementPresent(),
+                "Content Unavailable error message was not present");
+        Assert.assertTrue(homePage.getOkButton().isElementPresent(),
+                "OK button text was not present");
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
