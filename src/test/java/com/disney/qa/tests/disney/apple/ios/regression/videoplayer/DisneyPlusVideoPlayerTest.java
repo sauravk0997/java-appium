@@ -286,6 +286,39 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77896"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNAlternateBroadcastSelectorFeedsOptions() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        openBroadcastMenu();
+        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
+                "Target broadcasts feeds on UI are not as expected");
+
+        String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.displayVideoController();
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
+        Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedFeedOption),
+                "Target feed is not selected");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77895"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNAlternateBroadcastSelectorLanguageOptions() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        openBroadcastMenu();
+        Assert.assertTrue(videoPlayer.getExpectedBroadcastLanguageOptions()
+                        .containsAll(videoPlayer.getBroadcastLanguageOptionText()),
+                "Target broadcasts language on UI are not as expected");
+
+        String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.displayVideoController();
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
+        Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedFeedOption),
+                "Target language is not selected");
+    }
+
+    public void openBroadcastMenu() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
@@ -309,15 +342,6 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
         Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
                 "Broadcast Menu did not open on video player");
-        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
-                "Target broadcasts feeds on UI are not as expected");
-
-        String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.displayVideoController();
-        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
-        Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedFeedOption),
-                "Target feed is not selected");
     }
 
     private ArrayList<String> broadcastsExpectedFeeds() {
