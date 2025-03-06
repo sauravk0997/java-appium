@@ -633,6 +633,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         setAppToHomeScreen(getAccount());
+        handleAlert();
         homePage.waitForHomePageToOpen();
         try {
             brandCollection = getDisneyAPIPage(HOME_PAGE.getEntityId(),
