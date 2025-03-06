@@ -869,14 +869,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
-    public List<String> getBroadcastFeedOptionText(boolean isTargetFeed, boolean isLanguage) {
+    public List<String> getBroadcastTargetFeedOptionText() {
         List<String> feedOptionText = new ArrayList<>();
         List<ExtendedWebElement> feedCell =
                 findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
-        if (isTargetFeed)
             feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim().toUpperCase()));
-        else if (isLanguage)
-            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[1].trim().toUpperCase()));
         return feedOptionText;
     }
 
