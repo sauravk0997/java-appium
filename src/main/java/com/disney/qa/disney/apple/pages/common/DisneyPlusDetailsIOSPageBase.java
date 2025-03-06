@@ -171,6 +171,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "/XCUIElementTypeCell[1]")
     private ExtendedWebElement firstItemPickerCell;
 
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
+    private ExtendedWebElement espnPlusGenericErrorText;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -279,6 +283,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getResumeDownloadButton() {
         return resumeDownloadButton;
+    }
+
+    public ExtendedWebElement getEspnPlusGenericErrorText() {
+        return espnPlusGenericErrorText;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
