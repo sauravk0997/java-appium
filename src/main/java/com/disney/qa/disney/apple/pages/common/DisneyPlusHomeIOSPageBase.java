@@ -16,9 +16,12 @@ import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.*;
 
+import static java.lang.String.*;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private String brandLabelSubString = ", Select for details on this title.";
     @ExtendedFindBy(accessibilityId = "Disney, Select for details on this title.")
     private ExtendedWebElement disneyTile;
     @ExtendedFindBy(accessibilityId = "Pixar, Select for details on this title.")
@@ -31,7 +34,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement nationalGeographicTile;
     @ExtendedFindBy(accessibilityId = "ESPN, Select for details on this title.")
     private ExtendedWebElement espnTile;
-    private static final String brandLabelSubString = ", Select for details on this title.";
+
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Mickey Mouse and Friends'`]")
@@ -164,7 +167,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
 
     public ExtendedWebElement getBrandCell(String brand) {
-        return getDynamicCellByLabel(String.format("%s" + brandLabelSubString, brand));
+        return getDynamicCellByLabel(String.format("%s %s", brandLabelSubString, brand));
     }
 
     public void clickOnBrandCell(String brand) {
