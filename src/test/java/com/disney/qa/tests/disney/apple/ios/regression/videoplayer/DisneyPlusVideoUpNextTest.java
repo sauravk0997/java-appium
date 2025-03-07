@@ -27,20 +27,16 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 import java.util.*;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
-    //Test constants
-    protected static final String SHORT_SERIES = "Bluey";
     private static final String IRON_MAN = "Iron Man";
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT = 90;
     private static final double PLAYER_PERCENTAGE_FOR_AUTO_PLAY = 95;
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 50;
     private static final String REGEX_UPNEXT_SERIES_TITLE = "Season %s Episode %s %s";
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES = 80;
-    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video Player did not open";
-    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String UP_NEXT_UI_WAS_NOT_PRESENT = "Up Next UI was not displayed";
 
     @DataProvider(name = "autoplay-state")
@@ -311,7 +307,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
         // Deeplink series episode
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
 
         //Tap on Next episode and verify that the next episode has started playing
@@ -406,14 +402,14 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
         String nextEpisodesTitle = upNext.getNextEpisodeInfo();
         upNext.tapSeeAllEpisodesButton();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         swipe(detailsPage.getStaticTextByLabelContains(nextEpisodesTitle), Direction.UP, 1, 900);
         sa.assertTrue(detailsPage.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Details page from the expected series did not open");
         // Steps to tap in Play content
         deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
         upNext.getUpNextImageView().click();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.displayVideoController();
         sa.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Playback from the expected series did not open");
@@ -426,7 +422,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
         int percentage = 98;
         launchDeeplink(R.TESTDATA.get(deeplink));
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.scrubToPlaybackPercentage(percentage);
         // Verify image and elements present in upNext screen
         upNext.waitForUpNextUIToAppear();
@@ -446,9 +442,9 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);
         searchPage.getDynamicAccessibilityId(content).click();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentage);
