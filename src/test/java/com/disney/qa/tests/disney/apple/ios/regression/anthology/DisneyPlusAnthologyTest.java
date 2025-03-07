@@ -399,9 +399,8 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73971"})
     @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologyMaturityRatingRestrictionErrorMessage() {
-        String contentUnavailableError = "content-unavailable";
+        SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         //set lower rating
         List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
                 .getParentalControls().getMaturityRating().getRatingSystemValues();
@@ -410,11 +409,19 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
-        Assert.assertFalse(details.isOpened(), "Details page should not open");
-        //At the moment Parental control error message is not supported somehow and hence verifying generic
-        // error message
-        Assert.assertTrue(homePage.getTextViewByLabelContains(contentUnavailableError).isPresent(),
-                "Content Unavailable generic error not displayed");
+        sa.assertTrue(details.isHeroImagePresent(), "Title background image is not present");
+        sa.assertTrue(details.isLogoImageDisplayed(), "Title is not present");
+        sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata is not present");
+        Assert.assertTrue(details.getPconIcon().isPresent(), "PCON icon is not present");
+        Assert.assertTrue(details.getRatingRestrictionDetailMessage().isPresent(),
+                "Rating restriction detail message is not present");
+        sa.assertFalse(details.isContentDescriptionDisplayed(), "Content description is present");
+        sa.assertTrue(details.getTrailerButton().isElementNotPresent(ONE_SEC_TIMEOUT), "Trailer button is present");
+        sa.assertTrue(details.getPlayButton().isElementNotPresent(ONE_SEC_TIMEOUT), "Play button is present");
+        sa.assertTrue(details.getWatchlistButton().isElementNotPresent(ONE_SEC_TIMEOUT),
+                "Add to watchlist button is present");
+        sa.assertTrue(details.getTabBar().isElementNotPresent(ONE_SEC_TIMEOUT), "Tab container is present");
+        sa.assertAll();
     }
 
     private void searchAndOpenDWTSDetails() {
