@@ -8,11 +8,11 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT;
@@ -342,6 +342,20 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
         Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
                 "Broadcast Menu did not open on video player");
+        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
+                "Target broadcasts feeds on UI are not as expected");
+
+        String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        if(selectedFeedOption != null){
+            videoPlayer.waitForVideoToStart();
+            videoPlayer.displayVideoController();
+            videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
+            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedFeedOption),
+                    "Target feed is not selected");
+        }
+        else{
+            throw new SkipException("Only One target feed option available, hence skipping feed selection logic");
+        }
     }
 
     private ArrayList<String> broadcastsExpectedFeeds() {
