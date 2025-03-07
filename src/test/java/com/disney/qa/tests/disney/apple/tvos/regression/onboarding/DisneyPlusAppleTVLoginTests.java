@@ -154,7 +154,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66493"})
-    @Test(groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void verifyTryAgainWhenInvalidEmailInput() {
         String unknownEmail = "abc@po.com";
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -409,26 +409,23 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66556"})
-    @Test(groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void verifyIncorrectPasswordErrorMessage() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
 
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(getAccount().getEmail());
         oneTimePasscodePage.clickLoginWithPassword();
         passwordPage.logInWithPassword(RandomStringUtils.randomAlphabetic(6));
-        sa.assertTrue(passwordPage.isInvalidCredentialsDisplayed(), "Invalid Password error not displayed.");
-        sa.assertAll();
+        Assert.assertTrue(passwordPage.isInvalidCredentialsDisplayed(), "Invalid Password error not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66553"})
