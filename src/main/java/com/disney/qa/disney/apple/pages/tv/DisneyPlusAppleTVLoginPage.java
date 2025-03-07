@@ -199,4 +199,8 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     public ExtendedWebElement getEmailHint() {
         return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()));
     }
+
+    public void clickTryAgainBtn() {
+        clickSelect();
+    }
 }

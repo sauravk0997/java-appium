@@ -120,8 +120,4 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText()));
     }
-
-    public void clickTryAgainBtn() {
-        getTryAgainButton().click();
-    }
 }
