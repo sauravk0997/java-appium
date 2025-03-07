@@ -418,6 +418,7 @@ public enum DictionaryKeys {
     ORIGINALS_PAGE_LOAD("originals_pageload"),
     OTP_PLACEHOLDER("otp_placeholder"),
     OTP_PLACEHOLDER_SPACED("otp_placeholder_spaced"),
+    PARENTAL_CONTROL_MEDIA_NOT_ALLOWED_ERROR("error_medianotallowed_parental-control"),
     PASSWORD("password"),
     PASSWORD_CREATION_ERROR_EMPTY("password_creation_error_empty"),
     PASSWORD_RATING_FAIR("password_rating_fair"),

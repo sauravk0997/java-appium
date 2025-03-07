@@ -583,8 +583,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
-        Assert.assertTrue(homePage.getMoreContentMayBeAvailableDependOnLocationErrorPopUpMessage().isPresent(),
-                CONTENT_UNAVAILABLE_ERROR);
+        Assert.assertTrue(homePage.getParentalControlMediaNotAllowedErrorPopUpMessage().isPresent(),
+                "Parental Control media not allowed error message not found");
         Assert.assertTrue(homePage.getOkButton().isPresent(), "CTA button not found");
         homePage.getOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
