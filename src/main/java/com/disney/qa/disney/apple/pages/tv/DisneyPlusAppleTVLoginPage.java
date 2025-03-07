@@ -27,9 +27,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
     private ExtendedWebElement continueAfterEnteringNewEmailBtn;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"TRY AGAIN\"`]")
-    private ExtendedWebElement tryAgainBtn;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Continue. Confirm your password and login.'`]")
     private ExtendedWebElement confirmLoginButton;
 
@@ -148,12 +145,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     public void clickContinueBtn() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         continueButton.click();
-    }
-
-    public void clickTryAgainBtn() {
-        tryAgainBtn.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        tryAgainBtn.click();
     }
 
     public static List<String> getUnknownEmailScreenTexts(DisneyLocalizationUtils disneyLanguageUtils) {

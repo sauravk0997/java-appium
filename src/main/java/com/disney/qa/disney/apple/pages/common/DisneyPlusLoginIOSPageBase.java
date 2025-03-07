@@ -114,4 +114,14 @@ public class DisneyPlusLoginIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_LEARN_MORE_HEADER.getText())).isPresent();
     }
+
+    public ExtendedWebElement getTryAgainButton(){
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_CONTINUE_BTN.getText()));
+    }
+
+    public void clickTryAgainBtn() {
+        getTryAgainButton().click();
+    }
 }

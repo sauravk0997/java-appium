@@ -153,6 +153,25 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66493"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
+    public void verifyTryAgainWhenInvalidEmailInput() {
+        String unknownEmail = "abc@po.com";
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+
+        selectAppleUpdateLaterAndDismissAppTracking();
+        Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        welcomeScreen.clickLogInButton();
+        loginPage.proceedToPasswordScreen(unknownEmail);
+        Assert.assertTrue(loginPage.getTryAgainButton().isPresent(), "Try Again button not displayed");
+        loginPage.clickTryAgainBtn();
+        Assert.assertTrue(loginPage.isOpened(), "Email input screen did not launch");
+        Assert.assertTrue(loginPage.isEmailFieldFocused(), "Email input is not focused by default");
+        Assert.assertTrue(loginPage.getStaticTextByLabel(unknownEmail).isPresent(),
+                "Entered Email is not displayed");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66469"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void registeredEmailTakenToLoginPassword() {
