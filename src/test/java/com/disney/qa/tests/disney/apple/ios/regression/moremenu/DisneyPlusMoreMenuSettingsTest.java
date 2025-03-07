@@ -187,7 +187,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenu.isOpened(), "User was not returned to the More Menu after navigating back from safari");
         //Scenario: Verify Info hyperlink
         moreMenu.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(getAccount().getFirstName());
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
         editProfilePage.selectInfoHyperlink();
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
         sa.assertTrue(editProfilePage.verifyTextOnWebView(DISNEY_PLUS_HELP_CENTER),"User was not navigated to Disney plus help center");
