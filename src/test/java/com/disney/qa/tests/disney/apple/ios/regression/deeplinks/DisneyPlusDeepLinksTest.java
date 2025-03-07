@@ -561,7 +561,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .profileName(SECONDARY_PROFILE)
                 .language(getAccount().getProfileLang())
                 .avatarId(null)
-                .dateOfBirth(Person.U18.getYear() + "-" + Person.U18.getMonth().getNum() + "-" + Person.U18.getDay(true))
+                .dateOfBirth(U18_DOB)
                 .build());
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
