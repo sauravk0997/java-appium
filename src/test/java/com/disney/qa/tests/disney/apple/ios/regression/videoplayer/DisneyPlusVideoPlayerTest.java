@@ -1,17 +1,18 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
-import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.dictionarykeys.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.ArrayList;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT;
@@ -20,6 +21,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
     private static final int SPLIT_TIME = 15;
+    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77674"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
@@ -83,7 +85,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not open");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         Assert.assertEquals(videoPlayer.getTitleLabel(), contentTitle,
                 "Expected content did not open");
     }
@@ -234,7 +236,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77740"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER,TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNAlternateBroadcastSelector() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -258,5 +260,77 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
         Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
                 "Broadcast Menu did not open on video player");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77687"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEspnVODNetworkAttribution() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String disneyTrioPremiumMonthly = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
+        String espn = "ESPN+";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(disneyTrioPremiumMonthly)));
+        loginToHome(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("espn_prod_survive_and_advance_documentary_playback"));
+
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+
+        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(espn), "ESPN Network watermark is not present");
+        // Validate right position of espn logo
+        validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(espn), RIGHT_POSITION);
+        // Validate bottom position of espn logo
+        validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(espn), BOTTOM);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77896"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNAlternateBroadcastSelectorFeedsOptions() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        //NHL collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+
+        collectionPage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.REPLAYS_COLLECTION, 5);
+        espnPage.getReplayLabel().click();
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.displayVideoController();
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
+        Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
+                "Broadcast Menu did not open on video player");
+        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
+                "Target broadcasts feeds on UI are not as expected");
+
+        String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        if(selectedFeedOption != null){
+            videoPlayer.waitForVideoToStart();
+            videoPlayer.displayVideoController();
+            videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
+            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedFeedOption),
+                    "Target feed is not selected");
+        }
+        else{
+            throw new SkipException("Only One target feed option available, hence skipping feed selection logic");
+        }
+    }
+
+    private ArrayList<String> broadcastsExpectedFeeds() {
+        ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
+        broadcastsExpectedFeeds.add("PRIMARY");
+        broadcastsExpectedFeeds.add("NATIONAL");
+        broadcastsExpectedFeeds.add("HOME");
+        broadcastsExpectedFeeds.add("AWAY");
+        return broadcastsExpectedFeeds;
     }
 }

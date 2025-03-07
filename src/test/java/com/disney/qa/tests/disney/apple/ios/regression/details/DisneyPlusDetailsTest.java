@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.details;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.client.responses.profile.Profile;
-import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -395,12 +394,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
                 homePage.getBrandLandingView(), Direction.UP, 1000);
+        String espnSportCollectionId = CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS);
 
         // Get first sport and validate page
-        sa.assertTrue(homePage.getCollection(DisneyEntityIds.SPORTS_PAGE.getEntityId()).isPresent(), "Sports container was not found");
-        String sportTitle = getContainerTitlesFromApi(DisneyEntityIds.SPORTS_PAGE.getEntityId(), 5).get(0);
+        sa.assertTrue(homePage.getCollection(espnSportCollectionId).isPresent(), "Sports container was not found");
+        String sportTitle = getContainerTitlesFromApi(espnSportCollectionId, 5).get(0);
         if(!sportTitle.isEmpty()) {
-            homePage.getTypeCellLabelContains(sportTitle).click();
+            espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle).click();
             sa.assertTrue(espnPage.isSportTitlePresent(sportTitle), "Sport title was not found");
             sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
             sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
@@ -833,6 +833,26 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             Assert.assertTrue(detailsPage.getAiringBadgeLabel().getAttribute(Attributes.LABEL.getAttribute()).contains(LIVE),
                     "Live badge not displayed on detail page");
         }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78066"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, JP})
+    public void verifyESPNUnavailableDetailsPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getAccount());
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+
+        Assert.assertTrue(homePage.isViewAlertPresent(),
+                "Alert was not present");
+        Assert.assertTrue(homePage.getStaticTextByLabelContains("content-unavailable").isElementPresent(),
+                "Content Unavailable error message was not present");
+        Assert.assertTrue(homePage.getOkButton().isElementPresent(),
+                "OK button text was not present");
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {

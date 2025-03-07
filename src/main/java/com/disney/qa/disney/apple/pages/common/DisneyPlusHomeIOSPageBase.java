@@ -16,10 +16,12 @@ import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.*;
 
+import static java.lang.String.*;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String DISNEY_TILE = "Disney, Select for details on this title.";
+    private String brandLabelSubString = ", Select for details on this title.";
     @ExtendedFindBy(accessibilityId = "Disney, Select for details on this title.")
     private ExtendedWebElement disneyTile;
     @ExtendedFindBy(accessibilityId = "Pixar, Select for details on this title.")
@@ -32,6 +34,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement nationalGeographicTile;
     @ExtendedFindBy(accessibilityId = "ESPN, Select for details on this title.")
     private ExtendedWebElement espnTile;
+
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Mickey Mouse and Friends'`]")
@@ -46,7 +49,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHomePageMainElement() {
-        return dynamicCellByLabel.format(DISNEY_TILE);
+        return disneyTile;
     }
 
     public ExtendedWebElement getActiveHomeIcon() {
@@ -134,6 +137,20 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         brandTiles.get(new SecureRandom().nextInt(brandTiles.size() - 1)).click();
     }
 
+    public List<String> getOrderedBrandList() {
+        List<String> brandList = new ArrayList<>();
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+
+        brandList.add(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY));
+        brandList.add(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.PIXAR));
+        brandList.add(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.MARVEL));
+        brandList.add(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.STAR_WARS));
+        brandList.add(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.NATIONAL_GEOGRAPHIC));
+        brandList.add(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        brandList.add(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.ESPN));
+        return brandList;
+    }
+
     public ExtendedWebElement getDisneyTile() {
         return disneyTile;
     }
@@ -148,12 +165,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU)).click();
     }
 
-    public ExtendedWebElement getBrandTile(String brand) {
-        return getTypeCellLabelContains(brand);
-    }
 
     public ExtendedWebElement getBrandCell(String brand) {
-        return getDynamicCellByLabel(String.format("%s, Select for details on this title.", brand));
+        return getDynamicCellByLabel(String.format("%s%s", brand, brandLabelSubString));
     }
 
     public void clickOnBrandCell(String brand) {
@@ -204,5 +218,12 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
 
     public List<ExtendedWebElement> getBrandCells() {
         return findExtendedWebElements(brandTileCell.getBy());
+    }
+
+    public List<String> getBrandListFromUI() {
+        List<String> brandListFromUI = new ArrayList<>();
+        getAllCollectionCells(CollectionConstant.Collection.BRANDS_COLLECTION).forEach(
+                cell -> brandListFromUI.add(cell.getText().replace(brandLabelSubString, "")));
+        return brandListFromUI;
     }
 }
