@@ -25,6 +25,7 @@ import java.util.List;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.IConstantHelper.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
@@ -424,7 +425,8 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     public void verifyAppSettingsDownloadSectionNotVisibleForAdTierUser() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         SoftAssert sa = new SoftAssert();
         onboard();
         appSettingsPage.waitForAppSettingsPageToOpen();

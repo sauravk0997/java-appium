@@ -467,7 +467,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), "Who is watching screen did not open");
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
         whoIsWatchingPage.clickProfile(JUNIOR_PROFILE);
