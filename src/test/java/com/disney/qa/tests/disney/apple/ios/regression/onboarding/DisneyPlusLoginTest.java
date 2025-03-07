@@ -370,7 +370,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        DisneyPlusAddProfileBannerIOSPage addProfileBannerPage = initPage(DisneyPlusAddProfileBannerIOSPage.class);
+        DisneyPlusAddProfileBannerIOSPageBase addProfileBannerPage = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
         DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage =
                 initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
