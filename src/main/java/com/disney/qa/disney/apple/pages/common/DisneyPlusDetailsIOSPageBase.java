@@ -171,6 +171,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "/XCUIElementTypeCell[1]")
     private ExtendedWebElement firstItemPickerCell;
 
+    @ExtendedFindBy(accessibilityId = "detailsRestrictedIcon")
+    private ExtendedWebElement parentalControlIcon;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -1307,5 +1310,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                 IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER_TRIO.getText()))
                 .isPresent();
+    }
+
+    public ExtendedWebElement getParentalControlIcon() {
+        return parentalControlIcon;
     }
  }
