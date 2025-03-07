@@ -104,7 +104,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     //Common error messages
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
-    public static final String VIDEO_PLAYER_NOT_DISPLAYED = "Video Player is not displayed";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
