@@ -4,6 +4,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -75,6 +76,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
      * @return Playback remaining time in seconds
      */
     public int getRemainingTimeInSeconds() {
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(timeRemainingLabel.getBy()), FIVE_SEC_TIMEOUT);
         String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
         int remainingTimeInSec;
 
