@@ -1,6 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -20,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
 
 public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyBaseTest {
@@ -38,14 +39,14 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         //wait for action grant to expire
         passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
         createKidsProfile();
         passwordPage.submitPasswordWhileLoggedIn("IncorrectPassword!123");
         //Verify that error is shown on screen
         softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
         softAssert.assertAll();
     }
@@ -59,7 +60,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
@@ -69,7 +70,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         addProfile.clickSaveProfileButton();
         //Consent authentication
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
         if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             parentalConsent.scrollConsentContent(4);
@@ -98,8 +99,16 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
 
         SoftAssert softAssert = new SoftAssert();
         String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
-        setAppToHomeScreen(getAccount());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).dateOfBirth(null).build());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true).build());
 
         //wait for 15 min to expire the current action grant
         addProfile.keepSessionAlive(15, addProfile.getHomeNav());
@@ -120,7 +129,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         softAssert.assertTrue(updateProfilePage.isOpened(), "'Let's update your profile' page is not opened after abandoning the authentication flow");
         editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
         if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
             softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");

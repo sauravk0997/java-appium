@@ -203,10 +203,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         // Disable one trust banner Jarvis config and set account
         jarvisDisableOneTrustBanner();
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY, GERMANY,
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD, GERMANY,
                 getLocalizationUtils().getUserLanguage())));
 
-        //getAccountApi().overrideLocations(getAccount(), GERMANY);
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), GERMANY);
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getUnifiedAccount());
@@ -250,18 +250,19 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         SoftAssert sa =  new SoftAssert();
         String EXPECTED_RATING = "12";
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY, GERMANY,
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
 
-        //getAccountApi().overrideLocations(getAccount(), GERMANY);
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
+                .profileName(JUNIOR_PROFILE)
                 .dateOfBirth(KIDS_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
                 .isStarOnboarded(true).build());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), GERMANY);
 
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -301,7 +302,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74004"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
     public void testRalphContentSliderMaturityGermany() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -329,7 +330,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74273"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
     public void testRalphContentSliderMaturityCanada() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -340,7 +341,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(CANADA, under18Age, AGE_VALUES_CANADA)));
         LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
-        jarvisDisableOneTrustBanner();
+        //jarvisDisableOneTrustBanner();
 
         createAccountAndAddSecondaryProfile(CANADA, getLocalizationUtils().getUserLanguage());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
@@ -373,7 +374,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
             recommendedContentRatingByAge = "AL (Recommended)";
         }
         jarvisDisableOneTrustBanner();
-        createAccountAndAddSecondaryProfile(getLocalizationUtils().getLocale(), UNITED_KINGDOM);
+        createAccountAndAddSecondaryProfile(getLocalizationUtils().getLocale(), DE);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getUnifiedAccount());
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
@@ -397,10 +398,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         int age = 59;
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY,
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        //getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), CA);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(CANADA, age, AGE_VALUES_CANADA)));
@@ -438,17 +439,19 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         String ratingChoose = "TV-Y";
         int age = 59;
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY,
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
 
-        //getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), CA);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(CANADA, age, AGE_VALUES_CANADA)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
 
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
         setAppToHomeScreen(getUnifiedAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
@@ -493,11 +496,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
 
         setupForRalph();
-        //getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
-
+        handleGenericPopup(3, 1);
         welcomePage.clickLogInButton();
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
@@ -531,10 +533,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                         Map.of("content_rating", getRecommendedContentRating(CA, age, AGE_VALUES_CANADA)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
 
-        setAppToHomeScreen(getUnifiedAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        setAppToHomeScreen(getUnifiedAccount());
 
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
 
@@ -571,10 +573,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY,
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        //getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), GERMANY);
 
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -612,11 +614,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     private void createAccountAndAddSecondaryProfile(String locale, String language) {
-        String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
         // Create standard account with Ads subscription
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY, locale,
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD, locale,
                 language)));
-        //getAccountApi().overrideLocations(getAccount(), locale);
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
+
         // Create secondary profile with no DOB and gender
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -625,7 +627,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .gender(null)
                 .language(language)
                 .avatarId(BABY_YODA)
-                .kidsModeEnabled(true)
+                .kidsModeEnabled(false)
                 .isStarOnboarded(true).build());
     }
 
@@ -654,7 +656,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                         .subVersion(UNIFIED_ORDER)
                         .build())
                 .setCountry(getLocalizationUtils().getLocale())
-                .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
 
         // Depending on the test scenario we need to set the DOB to

@@ -302,9 +302,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB);
 
-        setAppToHomeScreen(basicAccount);
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -938,11 +937,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 getLocalizationUtils().getRatingSystem(),
                 RATING_MATURE);
-
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
@@ -966,7 +964,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String searchLimitQuery = "automationsearchlongqueryformaximumSixtyfourcharacterlimittest!!";
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
@@ -1038,7 +1036,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
@@ -1082,7 +1080,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
 
-        //getUnifiedAccount().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         setAppToHomeScreen(getUnifiedAccount());
         if (oneTrustPage.isOpened())
             oneTrustPage.tapAcceptAllButton();
@@ -1105,8 +1103,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);

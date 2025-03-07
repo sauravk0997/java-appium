@@ -1,16 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
-<<<<<<< HEAD
+
 import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISPLAYED;
-=======
 import static com.disney.qa.common.constant.IConstantHelper.DISNEY_BASIC_MONTHLY;
->>>>>>> 9a4bc338c (update unified account for more menu, deeplink)
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;

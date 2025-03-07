@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
@@ -69,8 +68,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkWatchlist() {
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
         String legacyWatchlistDeepLink = R.TESTDATA.get("disney_prod_watchlist_deeplink_legacy");
         launchDeeplink(legacyWatchlistDeepLink);
@@ -83,9 +81,10 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
+
         launchDeeplink(deepLink);
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(),
                 WATCHLIST_DEEP_LINK_ERROR);
@@ -104,8 +103,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyDeepLinkNewURLStructureWatchlistUnauthenticatedUser() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+
         launchDeeplink(R.TESTDATA.get("disney_prod_watchlist_deeplink_2"));
 
         handleAlert();
@@ -143,9 +143,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluSeriesDetailDeepLink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
+
         launchDeeplink(R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"));
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING),
@@ -188,7 +188,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(abcNetworkDeepLink);
@@ -217,7 +217,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void testDeeplinkMovieDetailsPageContentUnavailable() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
@@ -236,7 +236,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(JUNIOR_PROFILE)
@@ -280,7 +280,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         String episodeTitle, episodeDeeplinkId;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         ExploreContent seriesApiContent = getSeriesApi(
@@ -359,7 +359,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+                getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
@@ -534,17 +534,19 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
-    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
-        String unentitledSeriesId = "entity-7840bf30-f440-48d4-bf81-55d8cb24457a";
-        String platform = "apple";
-        String environment = "PROD";
+    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
+        String unentitledSeriesId = "entity-d8ea2b7d-d87d-4e5b-bfee-719a39e95129";
 
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
         launchDeeplink(deepLink);
 
-        sa.assertTrue(detailsPage.isContentAvailableWithHuluSubscriptionPresent(getAccount(), environment, platform, unentitledSeriesId),
+        Visuals visualsResponse = getExploreAPIPageVisuals(unentitledSeriesId);
+        String huluSubscriptionErrorMessage = visualsResponse.getRestriction().getMessage();
+
+        sa.assertTrue(detailsPage.getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent(),
                 "\"This content requires a Hulu subscription.\" message is displayed");
         sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
         sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");

@@ -13,6 +13,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.util.*;
 
+import static com.disney.qa.common.constant.IConstantHelper.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 
@@ -68,8 +69,9 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEspnTileOrder() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         Assert.assertTrue(homePage.getBrandListFromUI().equals(homePage.getOrderedBrandList()),
                 "Brand tiles are not in the expected order");
     }

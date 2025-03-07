@@ -13,8 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 
-import static com.disney.qa.common.constant.IConstantHelper.JP;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.JAPAN;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -34,8 +33,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS,
-                        "JP",
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        JP,
                         getLocalizationUtils().getUserLanguage())));
 
         //Add Profiles
@@ -92,8 +91,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS,
-                        "JP",
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        JP,
                         getLocalizationUtils().getUserLanguage())));
 
         setAppToHomeScreen(getUnifiedAccount());
@@ -102,24 +101,24 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
-        sa.assertTrue(editProfile.isEditTitleDisplayed(),"Edit profile Title is not displayed");
-        sa.assertTrue(editProfile.getDoneButton().isPresent(SHORT_TIMEOUT),"Done button is not displayed");
-        sa.assertTrue(editProfile.getDynamicCellByName(MICKEY_MOUSE).isPresent(),"profile icon is not displayed");
-        sa.assertTrue(editProfile.getPrimaryProfileExplainer().isPresent(SHORT_TIMEOUT),"Primary profile explainer is not displayed");
-        sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT),"pencil icon is not displayed");
-        sa.assertTrue(editProfile.getTextEntryField().getText().equals(DEFAULT_PROFILE),"Profile name is not displayed");
-        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(),"Playback setting section is not as expected");
-        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
-        sa.assertTrue(editProfile.isParentalControlHeadingDisplayed(),"Parental control section is not as expected");
-        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("PG"),"Maturity Rating section is not as expected");
-        sa.assertFalse(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is displayed");
-        sa.assertFalse(editProfile.getKidProofExitLabel().isPresent(SHORT_TIMEOUT),"Kid proof exit label is displayed");
-        sa.assertFalse(editProfile.getKidProofDescription().isPresent(SHORT_TIMEOUT),"Kid proof description is displayed");
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
+        sa.assertTrue(editProfile.getDoneButton().isPresent(SHORT_TIMEOUT), "Done button is not displayed");
+        sa.assertTrue(editProfile.getDynamicCellByName(MICKEY_MOUSE).isPresent(), "profile icon is not displayed");
+        sa.assertTrue(editProfile.getPrimaryProfileExplainer().isPresent(SHORT_TIMEOUT), "Primary profile explainer is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT), "pencil icon is not displayed");
+        sa.assertTrue(editProfile.getTextEntryField().getText().equals(DEFAULT_PROFILE), "Profile name is not displayed");
+        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(), "Playback setting section is not as expected");
+        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(), "Feature setting section is not as expected");
+        sa.assertTrue(editProfile.isParentalControlHeadingDisplayed(), "Parental control section is not as expected");
+        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("PG"), "Maturity Rating section is not as expected");
+        sa.assertFalse(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is displayed");
+        sa.assertFalse(editProfile.getKidProofExitLabel().isPresent(SHORT_TIMEOUT), "Kid proof exit label is displayed");
+        sa.assertFalse(editProfile.getKidProofDescription().isPresent(SHORT_TIMEOUT), "Kid proof description is displayed");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73708"})
-    @Test(description = "Edit Profile - UI Elements - (Legacy) - Kids Mode Profile", groups = {TestGroup.MORE_MENU, US})
+    @Test(groups = {TestGroup.MORE_MENU, JP})
     public void verifyEditProfileUIKidsProfile() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -128,8 +127,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS,
-                        "JP",
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        JP,
                         getLocalizationUtils().getUserLanguage())));
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
@@ -146,31 +145,31 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         handleAlert();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
-        sa.assertTrue(editProfile.isEditTitleDisplayed(),"Edit profile Title is not displayed");
-        sa.assertTrue(editProfile.getDoneButton().isPresent(SHORT_TIMEOUT),"Done button is not displayed");
-        sa.assertTrue(editProfile.getDynamicCellByName(BABY_YODA).isPresent(),"profile icon is not displayed");
-        sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT),"pencil icon is not displayed");
-        sa.assertTrue(editProfile.getTextEntryField().getText().equals(KIDS_PROFILE),"Profile name is not displayed");
-        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(),"Playback setting section is not as expected");
-        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
-        sa.assertTrue(editProfile.isParentalControlSectionDisplayed(),"Parental control section is not as expected");
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
+        sa.assertTrue(editProfile.getDoneButton().isPresent(SHORT_TIMEOUT), "Done button is not displayed");
+        sa.assertTrue(editProfile.getDynamicCellByName(BABY_YODA).isPresent(), "profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(SHORT_TIMEOUT), "pencil icon is not displayed");
+        sa.assertTrue(editProfile.getTextEntryField().getText().equals(KIDS_PROFILE), "Profile name is not displayed");
+        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(), "Playback setting section is not as expected");
+        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(), "Feature setting section is not as expected");
+        sa.assertTrue(editProfile.isParentalControlSectionDisplayed(), "Parental control section is not as expected");
         sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("On"), "Junior mode toggle was not present");
         sa.assertTrue(editProfile.getProfilePinHeader().isPresent(), "Profile pin header is not displayed");
         sa.assertTrue(editProfile.getProfilePinDescription().isPresent(), "Profile pin description is not displayed");
-        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is displayed");
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is displayed");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66776"})
-    @Test(groups = {TestGroup.MORE_MENU, US}, enabled = false)
+    @Test(groups = {TestGroup.MORE_MENU, JP})
     public void verifyAddProfilePageUI() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS,
-                        "JP",
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        JP,
                         getLocalizationUtils().getUserLanguage())));
         initialSetup();
         handleAlert();

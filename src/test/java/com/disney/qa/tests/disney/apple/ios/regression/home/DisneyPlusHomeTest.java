@@ -6,9 +6,7 @@ import com.disney.hatter.api.alice.model.ImagesResponse360;
 import com.disney.hatter.core.utils.FileUtil;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.explore.response.*;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -156,18 +154,18 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69549"})
-    @Test(groups = {TestGroup.HOME, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, DE})
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD, SG,
-                ENGLISH_LANG)));
-
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), JP);
         initialSetup();
         handleAlert();
         Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
-
         welcomePage.clickLogInButton();
         login(getUnifiedAccount());
         handleGenericPopup(5,1);
@@ -627,16 +625,19 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69662"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, SG})
     public void verifyStarBrandTile() {
-        getAccountApi().overrideLocations(getAccount(), SINGAPORE);
         int totalExpectedBrands = 6;
         Container brandCollection;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_SINGAPORE)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), SINGAPORE);
+        //Remove it after explore API changes
+        getAccountApi().overrideLocations(getAccount(), SINGAPORE);
+        setAppToHomeScreen(getUnifiedAccount());
         handleAlert();
         homePage.waitForHomePageToOpen();
         try {
-            brandCollection = getDisneyAPIPage(HOME_PAGE.getEntityId(),
+            brandCollection = getDisneyAPIPageUnifiedAccount(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
                     getLocalizationUtils().getUserLanguage()).get(1);
         } catch (Exception e) {
@@ -716,7 +717,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
@@ -734,7 +735,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
@@ -768,7 +769,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
@@ -843,7 +844,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.tapHuluBrandTile();
@@ -938,7 +939,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
-        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
+        ArrayList<Container> collections = getDisneyAPIPageUnifiedAccount(HOME_PAGE.getEntityId(),
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
         collectionID = collections.get(2).getId();

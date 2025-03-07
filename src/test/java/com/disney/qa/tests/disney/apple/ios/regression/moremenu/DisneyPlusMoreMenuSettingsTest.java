@@ -145,17 +145,18 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})
     @Test(description = "User Taps on App Settings", groups = {TestGroup.MORE_MENU, TestGroup.SMOKE, US})
     public void verifyAppSettings() {
-        onboard(getUnifiedAccount().getFirstName());
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.getDynamicAccessibilityId(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).isElementPresent()
-                        && disneyPlusMoreMenuIOSPageBase.getBackArrow().isElementPresent(),
+        setAppToHomeScreen(getUnifiedAccount());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
+
+        Assert.assertTrue(moreMenu.getDynamicAccessibilityId(
+                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).isElementPresent()
+                        && moreMenu.getBackArrow().isElementPresent(),
                 "App Settings was not opened");
-
-        disneyPlusMoreMenuIOSPageBase.getBackArrow().click();
-
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isOpened(),
+        moreMenu.getBackArrow().click();
+        Assert.assertTrue(moreMenu.isOpened(),
                 "User was not returned to the More Menu after closing Watchlist");
     }
 

@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.config.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -303,7 +302,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         } catch (Exception e) {
             throw new SkipException("Skipping test, next episode title is not found" + e.getMessage());
         }
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Turn OFF autoplay
         toggleAutoPlay("OFF");
@@ -336,7 +335,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         String season = "1";
         String episode = "2";
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
         setAppToHomeScreen(getUnifiedAccount());
 

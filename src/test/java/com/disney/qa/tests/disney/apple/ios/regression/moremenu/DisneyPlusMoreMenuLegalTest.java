@@ -146,14 +146,16 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
+
         String country = StringUtils.substringAfter(TUID, "TUID: ");
-        setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        getAccountApi().overrideLocations(getAccount(), country);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), country);
 
         Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomePage.clickLogInButton();
-        login(getAccount());
+        login(getUnifiedAccount());
+
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }

@@ -56,7 +56,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     public void setAppToAccountSettings() {
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
@@ -64,7 +64,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67128"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAccountDisplay() {
-        setAppToAccountSettings(getAccount());
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -74,9 +73,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.ACCOUNT_EDIT_PROFILE.getText());
 
+        setAppToAccountSettings(getUnifiedAccount());
+
         accountPage.waitForAccountPageToOpen();
         sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(accountPage.getStaticTextByLabelContains(getAccount().getEmail()).isPresent(),
+        sa.assertTrue(accountPage.getStaticTextByLabelContains(getUnifiedAccount().getEmail()).isPresent(),
                 "User Email address was not displayed");
         sa.assertTrue(accountPage.getManageMyAccountCell().isPresent(),
                 "Manage with MyDisney link was not displayed");
@@ -121,10 +122,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySubscriptionDetails_LegacyDisneyBundle() {
-        setAccount(createAccountWithSku(
-                        DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                        getLocalizationUtils().getLocale(),
-                        getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
         setAppToAccountSettings();
         SoftAssert sa = new SoftAssert();
@@ -138,11 +137,10 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67132"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySubscriptionDetails_DirectBillingWeb() {
-        setAccount(createAccountWithSku(
-                DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
+
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
+
         setAppToAccountSettings();
         Assert.assertTrue(disneyPlusAccountIOSPageBase.isSubscriptionMessageDisplayed(),
                 "Direct Billing Web subscription message was not displayed");

@@ -231,11 +231,11 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72334"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAdTierUserCoViewing() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
-        setAppToHomeScreen(getUnifiedAccount());
-        //setFlexWelcomeConfig();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
@@ -492,7 +492,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyArielAddProfileJuniorModeUI() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
         setAppToHomeScreen(getUnifiedAccount());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
@@ -658,7 +657,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67081"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAddProfileBannerForPrimaryProfiles() {
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -671,6 +669,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
+                .setPartner(Partner.DISNEY)
                 .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
@@ -717,6 +716,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
+                .setPartner(Partner.DISNEY)
                 .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
@@ -758,6 +758,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
+                .setPartner(Partner.DISNEY)
                 .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
@@ -872,7 +873,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
+                .profileName(SECONDARY_PROFILE)
                 .dateOfBirth(KIDS_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
@@ -963,7 +964,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
+                .profileName(JUNIOR_PROFILE)
                 .dateOfBirth(KIDS_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
@@ -1048,7 +1049,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(KIDS_PROFILE)
-                .dateOfBirth(KIDS_DOB)
+                .dateOfBirth(null)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)

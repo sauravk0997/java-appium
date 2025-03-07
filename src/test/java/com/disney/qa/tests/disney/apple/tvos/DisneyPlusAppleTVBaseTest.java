@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -24,7 +25,6 @@ import org.testng.annotations.BeforeMethod;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
@@ -113,7 +113,32 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
     }
 
+    public void logInWithoutHomeCheck(UnifiedAccount user) {
+        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+        selectAppleUpdateLaterAndDismissAppTracking();
+        Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
+        disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPassword();
+        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
+    }
+
     public void logIn(DisneyAccount user) {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        logInWithoutHomeCheck(user);
+
+        //Wait to handle the expanded validation
+        pause(5);
+        collapseGlobalNav();
+
+        Assert.assertTrue(homePage.isOpened(),
+                "Home page did not launch for single profile user after logging in");
+    }
+
+    public void logIn(UnifiedAccount user) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
 
@@ -182,24 +207,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
             jarvis.setDictionaryKey("0.0");
         }
     }
-
-    /**
-     * Below are methods to support temp setup of tvOS tests by disabling flexWelcomeConfig
-     * To be deprecated when IOS-7629 is fixed
-     */
-
-    public void logInTemp(DisneyAccount user) {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        logInWithoutHomeCheck(user);
-
-        //Wait to handle the expanded validation
-        pause(5);
-        collapseGlobalNav();
-
-        Assert.assertTrue(homePage.isOpened(),
-                "Home page did not launch for single profile user after logging in");
-    }
-
     public void selectAppleUpdateLaterAndDismissAppTracking() {
         DisneyPlusApplePageBase applePageBase = new DisneyPlusApplePageBase(getDriver());
         pause(5);

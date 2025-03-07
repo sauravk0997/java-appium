@@ -106,10 +106,14 @@ public interface IConstantHelper {
     //element attributes
     String LABEL = "label";
 
-    //Disney Plans
+    //US disney plans
     String DISNEY_PLUS_PREMIUM = "Disney+ Premium";
-    String DISNEY_PLUS_STANDARD = "Disney+ Standard";
     String DISNEY_BASIC_MONTHLY = "Disney+ Basic - 9.99 USD - Monthly";
-    String DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
-    String DISNEY_PREMIUM_MONTHLY_CANADA = "Disney+ Premium - 15.99 CAD - Monthly - Signup";
+    String DISNEY_BUNDLE_TRIO_BASIC = "Disney Bundle Trio Basic";
+    String DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
+
+    //Disney plans in non US countries
+    String DISNEY_PLUS_STANDARD = "Disney+ Standard";
+    String DISNEY_PREMIUM_MONTHLY_CANADA = "Disney+ Standard - 129.99 CAD - Yearly - Signup";
+    String DISNEY_PREMIUM_MONTHLY_SINGAPORE = "Disney+ Premium - 18.98 SGD - Monthly - Signup";
 }

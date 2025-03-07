@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.UnifiedEntitlement;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase.MoreMenu;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -156,7 +155,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 

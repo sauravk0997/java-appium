@@ -175,7 +175,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         editProfile.enterProfileName(updatedUserName);
         editProfile.clickDoneBtn();
-        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         Assert.assertTrue(whoIsWatching.isProfileIconPresent(updatedUserName),
                 "Profile name is not updated as expected");
 
@@ -894,7 +894,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
+                .profileName(JUNIOR_PROFILE)
                 .dateOfBirth(KIDS_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
@@ -1032,7 +1032,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String incorrectCode = "1234";
         configureKidsProfileProofExit();
 
-        moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
@@ -1153,8 +1152,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
+                .kidProofExitEnabled(true)
                 .isStarOnboarded(true).build());
-
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
@@ -1278,7 +1277,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
+                .profileName(SECONDARY_PROFILE)
                 .dateOfBirth(KIDS_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(MICKEY_MOUSE)

@@ -6,9 +6,7 @@ import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.*;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.RatingConstant;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -29,7 +27,6 @@ import java.util.stream.Collectors;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
@@ -611,7 +608,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         loginToHome(getUnifiedAccount());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(unnumberedSeries);
@@ -721,7 +718,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         //Movie download button
@@ -776,7 +773,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         String detailsNotOpen = "Details page did not open";
         String deleteButtonNotOpen = "Delete and Play button did not appear";
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
@@ -820,7 +817,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyJuniorProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -839,7 +836,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPCONProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -984,9 +981,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(getUnifiedAccountApi().getDisneyProfiles(getUnifiedAccount()).get(1).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isElementNotPresent(SHORT_TIMEOUT),
-                ONLY_MURDERS_IN_THE_BUILDING +  " was found present on " + getAccount().getProfiles().get(1) + " profile's Downloads screen.");
+                ONLY_MURDERS_IN_THE_BUILDING +  " was found present on " + getUnifiedAccount().getProfiles().get(1) + " profile's Downloads screen.");
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isElementNotPresent(SHORT_TIMEOUT),
-                PREY + " was found present on " + getAccount().getProfiles().get(1) + " profile's Downloads screen.");
+                PREY + " was found present on " + getUnifiedAccount().getProfiles().get(1) + " profile's Downloads screen.");
     }
 
     @AfterMethod(alwaysRun = true)
