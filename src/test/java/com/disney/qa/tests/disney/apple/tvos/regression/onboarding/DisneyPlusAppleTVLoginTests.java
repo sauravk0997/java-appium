@@ -166,7 +166,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         loginPage.proceedToPasswordScreen(unknownEmail);
         Assert.assertTrue(loginPage.getTryAgainButton().isPresent(), "Try Again button not displayed");
         loginPage.clickTryAgainBtn();
-        Assert.assertTrue(loginPage.isOpened(), "Email input screen did not launch");
+        Assert.assertTrue(loginPage.isOpened(), EMAIL_INPUT_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
         Assert.assertTrue(loginPage.isEmailFieldFocused(), "Email input is not focused by default");
         Assert.assertTrue(loginPage.getStaticTextByLabel(unknownEmail).isPresent(),
                 "Entered Email is not displayed");
