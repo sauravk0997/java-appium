@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
+import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
@@ -410,9 +411,9 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
         sa.assertTrue(details.isHeroImagePresent(), "Title background image is not present");
-        sa.assertTrue(details.isLogoImageDisplayed(), "Title is not present");
+        sa.assertTrue(details.isLogoImageDisplayed(), MEDIA_TITLE_NOT_DISPLAYED);
         sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata is not present");
-        Assert.assertTrue(details.getPconIcon().isPresent(), "PCON icon is not present");
+        Assert.assertTrue(details.getParentalControlIcon().isPresent(), "Parental Control icon is not present");
         Assert.assertTrue(details.getRatingRestrictionDetailMessage().isPresent(),
                 "Rating restriction detail message is not present");
         sa.assertFalse(details.isContentDescriptionDisplayed(), "Content description is present");

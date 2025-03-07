@@ -172,7 +172,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement firstItemPickerCell;
 
     @ExtendedFindBy(accessibilityId = "detailsRestrictedIcon")
-    private ExtendedWebElement pconIcon;
+    private ExtendedWebElement parentalControlIcon;
 
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -1312,7 +1312,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .isPresent();
     }
 
-    public ExtendedWebElement getPconIcon() {
-        return pconIcon;
+    public ExtendedWebElement getParentalControlIcon() {
+        return parentalControlIcon;
     }
  }
