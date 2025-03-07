@@ -34,7 +34,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getAccount());
-        initiatePlaybackFor(SHORT_SERIES);
+        initiatePlaybackFor(SERIES_BLUEY);
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubtitleMenu();
 
         sa.assertTrue(subtitlePage.isOpened(), "Subtitle menu didn't open");

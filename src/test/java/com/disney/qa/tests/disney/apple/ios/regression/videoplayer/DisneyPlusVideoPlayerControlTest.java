@@ -66,7 +66,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyRewindButtonControlOnPlayer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SHORT_SERIES);
+        loginAndStartPlayback(SERIES_BLUEY);
 
         videoPlayer.tapForwardButton(3);
         int remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
@@ -89,7 +89,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyForwardButtonControlOnPlayer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SHORT_SERIES);
+        loginAndStartPlayback(SERIES_BLUEY);
 
         int remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
         int remainingTimeAfterFwdTapInPauseMode = videoPlayer.tapForwardButton(1).getRemainingTime();
@@ -212,7 +212,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyRewindAndForwardButtonControlOnPlayerWhilePlaying() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SHORT_SERIES);
+        loginAndStartPlayback(SERIES_BLUEY);
 
         int remainingTimeBeforeFwd = videoPlayer.getRemainingTime();
         int remainingTimeAfterFwdTapInPlayMode = videoPlayer.tapForwardButton(1).getRemainingTime();
