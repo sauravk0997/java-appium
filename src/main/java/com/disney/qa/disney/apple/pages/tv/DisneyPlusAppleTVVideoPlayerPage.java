@@ -67,4 +67,30 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
                 .until(it -> getStaticTextByName(SERVICE_ATTRIBUTION).isPresent(ONE_SEC_TIMEOUT));
         return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
     }
+
+    /**
+     * Retrieves the remaining time on the seekbar and converts it to seconds
+     * Seek bar must be visible beforehand. You can use "DisneyPlusAppleTVCommonPage" .clickDown(1) for this
+     *
+     * @return Playback remaining time in seconds
+     */
+    public int getRemainingTimeInSeconds() {
+        String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
+        int remainingTimeInSec;
+
+        if (remainingTimeParts.length == 3) {
+            int hours = Integer.parseInt(remainingTimeParts[0]);
+            int minutes = Integer.parseInt(remainingTimeParts[1]);
+            int sec = Integer.parseInt(remainingTimeParts[2]);
+            remainingTimeInSec = (hours * 60 * 60) + minutes * 60 + sec;
+        } else if (remainingTimeParts.length == 2) {
+            int minutes = Integer.parseInt(remainingTimeParts[0]);
+            int sec = Integer.parseInt(remainingTimeParts[1]);
+            remainingTimeInSec = minutes * 60 + sec;
+        } else {
+            remainingTimeInSec = Integer.parseInt(remainingTimeParts[0]);
+        }
+        LOGGER.info("Playback time remaining {} seconds...", remainingTimeInSec);
+        return remainingTimeInSec;
+    }
 }
