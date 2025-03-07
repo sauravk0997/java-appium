@@ -18,8 +18,7 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.UNIFIED_ORDER;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 
 public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
@@ -30,7 +29,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page did not open";
 
     public void onboard() {
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
@@ -156,9 +155,10 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_TRIO_BUNDLE_PREMIUM_MONTHLY)));
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         //Add Hulu title to watch list
         homePage.clickSearchIcon();

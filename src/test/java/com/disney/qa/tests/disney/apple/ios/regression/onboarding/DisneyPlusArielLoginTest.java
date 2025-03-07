@@ -29,17 +29,19 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        createDisneyAccountRequest
+        //Create Disney account without DOB and Gender
+        getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
                 .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
+        disneyPlusLoginIOSPageBase.submitEmail(getUnifiedAccount().getEmail());
+        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getUnifiedAccount().getUserPass());
 
         disneyPlusDOBCollectionPageBase.isOpened();
         ednaDOBCollectionPage.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
@@ -62,20 +64,21 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
 
-        createDisneyAccountRequest
+        //Create Disney account without DOB and Gender
+        getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
                 .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(getAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open");
         ednaDOBCollectionPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
         ednaDOBCollectionPage.tapSaveAndContinueButton();

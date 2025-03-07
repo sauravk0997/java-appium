@@ -1,6 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -16,6 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
 
@@ -34,8 +36,15 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        DisneyAccount account = getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(TEST_USER).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).kidsModeEnabled(false).isStarOnboarded(true).build());
-        setAppToHomeScreen(account, TEST_USER);
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(TEST_USER)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true).build());
+        setAppToHomeScreen(getUnifiedAccount(), TEST_USER);
 
         softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not displayed");
         if(R.CONFIG.get(DEVICE_TYPE).equals(TABLET)){
@@ -63,7 +72,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         //verify if profile has pin lock then lock icon is displayed under profile name
         moreMenuPage.clickHomeIcon();
         try {
-            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), "1234");
+            getUnifiedAccountApi().updateProfilePin(getUnifiedAccount(),
+                    getUnifiedAccount().getProfileId(DEFAULT_PROFILE), "1234");
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
@@ -75,10 +85,20 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61655"})
     @Test(description = "User taps on Profile Switcher", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyProfileSwitcher() {
-        List<String> profiles = Arrays.asList("Profile 2", "Profile 3", "Profile 4", "Profile 5", "Profile 6");
-        profiles.forEach(profile -> getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(profile).language(getAccount().getProfileLang()).avatarId("5").kidsModeEnabled(false).dateOfBirth(null).build()));
-        onboard(getAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        List<String> profiles = Arrays.asList("Profile 2", "Profile 3", "Profile 4", "Profile 5", "Profile 6");
+        profiles.forEach(profile ->
+                getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(getUnifiedAccount())
+                        .profileName(profile)
+                        .dateOfBirth(ADULT_DOB)
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId("5")
+                        .kidsModeEnabled(false)
+                        .build()));
+
+        onboard(getUnifiedAccount().getFirstName());
+
         swipeInContainerTillElementIsPresent(disneyPlusMoreMenuIOSPageBase.getProfileContainer(),
                 disneyPlusMoreMenuIOSPageBase.getAddProfileBtn(), 5, Direction.LEFT);
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAddProfileButtonPresent());
@@ -90,7 +110,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @Test(description = "User taps on Edit Profiles", groups = {TestGroup.PRE_CONFIGURATION, TestGroup.MORE_MENU, TestGroup.SMOKE, US})
     public void verifyEditProfilesDisplay() {
         SoftAssert softAssert = new SoftAssert();
-        onboard(getAccount().getFirstName());
+        onboard(getUnifiedAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
@@ -125,7 +145,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})
     @Test(description = "User Taps on App Settings", groups = {TestGroup.MORE_MENU, TestGroup.SMOKE, US})
     public void verifyAppSettings() {
-        onboard(getAccount().getFirstName());
+        onboard(getUnifiedAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
 
@@ -145,8 +165,18 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount(), getAccount().getFirstName());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getFirstName());
         SoftAssert sa = new SoftAssert();
         moreMenu.clickMoreTab();
         //Scenario: Verify Help hyperlink
@@ -178,7 +208,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     public void verifyLogOut() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        onboard(getAccount().getFirstName());
+        onboard(getUnifiedAccount().getFirstName());
         welcomePage.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT)).click();
         Assert.assertTrue(welcomePage.isLogInButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
@@ -187,7 +217,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61667"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAppVersionNumber() {
-        onboard(getAccount().getFirstName());
+        onboard(getUnifiedAccount().getFirstName());
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAppVersionDisplayed(),
@@ -198,7 +228,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     }
 
     private void onboard(String profile) {
-        setAppToHomeScreen(getAccount(), profile);
+        setAppToHomeScreen(getUnifiedAccount(), profile);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
 }
