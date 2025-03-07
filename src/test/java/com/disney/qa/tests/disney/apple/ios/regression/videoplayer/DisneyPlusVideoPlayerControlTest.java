@@ -27,6 +27,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPa
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
+    
     protected static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
 
