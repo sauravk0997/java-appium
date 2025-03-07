@@ -332,13 +332,13 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
     public void verifyFeedOptionSelected() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        String selectedLanguageOption = videoPlayer.selectAndGetBroadcastFeedOption();
-        if (selectedLanguageOption != null) {
+        String selectedMenuOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        if (selectedMenuOption != null) {
             videoPlayer.waitForVideoToStart();
             videoPlayer.displayVideoController();
             videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
-            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedLanguageOption),
-                    "Target feed is not selected");
+            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedMenuOption),
+                    "Target feed/Language is not selected");
         } else {
             throw new SkipException("Only One target feed option available, hence skipping feed selection logic");
         }
