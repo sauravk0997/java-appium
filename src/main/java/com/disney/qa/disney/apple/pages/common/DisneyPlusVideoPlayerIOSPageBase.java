@@ -16,6 +16,7 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
@@ -74,6 +75,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentRatingOverlayLabel;
     @ExtendedFindBy(accessibilityId = "contentRatingInfoView")
     private ExtendedWebElement contentRatingInfoView;
+    @ExtendedFindBy(accessibilityId = "broadcastCollectionView")
+    private ExtendedWebElement broadcastCollectionView;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label CONTAINS " +
+            "'%s'$]/**/XCUIElementTypeButton")
+    private ExtendedWebElement feedOptionCheckmark;
+
 
     public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
           "depictions and/or mistreatment of people or cultures. These stereotypes were wrong then and are wrong now. Rather than remove this content, we want to acknowledge its harmful impact, learn from it and spark conversation to create a more inclusive future together.";
@@ -104,6 +111,26 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return dynamicBtnFindByName.format("buttonBack");
     }
 
+    public ExtendedWebElement getBroadcastMenu() {
+        String broadcastMenuLabel = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                DictionaryKeys.BROADCAST_MENU.getText());
+        return dynamicBtnFindByLabel.format(broadcastMenuLabel);
+    }
+
+    public ExtendedWebElement getSkipRecapButton() {
+        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SKIP_RECAP.getText()));
+    }
+
+    public ExtendedWebElement getContentRatingInfoView() {
+        return contentRatingInfoView;
+    }
+
+    public ExtendedWebElement getBroadcastCollectionView() {
+        return broadcastCollectionView;
+    }
+
     public ExtendedWebElement getElementFor(PlayerControl control) {
         switch (control) {
             case AIRPLAY:
@@ -112,6 +139,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 return audioSubtitleMenuButton;
             case BACK:
                 return getBackButton();
+            case BROADCAST_MENU:
+                return getBroadcastMenu();
             case CHROMECAST:
                 return chromecastButton;
             case FAST_FORWARD:
@@ -138,11 +167,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         waitForPresenceOfAnElement(playerView);
         displayVideoController();
         return getElementFor(control).isElementPresent();
-    }
-
-    public boolean isTitleLabelVisible() {
-        displayVideoController();
-        return titleLabel.isElementPresent();
     }
 
     public ExtendedWebElement getSeekbar() {
@@ -706,6 +730,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         AIRPLAY,
         AUDIO_SUBTITLE_BUTTON,
         BACK,
+        BROADCAST_MENU,
         CHROMECAST,
         FAST_FORWARD,
         LOCK_ICON,
@@ -783,24 +808,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(ONE_SEC_TIMEOUT));
     }
 
-    public void waitForVideoStereotypeMessageToDisappear() {
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Negative Stereotype message is present")
-                .until(it -> getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE).isElementNotPresent(ONE_SEC_TIMEOUT));
-    }
-
-    public boolean isNegativeStereotypeCountdownPresent() {
-        return getStaticTextByLabelContains(NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE).isPresent(THREE_SEC_TIMEOUT);
-    }
-
-    public ExtendedWebElement getSkipRecapButton() {
-        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SKIP_RECAP.getText()));
-    }
-
-    public ExtendedWebElement getContentRatingInfoView() {
-        return contentRatingInfoView;
-    }
-
     public boolean waitForVideoLockTooltipToAppear() {
         return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
                 "Player controls lock tooltip did not appear")
@@ -859,5 +866,28 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             LOGGER.info("Exception occurred attempting to wait for delete and play button");
             return false;
         }
+    }
+
+    public List<String> getBroadcastTargetFeedOptionText() {
+        List<String> feedOptionText = new ArrayList<>();
+        List<ExtendedWebElement> feedCell =
+                findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
+            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim().toUpperCase()));
+        return feedOptionText;
+    }
+
+    public String selectAndGetBroadcastFeedOption() {
+        String selectedOption = null;
+        List<ExtendedWebElement> feedCell =
+                findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
+        if (feedCell.size() > 1) {
+            selectedOption = feedCell.get(1).getText().trim();
+            feedCell.get(1).click();
+        }
+        return selectedOption;
+    }
+
+    public boolean isFeedOptionSelected(String feedOption) {
+        return feedOptionCheckmark.format(feedOption).getAttribute(Attributes.LABEL.getAttribute()).equals("checkmark");
     }
 }
