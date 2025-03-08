@@ -890,4 +890,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isFeedOptionSelected(String feedOption) {
         return feedOptionCheckmark.format(feedOption).getAttribute(Attributes.LABEL.getAttribute()).equals("checkmark");
     }
+
+    public ExtendedWebElement getTimeRemainingLabel() {
+        return timeRemainingLabel;
+    }
 }
