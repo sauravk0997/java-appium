@@ -51,8 +51,8 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         commonPage.clickDown(1);
         int remainingTime = videoPlayerTVPage.getRemainingDurationTime();
         LOGGER.info("remainingTimeAfterPause {}", remainingTime);
-
         Assert.assertEquals(remainingTime, remainingTimeWhilePaused, "Video was not paused");
+
         // Play video with remote button
         home.clickPlay();
         home.waitForElementToDisappear(videoPlayer.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
