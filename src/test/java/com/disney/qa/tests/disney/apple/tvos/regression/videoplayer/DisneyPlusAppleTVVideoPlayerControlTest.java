@@ -34,10 +34,10 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         DisneyPlusAppleTVVideoPlayerPage videoPlayerTVPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
 
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-      //  setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
-      //  logIn(getAccount());
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
+        logIn(getAccount());
 
-       // launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
         Assert.assertTrue(videoPlayer.isOpened(), "Video player did not launch");
         videoPlayer.waitForVideoToStart();
 
