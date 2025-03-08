@@ -283,7 +283,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         if (globalNavMenu.equalsIgnoreCase(globalNavigationMenu.MOVIES.getText())){
             clickLeft();
         } else {
-            clickMenuTimes(1, 1);
+            clickMenuTimes(1, 2);
         }
         navigateToOneGlobalNavMenu(globalNavMenu);
         clickSelect();
