@@ -38,6 +38,8 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     private static final String REGEX_UPNEXT_SERIES_TITLE = "Season %s Episode %s %s";
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES = 80;
     private static final String UP_NEXT_UI_WAS_NOT_PRESENT = "Up Next UI was not displayed";
+    private static final String UP_NEXT_UI_WAS_PRESENT = "Up Next UI was displayed";
+
 
     @DataProvider(name = "autoplay-state")
     public Object[][] autoplayState(){
@@ -413,6 +415,38 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         videoPlayer.displayVideoController();
         sa.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Playback from the expected series did not open");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67640"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUpNextAutoPlayTapsBackground() {
+        DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        setAppToHomeScreen(getAccount());
+
+        //Enable autoplay
+        toggleAutoPlay("ON");
+        // Launch deeplink and scrub to up next screen
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
+        // Steps to verify that taps in background makes disappear the upNext screen
+        sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
+        videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
+        sa.assertFalse(upNext.isOpened(), UP_NEXT_UI_WAS_PRESENT);
+        videoPlayer.clickPlayButton();
+        upNext.waitForUpNextUIToAppear();
+        sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_PRESENT);
+        // Tap on background should not dismiss up next screen
+        videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 30, 50);
+        sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
         sa.assertAll();
     }
 
