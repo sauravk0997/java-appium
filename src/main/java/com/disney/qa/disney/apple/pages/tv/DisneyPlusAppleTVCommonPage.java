@@ -37,7 +37,8 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
     public void pressButtonForDuration(RemoteControlKeyword keyword, int duration) {
         ((JavascriptExecutor) getDriver()).executeScript("mobile: pressButton",
                 ImmutableMap.of("name", keyword.getControlKeyword(), "durationSeconds", duration));
-        LOGGER.info("TV OS RemoteController '{}' clicked", keyword.name());
+        String controlKeywordName = keyword.name();
+        LOGGER.info("TV OS RemoteController '{}' clicked", controlKeywordName);
     }
 
     public void clickRight(int duration) {
