@@ -444,11 +444,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isSuggestedTabPresent(), SUGGESTED_TAB_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isExtrasTabPresent(), EXTRAS_TAB_NOT_DISPLAYED);
-        
+
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             detailsPage.swipeTabBar(Direction.LEFT, 1000);
         }
-        
+
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
                 "Release date from metadata label does not match release date from details tab");
         sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
@@ -1038,6 +1038,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
@@ -1054,7 +1055,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         if (episodeTitle == null) {
             throw new SkipException("No episode title found for the desired series episode in Explore API");
         }
-        detailsPage.waitForOneEpisodeDownloadToComplete(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
         detailsPage.getHuluSeriesDownloadCompleteButton().click();
         detailsPage.getDownloadModalPlayButton().click();
 

@@ -4,7 +4,6 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.client.responses.profile.Profile;
-import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -396,12 +395,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
                 homePage.getBrandLandingView(), Direction.UP, 1000);
+        String espnSportCollectionId = CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS);
 
         // Get first sport and validate page
-        sa.assertTrue(homePage.getCollection(DisneyEntityIds.SPORTS_PAGE.getEntityId()).isPresent(), "Sports container was not found");
-        String sportTitle = getContainerTitlesFromApi(DisneyEntityIds.SPORTS_PAGE.getEntityId(), 5).get(0);
+        sa.assertTrue(homePage.getCollection(espnSportCollectionId).isPresent(), "Sports container was not found");
+        String sportTitle = getContainerTitlesFromApi(espnSportCollectionId, 5).get(0);
         if(!sportTitle.isEmpty()) {
-            homePage.getTypeCellLabelContains(sportTitle).click();
+            espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle).click();
             sa.assertTrue(espnPage.isSportTitlePresent(sportTitle), "Sport title was not found");
             sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
             sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");

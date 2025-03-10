@@ -6,6 +6,7 @@ public class CollectionConstant {
         ACTION_AND_ADVENTURE,
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
+        BRANDS_COLLECTION,
         BRANDS_DISNEY_ORIGINALS,
         BRANDS_MARVEL_FEATURED,
         BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
@@ -19,6 +20,7 @@ public class CollectionConstant {
         ENJOY_THESE_MOVIES_FROM_HULU,
         ENJOY_THESE_SERIES_FROM_HULU,
         ESPN_PLUS_LIVE_AND_UPCOMING,
+        ESPN_SPORTS,
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
@@ -45,6 +47,8 @@ public class CollectionConstant {
                 return "a221f47c-0e16-476b-bdc0-35ed038b72b8";
             case ANIMATED_SERIES:
                 return "d2ccd7df-a0ee-4251-a290-e25c05b852b5";
+            case BRANDS_COLLECTION:
+                return "5fc710db-490e-405e-b753-7c0a697696db";
             case BRANDS_DISNEY_ORIGINALS:
                 return "33b99ab4-5306-4099-9c4b-0845876a0834";
             case BRANDS_PIXAR_FEATURED:
@@ -71,6 +75,8 @@ public class CollectionConstant {
                 return "311c4088-0a61-4055-9af0-aefa56fa1f00";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "21a6e9fa-2a5c-4f77-b1b1-ec956f3038c7";
+            case ESPN_SPORTS:
+                return "4e177574-aed4-4ad5-8d01-6fc7513bd3e5";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
@@ -120,6 +126,8 @@ public class CollectionConstant {
                 return "Unlock to Stream More Hulu";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "ESPN+ Live and Upcoming";
+            case ESPN_SPORTS:
+                return "Sports";
             case REPLAYS_COLLECTION:
                 return "Replays";
             default:
