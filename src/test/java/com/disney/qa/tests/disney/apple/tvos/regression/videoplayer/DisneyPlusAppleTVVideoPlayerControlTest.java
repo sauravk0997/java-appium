@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import java.time.temporal.ValueRange;
 
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
@@ -43,6 +44,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
                         "and the remaining time after the forward skip (%d seconds) is not greater than %d seconds",
                         remainingTimeBeforeForward, remainingTimeAfterForward, expectedSkippedSeconds));
 
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         commonPage.clickDown(1);
         int remainingTimeBeforeRewind = videoPlayer.getRemainingTimeInSeconds();
         commonPage.clickLeft(actionTimes, 1, 1);
