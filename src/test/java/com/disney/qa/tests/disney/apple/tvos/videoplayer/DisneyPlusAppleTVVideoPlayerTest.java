@@ -17,7 +17,7 @@ import static com.disney.qa.common.constant.IConstantHelper.VIDEO_PLAYER_NOT_DIS
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
-public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
+public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120534"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, US})
