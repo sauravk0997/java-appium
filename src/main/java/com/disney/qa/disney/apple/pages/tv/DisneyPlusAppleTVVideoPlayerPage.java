@@ -68,13 +68,8 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
     }
 
-    /**
-     * Retrieves the remaining time on the seekbar and converts it to seconds
-     * Seek bar must be visible beforehand. You can use "DisneyPlusAppleTVCommonPage" .clickDown(1) for this
-     *
-     * @return Playback remaining time in seconds
-     */
-    public int getRemainingTimeInSeconds() {
+    @Override
+    public int getRemainingTimeThreeIntegers() {
         String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
         int remainingTimeInSec;
 

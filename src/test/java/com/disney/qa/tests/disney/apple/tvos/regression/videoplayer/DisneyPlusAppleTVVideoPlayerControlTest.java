@@ -35,10 +35,10 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         videoPlayer.waitForVideoToStart();
 
         commonPage.clickDown(1);
-        int remainingTimeBeforeForward = videoPlayer.getRemainingTimeInSeconds();
+        int remainingTimeBeforeForward = videoPlayer.getRemainingTimeThreeIntegers();
         commonPage.clickRight(actionTimes, 1, 1);
         commonPage.clickDown(1);
-        int remainingTimeAfterForward = videoPlayer.getRemainingTimeInSeconds();
+        int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
         Assert.assertTrue((remainingTimeBeforeForward - remainingTimeAfterForward) > expectedSkippedSeconds,
                 String.format("The difference between the remaining time before forward skip (%d seconds) " +
                         "and the remaining time after the forward skip (%d seconds) is not greater than %d seconds",
@@ -46,10 +46,10 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
 
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         commonPage.clickDown(1);
-        int remainingTimeBeforeRewind = videoPlayer.getRemainingTimeInSeconds();
+        int remainingTimeBeforeRewind = videoPlayer.getRemainingTimeThreeIntegers();
         commonPage.clickLeft(actionTimes, 1, 1);
         commonPage.clickDown(1);
-        int remainingTimeAfterRewind = videoPlayer.getRemainingTimeInSeconds();
+        int remainingTimeAfterRewind = videoPlayer.getRemainingTimeThreeIntegers();
         // Validate time difference using a range, to take into account the possible elapsed seconds of playback
         // between each rewind
         ValueRange acceptableDeltaRange =
