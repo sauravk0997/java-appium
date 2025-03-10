@@ -20,6 +20,7 @@ public class CollectionConstant {
         ENJOY_THESE_MOVIES_FROM_HULU,
         ENJOY_THESE_SERIES_FROM_HULU,
         ESPN_PLUS_LIVE_AND_UPCOMING,
+        ESPN_SPORTS,
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
@@ -74,6 +75,8 @@ public class CollectionConstant {
                 return "311c4088-0a61-4055-9af0-aefa56fa1f00";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "21a6e9fa-2a5c-4f77-b1b1-ec956f3038c7";
+            case ESPN_SPORTS:
+                return "4e177574-aed4-4ad5-8d01-6fc7513bd3e5";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
@@ -123,6 +126,8 @@ public class CollectionConstant {
                 return "Unlock to Stream More Hulu";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "ESPN+ Live and Upcoming";
+            case ESPN_SPORTS:
+                return "Sports";
             case REPLAYS_COLLECTION:
                 return "Replays";
             default:
