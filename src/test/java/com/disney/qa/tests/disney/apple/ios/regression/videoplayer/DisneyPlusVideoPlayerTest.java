@@ -348,6 +348,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
         broadcastsExpectedFeeds.add("PRIMARY");
         broadcastsExpectedFeeds.add("NATIONAL");
+        broadcastsExpectedFeeds.add("NATIONAL FEED");
         broadcastsExpectedFeeds.add("HOME");
         broadcastsExpectedFeeds.add("AWAY");
         return broadcastsExpectedFeeds;
