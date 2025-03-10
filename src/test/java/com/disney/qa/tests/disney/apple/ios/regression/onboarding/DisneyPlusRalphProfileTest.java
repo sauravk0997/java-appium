@@ -253,6 +253,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), DE);
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -341,7 +342,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(CANADA, under18Age, AGE_VALUES_CANADA)));
         LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
-        //jarvisDisableOneTrustBanner();
+        jarvisDisableOneTrustBanner();
 
         createAccountAndAddSecondaryProfile(CANADA, getLocalizationUtils().getUserLanguage());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
