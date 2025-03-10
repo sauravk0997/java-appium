@@ -96,16 +96,19 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
 
-        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage());
+
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
 
-        loginPage.submitEmail(otpAccount.getEmail());
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
         Assert.assertTrue(passwordPage.isPasswordPagePresent(), "Password page did not open");
         Date startTime = getEmailApi().getStartTime();
         passwordPage.clickHavingTroubleLoggingButton();
 
-        String otp = getOTPFromApi(startTime, otpAccount);
+        String otp = getOTPFromApi(startTime, getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         handleGenericPopup(5,1);
