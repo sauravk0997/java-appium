@@ -810,7 +810,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getServiceAttribution() {
-        return staticTextLabelContains.format("Included with your Hulu subscription");
+        return staticTextLabelContains.format(HULU_SERVICE_ATTRIBUTION_MESSAGE);
     }
 
     public ExtendedWebElement getPlayIcon() {

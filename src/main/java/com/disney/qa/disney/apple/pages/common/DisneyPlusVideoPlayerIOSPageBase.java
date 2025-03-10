@@ -335,6 +335,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
+    public boolean isTitleLabelDisplayed() {
+        return titleLabel.isPresent();
+    }
+
+    public boolean isSubTitleLabelDisplayed() {
+        return subtitleLabel.isPresent();
+    }
+
     public DisneyPlusDetailsIOSPageBase tapTitleOnPlayer() {
         displayVideoController();
         titleLabel.click();
