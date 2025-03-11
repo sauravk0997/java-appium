@@ -685,16 +685,15 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         editEmailButton.click();
     }
 
-    public boolean waitForManageMyDisneyAccountOverlayToOpen(DisneyAccount account) {
-        return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-                "Manage MyDisney Account Overlay did not open")
-                .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
-    }
-
     public boolean waitForManageMyDisneyAccountOverlayToOpen(UnifiedAccount account) {
-        return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-                "Manage MyDisney Account Overlay did not open")
-                .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
+        try {
+            fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+                    "Manage MyDisney Account Overlay did not open")
+                    .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
+        } catch (TimeoutException e) {
+            return false;
+        }
+        return true;
     }
 
     public boolean isSubscriptionCellPresent() {
