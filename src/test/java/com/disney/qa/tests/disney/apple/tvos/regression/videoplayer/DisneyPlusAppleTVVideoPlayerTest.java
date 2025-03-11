@@ -42,6 +42,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(),
                 "service attribution wasn't visible along with controls");
+        commonPage.clickDown(2);
         sa.assertTrue(videoPlayer.isTitleLabelDisplayed(),
                 "Video player title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSubTitleLabelDisplayed(),
