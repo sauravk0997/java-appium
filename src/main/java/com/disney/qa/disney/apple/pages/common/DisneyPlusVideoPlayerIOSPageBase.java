@@ -38,7 +38,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "ucp.durationLabel")
     protected ExtendedWebElement timeRemainingLabel;
-    @ExtendedFindBy(accessibilityId = "serviceAttributionLabel")
+    @FindBy(name = "serviceAttributionLabel")
     protected ExtendedWebElement serviceAttributionLabel;
     @FindBy(name = "titleLabel")
     protected ExtendedWebElement titleLabel;
@@ -338,7 +338,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isTitleLabelDisplayed() {
-        LOGGER.info("Page Source" + getDriver().getPageSource());
         return titleLabel.isPresent();
     }
 

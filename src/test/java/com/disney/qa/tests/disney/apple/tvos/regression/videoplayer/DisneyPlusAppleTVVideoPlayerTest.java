@@ -31,9 +31,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        /*sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
-                "service attribution wasn't visible when video started");*/
+        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
+                "service attribution wasn't visible when video started");
         sa.assertTrue(videoPlayer.isTitleLabelDisplayed(),
                 "Video player title wasn't visible when video started");
         sa.assertFalse(videoPlayer.getSeekbar().isPresent(ONE_SEC_TIMEOUT),
