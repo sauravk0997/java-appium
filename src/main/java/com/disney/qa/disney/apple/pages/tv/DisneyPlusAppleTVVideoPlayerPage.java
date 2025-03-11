@@ -77,9 +77,4 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
-
-    public boolean isServiceAttributionLabelVisibleWithControls() {
-        displayVideoController();
-        return getServiceAttributionLabel().isPresent();
-    }
 }
