@@ -840,6 +840,34 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66748"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyRenewedExpiredDownload() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+
+        jarvisEnableOfflineExpiredLicenseOverride();
+
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 900);
+        detailsPage.getFirstEpisodeDownloadButton().click();
+        detailsPage.waitForFirstEpisodeToCompleteDownloadAndShowAsExpired(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        downloadsPage.clickSeriesMoreInfoButton();
+        Assert.assertTrue(downloadsPage.getDownloadErrorButton().isElementPresent(),
+                "Download Error button (Expired Download CTA) was not present");
+
+        downloadsPage.getDownloadErrorButton().click();
+        downloadsPage.getRenewLicenseButton().click();
+        Assert.assertTrue(downloadsPage.getDownloadCompleteButton().isElementPresent(),
+                "Download Error button was not updated to Download Complete button");
+        Assert.assertFalse(downloadsPage.getDownloadTitleLicenseExpiredText().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Expired text under downloaded title was present");
+    }
+
     public List<String> getListEpisodes(String element) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         List<String> episodeTitleList = new ArrayList<>();

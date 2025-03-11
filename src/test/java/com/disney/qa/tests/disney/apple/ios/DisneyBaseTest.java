@@ -94,7 +94,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String HULU = "Hulu";
     public static final String DEEPLINKURL = "disneyplus://www.disneyplus.com/browse/";
     public static final String JARVIS_PLAYBACK = "Playback";
-    public static final String JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE = "Offline Expired License Override";
+    public static final String JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE = "expiredAllowRenewal";
     protected static final String DOLBY_VISION = "Dolby Vision";
     public static final String ESPN_PLUS = "ESPN+";
 
@@ -838,13 +838,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         //Enable Playback > Offline Expired License Override toggle
         jarvis.scrollToItem(JARVIS_PLAYBACK).click();
-        jarvis.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE);
-
-        if (!isToggleEnabled(jarvis.getOverrideToggle(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE))) {
-            jarvis.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE).click();
-        }
-        Assert.assertTrue(isToggleEnabled(jarvis.getOverrideToggle(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE)),
-                JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE + " Jarvis toggle was not enabled");
+        jarvis.scrollToItem(JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE).click();
 
         //Relaunch Disney app
         terminateApp(sessionBundles.get(DISNEY));
