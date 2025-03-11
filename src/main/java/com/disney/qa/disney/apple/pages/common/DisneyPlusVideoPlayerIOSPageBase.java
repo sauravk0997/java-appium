@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.Dimension;
@@ -20,6 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
+
+import static com.disney.qa.common.constant.IConstantHelper.PHONE;
+import static com.disney.qa.common.constant.IConstantHelper.TABLET;
+
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
@@ -408,7 +413,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
      */
 
     public int getRemainingTimeThreeIntegers() {
-        displayVideoController();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE) || R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            displayVideoController();
+        }
         String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
         int remainingTimeInSec;
 
