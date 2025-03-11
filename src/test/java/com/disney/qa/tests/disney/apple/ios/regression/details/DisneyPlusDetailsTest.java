@@ -855,6 +855,38 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "OK button text was not present");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78064"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNUnavailableDetailsPagePCONError() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
+                .disneyAccount(getAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getAccount().getProfileLang())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+        Profile secondaryProfile = getAccount().getProfile(SECONDARY_PROFILE);
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                secondaryProfile.getProfileId(),
+                secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
+                secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
+
+        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
+
+        Assert.assertTrue(detailsPage.getEspnPlusGenericErrorText().isElementPresent(),
+                "Inline generic error message was not present");
+        Assert.assertFalse(detailsPage.getDetailsTab().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Details tab was present");
+    }
+
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
