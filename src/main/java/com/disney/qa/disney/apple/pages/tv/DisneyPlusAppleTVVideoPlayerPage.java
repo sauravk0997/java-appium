@@ -71,7 +71,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         int attempts = 0;
         do {
             commonPage.clickDown(2);
-        } while (attempts++ < 5 && !seekBar.isElementPresent(THREE_SEC_TIMEOUT));
+        } while (attempts++ < 5 && !seekBar.isElementPresent(ONE_SEC_TIMEOUT));
         if (attempts == 6) {
             Assert.fail("Seek bar was present and attempts exceeded over 5.");
         }
