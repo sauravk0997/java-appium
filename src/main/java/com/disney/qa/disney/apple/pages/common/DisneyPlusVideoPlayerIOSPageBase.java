@@ -187,7 +187,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isServiceAttributionLabelVisible() {
-        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
+        return (fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
                 "Service attribution didn't appear on video player")
                 .until(it -> getServiceAttributionLabel().isPresent(ONE_SEC_TIMEOUT)));
     }
