@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
 import com.disney.jarvisutils.pages.apple.JarvisHandset;
 import com.disney.jarvisutils.pages.apple.JarvisTablet;
@@ -56,6 +57,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
@@ -63,6 +65,7 @@ import static com.disney.qa.common.constant.RatingConstant.*;
 /**
  * Base class for both DisneyBaseTest (mobile) and DisneyPlusAppleTVBaseTest (TVOS)
  */
+@Listeners(JocastaCarinaAdapter.class)
 @SuppressWarnings("squid:S2187")
 public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIHelper {
 
