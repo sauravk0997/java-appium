@@ -74,7 +74,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     protected static final String FALSE = "false";
     public static final String APPLE = "apple";
     public static final String DISNEY = "disney";
-    public static final String LANGUAGE = "language";
     public static final String APP = "app";
     //Keeping this not to a specific plan name to support localization tests
     //Plan names in non-us countries might differ from that in us.
@@ -84,6 +83,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
+
+    private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(EmailApi::new);
+    ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = new ThreadLocal<>();
+    private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
+    private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
+    ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
+            ThreadLocal.withInitial(CreateUnifiedAccountRequest::new);
 
     private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
         @Override
@@ -196,11 +202,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     };
 
-    private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(EmailApi::new);
-    ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = new ThreadLocal<>();
-    private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
-    private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
-
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
         WebDriverConfiguration.addIgnoredNewSessionErrorMessages(Stream.concat(
@@ -297,49 +298,19 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), ES_LANG, true);
         } else if (groups.contains(EMEA)) {
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), REUNION, true);
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEACountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(MPAA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getMPAACountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(FRANCE)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), FRANCE, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
         }
     }
 
-    private String getLATAMCountryCode() {
-        List<String> countryCodeList = Arrays.asList(ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC,
-                ECUADOR, EL_SALVADOR, GUATEMALA, HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
-        LOGGER.info("Selecting random Country code");
-        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
-    }
-
-    private String getEMEACountryCode() {
-        List<String> countryCodeList = Arrays.asList(HAITI, MAURITIUS, MAYOTTE, REUNION, UNITED_KINGDOM);
-        LOGGER.info("Selecting random Country code");
-        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
-    }
-
-    private String getEMEACountryLanguage(String countryCode) {
-        switch (countryCode.toUpperCase()) {
-            case MAURITIUS:
-            case MAYOTTE:
-            case REUNION:
-                return FR_LANG;
-            case HAITI:
-            case UNITED_KINGDOM:
-                return EN_LANG;
-            default:
-                throw new IllegalArgumentException(String.format("Country language for %s is not found", countryCode));
-        }
-    }
-
-    private String getMPAACountryCode() {
-        List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, GUAM,
-                PUERTO_RICO, MARSHALL_ISLANDS);
-        LOGGER.info("Selecting random Country code");
-        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
-    }
 
     @BeforeMethod(onlyForGroups = TestGroup.PROXY, alwaysRun = true)
     public final void initProxy() {
@@ -403,12 +374,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return WebDriverConfiguration.getLocale().getLanguage();
     }
 
-    public static DisneyContentApiChecker getContentApiChecker() {
-        try {
-            return API_PROVIDER.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
+    public String getDate() {
+        String date = DateUtils.now();
+        return date.replace(":", "_");
     }
 
     public static DisneyMobileConfigApi getConfigApi() {
@@ -478,10 +446,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public UnifiedOffer getUnifiedOffer(String planName) {
         return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName));
     }
-
-    ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
-            ThreadLocal.withInitial(CreateUnifiedAccountRequest::new);
-
     public CreateUnifiedAccountRequest getDefaultCreateUnifiedAccountRequest() {
         return CREATE_UNIFIED_ACCOUNT_REQUEST.get();
     }
@@ -614,48 +578,23 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         removeApp(BuildType.IAP.getJarvisBundle());
     }
 
-    protected void installJarvis() {
-        String platformName;
-
-        if (StringUtils.equalsIgnoreCase(getDevice().getCapabilities().getCapability("deviceType").toString(), MobilePlatform.TVOS)) {
-            platformName = MobilePlatform.TVOS;
-        } else {
-            platformName = getDevice().getCapabilities().getCapability("platformName").toString();
-        }
-
-        switch (buildType) {
-            case ENTERPRISE:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
-                        .getDirectLink());
-                break;
-            case AD_HOC:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
-                        .getDirectLink());
-                break;
-            case IAP:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
-                        .getDirectLink());
-        }
+    private String getLATAMCountryCode() {
+        List<String> countryCodeList = Arrays.asList(ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC,
+                ECUADOR, EL_SALVADOR, GUATEMALA, HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
-    public String getDate() {
-        String date = DateUtils.now();
-        return date.replace(":", "_");
+    private String getEMEACountryCode() {
+        List<String> countryCodeList = Arrays.asList(FRANCE, SPAIN, SWEDEN);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
-    public JarvisAppleBase getJarvisPageFactory() {
-        switch (currentDevice.get().getDeviceType()) {
-            case APPLE_TV:
-                return new JarvisAppleTV(getDriver());
-            case IOS_PHONE:
-                return new JarvisHandset(getDriver());
-            case IOS_TABLET:
-                return new JarvisTablet(getDriver());
-            default:
-                throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
-        }
+    private String getMPAACountryCode() {
+        List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, GUAM,
+                PUERTO_RICO, MARSHALL_ISLANDS);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 }

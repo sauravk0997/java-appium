@@ -127,7 +127,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SPIDERMAN_THREE);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
+        Assert.assertTrue(videoPlayer.waitUntil(ExpectedConditions.invisibilityOfElementLocated(
+                videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT), "Seek bar visible");
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART),
                 "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE),
@@ -218,17 +221,17 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         loginAndStartPlayback(SPIDERMAN_THREE);
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
-        sa.assertTrue(videoPlayer.getPlayerView().isPresent(TEN_SEC_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.getPlayerView().isPresent(TEN_SEC_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT),
                 String.format(errorFormat, DURING_PRE_ROLL, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.clickBackButton();
         detailsPage.waitForDetailsPageToOpen();
-        sa.assertTrue(detailsPage.isOpened(),
+        Assert.assertTrue(detailsPage.isOpened(),
                 String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
 
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
-        sa.assertTrue(videoPlayer.getPlayerView().isPresent(TEN_SEC_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.getPlayerView().isPresent(TEN_SEC_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(5);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
@@ -238,7 +241,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
                 String.format(errorFormat, DURING_SECOND_AD_POD, AD_BADGE_NOT_PRESENT_ERROR_MESSAGE));
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(),
+        Assert.assertTrue(detailsPage.isOpened(),
                 String.format(errorFormat, DURING_SECOND_AD_POD, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
         sa.assertAll();
     }

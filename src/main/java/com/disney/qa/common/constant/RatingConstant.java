@@ -15,6 +15,7 @@ public class RatingConstant {
     public static final String DOMINICAN_REPUBLIC = "DO";
     public static final String ECUADOR = "EC";
     public static final String EL_SALVADOR = "SV";
+    public static final String FRANCE = "FR";
     public static final String GERMANY = "DE";
     public static final String GUAM = "GU";
     public static final String GUATEMALA = "GT";
@@ -36,6 +37,8 @@ public class RatingConstant {
     public static final String PUERTO_RICO = "PR";
     public static final String REUNION = "RE";
     public static final String SINGAPORE = "SG";
+    public static final String SPAIN = "ES";
+    public static final String SWEDEN = "SE";
     public static final String TURKEY = "TR";
     public static final String URUGUAY = "UY";
     public static final String UNITED_KINGDOM = "GB";
@@ -147,6 +150,9 @@ public class RatingConstant {
             case "PY":
             case "PE":
             case "UY":
+            case "ES":
+            case "SE":
+            case "FR":
                 return "1850";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
@@ -163,6 +169,8 @@ public class RatingConstant {
                 return "23065";
             case "DE":
                 return "23117";
+            case "FR":
+                return "23090";
             case "JP":
                 return "23098";
             case "KR":
@@ -233,6 +241,10 @@ public class RatingConstant {
                 return "23067";
             case "UM":
                 return "23068";
+            case "ES":
+                return "23105";
+            case "SE":
+                return "23113";
             default:
                 throw new IllegalArgumentException(String.format("Max maturity rating for %s locale is not found", locale));
         }

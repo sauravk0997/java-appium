@@ -1,25 +1,36 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
+import com.disney.config.DisneyConfiguration;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.constant.RatingConstant;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
 import static com.disney.qa.common.DisneyAbstractPage.*;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_14;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
@@ -27,6 +38,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open";
     private static final double SCRUB_PERCENTAGE_FIFTY = 50;
+    private static final String SET = "set";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66668"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
@@ -580,6 +592,352 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(downloadsPage.isDownloadsEmptyHeaderPresent(), "Empty Downloads header is not present");
         Assert.assertFalse(downloadsPage.getStaticTextByLabelContains(seriesName).isPresent(FIVE_SEC_TIMEOUT),
                 String.format("Title '%s' is present after deleting content", seriesName));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77923"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUnnumberedEpisodesOrderInDownloads() {
+        String disneyTrioPremiumMonthly = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
+        String unnumberedSeries = "FX Short Films";
+        String seasonOne = "1";
+        int episodeOne = 1;
+        int episodeTwo = 2;
+        int episodeThree = 3;
+
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(disneyTrioPremiumMonthly)));
+        loginToHome(getUnifiedAccount());
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(unnumberedSeries);
+        searchPage.getDynamicAccessibilityId(unnumberedSeries).click();
+
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+
+        //Start download in random order
+        List<String> downloadedTitles = new ArrayList<>();
+        detailsPage.getUnnumberedEpisodeToDownload(seasonOne, detailsPage.getEpisodeTitleLabel(episodeOne).getText()).click();
+        downloadedTitles.add(detailsPage.getEpisodeTitleLabel(episodeOne).getText());
+
+        detailsPage.getUnnumberedEpisodeToDownload(seasonOne, detailsPage.getEpisodeTitleLabel(episodeThree).getText()).click();
+        downloadedTitles.add(detailsPage.getEpisodeTitleLabel(episodeThree).getText());
+
+        detailsPage.getUnnumberedEpisodeToDownload(seasonOne, detailsPage.getEpisodeTitleLabel(episodeTwo).getText()).click();
+        downloadedTitles.add(detailsPage.getEpisodeTitleLabel(episodeTwo).getText());
+
+        // Wait for downloads to finish and navigate to the Downloads tab
+        detailsPage.waitForElementToDisappear(detailsPage.getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText())), SIXTY_SEC_TIMEOUT);
+
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        downloadsPage.getDownloadAssetFromListView(unnumberedSeries).click();
+
+        //non-numbered episodes order will be based on recency
+        for (int i = 0; i < downloadedTitles.size(); i++) {
+            Assert.assertEquals(downloadedTitles.get(i),
+                    downloadsPage.getEpisodeDownloadCellTitle(seasonOne, String.valueOf(i + 1)),
+                    "Downloaded non-numbered episodes order is not based on recency at index:" + i);
+        }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78059"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadNumberedEpisodes() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String titleEpisodesDownloads = "Play";
+        String theSimpsonsSeries = "The Simpsons";
+        String seasonOne = "Season 1";
+        String firstSeason = "1";
+        String episodeOneString = "1";
+        String episodeTwoString = "2";
+        String episodeThreeString = "3";
+        int episodeOne = 1;
+        int episodeTwo = 2;
+        int episodeThree = 3;
+        List<String> episodeTitleList = new ArrayList<>();
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        String seriesName = detailsPage.getMediaTitle();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 1100);
+        }
+
+        // Download three episodes from season 1 and populate episodes details list
+        detailsPage.getSeasonSelectorButton().click();
+        detailsPage.getStaticTextByLabel(seasonOne).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeTwoString).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeOneString).click();
+        detailsPage.getEpisodeToDownload(firstSeason, episodeThreeString).click();
+        // Need some time to appropriate populate downloads and have episodes to compare after
+        detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.DOWN, 1, 3800);
+        }
+
+        // Get details episodes list
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeOne).getText());
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeTwo).getText());
+        episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeThree).getText());
+
+        // Navigate to the Downloads title and wait for downloads to finish in case they have not
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        detailsPage.waitForElementToDisappear(
+                detailsPage.getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_IN_PROGRESS_PLURAL.getText())), SIXTY_SEC_TIMEOUT);
+        detailsPage.getStaticTextByLabelContains(theSimpsonsSeries).click();
+        Assert.assertTrue(downloadsPage.getDownloadAssetFromListView(seriesName).isPresent(),
+                seriesName + " series title was not present");
+        // Get episodes list from Downloads UI
+        List<String> episodeTitleListDownloads = getListEpisodes(titleEpisodesDownloads);
+
+        // Get episodes list from Downloads UI and compare both lists
+        if (!episodeTitleList.isEmpty()) {
+            Assert.assertTrue(isDownloadsListOrdered(episodeTitleList, episodeTitleListDownloads),
+                    "Numbered episodes are not ordered");
+        } else {
+            throw new IllegalArgumentException("Details or downloads list are empty");
+        }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75169", "XMOBQA-74449"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    public void verifyHuluSeriesPremiumDownloadActions() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        //Movie download button
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.getMovieDownloadButton().isPresent(),
+                "Movie download button was not found.");
+
+        //Episode download buttons
+        detailsPage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeUp(2500);
+        }
+        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodeDownloadsOfSeason());
+        LOGGER.info("Season 1 Total number of episode downloads: {}", season1NumberOfEpisodeDownloads);
+        sa.assertTrue(season1NumberOfEpisodeDownloads.equalsIgnoreCase("10"),
+                "Season 1 total number of episode downloads does not equal expected total of '10'");
+
+        //Download all of season
+        swipePageTillElementTappable(detailsPage.getDownloadAllSeasonButton(), 2, null, Direction.DOWN, 900);
+        detailsPage.getDownloadAllSeasonButton().click();
+        detailsPage.clickDownloadSeasonAlertButton();
+        detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(250, 25);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(downloads.getStaticTextByLabelContains("10 Episodes").isPresent(), "10 episode downloads were not found.");
+        downloads.clickSeriesMoreInfoButton();
+        sa.assertTrue(downloads.getStaticTextByLabelContains("Season 1").isPresent(), "Season 1 was not downloaded.");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74562"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluSeriesDeleteAndPlay() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        int polling = 5;
+        int episodeTimeout = 120;
+        int percentageForNextTitle = 97;
+        String one = "1";
+        String two = "2";
+        String videoPlayerNotOpen = "Video player did not open";
+        String detailsNotOpen = "Details page did not open";
+        String deleteButtonNotOpen = "Delete and Play button did not appear";
+
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAppToHomeScreen(getAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Online + next episode is downloaded
+        launchDeeplink(R.TESTDATA.get("hulu_prod_series_futurama_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
+            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
+        }
+        detailsPage.getEpisodeToDownload(one,one).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(episodeTimeout, polling);
+        detailsPage.getEpisodeToDownload(one,two).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(episodeTimeout, polling);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
+        sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
+                deleteButtonNotOpen);
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
+        detailsPage.clickCloseButton();
+
+        // Online + next episode is NOT downloaded
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
+        detailsPage.getEpisodeToDownload(one,one).click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(episodeTimeout, polling);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
+        sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
+                deleteButtonNotOpen);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75082"})
+    @Test( groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyJuniorProfileHuluFilteredOutDownloads() {
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+
+        validateHuluDownloadsNotOnLowerMaturityProfile(sa);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74903"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyPCONProfileHuluFilteredOutDownloads() {
+        SoftAssert sa = new SoftAssert();
+        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(RatingConstant.Rating.PG_13.getContentRating()).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
+        Profile profile = getAccount().getProfile(RatingConstant.Rating.PG_13.getContentRating());
+        getAccountApi().editContentRatingProfileSetting(getAccount(),
+                getAccountApi().getProfiles(getAccount()).get(1).getProfileId(),
+                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
+                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(5));
+
+        validateHuluDownloadsNotOnLowerMaturityProfile(sa);
+        sa.assertAll();
+    }
+
+    public List<String> getListEpisodes(String element) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        List<String> episodeTitleList = new ArrayList<>();
+
+        List<WebElement> episodeListElement = getDriver().findElements(detailsPage.getTypeButtonByName(element).getBy());
+        if (!episodeListElement.isEmpty()) {
+            for (WebElement title : episodeListElement) {
+                episodeTitleList.add(title.getText());
+            }
+        }
+        return episodeTitleList;
+    }
+
+    public boolean isDownloadsListOrdered(List<String> detailPageList, List<String> downloadPageList) {
+        for (int i = 0; i < downloadPageList.size(); i++) {
+            LOGGER.info("details title: {}, downloads title: {}", detailPageList.get(i), downloadPageList.get(i));
+            if (!downloadPageList.get(i).contains(detailPageList.get(i).substring(3))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private Integer getEpisodeDownloadsOfSeason() {
+        Map<List<String>, List<String>> params = new HashMap<>();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            int count = 3;
+            while (count > 0) {
+                params.put(Collections.singletonList(SET + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                swipeUp(600);
+                count --;
+            }
+            List<String> allEpisodeDownloadButtons = new ArrayList<>();
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "2")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "3")));
+            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
+            return allEpisodeDownloadButtonsNoDupes.size();
+        } else {
+            int count = 2;
+            while (count > 0) {
+                params.put(Collections.singletonList(SET + count), detailsPage.findAllEpisodeDownloadButtonsInCurrentView());
+                swipeUp(1200);
+                count --;
+            }
+            List<String> allEpisodeDownloadButtons = new ArrayList<>();
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "1")));
+            allEpisodeDownloadButtons.addAll(params.get(Collections.singletonList(SET + "2")));
+            List<String> allEpisodeDownloadButtonsNoDupes = allEpisodeDownloadButtons.stream().distinct().collect(Collectors.toList());
+            return allEpisodeDownloadButtonsNoDupes.size();
+        }
+    }
+
+    private void validateHuluDownloadsNotOnLowerMaturityProfile(SoftAssert sa) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        //Download TV-MA content
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeInContainer(null, Direction.UP, 2500);
+        }
+        detailsPage.getEpisodeToDownload("1", "1").click();
+        detailsPage.waitForOneEpisodeDownloadToComplete(180, 6);
+        searchPage.clickSearchIcon();
+        searchPage.clearText();
+        searchPage.searchForMedia(PREY);
+        searchPage.getDisplayedTitles().get(0).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            swipeInContainer(null, Direction.UP, 2500);
+        }
+        detailsPage.getMovieDownloadButton().click();
+        detailsPage.waitForMovieDownloadComplete(300, 25);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
+                ONLY_MURDERS_IN_THE_BUILDING + "was not found present on Downloads screen.");
+        sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isPresent(),
+                PREY + "was not found present on Downloads screen.");
+
+        //Validate on lower maturity rating profile downloaded assets not visible
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        whoIsWatching.clickProfile(getAccount().getProfiles().get(1).getProfileName());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isElementNotPresent(SHORT_TIMEOUT),
+                ONLY_MURDERS_IN_THE_BUILDING +  " was found present on " + getAccount().getProfiles().get(1) + " profile's Downloads screen.");
+        sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isElementNotPresent(SHORT_TIMEOUT),
+                PREY + " was found present on " + getAccount().getProfiles().get(1) + " profile's Downloads screen.");
     }
 
     @AfterMethod(alwaysRun = true)

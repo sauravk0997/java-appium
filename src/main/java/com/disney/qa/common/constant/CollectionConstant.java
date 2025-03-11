@@ -6,6 +6,7 @@ public class CollectionConstant {
         ACTION_AND_ADVENTURE,
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
+        BRANDS_COLLECTION,
         BRANDS_DISNEY_ORIGINALS,
         BRANDS_MARVEL_FEATURED,
         BRANDS_NATIONAL_GEOGRAPHIC_FEATURED,
@@ -16,6 +17,10 @@ public class CollectionConstant {
         CONTINUE_WATCHING,
         DISNEY_JUNIOR,
         DOCUMENTARIES_AND_REALITY,
+        ENJOY_THESE_MOVIES_FROM_HULU,
+        ENJOY_THESE_SERIES_FROM_HULU,
+        ESPN_PLUS_LIVE_AND_UPCOMING,
+        ESPN_SPORTS,
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
@@ -25,6 +30,7 @@ public class CollectionConstant {
         ORIGINALS,
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
+        REPLAYS_COLLECTION,
         STUDIOS_AND_NETWORKS,
         TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
@@ -41,6 +47,8 @@ public class CollectionConstant {
                 return "a221f47c-0e16-476b-bdc0-35ed038b72b8";
             case ANIMATED_SERIES:
                 return "d2ccd7df-a0ee-4251-a290-e25c05b852b5";
+            case BRANDS_COLLECTION:
+                return "5fc710db-490e-405e-b753-7c0a697696db";
             case BRANDS_DISNEY_ORIGINALS:
                 return "33b99ab4-5306-4099-9c4b-0845876a0834";
             case BRANDS_PIXAR_FEATURED:
@@ -61,6 +69,14 @@ public class CollectionConstant {
                 return "aaab13b2-4e15-4e71-836e-debe6d004193";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
+            case ENJOY_THESE_MOVIES_FROM_HULU:
+                return "5c721a08-c7ed-4e57-86c4-d781d3727098";
+            case ENJOY_THESE_SERIES_FROM_HULU:
+                return "311c4088-0a61-4055-9af0-aefa56fa1f00";
+            case ESPN_PLUS_LIVE_AND_UPCOMING:
+                return "21a6e9fa-2a5c-4f77-b1b1-ec956f3038c7";
+            case ESPN_SPORTS:
+                return "4e177574-aed4-4ad5-8d01-6fc7513bd3e5";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
@@ -74,13 +90,15 @@ public class CollectionConstant {
             case HULU_FEATURED:
                 return "a4af2864-302e-499e-adf5-88ed1735976f";
             case HULU_ORIGINALS:
-                return "3b31ecf1-9816-4d91-bcdf-197d69fdd58a";
+                return "bd52e84b-28f0-4c2d-a289-ccd61b92ecd4";
             case KIDS_CAROUSEL:
                 return "2821d7a3-1146-4ca5-8333-e2c565edf79d";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
                 return "a7b1bd9d-59ef-4345-b1a6-19c208b5357e";
             case KIDS_MICKEY_AND_FRIENDS:
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
+            case REPLAYS_COLLECTION:
+                return "971963b2-2bf5-4416-aa7d-41950d5760d7";
             case STUDIOS_AND_NETWORKS:
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
             case TREEHOUSE_OF_HORROR_I_TO_V:
@@ -106,6 +124,12 @@ public class CollectionConstant {
                 return "The Simpsons Treehouse of Horror";
             case UNLOCK_TO_STREAM_MORE_HULU:
                 return "Unlock to Stream More Hulu";
+            case ESPN_PLUS_LIVE_AND_UPCOMING:
+                return "ESPN+ Live and Upcoming";
+            case ESPN_SPORTS:
+                return "Sports";
+            case REPLAYS_COLLECTION:
+                return "Replays";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }

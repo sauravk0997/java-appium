@@ -1,14 +1,17 @@
 package com.disney.qa.tests.disney.apple.ios.regression.deeplinks;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
@@ -18,13 +21,17 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.net.URISyntaxException;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.IConstantHelper.STUDIOS_AND_NETWORKS_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
+    private static final String COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT = "disneyplus.com";
 
     private static final String CONTENT_UNAVAILABLE_ERROR = "Content Unavailable Error not displayed";
     private static final String CONTENT_UNAVAILABLE_OK_ERROR = "Content Unavailable Error OK cta is not displayed";
@@ -39,6 +46,13 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public Object[][] watchlistDeepLinks() {
         return new Object[][]{{R.TESTDATA.get("disney_prod_watchlist_deeplink_2")},
                 {R.TESTDATA.get("disney_prod_watchlist_deeplink_language")}
+        };
+    }
+
+    @DataProvider(name = "huluUnavailableDeepLinks")
+    public Object[][] huluUnavailableDeepLinks() {
+        return new Object[][]{{R.TESTDATA.get("disney_prod_hulu_unavailable_deeplink")},
+                {R.TESTDATA.get("disney_prod_hulu_unavailable_language_deeplink")}
         };
     }
 
@@ -96,6 +110,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         handleAlert();
         login(getAccount());
+        handleGenericPopup(5,1);
         watchlistPage.waitForPresenceOfAnElement(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR));
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
@@ -186,7 +201,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.tapHuluBrandTile();
         Assert.assertTrue(huluPage.isOpened(), HULU_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(huluPage.isStudiosAndNetworkPresent(), "Network and studios section is not present");
+        Assert.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
 
         huluPage.clickOnNetworkLogo(abcNetwork);
         Assert.assertTrue(homePage.isNetworkLogoImageVisible(abcNetwork), NETWORK_LOGO_IMAGE_NOT_DISPLAYED);
@@ -218,17 +233,40 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74866"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void testDeeplinkJuniorModeHuluHubContentUnavailable() {
+        String trioBasicPlan = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
-                .avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(trioBasicPlan)));
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(R.TESTDATA.get("disney_darth_maul_avatar_id"))
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true).build());
 
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        ExploreSearchRequest exploreSearchRequest = getHuluExploreSearchRequest()
+                .setEntityId(HULU_PAGE.getEntityId())
+                .setKidsMode(true)
+                .setCountryCode(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage())
+                .setLimit(30)
+                .setUnifiedAccount(getUnifiedAccount())
+                .setProfileId(getUnifiedAccount().getProfileId());
+
+        String errorMessage = getExploreAPIResponseOrErrorMsg(exploreSearchRequest);
+
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        welcomePage.clickLogInButton();
+        login(getUnifiedAccount());
+        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
+        whoIsWatching.clickProfile(JUNIOR_PROFILE);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_hub"));
-        Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
+        Assert.assertTrue(homePage.getStaticTextByLabelContains(errorMessage).isPresent(), CONTENT_UNAVAILABLE_ERROR);
         Assert.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
 
         homePage.getUnavailableOkButton().click();
@@ -455,5 +493,59 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(commonPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent(),
                 "Sign Up webview was not opened");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67580"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAccountSubscriptionDeeplink() {
+        DisneyPlusApplePageBase commonPage = initPage(DisneyPlusApplePageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_account_subscription"));
+        Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to mobile web browser");
+        Assert.assertTrue(commonPage.getWebviewUrl().contains(COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT),
+                "Webview did not open common Disney+ URL: " + COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67578"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAccountCancelSubscriptionDeeplink() {
+        DisneyPlusApplePageBase commonPage = initPage(DisneyPlusApplePageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAppToHomeScreen(getAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_account_cancel_subscription"));
+        Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to mobile web browser");
+        Assert.assertTrue(commonPage.getWebviewUrl().contains(COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT),
+                "Webview did not open common Disney+ URL: " + COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
+    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) throws URISyntaxException, JsonProcessingException {
+        String unentitledSeriesId = "entity-7840bf30-f440-48d4-bf81-55d8cb24457a";
+        String platform = "apple";
+        String environment = "PROD";
+
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getAccount());
+        launchDeeplink(deepLink);
+
+        sa.assertTrue(detailsPage.isContentAvailableWithHuluSubscriptionPresent(getAccount(), environment, platform, unentitledSeriesId),
+                "\"This content requires a Hulu subscription.\" message is displayed");
+        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
+        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
+        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), "Details tab is found.");
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+
+        sa.assertAll();
     }
 }

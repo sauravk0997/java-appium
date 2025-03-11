@@ -18,10 +18,9 @@ public final class TestGroup {
     public static final String DEEPLINKS = "Deeplinks";
     public static final String DETAILS_PAGE = "DetailsPage";
     public static final String DOWNLOADS = "Downloads";
+    public static final String EODPLUS = "ESPNOnDisneyPlus";
     public static final String HOME = "Home";
     public static final String HULK = "Hulk";
-    public static final String HULU_HUB = "HuluHub";
-    public static final String HULU_HUB_2 = "HuluHub2";
     public static final String IAP = "IAP";
     public static final String LOG_IN = "LogIn";
     public static final String MORE_MENU = "MoreMenu";

@@ -21,23 +21,14 @@ import java.time.temporal.ValueRange;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.*;
-import static com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoUpNextTest.SHORT_SERIES;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
 
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
+    
     protected static final String THE_MARVELS = "The Marvels";
-    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player didn't open";
-    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
-    private static final String NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN =
-            "Details page does not have the Negative Stereotype Advisory";
-    private static final String STEREOTYPE_ADVISORY_COUNTDOWN_NOT_PRESENT = "Playback Advisory Countdown is not present";
-    private static final String STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT = "Playback Advisory Countdown is present";
-    private static final String RATING_NOT_PRESENT = "Rating was not found in video player";
-    private static final String CONTINUE_BUTTON_NOT_PRESENT =
-            "Continue button is not present after exiting video player";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
 
     @DataProvider(name = "contentType")
@@ -62,13 +53,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.clickPlayButton().waitForVideoToStart().clickBackButton();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.clickPlayOrContinue().waitForVideoToStart().tapTitleOnPlayer();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})
@@ -76,7 +67,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyRewindButtonControlOnPlayer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SHORT_SERIES);
+        loginAndStartPlayback(SERIES_BLUEY);
 
         videoPlayer.tapForwardButton(3);
         int remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
@@ -99,7 +90,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyForwardButtonControlOnPlayer() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SHORT_SERIES);
+        loginAndStartPlayback(SERIES_BLUEY);
 
         int remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
         int remainingTimeAfterFwdTapInPauseMode = videoPlayer.tapForwardButton(1).getRemainingTime();
@@ -154,12 +145,12 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         String contentTitle = detailsPage.getContentTitle();
 
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         sa.assertTrue(videoPlayer.getTitleLabel().contains(contentTitle),
                 "Content title doesn't match from the detail's content title");
@@ -222,7 +213,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyRewindAndForwardButtonControlOnPlayerWhilePlaying() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SHORT_SERIES);
+        loginAndStartPlayback(SERIES_BLUEY);
 
         int remainingTimeBeforeFwd = videoPlayer.getRemainingTime();
         int remainingTimeAfterFwdTapInPlayMode = videoPlayer.tapForwardButton(1).getRemainingTime();
@@ -299,13 +290,13 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         String contentTitle = detailsPage.getContentTitle();
         String episodeTitle = detailsPage.getEpisodeContentTitle();
 
         detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Episode title doesn't match from the detail's episode title");
@@ -448,115 +439,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71665"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifySeriesPlaybackStereotypeAdvisory() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        String ratingExpected = "TV-Y";
-
-        // Login and open deeplink to series Timon and Puumba
-        setAppToHomeScreen(getAccount());
-        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_pumbaa_deeplink"));
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        Assert.assertFalse(detailsPage.isContinueButtonPresent(), "An episode has been started already");
-        detailsPage.clickDetailsTab();
-        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
-                NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN);
-
-        // Play content and immediately click back before stereotype countdown ends
-        detailsPage.clickPlayButton();
-        videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-
-        // Play content again to validate that stereotype message is still in the screen
-        detailsPage.clickPlayOrContinue();
-        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 1st paragraph is not present");
-        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 2nd paragraph is not present");
-        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
-                STEREOTYPE_ADVISORY_COUNTDOWN_NOT_PRESENT);
-        videoPlayer.waitForVideoStereotypeMessageToDisappear();
-        sa.assertTrue(detailsPage.isRatingPresent(ratingExpected), RATING_NOT_PRESENT);
-
-        // Click back and play again to validate that stereotype message is not present
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(detailsPage.isContinueButtonPresent(),
-                CONTINUE_BUTTON_NOT_PRESENT);
-        detailsPage.clickContinueButton();
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 1st paragraph is present");
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 2nd paragraph is present");
-        sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
-                STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT);
-        // Tap next episode to validate if stereotype message is not present
-        videoPlayer.displayVideoController();
-        videoPlayer.getElementFor(PlayerControl.NEXT_EPISODE).click();
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 1st paragraph is present");
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 2nd paragraph is present");
-        sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
-                STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT);
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68462"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyMoviePlaybackStereotypeAdvisory() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        String ratingExpected = "G";
-
-        // Login and open deeplink to movie Dumbo
-        setAppToHomeScreen(getAccount());
-        launchDeeplink(R.TESTDATA.get("disney_prod_content_dumbo_deeplink"));
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        Assert.assertFalse(detailsPage.isContinueButtonPresent(), "The movie has been started already");
-        detailsPage.clickDetailsTab();
-        sa.assertTrue(detailsPage.isNegativeStereotypeAdvisoryLabelPresent(),
-                NEGATIVE_STEREOTYPE_ADVISORY_DID_NOT_OPEN);
-
-        // Play content and immediately click back before stereotype countdown ends
-        detailsPage.clickPlayButton();
-        videoPlayer.clickElementAtLocation(videoPlayer.getBackButton(), 50, 50);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-
-        // Play content again to validate that stereotype message is still in the screen
-        detailsPage.clickPlayOrContinue();
-        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 1st paragraph is not present");
-        sa.assertTrue(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 2nd paragraph is not present");
-        sa.assertTrue(videoPlayer.isNegativeStereotypeCountdownPresent(),
-                STEREOTYPE_ADVISORY_COUNTDOWN_NOT_PRESENT);
-        videoPlayer.waitForVideoStereotypeMessageToDisappear();
-        sa.assertTrue(detailsPage.isRatingPresent(ratingExpected), RATING_NOT_PRESENT);
-
-        // Click back and play again to validate that stereotype message is not present
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(detailsPage.isContinueButtonPresent(),
-                CONTINUE_BUTTON_NOT_PRESENT);
-        detailsPage.clickContinueButton();
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 1st paragraph is present in the movie");
-        sa.assertFalse(videoPlayer.getTextElementValue(NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2).isPresent(THREE_SEC_TIMEOUT),
-                "Negative Stereotype 2nd paragraph is present in the movie");
-        sa.assertFalse(videoPlayer.isNegativeStereotypeCountdownPresent(),
-                STEREOTYPE_ADVISORY_COUNTDOWN_PRESENT);
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74453"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HULK, TestGroup.VIDEO_PLAYER, US})
     public void testNetworkWatermarkUserInterrupted() {
@@ -582,9 +464,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         // Launch deeplink for FX content and start to play
         launchDeeplink(R.TESTDATA.get("hulu_prod_series_pose_deeplink"));
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         // Start timer
         stopWatch.start();
         // Validate that content rating overlay and FX logo are present

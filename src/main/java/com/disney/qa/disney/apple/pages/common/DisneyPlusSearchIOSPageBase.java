@@ -40,13 +40,19 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentPageFilterHeader;
     @ExtendedFindBy(accessibilityId = "itemPickerView")
     private ExtendedWebElement itemPickerView;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][1]")
-    private ExtendedWebElement firstCollectionTitle;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS 'Rated' AND label CONTAINS '%s'$]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s'`][2]")
+    private ExtendedWebElement secondCollectionTitle;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeCell[`label CONTAINS \"%s\" AND label CONTAINS \"Rated %s\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s'`]")
     private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
+    private ExtendedWebElement firstUpcomingEventCell;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeStaticText[`name == 'airingBadgeLabel' AND label =[c] 'Upcoming'`]")
+    private ExtendedWebElement upcomingBadge;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == 'Unlock'`]")
+    private ExtendedWebElement unlockBadge;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_MOVIES_TITLE.getText()));
@@ -128,6 +134,18 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getMagnifyingGlassImage() {
         return magnifyingGlassImage;
+    }
+
+    public ExtendedWebElement getFirstUpcomingEventCell() {
+        return firstUpcomingEventCell;
+    }
+
+    public ExtendedWebElement getUpcomingBadgeForGivenSearchResult(ExtendedWebElement resultCell) {
+        return resultCell.findExtendedWebElement(upcomingBadge.getBy());
+    }
+
+    public ExtendedWebElement getUnlockBadgeForGivenSearchResult(ExtendedWebElement resultCell) {
+        return resultCell.findExtendedWebElement(unlockBadge.getBy());
     }
 
     public void clearText() {
@@ -240,8 +258,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
-    public void clickFirstCollection() {
-        firstCollectionTitle.format(
+    public void clickSecondCollection() {
+        secondCollectionTitle.format(
                 getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
                         DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();

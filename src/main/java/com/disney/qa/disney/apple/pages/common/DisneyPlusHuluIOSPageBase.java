@@ -41,7 +41,7 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
 
    public boolean isStudiosAndNetworkPresent() {
         ExtendedWebElement studiosLabel = getStudiosAndNetwork();
-        swipePageTillElementPresent(studiosLabel, 6, brandLandingView, Direction.UP, 1000);
+        swipePageTillElementPresent(studiosLabel, 8, brandLandingView, Direction.UP, 1000);
         if (!getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent()){
             swipeInContainer(brandLandingView, Direction.UP, 1000);
         }
@@ -67,8 +67,8 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
         return typeCellLabelContains.format(logoName).isPresent(THREE_SEC_TIMEOUT);
     }
 
-    public boolean validateScrollingInHuluCollection() {
-        return validateScrollingInCollections(CollectionConstant.Collection.HULU_ORIGINALS);
+    public boolean validateScrollingInHuluCollection(CollectionConstant.Collection collection) {
+        return validateScrollingInCollections(collection);
     }
 
     public void clickOnNetworkLogo(String network){

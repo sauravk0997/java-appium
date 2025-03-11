@@ -44,6 +44,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     public void ratingsSetup(String ratingValue, String locale, boolean... ageVerified) {
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
         getAccountApi().overrideLocations(getAccount(), locale);
         setAccountRatingsMax(getAccount());
@@ -51,6 +52,13 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getAccount());
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        //Dismiss ATT Popup
+        if (isAlertPresent()) {
+            handleGenericPopup(5, 1);
+        }
     }
 
     public void ratingSetupWithPINForOTPAccount(String locale) {
@@ -216,7 +224,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
-        swipePageTillElementTappable(detailsPage.getTabBar(), 2, null, Direction.DOWN, 1000);
+        swipe(detailsPage.getLogoImage(), Direction.DOWN, 2, 1000);
+        swipe(detailsPage.getTabBar(), Direction.UP, 2, 1000);
         swipeInContainerTillElementIsPresent(detailsPage.getTabBar(), detailsPage.getEpisodesTab(), 1,
                 Direction.RIGHT);
         detailsPage.getEpisodesTab().click();

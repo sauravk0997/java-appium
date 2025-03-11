@@ -4,21 +4,26 @@ import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import com.disney.jarvisutils.pages.apple.*;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
+import io.appium.java_client.remote.*;
 import io.appium.java_client.remote.options.SupportsAppOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +39,6 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
-import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
@@ -91,6 +95,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEEPLINKURL = "disneyplus://www.disneyplus.com/browse/";
     public static final String JARVIS_PLAYBACK = "Playback";
     public static final String JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE = "Offline Expired License Override";
+    protected static final String DOLBY_VISION = "Dolby Vision";
+    public static final String ESPN_PLUS = "ESPN+";
+
+    //Common error messages
+    public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -123,6 +132,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         MINOR(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 4)),
         U13(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 12)),
         U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16)),
+        AGE_17(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 17)),
         OLDERTHAN125(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 130)),
         OLDERTHAN200(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 205));
 
@@ -148,6 +158,20 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             }
         }
 
+    }
+
+    /**
+     * Calculates person's age based on month, day, year provided from Person enum
+     *
+     * @param personMonth - Person's birth month
+     * @param person  - Person for day and year
+     */
+    public int calculateAge(DateHelper.Month personMonth, Person person) {
+        int month = Integer.parseInt(personMonth.getNum());
+        int day = Integer.parseInt(person.day);
+        int year = Integer.parseInt(person.year);
+        LOGGER.info("Calculated age returned: {}", Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears());
+        return Period.between(LocalDate.of(year, month, day), LocalDate.now()).getYears();
     }
 
     /**
@@ -252,12 +276,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         getDriver();
         setBuildType();
 
-        if (buildType == BuildType.IAP) {
-            LOGGER.info("IAP build detected. Cancelling Disney+ subscription.");
-            initPage(IOSSettingsMenuBase.class).cancelActiveEntitlement("Disney+");
-            relaunch();
-        }
-
         try {
             initPage(DisneyPlusLoginIOSPageBase.class).dismissNotificationsPopUp();
             LOGGER.info("API threads started.");
@@ -274,7 +292,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void restart() {
         terminateApp(sessionBundles.get(APP));
         startApp(sessionBundles.get(DISNEY));
-        //        handleAlert();
     }
 
     /**
@@ -319,6 +336,46 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     public boolean isFooterTabPresent(DisneyPlusApplePageBase.FooterTabs tab) {
         return initPage(DisneyPlusApplePageBase.class).getDynamicAccessibilityId(tab.getLocator()).isElementPresent();
+    }
+
+    protected void installJarvis() {
+        String platformName;
+
+        if (StringUtils.equalsIgnoreCase(getDevice().getCapabilities().getCapability("deviceType").toString(), MobilePlatform.TVOS)) {
+            platformName = MobilePlatform.TVOS;
+        } else {
+            platformName = getDevice().getCapabilities().getCapability("platformName").toString();
+        }
+
+        switch (buildType) {
+            case ENTERPRISE:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
+                        .getDirectLink());
+                break;
+            case AD_HOC:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
+                        .getDirectLink());
+                break;
+            case IAP:
+                installApp(AppCenterManager.getInstance()
+                        .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
+                        .getDirectLink());
+        }
+    }
+
+    public JarvisAppleBase getJarvisPageFactory() {
+        switch (currentDevice.get().getDeviceType()) {
+            case APPLE_TV:
+                return new JarvisAppleTV(getDriver());
+            case IOS_PHONE:
+                return new JarvisHandset(getDriver());
+            case IOS_TABLET:
+                return new JarvisTablet(getDriver());
+            default:
+                throw new IllegalArgumentException(String.format("Invalid device type %s. No factory is available", currentDevice.get().getDeviceType()));
+        }
     }
 
     public void launchJarvis(boolean freshInstall) {
@@ -430,7 +487,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return getAccountApi().createAccount(request);
     }
 
-
     public void launchOrInstallJarvis() {
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
         if (isInstalled) {
@@ -452,6 +508,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+
+    //Explore API methods
     public ExploreSearchRequest getExploreSearchRequest(String brand) {
         switch (brand.toUpperCase()){
             case "HULU":
@@ -461,8 +519,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 return getDisneyExploreSearchRequest();
         }
     }
-
-    //Explore API methods
     public ExploreContent getSeriesApi(String entityID, Brand brand) {
         try {
             return getExploreApi().getSeries(getExploreSearchRequest(brand.toString())
@@ -606,6 +662,72 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return titlesFromApi;
     }
 
+    public List<String> getContainerTitlesWithGivenRatingFromApi(String setID, int limit, String expectedRating) {
+        List<Item> setItemsFromApi = getExploreAPIItemsFromSet(setID, limit);
+        List<String> filteredTitlesFromApi = new ArrayList<>();
+        setItemsFromApi.stream()
+                .filter(item -> item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText()
+                        .equals(expectedRating))
+                .forEach(item -> filteredTitlesFromApi.add(item.getVisuals().getTitle()));
+        if (filteredTitlesFromApi.isEmpty()) {
+            throw new NoSuchElementException("No titles found from Explore API using given rating");
+        }
+        return filteredTitlesFromApi;
+    }
+
+    public String getSetIdFromApi(String pageId, String containerName) {
+        if (pageId == null || containerName == null) {
+            throw new IllegalArgumentException("pageId or containerName parameters were null");
+        }
+        List<Container> pageContainers = getDisneyAPIPage(pageId);
+        if (pageContainers.isEmpty()) {
+            throw new ArrayIndexOutOfBoundsException("Containers for given page were not found");
+        }
+        for (Container container : pageContainers) {
+            if (containerName.contains(container.getVisuals().getName())) {
+                return container.getId();
+            }
+        }
+        throw new IllegalArgumentException("Given container was not found on given page using Explore API");
+    }
+
+    public List<Item> getAvailableHuluTitlesForStandaloneUserFromApi() {
+        List<Item> huluSeriesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU),
+                        100);
+        List<Item> huluMoviesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_MOVIES_FROM_HULU),
+                        100);
+        List<Item> huluContentFromApi = Stream.concat(
+                        huluSeriesFromApi.stream(), huluMoviesFromApi.stream())
+                .collect(Collectors.toList());
+        if (huluContentFromApi.isEmpty()) {
+            throw new NoSuchElementException("No available Hulu Titles found for standalone user using Explore API");
+        }
+        return huluContentFromApi;
+    }
+
+    public String getExploreAPIResponseOrErrorMsg(ExploreSearchRequest exploreSearchRequest) {
+        try {
+            ExplorePageResponse explorePageResponse = getExploreApi().getPage(exploreSearchRequest);
+            return explorePageResponse.getData().toString().split("message=")[1].split(", iconType=")[0];
+        } catch (Exception e) {
+            return e.getMessage().split("description=")[1].split("\\)")[0];
+        }
+    }
+
+    protected List<String> getGenreMetadataLabels(Visuals visualsResponse) {
+        List<String> metadataArray = new ArrayList();
+        List<String> genreList = visualsResponse.getMetastringParts().getGenres().getValues();
+        //get only first two values of genre
+        if (genreList.size() > 2) {
+            genreList = genreList.subList(0, 2);
+        }
+        genreList.forEach(genre -> metadataArray.add(genre));
+        return metadataArray;
+    }
+
+    //Jarvis Methods
     public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         applePageBase.removeDomainIdentifier();
@@ -661,27 +783,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-    }
-
-    public String convertMinutesIntoStringWithHourAndMinutes(int timeInMinutes) {
-        long hours = timeInMinutes / 60;
-        long minutes = timeInMinutes % 60;
-        return String.format("%dh %dm", hours, minutes);
-    }
-
-    public String getOTPFromApi(Date startTime, DisneyAccount testAccount) {
-        int emailAPILatency = 10;
-        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
-        pause(emailAPILatency);
-        String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
-
-        if (!secondOTP.equals(firstOTP)) {
-            LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
-            return secondOTP;
-        } else {
-            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
-            return firstOTP;
-        }
     }
 
     public void jarvisDisableOneTrustBanner() {
@@ -748,5 +849,31 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         //Relaunch Disney app
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
+    }
+
+    public String convertMinutesIntoStringWithHourAndMinutes(int timeInMinutes) {
+        long hours = timeInMinutes / 60;
+        long minutes = timeInMinutes % 60;
+        return String.format("%dh %dm", hours, minutes);
+    }
+
+    public String getOTPFromApi(Date startTime, DisneyAccount testAccount) {
+        int emailAPILatency = 10;
+        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+        pause(emailAPILatency);
+        String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+
+        if (!secondOTP.equals(firstOTP)) {
+            LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+            return secondOTP;
+        } else {
+            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+            return firstOTP;
+        }
+    }
+
+    public void handleGenericPopup(int timeout, int maxAttempts) {
+        pause(timeout);
+        handleSystemAlert(AlertButtonCommand.DISMISS, maxAttempts);
     }
 }

@@ -56,6 +56,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
 
                 launchJarvis(true);
+                selectAppleUpdateLaterAndDismissAppTracking();
 
                 jarvis.navigateToConfig(APP_CONFIG.getText(), Direction.DOWN);
                 jarvis.navigateToConfig(EDIT_CONFIG.getText(), Direction.DOWN);
@@ -105,7 +106,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
         selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), "Welcome screen did not launch");
+        Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPassword();

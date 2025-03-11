@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.api.account.*;
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.client.responses.profile.DisneyProfile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
@@ -26,8 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.*;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
-
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -65,20 +62,26 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67128"})
-    @Test(description = "Verify the Account submenu display elements are present", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAccountDisplay() {
         setAppToAccountSettings(getAccount());
         SoftAssert sa = new SoftAssert();
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        String manageDeviceText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText());
+        String accountSectionEditProfileLinkText = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.ACCOUNT_EDIT_PROFILE.getText());
+
         accountPage.waitForAccountPageToOpen();
-        sa.assertTrue(accountPage.getBackArrow().isElementPresent(), "Back arrow was not displayed");
-        sa.assertTrue(accountPage.getStaticTextByLabel(getAccount().getEmail()).isPresent(),
+        sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountPage.getStaticTextByLabelContains(getAccount().getEmail()).isPresent(),
                 "User Email address was not displayed");
-        sa.assertTrue(accountPage.getManageWithMyDisneyButton().isPresent(),
+        sa.assertTrue(accountPage.getManageMyAccountCell().isPresent(),
                 "Manage with MyDisney link was not displayed");
         sa.assertTrue(
-                accountPage.getStaticTextByLabel(
+                accountPage.getStaticTextByLabelContains(
                         getLocalizationUtils().getDictionaryItem(
                                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 DictionaryKeys.HIDDEN_PASSWORD.getText()
@@ -91,7 +94,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                         )).isPresent(), "Subscriptions header not displayed");
         sa.assertTrue(accountPage.isSubscriptionCellPresent(), "Subscription cell was not displayed");
         sa.assertTrue(accountPage.isAccessAndSecurityTextPresent(), "Access & Security text was not displayed");
-        sa.assertTrue(accountPage.isManageDevicesTextPresent(), "Manage Devices text was not displayed");
+        sa.assertTrue(accountPage.getManageDevicesText().equals(manageDeviceText),
+                "Manage Devices text was not displayed");
         sa.assertTrue(
                 accountPage.getStaticTextByLabel(
                         getLocalizationUtils().getDictionaryItem(
@@ -101,34 +105,17 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         sa.assertTrue(accountPage.isRestrictProfilesContainerPresent(),
                 "Restrict Profile Creation container was not displayed");
         sa.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
-        sa.assertTrue(accountPage.isEditProfilesTextPresent(), "Edit Profiles text was not displayed");
+        sa.assertTrue(accountPage.getEditProfileLink().getText().equals(accountSectionEditProfileLinkText),
+                "Edit Profiles text was not displayed");
         accountPage.swipe(accountPage.getAccountManagementTextElement());
         sa.assertTrue(accountPage.isAccountManagementLinkPresent(),
                 "Account Management link was not displayed");
         sa.assertTrue(accountPage.isAccountManagementTextPresent(),
                 "Account Management text was not displayed");
 
-        accountPage.getBackArrow().click();
-        sa.assertTrue(moreMenuPage.isOpened(), "More Menu page was not displayed");
+        accountPage.clickNavBackBtn();
+        sa.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED);
         sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61571"})
-    @Test(description = "Verify that the correct description for D+ Premium displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifySubscriptionDetailsDisneyPlus() {
-        setAppToAccountSettings(getAccount());
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isDisneyPlusPremiumSubscriptionPresent(),
-                "D+ Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openDisneyPlusPremiumWebView();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL),
-                "Webview did not open to the expected url");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61573"})
@@ -644,7 +631,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         accountPage.swipe(accountPage.getAccountManagementTextElement());
         Assert.assertTrue(accountPage.isAccountManagementLinkPresent(),
                 "Account Management link was not displayed");
-        accountPage.getAccountManagementLink().click();
+        accountPage.tapAccountManagementLink();
         accountPage.waitForPresenceOfAnElement(accountPage.getWebviewUrlBar());
         Assert.assertTrue(accountPage.isAccountManagementFAQWebViewDisplayed(),
                 "Account Management FAQ web page did not open");

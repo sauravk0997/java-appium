@@ -3,7 +3,6 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -11,6 +10,10 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+
+import java.awt.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -43,15 +46,21 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement editEmailButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[2]")
     private ExtendedWebElement editPasswordButton;
-    @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
-    private ExtendedWebElement changePasswordCell;
-
-    @ExtendedFindBy(accessibilityId = "subscriptionChange")
-    private ExtendedWebElement subscriptionChange;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
             "**/XCUIElementTypeButton[2]")
     private ExtendedWebElement subscriptionMessage;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
+    private ExtendedWebElement restrictedProfileToggle;
+    @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
+    private ExtendedWebElement manageMyAcccountCell;
+    @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
+    private ExtendedWebElement restrictProfileCreation;
+    @ExtendedFindBy(accessibilityId = "subscriptionChange")
+    private ExtendedWebElement subscriptionChange;
+    @ExtendedFindBy(accessibilityId = "manageParentalControls")
+    private ExtendedWebElement manageParentalControls;
+    @ExtendedFindBy(accessibilityId = "manageDevices")
+    private ExtendedWebElement manageDevices;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -62,6 +71,18 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getSubscriptionMessage() {
         return subscriptionMessage;
+    }
+
+    public ExtendedWebElement getManageMyAccountCell() {
+        return manageMyAcccountCell;
+    }
+
+    public ExtendedWebElement getManageDevices() {
+        return manageDevices;
+    }
+
+    public String getManageDevicesText() {
+        return manageDevices.getText();
     }
 
     public boolean isSubscriptionMessageDisplayed() {
@@ -218,9 +239,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getRestrictProfileCreationContainer() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_DESCRIPTION.getText())));
+        return restrictProfileCreation;
     }
 
     private ExtendedWebElement verifyAccountHeader = getDynamicXpath(
@@ -476,11 +495,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getEditProfileLink() {
-        String dictValOfEditProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
-        //To manage parental controls for profiles on your account, visit [Edit Profiles](https://www.disneyplus.com/edit-profiles) and select a Profile.
-        //Extracting the link text which is inside the '[]'
-        String expectedHyperLinkText = dictValOfEditProfile.substring(dictValOfEditProfile.indexOf('[') + 1, dictValOfEditProfile.indexOf(']'));
-        return customHyperlinkByLabel.format(expectedHyperLinkText);
+        return manageParentalControls;
     }
 
     public boolean isEditProfilesLinkPresent() {
@@ -488,17 +503,15 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void tapEditProfilesLink() {
+        int heightValue = 60;
         ExtendedWebElement element = getEditProfileLink();
         Dimension dimension = element.getSize();
         Point location = element.getLocation();
-        tap(location.getX() + 5, location.getY() + dimension.getHeight() / 2);
-    }
-
-    public boolean isEditProfilesTextPresent() {
-        String dictValOfEditProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
-        //Removing the square bracket, rounded bracket and the link inside it to match the label displayed on the screen.
-        String editProfileText = dictValOfEditProfile.replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
-        return textViewByLabel.format(editProfileText).isElementPresent();
+        if (element.getSize().getHeight() > heightValue) {
+            tap(location.getX() + 55 , location.getY() + dimension.getHeight()*2/3, 2);
+        } else {
+            element.click();
+        }
     }
 
     public boolean isPrivacyChoicesLinkPresent() {
@@ -525,14 +538,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         getDynamicCellByName("logOutAllDevicesCell").click();
     }
 
-    public boolean isRestrictProfileCreationEnabled() {
-        return getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(IOSUtils.ButtonStatus.ON.toString());
+    public boolean isRestrictProfileCreationValueExpected(String expectedValue) {
+        return getRestrictProfileCreationContainer()
+                .getAttribute(Attributes.VALUE.getAttribute()).equals(expectedValue);
     }
 
-    public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
-        if(!getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-            clickElementAtLocation(getRestrictProfileCreationContainer(), 35, 90);
-        }
+    public void toggleRestrictProfileCreation() {
+            restrictedProfileToggle.click();
     }
 
     public boolean isDirectBillingPausedSubscriptionDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
@@ -669,16 +681,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
     }
 
-    public void clickEditEmail(String email) {
-        getStaticTextByLabelContains(email).click();
-    }
-
     public void tapEditEmailButton() {
         editEmailButton.click();
-    }
-
-    public void clickChangePasswordCell() {
-        changePasswordCell.click();
     }
 
     public boolean waitForManageMyDisneyAccountOverlayToOpen(DisneyAccount account) {
@@ -695,20 +699,8 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return accessAndSecurityText.isElementPresent();
     }
 
-    public boolean isManageDevicesTextPresent() {
-        return manageDevicesText.isElementPresent();
-    }
-
-    public ExtendedWebElement getAccountManagementLink() {
-        String dictValOfAccountManagement = getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
-         String expectedHyperLinkText = dictValOfAccountManagement.substring(
-                dictValOfAccountManagement.indexOf('[') + 1, dictValOfAccountManagement.indexOf(']'));
-        return customHyperlinkByLabel.format(expectedHyperLinkText);
-    }
-
     public boolean isAccountManagementLinkPresent() {
-        return getAccountManagementLink().isElementPresent();
+        return getAccountManagementTextElement().isElementPresent();
     }
 
     public boolean isAccountManagementFAQWebViewDisplayed() {
@@ -721,7 +713,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMMUNICATION_SETTINGS.getText());
         String editProfileText = dictValOfAccountManagement.
                 replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
-        return textViewByLabel.format(editProfileText);
+        return staticTextByLabel.format(editProfileText);
     }
 
     public boolean isAccountManagementTextPresent() {
@@ -730,5 +722,15 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getEditPasswordButton() {
         return editPasswordButton;
+    }
+
+    public void tapAccountManagementLink() {
+        ExtendedWebElement element = getAccountManagementTextElement();
+        int maxHeight = getDriver().manage().window().getSize().getHeight();
+        int yCoordinate = element.getLocation().getY();
+        if (maxHeight- yCoordinate < 150) {
+            swipeUp(2, 1000);
+        }
+        element.click();
     }
 }
