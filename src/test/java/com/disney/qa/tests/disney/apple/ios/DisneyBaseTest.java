@@ -101,9 +101,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //Common error messages
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
 
-    //DOB
-    public static final String DOB_2015 = "2015-01-01";
-
     //Offers
     public static final String DISNEY_BASIC_PLAN = "Disney+ Basic";
 
