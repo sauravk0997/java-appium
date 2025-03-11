@@ -34,7 +34,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         logIn(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player did not launch");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
 
         // Pause video with remote button
