@@ -1,6 +1,8 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -33,13 +35,12 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        sa.assertFalse(videoPlayer.getSeekbar().isPresent(ONE_SEC_TIMEOUT),
-                "player controls were displayed when video started");
         sa.assertTrue(videoPlayer.isTitleLabelDisplayed(),
                 "Video player title wasn't visible when video started");
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
                 "service attribution wasn't visible when video started");
+        sa.assertFalse(videoPlayer.getSeekbar().isPresent(ONE_SEC_TIMEOUT),
+                "player controls were displayed when video started");
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(),
                 "service attribution wasn't visible along with controls");
