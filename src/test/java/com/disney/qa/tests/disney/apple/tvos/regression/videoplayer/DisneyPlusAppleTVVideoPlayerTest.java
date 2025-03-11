@@ -46,6 +46,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Video player meta data title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSeekbarVisible(),
                 "player controls were not displayed when playback activated");
+        videoPlayer.displayVideoController();
         sa.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE),
                 "Expected Hulu Service Attribution not displayed");
         sa.assertAll();
