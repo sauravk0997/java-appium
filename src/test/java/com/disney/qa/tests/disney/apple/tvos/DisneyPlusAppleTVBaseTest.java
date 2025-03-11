@@ -141,11 +141,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
     public void logIn(UnifiedAccount user) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         logInWithoutHomeCheck(user);
-
-        //Wait to handle the expanded validation
-        pause(5);
         collapseGlobalNav();
-
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
     }

@@ -133,7 +133,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
         Profile profile = getUnifiedAccount().getProfile(TV_Y7);
 
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
@@ -250,7 +251,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planType)));
         setAppToHomeScreen(getUnifiedAccount());
-
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
@@ -509,7 +509,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
@@ -603,7 +604,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
 
         //No upsell

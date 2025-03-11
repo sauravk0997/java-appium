@@ -355,8 +355,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
-
+                .isStarOnboarded(true)
+                .build());
         setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -469,40 +469,40 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67303"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchResultContainsRatingAndYearDetails() {
-            String media = "M";
-            String movie = "The Marvels";
-            String series = "The Simpsons";
+        String media = "M";
+        String movie = "The Marvels";
+        String series = "The Simpsons";
 
-            SoftAssert sa = new SoftAssert();
-            DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-            DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-            ExploreContent seriesApiContent = getSeriesApi(DisneyEntityIds.SERIES.getEntityId(),
-                    DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-            ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        ExploreContent seriesApiContent = getSeriesApi(DisneyEntityIds.SERIES.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
 
-            setAppToHomeScreen(getUnifiedAccount());
-            homePage.clickSearchIcon();
-            Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-            //User made search with one letter
-            String contentTitle = getFirstSearchResults(media);
-            sa.assertTrue(contentTitle.startsWith(media), "Result doesnt start with letter " + media);
+        //User made search with one letter
+        String contentTitle = getFirstSearchResults(media);
+        sa.assertTrue(contentTitle.startsWith(media), "Result doesnt start with letter " + media);
 
-            //User made search with movie name
-            contentTitle = getFirstSearchResults(movie);
-            sa.assertTrue(contentTitle.equals(movie), movie + " was not displayed in search results");
-            //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiMovieRatingDetails(movieApiContent),
-                    getApiContentReleasedYearDetails(movieApiContent));
+        //User made search with movie name
+        contentTitle = getFirstSearchResults(movie);
+        sa.assertTrue(contentTitle.equals(movie), movie + " was not displayed in search results");
+        //Verify search result have Rating and released year details also
+        validateRatingAndReleasedYearDetails(sa, contentTitle, getApiMovieRatingDetails(movieApiContent),
+                getApiContentReleasedYearDetails(movieApiContent));
 
-            //User made search with series name
-            contentTitle = getFirstSearchResults(series);
-            sa.assertTrue(contentTitle.equals(series), series + " was not displayed in search results");
-            //Verify search result have Rating and released year details also
-            validateRatingAndReleasedYearDetails(sa, contentTitle, getApiSeriesRatingDetails(seriesApiContent),
-                    getApiContentReleasedYearDetails(seriesApiContent));
-            sa.assertAll();
+        //User made search with series name
+        contentTitle = getFirstSearchResults(series);
+        sa.assertTrue(contentTitle.equals(series), series + " was not displayed in search results");
+        //Verify search result have Rating and released year details also
+        validateRatingAndReleasedYearDetails(sa, contentTitle, getApiSeriesRatingDetails(seriesApiContent),
+                getApiContentReleasedYearDetails(seriesApiContent));
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67379"})
@@ -547,7 +547,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
 
         //Click First Content Tile on Collection Page
-        homePage.clickDynamicCollectionOrContent(2,1);
+        homePage.clickDynamicCollectionOrContent(2, 1);
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
 
@@ -671,8 +671,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 .dateOfBirth(ADULT_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
-                .kidsModeEnabled(false).build());
-
+                .kidsModeEnabled(false)
+                .build());
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -740,7 +740,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 "API fetched titles don't contain UI titles");
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75501"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyOriginalsLandingPageContentMaturityRatingRestriction() {
@@ -769,7 +768,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
                 setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
 
-        if(!filteredListOfTitlesByRating.isEmpty()) {
+        if (!filteredListOfTitlesByRating.isEmpty()) {
             filteredListOfTitlesByRating.forEach(item -> {
                 sa.assertTrue(originalsPage.getTypeCellLabelContains(item).isPresent(), "Title from Api not found in UI " + item);
             });
@@ -815,7 +814,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         List<String> filteredListOfTitlesByRating = getContainerTitlesWithGivenRatingFromApi(
                 setId, apiTitlesSearchLimit, RatingConstant.Rating.TV_Y.getContentRating());
 
-        if(!filteredListOfTitlesByRating.isEmpty()) {
+        if (!filteredListOfTitlesByRating.isEmpty()) {
             String finalHeroCarouselId = collections.get(0).getId();
             filteredListOfTitlesByRating.forEach(item -> {
                 if (brandPage.getTypeCellLabelContains(item).isElementNotPresent(THREE_SEC_TIMEOUT)) {
@@ -899,8 +898,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
-
+                .isStarOnboarded(true)
+                .build());
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
@@ -974,7 +973,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
         sa.assertEquals(searchLimitQuery, searchPage.getSearchBarText(),
                 "Maximum number of characters is not allowed in search field.");
-        searchPage.searchForMedia(searchLimitQuery+"D");
+        searchPage.searchForMedia(searchLimitQuery + "D");
         sa.assertEquals(searchLimitQuery, searchPage.getSearchBarText(),
                 "character after 64 char is accepted in search bar");
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");

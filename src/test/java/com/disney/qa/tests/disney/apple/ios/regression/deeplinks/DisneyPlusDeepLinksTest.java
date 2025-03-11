@@ -244,7 +244,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(R.TESTDATA.get("disney_darth_maul_avatar_id"))
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         ExploreSearchRequest exploreSearchRequest = getHuluExploreSearchRequest()
                 .setEntityId(HULU_PAGE.getEntityId())

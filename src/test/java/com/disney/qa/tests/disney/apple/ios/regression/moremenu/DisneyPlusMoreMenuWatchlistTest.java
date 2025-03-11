@@ -24,7 +24,6 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
     private static final String GRIMCUTTY = "Grimcutty";
     private static final String WANDA_VISION = "WandaVision";
-
     private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page did not open";
 
     public void onboard() {
@@ -156,7 +155,6 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         //Add Hulu title to watch list
@@ -187,5 +185,4 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
                 "Empty Watchlist text/logo was not displayed");
         sa.assertAll();
     }
-
 }

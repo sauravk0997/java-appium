@@ -667,7 +667,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
@@ -700,7 +701,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
@@ -730,7 +732,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
@@ -784,7 +787,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
@@ -884,7 +888,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();

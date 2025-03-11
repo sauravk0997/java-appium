@@ -631,8 +631,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_SINGAPORE)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), SINGAPORE);
-        //Remove it after explore API changes
-        getAccountApi().overrideLocations(getAccount(), SINGAPORE);
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), SINGAPORE);
         setAppToHomeScreen(getUnifiedAccount());
         handleAlert();
         homePage.waitForHomePageToOpen();
@@ -675,7 +675,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
 
@@ -942,12 +943,17 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         ArrayList<Container> collections = getDisneyAPIPageUnifiedAccount(HOME_PAGE.getEntityId(),
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
+        if (collections.size() < 3) {
+            throw new ArrayIndexOutOfBoundsException("Explore API did not return any collection titles");
+        }
         collectionID = collections.get(2).getId();
         contentTitle = collections.get(2).getItems().get(0).getVisuals().getTitle();
+        if(contentTitle == null) {
+            throw new SkipException("Collection title returned null from Explore API, skipping test");
+        }
         ExtendedWebElement contentTitleElement = homePage.getElementTypeCellByLabel(contentTitle);
-
         swipe(homePage.getDynamicAccessibilityId(collectionID));
-        if (contentTitleElement.isPresent()){
+        if (contentTitleElement.isPresent()) {
             contentTitleElement.click();
         } else {
             swipeInContainerTillElementIsPresent(homePage.getCollection(collectionID), contentTitleElement,

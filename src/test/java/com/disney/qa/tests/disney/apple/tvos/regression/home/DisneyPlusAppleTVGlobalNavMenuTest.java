@@ -139,8 +139,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
-
+                .isStarOnboarded(true)
+                .build());
         initDisneyPlusAppleTVGlobalNavMenuTest();
         selectAppleUpdateLaterAndDismissAppTracking();
         logInWithoutHomeCheck(getUnifiedAccount());

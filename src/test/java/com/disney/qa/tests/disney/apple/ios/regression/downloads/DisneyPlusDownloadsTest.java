@@ -470,7 +470,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
-
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
 
         Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
@@ -826,7 +825,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         validateHuluDownloadsNotOnLowerMaturityProfile(sa);
         sa.assertAll();
@@ -845,7 +845,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         Profile profile = getUnifiedAccountApi().getDisneyProfiles(getUnifiedAccount()).get(1);
 

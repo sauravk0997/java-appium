@@ -96,8 +96,8 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
 
-
-        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
 

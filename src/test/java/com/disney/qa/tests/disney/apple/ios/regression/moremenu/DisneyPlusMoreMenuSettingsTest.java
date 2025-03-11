@@ -43,7 +43,8 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
         setAppToHomeScreen(getUnifiedAccount(), TEST_USER);
 
         softAssert.assertTrue(homePage.getMoreMenuTab().isPresent(), "Profile Icon is not displayed");

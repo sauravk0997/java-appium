@@ -52,9 +52,9 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
         sa.assertTrue(oneTrustPage.isRejectAllButtonPresent(), "Reject all button is not present on one trust banner");
-        sa.assertTrue(oneTrustPage.isAllowAllButtonPresent(),"Accept all button is not present on one trust banner");
-        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(),"Customized choices button is not present on one trust banner");
-        sa.assertTrue(oneTrustPage.isListOfVendorsLinkPresent(),"List of vendors link is not present on one trust banner");
+        sa.assertTrue(oneTrustPage.isAllowAllButtonPresent(), "Accept all button is not present on one trust banner");
+        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(), "Customized choices button is not present on one trust banner");
+        sa.assertTrue(oneTrustPage.isListOfVendorsLinkPresent(), "List of vendors link is not present on one trust banner");
         oneTrustPage.tapAcceptAllButton();
         sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
 
@@ -81,7 +81,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
 
         sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
-        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(),"Customized choices button is not present on one trust banner");
+        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(), "Customized choices button is not present on one trust banner");
         oneTrustPage.tapCustomizedChoices();
         sa.assertTrue(oneTrustPage.isPrivacyPreferenceCenterOpen(), "Privacy Preference page is not opened");
         oneTrustPage.tapConfirmMyChoiceButton();
@@ -247,7 +247,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        SoftAssert sa =  new SoftAssert();
+        SoftAssert sa = new SoftAssert();
         String EXPECTED_RATING = "12";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
@@ -262,7 +262,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), GERMANY);
 
         setAppToHomeScreen(getUnifiedAccount());
@@ -308,7 +309,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
 
         int under13Age = calculateAge(Person.U13.getMonth(), Person.U13);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
@@ -336,7 +337,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
 
         int under18Age = calculateAge(Person.AGE_17.getMonth(), Person.AGE_17);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
@@ -364,14 +365,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        DisneyPlusContentRatingIOSPageBase contentRating =   initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
 
         int minorAge = calculateAge(Person.MINOR.getMonth(), Person.MINOR);
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(UNITED_KINGDOM, minorAge, AGE_VALUES_EMEA)));
         LOGGER.info("Recommended Content Rating: {} ", recommendedContentRatingByAge);
         // Validation for 0 Rating because in screen appears AL Rating in slider
-        if(recommendedContentRatingByAge.contains("0 (Recommended)")) {
+        if (recommendedContentRatingByAge.contains("0 (Recommended)")) {
             recommendedContentRatingByAge = "AL (Recommended)";
         }
         jarvisDisableOneTrustBanner();
@@ -440,10 +441,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         String ratingChoose = "TV-Y";
         int age = 59;
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_STANDARD,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), CA);
 
         String recommendedContentRatingByAge = getLocalizationUtils().formatPlaceholderString(contentRating.getRecommendedRating(),
@@ -488,7 +490,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73829"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
-    public void testRalphDOBScreenStandardDateFormat () {
+    public void testRalphDOBScreenStandardDateFormat() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -507,8 +509,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
         passwordPage.getTextEntryField().click();
         Assert.assertTrue(passwordPage.getDynamicAccessibilityId(
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText())).isPresent(),
+                        getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText())).isPresent(),
                 "DOB format is not standard for the jurisdiction");
     }
 
@@ -545,11 +547,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(), "Header profile is not present");
         sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Profile Description is not present");
         sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
-        sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(),"Profile icon is not displayed");
-        sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"Pencil icon is not displayed");
+        sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(), "Profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating field is not present");
-        sa.assertTrue(updateProfilePage.isLearnMoreLinkTextPresent(),"Learn More link is not present3");
+        sa.assertTrue(updateProfilePage.isLearnMoreLinkTextPresent(), "Learn More link is not present3");
         sa.assertTrue(updateProfilePage.getSaveBtn().isPresent(), "Save button is not present");
 
         // Enter DOB and select a different rating to save
@@ -629,14 +631,15 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .language(language)
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
     }
 
     private String getRecommendedContentRating(String locale, int age, int[] ageValues) {
         DisneyCountryData disneyCountryData = new DisneyCountryData();
-        List<String> ratingValues = (List<String>)disneyCountryData.searchAndReturnCountryData(locale, CODE, RATING_VALUES);
+        List<String> ratingValues = (List<String>) disneyCountryData.searchAndReturnCountryData(locale, CODE, RATING_VALUES);
         LOGGER.info("Ratings values {}", ratingValues);
-        if(!ratingValues.isEmpty()) {
+        if (!ratingValues.isEmpty()) {
             for (int i = 0; i < ageValues.length; i++) {
                 if (age <= ageValues[i]) {
                     return ratingValues.get(i);
@@ -647,6 +650,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
             throw new NullPointerException("Ratings list not found for country specified");
         }
     }
+
     private void setupForRalph(String... DOB) {
 
         getDefaultCreateUnifiedAccountRequest()
@@ -663,19 +667,19 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         // 1. certain age or
         // 2. set to null - to trigger the data collection flow
         // 3. Don't add the DOB param in test to set the default DOB from the account api
-        if (null!= DOB && DOB.length > 0) {
+        if (null != DOB && DOB.length > 0) {
             getDefaultCreateUnifiedAccountRequest().setDateOfBirth(DOB[0]);
-        } else if(DOB.length == 0) {
+        } else if (DOB.length == 0) {
             getDefaultCreateUnifiedAccountRequest().setDateOfBirth(null);
         }
         setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
         handleAlert();
     }
 
-    private void validateRatingValuesInDropdown(String locale){
+    private void validateRatingValuesInDropdown(String locale) {
         DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyCountryData disneyCountryData = new DisneyCountryData();
-        List<String> ratingValues = (List<String>)disneyCountryData.searchAndReturnCountryData(locale, CODE, RATING_VALUES);
+        List<String> ratingValues = (List<String>) disneyCountryData.searchAndReturnCountryData(locale, CODE, RATING_VALUES);
         for (String item : ratingValues) {
             // Some rating values from country yaml contain + symbol instead of comma
             if (item.contains("+")) {
@@ -687,9 +691,9 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void removeJarvisApp(){
+    public void removeJarvisApp() {
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
-        if(isInstalled){
+        if (isInstalled) {
             removeJarvis();
         }
     }

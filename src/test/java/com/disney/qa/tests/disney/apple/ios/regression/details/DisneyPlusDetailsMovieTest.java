@@ -481,7 +481,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
@@ -505,7 +506,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
 
@@ -822,7 +824,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
-
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
         searchPage.getDisplayedTitles().get(0).click();
@@ -888,7 +889,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
-
 
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);

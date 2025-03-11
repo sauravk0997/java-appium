@@ -344,7 +344,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -769,7 +770,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
 
         //Add Max number of profile through API
-        for(int i=0;i<Max;i++) {
+        for (int i = 0; i < Max; i++) {
             getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                     .unifiedAccount(getUnifiedAccount())
                     .profileName(KIDS_PROFILE + i)
@@ -777,7 +778,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                     .language(getLocalizationUtils().getUserLanguage())
                     .avatarId(BABY_YODA)
                     .kidsModeEnabled(true)
-                    .isStarOnboarded(true).build());
+                    .isStarOnboarded(true)
+                    .build());
         }
 
         ednaDOBCollectionPageBase.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -842,7 +844,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -878,7 +881,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount());
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
@@ -937,7 +941,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         //Default setting is autoplay off
         setAppToHomeScreen(getUnifiedAccount());
@@ -969,7 +974,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();

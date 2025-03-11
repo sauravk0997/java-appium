@@ -406,6 +406,9 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         //set lower rating
         List<String> ratingSystemValues = getUnifiedAccount().getProfile(DEFAULT_PROFILE).getAttributes()
                 .getParentalControls().getMaturityRating().getRatingSystemValues();
+        if(ratingSystemValues.isEmpty()) {
+            throw new IllegalArgumentException("Unable to get the rating system values for default profile");
+        }
 
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 getLocalizationUtils().getRatingSystem(),

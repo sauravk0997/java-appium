@@ -108,7 +108,8 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         //wait for 15 min to expire the current action grant
         addProfile.keepSessionAlive(15, addProfile.getHomeNav());

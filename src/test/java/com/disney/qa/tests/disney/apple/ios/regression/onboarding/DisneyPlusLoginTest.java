@@ -116,7 +116,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
 
         welcomeScreen.clickLogInButton();
         login(getUnifiedAccount());
-        handleGenericPopup(5,1);
+        handleGenericPopup(5, 1);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
@@ -133,12 +133,12 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true).build());
-
+                .isStarOnboarded(true)
+                .build());
 
         welcomeScreen.clickLogInButton();
         login(getUnifiedAccount());
-        handleGenericPopup(5,1);
+        handleGenericPopup(5, 1);
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
     }
 
@@ -191,7 +191,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67234"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void testEmptyPassword() {
-        DisneyPlusLoginIOSPageBase loginPage =  initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
 
@@ -256,6 +256,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         String profile3 = "profile 3";
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        SoftAssert softAssert = new SoftAssert();
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -264,7 +265,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -273,10 +275,9 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
-
-        SoftAssert softAssert = new SoftAssert();
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
         login(getUnifiedAccount());
         pause(5);
@@ -397,7 +398,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         sa.assertTrue(loginPage.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
         sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
         sa.assertTrue(loginPage.getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
-                stepperDict, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
+                        stepperDict, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
                 "'STEP 3 OF 5' should be displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "DOB Sub Copy not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label not displayed");
@@ -439,7 +440,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase loginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordIOSPageBase = initPage(DisneyPlusPasswordIOSPageBase.class);
 
-        String learnMoreHeader= getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        String learnMoreHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_LEARN_MORE_HEADER.getText());
         String learnMoreBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,

@@ -33,7 +33,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getCreateUnifiedAccountRequest(
+                        DISNEY_PLUS_STANDARD,
                         JP,
                         getLocalizationUtils().getUserLanguage())));
 
@@ -91,7 +92,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getCreateUnifiedAccountRequest(
+                        DISNEY_PLUS_STANDARD,
                         JP,
                         getLocalizationUtils().getUserLanguage())));
 
@@ -127,7 +129,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getCreateUnifiedAccountRequest(
+                        DISNEY_PLUS_STANDARD,
                         JP,
                         getLocalizationUtils().getUserLanguage())));
 
@@ -138,7 +141,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -168,7 +172,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getCreateUnifiedAccountRequest(
+                        DISNEY_PLUS_STANDARD,
                         JP,
                         getLocalizationUtils().getUserLanguage())));
         initialSetup();

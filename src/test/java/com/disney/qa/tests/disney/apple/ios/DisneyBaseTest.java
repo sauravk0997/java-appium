@@ -221,7 +221,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert();
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
         login(account);
-        pause(2);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
         if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
             initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
@@ -256,7 +255,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         if (disneyPlusWelcomeScreenIOSPageBase.isOpened()) {
             loginToHome(account, profileName);
-
         } else if (!homePage.isOpened()) {
             restart();
             handleAlert();
@@ -270,9 +268,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setAppToHomeScreen(UnifiedAccount account, String... profileName) {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         if (welcomePage.isOpened()) {
+            LOGGER.info("On Welcome page, begin login");
             loginToHome(account, profileName);
-
         } else {
+            LOGGER.info("Welcome page is not opened, restarting the app");
             restart();
             handleAlert();
             loginToHome(account, profileName);

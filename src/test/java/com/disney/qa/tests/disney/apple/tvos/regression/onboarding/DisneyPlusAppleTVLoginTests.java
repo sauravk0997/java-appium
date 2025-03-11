@@ -418,7 +418,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         logInWithoutHomeCheck(getUnifiedAccount());
         Assert.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
@@ -436,7 +437,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage =
                 new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
@@ -464,7 +466,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true).build());
+                .isStarOnboarded(true)
+                .build());
 
         String whoIsWatchingTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, CHOOSE_PROFILE_TITLE.getText());
