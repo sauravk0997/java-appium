@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
+    protected static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
@@ -38,8 +39,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "ucp.durationLabel")
     protected ExtendedWebElement timeRemainingLabel;
-    @FindBy(name = "serviceAttributionLabel")
-    protected ExtendedWebElement serviceAttributionLabel;
     @FindBy(name = "titleLabel")
     protected ExtendedWebElement titleLabel;
     @ExtendedFindBy(accessibilityId = "ucp.currentTimeLabel")
@@ -183,11 +182,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getServiceAttributionLabel(){
-        return serviceAttributionLabel;
+        return getStaticTextByName(SERVICE_ATTRIBUTION);
     }
 
     public boolean isServiceAttributionLabelVisible() {
-        return (fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+        return (fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
                 "Service attribution didn't appear on video player")
                 .until(it -> getServiceAttributionLabel().isPresent(ONE_SEC_TIMEOUT)));
     }
