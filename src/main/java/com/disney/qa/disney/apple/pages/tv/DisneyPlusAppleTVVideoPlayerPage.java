@@ -68,7 +68,8 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
     }
 
-    public int getRemainingDurationTime() {
+    @Override
+    public int getRemainingTimeThreeIntegers() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         String[] remainingTimeParts = videoPlayer.getTimeRemainingLabel().getText().replace("-", "").split(":");
 

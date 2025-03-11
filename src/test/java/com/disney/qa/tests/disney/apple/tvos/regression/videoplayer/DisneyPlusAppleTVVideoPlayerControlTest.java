@@ -39,13 +39,13 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
 
         // Pause video with remote button
         home.clickPlay();
-        int remainingTimeWhilePaused = videoPlayerTVPage.getRemainingDurationTime();
+        int remainingTimeWhilePaused = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeBeforePause {}", remainingTimeWhilePaused);
         home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
 
         // Make duration appear and get time that should match the previous time
         commonPage.clickDown(1);
-        int remainingTime = videoPlayerTVPage.getRemainingDurationTime();
+        int remainingTime = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterPause {}", remainingTime);
         Assert.assertEquals(remainingTime, remainingTimeWhilePaused, "Video was not paused");
 
@@ -53,7 +53,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         home.clickPlay();
         home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
         commonPage.clickDown(1);
-        int remainingTimeAfterPlay = videoPlayerTVPage.getRemainingDurationTime();
+        int remainingTimeAfterPlay = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterPlay {}", remainingTimeAfterPlay);
         Assert.assertTrue(remainingTimeWhilePaused > remainingTimeAfterPlay, "Video was not playing");
     }
