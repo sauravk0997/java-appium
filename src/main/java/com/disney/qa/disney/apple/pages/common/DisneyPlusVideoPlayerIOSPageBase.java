@@ -24,7 +24,6 @@ import java.util.regex.Pattern;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    protected static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
@@ -39,6 +38,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "ucp.durationLabel")
     protected ExtendedWebElement timeRemainingLabel;
+    @ExtendedFindBy(accessibilityId = "serviceAttributionLabel")
+    protected ExtendedWebElement serviceAttributionLabel;
     @FindBy(name = "titleLabel")
     protected ExtendedWebElement titleLabel;
     @ExtendedFindBy(accessibilityId = "ucp.currentTimeLabel")
@@ -182,7 +183,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getServiceAttributionLabel(){
-        return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
+        return serviceAttributionLabel;
     }
 
     public boolean isServiceAttributionLabelVisible() {
