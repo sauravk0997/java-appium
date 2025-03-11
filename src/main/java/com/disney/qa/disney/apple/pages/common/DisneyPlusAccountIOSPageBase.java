@@ -687,13 +687,11 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean waitForManageMyDisneyAccountOverlayToOpen(UnifiedAccount account) {
         try {
-            fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-                    "Manage MyDisney Account Overlay did not open")
+            return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Time out exception occurred")
                     .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
         } catch (TimeoutException e) {
             return false;
         }
-        return true;
     }
 
     public boolean isSubscriptionCellPresent() {
