@@ -101,9 +101,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     //Common error messages
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
 
-    //Offers
-    public static final String DISNEY_BASIC_PLAN = "Disney+ Basic";
-
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
