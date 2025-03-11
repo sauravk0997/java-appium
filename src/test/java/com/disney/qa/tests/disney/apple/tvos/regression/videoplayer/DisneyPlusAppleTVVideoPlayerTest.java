@@ -35,12 +35,12 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isTitleLabelDisplayed(),
-                "Video player title wasn't visible when video started");
-        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
-                "service attribution wasn't visible when video started");
         sa.assertFalse(videoPlayer.getSeekbar().isPresent(ONE_SEC_TIMEOUT),
                 "player controls were displayed when video started");
+        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
+                "service attribution wasn't visible when video started");
+        sa.assertTrue(videoPlayer.isTitleLabelDisplayed(),
+                "Video player title wasn't visible when video started");
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(),
                 "service attribution wasn't visible along with controls");
