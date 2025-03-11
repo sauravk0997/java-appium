@@ -21,11 +21,10 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -518,9 +517,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        //Handle ATT popup after OneTrust popup
+        handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
 
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
 
+        Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
         // Validate Update Profile UI
         sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(), "Header profile is not present");
         sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Profile Description is not present");
