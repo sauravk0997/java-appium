@@ -27,7 +27,6 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
     @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifyVideoPlayerControls() {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusAppleTVVideoPlayerPage videoPlayerTVPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
 
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
@@ -35,14 +34,14 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         logIn(getAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayerTVPage.waitForVideoToStart();
 
         // Pause video with remote button
         home.clickPlay();
         int remainingTimeWhilePaused = videoPlayerTVPage.getRemainingDurationTime();
         LOGGER.info("remainingTimeBeforePause {}", remainingTimeWhilePaused);
-        home.waitForElementToDisappear(videoPlayer.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
+        home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
 
         // Make duration appear and get time that should match the previous time
         commonPage.clickDown(1);
@@ -52,7 +51,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
 
         // Play video with remote button
         home.clickPlay();
-        home.waitForElementToDisappear(videoPlayer.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
+        home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
         commonPage.clickDown(1);
         int remainingTimeAfterPlay = videoPlayerTVPage.getRemainingDurationTime();
         LOGGER.info("remainingTimeAfterPlay {}", remainingTimeAfterPlay);
