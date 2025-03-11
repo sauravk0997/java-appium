@@ -21,6 +21,9 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
     @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
     private ExtendedWebElement genderFormButtonCellIdentifier;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$visible == 1$]")
+    private ExtendedWebElement contentRatingContainer;
+
     private String updateProfileTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_PROFILE_TITLE.getText());
     private String completeProfileDescription = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_PROFILE_DESCRIPTION.getText());
 
@@ -55,5 +58,9 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
         return getStaticTextViewValueContains(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 LEARN_MORE_CONTENT_RATINGS_LINK_1_TEXT.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getContentRatingContainer() {
+        return contentRatingContainer;
     }
 }
