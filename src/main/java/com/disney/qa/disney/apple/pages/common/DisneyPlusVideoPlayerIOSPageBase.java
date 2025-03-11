@@ -338,6 +338,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isTitleLabelDisplayed() {
+        LOGGER.info("Page Source" + getDriver().getPageSource());
         return titleLabel.isPresent();
     }
 
