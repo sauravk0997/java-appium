@@ -19,7 +19,6 @@ import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
-
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
