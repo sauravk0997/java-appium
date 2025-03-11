@@ -61,6 +61,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         return titleLabel.getText();
     }
 
+    @Override
     public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         LOGGER.info("Activating video player controls...");
