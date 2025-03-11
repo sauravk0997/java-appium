@@ -552,20 +552,22 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77699"})
     @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUnavailableContentPopUpForESPNContentJuniorProfile() {
+        String disneyTrioPremiumMonthly = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(getAccount());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
-                .disneyAccount(getAccount())
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(disneyTrioPremiumMonthly)));
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
                 .language(getAccount().getProfileLang())
                 .avatarId(null)
                 .dateOfBirth(U18_DOB)
                 .build());
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
-                .disneyAccount(getAccount())
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
                 .profileName(JUNIOR_PROFILE)
                 .language(getAccount().getProfileLang())
                 .avatarId(null)
@@ -573,7 +575,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .dateOfBirth(KIDS_DOB)
                 .build());
 
-        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
+        loginToHome(getUnifiedAccount(), SECONDARY_PROFILE);
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
         Assert.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
