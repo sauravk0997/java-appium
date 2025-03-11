@@ -62,6 +62,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     public void verifyServiceAttributionOnPlayBackFromContinueWatching() {
         String continueWatchingCollection =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        int maxCount = 20;
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
@@ -80,7 +81,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        videoPlayer.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, 5);
+        videoPlayer.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
         videoPlayer.clickSelect();
         detailsPage.clickContinueButton();
         videoPlayer.waitForVideoToStart();
