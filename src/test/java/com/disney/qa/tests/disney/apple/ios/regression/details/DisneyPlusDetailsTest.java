@@ -863,20 +863,20 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
                 .disneyAccount(getAccount())
-                .profileName(TV_Y7)
+                .profileName(SECONDARY_PROFILE)
                 .dateOfBirth(KIDS_DOB)
                 .language(getAccount().getProfileLang())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
-        Profile profile = getAccount().getProfile(TV_Y7);
+        Profile secondaryProfile = getAccount().getProfile(SECONDARY_PROFILE);
         getAccountApi().editContentRatingProfileSetting(getAccount(),
-                getAccountApi().getProfiles(getAccount()).get(1).getProfileId(),
-                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
-                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
+                secondaryProfile.getProfileId(),
+                secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
+                secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
 
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(1).getProfileName());
+        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
 
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
