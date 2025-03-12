@@ -191,9 +191,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isServiceAttributionLabelVisible() {
-        return (fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
-                "Service attribution didn't appear on video player")
-                .until(it -> getServiceAttributionLabel().isPresent(ONE_SEC_TIMEOUT)));
+        try {
+            return fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                    "Service attribution didn't appear on video player")
+                    .until(it -> getServiceAttributionLabel().isPresent(ONE_SEC_TIMEOUT));
+        } catch (Exception e) {
+            LOGGER.info("Service Attribution Label not found " + e.getMessage());
+            return false;
+        }
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {

@@ -70,12 +70,12 @@
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.deeplinks.DisneyPlusAppleTVDeepLinksTests"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus tvOS Video Player" parallel="methods">
+    <test verbose="1" name="DisneyPlus tvOS Video Player Control" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.videoplayer.DisneyPlusAppleTVVideoPlayerControlTest"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus tvOS VideoPlayer" parallel="methods">
+    <test verbose="1" name="DisneyPlus tvOS Video Player" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.videoplayer.DisneyPlusAppleTVVideoPlayerTest"/>
         </classes>
