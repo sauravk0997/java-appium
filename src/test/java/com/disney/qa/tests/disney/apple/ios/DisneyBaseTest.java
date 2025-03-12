@@ -234,23 +234,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     /**
      * Logs into the app by entering the provided account's credentials and username
      *
-     * @param entitledUser - UnifiedAccount generated for the test run
-     * @param profileName  - Profile name to select after login,this is an optional param,
-     *                     if you don't need to select a profile in your test, leave this param blank
-     */
-    public void loginToHome(UnifiedAccount entitledUser, String... profileName) {
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        login(entitledUser);
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
-        if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
-            initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
-        }
-    }
-
-    /**
-     * Logs into the app by entering the provided account's credentials and username
-     *
      * @param account - UnifiedAccount generated for the test run
      */
     public void login(UnifiedAccount account) {
