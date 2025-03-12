@@ -84,6 +84,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         clickRight(3, 1, 1);
         Assert.assertTrue(videoPlayerTVPage.getThumbnailView().isPresent(), "Thumbnail preview did not appear");
         int positionOfThumbnail = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        commonPage.clickDown(1);
         home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
 
         // Make duration appear and get time that should be lower than the previous time
