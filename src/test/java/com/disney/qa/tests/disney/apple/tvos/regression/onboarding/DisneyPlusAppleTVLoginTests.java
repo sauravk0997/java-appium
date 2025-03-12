@@ -168,7 +168,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(loginPage.isOpened(), EMAIL_INPUT_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
         Assert.assertTrue(loginPage.isEmailFieldFocused(), "Email input is not focused by default");
         Assert.assertTrue(loginPage.getStaticTextByLabel(unknownEmail).isPresent(),
-                "Entered Email is not displayed");
+                "Previously entered email is not displayed in email text field");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66469"})
@@ -399,14 +399,10 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         selectAppleUpdateLaterAndDismissAppTracking();
         Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
-
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(getUnifiedAccount().getEmail());
         oneTimePasscodePage.clickLoginWithPassword();
