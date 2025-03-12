@@ -196,7 +196,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                     "Service attribution didn't appear on video player")
                     .until(it -> getServiceAttributionLabel().isPresent(ONE_SEC_TIMEOUT));
         } catch (Exception e) {
-            LOGGER.info("Service Attribution Label not found " + e.getMessage());
+            LOGGER.info(String.format("Service Attribution Label not found - %s", e.getMessage()));
             return false;
         }
     }
