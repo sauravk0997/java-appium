@@ -315,10 +315,8 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         //NHL collection
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
 
-        collectionPage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.REPLAYS_COLLECTION, 5);
-        espnPage.getReplayLabel().click();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
