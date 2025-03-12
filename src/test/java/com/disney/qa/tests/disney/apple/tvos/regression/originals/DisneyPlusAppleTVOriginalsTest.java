@@ -23,12 +23,11 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
     public void originalsAppearance() {
         int originalTitleIndex = 3;
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVOriginalsPage originalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.
                 globalNavigationMenu.ORIGINALS.getText());
