@@ -1490,8 +1490,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
         while (count > 0) {
             moveDown(1, 1);
-            if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) &&
-                    isFocused(getFirstCellFromCollection(collectionName))) {
+            if (firstCellFromCollection.isPresent(THREE_SEC_TIMEOUT) &&
+                    isFocused(firstCellFromCollection)) {
                 LOGGER.info("Reached desired collection");
                 return;
             }

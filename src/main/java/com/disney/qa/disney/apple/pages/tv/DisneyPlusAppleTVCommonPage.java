@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.invoke.MethodHandles;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusApplePageBase.class)
@@ -36,14 +37,30 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
     public void pressButtonForDuration(RemoteControlKeyword keyword, int duration) {
         ((JavascriptExecutor) getDriver()).executeScript("mobile: pressButton",
                 ImmutableMap.of("name", keyword.getControlKeyword(), "durationSeconds", duration));
+        String controlKeywordName = keyword.name();
+        LOGGER.info("TV OS RemoteController '{}' clicked", controlKeywordName);
     }
 
     public void clickRight(int duration) {
         pressButtonForDuration(RemoteControlKeyword.RIGHT, duration);
     }
 
+    public void clickRight(int times, int timeout, int duration) {
+        IntStream.range(0, times).forEach(i -> {
+            clickRight(duration);
+            pause(timeout);
+        });
+    }
+
     public void clickLeft(int duration) {
         pressButtonForDuration(RemoteControlKeyword.LEFT, duration);
+    }
+
+    public void clickLeft(int times, int timeout, int duration) {
+        IntStream.range(0, times).forEach(i -> {
+            clickLeft(duration);
+            pause(timeout);
+        });
     }
 
     public void clickUp(int duration) {
