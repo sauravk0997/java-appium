@@ -4,7 +4,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 
-import static com.disney.qa.common.constant.IConstantHelper.DISNEY_PLUS_PREMIUM;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.KR;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 

@@ -1,14 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.DISNEY_PREMIUM_MONTHLY_SINGAPORE;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PREMIUM_MONTHLY_SINGAPORE;
 import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 
 import com.disney.util.TestGroup;

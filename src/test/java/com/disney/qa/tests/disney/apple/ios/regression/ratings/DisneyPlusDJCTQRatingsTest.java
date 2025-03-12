@@ -7,8 +7,8 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.BR;
-import static com.disney.qa.common.constant.IConstantHelper.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
 public class DisneyPlusDJCTQRatingsTest extends DisneyPlusRatingsBase {

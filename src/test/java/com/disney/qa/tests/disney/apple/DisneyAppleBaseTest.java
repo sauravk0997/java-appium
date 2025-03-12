@@ -20,6 +20,7 @@ import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.api.watchlist.*;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
@@ -137,7 +138,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     private final ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = ThreadLocal.withInitial(() ->
             getUnifiedAccountApi().createAccount(
-                    getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM.getValue())));
+                    getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
 
     private static final ThreadLocal<DisneyAccountApi> ACCOUNT_API = ThreadLocal.withInitial(() -> {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
@@ -443,15 +444,15 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return unifiedOfferRequest;
     }
 
-    public UnifiedOffer getUnifiedOffer(String planName) {
-        return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName));
+    public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName) {
+        return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName.getValue()));
     }
 
     public CreateUnifiedAccountRequest getDefaultCreateUnifiedAccountRequest() {
         return CREATE_UNIFIED_ACCOUNT_REQUEST.get();
     }
 
-    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName) {
+    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan planName) {
         return getDefaultCreateUnifiedAccountRequest()
                 .setPartner(Partner.DISNEY)
                 .addEntitlement(UnifiedEntitlement.builder().unifiedOffer(getUnifiedOffer(planName)).subVersion(UNIFIED_ORDER).build())
@@ -459,7 +460,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .setLanguage(getLocalizationUtils().getUserLanguage());
     }
 
-    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName,
+    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan planName,
                                                                       String locale,
                                                                       String language,
                                                                       boolean... isAgeVerified) {

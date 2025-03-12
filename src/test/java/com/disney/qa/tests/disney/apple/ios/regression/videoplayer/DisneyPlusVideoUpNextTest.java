@@ -26,6 +26,7 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 import java.util.*;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {

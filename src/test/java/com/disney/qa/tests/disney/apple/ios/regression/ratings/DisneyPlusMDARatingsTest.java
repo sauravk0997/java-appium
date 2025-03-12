@@ -9,7 +9,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.IConstantHelper.DISNEY_PREMIUM_MONTHLY_SINGAPORE;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PREMIUM_MONTHLY_SINGAPORE;
 import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.G;
 import static com.disney.qa.common.constant.RatingConstant.Rating.M18;

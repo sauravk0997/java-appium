@@ -3,7 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.*;
-import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -33,7 +33,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
 
-    public void ratingsSetup(String planName, String locale) {
+    public void ratingsSetup(DisneyUnifiedOfferPlan planName, String locale) {
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
@@ -43,7 +43,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getUnifiedAccount());
     }
 
-    public void ratingsSetup(String planName, String ratingValue, String locale, boolean... ageVerified) {
+    public void ratingsSetup(DisneyUnifiedOfferPlan planName, String ratingValue, String locale, boolean... ageVerified) {
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}",
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
@@ -73,7 +73,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         }
     }
 
-    public void ratingSetupWithPINForOTPAccount(String planName, String locale) {
+    public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
                 planName,
@@ -95,7 +95,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getUnifiedAccount());
     }
 
-    public void ratingsSetupWithPINNew(String planName, String locale) {
+    public void ratingsSetupWithPINNew(DisneyUnifiedOfferPlan planName, String locale) {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
                 planName,
                 locale,
@@ -115,7 +115,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getUnifiedAccount());
     }
 
-    public void ratingsSetupForOTPAccount(String planName, String locale) {
+    public void ratingsSetupForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
                 planName,
                 locale,
