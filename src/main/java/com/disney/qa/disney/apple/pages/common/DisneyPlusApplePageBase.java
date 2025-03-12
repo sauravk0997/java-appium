@@ -1557,7 +1557,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         pause(seconds);
     }
 
-    public void bringAppToForeground(String bundleId) {
+    public void foregroundApp(String bundleId) {
         activateApp(bundleId);
     }
 }
