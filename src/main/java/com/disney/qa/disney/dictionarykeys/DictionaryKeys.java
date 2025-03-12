@@ -121,6 +121,7 @@ public enum DictionaryKeys {
     CHECK_EMAIL_COPY("check_email_copy"),
     CHECK_EMAIL_TITLE("check_email_title"),
     CHOOSE_AVATAR_TITLE("chooseprofileicon_title"),
+    CHOOSE_CONTENT_RATING("choose_content_rating"),
     CHOOSE_PROFILE_ICON_SKIP("chooseprofileicon_skip"),
     CHOOSE_PROFILE_TITLE("choose_profile_title"),
     COMMUNICATION_SETTINGS("communication_settings"),
@@ -623,8 +624,7 @@ public enum DictionaryKeys {
     WIFI_REQUIRED_TITLE("wifi_required_title"),
     WIFI_SAVE_DATA("settings_datausage_tier3_header"),
     WIFI_SAVE_DATA_BODY("settings_datausage_tier3_body"),
-    WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message"),
-    CHOOSE_CONTENT_RATING("choose_content_rating");
+    WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message");
 
     private final String dictionaryKey;
 
