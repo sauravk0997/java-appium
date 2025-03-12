@@ -2,7 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.disney.util.disney.DisneyGlobalUtils;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
