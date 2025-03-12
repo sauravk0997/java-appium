@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.disney.util.disney.DisneyGlobalUtils;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -196,7 +197,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                     "Service attribution didn't appear on video player")
                     .until(it -> getServiceAttributionLabel().isPresent(ONE_SEC_TIMEOUT));
         } catch (Exception e) {
-            LOGGER.info("Service Attribution Label not found " + e.getMessage());
+            LOGGER.info(String.format("Service Attribution Label not found - %s", e.getMessage()));
             return false;
         }
     }
