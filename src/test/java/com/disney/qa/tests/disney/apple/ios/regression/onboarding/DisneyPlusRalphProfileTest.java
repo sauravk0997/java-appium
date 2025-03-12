@@ -535,10 +535,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                         Map.of("content_rating", getRecommendedContentRating(CA, age, AGE_VALUES_CANADA)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
 
+        setAppToHomeScreen(getUnifiedAccount());
+
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
-        setAppToHomeScreen(getUnifiedAccount());
         //Handle ATT popup after OneTrust popup
         handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
 
