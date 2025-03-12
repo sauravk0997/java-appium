@@ -39,7 +39,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         installApplication(appPreviousFCVersion);
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         moreMenu.clickMoreTab();
         // Assert that version installed it is the previous FC Version
@@ -60,7 +60,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         Assert.assertEquals(currentBuildVersion, moreMenu.getAppVersion(), "Version is not the current expected");
         // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
         editProfile.toggleAutoplayButton("OFF");
         Assert.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not present");
         editProfile.waitForUpdatedToastToDisappear();
@@ -115,7 +115,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         AppStorePageBase appStorePageBase = initPage(AppStorePageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
 
         enableHardForceUpdateInJarvis();
