@@ -623,7 +623,8 @@ public enum DictionaryKeys {
     WIFI_REQUIRED_TITLE("wifi_required_title"),
     WIFI_SAVE_DATA("settings_datausage_tier3_header"),
     WIFI_SAVE_DATA_BODY("settings_datausage_tier3_body"),
-    WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message");
+    WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message"),
+    CHOOSE_CONTENT_RATING("choose_content_rating");
 
     private final String dictionaryKey;
 
