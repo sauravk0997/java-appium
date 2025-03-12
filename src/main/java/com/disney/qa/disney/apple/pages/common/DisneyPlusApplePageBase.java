@@ -3,7 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
@@ -877,6 +877,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void enterPassword(DisneyAccount account) {
+        passwordEntryField.type(account.getUserPass());
+        clickPrimaryButton();
+    }
+
+    public void enterPassword(UnifiedAccount account) {
         passwordEntryField.type(account.getUserPass());
         clickPrimaryButton();
     }
