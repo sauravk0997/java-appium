@@ -573,7 +573,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74027"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
     public void testCMPBannerUI() {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
                 initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
@@ -582,7 +582,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), GERMANY);
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), CANADA);
 
         setAppToHomeScreen(getUnifiedAccount());
 
