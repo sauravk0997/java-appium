@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.config.*;
+import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
@@ -384,7 +385,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
         //Background For X Amount of Time and Foreground
         applePageBase.backgroundAppForSeconds(10);
-        applePageBase.bringAppToForeground();
+        applePageBase.bringAppToForeground(sessionBundles.get(DISNEY));
 
         //After backgrounding the app, video player should exit
         Assert.assertFalse(videoPlayer.isOpened(), "Video player did not exit after backgrounding the app");
