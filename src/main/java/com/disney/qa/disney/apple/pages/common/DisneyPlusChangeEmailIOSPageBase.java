@@ -91,6 +91,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         return myDisneyLogo;
     }
 
+    @Override
     public ExtendedWebElement getCancelButton() {
         return getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
