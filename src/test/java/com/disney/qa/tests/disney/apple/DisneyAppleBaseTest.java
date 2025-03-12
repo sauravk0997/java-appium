@@ -54,6 +54,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
 
@@ -135,7 +136,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     });
 
     private final ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = ThreadLocal.withInitial(() ->
-            getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
+            getUnifiedAccountApi().createAccount(
+                    getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM.getValue())));
 
     private static final ThreadLocal<DisneyAccountApi> ACCOUNT_API = ThreadLocal.withInitial(() -> {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
