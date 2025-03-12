@@ -223,6 +223,7 @@ public enum DictionaryKeys {
     DOWNLOAD_SERIES_SEASON("details_download_season"),
     DOWNLOAD_STOP_DETAILS_PAGE("details_download_stop"),
     DOWNLOAD_STOP("download_stop"),
+    DOWNLOAD_TITLE_LICENSE_EXPIRED("download_title_license_expired"),
     DOWNLOAD_WIFI_ONLY("wifionly_label"),
     EDIT("edit"),
     EDIT_PROFILE_DONE_BUTTON("done_editing_profile_title"),

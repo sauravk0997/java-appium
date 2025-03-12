@@ -7,9 +7,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.disney.jarvisutils.pages.apple.JarvisAppleTV;
-import com.disney.jarvisutils.pages.apple.JarvisHandset;
-import com.disney.jarvisutils.pages.apple.JarvisTablet;
 import com.disney.qa.api.account.*;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.client.requests.*;
@@ -85,7 +82,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String MPAA = "MPAA";
 
     private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(EmailApi::new);
-    ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
     ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
@@ -137,6 +133,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
         return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
     });
+
+    private final ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = ThreadLocal.withInitial(() ->
+            getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
 
     private static final ThreadLocal<DisneyAccountApi> ACCOUNT_API = ThreadLocal.withInitial(() -> {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
@@ -311,7 +310,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
-
     @BeforeMethod(onlyForGroups = TestGroup.PROXY, alwaysRun = true)
     public final void initProxy() {
         //todo enable when grid will be updated and devices will use proxy
@@ -446,6 +444,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public UnifiedOffer getUnifiedOffer(String planName) {
         return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName));
     }
+
     public CreateUnifiedAccountRequest getDefaultCreateUnifiedAccountRequest() {
         return CREATE_UNIFIED_ACCOUNT_REQUEST.get();
     }
@@ -456,6 +455,16 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .addEntitlement(UnifiedEntitlement.builder().unifiedOffer(getUnifiedOffer(planName)).subVersion(UNIFIED_ORDER).build())
                 .setCountry(getLocalizationUtils().getLocale())
                 .setLanguage(getLocalizationUtils().getUserLanguage());
+    }
+
+    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName, String locale, String language) {
+        return getDefaultCreateUnifiedAccountRequest()
+                .setPartner(Partner.DISNEY)
+                .addEntitlement(UnifiedEntitlement.builder()
+                        .unifiedOffer(getUnifiedOffer(planName))
+                        .subVersion(UNIFIED_ORDER).build())
+                .setCountry(locale)
+                .setLanguage(language);
     }
 
     public static DisneySearchApi getSearchApi() {
