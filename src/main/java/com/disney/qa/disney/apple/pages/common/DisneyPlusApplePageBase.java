@@ -1473,16 +1473,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void moveDownUntilCollectionContentIsFocused(String collectionName, int count) {
         LOGGER.info("Moving down until desired collection content is focused");
         ExtendedWebElement firstCellFromCollection = getFirstCellFromCollection(collectionName);
-        LOGGER.info("Collection ID:- " + getFirstCellFromCollection(collectionName).getElement());
         if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) && isFocused(firstCellFromCollection)) {
             LOGGER.info("Desired collection content was already focused");
             return;
         }
         while (count > 0) {
             moveDown(1, 1);
-            LOGGER.info("Collection Present:- " + firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT));
-            if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) &&
-                    isFocused(getFirstCellFromCollection(collectionName))) {
+            if (firstCellFromCollection.isPresent(THREE_SEC_TIMEOUT) &&
+                    isFocused(firstCellFromCollection)) {
                 LOGGER.info("Reached desired collection");
                 return;
             }
