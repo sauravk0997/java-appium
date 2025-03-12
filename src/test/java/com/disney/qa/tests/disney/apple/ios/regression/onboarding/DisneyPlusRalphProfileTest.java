@@ -6,24 +6,21 @@ import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneyCountryData;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -524,7 +521,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
-        String darthMaulAvatarId = R.TESTDATA.get("disney_darth_maul_avatar_id");
         String ratingByDefault = "TV-14";
         String ratingToChoose = "TV-Y7";
         int age = 59;
@@ -536,18 +532,23 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                         Map.of("content_rating", getRecommendedContentRating(CA, age, AGE_VALUES_CANADA)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
 
+        setAppToHomeScreen(getUnifiedAccount());
+
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
-        setAppToHomeScreen(getUnifiedAccount());
+        //Handle ATT popup after OneTrust popup
+        handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
 
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
 
+        Assert.assertTrue(updateProfilePage.isOpened(), "Update Profile page is not displayed");
         // Validate Update Profile UI
         sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(), "Header profile is not present");
         sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Profile Description is not present");
         sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
-        sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(), "Profile icon is not displayed");
+        sa.assertTrue(editProfile.getDynamicCellByName(BABY_YODA).isPresent(), "Profile icon is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating field is not present");
@@ -558,6 +559,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         editProfile.getStaticTextByLabelContains(ratingByDefault).click();
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating not displayed");
+        swipe(contentRating.getStaticTextByLabelContains(recommendedContentRatingByAge),
+                updateProfilePage.getContentRatingContainer(), Direction.UP, 2);
         sa.assertTrue(contentRating.getStaticTextByLabelContains(recommendedContentRatingByAge).isPresent(),
                 "Recommended rating by age is not present");
 
