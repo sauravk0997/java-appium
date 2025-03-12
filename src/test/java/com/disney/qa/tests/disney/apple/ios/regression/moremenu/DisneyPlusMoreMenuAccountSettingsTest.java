@@ -414,7 +414,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         changeEmailPage.submitNewEmailAddress("invalid");
 
-        sa.assertTrue(changeEmailPage.isAttributeValidationErrorMessagePresent(),
+        sa.assertTrue(changeEmailPage.isChangeEmailFormatErrorDisplayed(),
                 "'Invalid Email' error was not displayed");
 
         sa.assertAll();
