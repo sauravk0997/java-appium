@@ -24,7 +24,8 @@ import static com.disney.qa.common.constant.IConstantHelper.VIDEO_PLAYER_NOT_DIS
 
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-
+    private static final String VIDEO_NOT_PAUSED = "Video was not paused";
+    private static final String VIDEO_NOT_PLAYING = "Video was not playing";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67528"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, US})
@@ -49,7 +50,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         commonPage.clickDown(1);
         int remainingTime = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterPause {}", remainingTime);
-        Assert.assertEquals(remainingTime, remainingTimeWhilePaused, "Video was not paused");
+        Assert.assertEquals(remainingTime, remainingTimeWhilePaused, VIDEO_NOT_PAUSED);
 
         // Play video with remote button
         home.clickPlay();
@@ -57,7 +58,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         commonPage.clickDown(1);
         int remainingTimeAfterPlay = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterPlay {}", remainingTimeAfterPlay);
-        Assert.assertTrue(remainingTimeWhilePaused > remainingTimeAfterPlay, "Video was not playing");
+        Assert.assertTrue(remainingTimeWhilePaused > remainingTimeAfterPlay, VIDEO_NOT_PLAYING);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67538"})
@@ -124,12 +125,14 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         home.clickPlay();
         home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT);
 
-        // Click fast-forward on the remote and get the thumbnail position in time after the assertion
+        // Click fast-forward on the remote and get the thumbnail position in time
         commonPage.clickRight(3, 1, 1);
         Assert.assertTrue(videoPlayerTVPage.getThumbnailView().isPresent(), "Thumbnail preview did not appear");
         int positionOfThumbnail = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        LOGGER.info("positionOfThumbnail {}", positionOfThumbnail);
         commonPage.clickUp(2);
-        // Make duration appear and get time that should be lower than the previous time
+
+        // Make duration appear and get time again
         commonPage.clickDown(1);
         int remainingTime = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterPause {}", remainingTime);
@@ -138,18 +141,18 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         commonPage.clickDown(1);
         int timeAfterFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("timeAfterFF {}", timeAfterFF);
-        Assert.assertEquals(remainingTime, timeAfterFF, "Video was not paused");
+        Assert.assertEquals(remainingTime, timeAfterFF, VIDEO_NOT_PAUSED);
 
-        // Get time before play and compare with thumbnail time appearance
+        // Get time before play and compare with thumbnail position
         commonPage.clickDown(1);
         int timeBeforeTapPlay = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         Assert.assertEquals(positionOfThumbnail, timeBeforeTapPlay, "Play will not start at the thumbnail position");
-        // Play video with remote button
+        // Play video with remote button and verify it started to play
         home.clickPlay();
         home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
         commonPage.clickDown(1);
         int remainingTimeAfterPlay = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterPlay {}", remainingTimeAfterPlay);
-        Assert.assertTrue(positionOfThumbnail > remainingTimeAfterPlay, "Video was not playing");
+        Assert.assertTrue(positionOfThumbnail > remainingTimeAfterPlay, VIDEO_NOT_PLAYING);
     }
 }
