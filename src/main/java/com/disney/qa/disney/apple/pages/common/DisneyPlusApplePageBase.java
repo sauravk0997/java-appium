@@ -1534,14 +1534,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return brandLandingView;
     }
 
-    public void backgroundAppForMilliseconds(long millis) {
+    public void backgroundAppForSeconds(int seconds) {
         runAppInBackground(Duration.ofSeconds(-1));
-        try {
-            LOGGER.info("Waiting for {} milliseconds", millis);
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        LOGGER.info("Waiting for {} seconds", seconds);
+        pause(seconds);
     }
 
     public void bringAppToForeground() {
