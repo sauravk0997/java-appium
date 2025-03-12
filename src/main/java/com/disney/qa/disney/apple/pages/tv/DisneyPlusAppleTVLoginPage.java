@@ -27,9 +27,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
     private ExtendedWebElement continueAfterEnteringNewEmailBtn;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"TRY AGAIN\"`]")
-    private ExtendedWebElement tryAgainBtn;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Continue. Confirm your password and login.'`]")
     private ExtendedWebElement confirmLoginButton;
 
@@ -150,12 +147,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         continueButton.click();
     }
 
-    public void clickTryAgainBtn() {
-        tryAgainBtn.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        tryAgainBtn.click();
-    }
-
     public static List<String> getUnknownEmailScreenTexts(DisneyLocalizationUtils disneyLanguageUtils) {
         var list = new ArrayList<String>();
         getEnumValues(LOGIN_NO_ACCOUNT, LOGIN_NO_ACCOUNT_SUB_TEXT, TRY_AGAIN_BTN, BTN_SIGN_UP).forEach(
@@ -207,5 +198,9 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public ExtendedWebElement getEmailHint() {
         return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HINT.getText()));
+    }
+
+    public void clickTryAgainBtn() {
+        clickSelect();
     }
 }
