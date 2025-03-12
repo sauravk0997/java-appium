@@ -121,6 +121,7 @@ public enum DictionaryKeys {
     CHECK_EMAIL_COPY("check_email_copy"),
     CHECK_EMAIL_TITLE("check_email_title"),
     CHOOSE_AVATAR_TITLE("chooseprofileicon_title"),
+    CHOOSE_CONTENT_RATING("choose_content_rating"),
     CHOOSE_PROFILE_ICON_SKIP("chooseprofileicon_skip"),
     CHOOSE_PROFILE_TITLE("choose_profile_title"),
     COMMUNICATION_SETTINGS("communication_settings"),
