@@ -724,13 +724,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean verifyPlayheadRepresentsCurrentPointOfTime() {
         displayVideoController();
         int seekBarWidth = seekBar.getSize().getWidth();
-        LOGGER.info("Scrubbing to 50%");
         scrubToPlaybackPercentage(50);
         waitForVideoToStart();
         int currentPositionOnSeekPlayerAfterScrub = getCurrentPositionOnPlayer();
         int expectedPosition = (seekBarWidth / 2);
-        LOGGER.info("This is the Current Position on Seek Player After Scrub {}", currentPositionOnSeekPlayerAfterScrub);
-        LOGGER.info("This is the Expected Position {}", expectedPosition);
         return ((expectedPosition - 75) < currentPositionOnSeekPlayerAfterScrub &&
                 currentPositionOnSeekPlayerAfterScrub < (expectedPosition + 75));
     }
