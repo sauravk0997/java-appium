@@ -128,8 +128,8 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         // Click fast-forward on the remote and get the thumbnail position in time
         commonPage.clickRight(3, 1, 1);
         Assert.assertTrue(videoPlayerTVPage.getThumbnailView().isPresent(), "Thumbnail preview did not appear");
-        int positionOfThumbnail = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        LOGGER.info("positionOfThumbnail {}", positionOfThumbnail);
+        int thumbnailTimeline = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        LOGGER.info("thumbnailTimeline {}", thumbnailTimeline);
         commonPage.clickUp(2);
 
         // Make duration appear and get time again
@@ -146,13 +146,13 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         // Get time before play and compare with thumbnail position
         commonPage.clickDown(1);
         int timeBeforeTapPlay = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        Assert.assertEquals(positionOfThumbnail, timeBeforeTapPlay, "Play will not start at the thumbnail position");
+        Assert.assertEquals(thumbnailTimeline, timeBeforeTapPlay, "Play will not start at the thumbnail position");
         // Play video with remote button and verify it started to play
         home.clickPlay();
         home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
         commonPage.clickDown(1);
         int remainingTimeAfterPlay = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterPlay {}", remainingTimeAfterPlay);
-        Assert.assertTrue(positionOfThumbnail > remainingTimeAfterPlay, VIDEO_NOT_PLAYING);
+        Assert.assertTrue(thumbnailTimeline > remainingTimeAfterPlay, VIDEO_NOT_PLAYING);
     }
 }
