@@ -66,6 +66,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String SET_TO_FALSE = "Set to: false";
     protected static final String PLACEHOLDER_E = "E";
     protected static final String DEVICE = "DEVICE";
+    public static final String HULU_SERVICE_ATTRIBUTION_MESSAGE = "Included with your Hulu subscription";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -1489,8 +1490,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
         while (count > 0) {
             moveDown(1, 1);
-            if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) &&
-                    isFocused(getFirstCellFromCollection(collectionName))) {
+            if (firstCellFromCollection.isPresent(THREE_SEC_TIMEOUT) &&
+                    isFocused(firstCellFromCollection)) {
                 LOGGER.info("Reached desired collection");
                 return;
             }
