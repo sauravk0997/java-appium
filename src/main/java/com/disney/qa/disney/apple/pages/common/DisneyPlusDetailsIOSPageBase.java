@@ -2,13 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.explore.ExploreApi;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import com.disney.qa.api.explore.response.ExplorePageResponse;
-import com.disney.qa.api.pojos.ApiConfiguration;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -24,7 +18,6 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
 import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -82,8 +75,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement movieDownloadButton;
     @ExtendedFindBy(accessibilityId = "downloadButtonDownloaded")
     protected ExtendedWebElement movieDownloadCompletedButton;
-    @ExtendedFindBy(accessibilityId = "watch")
-    protected ExtendedWebElement watchButton;
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
@@ -173,6 +164,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "/XCUIElementTypeCell[1]")
     private ExtendedWebElement firstItemPickerCell;
 
+    @ExtendedFindBy(accessibilityId = "detailsRestrictedIcon")
+    private ExtendedWebElement parentalControlIcon;
+
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
+    private ExtendedWebElement espnPlusGenericErrorText;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -185,6 +183,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private final ExtendedWebElement resumeDownloadButton = getTypeButtonByLabel(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_RESUME_DOWNLOAD.getText()));
+    protected final ExtendedWebElement watchButton = getTypeButtonByLabel(getLocalizationUtils()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                    BTN_WATCH.getText()));
 
     //FUNCTIONS
     public DisneyPlusDetailsIOSPageBase(WebDriver driver) {
@@ -278,6 +279,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getResumeDownloadButton() {
         return resumeDownloadButton;
+    }
+
+    public ExtendedWebElement getEspnPlusGenericErrorText() {
+        return espnPlusGenericErrorText;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
@@ -829,7 +834,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return shopOrPerksBtn;
     }
 
-    public void clickShopoOrPerksTab() {
+    public void clickShopOrPerksTab() {
         if (!getShopOrPerksBtn().isPresent()) {
             swipeInContainer(null, Direction.UP, 1200);
             pause(2); //transition
@@ -1046,14 +1051,22 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void isDolbyVisionPresentOrNot(SoftAssert sa) {
-        List<String> dolbyVisionDeviceNames = Arrays.asList("iPhone_13_Pro", "iPhone_14", "iPhone_11", "iPhone_11_1", "iPhone_12", "iPhone_11_2", "iPad_Mini_5_Gen");
-        List<String> noDolbyVisionDeviceNames = List.of("iPad_8_Gen_1");
+        List<String> dolbyVisionDeviceNames = Arrays.asList("iPhone_13_Pro", "iPhone_14", "iPhone_11", "iPhone_11_1",
+                "iPhone_12", "iPhone_11_2", "iPhone_15_1", "iPhone_15_2", "iPhone_15_3", "iPhone_15_4", "iPhone_15_5",
+                "iPhone_15_Plus_1", "iPhone_15_Plus_2", "iPhone_15_Plus_3", "iPhone_16_Pro_1", "iPhone_11_Pro_Max",
+                "iPad_Mini_5_Gen", "iPad_Pro_M4_1", "iPad_Pro_M4_2", "iPad_Pro_M4_3", "iPad_Pro_M4_4", "iPad_Pro_M4_5",
+                "iPad_Air_M2_1", "iPad_Air_M2_2", "iPad_Air_M2_3", "iPad_Air_M2_4", "iPad_Air_M2_5", "iPhone_Xs",
+                "iPhone_Xr");
+        List<String> noDolbyVisionDeviceNames = List.of("iPad_8_Gen_1", "iPad_Gen_10_1", "iPad_Gen_10_2",
+                "iPad_Gen_10_3");
         if (dolbyVisionDeviceNames.contains(R.CONFIG.get("capabilities.deviceName"))) {
             LOGGER.info("Validating Dolby Vision is present..");
-            sa.assertTrue(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");
+            sa.assertTrue(getStaticTextByLabelContains(DOLBY_VISION).isPresent(),
+                    "`Dolby Vision` video quality is not found.");
         } else if (noDolbyVisionDeviceNames.contains(R.CONFIG.get("capabilities.deviceName"))) {
             LOGGER.info("Validating Dolby Vision is not present..");
-            sa.assertFalse(getStaticTextByLabelContains(DOLBY_VISION).isPresent(), "`Dolby Vision` video quality is not found.");
+            sa.assertFalse(getStaticTextByLabelContains(DOLBY_VISION).isPresent(),
+                    "`Dolby Vision` video quality is found.");
         }
     }
 
@@ -1064,18 +1077,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isShopPromoLabelSubHeaderPresent() {
         return getStaticTextByLabel(SHOP_PROMO_LABEL_SUBHEADER).isPresent();
     }
-
-    public boolean isContentAvailableWithHuluSubscriptionPresent(DisneyAccount account, String environment, String platform, String seriesId) throws URISyntaxException, JsonProcessingException {
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(platform)
-                .environment(environment).build();
-        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
-        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(seriesId)
-                .profileId(account.getProfileId()).build();
-        ExplorePageResponse pageResponse = exploreApi.getPage(searchRequest);
-        String huluSubscriptionErrorMessage = pageResponse.getData().getPage().getVisuals().getRestriction().getMessage();
-        return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
-    }
-
 
     /**
      * To be used with continually navigating back and forth between details and player of same content.
@@ -1278,11 +1279,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTabBar() {
         return tabBar;
     }
-  
+
     public boolean isDetailsTabTitlePresent() {
         return detailsTabTitle.isPresent();
     }
-  
+
     public boolean isSeasonPickerPresent() {
         return seasonItemPicker.isPresent(THREE_SEC_TIMEOUT);
     }
@@ -1298,5 +1299,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                 IPS_MESSAGING_ONLY_EXPERIENCE_SCREEN_HEADER_TRIO.getText()))
                 .isPresent();
+    }
+
+    public ExtendedWebElement getParentalControlIcon() {
+        return parentalControlIcon;
     }
  }

@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -12,7 +13,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusArielLoginTest extends DisneyBaseTest {
 
@@ -26,20 +27,22 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusAccountIsMinorIOSPageBase disneyPlusAccountIsMinorIOSPageBase = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        createDisneyAccountRequest
+        //Create Disney account without DOB and Gender
+        getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
+                .setPartner(Partner.DISNEY)
                 .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
+        disneyPlusLoginIOSPageBase.submitEmail(getUnifiedAccount().getEmail());
+        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getUnifiedAccount().getUserPass());
 
         disneyPlusDOBCollectionPageBase.isOpened();
         ednaDOBCollectionPage.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
@@ -62,20 +65,22 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage = new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
 
-        createDisneyAccountRequest
+        //Create Disney account without DOB and Gender
+        getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
+                .setPartner(Partner.DISNEY)
                 .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
 
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
 
         welcomeScreen.clickLogInButton();
-        loginPage.submitEmail(getAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), "Edna Date of Birth page did not open");
         ednaDOBCollectionPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
         ednaDOBCollectionPage.tapSaveAndContinueButton();
@@ -91,18 +96,22 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
 
-        DisneyAccount otpAccount = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage());
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+
         initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
 
-        loginPage.submitEmail(otpAccount.getEmail());
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
         Assert.assertTrue(passwordPage.isPasswordPagePresent(), "Password page did not open");
         Date startTime = getEmailApi().getStartTime();
         passwordPage.clickHavingTroubleLoggingButton();
 
-        String otp = getOTPFromApi(startTime, otpAccount);
+        String otp = getOTPFromApi(startTime, getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
-        Assert.assertTrue(homePage.isOpened(), "Home page is not open after entering otp");
+        handleGenericPopup(5,1);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 }

@@ -1,11 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
+
+import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
@@ -43,7 +44,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(DANCING_WITH_THE_STARS);
         String[] firstDisplayTitle = searchPage.getDisplayedTitles().get(0).getText().split(",");
@@ -61,7 +62,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
         String mediaTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
@@ -78,7 +79,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     public void verifyAnthologyEnded() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isWatchButtonPresent());
         } catch (Exception e) {
@@ -94,7 +95,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.getMediaTitle().equalsIgnoreCase(DANCING_WITH_THE_STARS),
@@ -113,7 +114,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         //Download episode
@@ -156,7 +157,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         try {
@@ -185,7 +186,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         String mediaTitle = details.getMediaTitle();
@@ -215,7 +216,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
@@ -229,7 +230,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
@@ -244,7 +245,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         try {
@@ -280,7 +281,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
@@ -298,7 +299,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     public void verifyAnthologyDeepLinkDetailPage() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
         Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
@@ -315,8 +316,9 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologyDownloadForAdTierUser() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        setAppToHomeScreen(basicAccount);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
         Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
@@ -337,7 +339,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         String seasonNumber = "32";
         String episodeNumber = "10";
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
         detailsPage.getSeasonSelectorButton().click();
@@ -362,7 +364,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologySeriesPromotionLabel() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         String promoLabelHeader = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_series_dwts_entity_id"))
                 .getPromoLabel().getHeader();
         if (promoLabelHeader == null) {
@@ -380,7 +382,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         String seasonLabel = "Season 32";
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
         detailsPage.getSeasonSelectorButton().click();
@@ -399,22 +401,35 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73971"})
     @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologyMaturityRatingRestrictionErrorMessage() {
-        String contentUnavailableError = "content-unavailable";
+        SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         //set lower rating
-        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+        List<String> ratingSystemValues = getUnifiedAccount().getProfile(DEFAULT_PROFILE).getAttributes()
                 .getParentalControls().getMaturityRating().getRatingSystemValues();
-        getAccountApi().editContentRatingProfileSetting(getAccount(),
-                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
-        setAppToHomeScreen(getAccount());
+        if(ratingSystemValues.isEmpty()) {
+            throw new IllegalArgumentException("Unable to get the rating system values for default profile");
+        }
+
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                ratingSystemValues.get(0));
+
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
-        Assert.assertFalse(details.isOpened(), "Details page should not open");
-        //At the moment Parental control error message is not supported somehow and hence verifying generic
-        // error message
-        Assert.assertTrue(homePage.getTextViewByLabelContains(contentUnavailableError).isPresent(),
-                "Content Unavailable generic error not displayed");
+        sa.assertTrue(details.isHeroImagePresent(), "Title background image is not present");
+        sa.assertTrue(details.isLogoImageDisplayed(), MEDIA_TITLE_NOT_DISPLAYED);
+        sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata is not present");
+        Assert.assertTrue(details.getParentalControlIcon().isPresent(), "Parental Control icon is not present");
+        Assert.assertTrue(details.getRatingRestrictionDetailMessage().isPresent(),
+                "Rating restriction detail message is not present");
+        sa.assertFalse(details.isContentDescriptionDisplayed(), "Content description is present");
+        sa.assertTrue(details.getTrailerButton().isElementNotPresent(ONE_SEC_TIMEOUT), "Trailer button is present");
+        sa.assertTrue(details.getPlayButton().isElementNotPresent(ONE_SEC_TIMEOUT), "Play button is present");
+        sa.assertTrue(details.getWatchlistButton().isElementNotPresent(ONE_SEC_TIMEOUT),
+                "Add to watchlist button is present");
+        sa.assertTrue(details.getTabBar().isElementNotPresent(ONE_SEC_TIMEOUT), "Tab container is present");
+        sa.assertAll();
     }
 
     private void searchAndOpenDWTSDetails() {

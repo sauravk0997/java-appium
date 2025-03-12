@@ -4,6 +4,7 @@ public enum DisneyEntityIds {
     END_GAME("Avengers: Endgame", "entity-b39aa962-be56-4b09-a536-98617031717f"),
     INCREDIBLES_2("Incredibles 2", "entity-9da2c0fb-a380-4180-b67f-006fbaaa89ab"),
     IRONMAN("Iron Man", "entity-3ac839c4-864b-41ed-ad98-043d6b4ac564"),
+    LOKI("Loki", "entity-8f8c5cbb-e5ba-4285-9e2c-86abcac9fd50"),
     LUCA("Luca", "entity-f28b825f-c207-406b-923a-67f85e6d90e0"),
     SOUL("Soul", "entity-02a00d44-4607-4866-862f-9d260a8dbdca"),
     WANDA_VISION("WandaVision", "entity-90affd1f-0851-48bc-9cab-c142d5c9c20c"),
@@ -16,9 +17,9 @@ public enum DisneyEntityIds {
     HOME_PAGE("Home Page","page-4a8e20b7-1848-49e1-ae23-d45624f4498a"),
     HULU_PAGE("Hulu Page", "page-ff723d29-20d5-4303-9cce-4a9aac8e269e"),
     THE_AVENGERS("Marvel Studios' The Avengers", "entity-3a5596d6-5133-4a8e-8d21-00e1531a4e0f"),
-    DANCING_WITH_THE_STARS("Dancing with the Stars", "38c1eef7-aa8b-4fa4-8bdc-88e596ea565f"),
+    DANCING_WITH_THE_STARS("Dancing with the Stars", "entity-7d918be0-4130-4551-aab8-c7dcae85d35f"),
     DISNEY_PAGE("Disney Brand", "page-4c4b78ed-4a17-43eb-8221-14a3959e4517"),
-    SPORTS_PAGE("ESPN Sports", "4e177574-aed4-4ad5-8d01-6fc7513bd3e5");
+    SKELETON_CREW("Star Wars: Skeleton Crew", "entity-4a73a750-f18c-450a-b9f7-d9f40974ff9d");
 
     private final String title;
     private final String entityId;

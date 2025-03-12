@@ -1,9 +1,8 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -11,6 +10,10 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Point;
+
+import java.awt.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -43,17 +46,21 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement editEmailButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeImage[2]")
     private ExtendedWebElement editPasswordButton;
-    @ExtendedFindBy(accessibilityId = "ManageMyAccountCell")
-    private ExtendedWebElement changePasswordCell;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
+            "**/XCUIElementTypeButton[2]")
+    private ExtendedWebElement subscriptionMessage;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
+    private ExtendedWebElement restrictedProfileToggle;
+    @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
+    private ExtendedWebElement manageMyAcccountCell;
+    @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
+    private ExtendedWebElement restrictProfileCreation;
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
     private ExtendedWebElement subscriptionChange;
     @ExtendedFindBy(accessibilityId = "manageParentalControls")
     private ExtendedWebElement manageParentalControls;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"subscriptionChange\"`]/" +
-            "**/XCUIElementTypeButton[2]")
-    private ExtendedWebElement subscriptionMessage;
+    @ExtendedFindBy(accessibilityId = "manageDevices")
+    private ExtendedWebElement manageDevices;
 
     @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
     private ExtendedWebElement manageWithMyDisney;
@@ -67,6 +74,18 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public ExtendedWebElement getSubscriptionMessage() {
         return subscriptionMessage;
+    }
+
+    public ExtendedWebElement getManageMyAccountCell() {
+        return manageMyAcccountCell;
+    }
+
+    public ExtendedWebElement getManageDevices() {
+        return manageDevices;
+    }
+
+    public String getManageDevicesText() {
+        return manageDevices.getText();
     }
 
     public boolean isSubscriptionMessageDisplayed() {
@@ -223,9 +242,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getRestrictProfileCreationContainer() {
-        return getDynamicAccessibilityId(String.format(CONTAINER_TEXT,
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_TITLE.getText()),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RESTRICT_PROFILE_CREATION_DESCRIPTION.getText())));
+        return restrictProfileCreation;
     }
 
     private ExtendedWebElement verifyAccountHeader = getDynamicXpath(
@@ -500,13 +517,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         }
     }
 
-    public boolean isEditProfilesTextPresent() {
-        String dictValOfEditProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCOUNT_EDIT_PROFILE_LINK.getText());
-        //Removing the square bracket, rounded bracket and the link inside it to match the label displayed on the screen.
-        String editProfileText = dictValOfEditProfile.replaceAll("\\([^()]*\\)", "").replaceAll("[\\[\\]]","");
-        return textViewByLabel.format(editProfileText).isElementPresent();
-    }
-
     public boolean isPrivacyChoicesLinkPresent() {
         return customHyperlinkByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PRIVACY_CHOICES_LINK.getText())).isElementPresent();
     }
@@ -531,14 +541,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         getDynamicCellByName("logOutAllDevicesCell").click();
     }
 
-    public boolean isRestrictProfileCreationEnabled() {
-        return getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(IOSUtils.ButtonStatus.ON.toString());
+    public boolean isRestrictProfileCreationValueExpected(String expectedValue) {
+        return getRestrictProfileCreationContainer()
+                .getAttribute(Attributes.VALUE.getAttribute()).equals(expectedValue);
     }
 
-    public void toggleRestrictProfileCreation(IOSUtils.ButtonStatus status) {
-        if(!getRestrictProfileCreationContainer().getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equalsIgnoreCase(status.toString())) {
-            clickElementAtLocation(getRestrictProfileCreationContainer(), 35, 90);
-        }
+    public void toggleRestrictProfileCreation() {
+            restrictedProfileToggle.click();
     }
 
     public boolean isDirectBillingPausedSubscriptionDisplayed(DisneyPlusPaywallIOSPageBase.PlanType planName) {
@@ -675,22 +684,17 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return paywallPage.getStaticTextByLabel(expectedPlanName).isPresent();
     }
 
-    public void clickEditEmail(String email) {
-        getStaticTextByLabelContains(email).click();
-    }
-
     public void tapEditEmailButton() {
         editEmailButton.click();
     }
 
-    public void clickChangePasswordCell() {
-        changePasswordCell.click();
-    }
-
-    public boolean waitForManageMyDisneyAccountOverlayToOpen(DisneyAccount account) {
-        return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-                "Manage MyDisney Account Overlay did not open")
-                .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
+    public boolean waitForManageMyDisneyAccountOverlayToOpen(UnifiedAccount account) {
+        try {
+            return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Time out exception occurred")
+                    .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     public boolean isSubscriptionCellPresent() {
@@ -699,10 +703,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isAccessAndSecurityTextPresent() {
         return accessAndSecurityText.isElementPresent();
-    }
-
-    public boolean isManageDevicesTextPresent() {
-        return manageDevicesText.isElementPresent();
     }
 
     public boolean isAccountManagementLinkPresent() {

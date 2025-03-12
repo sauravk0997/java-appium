@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.qa.api.explore.response.Item;
-import com.disney.qa.api.pojos.*;
-import com.disney.qa.api.utils.*;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -17,18 +15,18 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121503"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
     public void verifyStandaloneESPNAndHuluBrandTiles() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY);
-        logIn(basicAccount);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
 
@@ -55,7 +53,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121502"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
     public void verifyHulkUpsellStandaloneUserInEligible() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
@@ -65,8 +63,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         String lockedHuluContentCollectionName =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM);
-        logIn(basicAccount);
+
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
@@ -109,14 +107,14 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120609"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
     public void verifyHuluHubPageUI() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        DisneyAccount bundleAccount = createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE);
-        logIn(bundleAccount);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
 
@@ -144,11 +142,11 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122533"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU_HUB_2, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
-        logIn(getAccount());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();

@@ -1,8 +1,8 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
+import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.DisneyOrder;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -30,7 +30,9 @@ import java.util.Map;
 
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 public class DisneyPlusLoginTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -78,7 +80,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusChangeEmailIOSPageBase disneyPlusChangeEmailIOSPageBase = new DisneyPlusChangeEmailIOSPageBase(getDriver());
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
+        disneyPlusLoginIOSPageBase.submitEmail(getUnifiedAccount().getEmail());
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isBackButtonPresent(), BACK_ARROW_NOT_DISPLAYED);
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
@@ -90,7 +92,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusChangeEmailIOSPageBase.isLearnMoreAboutMyDisney(), "Learn more about my disney Link should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isForgotPasswordButtonPresent(), "One Time Code Link should be present");
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isLoginButtonDisplayed(), "Login button should be present");
-        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isEnterYourPasswordBodyPresent(getAccount().getEmail()), "Password body with email and edit link should be present");
+        softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isEnterYourPasswordBodyPresent(getUnifiedAccount().getEmail()), "Password body with email and edit link should be present");
         softAssert.assertAll();
     }
 
@@ -100,7 +102,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
 
         new DisneyPlusWelcomeScreenIOSPageBase(getDriver()).clickLogInButton();
-        new DisneyPlusLoginIOSPageBase(getDriver()).submitEmail(getAccount().getEmail());
+        new DisneyPlusLoginIOSPageBase(getDriver()).submitEmail(getUnifiedAccount().getEmail());
         softAssert.assertTrue(new DisneyPlusPasswordIOSPageBase(getDriver()).isPasswordPagePresent(), "Password page should have opened");
 
         softAssert.assertAll();
@@ -109,36 +111,35 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62046"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testValidPasswordOneProfile() {
-        SoftAssert softAssert = new SoftAssert();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
 
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
-        softAssert.assertTrue(disneyPlusHomeIOSPageBase.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-
-        softAssert.assertAll();
+        welcomeScreen.clickLogInButton();
+        login(getUnifiedAccount());
+        handleGenericPopup(5, 1);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75711"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void testValidPasswordMultipleProfiles() {
-        SoftAssert softAssert = new SoftAssert();
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatchingPage = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Prof2").language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.submitPasswordForLogin(getAccount().getUserPass());
-        softAssert.assertTrue(disneyPlusWhoseWatchingIOSPageBase.isOpened(), "Who's Watching page should have been opened");
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
 
-        softAssert.assertAll();
+        welcomeScreen.clickLogInButton();
+        login(getUnifiedAccount());
+        handleGenericPopup(5, 1);
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67218"})
@@ -180,7 +181,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         String invalidCreds = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
+        disneyPlusLoginIOSPageBase.submitEmail(getUnifiedAccount().getEmail());
         disneyPlusPasswordIOSPageBase.enterLogInPassword("wrongUserPass" + "\n");
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.getDynamicAccessibilityId(invalidCreds).isPresent(), NO_ERROR_DISPLAYED);
 
@@ -190,12 +191,12 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67234"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void testEmptyPassword() {
-        DisneyPlusLoginIOSPageBase loginPage =  initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
 
         welcomePage.clickLogInButton();
-        loginPage.submitEmail(getAccount().getEmail());
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
         passwordPage.enterLogInPassword("");
         passwordPage.getLoginButton().click();
         Assert.assertTrue(passwordPage.isAttributeValidationErrorMessagePresent(), NO_ERROR_DISPLAYED);
@@ -210,12 +211,12 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
 
         StringBuilder hiddenPassword = new StringBuilder();
-        String userPassword = getAccount().getUserPass();
+        String userPassword = getUnifiedAccount().getUserPass();
         hiddenPassword.append("•".repeat(userPassword.length()));
 
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        disneyPlusLoginIOSPageBase.submitEmail(getAccount().getEmail());
-        disneyPlusPasswordIOSPageBase.typePassword(getAccount().getUserPass());
+        disneyPlusLoginIOSPageBase.submitEmail(getUnifiedAccount().getEmail());
+        disneyPlusPasswordIOSPageBase.typePassword(getUnifiedAccount().getUserPass());
         softAssert.assertTrue(disneyPlusPasswordIOSPageBase.isShowPasswordIconDisplayed());
         softAssert.assertEquals(disneyPlusPasswordIOSPageBase.getHidePasswordText(), hiddenPassword.toString());
         disneyPlusPasswordIOSPageBase.clickShowPasswordIcon();
@@ -244,7 +245,7 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertTrue(disneyPlusLoginIOSPageBase.isSignUpAlertButtonDisplayed(), "sign up button was not displayed");
         disneyPlusLoginIOSPageBase.clickAlertTryAgainButton();
         softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), noEmailError, NO_ERROR_DISPLAYED);
-        disneyPlusLoginIOSPageBase.fillOutEmailField(getAccount().getEmail());
+        disneyPlusLoginIOSPageBase.fillOutEmailField(getUnifiedAccount().getEmail());
         softAssert.assertAll();
     }
 
@@ -255,13 +256,30 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         String profile3 = "profile 3";
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase disneyPlusWhoseWatchingIOSPageBase = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(kidProfile).language("en").avatarId("90e6cc76-b849-5301-bf2a-d8ddb200d07b").kidsModeEnabled(true).dateOfBirth(null).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(profile3).language("en").avatarId("b4515c3a-d9a9-57e4-b2be-a793104c0839").kidsModeEnabled(false).dateOfBirth(null).build());
-
         SoftAssert softAssert = new SoftAssert();
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(kidProfile)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(profile3)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
         disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        login(getAccount());
+        login(getUnifiedAccount());
         pause(5);
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
 
@@ -321,11 +339,11 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         String blockedHeader = "Sorry, you're not eligible to use this service.";
         String blockedDescriptionPart1 = "Please visit our Help Center to find out more or for further assistance if you no longer wish to have a MyDisney account.";
         String blockedDescriptionPart2 = "If you think this is an error, please contact Customer Support.";
-        DisneyAccount minorAccount = getAccountApi().createAccount("Yearly", "US", "en", "V1");
-        getAccountApi().patchAccountBlock(minorAccount, AccountBlockReasons.MINOR);
+
+        getUnifiedAccountApi().patchAccountBlock(getUnifiedAccount(), AccountBlockReasons.MINOR);
 
         welcomeScreen.clickLogInButton();
-        login(minorAccount);
+        login(getUnifiedAccount());
         Assert.assertTrue(cssPage.getStaticTextByName(blockedHeader).isPresent(),
                 "CSS Header not displayed");
         sa.assertTrue(cssPage.getStaticTextByLabelContains(blockedDescriptionPart1).isPresent(),
@@ -345,41 +363,42 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     public void testLogInEntitledDOBCollectionOver18() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
-                new DisneyPlusEdnaDOBCollectionPageBase(getDriver());
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
-        DisneyPlusAddProfileIOSPageBase addProfilePage = new DisneyPlusAddProfileIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
-        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = new DisneyPlusUpdateProfileIOSPageBase(getDriver());
-        DisneyPlusAddProfileBannerIOSPage addProfileBannerPage = new DisneyPlusAddProfileBannerIOSPage(getDriver());
+                initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusAddProfileBannerIOSPageBase addProfileBannerPage = initPage(DisneyPlusAddProfileBannerIOSPageBase.class);
         DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage =
-                new DisneyPlusEnforceDOBCollectionPageBase(getDriver());
-        DisneyPlusDOBCollectionPageBase dobCollectionPage = new DisneyPlusDOBCollectionPageBase(getDriver());
+                initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
+
         String stepperDict = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.ONBOARDING_STEPPER.getText());
 
-        //Create Disney account without DOB
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
-        createDisneyAccountRequest
+        //Create Disney account without DOB and Gender
+        getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
+                .setPartner(Partner.DISNEY)
                 .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
-        setAccount(getAccountApi().createAccount(createDisneyAccountRequest));
 
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
         welcomePage.clickLogInButton();
-        loginPage.submitEmail(getAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         //Element Validations
         sa.assertTrue(loginPage.isDisneyLogoDisplayed(), DISNEY_PLUS_LOGO_NOT_DISPLAYED);
         sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), MYDISNEY_LOGO_NOT_DISPLAYED);
         sa.assertTrue(loginPage.getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
-                stepperDict, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
+                        stepperDict, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
                 "'STEP 3 OF 5' should be displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "DOB Sub Copy not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label not displayed");
@@ -406,8 +425,8 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         welcomePage.clickLogInButton();
-        loginPage.submitEmail(getAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getAccount().getUserPass());
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         sa.assertAll();
@@ -421,14 +440,14 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase loginIOSPageBase = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordIOSPageBase = initPage(DisneyPlusPasswordIOSPageBase.class);
 
-        String learnMoreHeader= getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+        String learnMoreHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_LEARN_MORE_HEADER.getText());
         String learnMoreBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_LEARN_MORE_BODY.getText()), Map.of("link_1", "and more"));
 
         welcomeScreen.clickLogInButton();
-        loginIOSPageBase.submitEmail(getAccount().getEmail());
+        loginIOSPageBase.submitEmail(getUnifiedAccount().getEmail());
         sa.assertTrue(passwordIOSPageBase.isPasswordPagePresent(), "Password page did not open");
         Assert.assertTrue(passwordIOSPageBase.getLearnMoreAboutMyDisney().isPresent(),
                 "Learn more about my disney Link is not displayed");
