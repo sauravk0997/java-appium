@@ -558,4 +558,46 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77699"})
+    @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUnavailableContentPopUpForESPNContentJuniorProfile() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .language(getAccount().getProfileLang())
+                .avatarId(null)
+                .dateOfBirth(U18_DOB)
+                .build());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .language(getAccount().getProfileLang())
+                .avatarId(null)
+                .kidsModeEnabled(true)
+                .dateOfBirth(KIDS_DOB)
+                .build());
+
+        loginToHome(getUnifiedAccount(), SECONDARY_PROFILE);
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
+        Assert.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
+                "Parental Control Message not found");
+
+        homePage.clickMoreTab();
+        whoIsWatching.clickProfile(JUNIOR_PROFILE);
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
+        Assert.assertTrue(homePage.getParentalControlMediaNotAllowedErrorPopUpMessage().isPresent(),
+                "Parental Control media not allowed error message not found");
+        Assert.assertTrue(homePage.getOkButton().isPresent(), "CTA button not found");
+        homePage.getOkButton().click();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
 }
