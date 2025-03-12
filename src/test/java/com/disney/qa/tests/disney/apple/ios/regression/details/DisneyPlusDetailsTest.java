@@ -1,11 +1,9 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -35,7 +33,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
     private static final String THE_ARISTOCATS = "The aristocats";
     private static final String TV_Y7 = "TV-Y7";
-    private static final String SPIDERMAN_THREE = "SpiderMan 3";
+    private static final String SPIDERMAN_THREE = "Spider-Man™ 3";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 40;
     private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
@@ -49,8 +47,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
-        return new Object[][]{{"Disney+ With Ads, Hulu with Ads, and ESPN+"},
-                {"Disney+, Hulu No Ads, and ESPN+"}
+        return new Object[][]{{DISNEY_BUNDLE_TRIO_BASIC},
+                {DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY}
         };
     }
 
@@ -62,7 +60,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -94,7 +92,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //series
         home.clickSearchIcon();
@@ -126,15 +124,25 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(description = "Maturity Rating Restriction on Detail Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyMaturityRatingRestrictionOnDetailPage() {
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(TV_Y7).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        Profile profile = getAccount().getProfile(TV_Y7);
-        getAccountApi().editContentRatingProfileSetting(getAccount(),
-                getAccountApi().getProfiles(getAccount()).get(1).getProfileId(),
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(TV_Y7)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+        Profile profile = getUnifiedAccount().getProfile(TV_Y7);
+
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
+                profile.getProfileId(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
 
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(1).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount(), profile.getProfileName());
 
         // Movies
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
@@ -176,7 +184,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
@@ -220,7 +228,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
@@ -240,9 +248,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAccount(getAccountApi().createAccount(getAccountApi().lookupOfferToUse(getCountry(), planType),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planType)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
 
@@ -265,7 +274,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
@@ -310,7 +319,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContentTitleInNavigationBar() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -326,7 +335,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -353,7 +362,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -386,8 +395,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String sportsLabel = "Sports";
         String leagues = "Leagues";
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickEspnTile();
         Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
@@ -416,8 +426,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
@@ -444,8 +455,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
@@ -486,13 +499,20 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB)
-                .language(getAccount().getProfileLang()).avatarId(BABY_YODA)
-                .kidsModeEnabled(true).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount(), getAccount().getProfiles().get(0).getProfileName());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         //Adult
         homePage.clickSearchIcon();
@@ -536,8 +556,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
@@ -573,9 +594,19 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer =  initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
 
         //No upsell
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -626,8 +657,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_BASIC)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Movie
         homePage.clickSearchIcon();
@@ -654,8 +686,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
@@ -674,9 +708,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyHuluDetailsPageRatings() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_teen_titans_go_deeplink"));
         detailsPage.verifyRatingsInDetailsFeaturedArea(TV_PG.getContentRating(), sa);
@@ -694,10 +728,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.waitForHomePageToOpen();
 
         // Open a hulu series and validate badges in details tab
@@ -726,8 +760,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         int swipeCount = 5;
 
-        DisneyAccount basicAccount = createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM);
-        setAppToHomeScreen(basicAccount);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
 
@@ -767,7 +801,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyExtrasTabForESPNContent() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -802,8 +837,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         CollectionConstant.Collection espnLiveAndUpcomingCollection =
                 CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING;
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickEspnTile();
 
@@ -840,9 +875,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyESPNUnavailableDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
-        getAccountApi().overrideLocations(getAccount(), getLocalizationUtils().getLocale());
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
@@ -910,15 +945,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         searchPage.searchForMedia(titleName);
-        List<ExtendedWebElement>  results = searchPage.getDisplayedTitles();
-        results.get(0).click();
+        searchPage.getDynamicAccessibilityId(titleName).click();
         sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.getShopOrPerksBtn().isPresent());
         } catch (Exception e) {
             throw new SkipException("Skipping test, Shop or Perks Tab was not found" + e);
         }
-        detailsPage.clickShopoOrPerksTab();
+        detailsPage.clickShopOrPerksTab();
         String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));

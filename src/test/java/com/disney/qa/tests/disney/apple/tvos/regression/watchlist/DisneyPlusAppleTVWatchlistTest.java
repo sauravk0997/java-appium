@@ -45,12 +45,10 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.SMOKE, US})
     public void verifyNoWatchlistAppearance() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        logInTemp(getAccount());
 
+        logIn(getUnifiedAccount());
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
 
         sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), WATCHLIST_NOT_OPEN);
@@ -82,7 +80,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(),
                 getAccount().getAccountToken(),getAccount().getProfileId(), infoBlockList.get(i)));
 
-        logIn(getAccount());
+        logIn(getUnifiedAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
         int watchlistItems = watchListPage.getNumberOfItemsByCell();
         sa.assertTrue(titles.size() == watchlistItems, "Number of added items did not match.");
@@ -122,10 +120,8 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logIn(getAccount());
+        logIn(getUnifiedAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), "Search did not open");
 
