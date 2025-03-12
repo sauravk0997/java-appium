@@ -523,7 +523,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
-        String darthMaulAvatarId = R.TESTDATA.get("disney_darth_maul_avatar_id");
         String ratingByDefault = "TV-14";
         String ratingToChoose = "TV-Y7";
         int age = 59;
@@ -551,7 +550,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(), "Header profile is not present");
         sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Profile Description is not present");
         sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
-        sa.assertTrue(editProfile.getDynamicCellByName(darthMaulAvatarId).isPresent(), "Profile icon is not displayed");
+        sa.assertTrue(editProfile.getDynamicCellByName(BABY_YODA).isPresent(), "Profile icon is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating field is not present");
