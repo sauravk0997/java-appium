@@ -152,6 +152,25 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66493"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
+    public void verifyTryAgainWhenInvalidEmailInput() {
+        String unknownEmail = "abc@po.com";
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+
+        selectAppleUpdateLaterAndDismissAppTracking();
+        Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        welcomeScreen.clickLogInButton();
+        loginPage.proceedToPasswordScreen(unknownEmail);
+        Assert.assertTrue(loginPage.getTryAgainButton().isPresent(), "Try Again button not displayed");
+        loginPage.clickTryAgainBtn();
+        Assert.assertTrue(loginPage.isOpened(), EMAIL_INPUT_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
+        Assert.assertTrue(loginPage.isEmailFieldFocused(), "Email input is not focused by default");
+        Assert.assertTrue(loginPage.getStaticTextByLabel(unknownEmail).isPresent(),
+                "Previously entered email is not displayed in email text field");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66469"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void registeredEmailTakenToLoginPassword() {
@@ -375,23 +394,20 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66556"})
-    @Test(groups = {TestGroup.ONBOARDING, US})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
     public void verifyIncorrectPasswordErrorMessage() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
 
+        selectAppleUpdateLaterAndDismissAppTracking();
+        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomeScreenPage.clickLogInButton();
         loginPage.proceedToPasswordScreen(getUnifiedAccount().getEmail());
         oneTimePasscodePage.clickLoginWithPassword();
         passwordPage.logInWithPassword(RandomStringUtils.randomAlphabetic(6));
-        sa.assertTrue(passwordPage.isInvalidCredentialsDisplayed(), "Invalid Password error not displayed.");
-        sa.assertAll();
+        Assert.assertTrue(passwordPage.isInvalidCredentialsDisplayed(), "Invalid Password error not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66553"})
