@@ -269,7 +269,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement upNextHeaderLabel;
 
     @ExtendedFindBy(accessibilityId = "thumbnailView")
-    private ExtendedWebElement thumbnailView;
+    protected ExtendedWebElement thumbnailView;
 
     @ExtendedFindBy(accessibilityId = "toggleView")
     private ExtendedWebElement toggleView;
