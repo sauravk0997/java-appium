@@ -29,7 +29,6 @@ import static com.disney.qa.common.constant.IConstantHelper.TABLET;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-    protected static final String SERVICE_ATTRIBUTION = "serviceAttributionLabel";
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
@@ -41,7 +40,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(accessibilityId = "currentTimeMarker")
     protected ExtendedWebElement currentTimeMarker;
-
+    @FindBy(name = "serviceAttributionLabel")
+    protected ExtendedWebElement serviceAttributionLabel;
     @ExtendedFindBy(accessibilityId = "ucp.durationLabel")
     protected ExtendedWebElement timeRemainingLabel;
     @FindBy(name = "titleLabel")
@@ -187,12 +187,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getServiceAttributionLabel(){
-        return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
+        return serviceAttributionLabel;
     }
 
     public boolean isServiceAttributionLabelVisible() {
-        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "Service attribution didn't appear on video player")
-                .until(it -> getServiceAttributionLabel().isPresent(SIXTY_SEC_TIMEOUT)));
+        try {
+            return fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                    "Service attribution didn't appear on video player")
+                    .until(it -> getServiceAttributionLabel().isPresent(ONE_SEC_TIMEOUT));
+        } catch (Exception e) {
+            LOGGER.info(String.format("Service Attribution Label not found - %s", e.getMessage()));
+            return false;
+        }
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {
@@ -338,6 +344,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         int yOffset = y / 2;
         tapAtCoordinateNoOfTimes(xOffset, yOffset, times);
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
+
+    public boolean isTitleLabelDisplayed() {
+        return titleLabel.isPresent();
+    }
+
+    public boolean isSubTitleLabelDisplayed() {
+        return subtitleLabel.isPresent();
     }
 
     public DisneyPlusDetailsIOSPageBase tapTitleOnPlayer() {
