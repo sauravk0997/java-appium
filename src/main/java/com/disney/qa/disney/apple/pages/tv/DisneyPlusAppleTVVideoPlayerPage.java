@@ -2,10 +2,10 @@ package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 
 import java.lang.invoke.MethodHandles;
 
@@ -62,9 +62,18 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     }
 
     @Override
-    public ExtendedWebElement getServiceAttributionLabel() {
-        fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Service Attribution is not visible")
-                .until(it -> getStaticTextByName(SERVICE_ATTRIBUTION).isPresent(ONE_SEC_TIMEOUT));
-        return getStaticTextByNameContains(SERVICE_ATTRIBUTION);
+    public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        LOGGER.info("Activating video player controls...");
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present")
+                .until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
+        int attempts = 0;
+        do {
+            commonPage.clickDown(2);
+        } while (attempts++ < 5 && !seekBar.isElementPresent(ONE_SEC_TIMEOUT));
+        if (attempts == 6) {
+            Assert.fail("Seek bar was present and attempts exceeded over 5.");
+        }
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 }
