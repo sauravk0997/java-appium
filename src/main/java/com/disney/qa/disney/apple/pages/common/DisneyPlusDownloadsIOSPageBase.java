@@ -43,6 +43,9 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 					DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_LICENSE_EXPIRED_RENEW.getText()));
 	private ExtendedWebElement downloadErrorButton = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
 			DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.DOWNLOAD_ERROR.getText()));
+	private ExtendedWebElement downloadTitleLicenseExpiredText =
+			getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+					DisneyDictionaryApi.ResourceKeys.MEDIA, DictionaryKeys.DOWNLOAD_TITLE_LICENSE_EXPIRED.getText()));
 
 	@ExtendedFindBy(accessibilityId = "deleteDownloadButton")
 	private ExtendedWebElement deleteDownloadButton;
@@ -123,6 +126,10 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 
 	public ExtendedWebElement getRenewLicenseButton() {
 		return renewLicenseButton;
+	}
+
+	public ExtendedWebElement getDownloadTitleLicenseExpiredText() {
+		return downloadTitleLicenseExpiredText;
 	}
 
 	public String getEpisodeDownloadCellTitle(String season, String episode) {

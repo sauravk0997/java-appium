@@ -1,6 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.*;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.disney.DisneyEntityIds;
@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -38,7 +38,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
 
     private static final String KIDS_DOB = "2018-01-01";
     private static final String KIDS = "Kids";
-    private static final String WATCHLIST_REF_TYPE_MOVIES = "programId";
     private static final String GLOBAL_NAV_NOT_COLLAPSED = "Global Nav menu is not collapsed";
     private static final String GLOBAL_NAV_IS_PRESENT = "Global nav is present";
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
@@ -68,14 +67,13 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @Test(description = "Global Navigation > Collapsed State / Expanded State", groups = { TestGroup.HOME, TestGroup.SMOKE, US})
     public void globalNavAppearance() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         AliceDriver aliceDriver = new AliceDriver(getDriver());
 
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         initDisneyPlusAppleTVGlobalNavMenuTest();
-        logInTemp(getAccount());
+
+        logIn(getUnifiedAccount());
 
         // move down to focus on brand tile
         disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
@@ -131,17 +129,21 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @Test(groups = { TestGroup.HOME, TestGroup.SMOKE, US})
     public void globalNavAppearanceKidsProfile() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
         AliceDriver aliceDriver = new AliceDriver(getDriver());
-
         SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
         initDisneyPlusAppleTVGlobalNavMenuTest();
         selectAppleUpdateLaterAndDismissAppTracking();
-        logInWithoutHomeCheck(getAccount());
+        logInWithoutHomeCheck(getUnifiedAccount());
 
         sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(), "Who's watching page did not launch");
         disneyPlusAppleTVHomePage.clickProfileBtn(KIDS);
@@ -187,12 +189,10 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         initDisneyPlusAppleTVGlobalNavMenuTest();
 
-        getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(), getAccount().getAccountToken(),
-                getAccount().getProfileId(),
+        getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(), getUnifiedAccount().getAccountToken(),
+                getUnifiedAccount().getProfileId(),
                 getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
 
         List<String> innerPages = Stream.of(
@@ -203,7 +203,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.ORIGINALS.getText(),
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS.getText())
                 .collect(Collectors.toList());
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickRandomBrandTile();
@@ -268,12 +268,10 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @Test(description = "Hidden state - Hero Carousel", groups = { TestGroup.HOME, US})
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
+
         homePage.moveLeft(2, 1);
         homePage.isCarouselFocused();
         homePage.clickMenu();

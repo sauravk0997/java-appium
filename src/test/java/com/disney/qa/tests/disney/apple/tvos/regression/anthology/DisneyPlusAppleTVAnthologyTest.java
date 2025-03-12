@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DANCING_WITH_THE_STARS;
+import static com.disney.qa.common.constant.IConstantHelper.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -20,8 +21,6 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
     //Test constants
-    private static final String UPCOMING = "UPCOMING";
-    private static final String LIVE = "LIVE";
     private static final String PLAY = "PLAY";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106662"})
@@ -32,9 +31,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
         details.addToWatchlist();
         details.clickMenuTimes(1,1);
@@ -54,9 +52,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         home.isOpened();
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -70,9 +66,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologyTitleDescriptionDate() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.getLogoImage().isPresent(), DANCING_WITH_THE_STARS.getTitle() + "logo image was not found.");
@@ -87,10 +81,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         try {
@@ -116,9 +107,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologyDetailsTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         String mediaTitle = details.getMediaTitle();
@@ -142,9 +131,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologySuggestedTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
@@ -157,9 +145,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologyExtrasTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
@@ -177,10 +164,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInWithoutHomeCheck(getAccount());
+        logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         try {
@@ -218,9 +203,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
 
         SoftAssert sa = new SoftAssert();
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
