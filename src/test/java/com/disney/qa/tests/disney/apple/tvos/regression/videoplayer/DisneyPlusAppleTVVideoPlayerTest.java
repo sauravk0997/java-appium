@@ -72,7 +72,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         videoPlayer.waitForVideoToStart();
         commonPage.clickRight(4);
         videoPlayer.waitForVideoToStart();
-        commonPage.clickLeft(2);
+        videoPlayer.clickDown();
+        videoPlayer.clickLeft();
 
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
