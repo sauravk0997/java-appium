@@ -26,7 +26,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
 
         // Login and open deeplink to movie and validate lock controls tooltip
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_playback_deeplink"));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);

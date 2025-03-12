@@ -2,9 +2,9 @@
 <suite verbose="1" name="dmgzios_handset_reg_ratings_fc" annotations="JDK" configfailurepolicy="continue" thread-count="12" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.2.0-dev"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78836"/>
-    <parameter name="jenkinsBuild" value="4.2.0.76844"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.2.0-fc"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78913"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77045"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_handset_reg_ratings_fc"/>
@@ -17,7 +17,7 @@
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Handset-Pipeline"/>
-    <parameter name="scheduling" value="H 5 * * 3,0"/>
+    <parameter name="scheduling" value="H 8 * * 3,0"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields"
