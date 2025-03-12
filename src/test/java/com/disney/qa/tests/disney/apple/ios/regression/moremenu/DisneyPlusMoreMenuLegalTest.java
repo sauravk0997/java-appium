@@ -63,14 +63,14 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76671"})
-    @Test(dataProvider = "fallbackLanguages", description = "Verify the displays in Legal only show in the profile language if the account's country supports it", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @Test(dataProvider = "fallbackLanguages", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyLegalUsesFallbackDictionary(String TUID) {
         SoftAssert sa = new SoftAssert();
         String lang = StringUtils.substringAfter(TUID, "TUID: ");
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        setAccount(getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), lang, SUBSCRIPTION_V2));
-        setAppToHomeScreen(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM, getLocalizationUtils().getLocale(), lang)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -108,7 +108,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -146,14 +146,16 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
+
         String country = StringUtils.substringAfter(TUID, "TUID: ");
-        setAccount(getAccountApi().createAccount(offer, country, getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2));
-        getAccountApi().overrideLocations(getAccount(), country);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), country);
 
         Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomePage.clickLogInButton();
-        login(getAccount());
+        login(getUnifiedAccount());
+
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
@@ -202,9 +204,9 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-        DisneyplusSellingLegalIOSPageBase sellinglegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
+        DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
@@ -225,14 +227,14 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
 
-        sa.assertTrue(sellinglegalTextPage.isOpened(), "Legal page/text for Selling, Sharing, Targeted Advertising not opened");
-        sa.assertTrue(sellinglegalTextPage.isBackArrowPresent(), "Back button arrow was not found");
-        sa.assertTrue(sellinglegalTextPage.isSellingSharingLegalHeaderPresent(), "'Selling, Sharing, Targeted Advertising' Header was not found");
-        sa.assertTrue(sellinglegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "Blue toggle was not Turned ON by default");
-        sa.assertTrue(sellinglegalTextPage.isLegaltextPresent(), "Legal text was not found for selling, sharing");
-        sa.assertTrue(sellinglegalTextPage.isOptOutFormLinkPresent(), "Opt-out-form link in the body text was not found");
-        sa.assertTrue(sellinglegalTextPage.isIABOptOutListLinkPresent(), "IAB opt-out list in the body text was not found");
-        sa.assertTrue(sellinglegalTextPage.isTargatedAdvertisingOptOutRightsLinkPresent(), "Do Not Sell or Share my Personal Information\" and \"Targeted Advertising\" Opt-out Rights link in the body text was not found");
+        sa.assertTrue(sellingLegalTextPage.isOpened(), "Legal page/text for Selling, Sharing, Targeted Advertising not opened");
+        sa.assertTrue(sellingLegalTextPage.isBackArrowPresent(), "Back button arrow was not found");
+        sa.assertTrue(sellingLegalTextPage.isSellingSharingLegalHeaderPresent(), "'Selling, Sharing, Targeted Advertising' Header was not found");
+        sa.assertTrue(sellingLegalTextPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "Blue toggle was not Turned ON by default");
+        sa.assertTrue(sellingLegalTextPage.isLegaltextPresent(), "Legal text was not found for selling, sharing");
+        sa.assertTrue(sellingLegalTextPage.isOptOutFormLinkPresent(), "Opt-out-form link in the body text was not found");
+        sa.assertTrue(sellingLegalTextPage.isIABOptOutListLinkPresent(), "IAB opt-out list in the body text was not found");
+        sa.assertTrue(sellingLegalTextPage.isTargatedAdvertisingOptOutRightsLinkPresent(), "Do Not Sell or Share my Personal Information\" and \"Targeted Advertising\" Opt-out Rights link in the body text was not found");
         sa.assertAll();
     }
 
@@ -245,7 +247,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
@@ -311,9 +313,9 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-        DisneyplusSellingLegalIOSPageBase sellinglegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
+        DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
@@ -334,22 +336,22 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         //Verify Opt out form Link
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
-        sellinglegalTextPage.clickOptOutFormLink();
-        sa.assertTrue(sellinglegalTextPage.isOptOutFormLinkOpened(25), "Opt Out form Link page not opened");
+        sellingLegalTextPage.clickOptOutFormLink();
+        sa.assertTrue(sellingLegalTextPage.isOptOutFormLinkOpened(25), "Opt Out form Link page not opened");
         oneTrustPage.getTypeButtonByLabel("Done").click();
-        sa.assertTrue(sellinglegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
+        sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
 
         //Verify IAB opt out list Link
-        sellinglegalTextPage.clickIABOptOutListLink();
-        sa.assertTrue(sellinglegalTextPage.isIABOptOutListLinkPageOpened(), "IAB Opt Out List Link page not opened");
+        sellingLegalTextPage.clickIABOptOutListLink();
+        sa.assertTrue(sellingLegalTextPage.isIABOptOutListLinkPageOpened(), "IAB Opt Out List Link page not opened");
         oneTrustPage.getTypeButtonByLabel("Done").click();
-        sa.assertTrue(sellinglegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
+        sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
 
         //Verify Do Not Sell or Share My Personal Information" and "Targeted Advertising" Opt-Out Rights" link
-        sellinglegalTextPage.clickTargetedAdvertisingOptOutRightsLink();
-        sa.assertTrue(sellinglegalTextPage.isTargetedAdvertisingOptOutRightsLinkPageOpened(15), "Targeted Advertising Opt Out Rights page not opened");
+        sellingLegalTextPage.clickTargetedAdvertisingOptOutRightsLink();
+        sa.assertTrue(sellingLegalTextPage.isTargetedAdvertisingOptOutRightsLinkPageOpened(15), "Targeted Advertising Opt Out Rights page not opened");
         oneTrustPage.getTypeButtonByLabel("Done").click();
-        sa.assertTrue(sellinglegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
+        sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
         sa.assertAll();
     }
 }
