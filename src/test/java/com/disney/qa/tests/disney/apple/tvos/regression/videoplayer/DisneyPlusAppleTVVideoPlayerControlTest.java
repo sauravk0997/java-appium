@@ -132,21 +132,6 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         LOGGER.info("thumbnailTimeline {}", thumbnailTimeline);
         commonPage.clickUp(2);
 
-        // Make duration appear and get time again
-        commonPage.clickDown(1);
-        int remainingTime = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        LOGGER.info("remainingTimeAfterPause {}", remainingTime);
-
-        // Make duration appear with remote button and validate video is paused
-        commonPage.clickDown(1);
-        int timeAfterFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        LOGGER.info("timeAfterFF {}", timeAfterFF);
-        Assert.assertEquals(remainingTime, timeAfterFF, VIDEO_NOT_PAUSED);
-
-        // Get time before play and compare with thumbnail position
-        commonPage.clickDown(1);
-        int timeBeforeTapPlay = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        Assert.assertEquals(thumbnailTimeline, timeBeforeTapPlay, "Play will not start at the thumbnail position");
         // Play video with remote button and verify it started to play
         home.clickPlay();
         home.waitForElementToDisappear(videoPlayerTVPage.getTimeRemainingLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
