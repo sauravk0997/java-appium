@@ -1533,4 +1533,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getBrandLandingView() {
         return brandLandingView;
     }
+
+    public void backgroundAppForMilliseconds(long millis) {
+        runAppInBackground(Duration.ofSeconds(-1));
+        try {
+            LOGGER.info("Waiting for {} milliseconds", millis);
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void bringAppToForeground() {
+        activateApp(BUNDLE_ID);
+    }
 }
