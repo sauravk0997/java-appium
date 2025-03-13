@@ -119,10 +119,10 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.waitForVideoToStart();
-        if (videoPlayer.getSkipIntroButton().isPresent(FIVE_SEC_TIMEOUT)) {
-            videoPlayer.clickSelect();
-        }
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getSkipIntroButton());
+
+        //Skip intro and then pause playback
+        videoPlayer.clickSelect();
         videoPlayer.clickSelect();
 
         //Move left to the start of the playback and check thumbnail is aligned with the beginning of the seek bar
