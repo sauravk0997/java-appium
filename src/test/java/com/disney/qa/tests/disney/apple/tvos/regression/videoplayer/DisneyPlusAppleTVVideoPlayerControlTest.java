@@ -160,7 +160,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         //Skip intro and then pause playback
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getSkipIntroButton());
         videoPlayer.clickSelect();
-        videoPlayer.clickPlay();
+        videoPlayer.clickSelect();
 
         //Move left to the start of the playback and check thumbnail is aligned with the beginning of the seek bar
         commonPage.clickLeftTillBeginningOfPlaybackIsReached(
@@ -184,7 +184,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
 
         //Fast-Forward until the end of the playback and validate the thumbnail is "docked" at the end of the seekbar
         commonPage.clickRightTillEndOfPlaybackIsReached(
-                videoPlayer.getSeekbar(), numberOfAttemptsToReachEnd, 1,1);
+                videoPlayer.getSeekbar(), numberOfAttemptsToReachEnd, 1,2);
         Assert.assertTrue(videoPlayer.isThumbnailAlignedWithTheEndOfTheSeekBar(),
                 "Thumbnail rectangle wasn't aligned with the end of the seek bar");
     }
