@@ -444,20 +444,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public void downloadApp(String version) {
-        String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
-        LOGGER.info("App Download: {}", appCenterAppName);
-        if (appCenterAppName.contains("for_Automation")) {
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Dominguez-Non-IAP-Prod-Enterprise-for-Automation/ios/enterprise/%s", version))
-                    .getDirectLink());
-        } else if (appCenterAppName.contains("Disney")) {
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", version))
-                    .getDirectLink());
-        }
-    }
 
     public void downloadDisneyApp() {
         String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
@@ -490,27 +476,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             HoraValidator hv = new HoraValidator(accountId);
             hv.assertValidation(softAssert);
             hv.checkListForPQOE(softAssert, checkList);
-        }
-    }
-
-    public DisneyAccount createAccountWithSku(DisneySkuParameters sku, String country, String language, boolean... ageVerified) {
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.addSku(sku);
-        request.setCountry(country);
-        request.setLanguage(language);
-        if (ageVerified.length > 0) {
-            request.setAgeVerified(ageVerified[0]);
-        }
-        return getAccountApi().createAccount(request);
-    }
-
-    public void launchOrInstallJarvis() {
-        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
-        if (isInstalled) {
-            launchJarvis(false);
-
-        } else {
-            launchJarvis(true);
         }
     }
 
@@ -596,7 +561,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             container = getExploreApi().getPage(getDisneyExploreSearchRequest()
                     .setEntityId(pageID)
-                    .setProfileId(getAccount().getProfileId())
+                    .setProfileId(getUnifiedAccount().getProfileId())
                     .setCountryCode(locale)
                     .setMaturity(getMaxMaturityRating(locale))
                     .setRoamingDas(getRoamingDas(locale))
@@ -677,7 +642,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public List<Item> getExploreAPIItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getSet(getDisneyExploreSearchRequest()
                         .setSetId(setId)
-                        .setProfileId(getAccount().getProfileId())
+                        .setProfileId(getUnifiedAccount().getProfileId())
                         .setCountryCode(locale)
                         .setMaturity(getMaxMaturityRating(locale))
                         .setRoamingDas(getRoamingDas(locale))

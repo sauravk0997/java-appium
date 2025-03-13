@@ -26,6 +26,7 @@ import org.testng.asserts.SoftAssert;
 import java.time.Duration;
 import java.util.*;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
@@ -321,7 +322,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74459"})
-    @Test(groups = {TestGroup.HULK, TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyStandardHuluPostPlay() {
         DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -379,12 +380,14 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         //Bring up upNext UI
         initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
         upNext.waitForUpNextUIToAppear();
-        sa.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
-        //This will lock the device for 5 seconds then unlock it
-        lockDevice(Duration.ofSeconds(5));
+        Assert.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
+
+        //Background For X Amount of Time and Foreground
+        runAppInBackground(10);
+
         //After backgrounding the app, video player should exit
         Assert.assertFalse(videoPlayer.isOpened(), "Video player did not exit after backgrounding the app");
-        Assert.assertTrue(detailsPage.isOpened(), "Details Page was not displayed");
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
@@ -424,7 +427,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Enable autoplay
         toggleAutoPlay("ON");

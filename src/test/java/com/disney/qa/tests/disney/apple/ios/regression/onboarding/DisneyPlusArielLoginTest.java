@@ -1,8 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.offer.pojos.*;
-import com.disney.qa.api.pojos.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -13,6 +11,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.*;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusArielLoginTest extends DisneyBaseTest {

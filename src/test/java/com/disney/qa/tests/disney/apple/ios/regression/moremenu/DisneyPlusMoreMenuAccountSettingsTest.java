@@ -24,6 +24,7 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.*;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
@@ -149,7 +150,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
     @Test(description = "Verify that the correct description for Google displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySubscriptionDetails_GooglePlay() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_GOOGLE_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -170,7 +171,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
     @Test(description = "Verify that the correct description for Roku displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySubscriptionDetails_Roku() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_ROKU)));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -191,7 +192,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75403"})
     @Test(description = "Verify that the correct description for Amazon displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySubscriptionDetails_Amazon() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_AMAZON)));
         setAppToAccountSettings();
         DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
 
@@ -206,27 +207,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Browser webview did not open");
 
         Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(AMAZON_URL),
-                "Webview did not open to the expected url");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61613", "XMOBQA-66500"})
-    @Test(description = "Verify that the correct description for Mercado Libre displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifySubscriptionDetails_MercadoLibre() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_PARTNER_MERCADOLIBRE_MX_STANDALONE, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMercadolibreSubscriptionTitlePresent(),
-                "Mercado Libre Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isMercadoLibreSubscriptionMessagePresent(),
-                "Mercado Libre Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openMercadoLibreWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(MERCADOLIBRE_URL),
                 "Webview did not open to the expected url");
     }
 
@@ -738,125 +718,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Already In Use Email Error message not displayed");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66501"})
-    @Test(description = "User in IAP D+ Hold who gets Partner Subscription does not see Hold UX", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyIAPBillingHoldWithPartnerSub() {
-        SoftAssert sa = new SoftAssert();
-        String firstName = "Test";
-        String lastName = "User";
-        List<DisneyOrder> billingOrder = new LinkedList<>();
-        List<DisneySkuParameters> iapOnHold = Arrays.asList(DisneySkuParameters.DISNEY_IAP_GOOGLE_MONTHLY, DisneySkuParameters.DISNEY_IAP_GOOGLE_YEARLY,
-                DisneySkuParameters.DISNEY_IAP_AMAZON_MONTHLY, DisneySkuParameters.DISNEY_IAP_AMAZON_YEARLY,
-                DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY, DisneySkuParameters.DISNEY_IAP_APPLE_YEARLY,
-                DisneySkuParameters.DISNEY_IAP_ROKU_MONTHLY, DisneySkuParameters.DISNEY_IAP_ROKU_YEARLY);
-        List<DisneySkuParameters> activeProviders = Arrays.asList(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE, DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_SUPER_BUNDLE,
-                DisneySkuParameters.DISNEY_EXTERNAL_CANAL_BUNDLE, DisneySkuParameters.DISNEY_EXTERNAL_O2_BUNDLE);
-
-        iapOnHold.forEach(iap -> activeProviders.forEach(provider -> {
-            LOGGER.info("Entitlement combo: {}/{}", iap, provider);
-            billingOrder.add(DisneyOrder.SET_BILLING_HOLD);
-            CreateDisneyAccountRequest createDisneyAccountRequest = CreateDisneyAccountRequest.builder()
-                    .firstName(firstName)
-                    .lastName(lastName)
-                    .email(generateGmailAccount())
-                    .language(getLocalizationUtils().getUserLanguage())
-                    .country(getLocalizationUtils().getLocale()).build();
-
-            createDisneyAccountRequest.addSku(iap);
-            createDisneyAccountRequest.setOrderSettings(billingOrder);
-            getAccount().getOrderSettings().clear();
-
-            try {
-                disneyEntitlements.setOffer(getAccountApi().fetchOffer(DisneySkuParameters.DISNEY_EXTERNAL_VERIZON_MONTHLY_STANDALONE));
-                disneyEntitlements.setSubVersion(SUBSCRIPTION_V2);
-                getSubscriptionApi().entitleAccount(getAccount(), Arrays.asList(disneyEntitlements));
-
-                performIapHoldProviderSubscriptionCheck(sa, provider, iap);
-            } catch (URISyntaxException | JSONException e) {
-                LOGGER.info("Something went wrong with generating the account with entitlements {}/{}", iap, provider, e);
-            } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }));
-
-        sa.assertAll();
-    }
-
     //Helper methods
-
-    private void setAppToAccountSettings(DisneyAccount account) {
-        setAppToHomeScreen(account);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
-    }
 
     private void setAppToAccountSettings(UnifiedAccount account) {
         setAppToHomeScreen(account);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
-    }
-
-    /**
-     * Performs the Paused Entitlement check by checking for the passed URL value for the given provider.
-     * Checks both the Partner and Direct subscription tab navigation.
-     *
-     * @param url - The expected URL (fragment, whole path is not required) when opening the webview
-     * @return - The soft assertion in the test for which it was called.
-     */
-    private SoftAssert performPausedEntitlementCheck(DisneySkuParameters sku, String url, DisneyPlusPaywallIOSPageBase.PlanType planName, SoftAssert sa) {
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-        setAppToAccountSettings();
-        if (!disneyPlusAccountIOSPageBase.isStackedSubHeaderPresent()) {
-            logout();
-            setAppToAccountSettings();
-        }
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isStackedSubHeaderPresent(),
-                "Stacked Subscription header text was not displayed. Unable to verify Paused status.");
-
-        sa.assertTrue(disneyPlusAccountIOSPageBase.isDirectBillingPausedSubscriptionDisplayed(planName),
-                "Direct Billing 'Paused' subscription was not displayed");
-
-        disneyPlusAccountIOSPageBase.openBillingProvider(sku);
-        pause(4);
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                String.format("Browser webview did not open on navigation for the following SKU: %s", sku));
-        pause(2);
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(url),
-                String.format("Webview did not open to the expected URL: %s", url));
-
-        relaunch();
-        disneyPlusAccountIOSPageBase.clickPausedDirectBillingContainer(planName);
-        sa.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEY_URL),
-                String.format("Webview did not open to the expected URL: %s", DISNEY_URL));
-        return sa;
-    }
-
-    /**
-     * Performs the Held Entitlement check by checking for the the presence of the active provider and the lack of
-     * display for the held IAP provider.
-     */
-    private void performIapHoldProviderSubscriptionCheck(SoftAssert sa, DisneySkuParameters activeProvider, DisneySkuParameters heldIapService) {
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        try {
-            setAppToAccountSettings();
-
-            sa.assertTrue(disneyPlusAccountIOSPageBase.isSingleSubHeaderPresent(),
-                    "Single Subscription header text was not displayed");
-
-            sa.assertFalse(disneyPlusAccountIOSPageBase.isBillingProviderCellPresent(heldIapService, 5),
-                    "Held IAP subscription cell was displayed unexpectedly for sku: " + heldIapService);
-
-            sa.assertTrue(disneyPlusAccountIOSPageBase.isBillingProviderCellPresent(activeProvider),
-                    "Active Partner cell was not displayed for sku: " + activeProvider);
-
-            logout();
-        } catch (NoSuchElementException e) {
-            LOGGER.error("There was a navigation error. Iteration was not completed");
-            sa.fail(String.format("Something went wrong with navigation for the account with entitlement combo: %s/%s", activeProvider, heldIapService), e);
-            restart();
-        }
     }
 }
