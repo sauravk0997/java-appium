@@ -77,8 +77,8 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
         List<String> infoBlockList = new ArrayList<>();
         titles.forEach(title ->
                 infoBlockList.add(getWatchlistInfoBlock(title.getEntityId())));
-        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(),
-                getAccount().getAccountToken(),getAccount().getProfileId(), infoBlockList.get(i)));
+        IntStream.range(0, titles.size()).forEach(i -> getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
+                getUnifiedAccount().getAccountToken(),getUnifiedAccount().getProfileId(), infoBlockList.get(i)));
 
         logIn(getUnifiedAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());

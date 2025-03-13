@@ -457,7 +457,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .setLanguage(getLocalizationUtils().getUserLanguage());
     }
 
-    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName, String locale, String language) {
+    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName,
+                                                                      String locale,
+                                                                      String language,
+                                                                      boolean... isAgeVerified) {
+        if (isAgeVerified.length > 0) {
+            getDefaultCreateUnifiedAccountRequest().setAgeVerified(isAgeVerified[0]);
+        }
         return getDefaultCreateUnifiedAccountRequest()
                 .setPartner(Partner.DISNEY)
                 .addEntitlement(UnifiedEntitlement.builder()
@@ -492,14 +498,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     public String getWatchlistInfoBlock(String entityId) {
-        ExploreSearchRequest pageRequest = ExploreSearchRequest.builder()
-                .disneyAccount(getAccount())
-                .entityId(entityId.toString())
-                .build();
-        return getExploreApi().getWatchlistActionInfoBlock(pageRequest);
-    }
-
-    public String getWatchlistInfoBlockForUnifiedAccount(String entityId) {
         ExploreSearchRequest pageRequest = ExploreSearchRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .entityId(entityId)

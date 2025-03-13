@@ -9,6 +9,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.IConstantHelper.DISNEY_PREMIUM_MONTHLY_SINGAPORE;
 import static com.disney.qa.common.constant.IConstantHelper.SG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.G;
 import static com.disney.qa.common.constant.RatingConstant.Rating.M18;
@@ -24,35 +25,35 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69568"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_G() {
-        ratingsSetup(G.getContentRating(), getCountry());
+        ratingsSetup(DISNEY_PREMIUM_MONTHLY_SINGAPORE, G.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(G.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73178"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_PG() {
-        ratingsSetup(PG.getContentRating(), getCountry());
+        ratingsSetup(DISNEY_PREMIUM_MONTHLY_SINGAPORE, PG.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(PG.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73179"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_PG13() {
-        ratingsSetup(PG13.getContentRating(), getCountry());
+        ratingsSetup(DISNEY_PREMIUM_MONTHLY_SINGAPORE, PG13.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(PG13.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73180"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_NC16() {
-        ratingsSetup(NC16.getContentRating(), getCountry());
+        ratingsSetup(DISNEY_PREMIUM_MONTHLY_SINGAPORE, NC16.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(NC16.getContentRating());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73181"})
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MDA, SG})
     public void verifyRatingSystemSingaporeMDA_M18() {
-        ratingsSetup(M18.getContentRating(), getCountry());
+        ratingsSetup(DISNEY_PREMIUM_MONTHLY_SINGAPORE, M18.getContentRating(), getCountry());
         confirmRegionalRatingsDisplays(M18.getContentRating());
     }
 
@@ -71,7 +72,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        ratingsSetup(R21.getContentRating(), getCountry());
+        ratingsSetup(DISNEY_PREMIUM_MONTHLY_SINGAPORE, R21.getContentRating(), getCountry());
         // search results validation
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
@@ -84,7 +85,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         sa.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), "Password page did not open");
-        passwordPage.enterPassword(getAccount());
+        passwordPage.enterPassword(getUnifiedAccount());
         sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page should open");
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();

@@ -424,7 +424,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Enable autoplay
         toggleAutoPlay("ON");

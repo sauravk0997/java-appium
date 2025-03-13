@@ -104,13 +104,13 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
                 getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlockForUnifiedAccount(DisneyEntityIds.WANDA_VISION.getEntityId()));
+                getWatchlistInfoBlock(DisneyEntityIds.WANDA_VISION.getEntityId()));
 
         //Add hulu content to watchlist
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
                 getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlockForUnifiedAccount(R.TESTDATA.get("disney_prod_hulu_movie_grimcutty_entity_id")));
+                getWatchlistInfoBlock(R.TESTDATA.get("disney_prod_hulu_movie_grimcutty_entity_id")));
 
         // Verify content on Watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);

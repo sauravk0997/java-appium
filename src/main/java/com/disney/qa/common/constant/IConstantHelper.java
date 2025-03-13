@@ -116,4 +116,5 @@ public interface IConstantHelper {
     String DISNEY_PLUS_STANDARD = "Disney+ Standard";
     String DISNEY_PREMIUM_MONTHLY_CANADA = "Disney+ Standard - 129.99 CAD - Yearly - Signup";
     String DISNEY_PREMIUM_MONTHLY_SINGAPORE = "Disney+ Premium - 18.98 SGD - Monthly - Signup";
+    String DISNEY_PREMIUM_YEARLY_TURKEY = "Disney+ Without Ads Annual Sign-Up";
 }

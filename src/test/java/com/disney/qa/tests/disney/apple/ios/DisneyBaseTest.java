@@ -596,7 +596,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             container = getExploreApi().getPage(getDisneyExploreSearchRequest()
                     .setEntityId(pageID)
-                    .setProfileId(getAccount().getProfileId())
+                    .setProfileId(getUnifiedAccount().getProfileId())
                     .setCountryCode(locale)
                     .setMaturity(getMaxMaturityRating(locale))
                     .setRoamingDas(getRoamingDas(locale))
@@ -677,7 +677,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public List<Item> getExploreAPIItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getSet(getDisneyExploreSearchRequest()
                         .setSetId(setId)
-                        .setProfileId(getAccount().getProfileId())
+                        .setProfileId(getUnifiedAccount().getProfileId())
                         .setCountryCode(locale)
                         .setMaturity(getMaxMaturityRating(locale))
                         .setRoamingDas(getRoamingDas(locale))

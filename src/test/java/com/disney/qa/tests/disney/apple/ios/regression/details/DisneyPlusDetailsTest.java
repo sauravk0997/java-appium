@@ -895,24 +895,23 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyESPNUnavailableDetailsPagePCONError() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
-                .disneyAccount(getAccount())
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
                 .dateOfBirth(KIDS_DOB)
-                .language(getAccount().getProfileLang())
+                .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
-        Profile secondaryProfile = getAccount().getProfile(SECONDARY_PROFILE);
-        getAccountApi().editContentRatingProfileSetting(getAccount(),
+
+        Profile secondaryProfile = getUnifiedAccount().getProfile(SECONDARY_PROFILE);
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 secondaryProfile.getProfileId(),
                 secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
                 secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
 
-        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
-
+        setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
 
