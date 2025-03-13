@@ -52,8 +52,8 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
         });
     }
 
-    public void clickRightTillEndOfPlaybackIsReached(ExtendedWebElement currentPosition,
-                                                          int attempts, int timeout, int duration) {
+    public void clickRightTillEndOfPlaybackIsReached(
+            ExtendedWebElement currentPosition, int attempts, int timeout, int duration) {
         String previousPositionTimestamp;
         do {
             previousPositionTimestamp = currentPosition.getAttribute(VALUE);
@@ -74,8 +74,8 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
         });
     }
 
-    public void clickLeftTillBeginningOfPlaybackIsReached(ExtendedWebElement currentPosition,
-                                                          int attempts, int timeout, int duration) {
+    public void clickLeftTillBeginningOfPlaybackIsReached(
+            ExtendedWebElement currentPosition, int attempts, int timeout, int duration) {
         do {
             clickLeft(duration);
             pause(timeout);

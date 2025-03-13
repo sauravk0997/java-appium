@@ -77,7 +77,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
-    public boolean isThumbnailAlignedWithTheBeginningOfTheSeekBar() {
+    public boolean isThumbnailAlignedWithTheSeekBar() {
         int seekBarLeftXCoordinate = seekBar.getLocation().getX();
         int thumbnailLeftXCoordinate = thumbnailView.getLocation().getX();
 
