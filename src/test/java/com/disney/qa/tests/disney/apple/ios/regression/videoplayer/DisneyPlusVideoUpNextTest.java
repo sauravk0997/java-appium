@@ -383,7 +383,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         Assert.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
 
         //Background For X Amount of Time and Foreground
-        applePageBase.backgroundAppForSeconds(10);
+        runAppInBackground(10);
 
         //After backgrounding the app, video player should exit
         Assert.assertFalse(videoPlayer.isOpened(), "Video player did not exit after backgrounding the app");
