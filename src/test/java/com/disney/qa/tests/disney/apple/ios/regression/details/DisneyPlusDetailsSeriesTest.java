@@ -4,7 +4,6 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -895,7 +894,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
         searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         String entityID = R.TESTDATA.get("disney_prod_series_disney_junior_ariel_entity_id");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);

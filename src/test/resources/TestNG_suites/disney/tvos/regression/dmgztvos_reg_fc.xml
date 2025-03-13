@@ -3,8 +3,8 @@
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-tv-4.2.0-fc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78915"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77045"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78959"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77058"/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_reg_fc"/>
@@ -70,9 +70,14 @@
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.deeplinks.DisneyPlusAppleTVDeepLinksTests"/>
         </classes>
     </test>
-    <test verbose="1" name="DisneyPlus tvOS Video Player" parallel="methods">
+    <test verbose="1" name="DisneyPlus tvOS Video Player Control" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.videoplayer.DisneyPlusAppleTVVideoPlayerControlTest"/>
+        </classes>
+    </test>
+    <test verbose="1" name="DisneyPlus tvOS Video Player" parallel="methods">
+        <classes>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.videoplayer.DisneyPlusAppleTVVideoPlayerTest"/>
         </classes>
     </test>
 </suite>

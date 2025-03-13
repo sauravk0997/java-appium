@@ -66,6 +66,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private static final String SET_TO_FALSE = "Set to: false";
     protected static final String PLACEHOLDER_E = "E";
     protected static final String DEVICE = "DEVICE";
+    public static final String HULU_SERVICE_ATTRIBUTION_MESSAGE = "Included with your Hulu subscription";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -486,6 +487,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getStaticTextByLabelContains(String label) {
         return staticTextLabelContains.format(label);
     }
+
     public ExtendedWebElement getImageLabelContains(String label) {
         return imageLabelContains.format(label);
     }
@@ -506,7 +508,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return staticTypeTextViewValueContains.format(value);
     }
 
-    public  ExtendedWebElement getViewAlert() {
+    public ExtendedWebElement getViewAlert() {
         return viewAlert;
     }
 
@@ -602,7 +604,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return headlineHeader.getText();
     }
 
-    public boolean isHeadlineHeaderTextPresent(){
+    public boolean isHeadlineHeaderTextPresent() {
         return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent();
     }
 
@@ -757,14 +759,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
     }
 
-    public ExtendedWebElement getManageWithMyDisneyButton() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                DictionaryKeys.MY_DISNEY_MANAGE.getText()));
-    }
-    public void clickManageWithMyDisneyButton() {
-        getManageWithMyDisneyButton().click();
-    }
-
     public ExtendedWebElement getKeyboardDoneButton() {
         return keyboardDone;
     }
@@ -908,7 +902,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void dismissATVAppTrackingPopUp(int timeout) {
-        if(isAlertPresent()){
+        if (isAlertPresent()) {
             LOGGER.info("Dismissing App Track popup by clicking {}", "Ask App not to Track");
             moveDown(1, 1);
             clickSelect();
@@ -1237,7 +1231,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return artworkBackground.isPresent();
     }
 
-    public ExtendedWebElement getBackButton() { return backButton; }
+    public ExtendedWebElement getBackButton() {
+        return backButton;
+    }
 
     public ExtendedWebElement getUnavailableContentErrorPopUpMessage() {
         // This element has hardcoded the text in the app and there is not a dictionary key with the same content
@@ -1247,6 +1243,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
         return getUnavailableContentErrorPopUpMessage().isPresent();
+    }
+
+    public ExtendedWebElement getParentalControlMediaNotAllowedErrorPopUpMessage() {
+        //This error message is hardcoded text in the app, once it available in dictionary need to get it from dict
+        String notAllowedParentalControlMesssgae = "This title cannot be accessed because it exceeds your profile's " +
+                "parental control settings. You will be re-directed to Disney+ Home.";
+        return getStaticTextByLabel(notAllowedParentalControlMesssgae);
     }
 
     public ExtendedWebElement getKeyboardDelete() {
@@ -1289,7 +1292,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return firstCellElementFromCollection.format(CollectionConstant.getCollectionName(collection)).getText();
     }
 
-    public ExtendedWebElement getCellElementFromContainer(CollectionConstant.Collection collection, String title){
+    public ExtendedWebElement getCellElementFromContainer(CollectionConstant.Collection collection, String title) {
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(collection), title);
     }
 
@@ -1298,9 +1301,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isRatingPresent(DictionaryKeys rating) {
-            return waitUntil(ExpectedConditions.visibilityOfElementLocated(getStaticTextByLabelContains(getLocalizationUtils()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS,
-                            rating.getText())).getBy()), TEN_SEC_TIMEOUT);
+        return waitUntil(ExpectedConditions.visibilityOfElementLocated(getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.RATINGS,
+                        rating.getText())).getBy()), TEN_SEC_TIMEOUT);
     }
 
     public ExtendedWebElement getNavBackArrow() {
@@ -1478,8 +1481,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
         while (count > 0) {
             moveDown(1, 1);
-            if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) &&
-                    isFocused(getFirstCellFromCollection(collectionName))) {
+            if (firstCellFromCollection.isPresent(THREE_SEC_TIMEOUT) &&
+                    isFocused(firstCellFromCollection)) {
                 LOGGER.info("Reached desired collection");
                 return;
             }
@@ -1537,5 +1540,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getBrandLandingView() {
         return brandLandingView;
+    }
+
+    public ExtendedWebElement getThumbnailView() {
+        return thumbnailView;
     }
 }
