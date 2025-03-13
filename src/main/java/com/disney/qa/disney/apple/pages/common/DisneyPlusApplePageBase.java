@@ -67,6 +67,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected static final String PLACEHOLDER_E = "E";
     protected static final String DEVICE = "DEVICE";
     public static final String HULU_SERVICE_ATTRIBUTION_MESSAGE = "Included with your Hulu subscription";
+    public static final String VALUE = "value";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
