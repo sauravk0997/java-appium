@@ -4,7 +4,6 @@ import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -43,15 +42,15 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     @DataProvider(name = "userType")
     public Object[][] userType() {
-        return new Object[][]{{"DISNEY_HULU_NO_ADS_ESPN_WEB"},
-                {"DISNEY_VERIFIED_HULU_ESPN_BUNDLE"}};
+        return new Object[][]{{DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY},
+                {DISNEY_PLUS_PREMIUM}};
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyTitleAndBackButtonToClose() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
@@ -111,7 +110,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyCloseButtonForDeepLinkingContentSeries() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_debug_video_player_episode_deeplink"));
         videoPlayer.waitForVideoToStart();
@@ -126,7 +125,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyCloseButtonForDeepLinkingContentMovie() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_debug_video_player_movie_deeplink"));
         videoPlayer.waitForVideoToStart();
@@ -143,7 +142,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
@@ -189,9 +188,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAccount(createAccountWithSku(DisneySkuParameters.valueOf(userType),
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(userType)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         searchPage.getDisplayedTitles().get(0).click();
@@ -234,7 +233,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
-    @Test(description = "VOD Player Controls - Scrubber Elements", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyScrubberElementsOnPlayer() {
         String errorMessage = "not changed after scrub";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -245,7 +244,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         ExploreContent movieApiContent = getMovieApi(MARVELS.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String durationTime = videoPlayer.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scrubber bar not representing total length of current video");
-
         sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Remaining time was not found");
         sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Time indicator for Elapsed time was not found");
         sa.assertTrue(videoPlayer.isSeekbarVisible(), "Scrubber Bar was not found");
@@ -255,8 +253,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
         int elapsedTime = videoPlayer.getCurrentTime();
         int currentPositionOnSeekPlayer = videoPlayer.getCurrentPositionOnPlayer();
-
-        sa.assertTrue(videoPlayer.verifyPlayheadRepresentsCurrentPointOfTime(), "Playhead position not representing the current point in time with respect to the total length of the video");
+        sa.assertTrue(videoPlayer.verifyPlayheadRepresentsCurrentPointOfTime(),
+                "Playhead position not representing the current point in time with respect to the total length of the video");
 
         //video player already scrubbed 50 % in above method
         int remainingTimeAfterScrub = videoPlayer.getRemainingTime();
@@ -288,7 +286,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
@@ -336,14 +334,15 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String RATING_PG_13 = "PG-13";
         String HOME_NOT_DISPLAYED_ERROR_MESSAGE = "Home page is not displayed";
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+
         // Assign PG-13 content maturity rating
-        getAccountApi().editContentRatingProfileSetting(getAccount(),
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 getLocalizationUtils().getRatingSystem(),
                 RATING_PG_13);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_NOT_DISPLAYED_ERROR_MESSAGE);
         // Launch deeplink Dead Pool rated R
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"));
@@ -450,10 +449,10 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         int uiLatency = 30;
         String network = "FX";
         String entitySeries = "entity-6bf318d8-f506-4e7f-a58f-0c5cc09b6c90";
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
-                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.waitForHomePageToOpen();
 
         //Get one percent of the first episode duration
@@ -493,7 +492,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);

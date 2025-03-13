@@ -1,6 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
+import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.client.responses.content.ContentSet;
@@ -26,10 +26,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -60,7 +57,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String LEFT = "LEFT";
 
     private void onboard() {
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
 
@@ -98,15 +95,25 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-66772" })
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66772"})
     @Test(description = "Verify: User cannot select the same avatar for multiple profiles", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUserCanNotSelectTheSameAvatarForMultipleProfiles() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(THE_CHILD)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
         disneyPlusMoreMenuIOSPageBase.clickMoreTab();
         disneyPlusMoreMenuIOSPageBase.clickAddProfile();
         ExtendedWebElement[] avatars = disneyPlusEditProfileIOSPageBase.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
@@ -119,14 +126,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-66778" })
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66778"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUserCanNotSelectTheSameNameForMultipleProfiles() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.waitForPresenceOfAnElement(moreMenu.getAddProfileBtn());
         moreMenu.clickAddProfile();
@@ -144,11 +151,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         //Turn ON autoplay
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
         editProfile.toggleAutoplayButton("OFF");
         sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         sa.assertAll();
@@ -156,20 +163,20 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66794"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void  verifyEditProfileName() {
+    public void verifyEditProfileName() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         String updatedUserName = "New Test User";
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
 
         editProfile.enterProfileName(updatedUserName);
         editProfile.clickDoneBtn();
-        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         Assert.assertTrue(whoIsWatching.isProfileIconPresent(updatedUserName),
                 "Profile name is not updated as expected");
 
@@ -181,10 +188,20 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount(),getAccount().getFirstName());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getFirstName());
         //Verify autoplay is turned on by default for adult profile
-        verifyAutoPlayStateForProfile(getAccount().getFirstName(),"On",sa);
+        verifyAutoPlayStateForProfile(getUnifiedAccount().getFirstName(), "On", sa);
         //Turn off autoplay for adult profile
         editProfile.toggleAutoplayButton("OFF");
         sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
@@ -193,13 +210,13 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
         //Verify autoplay is turned off for adult profile
-        verifyAutoPlayStateForProfile(getAccount().getFirstName(),"Off",sa);
+        verifyAutoPlayStateForProfile(getUnifiedAccount().getFirstName(), "Off", sa);
         editProfile.clickDoneBtn();
         //Verify autoplay is turned OFF by default for kids profile
-        verifyAutoPlayStateForProfile(KIDS_PROFILE,"Off",sa);
+        verifyAutoPlayStateForProfile(KIDS_PROFILE, "Off", sa);
         //Turn on autoplay for adult profile
         editProfile.toggleAutoplayButton("ON");
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
         sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
@@ -258,7 +275,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(addProfile.isMaturityRatingNotNowInfoDisplayed(), "Maturity rating not now info wasn't displayed");
         sa.assertTrue(addProfile.isUpdateMaturityRatingActionDisplayed(), "Update your maturity rating info wasn't displayed");
         sa.assertTrue(addProfile.verifyHeadlineHeaderText(), "Set your content rating to max rating text isn't displayed");
-       //select 'Not Now' button
+        //select 'Not Now' button
         addProfile.clickSecondaryButtonByCoordinates();
         //Verify TV-14 is displayed in account's page
         moreMenu.clickEditProfilesBtn();
@@ -275,15 +292,19 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
+        List<String> profiles = Arrays.asList("Profile 2", "Profile 3", "Profile 4", "Profile 5", "Profile 6");
+        profiles.forEach(profile ->
+                getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(getUnifiedAccount())
+                        .profileName(profile)
+                        .dateOfBirth(ADULT_DOB)
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId(RAYA)
+                        .kidsModeEnabled(false)
+                        .isStarOnboarded(true).build())
+        );
 
-        //Add Profiles
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Third").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Fourth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Fifth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(BABY_YODA).kidsModeEnabled(false).isStarOnboarded(true).build());
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName("Sixth").dateOfBirth(ADULT_DOB).language(getLocalizationUtils().getUserLanguage()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
-
-        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
             swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
@@ -305,22 +326,32 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(THE_CHILD)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount());
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
-        sa.assertTrue(editProfile.isEditTitleDisplayed(),"Edit profile Title is not displayed");
-        sa.assertTrue(editProfile.isProfileIconDisplayed(THE_CHILD),"profile icon is not displayed");
-        sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"pencil icon is not displayed");
-        sa.assertTrue(editProfile.isPersonalInformationSectionDisplayed(),"Personal information section is not as expected");
-        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(),"Playback setting section is not as expected");
-        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(),"Feature setting section is not as expected");
-        sa.assertTrue(editProfile.isParentalControlSectionDisplayed(),"Parental control section is not as expected");
-        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("TV-MA"),"Maturity Rating section is not as expected");
-        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is not displayed");
-        sa.assertTrue(editProfile.getDoneButton().isPresent(),"Done button is not displayed");
+        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
+        sa.assertTrue(editProfile.isProfileIconDisplayed(THE_CHILD), "profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "pencil icon is not displayed");
+        sa.assertTrue(editProfile.isPersonalInformationSectionDisplayed(), "Personal information section is not as expected");
+        sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(), "Playback setting section is not as expected");
+        sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(), "Feature setting section is not as expected");
+        sa.assertTrue(editProfile.isParentalControlSectionDisplayed(), "Parental control section is not as expected");
+        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("TV-MA"), "Maturity Rating section is not as expected");
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is not displayed");
+        sa.assertTrue(editProfile.getDoneButton().isPresent(), "Done button is not displayed");
         addProfile.updateUserName("updated_profile");
         editProfile.getDoneButton().click();
         moreMenu.clickMoreTab();
@@ -329,7 +360,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile("updated_profile");
-        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(),"Delete profile button is not displayed");
+        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is not displayed");
         editProfile.getDeleteProfileButton().click();
         editProfile.clickConfirmDeleteButton();
         sa.assertFalse(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "Profile is not deleted");
@@ -337,7 +368,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66836"})
-    @Test(description = "Profile - Forgot Profile PIN", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyForgotPin() {
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
@@ -345,14 +376,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
         String incorrectPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, INVALID_CREDENTIALS_ERROR.getText());
-        DisneyAccount account = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage(), "V2");
+
         try {
-            getAccountApi().updateProfilePin(account, account.getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+            getUnifiedAccountApi().updateProfilePin(getUnifiedAccount(),
+                    getUnifiedAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
-        setAppToHomeScreen(account);
+        setAppToHomeScreen(getUnifiedAccount());
         sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
 
@@ -365,7 +396,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, "'We couldn't log you in' error message did not display for wrong password entered.");
 
         //Enter correct password
-        passwordPage.enterPassword(account);
+        passwordPage.enterPassword(getUnifiedAccount());
 
         //Validate buttons and text present on Forgot PIN page
         sa.assertTrue(pinPage.isOpened(), "Profile pin title label was not found.");
@@ -385,7 +416,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(pinPage.getAccountPasswordRequiredMessaging().isPresent(), "'To retrieve pin, account password required' messaging not found.");
 
         //Enter in new pin and save
-        passwordPage.enterPassword(account);
+        passwordPage.enterPassword(getUnifiedAccount());
         sa.assertTrue(pinPage.isOpened(), "Pin page was not opened after entering password.");
         pinPage.clearPin();
         pinPage.clickProfilePin();
@@ -407,7 +438,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         whoIsWatching.isOpened();
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
         pinPage.getForgotPinButton().click();
-        passwordPage.enterPassword(account);
+        passwordPage.enterPassword(getUnifiedAccount());
         pinPage.getPinCheckBox().click();
         pinPage.getSaveButton().click();
         sa.assertFalse(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was found.");
@@ -423,16 +454,27 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(THE_CHILD)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount());
+
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
         moreMenu.clickMoreTab();
-        sa.assertTrue(moreMenu.isEditProfilesBtnPresent(),"Edit Profile CTA wasn't displayed on who's watching screen");
-        sa.assertTrue(moreMenu.isAddProfileButtonPresent(),"Add Profile CTA wasn't displayed on who's watching screen");
-        sa.assertTrue(moreMenu.getStaticTextByLabel(SECONDARY_PROFILE).isPresent(),"Profile name wasn't displayed on who's watching screen");
-        sa.assertTrue(moreMenu.getStaticTextByLabel(DEFAULT_PROFILE).isPresent(),"Profile name wasn't displayed on who's watching screen");
-        sa.assertTrue(whoIsWatching.isProfileIconPresent(DEFAULT_PROFILE),"Profile icon cell wasn't displayed for default profile");
-        sa.assertTrue(whoIsWatching.isProfileIconPresent(SECONDARY_PROFILE),"Profile icon cell wasn't displayed for secondary profile");
+        sa.assertTrue(moreMenu.isEditProfilesBtnPresent(), "Edit Profile CTA wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.isAddProfileButtonPresent(), "Add Profile CTA wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.getStaticTextByLabel(SECONDARY_PROFILE).isPresent(), "Profile name wasn't displayed on who's watching screen");
+        sa.assertTrue(moreMenu.getStaticTextByLabel(DEFAULT_PROFILE).isPresent(), "Profile name wasn't displayed on who's watching screen");
+        sa.assertTrue(whoIsWatching.isProfileIconPresent(DEFAULT_PROFILE), "Profile icon cell wasn't displayed for default profile");
+        sa.assertTrue(whoIsWatching.isProfileIconPresent(SECONDARY_PROFILE), "Profile icon cell wasn't displayed for secondary profile");
         sa.assertAll();
     }
 
@@ -440,11 +482,21 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(description = "Profiles > Edit Profile - Delete Profile UI", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileDeleteProfileUI() {
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(RAYA).kidsModeEnabled(false).isStarOnboarded(true).build());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -469,17 +521,27 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(description = "Profiles > Profile PIN - Profile Access", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyProfilePinProfileAccess() {
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(SECONDARY_PROFILE), SECONDARY_PROFILE_PIN);
+            getUnifiedAccountApi().updateProfilePin(getUnifiedAccount(), getUnifiedAccount().getProfileId(DEFAULT_PROFILE),
+                    PROFILE_PIN);
+            getUnifiedAccountApi().updateProfilePin(getUnifiedAccount(), getUnifiedAccount().getProfileId(SECONDARY_PROFILE), SECONDARY_PROFILE_PIN);
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         sa.assertTrue(whoIsWatching.isPinProtectedProfileIconPresent(DEFAULT_PROFILE), "Pin protected profile was not found.");
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
         //Validate UI
@@ -491,11 +553,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         //Validate incorrect pin error
         SecureRandom random = new SecureRandom();
-        int min=1000;
-        int max=9999;
+        int min = 1000;
+        int max = 9999;
         IntStream.range(0, 10).forEach(i -> {
             pinPage.clickProfilePin();
-            pinPage.enterProfilePin(String.valueOf(random.nextInt(max-min+1)+min));
+            pinPage.enterProfilePin(String.valueOf(random.nextInt(max - min + 1) + min));
             sa.assertTrue(pinPage.getProfilePinInvalidErrorMessage().isPresent(), "Profile PIN Invalid Error message was not found.");
             pinPage.clearPin();
         });
@@ -520,13 +582,13 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusContentRatingIOSPageBase contentRatingPage = new DisneyPlusContentRatingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
         editProfile.getContentRatingHeader().click();
-        passwordPage.enterPassword(getAccount());
+        passwordPage.enterPassword(getUnifiedAccount());
         sa.assertTrue(contentRatingPage.isOpened(), "Content rating page was not opened");
         sa.assertTrue(contentRatingPage.isContentRatingDisplyed(RATING_R), RATING_R + " rating was not displayed");
         sa.assertTrue(contentRatingPage.isContentRatingDisplyed(RATING_MATURE), RATING_MATURE + " rating was not displayed");
@@ -541,7 +603,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.waitForUpdatedToastToDisappear();
         //User select Rating TV-MA
         editProfile.getContentRatingHeader().click();
-        passwordPage.enterPassword(getAccount());
+        passwordPage.enterPassword(getUnifiedAccount());
         contentRatingPage.selectContentRating(RATING_MATURE);
         contentRatingPage.clickSaveButton();
         sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
@@ -557,13 +619,23 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPinIOSPageBase pinPage = new DisneyPlusPinIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).dateOfBirth(ADULT_DOB).language(getAccount().getProfileLang()).avatarId(THE_CHILD).kidsModeEnabled(false).isStarOnboarded(true).build());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
         try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+            getUnifiedAccountApi().updateProfilePin(getUnifiedAccount(), getUnifiedAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Verify pin protected profile
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
@@ -579,7 +651,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         editProfile.swipeUp(500);
         editProfile.getEditProfilePinSettingLabel().click();
-        passwordPage.enterPassword(getAccount());
+        passwordPage.enterPassword(getUnifiedAccount());
 
         //Verify clicking pin checkbox
         sa.assertTrue(pinPage.getPinCheckBox().isPresent(), "Checked checkbox was not found.");
@@ -616,35 +688,44 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-69511" })
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69511"})
     @Test(description = "PCON > Kid-Proof Exit Settings > Toggle UI and Logic", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyKidProofExitSettings() {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(BABY_YODA).kidsModeEnabled(true).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount(), getAccount().getFirstName());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getFirstName());
 
         editProfile.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
         //Verify line items for kid proof exit
         sa.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids proof exit label wasn't present");
-        sa.assertTrue(editProfile.getKidProofDescription().isPresent(),"Kids proof exit description wasn't present");
+        sa.assertTrue(editProfile.getKidProofDescription().isPresent(), "Kids proof exit description wasn't present");
         //Kid proof exit is off by default
         sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("Off"), "kids exit toggle value is not Off by default");
         editProfile.toggleKidsProofExit();
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
         sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON);
         editProfile.waitForUpdatedToastToDisappear();
         //Turn off junior mode toggle
         editProfile.toggleJuniorMode();
-        passwordPage.submitPasswordWhileLoggedIn(getAccount().getUserPass());
+        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
         sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("Off"), "Profile is not converted to General Audience(non-primary)");
         //Verify kids proof exit is not tappable
         editProfile.toggleKidsProofExit();
-        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"),"Kid proof exit toggle value was not retained from previous setting");
+        sa.assertTrue(editProfile.getKidProofExitToggleValue().equals("On"), "Kid proof exit toggle value was not retained from previous setting");
         //Change non-primary(general audience) profile back to kids profile
         editProfile.toggleJuniorMode();
         sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
@@ -666,7 +747,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount(), getAccount().getFirstName());
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getFirstName());
         editProfile.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
@@ -688,7 +770,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();
@@ -712,10 +794,10 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
         editProfile.clickAppLanguage();
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
         appLanguage.selectLanguage(ESPAÑOL);
@@ -740,14 +822,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
 
         sa.assertTrue(moreMenu.isEditProfilesBtnPresent(), "Edit Profiles button is not present.");
         moreMenu.clickEditProfilesBtn();
         sa.assertTrue(whoIsWatching.isEditProfileButtonDisplayed(), "Edit Profile button is not present.");
 
-        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
         sa.assertTrue(editProfile.isEditTitleDisplayed(), "Tapping on edit profile did not open profile to edit.");
         sa.assertAll();
     }
@@ -777,7 +859,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile(getAccount().getFirstName());
+        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
         editProfile.getAddProfileAvatar().click();
 
         //validate back arrow, Choose Avatar screen title and avatar headers
@@ -818,10 +900,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).
-                profileName(JUNIOR_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
         moreMenu.clickMoreTab();
 
         // Elements that should be present on screen
@@ -829,11 +918,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Avatar is not present");
         sa.assertTrue(moreMenu.getStaticTextByLabel(JUNIOR_PROFILE).isPresent(),
                 "Junior Mode name was not present on profile page");
-        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
+        sa.assertEquals(moreMenu.getExitKidsProfileButtonText(), "EXIT JUNIOR MODE",
                 "Exit Junior Mode text is not present");
         sa.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version is not present");
         sa.assertTrue(moreMenu.getDynamicCellByLabel(
-                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).isPresent(SHORT_TIMEOUT),
+                        moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).isPresent(SHORT_TIMEOUT),
                 "Watchlist Menu is not present");
         sa.assertTrue(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL),
                 "Legal Menu is not present");
@@ -857,9 +946,15 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = new DisneyPlusKidProofExitIOSPageBase(getDriver());
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                        .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
-                        .kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         configureKidsProfileProofExit();
 
@@ -872,7 +967,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Validates that Kid Proof Exit Screen has been closed
         Assert.assertTrue(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(),
                 "Junior Profile screen was not open");
-        Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
+        Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(), "EXIT JUNIOR MODE",
                 "Exit Junior Mode option is not present");
     }
 
@@ -883,11 +978,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
-                .kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
-        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
@@ -895,29 +996,29 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
         // Toggle ON Kid-Proof-Exit option and verify that it is updated and Junior Mode remains the same
         editProfile.toggleKidsProofExit();
-        passwordPage.enterPassword(getAccount());
+        passwordPage.enterPassword(getUnifiedAccount());
         editProfile.waitForUpdatedToastToDisappear();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is not converted to General Audience");
-        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(), "On", "Kids Proof Exit option is not toggled ON");
         // Toggle OFF Junior Mode option and it should not update kids toggle option
         editProfile.toggleJuniorMode();
-        passwordPage.enterPassword(getAccount());
+        passwordPage.enterPassword(getUnifiedAccount());
         editProfile.waitForUpdatedToastToDisappear();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
-        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(), "On", "Kids Proof Exit option is not toggled ON");
         // Toggle ON Junior Mode option and assert that Kid-Proof-Exit option remains the same
         editProfile.toggleJuniorMode();
         editProfile.waitForUpdatedToastToDisappear();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "On", "Profile is not converted to General Audience");
-        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit option is not toggled ON");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(), "On", "Kids Proof Exit option is not toggled ON");
         // Toggle OFF Junior Mode option and validate OFF status
         editProfile.toggleJuniorMode();
-        passwordPage.enterPassword(getAccount());
+        passwordPage.enterPassword(getUnifiedAccount());
         editProfile.waitForUpdatedToastToDisappear();
         Assert.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
         // Try to toggle Kid-Proof-Exit option and validate if it is disabled
         editProfile.toggleKidsProofExit();
-        Assert.assertEquals(editProfile.getKidProofExitToggleValue(),"On", "Kids Proof Exit toggle was not disabled");
+        Assert.assertEquals(editProfile.getKidProofExitToggleValue(), "On", "Kids Proof Exit toggle was not disabled");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75397"})
@@ -927,13 +1028,19 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = initPage(DisneyPlusKidProofExitIOSPageBase.class);
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
-                .kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
         String incorrectCode = "1234";
         configureKidsProfileProofExit();
 
-        moreMenu.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.tapExitKidsProfileButton();
@@ -951,9 +1058,15 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = initPage(DisneyPlusKidProofExitIOSPageBase.class);
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
-                .kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         configureKidsProfileProofExit();
         whoIsWatching.clickProfile(KIDS_PROFILE);
@@ -975,9 +1088,16 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusKidProofExitIOSPageBase kidProofExitIOSPageBase = initPage(DisneyPlusKidProofExitIOSPageBase.class);
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
-                .kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
         configureKidsProfileProofExit();
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
@@ -993,7 +1113,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         // Navigate back and validates that Kid Proof Exit Screen has been closed
         kidProofExitIOSPageBase.getCloseButton().click();
-        Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(),"EXIT JUNIOR MODE",
+        Assert.assertEquals(moreMenu.getExitKidsProfileButtonText(), "EXIT JUNIOR MODE",
                 "Exit Junior Mode option is not present");
         // Click on Exit Kids Profile and validates screen elements
         moreMenu.tapExitKidsProfileButton();
@@ -1010,11 +1130,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyJuniorModeProfileKidsCollection() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(DARTH_MAUL)
-                .kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
-        setAppToHomeScreen(getAccount(), KIDS_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
         homePage.clickDynamicCollectionOrContent(2, 2);
         Assert.assertTrue(brandPage.isOpened(), "Brand/Collection page is not open");
         Assert.assertTrue(brandPage.getBackButton().isPresent(), "Back button is not present");
@@ -1030,18 +1156,25 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount())
-                .profileName(KIDS_PROFILE).dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang())
-                .avatarId(DARTH_MAUL).kidsModeEnabled(true).kidProofExitEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .kidProofExitEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
-        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
         Assert.assertTrue(editProfile.getKidProofExitToggleValue().equals(ON), KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON);
 
         editProfile.toggleKidsProofExit();
-        editProfile.enterPassword(getAccount());
+        editProfile.enterPassword(getUnifiedAccount());
         Assert.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile screen did not open");
         Assert.assertTrue(editProfile.getKidProofExitToggleValue().equals(OFF),
@@ -1052,16 +1185,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyProfileContentMaturityRatingRestriction() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         String contentUnavailableError = "content-unavailable";
         String contentUnavailableHeader = "No Titles Available";
+
         //set lower rating
-        List<String> ratingSystemValues = getAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+        List<String> ratingSystemValues = getUnifiedAccount().getProfile(DEFAULT_PROFILE).getAttributes()
                 .getParentalControls().getMaturityRating().getRatingSystemValues();
-        getAccountApi().editContentRatingProfileSetting(getAccount(),
+
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
-        setAppToHomeScreen(getAccount());
+
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
         launchDeeplink(R.TESTDATA.get("disney_prod_loki_collection_deeplink"));
         Assert.assertTrue(homePage.getStaticTextByLabel(contentUnavailableHeader).isPresent(),
@@ -1075,15 +1209,19 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyProfileMinorConsentUI() {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-
         SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().
-                disneyAccount(getAccount()).profileName(JUNIOR_PROFILE).
-                dateOfBirth(null).language(getLocalizationUtils().getUserLanguage()).
-                avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
-        setAppToHomeScreen(getAccount(), JUNIOR_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
 
         updateProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
@@ -1108,26 +1246,27 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
-                .disneyAccount(getAccount())
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
                 .profileName(KIDS_PROFILE)
                 .dateOfBirth(KIDS_DOB)
-                .language(getAccount().getProfileLang())
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getAccount(), KIDS_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
         // Creating HashSet to store unique elements distance
         Set<Integer> distanceSet = new HashSet<>();
         List<ExtendedWebElement> navElements = addNavigationBarElements();
 
-        for (int i=0; i < navElements.size() - 1; i++)
+        for (int i = 0; i < navElements.size() - 1; i++)
             distanceSet.add(getDistanceBetweenElements(navElements.get(i), navElements.get(i + 1)));
 
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-             // All tabs in iPhone will be equally spaced, therefore HashSet will have just one entry
+            // All tabs in iPhone will be equally spaced, therefore HashSet will have just one entry
             Assert.assertEquals(distanceSet.size(), 1, "Junior mode navigation menu is not aligned in handset");
         } else if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             // In iPads, two tabs are on the right and other 2 are left aligned. Therefore there will be 2 unique distances, hence HashSet will have 2 entries.
@@ -1144,18 +1283,23 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyProfileValidateUpdate() {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage =initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         String dismissCatalog = "NOT NOW";
         String cancelButton = "Cancel";
         SoftAssert sa = new SoftAssert();
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().
-                disneyAccount(getAccount()).profileName(SECONDARY_PROFILE).
-                dateOfBirth(null).language(getLocalizationUtils().getUserLanguage()).
-                avatarId(MICKEY_MOUSE).kidsModeEnabled(false).isStarOnboarded(false).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(MICKEY_MOUSE)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
-        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
         Assert.assertTrue(updateProfilePage.isOpened(),
                 "'Let's update your profile' page is not opened");
 
@@ -1165,11 +1309,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(),
                 "Profile subtitle is not present");
         sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
-        sa.assertTrue(editProfile.getDynamicCellByName(MICKEY_MOUSE).isPresent(),"Profile icon is not displayed");
-        sa.assertTrue(editProfile.getBadgeIcon().isPresent(),"Pencil icon is not displayed");
+        sa.assertTrue(editProfile.getDynamicCellByName(MICKEY_MOUSE).isPresent(), "Profile icon is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "Pencil icon is not displayed");
         sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
         sa.assertTrue(updateProfilePage.isGenderFieldPresent(), "Gender field is not present");
-        sa.assertTrue(updateProfilePage.isGenderFieldEnabled() ,
+        sa.assertTrue(updateProfilePage.isGenderFieldEnabled(),
                 "Gender dropdown is not enabled");
         updateProfilePage.clickGenderDropDown();
         updateProfilePage.validateOptionsInGenderDropdown();
@@ -1239,14 +1383,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount(), DEFAULT_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
         // Validates kids proof exit option and toggle it
         Assert.assertTrue(editProfile.getKidProofExitLabel().isPresent(), "Kids Proof Exit label was not present");
         editProfile.toggleKidsProofExit();
-        passwordPage.enterPassword(getAccount());
+        passwordPage.enterPassword(getUnifiedAccount());
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
     }

@@ -26,7 +26,7 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
     @ExtendedFindBy(accessibilityId = "bannerListOfVendors")
     protected ExtendedWebElement bannerListOfVendors;
 
-    @ExtendedFindBy(accessibilityId = "bannerAllowAllButton")
+    @ExtendedFindBy(accessibilityId = "bannerButtonStackFirstItem")
     protected ExtendedWebElement bannerAllowAllButton;
 
     @ExtendedFindBy(accessibilityId = "bannerRejectAllButton")

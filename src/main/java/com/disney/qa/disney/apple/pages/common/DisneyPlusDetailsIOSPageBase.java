@@ -2,13 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.explore.ExploreApi;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import com.disney.qa.api.explore.response.ExplorePageResponse;
-import com.disney.qa.api.pojos.ApiConfiguration;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -24,7 +18,6 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.net.URISyntaxException;
 import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -174,6 +167,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "detailsRestrictedIcon")
     private ExtendedWebElement parentalControlIcon;
 
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
+    private ExtendedWebElement espnPlusGenericErrorText;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -282,6 +279,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getResumeDownloadButton() {
         return resumeDownloadButton;
+    }
+
+    public ExtendedWebElement getEspnPlusGenericErrorText() {
+        return espnPlusGenericErrorText;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
@@ -810,7 +811,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getServiceAttribution() {
-        return staticTextLabelContains.format("Included with your Hulu subscription");
+        return staticTextLabelContains.format(HULU_SERVICE_ATTRIBUTION_MESSAGE);
     }
 
     public ExtendedWebElement getPlayIcon() {
@@ -833,7 +834,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return shopOrPerksBtn;
     }
 
-    public void clickShopoOrPerksTab() {
+    public void clickShopOrPerksTab() {
         if (!getShopOrPerksBtn().isPresent()) {
             swipeInContainer(null, Direction.UP, 1200);
             pause(2); //transition
@@ -1076,18 +1077,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isShopPromoLabelSubHeaderPresent() {
         return getStaticTextByLabel(SHOP_PROMO_LABEL_SUBHEADER).isPresent();
     }
-
-    public boolean isContentAvailableWithHuluSubscriptionPresent(DisneyAccount account, String environment, String platform, String seriesId) throws URISyntaxException, JsonProcessingException {
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder().platform(platform)
-                .environment(environment).build();
-        ExploreApi exploreApi = new ExploreApi(apiConfiguration);
-        ExploreSearchRequest searchRequest = ExploreSearchRequest.builder().entityId(seriesId)
-                .profileId(account.getProfileId()).build();
-        ExplorePageResponse pageResponse = exploreApi.getPage(searchRequest);
-        String huluSubscriptionErrorMessage = pageResponse.getData().getPage().getVisuals().getRestriction().getMessage();
-        return getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent();
-    }
-
 
     /**
      * To be used with continually navigating back and forth between details and player of same content.

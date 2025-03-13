@@ -538,6 +538,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         navigateToHomePageForPinUser();
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.startDownload();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.enterPassword(getAccount());
@@ -545,7 +546,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
 
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
 
         String mediaTitle = detailsPage.getMediaTitle();
         detailsPage.waitForMovieDownloadComplete(DOWNLOAD_TIMEOUT, DOWNLOAD_POLLING);

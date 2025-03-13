@@ -1,7 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -12,8 +12,6 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
-
-import java.awt.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
@@ -52,7 +50,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
     private ExtendedWebElement restrictedProfileToggle;
     @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
-    private ExtendedWebElement manageMyAcccountCell;
+    private ExtendedWebElement manageWithMyDisney;
     @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
     private ExtendedWebElement restrictProfileCreation;
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
@@ -74,7 +72,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getManageMyAccountCell() {
-        return manageMyAcccountCell;
+        return manageWithMyDisney;
     }
 
     public ExtendedWebElement getManageDevices() {
@@ -685,10 +683,13 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         editEmailButton.click();
     }
 
-    public boolean waitForManageMyDisneyAccountOverlayToOpen(DisneyAccount account) {
-        return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
-                "Manage MyDisney Account Overlay did not open")
-                .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
+    public boolean waitForManageMyDisneyAccountOverlayToOpen(UnifiedAccount account) {
+        try {
+            return fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Time out exception occurred")
+                    .until(it -> getStaticTextByLabelContains(account.getEmail()).isPresent(THREE_SEC_TIMEOUT));
+        } catch (TimeoutException e) {
+            return false;
+        }
     }
 
     public boolean isSubscriptionCellPresent() {
@@ -732,5 +733,9 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
             swipeUp(2, 1000);
         }
         element.click();
+    }
+
+    public void clickManageWithMyDisneyButton() {
+        getManageMyAccountCell().click();
     }
 }
