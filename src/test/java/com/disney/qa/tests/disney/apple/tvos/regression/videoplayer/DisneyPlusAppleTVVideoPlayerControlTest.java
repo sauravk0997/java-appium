@@ -1,8 +1,8 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -18,8 +18,7 @@ import java.time.temporal.ValueRange;
 import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.common.constant.IConstantHelper.VIDEO_PLAYER_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -101,5 +100,55 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
                                 "the remaining time before the rewind skip (%d seconds) is not between %d-%d seconds",
                         remainingTimeAfterRewind, remainingTimeBeforeRewind,
                         acceptableDeltaRange.getMinimum(), acceptableDeltaRange.getMaximum()));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67554"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySeekingThumbnailRectangleBehavior() {
+        int numberOfAttemptsToReachBeginning = 5;
+        int numberOfAttemptsToReachEnd = 40;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        if (videoPlayer.getSkipIntroButton().isPresent(FIVE_SEC_TIMEOUT)) {
+            videoPlayer.clickSelect();
+        }
+        videoPlayer.clickSelect();
+
+        //Move left to the start of the playback and check thumbnail is aligned with the beginning of the seek bar
+        int firstThumbnailLeftXCoordinate = videoPlayer.getThumbnailView().getLocation().getX();
+        commonPage.clickLeftTillBeginningOfPlaybackIsReached(
+                videoPlayer.getSeekbar(), numberOfAttemptsToReachBeginning, 1,1);
+        Assert.assertTrue(videoPlayer.isThumbnailAlignedWithTheBeginningOfTheSeekBar(),
+                "Thumbnail rectangle wasn't aligned with the beginning of the seek bar");
+
+        //Fast-Forward 10 times and validate thumbnail is no longer aligned with the beginning of the seek bar
+        commonPage.clickRight(10,1,1);
+        int secondThumbnailLeftXCoordinate = videoPlayer.getThumbnailView().getLocation().getX();
+        Assert.assertTrue(secondThumbnailLeftXCoordinate > firstThumbnailLeftXCoordinate,
+                "Thumbnail rectangle did not detach from the left side of the screen" +
+                        " as the playback was moved forward");
+
+        //Fast-Forward 3 times and validate thumbnail has moved along through the content seek bar
+        commonPage.clickRight(10,1,1);
+        int thirdThumbnailLeftXCoordinate = videoPlayer.getThumbnailView().getLocation().getX();
+        Assert.assertTrue(thirdThumbnailLeftXCoordinate > secondThumbnailLeftXCoordinate,
+                "Thumbnail rectangle did not move along to the right as the playback was moved forward");
+
+        //Fast-Forward until the end of the playback and validate the thumbnail is "docked" at the end of the seekbar
+        commonPage.clickRightTillEndOfPlaybackIsReached(
+                videoPlayer.getSeekbar(), numberOfAttemptsToReachEnd, 1,1);
+        Assert.assertTrue(videoPlayer.isThumbnailAlignedWithTheEndOfTheSeekBar(),
+                "Thumbnail rectangle wasn't aligned with the end of the seek bar");
     }
 }
