@@ -156,18 +156,18 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getSkipIntroButton());
 
         //Skip intro and then pause playback
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getSkipIntroButton());
         videoPlayer.clickSelect();
-        videoPlayer.clickSelect();
+        videoPlayer.clickPlay();
 
         //Move left to the start of the playback and check thumbnail is aligned with the beginning of the seek bar
-        int firstThumbnailLeftXCoordinate = videoPlayer.getThumbnailView().getLocation().getX();
         commonPage.clickLeftTillBeginningOfPlaybackIsReached(
                 videoPlayer.getSeekbar(), numberOfAttemptsToReachBeginning, 1,1);
         Assert.assertTrue(videoPlayer.isThumbnailAlignedWithTheBeginningOfTheSeekBar(),
                 "Thumbnail rectangle wasn't aligned with the beginning of the seek bar");
+        int firstThumbnailLeftXCoordinate = videoPlayer.getThumbnailView().getLocation().getX();
 
         //Fast-Forward 10 times and validate thumbnail is no longer aligned with the beginning of the seek bar
         commonPage.clickRight(10,1,1);
