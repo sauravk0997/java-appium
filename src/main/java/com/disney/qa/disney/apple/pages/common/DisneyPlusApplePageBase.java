@@ -1548,10 +1548,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         LOGGER.info("Waiting for {} seconds", seconds);
         pause(seconds);
     }
-
-    public void foregroundApp(String bundleId) {
-        activateApp(bundleId);
-    }
   
     public ExtendedWebElement getThumbnailView() {
         return thumbnailView;
