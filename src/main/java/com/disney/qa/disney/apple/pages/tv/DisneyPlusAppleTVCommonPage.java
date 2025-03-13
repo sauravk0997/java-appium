@@ -52,6 +52,17 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
         });
     }
 
+    public void clickRightTillEndOfPlaybackIsReached(
+            ExtendedWebElement currentPosition, int attempts, int timeout, int duration) {
+        String previousPositionTimestamp;
+        do {
+            previousPositionTimestamp = currentPosition.getAttribute(VALUE);
+            clickRight(duration);
+            pause(timeout);
+            attempts--;
+        } while (attempts > 0 && !currentPosition.getAttribute(VALUE).equals(previousPositionTimestamp) );
+    }
+
     public void clickLeft(int duration) {
         pressButtonForDuration(RemoteControlKeyword.LEFT, duration);
     }
@@ -61,6 +72,15 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
             clickLeft(duration);
             pause(timeout);
         });
+    }
+
+    public void clickLeftTillBeginningOfPlaybackIsReached(
+            ExtendedWebElement currentPosition, int attempts, int timeout, int duration) {
+        do {
+            clickLeft(duration);
+            pause(timeout);
+            attempts--;
+        } while (attempts > 0 && !currentPosition.getAttribute(VALUE).equals("0:00") );
     }
 
     public void clickUp(int duration) {
