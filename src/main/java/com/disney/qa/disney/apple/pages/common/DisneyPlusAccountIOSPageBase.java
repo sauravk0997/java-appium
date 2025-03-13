@@ -13,8 +13,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 
-import java.awt.*;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
@@ -52,7 +50,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeToggle[2]")
     private ExtendedWebElement restrictedProfileToggle;
     @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
-    private ExtendedWebElement manageMyAcccountCell;
+    private ExtendedWebElement manageWithMyDisney;
     @ExtendedFindBy(accessibilityId = "restrictProfileCreation")
     private ExtendedWebElement restrictProfileCreation;
     @ExtendedFindBy(accessibilityId = "subscriptionChange")
@@ -61,9 +59,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private ExtendedWebElement manageParentalControls;
     @ExtendedFindBy(accessibilityId = "manageDevices")
     private ExtendedWebElement manageDevices;
-
-    @ExtendedFindBy(accessibilityId = "manageMyAccountCell")
-    private ExtendedWebElement manageWithMyDisney;
 
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
@@ -77,7 +72,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getManageMyAccountCell() {
-        return manageMyAcccountCell;
+        return manageWithMyDisney;
     }
 
     public ExtendedWebElement getManageDevices() {
@@ -740,10 +735,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         element.click();
     }
 
-    public ExtendedWebElement getManageWithMyDisneyButton() {
-        return manageWithMyDisney;
-    }
     public void clickManageWithMyDisneyButton() {
-        getManageWithMyDisneyButton().click();
+        getManageMyAccountCell().click();
     }
 }
