@@ -74,6 +74,15 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
         });
     }
 
+    public void clickLeftTillBeginningOfPlaybackIsReached(ExtendedWebElement currentPosition,
+                                                          int attempts, int timeout, int duration) {
+        while (attempts > 0 && !currentPosition.getAttribute(VALUE).equals("0:00") ) {
+            clickLeft(duration);
+            pause(timeout);
+            attempts--;
+        }
+    }
+
     public void clickUp(int duration) {
         pressButtonForDuration(RemoteControlKeyword.UP, duration);
     }
