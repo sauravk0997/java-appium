@@ -24,7 +24,7 @@ public class DisneyPlusDevicesSmokeTest extends DisneyBaseTest {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         softAssert.assertTrue(isFooterTabPresent(DisneyPlusApplePageBase.FooterTabs.HOME),
                 "Expected: Home button should be present in nav bar");
@@ -46,7 +46,7 @@ public class DisneyPlusDevicesSmokeTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         disneyPlusHomeIOSPageBase.clickSearchIcon();
         disneyPlusHomeIOSPageBase.getSearchNav().click();

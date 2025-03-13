@@ -2,8 +2,8 @@ package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
