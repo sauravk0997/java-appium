@@ -76,11 +76,11 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
 
     public void clickLeftTillBeginningOfPlaybackIsReached(ExtendedWebElement currentPosition,
                                                           int attempts, int timeout, int duration) {
-        while (attempts > 0 && !currentPosition.getAttribute(VALUE).equals("0:00") ) {
+        do {
             clickLeft(duration);
             pause(timeout);
             attempts--;
-        }
+        } while (attempts > 0 && !currentPosition.getAttribute(VALUE).equals("0:00") );
     }
 
     public void clickUp(int duration) {
