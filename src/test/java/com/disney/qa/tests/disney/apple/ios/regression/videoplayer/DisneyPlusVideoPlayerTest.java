@@ -330,6 +330,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     public void verifyFeedOptionSelected() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         String selectedMenuOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        LOGGER.info("Feed option selected value - " + selectedMenuOption);
         if (selectedMenuOption != null) {
             videoPlayer.waitForVideoToStart();
             videoPlayer.displayVideoController();
