@@ -212,17 +212,17 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         LOGGER.info("Validating Global Nav is not present in brand screen");
         sa.assertFalse(homePage.isGlobalNavPresent(), GLOBAL_NAV_IS_PRESENT);
 
-        brandsPage.clickMenuTimes(1, 1);
+        brandsPage.clickMenuTimes(1, 2);
         sa.assertTrue(homePage.isOpened(), "Not on home page after clicking menu on Brand page");
 
         //Navigate to Profile tab outside of switch for stability
-        homePage.clickMenuTimes(1, 1);
+        homePage.clickMenuTimes(1, 2);
         homePage.clickProfileTab();
         homePage.clickSelect();
         LOGGER.info("Validating Global Nav is not present in profile screen");
         sa.assertFalse(whoIsWatchingPage.isGlobalNavPresent(), GLOBAL_NAV_IS_PRESENT);
         sa.assertTrue(whoIsWatchingPage.isOpened(), "Profile page did not launch");
-        whoIsWatchingPage.clickMenuTimes(1, 1);
+        whoIsWatchingPage.clickMenuTimes(1, 2);
 
         IntStream.range(0, innerPages.size()).forEach(i -> {
             String menu = innerPages.get(i);
