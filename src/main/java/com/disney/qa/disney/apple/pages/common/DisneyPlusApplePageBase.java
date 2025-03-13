@@ -67,6 +67,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected static final String PLACEHOLDER_E = "E";
     protected static final String DEVICE = "DEVICE";
     public static final String HULU_SERVICE_ATTRIBUTION_MESSAGE = "Included with your Hulu subscription";
+    public static final String VALUE = "value";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -269,7 +270,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement upNextHeaderLabel;
 
     @ExtendedFindBy(accessibilityId = "thumbnailView")
-    private ExtendedWebElement thumbnailView;
+    protected ExtendedWebElement thumbnailView;
 
     @ExtendedFindBy(accessibilityId = "toggleView")
     private ExtendedWebElement toggleView;
@@ -757,15 +758,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     // Will take you to continue or done button on tvOS on screen keyboard
     public void moveToContinueOrDoneBtnKeyboardEntry() {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-    }
-
-    public ExtendedWebElement getManageWithMyDisneyButton() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                DictionaryKeys.MY_DISNEY_MANAGE.getText()));
-    }
-
-    public void clickManageWithMyDisneyButton() {
-        getManageWithMyDisneyButton().click();
     }
 
     public ExtendedWebElement getKeyboardDoneButton() {

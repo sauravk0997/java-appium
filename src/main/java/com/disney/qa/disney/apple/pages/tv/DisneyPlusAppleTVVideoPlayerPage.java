@@ -76,4 +76,18 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
+
+    public boolean isThumbnailAlignedWithTheSeekBar() {
+        int seekBarLeftXCoordinate = seekBar.getLocation().getX();
+        int thumbnailLeftXCoordinate = thumbnailView.getLocation().getX();
+
+        return  seekBarLeftXCoordinate == thumbnailLeftXCoordinate;
+    }
+
+    public boolean isThumbnailAlignedWithTheEndOfTheSeekBar() {
+        int seekBarRightXCoordinate = seekBar.getLocation().getX() + seekBar.getSize().getWidth();
+        int thumbnailRightXCoordinate = thumbnailView.getLocation().getX() + thumbnailView.getSize().getWidth();
+
+        return  seekBarRightXCoordinate == thumbnailRightXCoordinate;
+    }
 }

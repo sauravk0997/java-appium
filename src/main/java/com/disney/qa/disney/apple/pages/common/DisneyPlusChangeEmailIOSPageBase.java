@@ -2,10 +2,15 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView/**XCUIElementTypeImage[1]")
+    private ExtendedWebElement myDisneyLogo;
 
     public DisneyPlusChangeEmailIOSPageBase(WebDriver driver) {
         super(driver);
@@ -19,7 +24,10 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public boolean isCurrentEmailShown(String email) {
-        return getStaticTextByLabelContains(email).isElementPresent();
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_CURRENT.getText()).replace("{email}", email))
+                .isElementPresent();
     }
 
     public boolean isNewEmailHeaderPresent() {
@@ -35,9 +43,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
     public void submitNewEmailAddress(String value) {
         enterNewEmailAddress(value + "\n");
         getKeyboardDoneButton().clickIfPresent(SHORT_TIMEOUT);
-        getTypeButtonByLabel(getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                        DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText())).click();
+        getSaveAndContinueButton().click();
     }
 
     public boolean isLearnMoreAboutMyDisney() {
@@ -66,9 +72,7 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
 
     @Override
     public void clickCancelBtn() {
-        getTypeButtonByLabel(getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                        DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText())).click();
+        getCancelButton().click();
     }
 
     public boolean isChangeEmailFormatErrorDisplayed() {
@@ -81,5 +85,35 @@ public class DisneyPlusChangeEmailIOSPageBase extends DisneyPlusApplePageBase{
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_IN_USE_ERROR.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getMyDisneyLogo() {
+        return myDisneyLogo;
+    }
+
+    @Override
+    public ExtendedWebElement getCancelButton() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_CANCEL_BTN.getText()));
+    }
+
+    public ExtendedWebElement getSaveAndContinueButton() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_SAVE_CONTINUE_BTN.getText()));
+    }
+
+    public boolean isLogoutOfAllDevicesTextPresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_LOGOUT_ALL_CHECKBOX.getText())).isPresent();
+    }
+
+    public boolean isNewEmailShownOnSuccessPage(String email) {
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_SUCCESS_NEW_EMAIL.getText()).replace("{email}", email))
+                .isElementPresent();
     }
 }

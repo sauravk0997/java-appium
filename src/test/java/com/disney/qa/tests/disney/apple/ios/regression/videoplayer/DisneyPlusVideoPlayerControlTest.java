@@ -236,7 +236,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66519"})
-    @Test(description = "VOD Player Controls - Scrubber Elements", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyScrubberElementsOnPlayer() {
         String errorMessage = "not changed after scrub";
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -247,7 +247,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         ExploreContent movieApiContent = getMovieApi(MARVELS.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String durationTime = videoPlayer.getHourMinFormatForDuration(movieApiContent.getDurationMs());
         sa.assertTrue(durationTime.equals(contentTimeFromUI), "Scrubber bar not representing total length of current video");
-
         sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(), "Time indicator for Remaining time was not found");
         sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(), "Time indicator for Elapsed time was not found");
         sa.assertTrue(videoPlayer.isSeekbarVisible(), "Scrubber Bar was not found");
@@ -257,8 +256,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
         int elapsedTime = videoPlayer.getCurrentTime();
         int currentPositionOnSeekPlayer = videoPlayer.getCurrentPositionOnPlayer();
-
-        sa.assertTrue(videoPlayer.verifyPlayheadRepresentsCurrentPointOfTime(), "Playhead position not representing the current point in time with respect to the total length of the video");
+        sa.assertTrue(videoPlayer.verifyPlayheadRepresentsCurrentPointOfTime(),
+                "Playhead position not representing the current point in time with respect to the total length of the video");
 
         //video player already scrubbed 50 % in above method
         int remainingTimeAfterScrub = videoPlayer.getRemainingTime();

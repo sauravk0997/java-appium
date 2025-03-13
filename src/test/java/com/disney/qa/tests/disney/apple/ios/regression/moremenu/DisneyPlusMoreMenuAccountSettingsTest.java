@@ -349,7 +349,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67134"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void testChangeEmailUI() {
-        DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
+        DisneyPlusOneTimePasscodeIOSPageBase otpPage = new DisneyPlusOneTimePasscodeIOSPageBase(getDriver());
         DisneyPlusAccountIOSPageBase accountPage = new DisneyPlusAccountIOSPageBase(getDriver());
         DisneyPlusChangeEmailIOSPageBase changeEmailPage = new DisneyPlusChangeEmailIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -358,7 +358,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
         setAppToAccountSettings(getUnifiedAccount());
-
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -367,45 +367,35 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         String otp = getOTPFromApi(startTime, getUnifiedAccount());
 
-        Assert.assertTrue(disneyPlusOneTimePasscodeIOSPageBase.isOpened(),
-                "OTP entry page was not opened");
+        Assert.assertTrue(otpPage.isOpened(), "OTP entry page was not opened");
 
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(otp);
+        otpPage.enterOtpValueDismissKeys(otp);
 
-        Assert.assertTrue(changeEmailPage.isOpened(),
-                CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
+        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
 
         hideKeyboard();
 
-        sa.assertTrue(changeEmailPage.isHeadlineSubtitlePresent(),
-                "'Change Email' subtitle was not displayed");
-
+        sa.assertTrue(changeEmailPage.getMyDisneyLogo().isPresent(), "MyDisney logo not present");
+        sa.assertTrue(changeEmailPage.isHeadlineSubtitlePresent(), "'Change Email' subtitle was not displayed");
         sa.assertTrue(changeEmailPage.isCurrentEmailShown(getUnifiedAccount().getEmail()),
                 "'Change Email' display of user email was not shown");
-
         sa.assertTrue(changeEmailPage.isNewEmailHeaderPresent(),
                 "'Change Email' text entry header was not displayed");
-
+        sa.assertTrue(changeEmailPage.getTextEntryField().isPresent(), "'Email field' not present");
         Assert.assertTrue(changeEmailPage.isLogoutAllDevicesUnchecked(),
                 "'Change Email' device logout checkbox was not unchecked by default");
-
+        sa.assertTrue(changeEmailPage.isLogoutOfAllDevicesTextPresent(), "'Logout of all devices' text not present");
         changeEmailPage.clickLogoutAllDevices();
-
-        sa.assertTrue(changeEmailPage.isLogoutAllDevicesChecked(),
-                "'Logout All Devices' was not checked");
-
-        sa.assertTrue(changeEmailPage.isLearnMoreAboutMyDisney(),
-                "'Logout All Devices' password text was not displayed");
+        sa.assertTrue(changeEmailPage.isLogoutAllDevicesChecked(), "'Logout All Devices' was not checked");
+        sa.assertTrue(changeEmailPage.getSaveAndContinueButton().isPresent(),
+                "'Save and Continue' button not present");
+        sa.assertTrue(changeEmailPage.getCancelButton().isPresent(), "Cancel button not present");
+        sa.assertTrue(changeEmailPage.isLearnMoreAboutMyDisney(), "'Learn more about MyDisney' text not present");
 
         changeEmailPage.submitNewEmailAddress("invalid");
 
         sa.assertTrue(changeEmailPage.isChangeEmailFormatErrorDisplayed(),
                 "'Invalid Email' error was not displayed");
-
-        changeEmailPage.clickCancelBtn();
-
-        sa.assertTrue(accountPage.isOpened(),
-                "User was not returned to the Account Settings page after cancelling new email submission");
 
         sa.assertAll();
     }
@@ -427,6 +417,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getLocalizationUtils().getUserLanguage())));
         setAppToAccountSettings(getUnifiedAccount());
 
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
         accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -438,12 +429,15 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
 
+        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         String newEmail = generateGmailAccount();
         getUnifiedAccount().setEmail(newEmail);
         oneTimePasscodePage.getTextEntryField().click();
         changeEmailPage.submitNewEmailAddress(newEmail);
         Assert.assertTrue(changeEmailPage.isConfirmationPageOpen(),
                 "User was not directed to Confirmation Page");
+        Assert.assertTrue(changeEmailPage.isNewEmailShownOnSuccessPage(newEmail),
+                "New Email is not displayed on success page");
 
         changeEmailPage.clickBackToDisneyBtn();
         Assert.assertTrue(accountPage.isOpened(),
@@ -452,9 +446,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "The User's new email address was not displayed as expected");
 
         accountPage.clickMoreTab();
-        moreMenuPage.getDynamicCellByLabel(
-                moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT))
-                .click();
+        moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
+
         Assert.assertTrue(welcomePage.isOpened(),
                 "User was not logged out and returned to the Welcome screen after logout");
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
