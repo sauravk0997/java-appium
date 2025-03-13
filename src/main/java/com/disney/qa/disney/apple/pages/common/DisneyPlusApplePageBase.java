@@ -759,15 +759,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
     }
 
-    public ExtendedWebElement getManageWithMyDisneyButton() {
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                DictionaryKeys.MY_DISNEY_MANAGE.getText()));
-    }
-
-    public void clickManageWithMyDisneyButton() {
-        getManageWithMyDisneyButton().click();
-    }
-
     public ExtendedWebElement getKeyboardDoneButton() {
         return keyboardDone;
     }
