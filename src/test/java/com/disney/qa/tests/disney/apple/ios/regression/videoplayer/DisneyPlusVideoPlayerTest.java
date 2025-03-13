@@ -285,6 +285,25 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77896"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNAlternateBroadcastSelectorFeedsOptions() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        openBroadcastMenu();
+        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
+                "Target broadcasts feeds on UI are not as expected");
+        verifyFeedOptionSelected();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77895"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNAlternateBroadcastSelectorLanguageOptions() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        openBroadcastMenu();
+        Assert.assertTrue(videoPlayer.getExpectedBroadcastLanguageOptions()
+                        .containsAll(videoPlayer.getBroadcastLanguageOptionText()),
+                "Target broadcasts language on UI are not as expected");
+        verifyFeedOptionSelected();
+    }
+
+    public void openBroadcastMenu() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
@@ -297,10 +316,8 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         //NHL collection
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
 
-        collectionPage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.REPLAYS_COLLECTION, 5);
-        espnPage.getReplayLabel().click();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
@@ -309,18 +326,19 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
         Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
                 "Broadcast Menu did not open on video player");
-        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
-                "Target broadcasts feeds on UI are not as expected");
+    }
 
-        String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
-        if(selectedFeedOption != null){
+    public void verifyFeedOptionSelected() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String selectedMenuOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        LOGGER.info("Feed option selected value - " + selectedMenuOption);
+        if (selectedMenuOption != null) {
             videoPlayer.waitForVideoToStart();
             videoPlayer.displayVideoController();
             videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
-            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedFeedOption),
-                    "Target feed is not selected");
-        }
-        else{
+            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedMenuOption),
+                    "Target feed/Language is not selected");
+        } else {
             throw new SkipException("Only One target feed option available, hence skipping feed selection logic");
         }
     }
@@ -329,6 +347,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
         broadcastsExpectedFeeds.add("PRIMARY");
         broadcastsExpectedFeeds.add("NATIONAL");
+        broadcastsExpectedFeeds.add("NATIONAL FEED");
         broadcastsExpectedFeeds.add("HOME");
         broadcastsExpectedFeeds.add("AWAY");
         return broadcastsExpectedFeeds;
