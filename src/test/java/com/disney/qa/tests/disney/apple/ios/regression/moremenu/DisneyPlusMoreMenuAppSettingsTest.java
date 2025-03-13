@@ -25,8 +25,7 @@ import java.util.List;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.DISNEY_BASIC_MONTHLY;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -460,6 +459,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         searchPage.searchForMedia(AVATAR);
         searchPage.getDynamicAccessibilityId(AVATAR).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.startDownload();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);

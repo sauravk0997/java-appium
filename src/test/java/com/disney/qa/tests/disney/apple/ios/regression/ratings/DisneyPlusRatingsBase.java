@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
 
 /**
  * Base ratings setup class
@@ -252,6 +253,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //ratings are shown on downloaded content
         if (!detailsPage.getMovieDownloadButton().isPresent()) {
