@@ -173,14 +173,14 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
                 "Thumbnail rectangle didn't detach from the left side of the screen as the playback was moved forward");
 
         //Fast-Forward 3 times and validate thumbnail has moved along through the content seek bar
-        commonPage.clickRight(10,1,1);
+        commonPage.clickRight(10, 1, 1);
         int thirdThumbnailLeftXCoordinate = videoPlayer.getThumbnailView().getLocation().getX();
         Assert.assertTrue(thirdThumbnailLeftXCoordinate > secondThumbnailLeftXCoordinate,
                 "Thumbnail rectangle didn't move along to the right as the playback was moved forward");
 
         //Fast-Forward until the end of the playback and validate the thumbnail is "docked" at the end of the seekbar
         commonPage.clickRightTillEndOfPlaybackIsReached(
-                videoPlayer.getSeekbar(), numberOfAttemptsToReachEnd, 1,1);
+                videoPlayer.getSeekbar(), numberOfAttemptsToReachEnd, 1, 1);
         Assert.assertTrue(videoPlayer.isThumbnailAlignedWithTheEndOfTheSeekBar(),
                 "Thumbnail rectangle wasn't aligned with the end of the seek bar");
     }
