@@ -8,7 +8,7 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static com.disney.qa.common.constant.IConstantHelper.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusAppleTVDeepLinksTests extends DisneyPlusAppleTVBaseTest {

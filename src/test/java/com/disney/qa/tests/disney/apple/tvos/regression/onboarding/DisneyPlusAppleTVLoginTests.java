@@ -5,8 +5,6 @@ import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.Container;
-import com.disney.qa.api.pojos.*;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -25,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
@@ -213,7 +212,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         new AliceDriver(getDriver()).screenshotAndRecognize().isLabelPresent(sa, AliceLabels.DISNEY_LOGO.getText());
         sa.assertTrue(passwordPage.isEnterYourPasswordHeaderPresent(),
                 "Enter your password header was not found.");
-        sa.assertTrue(passwordPage.isEnterYourPasswordBodyPresent(getAccount().getEmail()),
+        sa.assertTrue(passwordPage.isEnterYourPasswordBodyPresent(getUnifiedAccount().getEmail()),
                 "Log in to Disney+ with your MyDisney account text was not found.");
         sa.assertTrue(passwordPage.isEnterYourPasswordHintPresent(), "Enter your password hint was not found.");
         sa.assertTrue(passwordPage.isCaseSensitiveHintPresent(), "Case Sensitive hint was not found.");
@@ -500,7 +499,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 "Edit Profile button not present");
         sa.assertTrue(whoIsWatchingPage.getTypeCellLabelContains(addProfileButtonLabel).isPresent(),
                 "Add profile cell not present");
-        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(getAccount().getFirstName())),
+        sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(getUnifiedAccount().getFirstName())),
                 "First profile is not in focus");
         whoIsWatchingPage.moveRight(1, 1);
         sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(PROFILE_NAME_SECONDARY)),
@@ -540,7 +539,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global navigation is not expanded");
 
-        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(getAccount().getProfiles().get(0).getProfileName()));
+        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(getUnifiedAccount().getProfiles().get(0).getProfileName()));
 
         sa.assertAll();
     }

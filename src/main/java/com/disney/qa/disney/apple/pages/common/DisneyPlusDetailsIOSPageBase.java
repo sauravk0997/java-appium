@@ -1091,13 +1091,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void verifyRatingsInDetailsFeaturedArea(String rating, SoftAssert sa) {
-        LOGGER.info("Verifying Ratings in featured area");
+        LOGGER.info("Verifying rating {} in featured area", rating);
         Assert.assertTrue(isDetailPageOpened(FIVE_SEC_TIMEOUT), "Details screen not displayed.");
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on details page featured area.");
     }
 
     public void validateRatingsInDetailsTab(String rating, SoftAssert sa) {
-        LOGGER.info("Verifying Ratings in details tab");
+        LOGGER.info("Verifying rating {} in details tab", rating);
         clickDetailsTab();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             swipe(getTypeOtherByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_RATING.getText())), 2);

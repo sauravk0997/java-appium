@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.UnifiedEntitlement;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase.MoreMenu;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -17,6 +18,7 @@ import java.net.URISyntaxException;
 import java.util.Arrays;
 
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 
@@ -93,24 +95,21 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     public void verifyExpiredHuluWatchlistDisplay() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        String disneyPremiumPlan = "Disney+ Premium - 159.99 USD - Yearly";
-        String trioBasicPlan = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
-
         //Create account with Disney Bundle plan
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(trioBasicPlan)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_BASIC)));
         loginToHome(getUnifiedAccount());
 
         //Add disney content to watchlist
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
                 getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlockForUnifiedAccount(DisneyEntityIds.WANDA_VISION.getEntityId()));
+                getWatchlistInfoBlock(DisneyEntityIds.WANDA_VISION.getEntityId()));
 
         //Add hulu content to watchlist
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
                 getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlockForUnifiedAccount(R.TESTDATA.get("disney_prod_hulu_movie_grimcutty_entity_id")));
+                getWatchlistInfoBlock(R.TESTDATA.get("disney_prod_hulu_movie_grimcutty_entity_id")));
 
         // Verify content on Watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -124,7 +123,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
         //Entitle account with D+
         UnifiedEntitlement disneyEntitlements = UnifiedEntitlement.builder()
-                .unifiedOffer(getUnifiedOffer(disneyPremiumPlan)).subVersion(UNIFIED_ORDER).build();
+                .unifiedOffer(getUnifiedOffer(DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM)).subVersion(UNIFIED_ORDER).build();
         try {
             getUnifiedSubscriptionApi().entitleAccount(getUnifiedAccount(), Arrays.asList(disneyEntitlements));
         } catch (MalformedURLException | URISyntaxException | InterruptedException e) {

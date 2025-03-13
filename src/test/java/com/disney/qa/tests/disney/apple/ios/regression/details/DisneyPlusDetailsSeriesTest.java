@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
 import static com.disney.qa.common.DisneyAbstractPage.*;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
@@ -298,7 +299,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         //Get duration from explore api
-        ExploreContent series = getExploreApi().getSeries(getDisneyExploreSearchRequest().setEntityId(SERIES_EXTRA.getEntityId()).setProfileId(getAccount().getProfileId()));
+        ExploreContent series = getExploreApi().getSeries(
+                getDisneyExploreSearchRequest()
+                        .setEntityId(SERIES_EXTRA.getEntityId())
+                        .setProfileId(getUnifiedAccount().getProfileId()));
         int seriesExtrasDuration = 0;
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));

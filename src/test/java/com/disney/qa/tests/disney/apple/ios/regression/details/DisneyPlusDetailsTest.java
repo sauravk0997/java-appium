@@ -4,7 +4,7 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
@@ -243,7 +244,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72730"})
     @Test(dataProvider = "disneyPlanTypes", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyShopTabInDetailsPage(String planType) {
+    public void verifyShopTabInDetailsPage(DisneyUnifiedOfferPlan planType) {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -895,24 +896,23 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyESPNUnavailableDetailsPagePCONError() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder()
-                .disneyAccount(getAccount())
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
                 .dateOfBirth(KIDS_DOB)
-                .language(getAccount().getProfileLang())
+                .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
-        Profile secondaryProfile = getAccount().getProfile(SECONDARY_PROFILE);
-        getAccountApi().editContentRatingProfileSetting(getAccount(),
+
+        Profile secondaryProfile = getUnifiedAccount().getProfile(SECONDARY_PROFILE);
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 secondaryProfile.getProfileId(),
                 secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
                 secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
 
-        setAppToHomeScreen(getAccount(), SECONDARY_PROFILE);
-
+        setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
 

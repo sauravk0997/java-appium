@@ -20,6 +20,7 @@ import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.api.watchlist.*;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
@@ -54,6 +55,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
 
@@ -135,7 +137,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     });
 
     private final ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = ThreadLocal.withInitial(() ->
-            getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
+            getUnifiedAccountApi().createAccount(
+                    getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
 
     private static final ThreadLocal<DisneyAccountApi> ACCOUNT_API = ThreadLocal.withInitial(() -> {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
@@ -441,15 +444,15 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return unifiedOfferRequest;
     }
 
-    public UnifiedOffer getUnifiedOffer(String planName) {
-        return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName));
+    public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName) {
+        return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName.getValue()));
     }
 
     public CreateUnifiedAccountRequest getDefaultCreateUnifiedAccountRequest() {
         return CREATE_UNIFIED_ACCOUNT_REQUEST.get();
     }
 
-    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName) {
+    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan planName) {
         return getDefaultCreateUnifiedAccountRequest()
                 .setPartner(Partner.DISNEY)
                 .addEntitlement(UnifiedEntitlement.builder().unifiedOffer(getUnifiedOffer(planName)).subVersion(UNIFIED_ORDER).build())
@@ -457,7 +460,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .setLanguage(getLocalizationUtils().getUserLanguage());
     }
 
-    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(String planName, String locale, String language) {
+    public CreateUnifiedAccountRequest getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan planName,
+                                                                      String locale,
+                                                                      String language,
+                                                                      boolean... isAgeVerified) {
+        if (isAgeVerified.length > 0) {
+            getDefaultCreateUnifiedAccountRequest().setAgeVerified(isAgeVerified[0]);
+        }
         return getDefaultCreateUnifiedAccountRequest()
                 .setPartner(Partner.DISNEY)
                 .addEntitlement(UnifiedEntitlement.builder()
@@ -492,14 +501,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     public String getWatchlistInfoBlock(String entityId) {
-        ExploreSearchRequest pageRequest = ExploreSearchRequest.builder()
-                .disneyAccount(getAccount())
-                .entityId(entityId.toString())
-                .build();
-        return getExploreApi().getWatchlistActionInfoBlock(pageRequest);
-    }
-
-    public String getWatchlistInfoBlockForUnifiedAccount(String entityId) {
         ExploreSearchRequest pageRequest = ExploreSearchRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .entityId(entityId)
