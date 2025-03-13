@@ -568,7 +568,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
-                .language(getAccount().getProfileLang())
+                .language(getUnifiedAccount().getProfileLang())
                 .avatarId(null)
                 .dateOfBirth(U18_DOB)
                 .build());
@@ -576,7 +576,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(JUNIOR_PROFILE)
-                .language(getAccount().getProfileLang())
+                .language(getUnifiedAccount().getProfileLang())
                 .avatarId(null)
                 .kidsModeEnabled(true)
                 .dateOfBirth(KIDS_DOB)
