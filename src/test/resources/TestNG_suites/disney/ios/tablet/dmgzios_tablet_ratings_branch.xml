@@ -17,7 +17,7 @@
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="overrideFields"
                value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=300"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77045"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77067"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings" parallel="methods">
         <classes>
