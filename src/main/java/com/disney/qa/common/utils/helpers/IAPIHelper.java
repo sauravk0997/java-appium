@@ -4,6 +4,7 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
@@ -19,6 +20,9 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEVICE_TYPE;
 
 public interface IAPIHelper {
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
@@ -45,7 +49,9 @@ public interface IAPIHelper {
         return LOCALIZATION_UTILS.computeIfAbsent(new ImmutablePair<>(WebDriverConfiguration.getLocale()
                 .getCountry(), WebDriverConfiguration.getLocale()
                 .getLanguage()), pair -> {
-            DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(), "iOS",
+            String platform = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ? "apple-tv" : "ios";
+            DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(),
+                    platform,
                     Configuration.getRequired(Configuration.Parameter.ENV),
                     DisneyConfiguration.getPartner());
             localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
