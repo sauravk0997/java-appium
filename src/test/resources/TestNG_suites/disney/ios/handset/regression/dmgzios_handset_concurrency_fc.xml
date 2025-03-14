@@ -11,10 +11,10 @@
     <parameter name="provider" value="mcloud"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.2.0-fc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78957"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-79032"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name"
                value="Disney-Prod-Enterprise,Disney-Non-IAP-PreProd-Enterprise"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77058"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77067"/>
     <parameter name="jenkinsEnvironments" value="Prod,PreProd"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_Xs,iPhone_Xr,iPhone_11_Pro_Max,iPhone_15_1,iPhone_15_5,iPhone_15_Plus_2,iPhone_15_3,iPhone_13_Pro,iPhone_15_Plus_1,iPhone_15_2,iPhone_15_Plus_3,iPhone_15_4;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>

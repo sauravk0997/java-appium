@@ -20,6 +20,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.disney.qa.common.constant.IConstantHelper.PHONE;
@@ -30,6 +31,7 @@ import static com.disney.qa.common.constant.IConstantHelper.TABLET;
 public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final String BROADCAST_COLLECTION = "broadcastCollectionView";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "ucp.playerView")
@@ -80,8 +82,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentRatingOverlayLabel;
     @ExtendedFindBy(accessibilityId = "contentRatingInfoView")
     private ExtendedWebElement contentRatingInfoView;
-    @ExtendedFindBy(accessibilityId = "broadcastCollectionView")
-    private ExtendedWebElement broadcastCollectionView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label CONTAINS " +
             "'%s'$]/**/XCUIElementTypeButton")
     private ExtendedWebElement feedOptionCheckmark;
@@ -133,7 +133,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBroadcastCollectionView() {
-        return broadcastCollectionView;
+        return getDynamicAccessibilityId(BROADCAST_COLLECTION);
     }
 
     public ExtendedWebElement getElementFor(PlayerControl control) {
@@ -891,15 +891,36 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public List<String> getBroadcastTargetFeedOptionText() {
         List<String> feedOptionText = new ArrayList<>();
         List<ExtendedWebElement> feedCell =
-                findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
-            feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim().toUpperCase()));
+                findExtendedWebElements(collectionCellNoRow.format(BROADCAST_COLLECTION).getBy());
+        feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim().toUpperCase()));
         return feedOptionText;
+    }
+
+    public List<String> getBroadcastLanguageOptionText() {
+        List<String> languageOptionText = new ArrayList<>();
+        List<ExtendedWebElement> feedCell =
+                findExtendedWebElements(collectionCellNoRow.format(BROADCAST_COLLECTION).getBy());
+        feedCell.forEach(targetFeed -> languageOptionText.add(targetFeed.getText().split(",")[1].trim()));
+        return languageOptionText;
+    }
+
+    public List<String> getExpectedBroadcastLanguageOptions() {
+        List<String> broadcastsAudioOptions = new ArrayList<>();
+        Pattern pattern = Pattern.compile("BROADCASTS_NAME_.*");
+        for (DictionaryKeys key : DictionaryKeys.values()) {
+            Matcher matcher = pattern.matcher(key.name());
+            if (matcher.matches()) {
+                broadcastsAudioOptions.add(getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.MEDIA, key.getText()));
+            }
+        }
+        return broadcastsAudioOptions;
     }
 
     public String selectAndGetBroadcastFeedOption() {
         String selectedOption = null;
         List<ExtendedWebElement> feedCell =
-                findExtendedWebElements(collectionCellNoRow.format("broadcastCollectionView").getBy());
+                findExtendedWebElements(collectionCellNoRow.format(BROADCAST_COLLECTION).getBy());
         if (feedCell.size() > 1) {
             selectedOption = feedCell.get(1).getText().trim();
             feedCell.get(1).click();
