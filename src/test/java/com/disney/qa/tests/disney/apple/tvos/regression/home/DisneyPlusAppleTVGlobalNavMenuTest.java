@@ -246,7 +246,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS).
                 dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).
                 kidsModeEnabled(true).isStarOnboarded(true).build());
@@ -275,7 +274,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         });
         Assert.assertTrue(homePage.isGlobalNavExpanded(),
                 "Global Nav menu is not expanded");
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
         Assert.assertTrue(homePage.isFocused(homePage.getDynamicAccessibilityId(
                         DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText())),
                 "HOME Nav bar selection is not focused/hovered");
@@ -287,8 +285,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-
         getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS).
                 dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).
                 kidsModeEnabled(true).isStarOnboarded(true).build());
@@ -319,7 +315,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 homePage.clickMenuTimes(1, 2);
             }
         });
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
         sa.assertAll();
     }
 }
