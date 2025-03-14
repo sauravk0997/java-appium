@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
@@ -31,8 +31,8 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
@@ -56,8 +56,8 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
@@ -75,8 +75,8 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_in_the_arena_serena_williams_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
@@ -102,8 +102,9 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusAudioSubtitleIOSPageBase subtitlePage = initPage(DisneyPlusAudioSubtitleIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.clickSearchIcon();
         searchPage.searchForMedia(networkTitle);
         searchPage.getDisplayedTitles().get(0).click();
@@ -161,11 +162,9 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        setAccount(createAccountWithSku(
-                DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.clickSearchIcon();
         searchPage.searchForMedia(networkTitle);
         searchPage.getDisplayedTitles().get(0).click();
@@ -214,11 +213,9 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         String contentNetwork = "CBS";
 
-        setAccount(createAccountWithSku(
-                DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB,
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage()));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_survivor_episode_playback"));
@@ -244,8 +241,9 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.waitForHomePageToOpen();
 
         //NHL collection
@@ -267,10 +265,11 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     public void verifyEspnVODNetworkAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        String disneyTrioPremiumMonthly = "Disney Bundle Trio Premium - 26.99 USD - Monthly";
+
         String espn = "ESPN+";
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(disneyTrioPremiumMonthly)));
-        loginToHome(getUnifiedAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("espn_prod_survive_and_advance_documentary_playback"));
 
@@ -286,21 +285,39 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77896"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNAlternateBroadcastSelectorFeedsOptions() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        openBroadcastMenu();
+        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
+                "Target broadcasts feeds on UI are not as expected");
+        verifyFeedOptionSelected();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77895"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNAlternateBroadcastSelectorLanguageOptions() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        openBroadcastMenu();
+        Assert.assertTrue(videoPlayer.getExpectedBroadcastLanguageOptions()
+                        .containsAll(videoPlayer.getBroadcastLanguageOptionText()),
+                "Target broadcasts language on UI are not as expected");
+        verifyFeedOptionSelected();
+    }
+
+    public void openBroadcastMenu() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_HULU_NO_ADS_ESPN_WEB));
-        setAppToHomeScreen(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         homePage.waitForHomePageToOpen();
 
         //NHL collection
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
 
-        collectionPage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.REPLAYS_COLLECTION, 5);
-        espnPage.getReplayLabel().click();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
@@ -309,18 +326,19 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
         Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
                 "Broadcast Menu did not open on video player");
-        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
-                "Target broadcasts feeds on UI are not as expected");
+    }
 
-        String selectedFeedOption = videoPlayer.selectAndGetBroadcastFeedOption();
-        if(selectedFeedOption != null){
+    public void verifyFeedOptionSelected() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String selectedMenuOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        LOGGER.info("Feed option selected value - " + selectedMenuOption);
+        if (selectedMenuOption != null) {
             videoPlayer.waitForVideoToStart();
             videoPlayer.displayVideoController();
             videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
-            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedFeedOption),
-                    "Target feed is not selected");
-        }
-        else{
+            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedMenuOption),
+                    "Target feed/Language is not selected");
+        } else {
             throw new SkipException("Only One target feed option available, hence skipping feed selection logic");
         }
     }
@@ -329,6 +347,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
         broadcastsExpectedFeeds.add("PRIMARY");
         broadcastsExpectedFeeds.add("NATIONAL");
+        broadcastsExpectedFeeds.add("NATIONAL FEED");
         broadcastsExpectedFeeds.add("HOME");
         broadcastsExpectedFeeds.add("AWAY");
         return broadcastsExpectedFeeds;

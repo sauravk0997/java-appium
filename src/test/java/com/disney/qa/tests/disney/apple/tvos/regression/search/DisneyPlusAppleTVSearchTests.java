@@ -1,6 +1,5 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.search;
 
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustConsentBannerIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -9,14 +8,14 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static com.disney.qa.common.constant.IConstantHelper.CA;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
 public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
     private static final String UNENTITLED_HULU_CONTENT = "Only Murders in the Building";
-    private static final String ENTITLED_HULU_CONTENT = "The Bold Type";
+    private static final String ENTITLED_HULU_CONTENT = "Tell Me Lies";
     private static final String UNLOCK = "Unlock";
     private static final String HOME_PAGE_ERROR_MESSAGE = "Home page did not open";
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
@@ -30,9 +29,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
-        logIn(getAccount());
-
+        logIn(getUnifiedAccount());
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -47,8 +44,9 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
-        logIn(getAccount());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
 
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
@@ -70,13 +68,12 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusOneTrustConsentBannerIOSPageBase bannerIOSPageBase =
                 new DisneyPlusOneTrustConsentBannerIOSPageBase(getDriver());
 
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                CA,
-                getLocalizationUtils().getUserLanguage()));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+
         handleAlert();
-
-        logIn(getAccount());
-
+        logIn(getUnifiedAccount());
         if (bannerIOSPageBase.isAllowAllButtonPresent()) {
             bannerIOSPageBase.tapAcceptAllButton();
         }
@@ -95,9 +92,8 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM));
 
-        logIn(getAccount());
+        logIn(getUnifiedAccount());
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());

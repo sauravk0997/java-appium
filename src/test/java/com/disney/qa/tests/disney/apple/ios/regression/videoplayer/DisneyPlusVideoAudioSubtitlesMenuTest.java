@@ -33,7 +33,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         initiatePlaybackFor(SERIES_BLUEY);
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubtitleMenu();
 
@@ -61,7 +61,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         initiatePlaybackFor(LOKI);
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubtitleMenu();
 
@@ -155,7 +155,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     public void verifyAudioAndSubtitlesPreferredLanguage() {
         String choctawLang = "Chahta anumpa (Choctaw)";
         String spanishLang = "Español";
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         // Open content and select Deutsch audio and language, this will be the preferred language
         changeAudioLanguage(R.TESTDATA.get("disney_prod_content_mulan_playback_deeplink"), DEUTSCH, DEUTSCH);
@@ -227,7 +227,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     private void loginAndDeeplinkToPlayerAudioSubtitleMenu(String deeplink) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.clickPlayButton().isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);

@@ -2,8 +2,8 @@ package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.utils.DisneySkuParameters;
+import com.disney.qa.api.pojos.*;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -18,6 +18,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
 
 /**
  * Base ratings setup class
@@ -32,26 +33,37 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
 
-    public void ratingsSetup(String locale, boolean... ageVerified) {
+    public void ratingsSetup(DisneyUnifiedOfferPlan planName, String locale) {
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
+        setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
-    public void ratingsSetup(String ratingValue, String locale, boolean... ageVerified) {
-        LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+    public void ratingsSetup(DisneyUnifiedOfferPlan planName, String ratingValue, String locale, boolean... ageVerified) {
+        LOGGER.info("Locale and language from getLocalizationUtils: {} {}",
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage());
+
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName,
+                locale,
+                getLocalizationUtils().getUserLanguage(),
+                ageVerified)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
+
+        setAccountRatingsMax(getUnifiedAccount());
         getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getAccount());
+        //TEMP fix for ATT pop-up
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        setAppToHomeScreen(getUnifiedAccount());
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
@@ -61,43 +73,58 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         }
     }
 
-    public void ratingSetupWithPINForOTPAccount(String locale) {
+    public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}", getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
+                planName,
+                locale,
+                getLocalizationUtils().getUserLanguage())));
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
         try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+            getUnifiedAccountApi().updateProfilePin(
+                    getUnifiedAccount(),
+                    getUnifiedAccount().getProfileId(DEFAULT_PROFILE),
+                    PROFILE_PIN);
         } catch (IOException e) {
             new Exception("Failed to update Profile pin: {}", e);
         }
-        setAccountRatingsMax(getAccount());
+        setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
-    public void ratingsSetupWithPINNew(String locale, boolean... ageVerified) {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM,
-                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), ageVerified));
-        getAccountApi().overrideLocations(getAccount(), locale);
+    public void ratingsSetupWithPINNew(DisneyUnifiedOfferPlan planName, String locale) {
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                planName,
+                locale,
+                getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
         try {
-            getAccountApi().updateProfilePin(getAccount(), getAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+            getUnifiedAccountApi().updateProfilePin(
+                    getUnifiedAccount(),
+                    getUnifiedAccount().getProfileId(DEFAULT_PROFILE),
+                    PROFILE_PIN);
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
-        setAccountRatingsMax(getAccount());
+        setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
-    public void ratingsSetupForOTPAccount(String locale) {
-        setAccount(getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        getAccountApi().overrideLocations(getAccount(), locale);
-        setAccountRatingsMax(getAccount());
+    public void ratingsSetupForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
+                planName,
+                locale,
+                getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
+        setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
     public void handleOneTrustPopUp() {
@@ -118,11 +145,11 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         }
     }
 
-    private void setAccountRatingsMax(DisneyAccount account) {
+    private void setAccountRatingsMax(UnifiedAccount account) {
         List<String> ratingSystemValues = account.getProfile(DEFAULT_PROFILE).getAttributes().getParentalControls().getMaturityRating()
                 .getRatingSystemValues();
         LOGGER.info("Rating values: " + ratingSystemValues);
-        getAccountApi().editContentRatingProfileSetting(account,
+        getUnifiedAccountApi().editContentRatingProfileSetting(account,
                 getLocalizationUtils().getRatingSystem(),
                 ratingSystemValues.get(ratingSystemValues.size() - 1));
     }
@@ -252,6 +279,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //ratings are shown on downloaded content
         if (!detailsPage.getMovieDownloadButton().isPresent()) {

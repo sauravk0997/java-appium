@@ -3,10 +3,8 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -19,6 +17,7 @@ import java.util.stream.*;
 
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
@@ -35,21 +34,19 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
     public void verifyMovieDetailsPageAppearance() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        getWatchlistApi().addContentToWatchlist(getAccount().getAccountId(), getAccount().getAccountToken(),
-                getAccount().getProfileId(),
+        getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(), getUnifiedAccount().getAccountToken(),
+                getUnifiedAccount().getProfileId(),
                 getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
 
         ExploreContent movieApiContent = getMovieApi(END_GAME.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String description = movieApiContent.getDescription().getBrief();
         String ratingsValue = movieApiContent.getRating();
         List<String> tabs = Stream.of("SUGGESTED", "EXTRAS", "DETAILS").collect(Collectors.toList());
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         sa.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
 
@@ -78,11 +75,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         DisneyPlusAppleTVDetailsPage disneyPlusAppleTVDetailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVSearchPage disneyPlusAppleTVSearchPage = new DisneyPlusAppleTVSearchPage(getDriver());
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         SoftAssert sa = new SoftAssert();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
 
@@ -128,9 +123,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVSearchPage disneyPlusAppleTVSearchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage disneyPlusAppleTVVideoPlayerPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-        logInTemp(getAccount());
+
+        logIn(getUnifiedAccount());
 
         disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
 
@@ -152,8 +146,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112611"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
     public void verifyNetworkAttributionWithBundleUserAccount() {
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_VERIFIED_HULU_ESPN_BUNDLE));
-        logIn(getAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
         SoftAssert sa = new SoftAssert();
         verifyServiceAttribution(ONLY_MURDERS_IN_THE_BUILDING, sa);
         terminateApp(sessionBundles.get(DISNEY));

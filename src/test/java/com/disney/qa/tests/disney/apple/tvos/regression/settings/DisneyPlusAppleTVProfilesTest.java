@@ -1,10 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
-import com.disney.alice.AliceDriver;
-import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.tv.*;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -19,19 +15,16 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     private static final String PROFILE_NAME = "Test";
     private static final String whoIsWatchingAssertMessage = "Who is watching page is not open after selecting Profile Name from global nav menu";
-    private static final String homePageAssertMessage = "Home page is not open after login";
     private static final String globalNavMenuAssertMessage = "Global Nav menu is present";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90920"})
     @Test(description = "Profiles - Exit from Who's Watching view", groups = {TestGroup.PROFILES, TestGroup.SMOKE, US})
     public void exitFromWhoseWatching() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         homePage.openGlobalNavWithClickingMenu();
         homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
         homePage.clickSelect();
@@ -56,14 +49,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Profiles - Exit from Add Profile view", groups = {TestGroup.PROFILES, US})
     public void exitFromAddProfile() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
 
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
-
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
@@ -85,13 +75,12 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Profiles - Exit from Select profile to edit view", groups = {TestGroup.PROFILES, US})
     public void exitFromSelectProfileToEdit() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
+
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEditProfilePage disneyPlusAppleTVEditProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
@@ -112,13 +101,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @Test(description = "Profiles - Exit from Edit Profile view", groups = {TestGroup.PROFILES, US})
     public void verifyExitFromEditProfileView() {
         SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        setAccount(disneyBaseTest.createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_YEARLY_PREMIUM, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()));
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEditProfilePage disneyPlusAppleTVEditProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
 
-        logInTemp(getAccount());
+        logIn(getUnifiedAccount());
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
         disneyPlusAppleTVHomePage.clickSelect();

@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.ios_settings.NetworkHandler;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -25,6 +24,8 @@ import java.util.List;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
 public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
@@ -35,7 +36,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
 
     public void onboard() {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(
                 disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
@@ -371,7 +372,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61233"})
-    @Test(description = "App Settings Page UI updates for Downloads test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAppSettingsUIDownloadsUpdates() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -379,11 +380,12 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.getHomeNav().click();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(AVATAR);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(AVATAR).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.startDownload();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
@@ -424,7 +426,8 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     public void verifyAppSettingsDownloadSectionNotVisibleForAdTierUser() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppSettingsIOSPageBase appSettingsPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
-        setAccount(createAccountWithSku(DisneySkuParameters.DISNEY_US_WEB_ADS_MONTHLY));
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         SoftAssert sa = new SoftAssert();
         onboard();
         appSettingsPage.waitForAppSettingsPageToOpen();
@@ -451,13 +454,14 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Download a title
         homePage.getHomeNav().click();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(AVATAR);
         searchPage.getDynamicAccessibilityId(AVATAR).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.startDownload();
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);

@@ -20,7 +20,14 @@
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,Ariel,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
-    <parameter name="jenkinsBuild" value="4.2.0.76844"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77045"/>
+
+    <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
+    <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
+    <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
+    <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
+    <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value=""/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding Acceptance" parallel="methods">
         <classes>
@@ -52,6 +59,7 @@
     </test>
     <test verbose="1" name="DisneyPlus iOS Tablet Video Player" parallel="methods">
         <classes>
+            <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoAudioSubtitlesMenuTest"/>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.videoplayer.DisneyPlusVideoPlayerControlTest"/>
         </classes>

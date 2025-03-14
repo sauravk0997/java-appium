@@ -62,6 +62,11 @@
             <name>hulu-mvn-releases</name>
             <url>https://artifactory.prod.hulu.com/artifactory/hulu-mvn-releases</url>
         </repository>
+        <repository>
+            <id>nexus-on-hulu-artifactory</id>
+            <name>hulu-mvn-releases</name>
+            <url>https://artifactory.prod.hulu.com/artifactory/co-dtci-nexus-DTCI-Releases</url>
+        </repository>
         <!--repository>
             <snapshots/>
             <id>hulu-artifactory-mvn-snapshots</id>
@@ -239,6 +244,11 @@
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.disney.dmed.productivity</groupId>
+            <artifactId>jocasta-carina-adapter</artifactId>
+            <version>1.0.1</version>
         </dependency>
     </dependencies>
 
