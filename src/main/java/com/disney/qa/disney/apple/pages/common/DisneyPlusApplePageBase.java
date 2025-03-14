@@ -1515,7 +1515,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void moveRightUntilElementIsFocused(ExtendedWebElement element, int count) {
-        LOGGER.info("Moving right until desired collection content is focused");
+        LOGGER.info("Moving right until desired element is focused");
         if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
             LOGGER.info("Desired element was already focused");
             return;
