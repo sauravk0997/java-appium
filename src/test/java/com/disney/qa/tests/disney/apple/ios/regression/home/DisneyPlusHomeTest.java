@@ -637,6 +637,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         handleAlert();
         homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
         try {
             brandCollection = getDisneyAPIPageUnifiedAccount(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
