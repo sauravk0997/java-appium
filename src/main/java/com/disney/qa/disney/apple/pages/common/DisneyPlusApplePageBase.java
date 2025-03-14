@@ -513,6 +513,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return viewAlert;
     }
 
+    public ExtendedWebElement getSecondaryButton() {
+        return secondaryButton;
+    }
+
     public String getErrorMessageString() {
         return labelError.getText();
     }
