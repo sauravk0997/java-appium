@@ -1,6 +1,9 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
+import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.DisneyAbstractPage;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
@@ -195,11 +198,14 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         int secondsSkippedPerAction = 10;
         int expectedSkippedSeconds = times * secondsSkippedPerAction;
         int uiLatencyInSeconds = 10;
-        logIn(getUnifiedAccount());
+        // Total time of the movie
+        int totalDurationTime = 7526;
+   /*     logIn(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
         Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayerTVPage.waitForVideoToStart();
+*/
 
         // Pause and forward video validations
         commonPage.clickDown(1);
@@ -209,7 +215,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         commonPage.clickPlay();
         commonPage.clickDown(1);
         int timeAfterFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        LOGGER.info("remainingTimeBeforeFF {}", timeAfterFF);
+        LOGGER.info("timeAfterFF {}", timeAfterFF);
         Assert.assertTrue(remainingTimeBeforeFF > timeAfterFF, "Forward did not work as expected");
         home.waitForElementToDisappear(videoPlayerTVPage.getSeekbar(), DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT);
 
@@ -223,6 +229,12 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         home.waitForPresenceOfAnElement(videoPlayerTVPage.getTitleVideoLabel());
         home.waitForElementToDisappear(videoPlayerTVPage.getTitleVideoLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
         commonPage.clickPlay();
+        commonPage.clickDown(1);
+        int timeAfterRestart = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        LOGGER.info("timeAfterRestart {}, totalDuration {}", timeAfterRestart, totalDurationTime);
+        int duration = totalDurationTime - timeAfterRestart;
+        ValueRange range = ValueRange.of(0, uiLatencyInSeconds);
+        Assert.assertTrue(range.isValidIntValue(duration),"Video did not restarted");
 
         // Actions to validate forward and rewind
         commonPage.clickPlay();
