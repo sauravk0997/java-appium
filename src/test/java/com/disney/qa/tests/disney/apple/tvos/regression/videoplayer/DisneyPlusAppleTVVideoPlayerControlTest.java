@@ -201,14 +201,11 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayerTVPage.waitForVideoToStart();
 
-        // Forward video
+        // Pause and forward video validations
         commonPage.clickDown(1);
         int remainingTimeBeforeFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeBeforeFF {}", remainingTimeBeforeFF);
-
         commonPage.clickRight(3, 1, 1);
-
-        // Pause video
         commonPage.clickPlay();
         commonPage.clickDown(1);
         int timeAfterFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
