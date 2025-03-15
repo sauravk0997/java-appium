@@ -233,7 +233,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         LOGGER.info("timeAfterRestart {}, totalDuration {}", timeAfterRestart, totalDurationTime);
         int duration = totalDurationTime - timeAfterRestart;
         ValueRange range = ValueRange.of(0, uiLatencyInSeconds);
-        Assert.assertTrue(range.isValidIntValue(duration),"Video did not restarted");
+        Assert.assertTrue(range.isValidIntValue(duration),"Video did not restart");
 
         // Actions to validate forward and rewind
         commonPage.clickPlay();
