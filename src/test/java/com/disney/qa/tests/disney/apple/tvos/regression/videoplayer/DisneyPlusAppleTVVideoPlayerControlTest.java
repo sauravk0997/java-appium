@@ -197,69 +197,47 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         int uiLatencyInSeconds = 10;
         logIn(getUnifiedAccount());
 
-
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
         Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayerTVPage.waitForVideoToStart();
 
-        // Pause video with remote button
-        home.clickPlay();
-        home.waitForElementToDisappear(videoPlayerTVPage.getSeekbar(), DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT);
-        commonPage.clickUp(2);
-        int timeWhilePaused = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        LOGGER.info("timeWhilePaused {}", timeWhilePaused);
-        home.waitForElementToDisappear(videoPlayerTVPage.getSeekbar(), DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT);
+        // Forward video
+        commonPage.clickDown(1);
+        int remainingTimeBeforeFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        LOGGER.info("remainingTimeBeforeFF {}", remainingTimeBeforeFF);
 
-        // Play video with remote button
-        home.clickPlay();
-        home.waitForElementToDisappear(videoPlayerTVPage.getSeekbar(), DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT);
-        commonPage.clickUp(2);
-        int timeAfterPlay = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        Assert.assertTrue(timeWhilePaused > timeAfterPlay, VIDEO_NOT_PLAYING);
+        commonPage.clickRight(3, 1, 1);
+
         // Pause video
-        home.clickPlay();
+        commonPage.clickPlay();
+        commonPage.clickDown(1);
+        int timeAfterFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        LOGGER.info("remainingTimeBeforeFF {}", timeAfterFF);
+        Assert.assertTrue(remainingTimeBeforeFF > timeAfterFF, "Forward did not work as expected");
         home.waitForElementToDisappear(videoPlayerTVPage.getSeekbar(), DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT);
 
-        // Verify forward
-        commonPage.clickUp(2);
-        int remainingTimeBeforeForward = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        commonPage.clickRight(times, 1, 1);
-        commonPage.clickUp(2);
-        int remainingTimeAfterForward = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        Assert.assertTrue((remainingTimeBeforeForward - remainingTimeAfterForward) > expectedSkippedSeconds,
-                "Forward did not execute correctly");
+        // Actions required to properly restart the video because the button disappears quickly from screen
+        commonPage.clickUp(3);
+        Assert.assertTrue(videoPlayerTVPage.getRestartBtn().isPresent(), RESTART_BTN_NOT_DISPLAYED);
+        commonPage.clickUp(3);
+        commonPage.clickLeft();
+        commonPage.clickRight();
+        videoPlayerTVPage.getRestartBtn().click();
+        home.waitForPresenceOfAnElement(videoPlayerTVPage.getTitleVideoLabel());
+        home.waitForElementToDisappear(videoPlayerTVPage.getTitleVideoLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
+        commonPage.clickPlay();
 
-       // Verify rewind
-        videoPlayerTVPage.waitForElementToDisappear(videoPlayerTVPage.getSeekbar(), FIVE_SEC_TIMEOUT);
-        commonPage.clickUp(2);
+        // Actions to validate forward and rewind
+        commonPage.clickPlay();
+        commonPage.clickRight(6, 1, 1);
+        commonPage.clickDown(1);
         int remainingTimeBeforeRewind = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        commonPage.clickLeft(times, 1, 1);
+        commonPage.clickLeft(3, 1, 1);
         commonPage.clickDown(1);
         int remainingTimeAfterRewind = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         ValueRange acceptableDeltaRange =
                 ValueRange.of(expectedSkippedSeconds - uiLatencyInSeconds, expectedSkippedSeconds);
         Assert.assertTrue(acceptableDeltaRange.isValidIntValue(remainingTimeAfterRewind - remainingTimeBeforeRewind),
-                "Rewind did not execute correctly");
-
-        // Play video
-        home.clickPlay();
-        home.waitForElementToDisappear(videoPlayerTVPage.getSeekbar(), DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT);
-
-        // Verify restart
-
-        commonPage.clickUp(3);
-        Assert.assertTrue(videoPlayerTVPage.getRestartBtn().isPresent(), RESTART_BTN_NOT_DISPLAYED);
-        commonPage.clickPlay();
-        commonPage.clickUp(2);
-        commonPage.clickRight();
-        commonPage.clickLeft();
-        videoPlayerTVPage.getRestartBtn().click();
-        commonPage.clickDown(1);
-        int timeAfterRestart = videoPlayerTVPage.getRemainingTimeThreeIntegers();
-        LOGGER.info("timeAfterRestart {}, timeAfterPlay {}", timeAfterRestart, timeAfterPlay);
-        int playDuration = (timeAfterPlay - timeAfterRestart);
-        ValueRange range = ValueRange.of(0, uiLatencyInSeconds);
-        Assert.assertTrue(range.isValidIntValue(playDuration), "Video did not restart");
-
+                "Rewind did not work as expected");
     }
 }

@@ -353,6 +353,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement downloadsTabNotificationBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'loader'`]")
     private ExtendedWebElement loader;
+    @ExtendedFindBy(accessibilityId = "titleLabel")
+    protected ExtendedWebElement titleLabel;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1545,5 +1547,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getThumbnailView() {
         return thumbnailView;
+    }
+
+    public ExtendedWebElement getTitleVideoLabel() {
+        return titleLabel;
     }
 }
