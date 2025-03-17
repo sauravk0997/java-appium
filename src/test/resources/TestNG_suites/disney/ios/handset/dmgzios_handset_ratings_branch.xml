@@ -3,6 +3,7 @@
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
+    <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
     <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>

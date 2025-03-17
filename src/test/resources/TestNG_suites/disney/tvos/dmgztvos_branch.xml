@@ -16,6 +16,7 @@
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
     <parameter name="jenkinsBuild" value="4.2.0.77067"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
+    <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
     <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47916"/>
