@@ -44,6 +44,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement currentTimeMarker;
     @FindBy(name = "serviceAttributionLabel")
     protected ExtendedWebElement serviceAttributionLabel;
+    @ExtendedFindBy(accessibilityId = "serviceAttributionLabel")
+    protected ExtendedWebElement serviceAttribution;
     @ExtendedFindBy(accessibilityId = "ucp.durationLabel")
     protected ExtendedWebElement timeRemainingLabel;
     @FindBy(name = "titleLabel")
@@ -188,6 +190,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getServiceAttributionLabel(){
         return serviceAttributionLabel;
+    }
+
+    public ExtendedWebElement getServiceAttribution() {
+        return serviceAttribution;
     }
 
     public boolean isServiceAttributionLabelVisible() {

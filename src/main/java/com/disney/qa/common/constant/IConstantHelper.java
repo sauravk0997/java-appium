@@ -68,6 +68,7 @@ public interface IConstantHelper {
 
     //Content
     String SERIES_BLUEY = "Bluey";
+    String SERIES_DELI_BOYS = "Deli Boys";
     String SERIES_LOKI = "Loki";
 
     //country codes
