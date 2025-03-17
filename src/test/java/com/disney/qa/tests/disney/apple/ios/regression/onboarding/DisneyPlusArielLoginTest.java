@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -89,7 +90,7 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67749"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
-    public void testForgotPasswordOTPPage() {
+    public void testForgotPasswordOTPPage() throws GMailUtilsException {
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -104,10 +105,9 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
 
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         Assert.assertTrue(passwordPage.isPasswordPagePresent(), "Password page did not open");
-        Date startTime = getEmailApi().getStartTime();
         passwordPage.clickHavingTroubleLoggingButton();
 
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         handleGenericPopup(5,1);

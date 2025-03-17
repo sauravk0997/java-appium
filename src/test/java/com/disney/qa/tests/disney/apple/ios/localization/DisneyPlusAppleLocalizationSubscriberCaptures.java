@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.util.TestGroup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
@@ -203,7 +204,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = { "Subscriber - UI", "Subscriber - UI - S3",
             TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
-    public void AccountsAndHelp(String TUID) {
+    public void AccountsAndHelp(String TUID) throws GMailUtilsException {
         setup();
         setZipTestName("SubscriberUI_3_accounts");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -250,7 +251,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
         DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
                 .until(it -> accountPage.isChangeLinkPresent(testAccount.getEmail()));
-        Date startTime = emailApi.getStartTime();
         accountPage.clickChangeLink(testAccount.getEmail());
         pause(2);
         getScreenshots("ChangeEmailPage");
@@ -265,7 +265,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("ChangeEmailPageResend");
         forgotPasswordPage.clickAlertDismissBtn();
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
-                emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
+                emailApi.getDisneyOTP(testAccount.getEmail()));
         pause(3);
         dismissKeyboardForPhone();
         getScreenshots("ChangeEmailPageAfterOtp");
@@ -296,7 +296,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                         return accountPage.isChangeLinkPresent(DictionaryKeys.HIDDEN_PASSWORD.getText());
                     }
                 });
-        startTime = emailApi.getStartTime();
         if (!DEBUG_MODE) {
             accountPage.clickChangeLink(
                     getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
@@ -305,7 +304,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         }
 
         disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
-                emailApi.getDisneyOTP(testAccount.getEmail(), EmailApi.getOtpAccountPassword(), startTime));
+                emailApi.getDisneyOTP(testAccount.getEmail()));
         pause(3);
         dismissKeyboardForPhone();
         getScreenshots("ChangePasswordPage");

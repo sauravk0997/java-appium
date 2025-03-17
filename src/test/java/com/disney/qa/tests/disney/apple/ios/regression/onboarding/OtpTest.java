@@ -6,6 +6,7 @@ import com.disney.config.DisneyParameters;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.ApiConfiguration;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.zebrunner.carina.utils.config.Configuration;
 import org.testng.annotations.Test;
 
@@ -16,7 +17,7 @@ import java.util.Date;
 public class OtpTest {
 
     @Test
-    public void testOTP() throws IOException, URISyntaxException {
+    public void testOTP() throws IOException, URISyntaxException, GMailUtilsException {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform("apple")
                 .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
@@ -28,10 +29,9 @@ public class OtpTest {
 
         DisneyAccount account = api.createAccountForOTP("US", "en");
         EmailApi emailApi = new EmailApi();
-        Date startTime = emailApi.getStartTime();
         api.requestOtp(account);
 
-        String code = emailApi.getDisneyOTP(account.getEmail(), startTime);
+        String code = emailApi.getDisneyOTP(account.getEmail());
         System.out.println(code);
     }
 }

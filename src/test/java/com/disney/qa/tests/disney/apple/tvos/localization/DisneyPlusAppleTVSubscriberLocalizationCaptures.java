@@ -8,6 +8,7 @@ import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.disney.util.ZipUtils;
@@ -314,7 +315,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
     }
 
     @Test(description = "Account Settings Capture Screenshots", groups = { TestGroup.SUBSCRIBER_FLOW_ACCOUNT_SETTINGS, TestGroup.SUB_UI, TestGroup.PROXY, US})
-    public void captureAccountSettings() {
+    public void captureAccountSettings() throws GMailUtilsException {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSettingsPage disneyPlusAppleTVSettingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
@@ -348,13 +349,12 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         getScreenshots("1-AccountPage", baseDirectory);
         //Screenshot 1. Apple TV S4.1 From the left navigation panel > Settings, click on Account and review the page. - Take SS
 
-        Date startTime = emailApi.getStartTime();
         disneyPlusAppleTVAccountPage.clickChangeEmailBtn();
         disneyPlusAppleTVChangeEmailPage.isOpened();
         getScreenshots("1-OneTimePassword", baseDirectory);
         //Screenshot 2. Apple TV S4.2 Click on Change next to the email address and review the page.- Take SS
 
-        String otp = emailApi.getDisneyOTP(user.getEmail(), EmailApi.getOtpAccountPassword(), startTime);
+        String otp = emailApi.getDisneyOTP(user.getEmail());
         disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
         disneyPlusAppleTVForgotPasswordPage.enterOTPLocalized("000000");
         disneyPlusAppleTVChangeEmailPage.isOpened();
@@ -397,9 +397,8 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         pause(1);
         disneyPlusAppleTVHomePage.clickMenu();
 
-        Date startTime2 = emailApi.getStartTime();
         disneyPlusAppleTVAccountPage.clickChangePasswordBtn();
-        String otp2 = emailApi.getDisneyOTP(user.getEmail(), EmailApi.getOtpAccountPassword(), startTime2);
+        String otp2 = emailApi.getDisneyOTP(user.getEmail());
         pause(5);
         //Screenshot 8. Apple TV S4.8 Go back to the Account section, now click on Change next to Password. Follow the steps again for Check your email inbox flow (Same as S4.2 - S4.5).- Take SS
         getScreenshots("8-OneTimePassword", baseDirectory);
