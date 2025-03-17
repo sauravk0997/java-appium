@@ -461,7 +461,9 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.skipIntroIfPresent();
+        videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentage);
+        videoPlayer.clickPlayButton();
         // Verify image and elements present in upNext screen
         upNext.waitForUpNextUIToAppear();
         Assert.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
