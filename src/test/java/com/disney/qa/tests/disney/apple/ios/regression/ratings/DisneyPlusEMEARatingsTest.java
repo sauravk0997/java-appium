@@ -1,8 +1,10 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
+import org.testng.annotations.Listeners;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.RatingConstant.Rating.EIGHTEEN_PLUS;
@@ -13,6 +15,7 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.SIX_PLUS;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TWELVE_PLUS;
 import static com.disney.qa.common.constant.RatingConstant.Rating.ZERO_PLUS;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
 
     // Countries and language of these test cases are selected in the 'overrideLocaleConfig' method
