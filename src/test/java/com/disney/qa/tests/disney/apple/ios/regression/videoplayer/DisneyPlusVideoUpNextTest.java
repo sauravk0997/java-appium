@@ -459,6 +459,8 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         int percentage = 98;
         launchDeeplink(R.TESTDATA.get(deeplink));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.skipIntroIfPresent();
         videoPlayer.scrubToPlaybackPercentage(percentage);
         // Verify image and elements present in upNext screen
         upNext.waitForUpNextUIToAppear();
