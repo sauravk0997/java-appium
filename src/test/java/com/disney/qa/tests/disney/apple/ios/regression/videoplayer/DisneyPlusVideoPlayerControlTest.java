@@ -183,21 +183,22 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        String huluServiceAttributionText = "Included with your Hulu subscription";
+        String seriesDeliBoys = "Deli Boys";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        searchPage.searchForMedia(SERIES_DELI_BOYS);
+        searchPage.searchForMedia(seriesDeliBoys);
         searchPage.getDisplayedTitles().get(0).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
         videoPlayer.waitForVideoToStart();
         videoPlayer.displayVideoController();
-        Assert.assertTrue(videoPlayer.getServiceAttribution().isPresent(), "Service Attribution is not displayed");
-        Assert.assertTrue(videoPlayer.getServiceAttribution().getText().equals("Included with your Hulu subscription"));
+        Assert.assertTrue(videoPlayer.getServiceAttribution().getText().equals(huluServiceAttributionText));
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72690"})
