@@ -38,7 +38,7 @@ import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.EN
 
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String ADULT_DOB = "1923-10-23";
+    private static final String ADULT_DOB = "1990-10-23";
     private static final String THE_CHILD = "f11d21b5-f688-50a9-8b85-590d6ec26d0c";
     private static final String PROFILE_PIN = "1111";
     private static final String NEW_PROFILE_PIN = "1234";
@@ -53,6 +53,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String UPDATED_TOAST_WAS_NOT_DISPLAYED = "'Updated' toast was not displayed";
     private static final String KIDS_PROOF_EXIT_TOGGLE_IS_NOT_ON = "'kids proof exit' toggle is not 'On'";
     private static final String WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED = "Who is watching screen did not open";
+    private static final String LIVE_TOGGLE_WAS_NOT_DISPLAYED =
+            "Live and unrated section is not found on edit profile screen after multiple swipe";
+    private static final String LIVE_TOGGLE_IS_NOT_ON_BY_DEFAULT = "Live toggle is not ON by default";
     private static final String RIGHT = "RIGHT";
     private static final String LEFT = "LEFT";
 
@@ -1329,6 +1332,104 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78840"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLiveAndUnratedToggleEditProfileScreen() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String ON = "On";
+        String OFF = "Off";
+        int swipeCount = 3;
+        int duration = 500;
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+        sa.assertTrue(editProfile.getProfileSettingLiveUnratedDesc().isPresent(),
+                "Live unrated description is not present");
+        sa.assertTrue(editProfile.getProfileSettingLiveUnratedHelpLink().isPresent(),
+                "Live unrated hyper link is not present");
+
+        //Toggle is ON by default
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
+                LIVE_TOGGLE_IS_NOT_ON_BY_DEFAULT);
+
+        // Turn Toggle OFF
+        editProfile.tapLiveAndUnratedToggle();
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle did not turn OFF after tapping on toggle");
+
+        //Turn toggle ON
+        editProfile.tapLiveAndUnratedToggle();
+        editProfile.enterPassword(getUnifiedAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
+                "Live toggle did not turn On after tapping on toggle");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78839"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLiveAndUnratedToggleUI() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String ON = "On";
+        int swipeCount = 3;
+        int duration = 500;
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
+
+        //Toggle is ON by default for secondary profile
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON, LIVE_TOGGLE_IS_NOT_ON_BY_DEFAULT +
+                " for secondary profile");
+        editProfile.clickDoneBtn();
+
+        //Toggle is ON by default for primary profile
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON, LIVE_TOGGLE_IS_NOT_ON_BY_DEFAULT +
+                " for primary profile");
+
+        sa.assertAll();
+    }
+
 
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
