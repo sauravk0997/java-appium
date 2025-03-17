@@ -3,7 +3,12 @@
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
+    <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
+    <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
+    <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
+    <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
+    <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value=""/>
     <parameter name="jenkinsBuild" value=""/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation"/>
     <parameter name="jenkinsJobType" value="ios"/>
