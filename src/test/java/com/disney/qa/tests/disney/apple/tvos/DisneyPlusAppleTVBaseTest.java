@@ -144,9 +144,8 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         logInWithoutHomeCheck(user);
         if (profileName.length > 0 && !(homePage.isOpened())) {
-            initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
             Assert.assertTrue(WhoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-            WhoIsWatchingPage.clickProfile(String.valueOf(profileName[0]));
+            WhoIsWatchingPage.clickProfile(String.valueOf(profileName[0]), true);
         }
         collapseGlobalNav();
         Assert.assertTrue(homePage.isOpened(),
