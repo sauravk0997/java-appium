@@ -153,7 +153,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount(), KIDS_PROFILE);
         Assert.assertTrue(homePage.isKidThemeBackgroudUIDisplayed(),
                 "UI on home page is not in kid mode theme");
-        //launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_deeplink"));
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertFalse(detailsPage.isOpened(), "Adult content detail page displayed for kid profile");
     }
