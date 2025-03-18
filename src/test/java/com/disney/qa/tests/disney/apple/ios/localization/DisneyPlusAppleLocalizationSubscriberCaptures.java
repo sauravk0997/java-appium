@@ -307,8 +307,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             accountPage.clickChangeLink(DictionaryKeys.HIDDEN_PASSWORD.getText());
         }
 
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
-                emailApi.getDisneyOTP(testAccount.getEmail()));
+        try {
+            disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
+                    emailApi.getDisneyOTP(testAccount.getEmail()));
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         pause(3);
         dismissKeyboardForPhone();
         getScreenshots("ChangePasswordPage");
