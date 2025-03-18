@@ -1339,6 +1339,46 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78841"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLiveAndUnratedToggleJuniorMode() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        String OFF = "Off";
+        int swipeCount = 3;
+        int duration = 500;
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+
+        //Tap on toggle to activate tool tip
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle did not OFF for kid's profile");
+
+        editProfile.tapLiveAndUnratedToggle();
+
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle did not turn OFF after tapping on toggle");
+        editProfile.getProfileSettingLiveUnratedHeader().click();
+        Assert.assertTrue(editProfile.getProfileSettingLiveUnratedTooltip().isPresent(),
+                "Live and unrated toggle Tool tip for junior mode was not present");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78840"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyLiveAndUnratedToggleEditProfileScreen() {
