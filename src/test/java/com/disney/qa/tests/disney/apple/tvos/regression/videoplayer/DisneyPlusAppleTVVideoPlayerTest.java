@@ -4,7 +4,6 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -106,28 +105,22 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102801"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifyVODReplay() {
-        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayerTVPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-
         String basketballTitle = "Basketball";
-        String replays = "Replays";
-      //  setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
-        launchDeeplink(R.TESTDATA.get("espn_prod_replay_basketball_page"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
 
         Assert.assertTrue(espnPage.isSportTitlePresent(basketballTitle), "Title was not found");
         detailsPage.moveDown(2, 1);
-        detailsPage.getStaticTextByLabel(replays);
+        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
+        detailsPage.getTypeCellLabelContains(replayTitle).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
-
-
     }
 }
