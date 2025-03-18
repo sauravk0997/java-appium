@@ -108,13 +108,13 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        String basketballTitle = "Basketball";
+        String nhlTitle = "NHL";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
 
-        Assert.assertTrue(espnPage.isSportTitlePresent(basketballTitle), "Title was not found");
+        Assert.assertTrue(espnPage.isSportTitlePresent(nhlTitle), "Title was not found");
         detailsPage.moveDown(2, 1);
         String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
         detailsPage.getTypeCellLabelContains(replayTitle).click();
