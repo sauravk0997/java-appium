@@ -27,6 +27,7 @@ import java.util.stream.Stream;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -239,20 +240,25 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertAll();
     }
 
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67250"})
     @Test(groups = { TestGroup.HOME, TestGroup.SMOKE, US})
     public void verifyGlobalNavKidsSelectedExpanded() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS).
-                dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         initDisneyPlusAppleTVGlobalNavMenuTest();
         selectAppleUpdateLaterAndDismissAppTracking();
-        logInWithoutHomeCheck(getAccount());
+        logInWithoutHomeCheck(getUnifiedAccount());
 
         sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(),
                 "Who's watching page did not launch");
@@ -285,12 +291,18 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         SoftAssert sa = new SoftAssert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(getAccount()).profileName(KIDS).
-                dateOfBirth(KIDS_DOB).language(getAccount().getProfileLang()).avatarId(null).
-                kidsModeEnabled(true).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
         initDisneyPlusAppleTVGlobalNavMenuTest();
         selectAppleUpdateLaterAndDismissAppTracking();
-        logInWithoutHomeCheck(getAccount());
+        logInWithoutHomeCheck(getUnifiedAccount());
 
         sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(),
                 "Who's watching page did not launch");
