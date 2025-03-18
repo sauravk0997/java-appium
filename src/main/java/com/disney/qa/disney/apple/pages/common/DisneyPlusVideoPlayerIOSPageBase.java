@@ -935,4 +935,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTimeRemainingLabel() {
         return timeRemainingLabel;
     }
+
+    public ExtendedWebElement getTitleVideoLabel() {
+        return titleLabel;
+    }
 }
