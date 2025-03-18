@@ -1490,14 +1490,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
                 "Live toggle did not turn OFF after tapping on toggle");
         editProfile.clickDoneBtn();
-        //homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
 
         // Verify that live and unrated content is not shown
         Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setTitle), Direction.UP, swipeCount, duration),
-                "'live and unrated' collection is not found on home page");
+                "Live and unrated collection was present after turning off the live toggle");
 
         Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setContentTitle), Direction.DOWN, swipeCount, duration),
-                "not able to find live title");
+                "Live content title was present after turning off the live toggle");
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
