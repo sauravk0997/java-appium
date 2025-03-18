@@ -3,11 +3,13 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -18,7 +20,7 @@ import java.util.stream.*;
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -154,6 +156,32 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         launchApp(sessionBundles.get(DISNEY));
         verifyServiceAttribution(PREY, sa);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102800"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    public void verifyVODReplayAppearance() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+        Assert.assertTrue(detailsPage.getBrandLandingView().isPresent(),
+                "Deeplink did not navigate to the Replay Event Details Page");
+        detailsPage.moveDown(2, 1);
+        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
+        detailsPage.getTypeCellLabelContains(replayTitle).click();
+        detailsPage.waitForDetailsPageToOpen();
+        // Validate logo and play button
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        // Validate other UI elements
+        Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata text is not present");
+        Assert.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
+        Assert.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
+        Assert.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
+        Assert.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
+        Assert.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {
