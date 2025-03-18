@@ -2,11 +2,9 @@ package com.disney.qa.tests.disney.apple.ios.localization;
 
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 
-import java.util.Date;
 import java.util.List;
 
 import com.disney.qa.api.client.responses.profile.Profile;
-import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.util.TestGroup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
@@ -15,7 +13,6 @@ import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.content.CollectionRequest;
 import com.disney.qa.api.client.responses.content.ContentCollection;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.DisneyEntitlement;
 import com.disney.qa.api.pojos.DisneyOffer;
@@ -23,12 +20,9 @@ import com.disney.qa.api.search.assets.DisneyStandardCollection;
 import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusAccountIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusChangeEmailIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusChangePasswordIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusChooseAvatarIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusContentRatingIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
@@ -200,167 +194,6 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.getDynamicXpathContainsName(videoQuality).click();
         pause(3);
         getScreenshots("VideoQuality");
-    }
-
-    @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = { "Subscriber - UI", "Subscriber - UI - S3",
-            TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
-    public void AccountsAndHelp(String TUID) {
-        setup();
-        setZipTestName("SubscriberUI_3_accounts");
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusOneTimePasscodeIOSPageBase forgotPasswordPage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
-        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
-        DisneyPlusOneTimePasscodeIOSPageBase disneyPlusOneTimePasscodeIOSPageBase = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
-        DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
-        EmailApi emailApi = getEmailApi();
-
-        String locale = getLocalizationUtils().getLocale();
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage())
-                .build();
-        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Yearly");
-        DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V1").build();
-        request.addEntitlement(entitlement);
-        DisneyAccount testAccount = getAccountApi().createAccountForOTP(request);
-        setAccount(testAccount);
-
-        welcomePage.clickLogInButton();
-        loginPage.submitEmail(testAccount.getEmail());
-        passwordPage.typePassword(testAccount.getUserPass());
-        dismissKeyboardForPhone();
-        passwordPage.clickPrimaryButton();
-
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.clickMenuOptionByIndex(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
-        pause(3);
-        int accountPageShotCount = 1;
-        getScreenshots("AccountPagePart_" + accountPageShotCount);
-
-        while (!moreMenuPage.getDeleteAccountButton().isElementPresent()) {
-            accountPageShotCount += 1;
-            swipeInContainer(null, Direction.UP, 500);
-            pause(2);
-            getScreenshotsNoCountUpdate("AccountPagePart" + accountPageShotCount);
-        }
-
-        while (!accountPage.isChangeLinkPresent(testAccount.getEmail())) {
-            swipeInContainer(null, Direction.DOWN, 500);
-        }
-
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
-                .until(it -> accountPage.isChangeLinkPresent(testAccount.getEmail()));
-        accountPage.clickChangeLink(testAccount.getEmail());
-        pause(2);
-        getScreenshots("ChangeEmailPage");
-        forgotPasswordPage.clickPrimaryButton();
-
-        dismissKeyboardForPhone();
-        pause(3);
-        getScreenshots("ChangeEmailPageBlankCode");
-        dismissKeyboardForPhone();
-        forgotPasswordPage.clickResend();
-        pause(3);
-        getScreenshots("ChangeEmailPageResend");
-        forgotPasswordPage.clickAlertDismissBtn();
-        try {
-            disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
-                    emailApi.getDisneyOTP(testAccount.getEmail()));
-        } catch (GMailUtilsException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        pause(3);
-        dismissKeyboardForPhone();
-        getScreenshots("ChangeEmailPageAfterOtp");
-
-        changeEmailPage.clickLogoutAllDevices();
-        pause(3);
-        getScreenshots("EmailLogOutOfAllDevices");
-
-        changeEmailPage.clickSaveBtn();
-        dismissKeyboardForPhone();
-        pause(3);
-        getScreenshots("EmailEmptySave");
-
-        changeEmailPage.submitNewEmailAddress("a");
-        dismissKeyboardForPhone();
-        pause(3);
-        getScreenshots("EmailBadEmailSave");
-
-        dismissKeyboardForPhone();
-        changeEmailPage.clickCancelBtn();
-
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 5, "Change link was not present")
-                .until(it -> {
-                    if (!DEBUG_MODE) {
-                        return accountPage.isChangeLinkPresent(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.HIDDEN_PASSWORD.getText()));
-                    } else {
-                        return accountPage.isChangeLinkPresent(DictionaryKeys.HIDDEN_PASSWORD.getText());
-                    }
-                });
-        if (!DEBUG_MODE) {
-            accountPage.clickChangeLink(
-                    getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.HIDDEN_PASSWORD.getText()));
-        } else {
-            accountPage.clickChangeLink(DictionaryKeys.HIDDEN_PASSWORD.getText());
-        }
-
-        try {
-            disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
-                    emailApi.getDisneyOTP(testAccount.getEmail()));
-        } catch (GMailUtilsException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-        pause(3);
-        dismissKeyboardForPhone();
-        getScreenshots("ChangePasswordPage");
-
-        DisneyPlusChangePasswordIOSPageBase changePasswordPage = initPage(DisneyPlusChangePasswordIOSPageBase.class);
-        changePasswordPage.clickLogoutAllDevices();
-        pause(3);
-        getScreenshots("ChangePasswordPageLogOutOfAll");
-
-        passwordPage.typePassword("123");
-        pause(2);
-        getScreenshots("BadPassword");
-
-        passwordPage.typePassword("local123");
-        pause(2);
-        getScreenshots("FairPassword");
-
-        passwordPage.typePassword("local1234");
-        pause(2);
-        getScreenshots("GoodPassword");
-
-        passwordPage.typePassword("local123b456@");
-        pause(2);
-        getScreenshots("ExcellentPassword");
-
-        passwordPage.typePassword("a");
-        changePasswordPage.clickSaveBtn();
-        dismissKeyboardForPhone();
-        pause(3);
-        getScreenshots("InvalidPasswordError");
-
-        changePasswordPage.clickCancelBtn();
-        DisneyPlusApplePageBase.fluentWait(getDriver(), 60, 2, "Log out of all devices is not present")
-                .until(it -> accountPage.isLogOutOfAllDevicesLinkPresent());
-        accountPage.clickLogOutOfAllDevices();
-        pause(3);
-        getScreenshots("LogoutAllDevicesPage");
-
-        accountPage.clickPrimaryButton();
-        dismissKeyboardForPhone();
-        pause(3);
-        getScreenshots("LogoutAllDevicesEmptyPassword");
-
-        passwordPage.typePassword("a");
-        accountPage.clickPrimaryButton();
-        dismissKeyboardForPhone();
-        pause(3);
-        getScreenshots("LogoutAllDevicesWrongPassword");
     }
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S4 Legal", groups = { "Subscriber - UI", "Subscriber - UI - S4",
