@@ -14,7 +14,7 @@
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression. Some Groups may not have associated tests at this time."
                value=",Smoke,Anthology,Ariel,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77045"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77091"/>
 
     <test verbose="1" name="DisneyPlus tvOS Details" parallel="methods">
         <classes>
