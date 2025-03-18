@@ -19,7 +19,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
-    <parameter name="scheduling" value="H 8 * * 3,0"/>
+<!--    <parameter name="scheduling" value="H 8 * * 3,0"/>-->
     <parameter name="overrideFields"
                value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=300"/>
 
