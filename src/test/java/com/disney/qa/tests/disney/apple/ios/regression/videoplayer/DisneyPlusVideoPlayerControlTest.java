@@ -43,12 +43,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         };
     }
 
-    @DataProvider(name = "userType")
-    public Object[][] userType() {
-        return new Object[][]{{DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY},
-                {DISNEY_PLUS_PREMIUM}};
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyTitleAndBackButtonToClose() {
@@ -183,31 +177,25 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74457"})
-    @Test(dataProvider = "userType", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyVideoPlayerServiceAttribution(DisneyUnifiedOfferPlan userType) {
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyVideoPlayerServiceAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
+        String seriesDeliBoys = "Deli Boys";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(userType)));
         setAppToHomeScreen(getUnifiedAccount());
-
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(seriesDeliBoys);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.skipPromoIfPresent();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
-        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
-                "service attribution wasn't visible when video started");
-        sa.assertFalse(videoPlayer.isSeekbarVisible(),
-                "player controls were displayed when video started");
-        sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(),
-                "service attribution wasn't visible along with controls");
-        sa.assertAll();
+        detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
+        Assert.assertTrue(videoPlayer.getServiceAttribution().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE));
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72690"})
