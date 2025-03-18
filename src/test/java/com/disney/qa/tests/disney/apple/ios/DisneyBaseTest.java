@@ -848,19 +848,24 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return String.format("%dh %dm", hours, minutes);
     }
 
-    public String getOTPFromApi(UnifiedAccount testAccount) throws GMailUtilsException {
+    public String getOTPFromApi(UnifiedAccount testAccount) {
         int emailAPILatency = 10;
-        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail());
-        pause(emailAPILatency);
-        String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail());
+        try {
+            String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail());
+            pause(emailAPILatency);
+            String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail());
 
-        if (!secondOTP.equals(firstOTP)) {
-            LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
-            return secondOTP;
-        } else {
-            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
-            return firstOTP;
+            if (!secondOTP.equals(firstOTP)) {
+                LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+                return secondOTP;
+            } else {
+                LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+                return firstOTP;
+            }
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
         }
+
     }
 
     public void handleGenericPopup(int timeout, int maxAttempts) {

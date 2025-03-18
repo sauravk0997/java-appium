@@ -315,7 +315,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
     }
 
     @Test(description = "Account Settings Capture Screenshots", groups = { TestGroup.SUBSCRIBER_FLOW_ACCOUNT_SETTINGS, TestGroup.SUB_UI, TestGroup.PROXY, US})
-    public void captureAccountSettings() throws GMailUtilsException {
+    public void captureAccountSettings() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSettingsPage disneyPlusAppleTVSettingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
@@ -354,7 +354,12 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         getScreenshots("1-OneTimePassword", baseDirectory);
         //Screenshot 2. Apple TV S4.2 Click on Change next to the email address and review the page.- Take SS
 
-        String otp = emailApi.getDisneyOTP(user.getEmail());
+        String otp = null;
+        try {
+            otp = emailApi.getDisneyOTP(user.getEmail());
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
         disneyPlusAppleTVForgotPasswordPage.enterOTPLocalized("000000");
         disneyPlusAppleTVChangeEmailPage.isOpened();

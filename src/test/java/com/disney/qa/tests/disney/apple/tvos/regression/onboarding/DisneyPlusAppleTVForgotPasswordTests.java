@@ -88,7 +88,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90624"})
     @Test(groups = {TestGroup.ONBOARDING, US})
-    public void onScreenNumericKeyboardVerification() throws GMailUtilsException {
+    public void onScreenNumericKeyboardVerification() {
         DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
@@ -104,7 +104,12 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         passwordPage.clickHavingTroubleLogginInBtn();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
-        String otp = getEmailApi().getDisneyOTP(disneyOTPAccount.getEmail());
+        String otp = null;
+        try {
+            otp = getEmailApi().getDisneyOTP(disneyOTPAccount.getEmail());
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         oneTimePasscodePage.enterOTPCode(otp);
         oneTimePasscodePage.clickMenu();
         Assert.assertTrue(loginPage.isOpened(), LOG_IN_SCREEN_DID_NOT_LAUNCH);
@@ -112,7 +117,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66546"})
     @Test(groups = {TestGroup.ONBOARDING, US})
-    public void verifyEmailResentWithDifferentCode() throws GMailUtilsException {
+    public void verifyEmailResentWithDifferentCode() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -132,12 +137,22 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         passwordPage.clickHavingTroubleLogginInBtn();
         Assert.assertTrue(forgotPasswordPage.isOpened(), "Forgot password page did not launch");
 
-        String otp = getEmailApi().getDisneyOTP(disneyUser.getEmail());
+        String otp = null;
+        try {
+            otp = getEmailApi().getDisneyOTP(disneyUser.getEmail());
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         forgotPasswordPage.clickResend();
         sa.assertTrue(forgotPasswordPage.isResentEmailHeaderPresent(), "Resent email header is not present.");
         sa.assertTrue(forgotPasswordPage.isResentEmailBodyPresent(), "Resent email body is not present.");
 
-        String otpTwo = getEmailApi().getDisneyOTP(disneyUser.getEmail());
+        String otpTwo = null;
+        try {
+            otpTwo = getEmailApi().getDisneyOTP(disneyUser.getEmail());
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         sa.assertEquals(otp, otpTwo, "Original and second OTPs do not match one another.");
         sa.assertAll();
     }
@@ -209,7 +224,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66522"})
     @Test(groups = {TestGroup.ONBOARDING, US})
-    public void otpDoesNotWorkAfterFifteenMinutes() throws GMailUtilsException {
+    public void otpDoesNotWorkAfterFifteenMinutes() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -231,7 +246,12 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = getEmailApi().getDisneyOTP(disneyUser.getEmail());
+        String otp = null;
+        try {
+            otp = getEmailApi().getDisneyOTP(disneyUser.getEmail());
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
         AtomicInteger count = new AtomicInteger(0);
         IntStream.range(0, 60).forEach(i -> {
@@ -251,7 +271,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66516"})
     @Test(groups = {TestGroup.ONBOARDING, US})
-    public void resettingPasswordTakesUserToHome() throws GMailUtilsException {
+    public void resettingPasswordTakesUserToHome() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
@@ -275,7 +295,12 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         passwordPage.clickHavingTroubleLogginInBtn();
 
         sa.assertTrue(forgotPasswordPage.isOpened(), "Forgot password page did not launch");
-        String otp = verifyEmail.getDisneyOTP(disneyUser.getEmail());
+        String otp = null;
+        try {
+            otp = verifyEmail.getDisneyOTP(disneyUser.getEmail());
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
         forgotPasswordPage.enterOTP(otp);
         forgotPasswordPage.clickContinueBtnOnOTPPage();

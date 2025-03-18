@@ -204,7 +204,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
 
     @Test(dataProvider = "tuidGenerator", description = "iOS S3 Profile menu: Account & Help", groups = { "Subscriber - UI", "Subscriber - UI - S3",
             TestGroup.PRE_CONFIGURATION, TestGroup.PROXY })
-    public void AccountsAndHelp(String TUID) throws GMailUtilsException {
+    public void AccountsAndHelp(String TUID) {
         setup();
         setZipTestName("SubscriberUI_3_accounts");
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -264,8 +264,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         pause(3);
         getScreenshots("ChangeEmailPageResend");
         forgotPasswordPage.clickAlertDismissBtn();
-        disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
-                emailApi.getDisneyOTP(testAccount.getEmail()));
+        try {
+            disneyPlusOneTimePasscodeIOSPageBase.enterOtpValueDismissKeys(
+                    emailApi.getDisneyOTP(testAccount.getEmail()));
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
         pause(3);
         dismissKeyboardForPhone();
         getScreenshots("ChangeEmailPageAfterOtp");
