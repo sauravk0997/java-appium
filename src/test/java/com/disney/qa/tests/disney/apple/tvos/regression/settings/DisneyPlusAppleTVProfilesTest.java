@@ -1,5 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
+import com.disney.qa.api.offer.pojos.Partner;
+import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -10,7 +12,8 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 
 public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     private static final String PROFILE_NAME = "Test";
@@ -129,5 +132,44 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVWhoIsWatchingPage.clickEditProfile();
         Assert.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), "Who is watching page is not open after clicking Done on edit profile page");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-97845"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyEnterPasswordScreenUIForProfileCreationLockUserWhileAddProfileFlow() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        getDefaultCreateUnifiedAccountRequest()
+                .setPartner(Partner.DISNEY)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setProfileRestricted(true)
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
+        logIn(getUnifiedAccount());
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), DisneyAbstractPage.FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.moveRight(1, 1);
+        whoIsWatchingPage.clickSelect();
+        passwordPage.waitForPresenceOfAnElement(passwordPage.getEnterYourPasswordHeader());
+        sa.assertTrue(passwordPage.isHeaderTextDisplayed(),
+                "Enter your password header was not found.");
+        sa.assertTrue(passwordPage.getAuthEnterPasswordProfileBody().isPresent(),
+                "Add password profile description was not found");
+        sa.assertTrue(passwordPage.getPasswordFieldText().equals(passwordPage.getAuthEnterPasswordFieldHint().getText()),
+                "Field Ghost text 'Password' was not found");
+        sa.assertTrue(passwordPage.isShowHidePasswordEyeIconPresent(),
+                "Show hide password eyc icon was not found");
+        sa.assertTrue(passwordPage.getAuthEnterPasswordForgotPassword().isPresent(),
+                "Forgot Password button text was not found");
+        sa.assertTrue(passwordPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
+        passwordPage.enterPasswordToCompleteAuth(getUnifiedAccount().getUserPass());
+        sa.assertTrue(chooseAvatarPage.isOpened(), "Choose your avatar screen not open");
     }
 }
