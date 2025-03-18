@@ -21,7 +21,7 @@
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,Ariel,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Welch"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77067"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77091"/>
 
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
     <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
