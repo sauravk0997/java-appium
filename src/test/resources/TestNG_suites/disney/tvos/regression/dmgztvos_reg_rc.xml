@@ -2,9 +2,9 @@
 <suite verbose="1" name="dmgztvos_reg_rc" annotations="JDK" configfailurepolicy="continue" thread-count="2" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-tv-4.1.5-rc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-78774"/>
-    <parameter name="jenkinsBuild" value="4.1.5.76424"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-tv-4.2.0-rc"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XCDQA-123306"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77091"/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_reg_rc"/>
