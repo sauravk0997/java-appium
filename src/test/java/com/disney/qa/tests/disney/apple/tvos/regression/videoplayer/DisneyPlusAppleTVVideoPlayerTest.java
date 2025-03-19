@@ -2,17 +2,24 @@ package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.lang.invoke.MethodHandles;
+import java.util.List;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
@@ -21,6 +28,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest {
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120534"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, US})
@@ -103,5 +111,28 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         sa.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE),
                 "Expected Hulu Service Attribution not displayed");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-99575"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyPCONPlayback() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String contentUnavailableError = "content-unavailable";
+        String contentUnavailableHeader = "No Titles Available";
+
+        // Set lower rating
+        List<String> ratingSystemValues = getUnifiedAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        LOGGER.info("Lower rating: {}", ratingSystemValues.get(0));
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
+                getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
+
+        logIn(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+        launchDeeplink(R.TESTDATA.get("disney_prod_loki_collection_deeplink"));
+        Assert.assertTrue(homePage.getStaticTextByLabel(contentUnavailableHeader).isPresent(),
+                "Rating Restriction message Header not displayed");
+        Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(),
+                "Rating Restriction message was not displayed");
     }
 }
