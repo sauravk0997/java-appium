@@ -16,10 +16,11 @@
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
-    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value=""/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-79161"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-79161"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name"
                value="Disney-Prod-Enterprise,Disney-Non-IAP-PreProd-Enterprise"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77091"/>
+    <parameter name="jenkinsBuild" value="4.2.0.77099"/>
     <parameter name="jenkinsEnvironments" value="Prod,PreProd"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Air_M2_1,iPad_Air_M2_2,iPad_Air_M2_3,iPad_Air_M2_4,iPad_Air_M2_5,iPad_Air_M2_6,iPad_Gen_10_1,iPad_Gen_10_2,iPad_Gen_10_3,iPad_Pro_M4_1,iPad_Pro_M4_3,iPad_Pro_M4_5,iPad_Pro_M4_2,iPad_Gen_9;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
