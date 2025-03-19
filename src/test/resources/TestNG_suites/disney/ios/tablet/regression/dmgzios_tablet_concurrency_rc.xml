@@ -17,6 +17,7 @@
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
     <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value=""/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-79161"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name"
                value="Disney-Prod-Enterprise,Disney-Non-IAP-PreProd-Enterprise"/>
     <parameter name="jenkinsBuild" value="4.2.0.77091"/>
