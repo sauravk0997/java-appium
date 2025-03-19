@@ -117,8 +117,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     public void verifyPCONPlayback() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        String contentUnavailableError = "content-unavailable";
-        String contentUnavailableHeader = "No Titles Available";
+        String contentUnavailableError = "This title cannot be watched with current Parental Control settings";
 
         // Set lower rating
         List<String> ratingSystemValues = getUnifiedAccount().getProfile(DEFAULT_PROFILE).getAttributes()
@@ -129,12 +128,10 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         logIn(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
 
         Assert.assertFalse(videoPlayer.isOpened(),"Video player opened");
-        Assert.assertTrue(homePage.getStaticTextByLabel(contentUnavailableHeader).isPresent(),
-                "Rating Restriction message Header not displayed");
         Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(),
-                "Rating Restriction message was not displayed");
+                "Restriction message was not displayed");
     }
 }
