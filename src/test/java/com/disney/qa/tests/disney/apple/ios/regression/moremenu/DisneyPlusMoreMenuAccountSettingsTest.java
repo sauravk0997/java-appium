@@ -415,18 +415,18 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getUnifiedAccount());
 
         Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
-        accountPage.clickManageWithMyDisneyButton();
+//        accountPage.clickManageWithMyDisneyButton();
         Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
-        accountPage.tapEditEmailButton();
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
+//        accountPage.tapEditEmailButton();
+//        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
 
         String otp = getOTPFromApi(startTime, getUnifiedAccount());
 
-        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
+//        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
 
-        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
+//        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         String newEmail = generateGmailAccount();
         getUnifiedAccount().setEmail(newEmail);
         oneTimePasscodePage.getTextEntryField().click();

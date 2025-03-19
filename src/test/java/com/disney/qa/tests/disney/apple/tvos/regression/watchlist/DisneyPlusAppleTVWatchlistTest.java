@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.WATCHLIST_PAGE_NOT_DISPLAYED;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
@@ -50,25 +51,16 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102674"})
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.SMOKE, US})
     public void verifyNoWatchlistAppearance() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchlistPage = new DisneyPlusAppleTVWatchListPage(getDriver());
 
         logIn(getUnifiedAccount());
-        disneyPlusAppleTVHomePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
+        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
 
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), WATCHLIST_NOT_OPEN);
-
-        LOGGER.info("What is print out? " + getDriver().getPageSource());
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isDynamicAccessibilityIDElementPresent(
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.WATCHLIST_COPY.getText())), "Empty watchlist text is not present");
-        String subtext = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.WATCHLIST_COPY.getText()) + ". " + getLocalizationUtils().getDictionaryItem(
-                        DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_SUBCOPY.getText());
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isDynamicAccessibilityIDElementPresent(subtext),
-                "Empty watchlist subtext is not present");
-        sa.assertAll();
+        Assert.assertTrue(watchlistPage.isOpened(), WATCHLIST_NOT_OPEN);
+        Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
+                "Empty Watchlist text/logo was not properly displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67728"})

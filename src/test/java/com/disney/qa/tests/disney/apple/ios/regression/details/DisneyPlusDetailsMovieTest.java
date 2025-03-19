@@ -80,7 +80,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(
                 moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
-        sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
+        sa.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
     }

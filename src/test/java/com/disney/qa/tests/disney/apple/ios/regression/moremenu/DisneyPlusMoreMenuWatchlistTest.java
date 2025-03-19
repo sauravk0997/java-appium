@@ -46,7 +46,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), "'Watchlist' page was not displayed");
 
-        Assert.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
+        Assert.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
     }
 
@@ -183,7 +183,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         moreMenu.clickMenuOption(MoreMenu.WATCHLIST);
         //verify empty watch list
         sa.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
+        sa.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not displayed");
         sa.assertAll();
     }

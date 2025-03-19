@@ -54,9 +54,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	private ExtendedWebElement addProfileBtn = getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
 
-	@ExtendedFindBy(accessibilityId = "emptyView")
-	private ExtendedWebElement watchlistEmpty;
-
 	@FindBy(xpath = "//*[@name='accountView']/XCUIElementTypeCollectionView/XCUIElementTypeCell[%s]")
 	private ExtendedWebElement moreMenuItemByIndex;
 
@@ -350,10 +347,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 			}
 		}
 		return !validations.contains(false);
-	}
-
-	public boolean isWatchlistEmptyBackgroundDisplayed() {
-		return watchlistEmpty.isPresent();
 	}
 
 	public boolean isAccountUnverifiedBadgeDisplayed() {
