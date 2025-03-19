@@ -1,13 +1,16 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
+import org.testng.annotations.Listeners;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.DE;
 import static com.disney.qa.common.constant.RatingConstant.Rating.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68353"})

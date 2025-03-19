@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.downloads;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.*;
@@ -19,6 +20,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -31,6 +33,7 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
     //Test constants

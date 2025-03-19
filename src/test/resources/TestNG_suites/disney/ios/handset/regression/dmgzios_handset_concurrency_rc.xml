@@ -9,8 +9,14 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value=""/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.2.0-rc"/>
+    <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
+    <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
+    <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
+    <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
+    <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
+    <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value=""/>
     <parameter name="choiceParam::appcenter_app_name::app center app name"
                value="Disney-Prod-Enterprise,Disney-Non-IAP-PreProd-Enterprise"/>
     <parameter name="jenkinsBuild" value="4.2.0.77091"/>
