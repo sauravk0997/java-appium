@@ -117,6 +117,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifyPCONPlayback() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         String contentUnavailableError = "content-unavailable";
         String contentUnavailableHeader = "No Titles Available";
 
@@ -130,6 +131,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         logIn(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
         launchDeeplink(R.TESTDATA.get("disney_prod_loki_collection_deeplink"));
+
+        Assert.assertFalse(videoPlayer.isOpened(),"Video player opened");
         Assert.assertTrue(homePage.getStaticTextByLabel(contentUnavailableHeader).isPresent(),
                 "Rating Restriction message Header not displayed");
         Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(),
