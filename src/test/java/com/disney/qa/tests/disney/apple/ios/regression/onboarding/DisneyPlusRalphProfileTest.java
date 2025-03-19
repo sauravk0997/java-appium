@@ -316,7 +316,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
         createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage());
         setAppToHomeScreen(getUnifiedAccount());
-        handleOneTrustPopup();
+        handleOneTrustPopUp();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.AGE_17.getMonth(), Person.AGE_17.getDay(), Person.AGE_17.getYear());
         updateProfilePage.tapSaveButton();
@@ -342,7 +342,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         createAccountAndAddSecondaryProfile(CANADA, getLocalizationUtils().getUserLanguage());
         setAppToHomeScreen(getUnifiedAccount());
-        handleOneTrustPopup();
+        handleOneTrustPopUp();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.AGE_17.getMonth(), Person.AGE_17.getDay(), Person.AGE_17.getYear());
         updateProfilePage.tapSaveButton();
@@ -371,7 +371,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         }
         createAccountAndAddSecondaryProfile(getLocalizationUtils().getLocale(), DE);
         setAppToHomeScreen(getUnifiedAccount());
-        handleOneTrustPopup();
+        handleOneTrustPopUp();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
         updateProfilePage.tapSaveButton();
@@ -528,7 +528,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
 
         setAppToHomeScreen(getUnifiedAccount());
-        handleOneTrustPopup();
+        handleOneTrustPopUp();
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
 

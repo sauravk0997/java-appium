@@ -864,7 +864,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleSystemAlert(AlertButtonCommand.DISMISS, maxAttempts);
     }
 
-    public void handleOneTrustPopup() {
+    public void handleOneTrustPopUp() {
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
