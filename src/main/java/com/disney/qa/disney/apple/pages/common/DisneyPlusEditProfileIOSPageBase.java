@@ -47,7 +47,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     private final String editProfileTitle =
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-            DictionaryKeys.EDIT_PROFILE_TITLE.getText());
+                    DictionaryKeys.EDIT_PROFILE_TITLE.getText());
 
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
     private ExtendedWebElement autoplayToggleCell;
@@ -112,6 +112,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
+
 
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -237,7 +238,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return customHyperlinkByLabel.format(learnMoreText);
     }
 
-
     public boolean isLearnMoreLinkPresent() {
         ExtendedWebElement learnMoreLink = getLearnMoreLink();
         swipe(learnMoreLink);
@@ -266,7 +266,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public boolean isEmptyProfileNameErrorDisplayed() {
         return staticTextByLabel.format(EMPTY_PROFILE_NAME_ERROR).isPresent();
     }
-
 
     public boolean isServiceEnrollmentAccessFullCatalogPagePresent() {
         return serviceEnrollmentAccessFullCatalogPage.isElementPresent();
@@ -399,6 +398,17 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public ExtendedWebElement getContentRatingHeader() {
         return contentRatingHeader;
+    }
+
+    public ExtendedWebElement getLiveAndUnratedToggleCell() {
+        String liveUnratedHeader = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        PROFILE_SETTINGS_LIVE_UNRATED_HEADER.getText());
+        return getTypeCellLabelContains(liveUnratedHeader);
+    }
+
+    public void tapLiveAndUnratedToggle() {
+        getLiveAndUnratedToggleCell().getElement().findElement(By.name("toggleView")).click();
     }
 
     public ExtendedWebElement getPinSettingsCell() {
@@ -534,7 +544,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DELETE_PROFILE_COPY.getText()));
     }
 
-    public ExtendedWebElement getEditProfilePinSettingLabel(){
+    public ExtendedWebElement getEditProfilePinSettingLabel() {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                         DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()));
@@ -561,4 +571,35 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, FIELD_NOT_REQUIRED.getText());
         return staticTextByLabel.format(fieldNotRequired).isPresent();
     }
+
+    public ExtendedWebElement getProfileSettingLiveUnratedHeader() {
+        String unratedHeader = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        PROFILE_SETTINGS_LIVE_UNRATED_HEADER.getText());
+        LOGGER.info("Expected live and unrated header: {}", unratedHeader);
+        return getStaticTextByLabel(unratedHeader);
+    }
+
+    public ExtendedWebElement getProfileSettingLiveUnratedDesc() {
+        return getStaticTextViewValueContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        PROFILE_SETTINGS_LIVE_UNRATED_DESCRIPTION.getText()));
+    }
+
+    public ExtendedWebElement getProfileSettingLiveUnratedHelpLink() {
+        return getDynamicAccessibilityId(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        PROFILE_SETTINGS_LIVE_UNRATED_HELP_LINK.getText()));
+    }
+
+    public ExtendedWebElement getProfileSettingLiveUnratedTooltip() {
+        return getDynamicAccessibilityId(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        PROFILE_SETTINGS_LIVE_UNRATED_TOOL_TIP.getText()));
+    }
+
+    public String getLiveAndUnratedToggleState() {
+        return getLiveAndUnratedToggleCell().getText();
+    }
+
 }
