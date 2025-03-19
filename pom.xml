@@ -18,7 +18,7 @@
         <alice-client.version>1.0.56</alice-client.version>
         <jarvis-utils-version>1.0.42</jarvis-utils-version>
         <hora-validator-version>1.0.29</hora-validator-version>
-        <disney-api-utils-version>5.12.0</disney-api-utils-version>
+        <disney-api-utils-version>5.15.0</disney-api-utils-version>
         <suite>helloDisney</suite>
     </properties>
 
@@ -116,7 +116,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.disney</groupId>
+            <groupId>com.disney.qait</groupId>
             <artifactId>disney-api-utils</artifactId>
             <version>${disney-api-utils-version}</version>
             <exclusions>
