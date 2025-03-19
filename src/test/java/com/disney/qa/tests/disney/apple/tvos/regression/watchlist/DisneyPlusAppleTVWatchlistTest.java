@@ -55,11 +55,15 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(disneyPlusAppleTVWatchListPage.isOpened(), WATCHLIST_NOT_OPEN);
 
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isDynamicAccessibilityIDElementPresent(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_COPY.getText())), "Empty watchlist text is not present");
-        String subtext = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_COPY.getText())
-                + ". " +getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_SUBCOPY.getText());
-        sa.assertTrue(disneyPlusAppleTVWatchListPage.isDynamicAccessibilityIDElementPresent(subtext), "Empty watchlist subtext is not present");
+        LOGGER.info("What is print out? " + getDriver().getPageSource());
+        sa.assertTrue(disneyPlusAppleTVWatchListPage.isDynamicAccessibilityIDElementPresent(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.WATCHLIST_COPY.getText())), "Empty watchlist text is not present");
+        String subtext = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.WATCHLIST_COPY.getText()) + ". " + getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WATCHLIST_SUBCOPY.getText());
+        sa.assertTrue(disneyPlusAppleTVWatchListPage.isDynamicAccessibilityIDElementPresent(subtext),
+                "Empty watchlist subtext is not present");
         sa.assertAll();
     }
 
