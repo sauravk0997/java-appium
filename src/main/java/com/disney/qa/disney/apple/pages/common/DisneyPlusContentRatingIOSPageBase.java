@@ -20,9 +20,10 @@ public class DisneyPlusContentRatingIOSPageBase extends DisneyPlusApplePageBase 
     private ExtendedWebElement contentRatingHeader = getStaticTextByLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.MATURITY_RATING_SETTINGS_LABEL.getText()));
 
-    private ExtendedWebElement textRecommended =  getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.PCON,
-            DictionaryKeys.RECOMMENDED_RATING.getText()));
+    private ExtendedWebElement textRecommended =  getStaticTextByLabelContains(getLocalizationUtils()
+            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.RECOMMENDED_RATING.getText())
+            .replace("{content_rating}", "")
+            .trim());
 
     private ExtendedWebElement contentRatingText = getStaticTextByLabel(
             getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
