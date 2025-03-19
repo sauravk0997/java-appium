@@ -127,13 +127,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAppToHomeScreen(getUnifiedAccount());
     }
 
-    public void handleOneTrustPopUp() {
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        LOGGER.info("Checking for one trust popup");
-        if (oneTrustPage.isOpened())
-            oneTrustPage.tapAcceptAllButton();
-    }
-
     public void confirmRegionalRatingsDisplays(String rating) {
         LOGGER.info("Rating value under test: {}", rating);
         if (IS_MOVIE.get()) {
