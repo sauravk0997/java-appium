@@ -39,19 +39,16 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
-import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
-import javax.annotation.*;
-
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
@@ -866,5 +863,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void handleGenericPopup(int timeout, int maxAttempts) {
         pause(timeout);
         handleSystemAlert(AlertButtonCommand.DISMISS, maxAttempts);
+    }
+
+    public void handleOneTrustPopUp() {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        if (isAlertPresent()) {
+            handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
+        }
     }
 }
