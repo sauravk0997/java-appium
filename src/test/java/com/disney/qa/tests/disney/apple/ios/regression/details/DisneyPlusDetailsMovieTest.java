@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.*;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.disney.DisneyEntityIds;
@@ -14,6 +15,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -24,6 +26,7 @@ import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     //Test constants
     private static final String HOCUS_POCUS = "Hocus Pocus";
