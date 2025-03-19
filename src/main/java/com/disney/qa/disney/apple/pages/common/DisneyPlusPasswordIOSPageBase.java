@@ -66,7 +66,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isHeaderTextDisplayed() {
-        IOSUtils.LOGGER.info("Auth Password screen:- "+getDriver().getPageSource());
         return staticTextByLabel.format(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.ENTER_YOUR_PASSWORD.getText())).isPresent();

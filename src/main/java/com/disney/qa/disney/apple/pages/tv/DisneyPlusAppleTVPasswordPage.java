@@ -292,10 +292,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
                         AUTH_PASSWORD_ADD_PROFILE_BODY.getText()));
     }
 
-    public ExtendedWebElement getAuthEnterPasswordFieldHint() {
-        return getTextViewByLabel(getLocalizationUtils()
+    public String getAuthEnterPasswordFieldHintText() {
+        return getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
-                        AUTH_PASSWORD_ADD_PROFILE_FIELD_HINT.getText()));
+                        AUTH_PASSWORD_ADD_PROFILE_FIELD_HINT.getText());
     }
 
     public ExtendedWebElement getAuthEnterPasswordForgotPassword() {
