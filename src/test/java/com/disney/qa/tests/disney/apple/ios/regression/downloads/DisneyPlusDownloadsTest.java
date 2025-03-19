@@ -714,7 +714,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75169", "XMOBQA-74449"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyHuluSeriesPremiumDownloadActions() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -762,7 +762,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74562"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluSeriesDeleteAndPlay() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -817,7 +817,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75082"})
-    @Test( groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test( groups = {TestGroup.DOWNLOADS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
 
@@ -838,7 +838,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74903"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPCONProfileHuluFilteredOutDownloads() {
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));

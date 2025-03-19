@@ -1215,7 +1215,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73825"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHulkDetailsTabs() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -1252,7 +1252,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75021"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySeriesDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1280,7 +1280,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75023"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesDetailsVideoPlayerRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

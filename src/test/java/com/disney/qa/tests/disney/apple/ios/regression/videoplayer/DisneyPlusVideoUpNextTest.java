@@ -325,7 +325,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74459"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyStandardHuluPostPlay() {
         DisneyPlusUpNextIOSPageBase upNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

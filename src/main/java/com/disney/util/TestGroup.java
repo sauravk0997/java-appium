@@ -12,15 +12,13 @@ public final class TestGroup {
     //Feature Groups
     public static final String SMOKE = "Smoke";
     public static final String ANTHOLOGY = "Anthology";
-    public static final String ARIEL = "Ariel";
-    public static final String BG_IMAGE = "BGImage";
     public static final String CONCURRENCY = "Concurrency";
     public static final String DEEPLINKS = "Deeplinks";
     public static final String DETAILS_PAGE = "DetailsPage";
     public static final String DOWNLOADS = "Downloads";
     public static final String EODPLUS = "ESPNOnDisneyPlus";
     public static final String HOME = "Home";
-    public static final String HULK = "Hulk";
+    public static final String HULU = "Hulu";
     public static final String IAP = "IAP";
     public static final String LOG_IN = "LogIn";
     public static final String MORE_MENU = "MoreMenu";
