@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
@@ -13,6 +14,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.lang3.time.StopWatch;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -28,6 +30,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ON
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     
     protected static final String THE_MARVELS = "The Marvels";

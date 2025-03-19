@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusWelcomeScreenIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -7,11 +8,13 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.ScreenOrientation;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusWelcomeScreenTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67821"})

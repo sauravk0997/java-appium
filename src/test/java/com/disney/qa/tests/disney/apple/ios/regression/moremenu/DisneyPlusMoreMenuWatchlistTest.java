@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.UnifiedEntitlement;
 import com.disney.qa.common.constant.*;
@@ -10,6 +11,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -22,6 +24,7 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
     private static final String GRIMCUTTY = "Grimcutty";

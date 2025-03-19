@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.watchlist;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
@@ -13,6 +14,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -23,6 +25,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     private static final String WATCHLIST_NOT_OPEN = "Watchlist page did not open";
     private static final String DETAILS_NOT_OPEN = "Details page did not open";

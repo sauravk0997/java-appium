@@ -13,9 +13,11 @@ import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
@@ -28,6 +30,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 
 import java.util.List;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
     //Test constants

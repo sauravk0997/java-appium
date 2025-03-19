@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
@@ -15,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.temporal.ValueRange;
@@ -23,13 +25,14 @@ import java.lang.invoke.MethodHandles;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String VIDEO_NOT_PAUSED = "Video was not paused";
     private static final String VIDEO_NOT_PLAYING = "Video was not playing";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67528"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerControls() {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayerTVPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -107,7 +110,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67546"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerControlsScrubThumbnail() {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayerTVPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -189,7 +192,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121848"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerControlsUIVOD() {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayerTVPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
