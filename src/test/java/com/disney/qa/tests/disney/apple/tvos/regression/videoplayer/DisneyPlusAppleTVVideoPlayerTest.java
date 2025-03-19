@@ -113,7 +113,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-99575"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PROFILES, US})
     public void verifyPCONPlayback() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
