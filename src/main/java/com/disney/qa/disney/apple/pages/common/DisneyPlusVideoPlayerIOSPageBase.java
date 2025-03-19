@@ -935,8 +935,4 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTimeRemainingLabel() {
         return timeRemainingLabel;
     }
-
-    public void skipIntroIfPresent() {
-        getSkipIntroButton().clickIfPresent(TEN_SEC_TIMEOUT);
-    }
 }

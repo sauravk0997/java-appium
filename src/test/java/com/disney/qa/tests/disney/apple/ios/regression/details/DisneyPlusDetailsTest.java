@@ -285,8 +285,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayerPage.isOpened(), "Video player is not opened");
         videoPlayerPage.waitForVideoToStart();
-        videoPlayerPage.skipIntroIfPresent();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT);
+        videoPlayerPage.clickPlayButton();
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.clickPauseButton();
         String durationTime = videoPlayerPage.getRemainingTimeInStringWithHourAndMinutes();
@@ -305,9 +306,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.clickContinueButton();
         Assert.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
         videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(95);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
-        videoPlayerPage.clickPauseButton();
+        videoPlayerPage.clickPlayButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         sa.assertFalse(detailsPage.getContinueButton().isPresent(FIVE_SEC_TIMEOUT),

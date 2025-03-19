@@ -460,7 +460,6 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get(deeplink));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.skipIntroIfPresent();
         videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentage);
         videoPlayer.clickPlayButton();
