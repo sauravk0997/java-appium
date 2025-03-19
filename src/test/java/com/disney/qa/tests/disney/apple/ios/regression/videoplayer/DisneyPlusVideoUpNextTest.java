@@ -403,7 +403,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         // Turn OFF autoplay
         toggleAutoPlay(off);
         // Steps to click in SEE DETAILS button
-        deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
+        deeplinkContentAndScrubPlayback("disney_prod_series_loki_last_episode_playback");
         String nextEpisodesTitle = upNext.getNextEpisodeInfo();
         upNext.tapSeeAllEpisodesButton();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -411,7 +411,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Details page from the expected series did not open");
         // Steps to tap in Play content
-        deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
+        deeplinkContentAndScrubPlayback("disney_prod_series_loki_last_episode_playback");
         upNext.getUpNextImageView().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.displayVideoController();
