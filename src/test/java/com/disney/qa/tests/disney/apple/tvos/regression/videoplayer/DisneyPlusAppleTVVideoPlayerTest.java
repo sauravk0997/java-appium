@@ -111,7 +111,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
 
-        Assert.assertTrue(detailsPage.getBrandLandingView().isPresent(), "Title was not found");
+        Assert.assertTrue(detailsPage.getBrandLandingView().isPresent(),
+                "Deeplink did not navigate to the collections page");
         detailsPage.moveDown(2, 1);
         String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
         detailsPage.getTypeCellLabelContains(replayTitle).click();
