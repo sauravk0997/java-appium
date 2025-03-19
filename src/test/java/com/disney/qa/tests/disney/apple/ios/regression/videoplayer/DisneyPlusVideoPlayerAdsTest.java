@@ -142,10 +142,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE),
                 "Restart button is not enabled on video player");
-        int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTime();
+        int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTimeThreeIntegers();
         videoPlayer.clickRestartButton();
         videoPlayer.waitForVideoToStart();
-        int remainingTimeAfterRestartClick = videoPlayer.getRemainingTime();
+        int remainingTimeAfterRestartClick = videoPlayer.getRemainingTimeThreeIntegers();
         sa.assertTrue(remainingTimeBeforeRestartClick < remainingTimeAfterRestartClick,
                 "Remaining time after restart click" + remainingTimeAfterRestartClick +
                         " is not greater than remaining time before restart click" + remainingTimeBeforeRestartClick);
