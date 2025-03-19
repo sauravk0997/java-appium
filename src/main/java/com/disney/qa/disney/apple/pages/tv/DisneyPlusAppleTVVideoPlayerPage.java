@@ -2,6 +2,8 @@ package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +16,15 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Restart'`]")
+    private ExtendedWebElement restartBtn;
+
     public DisneyPlusAppleTVVideoPlayerPage(WebDriver driver) {
         super(driver);
+    }
+
+    public ExtendedWebElement getRestartBtn() {
+        return restartBtn;
     }
 
     public void waitUntilDetailsPageIsLoadedFromTrailer(long timeout, int polling) {
