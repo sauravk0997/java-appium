@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -36,6 +37,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -861,7 +863,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickSaveProfileButton() {
-        dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText())).click();
+        DisneyLocalizationUtils localizationUtils = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ?
+                getAppleTVLocalizationUtils() : getLocalizationUtils();
+        dynamicBtnFindByLabel.format(localizationUtils.getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText()))
+                .click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
