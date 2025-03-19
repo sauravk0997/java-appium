@@ -29,16 +29,4 @@ public class DisneyPlusAppleTVWatchListPage extends DisneyPlusWatchlistIOSPageBa
                 DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WATCHLIST_SCREEN.getText()))
                 .isPresent();
     }
-
-    public boolean areWatchlistTitlesDisplayed(String... titles) {
-        List<String> items = Arrays.asList(titles);
-        List<Boolean> validations = new ArrayList<>();
-        CollectionConstant.Collection watchlist = CollectionConstant.Collection.WATCHLIST;
-        items.forEach(title -> {
-            ExtendedWebElement watchlistItem = getTypeCellLabelContains(title);
-            swipeInContainerTillElementIsPresent(getCollection(watchlist), watchlistItem, 1, LEFT);
-            validations.add(watchlistItem.isElementPresent());
-        });
-        return !validations.contains(false);
-    }
 }

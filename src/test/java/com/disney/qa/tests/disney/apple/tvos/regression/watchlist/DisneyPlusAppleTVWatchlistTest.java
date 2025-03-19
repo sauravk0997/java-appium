@@ -11,14 +11,11 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.lang.invoke.MethodHandles;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +26,6 @@ import static com.disney.qa.common.constant.IConstantHelper.WATCHLIST_PAGE_NOT_D
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
-    Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String WATCHLIST_NOT_OPEN = "Watchlist page did not open";
     private static final String DETAILS_NOT_OPEN = "Details page did not open";
     private static final String WATCHLIST_BUTTON_NOT_PRESENT = "Details page watchlist button not present";
