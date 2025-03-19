@@ -2,7 +2,7 @@
 <suite verbose="1" name="dmgzios_handset_reg_ratings_rc" annotations="JDK" configfailurepolicy="continue" thread-count="12" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value=""/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-79160"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
     <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
     <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
@@ -11,7 +11,6 @@
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
     <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-79160"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.2.0-rc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-79160"/>
     <parameter name="jenkinsBuild" value="4.2.0.77099"/>
     <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
