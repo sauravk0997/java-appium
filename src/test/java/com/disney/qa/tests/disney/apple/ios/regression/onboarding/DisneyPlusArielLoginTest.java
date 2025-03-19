@@ -107,10 +107,9 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
 
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         Assert.assertTrue(passwordPage.isPasswordPagePresent(), "Password page did not open");
-        Date startTime = getEmailApi().getStartTime();
         passwordPage.clickHavingTroubleLoggingButton();
 
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         handleGenericPopup(5,1);
