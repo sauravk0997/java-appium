@@ -356,6 +356,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         ACCOUNT_API.remove();
         DISNEY_ACCOUNT.remove();
         LOCALIZATION_UTILS.clear();
+        APPLE_TV_LOCALIZATION_UTILS.clear();
         UNIFIED_ACCOUNT.remove();
         UNIFIED_ACCOUNT_API.remove();
         UNIFIED_SUBSCRIPTION_API.remove();

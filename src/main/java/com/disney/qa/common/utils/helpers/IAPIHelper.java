@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public interface IAPIHelper {
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
+    Map<ImmutablePair<String, String>, DisneyLocalizationUtils> APPLE_TV_LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
         @Override
@@ -59,7 +60,7 @@ public interface IAPIHelper {
      * @return {@link DisneyLocalizationUtils}
      */
     default DisneyLocalizationUtils getAppleTVLocalizationUtils() {
-        return LOCALIZATION_UTILS.computeIfAbsent(new ImmutablePair<>(WebDriverConfiguration.getLocale()
+        return APPLE_TV_LOCALIZATION_UTILS.computeIfAbsent(new ImmutablePair<>(WebDriverConfiguration.getLocale()
                 .getCountry(), WebDriverConfiguration.getLocale()
                 .getLanguage()), pair -> {
             DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(),
