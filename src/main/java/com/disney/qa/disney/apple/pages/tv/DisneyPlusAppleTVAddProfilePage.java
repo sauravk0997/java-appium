@@ -20,15 +20,17 @@ public class DisneyPlusAppleTVAddProfilePage extends DisneyPlusAddProfileIOSPage
     @ExtendedFindBy(accessibilityId = "skipAvatarSelectionBarButton")
     private ExtendedWebElement skipAvatarSelectionBtn;
 
-    ExtendedWebElement enterProfileNameTitle = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+    ExtendedWebElement enterProfileNameTitle = getStaticTextByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, ADD_PROFILE_ENTER_PROFILE_NAME_TITLE.getText()));
-    ExtendedWebElement enterProfileNameContinueButton = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_ENTER_NAME_CONTINUE.getText()));
-    ExtendedWebElement enterYourBirthdateTitle = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+    ExtendedWebElement enterProfileNameContinueButton = getTypeButtonByLabel(
+            getAppleTVLocalizationUtils().getDictionaryItem(
+                    DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_ENTER_NAME_CONTINUE.getText()));
+    ExtendedWebElement enterYourBirthdateTitle = getStaticTextByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, ADD_PROFILE_DATE_OF_BIRTH_TITLE.getText()));
-    ExtendedWebElement enterDateOfBirthContinueButton = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_DATE_OF_BIRTH_CONTINUE.getText()));
-    ExtendedWebElement selectGenderTitle = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+    ExtendedWebElement enterDateOfBirthContinueButton = getTypeButtonByLabel(
+            getAppleTVLocalizationUtils().getDictionaryItem(
+                    DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_DATE_OF_BIRTH_CONTINUE.getText()));
+    ExtendedWebElement selectGenderTitle = getStaticTextByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, ADD_PROFILE_SELECT_GENDER_TITLE.getText()));
 
     public DisneyPlusAppleTVAddProfilePage(WebDriver driver) {
