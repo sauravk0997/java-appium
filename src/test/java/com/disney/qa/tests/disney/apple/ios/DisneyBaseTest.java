@@ -12,6 +12,7 @@ import java.util.stream.Stream;
 import com.disney.jarvisutils.pages.apple.*;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -631,6 +632,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId())
                     .setLimit(limit)).getData().getSet().getItems();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Set getExploreAPISet(String setId, int limit) {
+        try {
+            return getExploreApi().getSet(getDisneyExploreSearchRequest()
+                    .setSetId(setId)
+                    .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                    .setUnifiedAccount(getUnifiedAccount())
+                    .setProfileId(getUnifiedAccount().getProfileId())
+                    .setLimit(limit)).getData().getSet();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
