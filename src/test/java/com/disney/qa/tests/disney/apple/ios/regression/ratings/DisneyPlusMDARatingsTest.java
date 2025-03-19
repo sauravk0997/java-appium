@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import org.testng.annotations.Listeners;
 
 import java.util.stream.IntStream;
 
@@ -18,6 +20,7 @@ import static com.disney.qa.common.constant.RatingConstant.Rating.PG;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG13;
 import static com.disney.qa.common.constant.RatingConstant.Rating.R21;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
     private final int DOWNLOAD_TIMEOUT = 150;
     private final int DOWNLOAD_POLLING = 15;

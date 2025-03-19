@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
@@ -15,6 +16,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
 import java.time.*;
@@ -29,6 +31,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_PLAY;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     //Test constants
     private static final String SPIDERMAN_THREE = "Spider-Man™ 3";
