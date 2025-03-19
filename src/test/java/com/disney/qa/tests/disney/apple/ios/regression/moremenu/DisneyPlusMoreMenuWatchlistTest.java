@@ -57,6 +57,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
 
         onboard();
         //Adding a Pixar item to Watchlist
@@ -86,10 +87,10 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
 
-        Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(thirdTitle, secondTitle, firstTitle),
+        Assert.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(thirdTitle, secondTitle, firstTitle),
                 "Titles were not added to the Watchlist");
 
-        Assert.assertTrue(moreMenu.areWatchlistTitlesProperlyOrdered(thirdTitle, secondTitle, firstTitle),
+        Assert.assertTrue(watchlistPage.areWatchlistTitlesProperlyOrdered(thirdTitle, secondTitle, firstTitle),
                 "Titles were not placed in the correct order");
     }
 
@@ -97,6 +98,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExpiredHuluWatchlistDisplay() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
 
         //Create account with Disney Bundle plan
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_BASIC)));
@@ -117,7 +119,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         // Verify content on Watchlist
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        Assert.assertTrue(moreMenu.areWatchlistTitlesDisplayed(GRIMCUTTY, WANDA_VISION),
+        Assert.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(GRIMCUTTY, WANDA_VISION),
                 "Titles were not added to the Watchlist");
 
         // Revoke HULU subscription

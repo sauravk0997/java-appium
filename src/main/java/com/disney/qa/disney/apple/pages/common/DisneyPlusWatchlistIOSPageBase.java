@@ -50,4 +50,31 @@ public class DisneyPlusWatchlistIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isWatchlistEmptyBackgroundDisplayed() {
         return watchlistEmpty.isPresent();
     }
+
+    public boolean areWatchlistTitlesDisplayed(String... titles) {
+        List<String> items = Arrays.asList(titles);
+        List<Boolean> validations = new ArrayList<>();
+        CollectionConstant.Collection watchlist = CollectionConstant.Collection.WATCHLIST;
+        items.forEach(title -> {
+            ExtendedWebElement watchlistItem = getTypeCellLabelContains(title);
+            swipeInContainerTillElementIsPresent(getCollection(watchlist), watchlistItem, 1, LEFT);
+            validations.add(watchlistItem.isElementPresent());
+        });
+        return !validations.contains(false);
+    }
+
+    public boolean areWatchlistTitlesProperlyOrdered(String... titles) {
+        List<String> items = Arrays.asList(titles);
+        List<ExtendedWebElement> entryCells = getCellsWithLabels();
+        List<Boolean> validations = new ArrayList<>();
+        for (int i = 0; i < items.size(); i++) {
+            try {
+                String entryCellTextOnlyTitle = entryCells.get(i).getText().split(",")[0];
+                validations.add(entryCellTextOnlyTitle.equals(titles[i]));
+            } catch (IndexOutOfBoundsException e) {
+                return false;
+            }
+        }
+        return !validations.contains(false);
+    }
 }
