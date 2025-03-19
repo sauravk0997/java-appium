@@ -11,7 +11,6 @@ import com.disney.qa.api.dictionary.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 
-import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.util.TestGroup;
 import org.testng.annotations.Listeners;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -20,7 +19,6 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
-import java.util.Date;
 import java.util.stream.IntStream;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -101,7 +99,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74416"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
-    public void verifyR21CreatePINForgotPassword() throws GMailUtilsException {
+    public void verifyR21CreatePINForgotPassword() {
         String NEW_PASSWORD = "TestPass1234!";
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -115,7 +113,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.clickR21ForgotPasswordLink();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
-        String otp = getEmailApi().getDisneyOTP(getUnifiedAccount().getEmail());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_DID_NOT_OPEN);
@@ -504,7 +502,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74749"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
-    public void verifyR21ExistingPinForgotPassword() throws GMailUtilsException {
+    public void verifyR21ExistingPinForgotPassword() {
         String NEW_PASSWORD = "TestPass1234!";
         ratingSetupWithPINForOTPAccount(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
@@ -519,7 +517,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.clickR21ForgotPasswordLink();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
-        String otp = getEmailApi().getDisneyOTP(getUnifiedAccount().getEmail());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_DID_NOT_OPEN);

@@ -3,12 +3,10 @@ package com.disney.qa.tests.disney.apple.tvos.localization;
 import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.profile.Profile;
-import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
-import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.disney.util.ZipUtils;
@@ -19,10 +17,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.net.URISyntaxException;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -315,7 +313,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
     }
 
     @Test(description = "Account Settings Capture Screenshots", groups = { TestGroup.SUBSCRIBER_FLOW_ACCOUNT_SETTINGS, TestGroup.SUB_UI, TestGroup.PROXY, US})
-    public void captureAccountSettings() throws GMailUtilsException {
+    public void captureAccountSettings() {
         DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVSettingsPage disneyPlusAppleTVSettingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
@@ -326,17 +324,19 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusApplePageBase disneyPlusApplePageBase = new DisneyPlusApplePageBase(getDriver());
         DisneyPlusAppleTVAccountPage disneyPlusAppleTVAccountPage = new DisneyPlusAppleTVAccountPage(getDriver());
-        EmailApi emailApi = getEmailApi();
 
-        DisneyAccount user = getAccountApi().createAccountForOTP(getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
         String baseDirectory = "AccountSettingsScreens/";
 
         //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
         disneyPlusAppleTVWelcomeScreenPage.moveDown(1, 1);
         disneyPlusAppleTVWelcomeScreenPage.clickSelect();
-        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
-        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(getUnifiedAccount().getEmail());
+        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(getUnifiedAccount().getUserPass());
         //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
         disneyPlusAppleTVHomePage.isOpened();
@@ -354,7 +354,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         getScreenshots("1-OneTimePassword", baseDirectory);
         //Screenshot 2. Apple TV S4.2 Click on Change next to the email address and review the page.- Take SS
 
-        String otp = emailApi.getDisneyOTP(user.getEmail());
+        String otp = getOTPFromApi(getUnifiedAccount());
         disneyPlusAppleTVForgotPasswordPage.clickOnOtpField();
         disneyPlusAppleTVForgotPasswordPage.enterOTPLocalized("000000");
         disneyPlusAppleTVChangeEmailPage.isOpened();
@@ -398,7 +398,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVHomePage.clickMenu();
 
         disneyPlusAppleTVAccountPage.clickChangePasswordBtn();
-        String otp2 = emailApi.getDisneyOTP(user.getEmail());
+        String otp2 = getOTPFromApi(getUnifiedAccount());
         pause(5);
         //Screenshot 8. Apple TV S4.8 Go back to the Account section, now click on Change next to Password. Follow the steps again for Check your email inbox flow (Same as S4.2 - S4.5).- Take SS
         getScreenshots("8-OneTimePassword", baseDirectory);
