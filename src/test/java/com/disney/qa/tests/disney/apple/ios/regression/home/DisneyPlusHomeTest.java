@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.hatter.api.alice.AliceApiManager;
 import com.disney.hatter.api.alice.model.ImagesRequestS3;
 import com.disney.hatter.api.alice.model.ImagesResponse360;
@@ -21,6 +22,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -40,6 +42,7 @@ import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
