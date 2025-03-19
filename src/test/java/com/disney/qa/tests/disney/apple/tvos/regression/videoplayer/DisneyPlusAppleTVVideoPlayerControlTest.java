@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.temporal.ValueRange;
@@ -20,6 +22,7 @@ import java.lang.invoke.MethodHandles;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String VIDEO_NOT_PAUSED = "Video was not paused";

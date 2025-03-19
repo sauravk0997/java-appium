@@ -1,23 +1,23 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
-import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -29,6 +29,7 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String KIDS_DOB = "2018-01-01";
