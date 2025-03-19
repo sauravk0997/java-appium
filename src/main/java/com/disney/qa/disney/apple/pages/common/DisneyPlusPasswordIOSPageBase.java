@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -65,6 +66,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isHeaderTextDisplayed() {
+        IOSUtils.LOGGER.info("Auth Password screen:- "+getDriver().getPageSource());
         return staticTextByLabel.format(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.ENTER_YOUR_PASSWORD.getText())).isPresent();

@@ -160,7 +160,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), DisneyAbstractPage.FIVE_SEC_TIMEOUT);
         whoIsWatchingPage.moveRight(1, 1);
         whoIsWatchingPage.clickSelect();
-        passwordPage.waitForPresenceOfAnElement(passwordPage.getEnterYourPasswordHeader());
+        //passwordPage.waitForPresenceOfAnElement(passwordPage.getEnterYourPasswordHeader());
         sa.assertTrue(passwordPage.isHeaderTextDisplayed(),
                 "Enter your password header was not found.");
         sa.assertTrue(passwordPage.getAuthEnterPasswordProfileBody().isPresent(),
