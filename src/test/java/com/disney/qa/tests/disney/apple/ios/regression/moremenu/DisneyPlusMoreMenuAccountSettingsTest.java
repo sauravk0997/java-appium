@@ -220,10 +220,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getLocalizationUtils().getUserLanguage())));
         setAppToAccountSettings(getUnifiedAccount());
 
-        Date startTime = getEmailApi().getStartTime();
         accountPage.clickManageWithMyDisneyButton();
         accountPage.getEditPasswordButton().click();
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
 
         sa.assertTrue(oneTimePasscodePage.isOpened(),
                 "OTP entry page was not opened");
@@ -285,14 +284,13 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getLocalizationUtils().getUserLanguage())));
         setAppToAccountSettings(getUnifiedAccount());
 
-        Date startTime = getEmailApi().getStartTime();
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.getEditPasswordButton().click();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
 
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changePasswordPage.isChooseNewPasswordPageOpen(),
                 "Choose new password page did not open");
@@ -318,13 +316,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 getLocalizationUtils().getUserLanguage())));
         setAppToAccountSettings(getUnifiedAccount());
 
-        Date startTime = getEmailApi().getStartTime();
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.getEditPasswordButton().click();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "One time passcode screen is not displayed");
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
 
         Assert.assertTrue(changePasswordPage.isChooseNewPasswordPageOpen(),
@@ -357,12 +354,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getUnifiedAccount());
         Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
         accountPage.clickManageWithMyDisneyButton();
-        Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
 
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
 
         Assert.assertTrue(otpPage.isOpened(), "OTP entry page was not opened");
 
@@ -415,18 +411,17 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getUnifiedAccount());
 
         Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
-//        accountPage.clickManageWithMyDisneyButton();
-        Date startTime = getEmailApi().getStartTime();
+        accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
-//        accountPage.tapEditEmailButton();
-//        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
+        accountPage.tapEditEmailButton();
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
 
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
 
-//        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
+        oneTimePasscodePage.enterOtpValueDismissKeys(otp);
 
-//        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
+        Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         String newEmail = generateGmailAccount();
         getUnifiedAccount().setEmail(newEmail);
         oneTimePasscodePage.getTextEntryField().click();
@@ -469,12 +464,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
-        Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
 
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
 
         Assert.assertTrue(changeEmailPage.isOpened(), "'Change Email' screen was not opened");
@@ -559,12 +553,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
-        Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         changeEmailPage.clickCancelBtn();
@@ -672,12 +665,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
-        Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         changeEmailPage.submitNewEmailAddress(emailWithoutAtSymbol);
@@ -702,12 +694,11 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
-        Date startTime = getEmailApi().getStartTime();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.tapEditEmailButton();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED);
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtpValueDismissKeys(otp);
         Assert.assertTrue(changeEmailPage.isOpened(), CHANGE_EMAIL_SCREEN_DID_NOT_OPEN);
         changeEmailPage.submitNewEmailAddress(getUnifiedAccount().getEmail());
