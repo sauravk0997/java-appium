@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
@@ -15,6 +16,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -29,6 +31,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RA
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String EMAIL_INPUT_SCREEN_NOT_LAUNCH_ERROR_MESSAGE = "Email input screen did not launch";

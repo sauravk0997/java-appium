@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.dictionary.*;
@@ -14,6 +15,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -27,6 +29,7 @@ import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
     private static final int[] AGE_VALUES_GERMANY = {5, 11, 15, 17};

@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
@@ -15,6 +16,7 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -28,6 +30,7 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 

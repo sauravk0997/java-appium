@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.annotations.Listeners;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -13,6 +15,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
 
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
