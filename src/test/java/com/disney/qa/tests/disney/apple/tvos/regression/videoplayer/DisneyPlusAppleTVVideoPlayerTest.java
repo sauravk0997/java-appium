@@ -129,7 +129,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         logIn(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
-        launchDeeplink(R.TESTDATA.get("disney_prod_loki_collection_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
 
         Assert.assertFalse(videoPlayer.isOpened(),"Video player opened");
         Assert.assertTrue(homePage.getStaticTextByLabel(contentUnavailableHeader).isPresent(),
