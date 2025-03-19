@@ -249,7 +249,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
-        detailsPage.validateRatingsInDetailsTab(rating, sa);
+        detailsPage.validateRatingsInDetailsTab(EPISODIC_RATING.get(), sa);
 
         swipe(detailsPage.getLogoImage(), Direction.DOWN, 2, 1000);
         swipe(detailsPage.getTabBar(), Direction.UP, 2, 1000);
