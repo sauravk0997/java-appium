@@ -1339,45 +1339,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78841"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyLiveAndUnratedToggleJuniorMode() {
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        String OFF = "Off";
-        int swipeCount = 3;
-        int duration = 500;
-
-        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
-                .unifiedAccount(getUnifiedAccount())
-                .profileName(JUNIOR_PROFILE)
-                .dateOfBirth(KIDS_DOB)
-                .language(getLocalizationUtils().getUserLanguage())
-                .avatarId(DARTH_MAUL)
-                .kidsModeEnabled(true)
-                .isStarOnboarded(true)
-                .build());
-
-        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
-        homePage.clickMoreTab();
-        whoIsWatching.clickEditProfile();
-        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
-        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
-                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
-
-        //Tap on toggle to activate tool tip
-        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
-                "Live toggle was not defaulted to OFF for kid's profile");
-
-        editProfile.tapLiveAndUnratedToggle();
-        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
-                "Live toggle was tappable for kids mode");
-        editProfile.getProfileSettingLiveUnratedHeader().click();
-        Assert.assertTrue(editProfile.getProfileSettingLiveUnratedTooltip().isPresent(),
-                "Live and unrated toggle Tool tip for junior mode was not present");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78840"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyLiveAndUnratedToggleEditProfileScreen() {
@@ -1428,6 +1389,41 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
                 "Live toggle did not turn On after tapping on toggle");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78841"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLiveAndUnratedToggleJuniorMode() {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String OFF = "Off";
+        int swipeCount = 3;
+        int duration = 500;
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
+        homePage.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+
+        //Live toggle should be disabled
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle was not defaulted to OFF for kid's profile");
+        editProfile.tapLiveAndUnratedToggle();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle was tappable for kids mode");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78839"})
