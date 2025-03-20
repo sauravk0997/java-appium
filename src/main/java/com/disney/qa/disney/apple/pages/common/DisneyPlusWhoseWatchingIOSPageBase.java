@@ -32,6 +32,9 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "addProfileCell")
     private ExtendedWebElement addProfile;
 
+    @ExtendedFindBy(accessibilityId = "unlockedProfileCell")
+    private ExtendedWebElement unlockedProfile;
+
     public DisneyPlusWhoseWatchingIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -41,6 +44,10 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
         boolean isPresent = whosWatchingTitle.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
+    }
+
+    public ExtendedWebElement getUnlockedProfileCell() {
+        return unlockedProfile;
     }
 
     public ExtendedWebElement getEditProfileButton() {
