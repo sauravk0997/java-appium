@@ -11,6 +11,7 @@ public enum DisneyUnifiedOfferPlan {
 
     //Disney plans in non US countries
     DISNEY_PLUS_STANDARD("Disney+ Standard"),
+    DISNEY_PLUS_STANDARD_WITH_ADS_NON_US("Disney+ Standard with Ads"),
     DISNEY_PLUS_PREMIUM_MONTHLY("Disney+ Premium Monthly"),
     DISNEY_PREMIUM_MONTHLY_CANADA("Disney+ Standard - 129.99 CAD - Yearly - Signup"),
     DISNEY_PREMIUM_MONTHLY_SINGAPORE("Disney+ Premium - 18.98 SGD - Monthly - Signup"),

@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.config.DisneyParameters;
@@ -7,6 +8,7 @@ import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -20,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -27,15 +30,18 @@ import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.*;
+import java.util.Set;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MICKEY_MOUSE;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
-import static com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest.ENTITLEMENT_LOOKUP;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String ADULT_DOB = "1990-10-23";
@@ -1385,6 +1391,41 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78841"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLiveAndUnratedToggleJuniorMode() {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        String OFF = "Off";
+        int swipeCount = 3;
+        int duration = 500;
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
+        homePage.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+
+        //Live toggle should be disabled
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle was not defaulted to OFF for kid's profile");
+        editProfile.tapLiveAndUnratedToggle();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle was tappable for kids mode");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78839"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyLiveAndUnratedToggleUI() {
@@ -1430,6 +1471,69 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77686"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLiveAndUnratedToggleOff() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        String ON = "On";
+        String OFF = "Off";
+        int swipeCount = 3;
+        int duration = 500;
+        String setTitle, setContentTitle;
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
+        com.disney.qa.api.explore.response.Set espnUpcomingSet =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 50);
+
+        if (espnUpcomingSet == null) {
+            throw new SkipException("Skipping test, not able to get the 'Live and unrated' set data from the explore api");
+        }
+
+        try {
+            setTitle = espnUpcomingSet.getVisuals().getName();
+            setContentTitle = espnUpcomingSet.getItems().get(0).getVisuals().getTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, not able to get the 'Live and unrated' content from the explore " +
+                    "api" + e);
+        }
+
+        // Verify that live and unrated content is shown
+        LOGGER.info("'Live and unrated' content under test -> set Name: {} and title: {}", setTitle, setContentTitle);
+        Assert.assertTrue(swipe(homePage.getStaticTextByLabel(setTitle), Direction.UP, swipeCount, duration),
+                "'live and unrated' collection is not found on home page");
+        Assert.assertTrue(homePage.getStaticTextByLabel(setContentTitle).isPresent(), "not able to find live title");
+
+        //Toggle is ON by default for secondary profile
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+
+        //Toggle is ON by default
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
+                LIVE_TOGGLE_IS_NOT_ON_BY_DEFAULT);
+
+        // Turn Toggle OFF
+        editProfile.tapLiveAndUnratedToggle();
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle did not turn OFF after tapping on toggle");
+        editProfile.clickDoneBtn();
+        homePage.waitForHomePageToOpen();
+
+        // Verify that live and unrated content is not shown
+        Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setTitle), Direction.UP, swipeCount, duration),
+                "Live and unrated collection was present after turning off the live toggle");
+
+        Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setContentTitle), Direction.DOWN, swipeCount, duration),
+                "Live content title was present after turning off the live toggle");
+    }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
