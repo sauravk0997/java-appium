@@ -18,7 +18,7 @@
     <parameter name="choiceParam::env::Test ENV" value="PROD,Preview"/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="deviceName=ATV_4_Gen_12;platformName=iOS;deviceType=tvOS"/>
+    <parameter name="capabilities" value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4_Gen_9,ATV_4_Gen_10,ATV_4_Gen_11,ATV_4_Gen_13,ATV_4_Gen_12;platformName=iOS;deviceType=tvOS"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS,Dominguez-Non-IAP-Editorial-Preview-Enterprise-tvOS"/>
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
