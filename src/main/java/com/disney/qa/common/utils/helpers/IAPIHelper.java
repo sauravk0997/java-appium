@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public interface IAPIHelper {
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
+    Map<ImmutablePair<String, String>, DisneyLocalizationUtils> APPLE_TV_LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
         @Override
@@ -46,6 +47,24 @@ public interface IAPIHelper {
                 .getCountry(), WebDriverConfiguration.getLocale()
                 .getLanguage()), pair -> {
             DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(), "iOS",
+                    Configuration.getRequired(Configuration.Parameter.ENV),
+                    DisneyConfiguration.getPartner());
+            localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
+            localizationUtils.setLegalDocuments();
+            return localizationUtils;
+        });
+    }
+
+    /**
+     * Get Apple TV specific localization utils
+     * @return {@link DisneyLocalizationUtils}
+     */
+    default DisneyLocalizationUtils getAppleTVLocalizationUtils() {
+        return APPLE_TV_LOCALIZATION_UTILS.computeIfAbsent(new ImmutablePair<>(WebDriverConfiguration.getLocale()
+                .getCountry(), WebDriverConfiguration.getLocale()
+                .getLanguage()), pair -> {
+            DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(),
+                    "apple-tv",
                     Configuration.getRequired(Configuration.Parameter.ENV),
                     DisneyConfiguration.getPartner());
             localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
