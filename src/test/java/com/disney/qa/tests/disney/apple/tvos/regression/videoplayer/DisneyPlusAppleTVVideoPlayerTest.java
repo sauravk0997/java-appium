@@ -162,7 +162,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
         if (replayTitle == null) {
-            throw new IndexOutOfBoundsException("There were no replay events found");
+            throw new IndexOutOfBoundsException("No replay events found");
         }
         detailsPage.getTypeCellLabelContains(replayTitle).click();
         detailsPage.waitForDetailsPageToOpen();
