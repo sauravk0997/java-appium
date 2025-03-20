@@ -283,12 +283,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia(SPIDERMAN_THREE);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(SPIDERMAN_THREE).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayerPage.isOpened(), "Video player is not opened");
         videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT);
+        videoPlayerPage.clickPlayButton();
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.clickPauseButton();
         String durationTime = videoPlayerPage.getRemainingTimeInStringWithHourAndMinutes();
@@ -305,11 +307,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Correct remaining time is not reflecting in progress bar");
 
         detailsPage.clickContinueButton();
-        sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
+        Assert.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
         videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(95);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
-        videoPlayerPage.clickPauseButton();
+        videoPlayerPage.clickPlayButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         sa.assertFalse(detailsPage.getContinueButton().isPresent(FIVE_SEC_TIMEOUT),
