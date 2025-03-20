@@ -157,7 +157,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), DisneyAbstractPage.FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(),
+                DisneyAbstractPage.FIVE_SEC_TIMEOUT);
         whoIsWatchingPage.moveRight(1, 1);
         whoIsWatchingPage.clickSelect();
         sa.assertTrue(passwordPage.isHeaderTextDisplayed(),
@@ -173,5 +174,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(passwordPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
         passwordPage.enterPasswordToCompleteAuth(getUnifiedAccount().getUserPass());
         sa.assertTrue(chooseAvatarPage.isOpened(), "Choose your avatar screen not open");
+        sa.assertAll();
     }
 }
