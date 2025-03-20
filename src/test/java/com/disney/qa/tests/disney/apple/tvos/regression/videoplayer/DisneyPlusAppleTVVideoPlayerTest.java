@@ -117,6 +117,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     public void verifyPCONPlayback() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
         String contentUnavailableError = "This title cannot be watched with current Parental Control settings";
 
         // Set lower rating
@@ -131,7 +133,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
 
         Assert.assertFalse(videoPlayer.isOpened(),"Video player opened");
-        Assert.assertTrue(homePage.getStaticTextByLabelContains(contentUnavailableError).isPresent(),
+        Assert.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
                 "Restriction message was not displayed");
     }
 }
