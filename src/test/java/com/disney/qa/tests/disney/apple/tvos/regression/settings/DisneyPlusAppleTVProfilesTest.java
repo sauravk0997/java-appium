@@ -153,7 +153,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         whoIsWatchingPage.clickAddProfile();
 
         //Go through Choose Avatar screen
-        Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar page was not opened");
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
         chooseAvatarPage.moveUp(1, 1);
         chooseAvatarPage.clickSelect();
 
