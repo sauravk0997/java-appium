@@ -272,7 +272,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.getEnterProfileNameContinueButton().click();
 
         //Go through birthdate input
-        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isElementPresent(),
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
                 "Enter Your Birthdate title is not present");
         addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
         addProfilePage.getEnterDateOfBirthContinueButton().click();
@@ -281,11 +281,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
         addProfilePage.moveDown(3, 1);
         addProfilePage.clickSelect();
-        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isElementPresent(),
+        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
                 "Select Gender title is not present");
         addProfilePage.clickSelect();
         addProfilePage.clickSaveProfileButton();
-        Assert.assertTrue(addProfilePage.getSecondaryButton().isElementPresent(),
+        Assert.assertTrue(addProfilePage.getSecondaryButton().isPresent(),
                 "'Want to add a Profile PIN?' screen is not visible");
         addProfilePage.getSecondaryButton().click();
 
