@@ -12,11 +12,13 @@ import java.util.stream.Stream;
 import com.disney.jarvisutils.pages.apple.*;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,19 +41,16 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
-import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
-import javax.annotation.*;
-
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
@@ -639,6 +638,19 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public Set getExploreAPISet(String setId, int limit) {
+        try {
+            return getExploreApi().getSet(getDisneyExploreSearchRequest()
+                    .setSetId(setId)
+                    .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                    .setUnifiedAccount(getUnifiedAccount())
+                    .setProfileId(getUnifiedAccount().getProfileId())
+                    .setLimit(limit)).getData().getSet();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Item> getExploreAPIItemsFromSet(String setId, String locale, String language) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getSet(getDisneyExploreSearchRequest()
                         .setSetId(setId)
@@ -847,23 +859,38 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return String.format("%dh %dm", hours, minutes);
     }
 
-    public String getOTPFromApi(Date startTime, UnifiedAccount testAccount) {
+    public String getOTPFromApi(UnifiedAccount testAccount) {
         int emailAPILatency = 10;
-        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
-        pause(emailAPILatency);
-        String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+        try {
+            String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail());
+            pause(emailAPILatency);
+            String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail());
 
-        if (!secondOTP.equals(firstOTP)) {
-            LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
-            return secondOTP;
-        } else {
-            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
-            return firstOTP;
+            if (!secondOTP.equals(firstOTP)) {
+                LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+                return secondOTP;
+            } else {
+                LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+                return firstOTP;
+            }
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
         }
+
     }
 
     public void handleGenericPopup(int timeout, int maxAttempts) {
         pause(timeout);
         handleSystemAlert(AlertButtonCommand.DISMISS, maxAttempts);
+    }
+
+    public void handleOneTrustPopUp() {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        if (isAlertPresent()) {
+            handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
+        }
     }
 }

@@ -943,6 +943,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return timeRemainingLabel;
     }
 
+    public ExtendedWebElement getTitleVideoLabel() {
+        return titleLabel;
+    }
+
 //    public ExtendedWebElement getSkipText() {
 //        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
 //    }
