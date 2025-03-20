@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 
@@ -187,5 +188,45 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(SECONDARY_PROFILE),
                 "Profile icon cell wasn't displayed for secondary profile");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-97901"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyOTPValidationForProfileCreation() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusAppleTVChangePasswordPage changePasswordPage = new DisneyPlusAppleTVChangePasswordPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccountForOTP(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM).setProfileRestricted(true)));
+        logIn(getUnifiedAccount());
+
+        //Try to add a new profile
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.clickAddProfile();
+
+        //Validate transition to Enter Your Password screen and select 'Forgot Password' CTA
+        Assert.assertTrue(passwordPage.isHeaderTextDisplayed(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
+        passwordPage.getForgotPasswordButton().click();
+
+        //Fill OTP and create new password
+        Assert.assertTrue(forgotPasswordPage.getCheckEmailTitle().isElementPresent(),
+                "Forgot Password screen wasn't visible");
+        forgotPasswordPage.enterOtpOnModal(getOTPFromApi(getUnifiedAccount()));
+        Assert.assertTrue(changePasswordPage.isOpened(),
+                "Create New Password screen wasn't opened");
+        changePasswordPage.clickPasswordField();
+        changePasswordPage.enterPassword("Abc12!");
+        changePasswordPage.moveDown(3, 1);
+        changePasswordPage.clickSelect();
+        changePasswordPage.clickSave();
+
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
     }
 }
