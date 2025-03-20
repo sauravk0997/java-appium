@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgztvos_reg_rc" annotations="JDK" configfailurepolicy="continue" thread-count="2" parallel="tests">
+<suite verbose="1" name="dmgztvos_reg_rc" annotations="JDK" configfailurepolicy="continue" thread-count="9" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XCDQA-123326"/>
