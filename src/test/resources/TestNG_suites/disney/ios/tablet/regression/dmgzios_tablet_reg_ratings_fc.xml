@@ -9,8 +9,8 @@
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
-    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-79031"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77067"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-79288"/>
+    <parameter name="jenkinsBuild" value="4.2.5.771067"/>
     <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_tablet_reg_ratings_fc"/>
@@ -25,7 +25,7 @@
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
     <parameter name="jenkinsRegressionPipeline" value="iOS-Regression-Tablet-Pipeline"/>
-<!--    <parameter name="scheduling" value="H 8 * * 3,0"/>-->
+    <parameter name="scheduling" value="H 8 * * 3,0"/>
     <parameter name="overrideFields"
                value="JOB_MAX_RUN_TIME=600,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=300"/>
 
