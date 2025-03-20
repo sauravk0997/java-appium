@@ -769,7 +769,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
         detailsPage.getPlayButton().click();
-        waitForPresenceOfAnElement(getStaticTextByLabelContains(rating));
+        skipPromoIfPresent();
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player");
         waitForVideoToStart();
         scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
@@ -942,4 +942,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTimeRemainingLabel() {
         return timeRemainingLabel;
     }
+
+//    public ExtendedWebElement getSkipText() {
+//        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
+//    }
+//
+//    public void skipPromoTextIfPresent() {
+//        getSkipText().clickIfPresent(THREE_SEC_TIMEOUT);
+//    }
 }
