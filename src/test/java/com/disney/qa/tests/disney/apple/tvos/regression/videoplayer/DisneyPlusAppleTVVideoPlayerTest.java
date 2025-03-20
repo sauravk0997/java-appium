@@ -129,7 +129,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
 
-        Assert.assertFalse(videoPlayer.isOpened(),"Video player opened");
+        Assert.assertFalse(videoPlayer.isOpened(),"Playback initiated for the mature content");
         Assert.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
                 "Rating restriction message was not displayed");
     }
