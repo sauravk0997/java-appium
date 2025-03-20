@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
@@ -109,6 +110,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     public void verifyVODReplay() {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        int count = 3;
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
@@ -116,7 +119,17 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         Assert.assertTrue(detailsPage.getBrandLandingView().isPresent(),
                 "Deeplink did not navigate to the collections page");
-        detailsPage.moveDown(2, 1);
+
+        // Navigate to a Replay
+        while (count > 0) {
+            detailsPage.moveDown(1, 1);
+            if (espnPage.getReplayLabel().isPresent(ONE_SEC_TIMEOUT)) {
+                count = 0;
+            } else {
+                count--;
+            }
+        }
+
         String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
         detailsPage.getTypeCellLabelContains(replayTitle).click();
         detailsPage.waitForDetailsPageToOpen();
