@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.amazonaws.services.applicationautoscaling.model.ObjectNotFoundException;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -36,6 +37,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -513,6 +515,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return viewAlert;
     }
 
+    public ExtendedWebElement getSecondaryButton() {
+        return secondaryButton;
+    }
+
     public String getErrorMessageString() {
         return labelError.getText();
     }
@@ -857,7 +863,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickSaveProfileButton() {
-        dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText())).click();
+        DisneyLocalizationUtils localizationUtils = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ?
+                getAppleTVLocalizationUtils() : getLocalizationUtils();
+        dynamicBtnFindByLabel.format(localizationUtils.getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText()))
+                .click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
@@ -1492,8 +1502,26 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         throw new NoSuchElementException("Desired collection was not focused");
     }
 
+    public void moveDownUntilElementIsFocused(ExtendedWebElement element, int count) {
+        LOGGER.info("Moving down until desired element is focused");
+        if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
+            LOGGER.info("Desired element was already focused");
+            return;
+        }
+        while (count > 0) {
+            moveDown(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT) &&
+                    isFocused(element)) {
+                LOGGER.info("Reached desired element");
+                return;
+            }
+            count--;
+        }
+        throw new NoSuchElementException("Desired element was not focused after '" + count + "' retries");
+    }
+
     public void moveRightUntilElementIsFocused(ExtendedWebElement element, int count) {
-        LOGGER.info("Moving right until desired collection content is focused");
+        LOGGER.info("Moving right until desired element is focused");
         if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
             LOGGER.info("Desired element was already focused");
             return;
