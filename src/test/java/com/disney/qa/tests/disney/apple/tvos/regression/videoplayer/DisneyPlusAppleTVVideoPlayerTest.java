@@ -21,8 +21,7 @@ import java.lang.invoke.MethodHandles;
 import java.util.List;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
-import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -119,8 +118,6 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        String contentUnavailableError = "This title cannot be watched with current Parental Control settings";
-
         // Set lower rating
         List<String> ratingSystemValues = getUnifiedAccount().getProfile(DEFAULT_PROFILE).getAttributes()
                 .getParentalControls().getMaturityRating().getRatingSystemValues();
@@ -129,11 +126,11 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
 
         logIn(getUnifiedAccount());
-        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
 
         Assert.assertFalse(videoPlayer.isOpened(),"Video player opened");
         Assert.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
-                "Restriction message was not displayed");
+                "Rating restriction message was not displayed");
     }
 }
