@@ -771,10 +771,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         detailsPage.getPlayButton().click();
 //        skipPromoIfPresent();
 //        getStaticTextByLabel("SKIP").clickIfPresent(THREE_SEC_TIMEOUT);
+        waitForVideoToStart();
         getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.MEDIA,
                 DictionaryKeys.BTN_SKIP_PROMO.getText())).clickIfPresent(THREE_SEC_TIMEOUT);
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player");
-        waitForVideoToStart();
+//        waitForVideoToStart();
         scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         waitForVideoToStart();
         clickBackButton();
