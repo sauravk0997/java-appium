@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.update;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.annotations.Listeners;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
@@ -15,6 +17,7 @@ import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
     String APP_URL = "appcenter://Disney-Prod-Enterprise/ios/enterprise/%s";

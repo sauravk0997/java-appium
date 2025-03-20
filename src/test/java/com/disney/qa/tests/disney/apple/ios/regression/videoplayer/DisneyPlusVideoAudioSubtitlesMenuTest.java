@@ -1,9 +1,11 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.annotations.Listeners;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
@@ -18,6 +20,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static java.lang.String.format;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     private static final String AUDIO_SUBTITLE_MENU_DID_NOT_OPEN = "Audio subtitle menu didn't open";
     private static final String VIDEO_NOT_PAUSED = "Video was not paused";

@@ -24,6 +24,7 @@ import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.util.JiraUtils;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
@@ -82,8 +83,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
-
-    private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(EmailApi::new);
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
     ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
@@ -203,6 +202,21 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             return new WatchlistApi(apiConfiguration);
         }
     };
+
+    private static final ThreadLocal<EmailApi> EMAIL_API = ThreadLocal.withInitial(() -> {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
+                .partner(DisneyConfiguration.getPartner())
+                .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
+                .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
+                .build();
+        try {
+            return new EmailApi(apiConfiguration);
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException("Error initializing EmailApi", e);
+        }
+    });
 
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {

@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PREMIUM_MONTHLY_SINGAPORE;
 import static com.disney.qa.common.constant.IConstantHelper.SG;
@@ -11,15 +12,16 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 
 import com.disney.util.TestGroup;
+import org.testng.annotations.Listeners;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
-import java.util.Date;
 import java.util.stream.IntStream;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
     private static final String PASSWORD_PAGE_ERROR_MESSAGE = "Password page should open";
     private static final String DOB_PAGE_ERROR_MESSAGE = "Enter your birthdate page should open";
@@ -106,13 +108,12 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
 
         ratingsSetupForOTPAccount(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
-        Date startTime = getEmailApi().getStartTime();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.clickR21ForgotPasswordLink();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
-        String otp = getEmailApi().getDisneyOTP(getUnifiedAccount().getEmail(), startTime);
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_DID_NOT_OPEN);
@@ -503,7 +504,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
     public void verifyR21ExistingPinForgotPassword() {
         String NEW_PASSWORD = "TestPass1234!";
-        Date startTime = getEmailApi().getStartTime();
         ratingSetupWithPINForOTPAccount(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -517,7 +517,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(passwordPage.isOpened(), PASSWORD_PAGE_ERROR_MESSAGE);
         passwordPage.clickR21ForgotPasswordLink();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
-        String otp = getEmailApi().getDisneyOTP(getUnifiedAccount().getEmail(), startTime);
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_DID_NOT_OPEN);

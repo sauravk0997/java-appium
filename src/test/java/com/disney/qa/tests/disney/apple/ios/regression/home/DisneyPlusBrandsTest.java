@@ -1,12 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
-import com.disney.qa.api.utils.*;
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -16,6 +17,7 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusBrandsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67373"})

@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -19,6 +20,7 @@ import com.zebrunner.carina.utils.*;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -29,6 +31,7 @@ import java.util.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
     private static final String IRON_MAN = "Iron Man";

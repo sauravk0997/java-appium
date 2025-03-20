@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.search;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.disney.DisneyEntityIds;
@@ -16,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.FRANCE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private static final String BLUEY = "Bluey";

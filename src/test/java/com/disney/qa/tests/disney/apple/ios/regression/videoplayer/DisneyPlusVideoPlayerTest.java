@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -8,6 +9,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.SkipException;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -18,6 +20,7 @@ import static com.disney.qa.common.DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIM
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
     private static final int SPLIT_TIME = 15;
@@ -235,29 +238,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77740"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNAlternateBroadcastSelector() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
-        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount());
-
-        homePage.waitForHomePageToOpen();
-
-        //NHL collection
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
-
-        collectionPage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.REPLAYS_COLLECTION, 5);
-        espnPage.getReplayLabel().click();
-        detailsPage.waitForDetailsPageToOpen();
-        detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video player page did not open");
-        videoPlayer.displayVideoController();
-        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.BROADCAST_MENU).click();
-        Assert.assertTrue(videoPlayer.getBroadcastCollectionView().isPresent(),
-                "Broadcast Menu did not open on video player");
+        openBroadcastMenu();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77687"})
@@ -306,8 +287,6 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     public void openBroadcastMenu() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
-        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));

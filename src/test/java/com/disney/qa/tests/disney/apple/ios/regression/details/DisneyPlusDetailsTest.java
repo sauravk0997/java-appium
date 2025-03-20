@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.details;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
@@ -14,6 +15,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -29,6 +31,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private static final String THE_LION_KINGS_TIMON_AND_PUUMBA = "The Lion King Timon Pumbaa";
