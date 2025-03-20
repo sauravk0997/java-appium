@@ -4,6 +4,7 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.appcenter.AppCenterManager;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
@@ -20,6 +21,9 @@ import java.lang.invoke.MethodHandles;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEVICE_TYPE;
+
 public interface IAPIHelper {
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> APPLE_TV_LOCALIZATION_UTILS = new ConcurrentHashMap<>();
@@ -32,8 +36,9 @@ public interface IAPIHelper {
                             .orElseThrow(
                                     () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
                     .getVersion();
+            String platform = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ? "tvos" : "ios";
             I_API_HELPER_LOGGER.info("App version: {}", version);
-            return new DisneyMobileConfigApi("iOS", Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
+            return new DisneyMobileConfigApi(platform, Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
                     version);
         }
     };
