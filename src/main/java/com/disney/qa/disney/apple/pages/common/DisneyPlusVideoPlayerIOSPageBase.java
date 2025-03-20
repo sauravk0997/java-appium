@@ -769,13 +769,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
         detailsPage.getPlayButton().click();
-//        skipPromoIfPresent();
-//        getStaticTextByLabel("SKIP").clickIfPresent(THREE_SEC_TIMEOUT);
-        waitForVideoToStart();
-        getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.MEDIA,
-                DictionaryKeys.BTN_SKIP_PROMO.getText())).clickIfPresent(THREE_SEC_TIMEOUT);
+        skipPromoIfPresent(FIVE_SEC_TIMEOUT);
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player");
-//        waitForVideoToStart();
+        waitForVideoToStart();
         scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         waitForVideoToStart();
         clickBackButton();
@@ -787,6 +783,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void skipPromoIfPresent() {
         getSkipPromoButton().clickIfPresent(THREE_SEC_TIMEOUT);
+    }
+
+    public void skipPromoIfPresent(int timeout) {
+        getSkipPromoButton().clickIfPresent(timeout);
     }
 
     public void waitForAdGracePeriodToEnd(int remainingTime) {
@@ -950,12 +950,4 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTitleVideoLabel() {
         return titleLabel;
     }
-
-//    public ExtendedWebElement getSkipText() {
-//        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
-//    }
-//
-//    public void skipPromoTextIfPresent() {
-//        getSkipText().clickIfPresent(THREE_SEC_TIMEOUT);
-//    }
 }
