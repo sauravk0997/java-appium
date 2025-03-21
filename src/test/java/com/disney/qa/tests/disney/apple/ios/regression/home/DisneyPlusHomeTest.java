@@ -644,7 +644,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         try {
-            brandCollection = getDisneyAPIPageUnifiedAccount(HOME_PAGE.getEntityId(),
+            brandCollection = getDisneyAPIPage(HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
                     getLocalizationUtils().getUserLanguage()).get(1);
         } catch (Exception e) {
@@ -954,7 +954,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     private void goToFirstCollectionTitle(DisneyPlusHomeIOSPageBase homePage) {
         String collectionID, contentTitle;
-        ArrayList<Container> collections = getDisneyAPIPageUnifiedAccount(HOME_PAGE.getEntityId(),
+        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId(),
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
         if (collections.size() < 3) {
