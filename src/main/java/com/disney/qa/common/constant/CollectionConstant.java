@@ -90,7 +90,7 @@ public class CollectionConstant {
             case HULU_FEATURED:
                 return "a4af2864-302e-499e-adf5-88ed1735976f";
             case HULU_ORIGINALS:
-                return "bd52e84b-28f0-4c2d-a289-ccd61b92ecd4";
+                return "d0c4d6a0-3e18-43e4-9db0-9e94ce587273";
             case KIDS_CAROUSEL:
                 return "2821d7a3-1146-4ca5-8333-e2c565edf79d";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
@@ -130,6 +130,8 @@ public class CollectionConstant {
                 return "Sports";
             case REPLAYS_COLLECTION:
                 return "Replays";
+            case STUDIOS_AND_NETWORKS:
+                return "Studios and Networks";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }
