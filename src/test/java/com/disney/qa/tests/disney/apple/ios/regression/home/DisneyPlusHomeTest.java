@@ -502,15 +502,14 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         // Populate Continue Watching assets
-        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"), 50);
+        addContentInContinueWatching(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"), 30);
 
         homePage.waitForHomePageToOpen();
-        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
-        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
-                "Continue Watching Container not found");
+        CollectionConstant.Collection continueWatching = CollectionConstant.Collection.CONTINUE_WATCHING;
+        homePage.swipeTillCollectionTappable(continueWatching, Direction.UP, swipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(continueWatching), "Continue Watching Container not found");
 
-        String continueWatchingCollectionName = CollectionConstant
-                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        String continueWatchingCollectionName = CollectionConstant.getCollectionName(continueWatching);
         int homePageRemainingTimeInMinutes =
                 homePage.getFirstCellRemainingTimeInMinutesFromCollection(continueWatchingCollectionName);
         ExtendedWebElement firstElement = homePage.getFirstCellFromCollection(continueWatchingCollectionName);
