@@ -35,7 +35,9 @@ import java.util.stream.IntStream;
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.STUDIOS_AND_NETWORKS;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
@@ -741,7 +743,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAccount(getUnifiedAccountApi()
+                .createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
@@ -759,6 +762,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isHuluTileVisible(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
 
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
+        huluPage.waitForLoaderToDisappear(TEN_SEC_TIMEOUT);
         sa.assertTrue(huluPage.validateScrollingInHuluCollection(CollectionConstant.Collection.HULU_ORIGINALS),
                 "Unable to validate Scrolling in Hulu Collection");
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
@@ -932,11 +936,16 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
         try {
-            // Items from index 5 indicates the list of Network Logos from the Hulu Brand page
-            ArrayList<Item> logoCollection = getHuluAPIPage(HULU_PAGE.getEntityId()).get(5).getItems();
+            String collection = CollectionConstant.getCollectionTitle(STUDIOS_AND_NETWORKS);
+            ArrayList<Item> logoCollection = getHuluAPIPage(HULU_PAGE.getEntityId()).stream()
+                    .filter(container -> container.getVisuals().getName().equals(collection))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException(collection + "container not present in API response"))
+                    .getItems();
             for (Item item : logoCollection) {
                 String logoTitle = item.getVisuals().getTitle();
-                sa.assertTrue(huluPage.isNetworkLogoPresent(logoTitle), String.format("%s Network logo is not present", logoTitle));
+                sa.assertTrue(huluPage.isNetworkLogoPresent(logoTitle),
+                        String.format("%s Network logo is not present", logoTitle));
             }
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e.getMessage());
