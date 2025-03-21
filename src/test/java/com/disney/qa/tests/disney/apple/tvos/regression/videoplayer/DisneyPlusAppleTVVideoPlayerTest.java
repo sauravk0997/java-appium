@@ -3,14 +3,12 @@ package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -141,25 +139,32 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
-        int count = 3;
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String sports = "Sports";
+        String basketball = "Basketball";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
 
-        Assert.assertTrue(detailsPage.getBrandLandingView().isPresent(),
-                "Deeplink did not navigate to the collections page");
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
 
-        // Navigate to a Replay
-        while (count > 0) {
-            detailsPage.moveDown(1, 1);
-            if (espnPage.getReplayLabel().isPresent(ONE_SEC_TIMEOUT)) {
-                count = 0;
-            } else {
-                count--;
-            }
-        }
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                ESPN_PAGE_DID_NOT_OPEN);
 
+        // Navigate to Sports and basketball sport
+        navigateToShelf(brandPage.getBrandShelf(sports));
+        detailsPage.moveDown(1, 1);
+        homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
+        detailsPage.getTypeCellLabelContains(basketball).click();
+        Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
+                "Sport page did not open");
+
+        // Navigate to a Replay and validate playback
+        navigateToShelf(espnPage.getReplayLabel());
         String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException("No replay events found");
@@ -168,5 +173,18 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+    }
+
+    public void navigateToShelf(ExtendedWebElement element) {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        int count = 10;
+        while (count > 0) {
+            detailsPage.moveDown(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT)) {
+                count = 0;
+            } else {
+                count--;
+            }
+        }
     }
 }

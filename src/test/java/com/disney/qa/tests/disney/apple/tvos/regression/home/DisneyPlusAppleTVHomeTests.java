@@ -54,7 +54,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
         Assert.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
-                "Hulu Hub page did not open");
+                ESPN_PAGE_DID_NOT_OPEN);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121502"})
