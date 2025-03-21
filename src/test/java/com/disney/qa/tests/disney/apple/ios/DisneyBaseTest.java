@@ -445,7 +445,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-
     public void downloadDisneyApp() {
         String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
                 .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
@@ -516,29 +515,17 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             return getExploreApi().getMovie(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
-        try {
-            return getExploreApi().getPage(getDisneyExploreSearchRequest()
-                            .setEntityId(pageID)
-                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
-                            .setProfileId(getUnifiedAccount().getProfileId()))
-                    .getData()
-                    .getPage()
-                    .getContainers();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException("Exception occurred..." + e);
-        }
-    }
-
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getHuluExploreSearchRequest()
                         .setEntityId(pageID)
+                        .setUnifiedAccount(getUnifiedAccount())
                         .setProfileId(getUnifiedAccount().getProfileId()))
                 .getData()
                 .getPage()
@@ -550,6 +537,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()).setLimit(30));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
@@ -557,32 +545,33 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return pageResponse.getData().getPage().getVisuals();
     }
 
+    public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
+        try {
+            return getExploreApi().getPage(getDisneyExploreSearchRequest()
+                            .setEntityId(pageID)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
+                            .setProfileId(getUnifiedAccount().getProfileId()))
+                    .getData()
+                    .getPage()
+                    .getContainers();
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+    }
+
     public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) {
         ArrayList<Container> container;
         try {
             container = getExploreApi().getPage(getDisneyExploreSearchRequest()
-                    .setEntityId(pageID)
-                    .setProfileId(getUnifiedAccount().getProfileId())
-                    .setCountryCode(locale)
-                    .setMaturity(getMaxMaturityRating(locale))
-                    .setRoamingDas(getRoamingDas(locale))
-                    .setLanguage(language)).getData().getPage().getContainers();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException("Exception occurred..." + e);
-        }
-        return container;
-    }
-
-    public ArrayList<Container> getDisneyAPIPageUnifiedAccount(String pageID, String locale, String language) {
-        ArrayList<Container> container;
-        try {
-            container = getExploreApi().getPage(getDisneyExploreSearchRequest()
-                    .setEntityId(pageID)
-                    .setProfileId(getUnifiedAccount().getProfileId())
-                    .setCountryCode(locale)
-                    .setMaturity(getMaxMaturityRating(locale))
-                    .setRoamingDas(getRoamingDas(locale))
-                    .setLanguage(language)).getData().getPage().getContainers();
+                            .setEntityId(pageID)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setProfileId(getUnifiedAccount().getProfileId())
+                            .setCountryCode(locale)
+                            .setMaturity(getMaxMaturityRating(locale))
+                            .setRoamingDas(getRoamingDas(locale))
+                            .setLanguage(language))
+                    .getData().getPage().getContainers();
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
         }
@@ -595,6 +584,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
             firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
         } catch (IndexOutOfBoundsException | URISyntaxException e) {
@@ -643,11 +633,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public Set getExploreAPISet(String setId, int limit) {
         try {
             return getExploreApi().getSet(getDisneyExploreSearchRequest()
-                    .setSetId(setId)
-                    .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
-                    .setUnifiedAccount(getUnifiedAccount())
-                    .setProfileId(getUnifiedAccount().getProfileId())
-                    .setLimit(limit)).getData().getSet();
+                            .setSetId(setId)
+                            .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setProfileId(getUnifiedAccount().getProfileId())
+                            .setLimit(limit))
+                    .getData()
+                    .getSet();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
