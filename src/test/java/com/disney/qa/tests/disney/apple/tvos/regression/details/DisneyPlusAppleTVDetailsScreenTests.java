@@ -6,6 +6,7 @@ import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -164,16 +165,35 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102800"})
     @Test(groups = {TestGroup.DETAILS_PAGE, US})
     public void verifyVODReplayAppearance() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        String sports = "Sports";
+        String basketball = "Basketball";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
-        Assert.assertTrue(detailsPage.getBrandLandingView().isPresent(),
-                "Deeplink did not navigate to the Replay Event Details Page");
-        detailsPage.moveDown(2, 1);
-        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                ESPN_PAGE_DID_NOT_OPEN);
+
+        // Navigate to Sports and basketball sport
+        detailsPage.navigateToShelf(brandPage.getBrandShelf(sports));
+        detailsPage.moveDown(1, 1);
+        homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
+        detailsPage.getTypeCellLabelContains(basketball).click();
+        Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
+                "Sport page did not open");
+
+        // Navigate to a Replay and validate the page
+        detailsPage.navigateToShelf(espnPage.getReplayLabel());
+        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        if (replayTitle == null) {
+            throw new IndexOutOfBoundsException("No replay events found");
+        }
         detailsPage.getTypeCellLabelContains(replayTitle).click();
         detailsPage.waitForDetailsPageToOpen();
         // Validate logo and play button
