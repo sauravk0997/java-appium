@@ -266,7 +266,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "Enter Profile Name title is not present");
         addProfilePage.clickSelect();
         addProfilePage.enterProfileName(SECONDARY_PROFILE);
-        addProfilePage.moveDownUntilElementIsFocused(addProfilePage.getKeyboardDoneButton(), 10);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         addProfilePage.clickSelect();
         addProfilePage.getEnterProfileNameContinueButton().click();
 
