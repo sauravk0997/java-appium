@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
@@ -19,6 +20,7 @@ import com.zebrunner.carina.utils.*;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.*;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -29,6 +31,7 @@ import java.util.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
 
     private static final String IRON_MAN = "Iron Man";
@@ -403,7 +406,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         // Turn OFF autoplay
         toggleAutoPlay(off);
         // Steps to click in SEE DETAILS button
-        deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
+        deeplinkContentAndScrubPlayback("disney_prod_series_loki_last_episode_playback");
         String nextEpisodesTitle = upNext.getNextEpisodeInfo();
         upNext.tapSeeAllEpisodesButton();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -411,7 +414,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains(nextEpisodesTitle).isPresent(),
                 "Details page from the expected series did not open");
         // Steps to tap in Play content
-        deeplinkContentAndScrubPlayback("disney_prod_series_one_strange_rock_last_episode_playback");
+        deeplinkContentAndScrubPlayback("disney_prod_series_loki_last_episode_playback");
         upNext.getUpNextImageView().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.displayVideoController();
@@ -459,7 +462,10 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         int percentage = 98;
         launchDeeplink(R.TESTDATA.get(deeplink));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentage);
+        videoPlayer.clickPlayButton();
         // Verify image and elements present in upNext screen
         upNext.waitForUpNextUIToAppear();
         Assert.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);

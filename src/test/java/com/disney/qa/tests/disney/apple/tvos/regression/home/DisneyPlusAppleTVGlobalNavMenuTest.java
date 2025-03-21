@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
@@ -14,7 +15,9 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -28,6 +31,7 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
@@ -120,55 +124,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
             }
         });
 
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-67248", "XCDQA-67250"})
-    @Test(groups = { TestGroup.HOME, TestGroup.SMOKE, US})
-    public void globalNavAppearanceKidsProfile() {
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        SoftAssert sa = new SoftAssert();
-
-        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
-                .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS)
-                .dateOfBirth(KIDS_DOB)
-                .language(getLocalizationUtils().getUserLanguage())
-                .avatarId(BABY_YODA)
-                .kidsModeEnabled(true)
-                .isStarOnboarded(true)
-                .build());
-        initDisneyPlusAppleTVGlobalNavMenuTest();
-        selectAppleUpdateLaterAndDismissAppTracking();
-        logInWithoutHomeCheck(getUnifiedAccount());
-
-        sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(), "Who's watching page did not launch");
-        disneyPlusAppleTVHomePage.clickProfileBtn(KIDS);
-        sa.assertTrue(disneyPlusAppleTVHomePage.isKidsHomePageOpen(), "Kids Home page is not open after login");
-
-        disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
-        disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        IntStream.range(0, GLOBAL_NAV.get().size()).forEach(i -> {
-            String menu = GLOBAL_NAV.get().get(i);
-            if (i != 0) {
-                sa.assertTrue(disneyPlusAppleTVHomePage.isDynamicAccessibilityIDElementPresent(menu),
-                        String.format("%s is not found on expanded global nav", menu));
-            } else {
-                LOGGER.info("Checking for profile button focus");
-                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-                sa.assertTrue(disneyPlusAppleTVHomePage.isProfileBtnPresent());
-            }
-        });
-        aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
-        sa.assertTrue(disneyPlusAppleTVHomePage.isFocused(disneyPlusAppleTVHomePage.getDynamicAccessibilityId(
-                DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText())), "HOME Nav bar selection is not focused/hovered");
-
-        disneyPlusAppleTVHomePage.clickSelect();
-        sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavExpanded(),
-                "Global Nav menu is not collapsed after clicking select from expanded global nav");
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         aliceDriver.screenshotAndRecognize().isLabelPresent(sa, GLOBAL_NAV_ALICE_LABELS.get().toArray(String[]::new));
         sa.assertAll();
     }
@@ -285,6 +240,96 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(homePage.getStaticTextByLabel(RECOMMENDED_FOR_YOU).isPresent(),
                 "Recommended For You is not present");
 
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67250"})
+    @Test(groups = { TestGroup.HOME, TestGroup.SMOKE, US})
+    public void verifyGlobalNavKidsSelectedExpanded() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        SoftAssert sa = new SoftAssert();
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        initDisneyPlusAppleTVGlobalNavMenuTest();
+        selectAppleUpdateLaterAndDismissAppTracking();
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(),
+                "Who's watching page did not launch");
+        homePage.clickProfileBtn(KIDS);
+        sa.assertTrue(homePage.isKidsHomePageOpen(), "Kids Home page is not open after login");
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavWithClickingMenu();
+        IntStream.range(0, GLOBAL_NAV.get().size()).forEach(i -> {
+            String menu = GLOBAL_NAV.get().get(i);
+            if (i != 0) {
+                Assert.assertTrue(homePage.isDynamicAccessibilityIDElementPresent(menu),
+                        String.format("%s is not found on expanded global nav", menu));
+            } else {
+                LOGGER.info("Checking for profile button focus");
+                Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+                Assert.assertTrue(homePage.isProfileBtnPresent());
+            }
+        });
+        Assert.assertTrue(homePage.isGlobalNavExpanded(),
+                "Global Nav menu is not expanded");
+        Assert.assertTrue(homePage.isFocused(homePage.getDynamicAccessibilityId(
+                        DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText())),
+                "HOME Nav bar selection is not focused/hovered");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67248"})
+    @Test(groups = { TestGroup.HOME, TestGroup.SMOKE, US})
+    public void verifyGlobalNavKidsSelectedCollapsed() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        SoftAssert sa = new SoftAssert();
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+        initDisneyPlusAppleTVGlobalNavMenuTest();
+        selectAppleUpdateLaterAndDismissAppTracking();
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        sa.assertTrue(new DisneyPlusAppleTVWhoIsWatchingPage(getDriver()).isOpened(),
+                "Who's watching page did not launch");
+        homePage.clickProfileBtn(KIDS);
+        sa.assertTrue(homePage.isKidsHomePageOpen(), "Kids Home page is not open after login");
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        Assert.assertFalse(homePage.isGlobalNavExpanded(),
+                "Global Nav menu is not collapsed after clicking select from expanded global nav");
+
+        IntStream.range(0, GLOBAL_NAV.get().size()).forEach(i -> {
+            String menu = GLOBAL_NAV.get().get(i);
+            homePage.clickMenuTimes(1, 2);
+            homePage.navigateToOneGlobalNavMenu(menu);
+            sa.assertTrue(homePage.isFocused(homePage.getDynamicAccessibilityId(menu)),
+                    "HOME Nav bar selection is not focused/hovered");
+
+            homePage.clickSelect();
+            Assert.assertFalse(homePage.isGlobalNavExpanded(),
+                    "Global Nav menu is not collapsed after clicking select from expanded global nav");
+            if (menu == DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE.getText()) {
+                homePage.clickMenuTimes(1, 2);
+            }
+        });
         sa.assertAll();
     }
 }

@@ -12,11 +12,13 @@ import java.util.stream.Stream;
 import com.disney.jarvisutils.pages.apple.*;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -39,19 +41,16 @@ import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.asserts.SoftAssert;
 
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
-import com.disney.qa.common.utils.ios_settings.IOSSettingsMenuBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
 import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
-import javax.annotation.*;
-
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
@@ -106,6 +105,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     //Common error messages
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
+    public static final String ADD_PROFILE_PAGE_NOT_DISPLAYED = "Add Profile Page is not displayed";
+    public static final String CHOOSE_AVATAR_PAGE_NOT_DISPLAYED = "Choose Avatar Page is not displayed";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -444,7 +445,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-
     public void downloadDisneyApp() {
         String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
                 .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
@@ -515,29 +515,17 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             return getExploreApi().getMovie(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
-        try {
-            return getExploreApi().getPage(getDisneyExploreSearchRequest()
-                            .setEntityId(pageID)
-                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
-                            .setProfileId(getUnifiedAccount().getProfileId()))
-                    .getData()
-                    .getPage()
-                    .getContainers();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException("Exception occurred..." + e);
-        }
-    }
-
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getHuluExploreSearchRequest()
                         .setEntityId(pageID)
+                        .setUnifiedAccount(getUnifiedAccount())
                         .setProfileId(getUnifiedAccount().getProfileId()))
                 .getData()
                 .getPage()
@@ -549,6 +537,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()).setLimit(30));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
@@ -556,32 +545,33 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return pageResponse.getData().getPage().getVisuals();
     }
 
+    public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
+        try {
+            return getExploreApi().getPage(getDisneyExploreSearchRequest()
+                            .setEntityId(pageID)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
+                            .setProfileId(getUnifiedAccount().getProfileId()))
+                    .getData()
+                    .getPage()
+                    .getContainers();
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+    }
+
     public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) {
         ArrayList<Container> container;
         try {
             container = getExploreApi().getPage(getDisneyExploreSearchRequest()
-                    .setEntityId(pageID)
-                    .setProfileId(getUnifiedAccount().getProfileId())
-                    .setCountryCode(locale)
-                    .setMaturity(getMaxMaturityRating(locale))
-                    .setRoamingDas(getRoamingDas(locale))
-                    .setLanguage(language)).getData().getPage().getContainers();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException("Exception occurred..." + e);
-        }
-        return container;
-    }
-
-    public ArrayList<Container> getDisneyAPIPageUnifiedAccount(String pageID, String locale, String language) {
-        ArrayList<Container> container;
-        try {
-            container = getExploreApi().getPage(getDisneyExploreSearchRequest()
-                    .setEntityId(pageID)
-                    .setProfileId(getUnifiedAccount().getProfileId())
-                    .setCountryCode(locale)
-                    .setMaturity(getMaxMaturityRating(locale))
-                    .setRoamingDas(getRoamingDas(locale))
-                    .setLanguage(language)).getData().getPage().getContainers();
+                            .setEntityId(pageID)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setProfileId(getUnifiedAccount().getProfileId())
+                            .setCountryCode(locale)
+                            .setMaturity(getMaxMaturityRating(locale))
+                            .setRoamingDas(getRoamingDas(locale))
+                            .setLanguage(language))
+                    .getData().getPage().getContainers();
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
         }
@@ -594,6 +584,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
             firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
         } catch (IndexOutOfBoundsException | URISyntaxException e) {
@@ -634,6 +625,21 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId())
                     .setLimit(limit)).getData().getSet().getItems();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Set getExploreAPISet(String setId, int limit) {
+        try {
+            return getExploreApi().getSet(getDisneyExploreSearchRequest()
+                            .setSetId(setId)
+                            .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setProfileId(getUnifiedAccount().getProfileId())
+                            .setLimit(limit))
+                    .getData()
+                    .getSet();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -847,23 +853,38 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return String.format("%dh %dm", hours, minutes);
     }
 
-    public String getOTPFromApi(Date startTime, UnifiedAccount testAccount) {
+    public String getOTPFromApi(UnifiedAccount testAccount) {
         int emailAPILatency = 10;
-        String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
-        pause(emailAPILatency);
-        String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail(), startTime);
+        try {
+            String firstOTP = getEmailApi().getDisneyOTP(testAccount.getEmail());
+            pause(emailAPILatency);
+            String secondOTP = getEmailApi().getDisneyOTP(testAccount.getEmail());
 
-        if (!secondOTP.equals(firstOTP)) {
-            LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
-            return secondOTP;
-        } else {
-            LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
-            return firstOTP;
+            if (!secondOTP.equals(firstOTP)) {
+                LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+                return secondOTP;
+            } else {
+                LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+                return firstOTP;
+            }
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
         }
+
     }
 
     public void handleGenericPopup(int timeout, int maxAttempts) {
         pause(timeout);
         handleSystemAlert(AlertButtonCommand.DISMISS, maxAttempts);
+    }
+
+    public void handleOneTrustPopUp() {
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        if (isAlertPresent()) {
+            handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
+        }
     }
 }

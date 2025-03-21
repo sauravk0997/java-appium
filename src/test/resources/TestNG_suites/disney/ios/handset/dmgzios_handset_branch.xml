@@ -2,6 +2,13 @@
 <suite verbose="1" name="dmgzios_handset_branch" annotations="JDK" configfailurepolicy="continue" thread-count="12" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
+    <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
+    <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
+    <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
+    <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
+    <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
+    <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value=""/>
     <parameter name="choiceParam::appcenter_app_name::app center app name"
                value="Disney-Prod-Enterprise,Dominguez-Non-IAP-Prod-Enterprise-for-Automation,Dominguez-Editorial-Preview-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
@@ -21,14 +28,7 @@
 
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,Ariel,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Welch"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77091"/>
-
-    <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
-    <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
-    <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
-    <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
-    <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
-    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value=""/>
+    <parameter name="jenkinsBuild" value="4.2.5.77106"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>

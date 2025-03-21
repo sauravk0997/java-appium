@@ -1,6 +1,10 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
+import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.DisneyAbstractPage;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
@@ -12,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import java.time.temporal.ValueRange;
@@ -20,6 +25,7 @@ import java.lang.invoke.MethodHandles;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String VIDEO_NOT_PAUSED = "Video was not paused";
@@ -60,7 +66,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67538"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifyRewindAndForwardActionsWhilePlaying() {
         int actionTimes = 3;
         int secondsSkippedPerAction = 10;
@@ -140,7 +146,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67554"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifySeekingThumbnailRectangleBehavior() {
         int numberOfAttemptsToReachBeginning = 5;
         int numberOfAttemptsToReachEnd = 40;
@@ -183,5 +189,67 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
                 videoPlayer.getSeekbar(), numberOfAttemptsToReachEnd, 1, 1);
         Assert.assertTrue(videoPlayer.isThumbnailAlignedWithTheEndOfTheSeekBar(),
                 "Thumbnail rectangle wasn't aligned with the end of the seek bar");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121848"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyVideoPlayerControlsUIVOD() {
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayerTVPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        int times = 3;
+        int secondsSkippedPerAction = 10;
+        int expectedSkippedSeconds = times * secondsSkippedPerAction;
+        int uiLatencyInSeconds = 10;
+        // Total time of the movie
+        ExploreContent exploreMovieContent = getMovieApi(DisneyEntityIds.IRONMAN.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        int totalDurationTime = exploreMovieContent.getDurationMs() / 1000;
+
+        logIn(getUnifiedAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
+        Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayerTVPage.waitForVideoToStart();
+
+        // Pause and forward video validations
+        commonPage.clickDown(1);
+        int remainingTimeBeforeFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        LOGGER.info("remainingTimeBeforeFF {}", remainingTimeBeforeFF);
+        commonPage.clickRight(3, 1, 1);
+        commonPage.clickPlay();
+        commonPage.clickDown(1);
+        int timeAfterFF = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        LOGGER.info("timeAfterFF {}", timeAfterFF);
+        Assert.assertTrue(remainingTimeBeforeFF > timeAfterFF, "Forward did not work as expected");
+        home.waitForElementToDisappear(videoPlayerTVPage.getSeekbar(), DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT);
+
+        // Actions required to properly restart the video because the button disappears quickly from screen
+        commonPage.clickUp(3);
+        Assert.assertTrue(videoPlayerTVPage.getRestartBtn().isPresent(), RESTART_BTN_NOT_DISPLAYED);
+        commonPage.clickUp(3);
+        commonPage.clickLeft();
+        commonPage.clickRight();
+        videoPlayerTVPage.getRestartBtn().click();
+        home.waitForPresenceOfAnElement(videoPlayerTVPage.getTitleVideoLabel());
+        home.waitForElementToDisappear(videoPlayerTVPage.getTitleVideoLabel(), DisneyAbstractPage.SIXTY_SEC_TIMEOUT);
+        commonPage.clickPlay();
+        commonPage.clickDown(1);
+        int timeAfterRestart = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        LOGGER.info("timeAfterRestart {}, totalDuration {}", timeAfterRestart, totalDurationTime);
+        int duration = totalDurationTime - timeAfterRestart;
+        ValueRange range = ValueRange.of(0, uiLatencyInSeconds);
+        Assert.assertTrue(range.isValidIntValue(duration),"Video did not restart");
+
+        // Actions to validate forward and rewind
+        commonPage.clickPlay();
+        commonPage.clickRight(6, 1, 1);
+        commonPage.clickDown(1);
+        int remainingTimeBeforeRewind = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        commonPage.clickLeft(3, 1, 1);
+        commonPage.clickDown(1);
+        int remainingTimeAfterRewind = videoPlayerTVPage.getRemainingTimeThreeIntegers();
+        ValueRange acceptableDeltaRange =
+                ValueRange.of(expectedSkippedSeconds - uiLatencyInSeconds, expectedSkippedSeconds);
+        Assert.assertTrue(acceptableDeltaRange.isValidIntValue(remainingTimeAfterRewind - remainingTimeBeforeRewind),
+                "Rewind did not work as expected");
     }
 }

@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
+import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -14,6 +16,7 @@ import java.util.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
+@Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusArielLoginTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72231"})
@@ -104,10 +107,9 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
 
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         Assert.assertTrue(passwordPage.isPasswordPagePresent(), "Password page did not open");
-        Date startTime = getEmailApi().getStartTime();
         passwordPage.clickHavingTroubleLoggingButton();
 
-        String otp = getOTPFromApi(startTime, getUnifiedAccount());
+        String otp = getOTPFromApi(getUnifiedAccount());
         oneTimePasscodePage.enterOtp(otp);
         oneTimePasscodePage.clickPrimaryButton();
         handleGenericPopup(5,1);
