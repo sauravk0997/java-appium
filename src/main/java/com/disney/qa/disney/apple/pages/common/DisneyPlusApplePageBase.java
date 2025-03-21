@@ -519,6 +519,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return secondaryButton;
     }
 
+    public ExtendedWebElement getForgotPasswordButton() {
+        return forgotPasswordBtn;
+    }
+
     public String getErrorMessageString() {
         return labelError.getText();
     }
