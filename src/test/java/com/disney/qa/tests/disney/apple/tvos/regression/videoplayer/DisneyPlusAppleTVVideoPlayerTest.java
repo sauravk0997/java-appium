@@ -163,7 +163,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         // Navigate to a Replay and validate playback
         navigateToShelf(espnPage.getReplayLabel());
-        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.REPLAYS_COLLECTION).get(0).getText();
+        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException("No replay events found");
         }
