@@ -24,7 +24,7 @@
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
     <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value=""/>
-    <parameter name="jenkinsBuild" value="4.2.0.77099"/>
+    <parameter name="jenkinsBuild" value="4.2.5.77106"/>
 
     <test verbose="1" name="DisneyPlus iOS Tablet APAC Ratings" parallel="methods">
         <classes>
