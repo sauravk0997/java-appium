@@ -17,6 +17,7 @@ import org.testng.asserts.SoftAssert;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
@@ -254,5 +255,65 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         changePasswordPage.clickSave();
 
         Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68211"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyAddNewProfileFromWhoIsWatchingPage() {
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(PROFILE_NAME_SECONDARY)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
+        logInWithoutHomeCheck(getUnifiedAccount());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.clickAddProfile();
+
+        //Go through Choose Avatar screen
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        chooseAvatarPage.moveUp(1, 1);
+        chooseAvatarPage.clickSelect();
+
+        //Go through profile name input
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
+                "Enter Profile Name title is not present");
+        addProfilePage.clickSelect();
+        addProfilePage.enterProfileName(SECONDARY_PROFILE);
+        addProfilePage.moveDownUntilElementIsFocused(addProfilePage.getKeyboardDoneButton(), 6);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+
+        //Go through birthdate input
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isElementPresent(),
+                "Enter Your Birthdate title is not present");
+        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+
+        //Go through Add Profile page
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfilePage.moveDown(3, 1);
+        addProfilePage.clickSelect();
+        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isElementPresent(),
+                "Select Gender title is not present");
+        addProfilePage.clickSelect();
+        addProfilePage.clickSaveProfileButton();
+        Assert.assertTrue(addProfilePage.getSecondaryButton().isElementPresent(),
+                "'Want to add a Profile PIN?' screen is not visible");
+        addProfilePage.getSecondaryButton().click();
+
+        //Validate profile was created
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(SECONDARY_PROFILE),
+                "Profile icon cell wasn't displayed for secondary profile");
     }
 }
