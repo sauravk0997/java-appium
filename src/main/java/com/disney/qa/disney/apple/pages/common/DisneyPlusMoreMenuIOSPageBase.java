@@ -233,7 +233,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 
 	public boolean isHelpWebviewOpen() {
 		ExtendedWebElement addressBar = getAddressBar();
-		return fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Help Webview is not open")
+		return fluentWait(getDriver(), THREE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Help Webview is not open")
 				.until(it -> addressBar.getText().contains("help.disneyplus.com"));
 	}
 
