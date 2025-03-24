@@ -1342,14 +1342,4 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
         return exploreAPIMetadata;
     }
-
-    private Map<String, Object> getContentAdvisoryFromAPI(Visuals visualsResponse) {
-        Map<String, Object> exploreAPIMetadata = new HashMap<>();
-
-        if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
-            exploreAPIMetadata.put(RELEASE_YEAR_DETAILS,
-                    visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
-        }
-        return exploreAPIMetadata;
-    }
 }
