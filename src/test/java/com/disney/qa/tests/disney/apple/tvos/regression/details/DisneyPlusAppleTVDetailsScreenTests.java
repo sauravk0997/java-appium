@@ -7,6 +7,7 @@ import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -35,6 +36,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ON
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
+import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.UPCOMING;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTest {
@@ -175,6 +177,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void verifyLiveEventAppearance() {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -184,15 +188,18 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         // Navigate to a live event
         Set espnLiveEvent =
-               getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 50);
+               getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
 
-        if (espnLiveEvent == null) {
+        LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
+        navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
+        homePage.moveDown(1, 1);
+        String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
+        LOGGER.info("Airing badge: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
+        if (espnLiveEvent == null || airingBadge.equals(UPCOMING)) {
             throw new SkipException("Skipping test, no live events are available");
         }
 
-        LOGGER.info("items title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
-        navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
-        homePage.moveDown(1, 1);
         detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()).click();
         detailsPage.getDetailsButton().click();
         // Validate logo and play button
