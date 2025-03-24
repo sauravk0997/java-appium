@@ -188,6 +188,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 50);
 
         LOGGER.info("items size {}", espnUpcomingSet.getItems().size());
+        LOGGER.info("items title {}", espnUpcomingSet.getItems().get(0).getVisuals().getTitle());
         detailsPage.moveDown(1, 1);
 
     }
