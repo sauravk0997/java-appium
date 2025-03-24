@@ -168,6 +168,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
         String sports = "Sports";
         String basketball = "Basketball";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
@@ -180,7 +181,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 ESPN_PAGE_DID_NOT_OPEN);
 
         // Navigate to Sports and basketball sport
-        detailsPage.navigateToShelf(brandPage.getBrandShelf(sports));
+        homePage.navigateToShelf(brandPage.getBrandShelf(sports));
         detailsPage.moveDown(1, 1);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
@@ -188,7 +189,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Sport page did not open");
 
         // Navigate to a Replay and validate the page
-        detailsPage.navigateToShelf(espnPage.getReplayLabel());
+        homePage.navigateToShelf(espnPage.getReplayLabel());
         String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException("No replay events found");
@@ -198,12 +199,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Validate logo and play button
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         // Validate other UI elements
-        Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata text is not present");
-        Assert.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
-        Assert.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
-        Assert.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
-        Assert.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
-        Assert.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
+        sa.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata text is not present");
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
+        sa.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
+        sa.assertAll();
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {
