@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -21,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
@@ -96,7 +98,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount());
+//        setAppToHomeScreen(getUnifiedAccount());
+
+        String entityID = R.TESTDATA.get("disney_prod_timon_and_pumbaa");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        System.out.println(visualsResponse);
 
         //series
         home.clickSearchIcon();

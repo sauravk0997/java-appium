@@ -102,12 +102,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = AppCenterManager.getInstance()
-                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                            .orElseThrow(
-                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
-                    .getVersion();
-            LOGGER.info("version:{}", version);
+            String version = "4.2.0";
+//            String version = AppCenterManager.getInstance()
+//                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
+//                            .orElseThrow(
+//                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
+//                    .getVersion();
+//            LOGGER.info("version:{}", version);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), version);
             } else {
@@ -262,10 +263,10 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         });
     }
 
-    @BeforeSuite(alwaysRun = true)
-    public final void cleanAppInstall() {
-        R.CONFIG.put("capabilities.fullReset", "true");
-    }
+//    @BeforeSuite(alwaysRun = true)
+//    public final void cleanAppInstall() {
+//        R.CONFIG.put("capabilities.fullReset", "true");
+//    }
 
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
@@ -565,13 +566,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .contains("Disney_iOS_AdHoc") || sessionBundles.get(APP).contains("Disney-IAP-Prod-AdHoc-for-Automation")) {
             buildType = BuildType.IAP;
             sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getIapBundle());
-            removeEnterpriseApps();
-            removeAdHocApps();
+//            removeEnterpriseApps();
+//            removeAdHocApps();
         } else {
             buildType = BuildType.AD_HOC;
             sessionBundles.put(JarvisAppleBase.JARVIS, JarvisAppleParameters.getAdhocBundle());
-            removeEnterpriseApps();
-            removePurchaseApps();
+//            removeEnterpriseApps();
+//            removePurchaseApps();
         }
         sessionBundles.put(DISNEY, buildType.getDisneyBundle());
     }
