@@ -189,15 +189,17 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Navigate to a live event
         Set espnLiveEvent =
                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
-
+        if (espnLiveEvent == null) {
+            throw new SkipException("Skipping test, no events are available");
+        }
         LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
         navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
         homePage.moveDown(1, 1);
         String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
         LOGGER.info("Airing badge: {}", airingBadge);
-        if (espnLiveEvent == null || airingBadge.equals(UPCOMING)) {
-            throw new SkipException("Skipping test, no live events are available");
+        if (airingBadge.equals(UPCOMING)) {
+            throw new SkipException("Skipping test, no live events were found at this moment");
         }
 
         detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()).click();
