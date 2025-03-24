@@ -173,7 +173,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102798"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER,  US})
     public void verifyLiveEventAppearance() {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
