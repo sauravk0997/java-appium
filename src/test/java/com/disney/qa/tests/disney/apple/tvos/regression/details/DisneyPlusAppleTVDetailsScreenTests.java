@@ -28,6 +28,7 @@ import java.util.stream.*;
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
@@ -184,24 +185,19 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
-        homePage.moveDownFromHeroTileToBrandTile();
 
-        // Navigate to a live event
+        // Navigate to the first event from Live and Upcoming shelf
         Set espnLiveEvent =
-                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
-
-        LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
-        navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
-        homePage.moveDown(1, 1);
-      //  String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
-        //        .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
-      //  LOGGER.info("Airing badge: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
         if (espnLiveEvent == null) {
             throw new SkipException("Skipping test, no upcoming events are available");
         }
+        LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
+        navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
+        homePage.moveDown(1, 1);
 
-        detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()).click();
-        detailsPage.getDetailsButton().click();
+        moveRightForUpcomingEvent(espnLiveEvent);
+
         // Validate logo and play button
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         // Validate other UI elements
@@ -211,6 +207,27 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
         sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
         sa.assertAll();
+    }
+
+    public void moveRightForUpcomingEvent(Set event) {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        int limit = 10;
+        int count = 0;
+        String startedEvent = "Started";
+        while(limit > 0){
+            if(detailsPage.getTypeCellLabelContains(
+                    event.getItems().get(count).getVisuals().getTitle()).isPresent(THREE_SEC_TIMEOUT)
+                    && !event.getItems().get(count).getVisuals().getPrompt().contains(startedEvent)) {
+                limit = 0;
+                detailsPage.getTypeCellLabelContains(
+                        event.getItems().get(count).getVisuals().getTitle()).click();
+            } else {
+                homePage.moveRightUntilElementIsFocused(
+                        detailsPage.getTypeCellLabelContains(event.getItems().get(count).getVisuals().getTitle()), 10);
+                limit--; count++;
+            }
+        }
     }
 
     public void navigateToShelf(ExtendedWebElement element) {
