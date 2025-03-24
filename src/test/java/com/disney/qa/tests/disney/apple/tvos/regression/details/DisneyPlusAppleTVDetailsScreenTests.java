@@ -4,30 +4,43 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.api.explore.response.Set;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 import java.util.*;
 import java.util.stream.*;
 
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
+import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
+import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.UPCOMING;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTest {
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String HOME_PAGE_ERROR_MESSAGE = "Home page did not open";
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
@@ -157,6 +170,60 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         launchApp(sessionBundles.get(DISNEY));
         verifyServiceAttribution(PREY, sa);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102799"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, US})
+    public void verifyUpcomingEventAppearance() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+
+        // Navigate to a live event
+        Set espnLiveEvent =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
+
+        LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
+        navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
+        homePage.moveDown(1, 1);
+      //  String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
+        //        .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
+      //  LOGGER.info("Airing badge: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
+        if (espnLiveEvent == null) {
+            throw new SkipException("Skipping test, no upcoming events are available");
+        }
+
+        detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()).click();
+        detailsPage.getDetailsButton().click();
+        // Validate logo and play button
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        // Validate other UI elements
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
+        sa.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
+        sa.assertAll();
+    }
+
+    public void navigateToShelf(ExtendedWebElement element) {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        int count = 10;
+        while (count > 0) {
+            detailsPage.moveDown(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT)) {
+                count = 0;
+            } else {
+                count--;
+            }
+        }
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {

@@ -34,6 +34,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"backgroundGradient\"`]")
+    private ExtendedWebElement backgroundImage;
+
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
     }
@@ -198,5 +201,13 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public boolean isExtrasTabPresent() {
         return extrasTab.isPresent();
+    }
+
+    public ExtendedWebElement getBackgroundImage() {
+        return backgroundImage;
+    }
+
+    public ExtendedWebElement getDetailsButton() {
+        return detailsTab;
     }
 }
