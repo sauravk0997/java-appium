@@ -198,27 +198,29 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-                if (item.getVisuals().getMetastringParts() != null) {
-                    if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
-                        if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
-                            LOGGER.info("Title returned: " + item.getVisuals().getTitle());
-                            CONTENT_TITLE.set(item.getVisuals().getTitle());
-                            Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
-                            if (pageContainer != null) {
-                                if (!pageContainer.getType().equals(EPISODES)) {
-                                    IS_MOVIE.set(true);
-                                } else {
-                                    if (pageContainer.getSeasons().get(0) != null) {
-                                        IS_MOVIE.set(false);
-                                        List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
-                                        if (seasonItems.get(0) != null) {
-                                            EPISODIC_RATING.set(seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText());
-                                        } else {
-                                            throw new NullPointerException("Episodic rating is null");
+                if (item.getVisuals().getPromoLabel() == null) {
+                    if (item.getVisuals().getMetastringParts() != null) {
+                        if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
+                            if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
+                                LOGGER.info("Title returned: " + item.getVisuals().getTitle());
+                                CONTENT_TITLE.set(item.getVisuals().getTitle());
+                                Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
+                                if (pageContainer != null) {
+                                    if (!pageContainer.getType().equals(EPISODES)) {
+                                        IS_MOVIE.set(true);
+                                    } else {
+                                        if (pageContainer.getSeasons().get(0) != null) {
+                                            IS_MOVIE.set(false);
+                                            List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
+                                            if (seasonItems.get(0) != null) {
+                                                EPISODIC_RATING.set(seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText());
+                                            } else {
+                                                throw new NullPointerException("Episodic rating is null");
+                                            }
                                         }
                                     }
+                                    return CONTENT_TITLE.get();
                                 }
-                                return CONTENT_TITLE.get();
                             }
                         }
                     }
