@@ -138,9 +138,15 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 "Home page did not launch for single profile user after logging in");
     }
 
-    public void logIn(UnifiedAccount user) {
+    public void logIn(UnifiedAccount user, String... profileName) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage WhoIsWatchingPage =
+                new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         logInWithoutHomeCheck(user);
+        if (profileName.length > 0 && !(homePage.isOpened())) {
+            Assert.assertTrue(WhoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+            WhoIsWatchingPage.clickProfile(String.valueOf(profileName[0]), true);
+        }
         collapseGlobalNav();
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");

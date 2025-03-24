@@ -1426,6 +1426,64 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Live toggle was tappable for kids mode");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78842"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLiveAndUnratedContentJuniorMode() {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        int swipeCount = 3;
+        int duration = 500;
+        String setTitle, setContentTitle;
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        com.disney.qa.api.explore.response.Set espnUpcomingSet =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.LIVE_AND_UPCOMING_FROM_ESPN), 50);
+
+        if (espnUpcomingSet == null) {
+            throw new SkipException("Skipping test, not able to get the 'Live and unrated' set data from the explore api");
+        }
+
+        try {
+            setTitle = espnUpcomingSet.getVisuals().getName();
+            setContentTitle = espnUpcomingSet.getItems().get(0).getVisuals().getTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, not able to get the 'Live and unrated' content from the explore " +
+                    "api " + e);
+        }
+
+        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
+
+        // Verify that live and unrated content is not shown
+        LOGGER.info("'Live and unrated' content under test -> set Name: {} and title: {}", setTitle, setContentTitle);
+        Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setTitle), Direction.UP, swipeCount, duration),
+                "'Live and unrated' collection header is found on kid's profile");
+        Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setContentTitle), Direction.DOWN, swipeCount, duration),
+                "'Live and unrated' title was found on kid's profile");
+
+        homePage.clickMoreTab();
+        moreMenu.tapExitKidsProfileButton();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+
+        //verify tooltip
+        editProfile.getProfileSettingLiveUnratedHeader().click();
+        Assert.assertTrue(editProfile.getProfileSettingLiveUnratedTooltip().isPresent(),
+                "Live and unrated toggle Tool tip for junior mode was not present");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78839"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyLiveAndUnratedToggleUI() {

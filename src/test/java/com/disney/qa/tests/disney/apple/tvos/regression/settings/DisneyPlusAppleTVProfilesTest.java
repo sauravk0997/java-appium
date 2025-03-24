@@ -1,10 +1,12 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import org.testng.Assert;
@@ -13,8 +15,10 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
@@ -152,7 +156,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         whoIsWatchingPage.clickAddProfile();
 
         //Go through Choose Avatar screen
-        Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar page was not opened");
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
         chooseAvatarPage.moveUp(1, 1);
         chooseAvatarPage.clickSelect();
 
@@ -187,5 +191,68 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(SECONDARY_PROFILE),
                 "Profile icon cell wasn't displayed for secondary profile");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67258"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.SMOKE, US})
+    public void verifyKidsProfileCuratedContent() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        setAccount(getUnifiedAccount());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        logIn(getUnifiedAccount(), KIDS_PROFILE);
+        Assert.assertTrue(homePage.isKidThemeBackgroudUIDisplayed(),
+                "UI on home page is not in kid mode theme");
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertFalse(detailsPage.isOpened(), "Adult content detail page displayed for kid profile");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-97901"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyOTPValidationForProfileCreation() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusAppleTVChangePasswordPage changePasswordPage = new DisneyPlusAppleTVChangePasswordPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccountForOTP(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM).setProfileRestricted(true)));
+        logIn(getUnifiedAccount());
+
+        //Try to add a new profile
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.clickAddProfile();
+
+        //Validate transition to Enter Your Password screen and select 'Forgot Password' CTA
+        Assert.assertTrue(passwordPage.isHeaderTextDisplayed(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
+        passwordPage.getForgotPasswordButton().click();
+
+        //Fill OTP and create new password
+        Assert.assertTrue(forgotPasswordPage.getCheckEmailTitle().isElementPresent(),
+                "Forgot Password screen wasn't visible");
+        forgotPasswordPage.enterOtpOnModal(getOTPFromApi(getUnifiedAccount()));
+        Assert.assertTrue(changePasswordPage.isOpened(),
+                "Create New Password screen wasn't opened");
+        changePasswordPage.clickPasswordField();
+        changePasswordPage.enterPassword("Abc12!");
+        changePasswordPage.moveDown(3, 1);
+        changePasswordPage.clickSelect();
+        changePasswordPage.clickSave();
+
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
     }
 }
