@@ -198,7 +198,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-                if (item.getVisuals().getPromoLabel() == null) {
+                if (item.getVisuals().getPromoLabel().getHeader().contains("Coming to Disney+")) {
                     if (item.getVisuals().getMetastringParts() != null) {
                         if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
                             if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
