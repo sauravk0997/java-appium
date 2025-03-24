@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
+import com.disney.qa.api.offer.pojos.Partner;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -254,5 +255,45 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         changePasswordPage.clickSave();
 
         Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-97845"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyEnterPasswordScreenUIForProfileCreationLockUserWhileAddProfileFlow() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        getDefaultCreateUnifiedAccountRequest()
+                .setPartner(Partner.DISNEY)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setProfileRestricted(true)
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
+        logIn(getUnifiedAccount());
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(),
+                FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.moveRight(1, 1);
+        whoIsWatchingPage.clickSelect();
+        sa.assertTrue(passwordPage.isHeaderTextDisplayed(),
+                "Enter your password header was not found.");
+        sa.assertTrue(passwordPage.getAuthEnterPasswordProfileBody().isPresent(),
+                "Add password profile description was not found");
+        sa.assertTrue(passwordPage.getPasswordFieldText().equals(passwordPage.getAuthEnterPasswordFieldHintText()),
+                "Field Ghost text 'Password' was not found");
+        sa.assertTrue(passwordPage.isShowHidePasswordEyeIconPresent(),
+                "Show hide password eye icon was not found");
+        sa.assertTrue(passwordPage.getAuthEnterPasswordForgotPassword().isPresent(),
+                "Forgot Password button text was not found");
+        sa.assertTrue(passwordPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
+        passwordPage.enterPasswordToCompleteAuth(getUnifiedAccount().getUserPass());
+        sa.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        sa.assertAll();
     }
 }
