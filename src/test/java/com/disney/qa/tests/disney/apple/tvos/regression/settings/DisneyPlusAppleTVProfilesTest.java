@@ -194,109 +194,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "Profile icon cell wasn't displayed for secondary profile");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-97845"})
-    @Test(groups = {TestGroup.PROFILES, US})
-    public void verifyEnterPasswordScreenUIForProfileCreationLockUserWhileAddProfileFlow() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-
-        getDefaultCreateUnifiedAccountRequest()
-                .setPartner(Partner.DISNEY)
-                .setCountry(getLocalizationUtils().getLocale())
-                .setAddDefaultEntitlement(true)
-                .setProfileRestricted(true)
-                .setLanguage(getLocalizationUtils().getUserLanguage());
-        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
-        logIn(getUnifiedAccount());
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
-        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(),
-                FIVE_SEC_TIMEOUT);
-        whoIsWatchingPage.moveRight(1, 1);
-        whoIsWatchingPage.clickSelect();
-        sa.assertTrue(passwordPage.isHeaderTextDisplayed(),
-                "Enter your password header was not found.");
-        sa.assertTrue(passwordPage.getAuthEnterPasswordProfileBody().isPresent(),
-                "Add password profile description was not found");
-        sa.assertTrue(passwordPage.getPasswordFieldText().equals(passwordPage.getAuthEnterPasswordFieldHintText()),
-                "Field Ghost text 'Password' was not found");
-        sa.assertTrue(passwordPage.isShowHidePasswordEyeIconPresent(),
-                "Show hide password eyc icon was not found");
-        sa.assertTrue(passwordPage.getAuthEnterPasswordForgotPassword().isPresent(),
-                "Forgot Password button text was not found");
-        sa.assertTrue(passwordPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
-        passwordPage.enterPasswordToCompleteAuth(getUnifiedAccount().getUserPass());
-        sa.assertTrue(chooseAvatarPage.isOpened(), "Choose your avatar screen not open");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-97899"})
-    @Test(groups = {TestGroup.PROFILES, US})
-    public void verifyAddProfileFlowForProfileCreationLockUser() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
-        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
-
-        getDefaultCreateUnifiedAccountRequest()
-                .setPartner(Partner.DISNEY)
-                .setCountry(getLocalizationUtils().getLocale())
-                .setAddDefaultEntitlement(true)
-                .setProfileRestricted(true)
-                .setLanguage(getLocalizationUtils().getUserLanguage());
-        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
-        logIn(getUnifiedAccount());
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
-        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), FIVE_SEC_TIMEOUT);
-        whoIsWatchingPage.moveRight(1, 1);
-        whoIsWatchingPage.clickSelect();
-        Assert.assertTrue(passwordPage.isHeaderTextDisplayed(),
-                "Enter your password header was not found.");
-        passwordPage.enterPasswordToCompleteAuth(getUnifiedAccount().getUserPass());
-        Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose your avatar screen not open");
-        chooseAvatarPage.moveUp(1, 1);
-        chooseAvatarPage.clickSelect();
-
-        //Go through profile name input
-        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isPresent(),
-                "Enter Profile Name title is not present");
-        addProfilePage.clickSelect();
-        addProfilePage.enterProfileName(SECONDARY_PROFILE);
-        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        addProfilePage.clickSelect();
-        addProfilePage.getEnterProfileNameContinueButton().click();
-
-        //Go through birthdate input
-        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
-                "Enter Your Birthdate title is not present");
-        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-        addProfilePage.getEnterDateOfBirthContinueButton().click();
-
-        //Go through Add Profile page
-        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
-        addProfilePage.moveDown(3, 1);
-        addProfilePage.clickSelect();
-        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
-                "Select Gender title is not present");
-        addProfilePage.clickSelect();
-        addProfilePage.clickSaveProfileButton();
-        Assert.assertTrue(addProfilePage.getSecondaryButton().isPresent(),
-                "'Want to add a Profile PIN?' screen is not visible");
-        addProfilePage.getSecondaryButton().click();
-
-        //Validate profile was created
-        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(SECONDARY_PROFILE),
-                "Profile icon cell wasn't displayed for secondary profile");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67258"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.SMOKE, US})
     public void verifyKidsProfileCuratedContent() {
@@ -358,5 +255,108 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         changePasswordPage.clickSave();
 
         Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-97845"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyEnterPasswordScreenUIForProfileCreationLockUserWhileAddProfileFlow() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        getDefaultCreateUnifiedAccountRequest()
+                .setPartner(Partner.DISNEY)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setProfileRestricted(true)
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
+        logIn(getUnifiedAccount());
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(),
+                FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.moveRight(1, 1);
+        whoIsWatchingPage.clickSelect();
+        sa.assertTrue(passwordPage.isHeaderTextDisplayed(),
+                "Enter your password header was not found.");
+        sa.assertTrue(passwordPage.getAuthEnterPasswordProfileBody().isPresent(),
+                "Add password profile description was not found");
+        sa.assertTrue(passwordPage.getPasswordFieldText().equals(passwordPage.getAuthEnterPasswordFieldHintText()),
+                "Field Ghost text 'Password' was not found");
+        sa.assertTrue(passwordPage.isShowHidePasswordEyeIconPresent(),
+                "Show hide password eye icon was not found");
+        sa.assertTrue(passwordPage.getAuthEnterPasswordForgotPassword().isPresent(),
+                "Forgot Password button text was not found");
+        sa.assertTrue(passwordPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
+        passwordPage.enterPasswordToCompleteAuth(getUnifiedAccount().getUserPass());
+        sa.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-97899"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyAddProfileFlowForProfileCreationLockUser() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+
+        getDefaultCreateUnifiedAccountRequest()
+                .setPartner(Partner.DISNEY)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setProfileRestricted(true)
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
+        logIn(getUnifiedAccount());
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.moveRight(1, 1);
+        whoIsWatchingPage.clickSelect();
+        Assert.assertTrue(passwordPage.isHeaderTextDisplayed(),
+                "Enter your password header was not found.");
+        passwordPage.enterPasswordToCompleteAuth(getUnifiedAccount().getUserPass());
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        chooseAvatarPage.moveUp(1, 1);
+        chooseAvatarPage.clickSelect();
+
+        //Go through profile name input
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isPresent(),
+                "Enter Profile Name title is not present");
+        addProfilePage.clickSelect();
+        addProfilePage.enterProfileName(SECONDARY_PROFILE);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+
+        //Go through birthdate input
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                "Enter Your Birthdate title is not present");
+        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+
+        //Go through Add Profile page
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfilePage.moveDown(3, 1);
+        addProfilePage.clickSelect();
+        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
+                "Select Gender title is not present");
+        addProfilePage.clickSelect();
+        addProfilePage.clickSaveProfileButton();
+        Assert.assertTrue(addProfilePage.getSecondaryButton().isPresent(),
+                "'Want to add a Profile PIN?' screen is not visible");
+        addProfilePage.getSecondaryButton().click();
+
+        //Validate profile was created
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(SECONDARY_PROFILE),
+                "Profile icon cell wasn't displayed for secondary profile");
     }
 }
