@@ -193,7 +193,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             throw new SkipException("Skipping test, no upcoming events are available");
         }
         LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
-        navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
+        homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
         homePage.moveDown(1, 1);
 
         moveRightForUpcomingEvent(espnLiveEvent);
@@ -226,19 +226,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 homePage.moveRightUntilElementIsFocused(
                         detailsPage.getTypeCellLabelContains(event.getItems().get(count).getVisuals().getTitle()), 10);
                 limit--; count++;
-            }
-        }
-    }
-
-    public void navigateToShelf(ExtendedWebElement element) {
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        int count = 10;
-        while (count > 0) {
-            detailsPage.moveDown(1, 1);
-            if (element.isPresent(ONE_SEC_TIMEOUT)) {
-                count = 0;
-            } else {
-                count--;
             }
         }
     }

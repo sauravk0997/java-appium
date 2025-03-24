@@ -360,4 +360,17 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         else { throw new SkipException(brandLabel + " brand tile was not focused"); }
 
     }
+
+    public void navigateToShelf(ExtendedWebElement element) {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        int count = 10;
+        while (count > 0) {
+            detailsPage.moveDown(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT)) {
+                count = 0;
+            } else {
+                count--;
+            }
+        }
+    }
 }
