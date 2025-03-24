@@ -288,12 +288,12 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(passwordPage.getPasswordFieldText().equals(passwordPage.getAuthEnterPasswordFieldHintText()),
                 "Field Ghost text 'Password' was not found");
         sa.assertTrue(passwordPage.isShowHidePasswordEyeIconPresent(),
-                "Show hide password eyc icon was not found");
+                "Show hide password eye icon was not found");
         sa.assertTrue(passwordPage.getAuthEnterPasswordForgotPassword().isPresent(),
                 "Forgot Password button text was not found");
         sa.assertTrue(passwordPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
         passwordPage.enterPasswordToCompleteAuth(getUnifiedAccount().getUserPass());
-        sa.assertTrue(chooseAvatarPage.isOpened(), "Choose your avatar screen not open");
+        sa.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 }
