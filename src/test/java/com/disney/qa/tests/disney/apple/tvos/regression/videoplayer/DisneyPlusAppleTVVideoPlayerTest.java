@@ -154,7 +154,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 ESPN_PAGE_DID_NOT_OPEN);
 
         // Navigate to Sports and basketball sport
-        navigateToShelf(brandPage.getBrandShelf(sports));
+        homePage.navigateToShelf(brandPage.getBrandShelf(sports));
         detailsPage.moveDown(1, 1);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
@@ -162,7 +162,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Sport page did not open");
 
         // Navigate to a Replay and validate playback
-        navigateToShelf(espnPage.getReplayLabel());
+        homePage.navigateToShelf(espnPage.getReplayLabel());
         String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException("No replay events found");
@@ -171,18 +171,5 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-    }
-
-    public void navigateToShelf(ExtendedWebElement element) {
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        int count = 10;
-        while (count > 0) {
-            detailsPage.moveDown(1, 1);
-            if (element.isPresent(ONE_SEC_TIMEOUT)) {
-                count = 0;
-            } else {
-                count--;
-            }
-        }
     }
 }
