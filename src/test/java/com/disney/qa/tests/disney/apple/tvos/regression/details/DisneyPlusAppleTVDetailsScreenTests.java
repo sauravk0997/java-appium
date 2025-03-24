@@ -191,6 +191,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         }
 
         LOGGER.info("items title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
+        navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
         detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()).click();
         detailsPage.getDetailsButton().click();
         // Validate logo and play button
