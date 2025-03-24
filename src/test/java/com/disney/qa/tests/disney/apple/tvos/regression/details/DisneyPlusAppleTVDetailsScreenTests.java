@@ -175,7 +175,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void verifyLiveEventAppearance() {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-
+        SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
@@ -198,11 +198,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Validate logo and play button
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         // Validate other UI elements
-        Assert.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
-        Assert.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
-        Assert.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
-        Assert.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
-        Assert.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
+        sa.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
+        sa.assertAll();
     }
 
 
