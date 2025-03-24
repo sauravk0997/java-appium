@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -14,6 +15,7 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -27,6 +29,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
@@ -170,27 +173,35 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102798"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, US})
     public void verifyLiveEventAppearance() {
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
-        SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
 
-        // Navigate to Sports and basketball sport
+        // Navigate to a live event
+        Set espnLiveEvent =
+               getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 50);
 
-        com.disney.qa.api.explore.response.Set espnUpcomingSet =
-                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 50);
+        if (espnLiveEvent == null) {
+            throw new SkipException("Skipping test, no live events are available");
+        }
 
-        LOGGER.info("items size {}", espnUpcomingSet.getItems().size());
-        LOGGER.info("items title {}", espnUpcomingSet.getItems().get(0).getVisuals().getTitle());
-        detailsPage.moveDown(1, 1);
-
+        LOGGER.info("items title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
+        detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()).click();
+        detailsPage.getDetailsButton().click();
+        // Validate logo and play button
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        // Validate other UI elements
+        Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata text is not present");
+        Assert.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
+        Assert.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
+        Assert.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
+        Assert.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
+        Assert.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
     }
 
 
