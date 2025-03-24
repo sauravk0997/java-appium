@@ -139,6 +139,9 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         searchPage.typeInSearchField(SERIES_LOKI);
-
+        searchPage.waitForPresenceOfAnElement(searchPage.getSearchResults(SERIES_LOKI).get(0));
+        searchPage.keyPressTimes(searchPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 1, 1);
+        Assert.assertTrue(searchPage.isFocused(searchPage.getSearchResults(SERIES_LOKI).get(0)),
+                "First Top Left of the tile is not focused");
     }
 }
