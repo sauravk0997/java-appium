@@ -38,7 +38,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
 
     public static final String SUB_VERSION = "V1";
     public static final String ENTITLEMENT_LOOKUP = "Yearly";
-    public static final String ESPN_PAGE_DID_NOT_OPEN = "ESPN page did not open";
 
     @BeforeMethod(alwaysRun = true)
     public void setUp() {
