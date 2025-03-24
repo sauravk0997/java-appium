@@ -193,7 +193,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             throw new SkipException("Skipping test, no events are available");
         }
         LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
-        navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
+        homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
         homePage.moveDown(1, 1);
         String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
@@ -213,19 +213,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
         sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
         sa.assertAll();
-    }
-
-    public void navigateToShelf(ExtendedWebElement element) {
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        int count = 10;
-        while (count > 0) {
-            detailsPage.moveDown(1, 1);
-            if (element.isPresent(ONE_SEC_TIMEOUT)) {
-                count = 0;
-            } else {
-                count--;
-            }
-        }
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {
