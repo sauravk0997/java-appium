@@ -870,7 +870,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         DisneyLocalizationUtils localizationUtils = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ?
                 getAppleTVLocalizationUtils() : getLocalizationUtils();
         dynamicBtnFindByLabel.format(localizationUtils.getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText())).click();
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText()))
+                .click();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
