@@ -35,6 +35,19 @@ public enum DictionaryKeys {
     BILLING_INFO_TITLE("billinginfo_title"),
     BRAND_LANDING_PAGE_LOAD("brandlanding_pageload"),
     BROADCAST_MENU("videoplayer_broadcasts"),
+    /**
+     BROADCASTS_NAME_EN to BROADCASTS_NAME_PT_BR are used by getExpectedBroadcastLanguageOptions()
+     despite how they appear unused.
+     */
+    BROADCASTS_NAME_EN("broadcast_name_en"),
+    BROADCASTS_NAME_EN_US("broadcast_name_en-US"),
+    BROADCASTS_NAME_EN_GB("broadcast_name_en-GB"),
+    BROADCASTS_NAME_ES("broadcast_name_es"),
+    BROADCASTS_NAME_ES_ES("broadcast_name_es-ES"),
+    BROADCASTS_NAME_ES_419("broadcast_name_es-419"),
+    BROADCASTS_NAME_PT("broadcast_name_pt"),
+    BROADCASTS_NAME_PT_PT("broadcast_name_pt-PT"),
+    BROADCASTS_NAME_PT_BR("broadcast_name_pt-BR"),
     BROWSE_CONTENT_HIDDEN_BODY("browse_content_hidden_body"),
     BROWSE_CONTENT_HIDDEN_BODY_KIDS("browse_content_hidden_body_kids"),
     BROWSE_CONTENT_HIDDEN_HEADER("browse_content_hidden_header"),
