@@ -362,4 +362,15 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         else { throw new SkipException(brandLabel + " brand tile was not focused"); }
 
     }
+
+    public void navigateToShelf(ExtendedWebElement element) {
+        int count = 10;
+        while (count > 0) {
+            moveDown(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT)) {
+                break;
+            }
+            count--;
+        }
+    }
 }
