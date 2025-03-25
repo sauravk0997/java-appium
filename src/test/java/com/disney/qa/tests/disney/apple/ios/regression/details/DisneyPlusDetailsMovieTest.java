@@ -80,7 +80,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(
                 moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
-        sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
+        sa.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
     }
@@ -368,6 +368,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
@@ -391,7 +392,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         detailsPage.clickWatchlistButton();
         detailsPage.clickMoreTab();
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(contentTitle),
+        sa.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(contentTitle),
                 "Titles were not added to the Watchlist");
         moreMenu.clickHomeIcon();
 
