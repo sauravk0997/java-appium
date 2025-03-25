@@ -13,10 +13,11 @@ public class DisneyPlusAppleTVBrandsPage extends DisneyPlusBrandIOSPageBase {
     @ExtendedFindBy(iosPredicate = "name == \"headerViewTitleLabel\" AND label == '%s'")
     protected ExtendedWebElement brandShelf;
 
-    public ExtendedWebElement getBrandShelf(String element) {
-        return brandShelf.format(element);
-    }
     public DisneyPlusAppleTVBrandsPage(WebDriver driver) {
         super(driver);
+    }
+
+    public ExtendedWebElement getBrandShelf(String element) {
+        return brandShelf.format(element);
     }
 }
