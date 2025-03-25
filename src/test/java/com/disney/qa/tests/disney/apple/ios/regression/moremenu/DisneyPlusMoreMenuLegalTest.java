@@ -334,7 +334,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         //Verify California Privacy Rights Link
         oneTrustPage.clickYourCaliforniaPrivacyRightsLink();
         sa.assertTrue(oneTrustPage.isYourCaliforniaPrivacyRightsPageOpened(15), "California Privacy Rights Link page not opened");
-//        oneTrustPage.getTypeButtonByLabel("Done").click();
         tap(oneTrustPage.getTypeButtonByLabel("Done"));
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
@@ -342,21 +341,18 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
         sellingLegalTextPage.clickOptOutFormLink();
         sa.assertTrue(sellingLegalTextPage.isOptOutFormLinkOpened(25), "Opt Out form Link page not opened");
-//        oneTrustPage.getTypeButtonByLabel("Done").click();
         tap(oneTrustPage.getTypeButtonByLabel("Done"));
         sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
 
         //Verify IAB opt out list Link
         sellingLegalTextPage.clickIABOptOutListLink();
         sa.assertTrue(sellingLegalTextPage.isIABOptOutListLinkPageOpened(), "IAB Opt Out List Link page not opened");
-//        oneTrustPage.getTypeButtonByLabel("Done").click();
         tap(oneTrustPage.getTypeButtonByLabel("Done"));
         sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
 
         //Verify Do Not Sell or Share My Personal Information" and "Targeted Advertising" Opt-Out Rights" link
         sellingLegalTextPage.clickTargetedAdvertisingOptOutRightsLink();
         sa.assertTrue(sellingLegalTextPage.isTargetedAdvertisingOptOutRightsLinkPageOpened(15), "Targeted Advertising Opt Out Rights page not opened");
-//        oneTrustPage.getTypeButtonByLabel("Done").click();
         tap(oneTrustPage.getTypeButtonByLabel("Done"));
         sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
         sa.assertAll();
