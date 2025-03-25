@@ -30,6 +30,7 @@ import java.util.stream.Stream;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RECOMMENDED_FOR_YOU;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTest {
@@ -43,7 +44,6 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     private static final String KIDS = "Kids";
     private static final String GLOBAL_NAV_NOT_COLLAPSED = "Global Nav menu is not collapsed";
     private static final String GLOBAL_NAV_IS_PRESENT = "Global nav is present";
-    private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
 
     public void initDisneyPlusAppleTVGlobalNavMenuTest() {
         DisneyPlusAppleTVHomePage appleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -219,7 +219,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XCDQA-90928" })
-    @Test(description = "Hidden state - Hero Carousel", groups = { TestGroup.HOME, US})
+    @Test(groups = { TestGroup.HOME, US})
     public void hiddenStateHeroCarousel() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -233,10 +233,13 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(homePage.isGlobalNavExpanded(), "Global Nav menu is not expanded after clicking on menu");
         sa.assertTrue(homePage.isAIDElementPresentWithScreenshot(DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()),
                 "Home is not focused by default");
+
         LOGGER.info("Collapsing Global Nav menu by moving right");
         homePage.moveRight(2, 1);
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
+
         homePage.moveDown(1, 1);
+        homePage.findCollection(RECOMMENDED_FOR_YOU, 10);
         sa.assertTrue(homePage.getStaticTextByLabel(RECOMMENDED_FOR_YOU).isPresent(),
                 "Recommended For You is not present");
 
