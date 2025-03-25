@@ -169,6 +169,9 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         detailsPage.getTypeCellLabelContains(replayTitle).click();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
+        pause(5);
+        LOGGER.info(getDriver().getPageSource());
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        pause(5);
     }
 }
