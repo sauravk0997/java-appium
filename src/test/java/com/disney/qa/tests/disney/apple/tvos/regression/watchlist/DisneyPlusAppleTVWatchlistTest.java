@@ -117,7 +117,6 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
     }
 
     private void validateAddRemoveWatchlistContent(List<DisneyEntityIds> titles) {
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -125,6 +124,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH.getText());
+        searchPage.waitForPresenceOfAnElement(searchPage.getSearchField());
         Assert.assertTrue(searchPage.isOpened(), "Search did not open");
 
         IntStream.range(0, titles.size()).forEach(i -> {
