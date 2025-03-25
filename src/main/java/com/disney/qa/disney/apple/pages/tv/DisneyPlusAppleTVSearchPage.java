@@ -74,4 +74,8 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         moveRight(2, 1);
         keyPressTimes(IRemoteControllerAppleTV::clickSelect, 1, 5);
     }
+
+    public ExtendedWebElement getSearchField() {
+        return searchField;
+    }
 }
