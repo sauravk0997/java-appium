@@ -172,6 +172,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
+                "Video title does not match with the expected");
         Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(espn), "ESPN Network watermark is not present");
     }
 }
