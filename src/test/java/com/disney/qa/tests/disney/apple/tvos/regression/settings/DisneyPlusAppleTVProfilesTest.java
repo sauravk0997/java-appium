@@ -399,16 +399,16 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         //Go through profile name input
         Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
-                "Enter Profile Name title is not present");
+                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
         addProfilePage.clickSelect();
-        addProfilePage.enterProfileName("Tertiary");
-        addProfilePage.moveDownUntilElementIsFocused(addProfilePage.getKeyboardDoneButton(), 6);
+        addProfilePage.enterProfileName(TERTIARY_PROFILE);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         addProfilePage.clickSelect();
         addProfilePage.getEnterProfileNameContinueButton().click();
 
         //Go through birthdate input
         Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isElementPresent(),
-                "Enter Your Birthdate title is not present");
+                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
         addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
         addProfilePage.getEnterDateOfBirthContinueButton().click();
 
@@ -417,16 +417,16 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.moveDown(3, 1);
         addProfilePage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isElementPresent(),
-                "Select Gender title is not present");
+                SELECT_GENDER_TITLE_NOT_DISPLAYED);
         addProfilePage.clickSelect();
         addProfilePage.clickSaveProfileButton();
         Assert.assertTrue(addProfilePage.getSecondaryButton().isElementPresent(),
-                "'Want to add a Profile PIN?' screen is not visible");
+                ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED);
         addProfilePage.getSecondaryButton().click();
 
         //Validate profile was created
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(SECONDARY_PROFILE),
-                "Profile icon cell wasn't displayed for secondary profile");
+        Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(TERTIARY_PROFILE),
+                PROFILE_ICON_CELL_NOT_DISPLAYED + TERTIARY_PROFILE);
     }
 }
