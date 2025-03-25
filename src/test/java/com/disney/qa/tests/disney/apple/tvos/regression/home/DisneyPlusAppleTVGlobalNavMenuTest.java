@@ -322,7 +322,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
             String menu = GLOBAL_NAV.get().get(i);
             homePage.navigateToOneGlobalNavMenu(menu);
             boolean focused = homePage.isFocused(homePage.getDynamicAccessibilityId(menu));
-            sa.assertTrue(focused),
+            sa.assertTrue(focused,
                     "HOME Nav bar selection is not focused/hovered");
 
             homePage.clickSelect();
