@@ -7,9 +7,6 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.Assert;
-
 import java.util.Map;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
