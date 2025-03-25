@@ -18,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
@@ -367,5 +368,65 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(SECONDARY_PROFILE),
                 PROFILE_ICON_CELL_NOT_DISPLAYED + SECONDARY_PROFILE);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68211"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyAddNewProfileFromWhoIsWatchingPage() {
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(PROFILE_NAME_SECONDARY)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
+        logInWithoutHomeCheck(getUnifiedAccount());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), FIVE_SEC_TIMEOUT);
+        whoIsWatchingPage.clickAddProfile();
+
+        //Go through Choose Avatar screen
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        chooseAvatarPage.moveUp(1, 1);
+        chooseAvatarPage.clickSelect();
+
+        //Go through profile name input
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
+                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+        addProfilePage.enterProfileName(TERTIARY_PROFILE);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+
+        //Go through birthdate input
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isElementPresent(),
+                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
+        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+
+        //Go through Add Profile page
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfilePage.moveDown(3, 1);
+        addProfilePage.clickSelect();
+        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isElementPresent(),
+                SELECT_GENDER_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+        addProfilePage.clickSaveProfileButton();
+        Assert.assertTrue(addProfilePage.getSecondaryButton().isElementPresent(),
+                ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED);
+        addProfilePage.getSecondaryButton().click();
+
+        //Validate profile was created
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(TERTIARY_PROFILE),
+                PROFILE_ICON_CELL_NOT_DISPLAYED + TERTIARY_PROFILE);
     }
 }
