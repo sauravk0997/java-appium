@@ -70,6 +70,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected static final String DEVICE = "DEVICE";
     public static final String HULU_SERVICE_ATTRIBUTION_MESSAGE = "Included with your Hulu subscription";
     public static final String VALUE = "value";
+    public static final String RECOMMENDED_FOR_YOU = "Recommended For You";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -1577,5 +1578,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getThumbnailView() {
         return thumbnailView;
+    }
+
+    public void findCollection(String collection, int countNum) {
+        int count = countNum;
+        while (!getStaticTextByLabel(collection).isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+            moveDown(1, 2);
+            count--;
+        }
     }
 }
