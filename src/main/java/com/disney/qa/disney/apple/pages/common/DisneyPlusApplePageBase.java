@@ -1252,8 +1252,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getUnavailableContentErrorPopUpMessage() {
         // This element has hardcoded the text in the app and there is not a dictionary key with the same content
-        return getStaticTextByLabelContains("**/XCUIElementTypeTextView[`label == \"Sorry, this content is " +
-                "unavailable. If the problem continues, visit our Help Center at disneyplus.com/content-unavailable.");
+        return getStaticTextByLabelContains("**/XCUIElementTypeTextView[`label == \"Sorry, content you are trying to " +
+                "access is not available currently. You will be re-directed to Disney+ Home");
     }
 
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
@@ -1496,7 +1496,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
         while (count > 0) {
             moveDown(1, 1);
-            if (firstCellFromCollection.isPresent(THREE_SEC_TIMEOUT) &&
+            if (firstCellFromCollection.isPresent(FIVE_SEC_TIMEOUT) &&
                     isFocused(firstCellFromCollection)) {
                 LOGGER.info("Reached desired collection");
                 return;
