@@ -142,6 +142,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String sports = "Sports";
         String basketball = "Basketball";
+        String espn = "ESPN+";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
@@ -169,10 +170,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         detailsPage.getTypeCellLabelContains(replayTitle).click();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
-        pause(5);
-        LOGGER.info(getDriver().getPageSource());
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        pause(10);
-        LOGGER.info(getDriver().getPageSource());
+        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(espn), "ESPN Network watermark is not present");
     }
 }
