@@ -142,10 +142,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE),
                 "Restart button is not enabled on video player");
-        int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTime();
+        int remainingTimeBeforeRestartClick = videoPlayer.getRemainingTimeThreeIntegers();
         videoPlayer.clickRestartButton();
         videoPlayer.waitForVideoToStart();
-        int remainingTimeAfterRestartClick = videoPlayer.getRemainingTime();
+        int remainingTimeAfterRestartClick = videoPlayer.getRemainingTimeThreeIntegers();
         sa.assertTrue(remainingTimeBeforeRestartClick < remainingTimeAfterRestartClick,
                 "Remaining time after restart click" + remainingTimeAfterRestartClick +
                         " is not greater than remaining time before restart click" + remainingTimeBeforeRestartClick);
@@ -310,6 +310,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.clickPauseButton();
+        videoPlayer.waitForVideoControlToDisappear();
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), "Ad remaining time was not found");
         verifyAdRemainingTimeFormat(sa);
         sa.assertAll();
