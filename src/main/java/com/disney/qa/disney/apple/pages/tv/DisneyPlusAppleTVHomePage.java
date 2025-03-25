@@ -29,6 +29,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusHomeIOSPageBase.class)
 public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    public static final String RECOMMENDED_FOR_YOU = "Recommended For You";
 
     @ExtendedFindBy(accessibilityId = "profileTab")
     private ExtendedWebElement profileBtnGlobalNav;
@@ -359,5 +360,15 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         if(expectedBrandTileIsFocused) { clickSelect(); }
         else { throw new SkipException(brandLabel + " brand tile was not focused"); }
 
+    }
+
+    public void findCollection(String collection, int countNum) {
+        int count = countNum;
+        LOGGER.info(String.format("Looking for collection: %s"), collection);
+        while (!getStaticTextByLabel(collection).isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+            LOGGER.info(String.format("Collection %s not found, navigating down page"), collection);
+            moveDown(1, 2);
+            count--;
+        }
     }
 }
