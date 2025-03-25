@@ -45,7 +45,7 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
                 AliceLabels.PIXAR_LOGO, AliceLabels.STAR_WARS_LOGO, AliceLabels.CELL_PHONE_IMAGE).collect(Collectors.toList());
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomePage.isOpened(), "Welcome screen did not launch");
+        welcomePage.waitForWelcomePageToLoad();
 
         AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
         labelList.forEach(item -> aliceAssertion.isLabelPresent(sa, item.getText()));
