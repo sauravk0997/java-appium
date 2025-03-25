@@ -95,9 +95,9 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         return isFocused;
     }
 
-    public void createNewPasswordEntry(String password) {
+    public void enterPasswordToCompleteAuth(String password) {
         clickPassword();
-        enterPasswordCreatePassword(password);
+        enterPasswordOnAuthPasswordScreen(password);
         moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
@@ -109,7 +109,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
-    public void enterPasswordCreatePassword(String password) {
+    public void enterPasswordOnAuthPasswordScreen(String password) {
         createPasswordTextField.type(password);
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
@@ -154,6 +154,10 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         return text;
     }
 
+    public boolean isShowHidePasswordEyeIconPresent() {
+        return hideShowPasswordBtn.isPresent();
+    }
+
     public void passwordEntry(String password) {
         clickPassword();
         enterPassword(password);
@@ -185,7 +189,7 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         enterPassword(password);
     }
 
-    public boolean isContinueBtnOnCreatePasswordPresent() {
+    public boolean isContinueButtonPresent() {
         boolean isPresent = primaryButton.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
@@ -280,5 +284,23 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 MY_DISNEY_ENTER_PASSWORD_BODY.getText()), Map.of("email", accountEmail, "link_1", ""));
         return getDynamicAccessibilityId(enterYourPasswordBody.trim()).isPresent();
+    }
+
+    public ExtendedWebElement getAuthEnterPasswordProfileBody() {
+        return getTextViewByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        AUTH_PASSWORD_ADD_PROFILE_BODY.getText()));
+    }
+
+    public String getAuthEnterPasswordFieldHintText() {
+        return getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        AUTH_PASSWORD_ADD_PROFILE_FIELD_HINT.getText());
+    }
+
+    public ExtendedWebElement getAuthEnterPasswordForgotPassword() {
+        return getStaticTextByLabel(getAppleTVLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        AUTH_PASSWORD_ADD_PROFILE_FORGOT_PASSWORD.getText()));
     }
 }

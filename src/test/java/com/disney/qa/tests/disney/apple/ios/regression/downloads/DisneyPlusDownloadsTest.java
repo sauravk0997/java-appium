@@ -73,12 +73,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
         String movieTitle = detailsPage.getMediaTitle();
         detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
-        videoPlayer.waitForVideoToStart();
+        pauseScrubAndPlay(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.clickBackButton();
         detailsPage.waitForBookmarkToRefresh(SCRUB_PERCENTAGE_FIFTY, latency);
         detailsPage.startDownload();
@@ -94,12 +92,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         //Series
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_DID_NOT_OPEN);
         String episodeTitle = detailsPage.getEpisodeContentTitle();
         detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
-        videoPlayer.waitForVideoToStart();
+        pauseScrubAndPlay(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.clickBackButton();
         detailsPage.waitForBookmarkToRefresh(SCRUB_PERCENTAGE_FIFTY, latency);
         swipePageTillElementPresent(detailsPage.getEpisodeToDownload(one, two), 2,
@@ -990,6 +986,15 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 ONLY_MURDERS_IN_THE_BUILDING +  " was found present on " + getUnifiedAccount().getProfiles().get(1) + " profile's Downloads screen.");
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(PREY).isElementNotPresent(SHORT_TIMEOUT),
                 PREY + " was found present on " + getUnifiedAccount().getProfiles().get(1) + " profile's Downloads screen.");
+    }
+
+    private void pauseScrubAndPlay(double scrubPercentage) {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
+        videoPlayer.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
     }
 
     @AfterMethod(alwaysRun = true)
