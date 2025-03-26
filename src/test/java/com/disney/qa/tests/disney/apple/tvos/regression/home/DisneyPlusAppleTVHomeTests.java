@@ -225,6 +225,37 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "Episodic Info label doesn't match expected format or element has more than just episodic info");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118738"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyLiveModalWithEpisodicArtworkForSeriesLiveEvent() {
+        int maxQuantityOfExpectedChannels = 10;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        String streamsCollectionName =
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
+        Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
+        homePage.moveRightUntilElementIsFocused(
+                homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                        channelItemWithEpisodicInfo.getVisuals().getTitle()),
+                maxQuantityOfExpectedChannels);
+        homePage.clickSelect();
+
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
+
+        sa.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), "Watch Live CTA is not present");
+        sa.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), "Details CTA is not present");
+        sa.assertTrue(liveEventModal.getThumbnailView().isElementPresent(), "Episodic artwork is not present");
+        sa.assertEquals(liveEventModal.getThumbnailAspectRatio(), 1.78,
+                "Thumbnail aspect ratio wasn't the standard (1.78)");
+        sa.assertAll();
+    }
+
     private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
         List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
                 getCollectionName(STREAMS_NON_STOP_PLAYLISTS), titlesLimit);
@@ -237,30 +268,5 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             }
         }
         throw new NoSuchElementException("Failed to fetch a live channel that has Episodic info");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118738"})
-    @Test(groups = {TestGroup.HOME, US})
-    public void verifyLiveModalWithEpisodicArtworkForSeriesLiveEvent() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-
-        String streamsCollectionName =
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
-
-        logIn(getUnifiedAccount());
-        homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
-        homePage.clickSelect();
-
-        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
-
-        sa.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), "Watch Live CTA is not present");
-        sa.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), "Details CTA is not present");
-        sa.assertTrue(liveEventModal.getThumbnailView().isElementPresent(), "Episodic artwork is not present");
-        sa.assertEquals(liveEventModal.getThumbnailAspectRatio(), 1.78,
-                "Thumbnail aspect ratio wasn't the standard (1.78)");
-        sa.assertAll();
     }
 }
