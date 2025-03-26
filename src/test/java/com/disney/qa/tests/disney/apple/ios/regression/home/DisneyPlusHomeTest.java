@@ -603,7 +603,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77869"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, US})
     public void verifyStandaloneUserSubBrandTile() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
@@ -720,7 +720,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74564"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluBrandTileOnHome() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -736,7 +736,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74829"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluBrandPage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -772,7 +772,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74642"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluPageContent() throws URISyntaxException, JsonProcessingException {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -802,7 +802,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78296"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, US})
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
@@ -839,8 +839,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
-    @Test(groups = {TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyHulkCollectionPagesNetworkPageUI() {
+    @Test(groups = {TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    public void verifyHuluCollectionPagesNetworkPageUI() {
         List<String> networkLogos = new ArrayList<String>(
                 Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
                         "Cartoon Network", "CBS", "Discovery", "Disney XD", "FOX", "Freeform", "FX", "FYI", "HGTV",
