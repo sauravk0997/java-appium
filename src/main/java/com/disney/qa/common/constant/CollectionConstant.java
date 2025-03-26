@@ -19,18 +19,20 @@ public class CollectionConstant {
         DOCUMENTARIES_AND_REALITY,
         ENJOY_THESE_MOVIES_FROM_HULU,
         ENJOY_THESE_SERIES_FROM_HULU,
-        ESPN_PLUS_LIVE_AND_UPCOMING,
+        ESPN_PLUS_LIVE_AND_UPCOMING,// live collection for bundle user
         ESPN_SPORTS,
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
         KIDS_MICKEY_AND_FRIENDS,
         KIDS_PRINCESSES_AND_FAIRY_TALES,
+        LIVE_AND_UPCOMING_FROM_ESPN, //live collection for D+ premium user
         NEW_TO_DISNEY,
         ORIGINALS,
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         REPLAYS_COLLECTION,
+        SPORT_REPLAYS,
         STUDIOS_AND_NETWORKS,
         TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
@@ -77,6 +79,8 @@ public class CollectionConstant {
                 return "21a6e9fa-2a5c-4f77-b1b1-ec956f3038c7";
             case ESPN_SPORTS:
                 return "4e177574-aed4-4ad5-8d01-6fc7513bd3e5";
+            case LIVE_AND_UPCOMING_FROM_ESPN:
+                return "3fd573af-c11c-4f29-a201-b543829aad21";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
@@ -90,7 +94,7 @@ public class CollectionConstant {
             case HULU_FEATURED:
                 return "a4af2864-302e-499e-adf5-88ed1735976f";
             case HULU_ORIGINALS:
-                return "bd52e84b-28f0-4c2d-a289-ccd61b92ecd4";
+                return "d0c4d6a0-3e18-43e4-9db0-9e94ce587273";
             case KIDS_CAROUSEL:
                 return "2821d7a3-1146-4ca5-8333-e2c565edf79d";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
@@ -99,6 +103,8 @@ public class CollectionConstant {
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case REPLAYS_COLLECTION:
                 return "971963b2-2bf5-4416-aa7d-41950d5760d7";
+            case SPORT_REPLAYS:
+                return "b9fac575-876d-4a06-aafc-1ab8ab7a34b5";
             case STUDIOS_AND_NETWORKS:
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
             case TREEHOUSE_OF_HORROR_I_TO_V:
@@ -126,10 +132,14 @@ public class CollectionConstant {
                 return "Unlock to Stream More Hulu";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "ESPN+ Live and Upcoming";
+            case LIVE_AND_UPCOMING_FROM_ESPN:
+                return "Live and Upcoming From ESPN+";
             case ESPN_SPORTS:
                 return "Sports";
             case REPLAYS_COLLECTION:
                 return "Replays";
+            case STUDIOS_AND_NETWORKS:
+                return "Studios and Networks";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }

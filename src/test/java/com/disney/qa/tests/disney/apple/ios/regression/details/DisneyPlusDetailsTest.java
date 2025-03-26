@@ -48,6 +48,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public static final String UPCOMING = "Upcoming";
     public static final String LIVE = "LIVE";
     private static final String ESPN_CONTENT = "NFL 2025 Winter Classic";
+    public static final String NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION = "This program is presented as originally " +
+            "created and may contain stereotypes or negative depictions.";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -106,7 +108,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
+        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
                 "Negative Stereotype Advisory text was not found on details page");
 
         //movie
@@ -118,7 +121,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
+        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
                 "Negative Stereotype Advisory text was not found on details page");
 
         sa.assertAll();
@@ -283,12 +287,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         homePage.getSearchNav().click();
         searchPage.searchForMedia(SPIDERMAN_THREE);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(SPIDERMAN_THREE).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayerPage.isOpened(), "Video player is not opened");
         videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT);
+        videoPlayerPage.clickPlayButton();
         videoPlayerPage.waitForVideoToStart();
         videoPlayerPage.clickPauseButton();
         String durationTime = videoPlayerPage.getRemainingTimeInStringWithHourAndMinutes();
@@ -305,11 +311,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Correct remaining time is not reflecting in progress bar");
 
         detailsPage.clickContinueButton();
-        sa.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
+        Assert.assertTrue(videoPlayerPage.isOpened(), "Video player Page is not opened");
         videoPlayerPage.waitForVideoToStart();
+        videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(95);
         disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
-        videoPlayerPage.clickPauseButton();
+        videoPlayerPage.clickPlayButton();
         videoPlayerPage.clickBackButton();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
         sa.assertFalse(detailsPage.getContinueButton().isPresent(FIVE_SEC_TIMEOUT),
