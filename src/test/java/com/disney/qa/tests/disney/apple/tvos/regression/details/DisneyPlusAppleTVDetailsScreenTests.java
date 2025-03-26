@@ -170,6 +170,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         verifyServiceAttribution(PREY, sa);
         sa.assertAll();
     }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102800"})
     @Test(groups = {TestGroup.DETAILS_PAGE, US})
     public void verifyVODReplayAppearance() {
