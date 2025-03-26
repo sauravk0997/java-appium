@@ -27,7 +27,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120534"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULU, US})
     public void verifyServiceAttributionOnPlayBack() {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -61,7 +61,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120546"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULU, US})
     public void verifyServiceAttributionOnPlayBackFromContinueWatching() {
         String continueWatchingCollection =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
