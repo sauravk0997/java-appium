@@ -44,6 +44,11 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String WATCHLIST_SCREEN_ERROR_MESSAGE = "Watchlist page did not open";
+    private static final String BADGE_LABEL_NOT_PRESENT = "Badge label is not present";
+    private static final String TITLE_NOT_PRESENT = "Title is not present";
+    private static final String DESCRIPTION_NOT_PRESENT = "Description is not present";
+    private static final String WATCHLIST_NOT_PRESENT = "Watchlist button is not present";
+    private static final String BACKGROUND_IMAGE_NOT_PRESENT = "Background image is not present";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66642"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
@@ -209,11 +214,11 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         // Validate other UI elements
         sa.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata text is not present");
-        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
-        sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), "Title is not present");
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
-        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
-        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
         sa.assertAll();
     }
 
@@ -252,11 +257,11 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Validate logo and play button
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         // Validate other UI elements
-        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
-        sa.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
-        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
-        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
         sa.assertAll();
     }
 
