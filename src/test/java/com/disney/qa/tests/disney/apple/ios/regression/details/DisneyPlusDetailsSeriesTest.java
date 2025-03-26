@@ -23,6 +23,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
@@ -46,6 +47,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String CONTENT_TITLE = "Content_Title";
     private static final String DISNEY_JUNIOR_ARIEL = "Disney Junior Ariel";
     private static final String PLAY = "Play";
+    private static final String DOWNLOAD_MODAL_IS_VISIBLE = "Download Modal was still visible";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
@@ -113,6 +115,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -141,7 +144,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertFalse(moreMenuPage.getTypeCellLabelContains(contentTitle).isPresent(),
                 "Series title was not removed from watchlist");
-        sa.assertTrue(moreMenuPage.isWatchlistEmptyBackgroundDisplayed(),
+        sa.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
     }
@@ -547,6 +550,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disney.com/browse/QP-3247 is ready
@@ -572,7 +576,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickWatchlistButton();
         detailsPage.clickMoreTab();
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(contentTitle),
+        sa.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(contentTitle),
                 "Titles were not added to the Watchlist");
         moreMenu.clickHomeIcon();
 
@@ -1144,8 +1148,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     public void verifyDownloadModalWhenEpisodeDownloadIsPaused() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        String firstEpisodeTitle = "Glorious Purpose";
-        String seriesDeeplink = R.TESTDATA.get("disney_prod_series_detail_loki_deeplink");
+        String firstEpisodeTitle = "Heaven’s Half Hour";
+        String seriesDeeplink = DEEPLINKURL.concat(DAREDEVIL_BORN_AGAIN.getEntityId());
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -1162,8 +1166,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(),
                 "Pause Download button was not displayed on Download modal");
         detailsPage.getPauseDownloadButton().click();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getViewAlert().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
+                DOWNLOAD_MODAL_IS_VISIBLE);
         detailsPage.getFirstEpisodeDownloadButton().click();
 
         //Validate download modal elements presence when download is paused
@@ -1179,8 +1183,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Validate Dismiss button behavior when download is paused
         detailsPage.clickAlertDismissBtn();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getViewAlert().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
+                DOWNLOAD_MODAL_IS_VISIBLE);
         Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
                 "Download is not paused. Download icon was not displayed");
         detailsPage.getFirstEpisodeDownloadButton().click();
@@ -1189,8 +1193,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Validate Resume Download button does resume the download when the download was paused
         detailsPage.getResumeDownloadButton().click();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getViewAlert().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
+                DOWNLOAD_MODAL_IS_VISIBLE);
         Assert.assertTrue(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(),
                 "Download was not resumed. Stop/Pause Download icon was not present");
         detailsPage.clickStopOrPauseDownload();
@@ -1201,9 +1205,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getPauseDownloadButton().click();
         detailsPage.getFirstEpisodeDownloadButton().click();
         detailsPage.getRemoveDownloadButton().click();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
-        Assert.assertFalse(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(THREE_SEC_TIMEOUT),
+        Assert.assertTrue(detailsPage.getViewAlert().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
+                DOWNLOAD_MODAL_IS_VISIBLE);
+        Assert.assertTrue(detailsPage.getStopOrPauseDownloadIcon().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
                 "Download was not removed. Stop/Pause Download icon was displayed");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
