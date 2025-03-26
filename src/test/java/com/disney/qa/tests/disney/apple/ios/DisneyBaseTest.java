@@ -109,6 +109,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String ADD_PROFILE_PAGE_NOT_DISPLAYED = "Add Profile Page is not displayed";
     public static final String CHOOSE_AVATAR_PAGE_NOT_DISPLAYED = "Choose Avatar Page is not displayed";
     public static final String ESPN_PAGE_DID_NOT_OPEN = "ESPN page did not open";
+    public static final String LIVE_MODAL_NOT_DISPLAYED = "Live Modal is not displayed";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
