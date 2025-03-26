@@ -1,5 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 
@@ -96,7 +97,16 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickYourCaliforniaPrivacyRightsLink(){
-        clickElementAtLocation(customHyperlinkByLabel.format(californiaPrivacyRights), 10, 75);
+//        clickElementAtLocation(customHyperlinkByLabel.format(californiaPrivacyRights), 10, 75);
+        ExtendedWebElement element = customHyperlinkByLabel.format(californiaPrivacyRights);
+        int heightValue = 60;
+        Dimension dimension = element.getSize();
+        Point location = element.getLocation();
+        if (element.getSize().getHeight() > heightValue) {
+            tap(location.getX() + 55 , location.getY() + dimension.getHeight()*2/3, 2);
+        } else {
+            element.click();
+        }
     }
 
     public boolean isYourCaliforniaPrivacyRightsPageOpened(int timeout){
