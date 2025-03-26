@@ -325,19 +325,17 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         IntStream.range(0, GLOBAL_NAV.get().size()).forEach(i -> {
             String menu = GLOBAL_NAV.get().get(i);
             homePage.navigateToOneGlobalNavMenu(menu);
-            boolean focused = homePage.isFocused(homePage.getDynamicAccessibilityId(menu));
-            sa.assertTrue(focused,
+            sa.assertTrue(homePage.isFocused(homePage.getDynamicAccessibilityId(menu)),
                     "HOME Nav bar selection is not focused/hovered");
 
             homePage.clickSelect();
             Assert.assertFalse(homePage.isGlobalNavExpanded(),
                     "Global Nav menu is not collapsed after clicking select from expanded global nav");
-            if (focused = true && menu == DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE.getText()) {
-                homePage.clickMenuTimes(2, 2);
-            } else if (focused = true && menu == DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()) {
+
+            if (menu == DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()) {
                 homePage.moveDownFromHeroTileToBrandTile();
             }
-            homePage.navigateToGlobalNav();
+            homePage.navigateToGlobalNav(menu);
         });
         sa.assertAll();
     }
