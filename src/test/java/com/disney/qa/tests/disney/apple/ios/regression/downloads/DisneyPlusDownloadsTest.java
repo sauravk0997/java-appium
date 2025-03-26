@@ -799,7 +799,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickCloseButton();
 
         // Online + next episode is NOT downloaded
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_details_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), detailsNotOpen);
         detailsPage.getEpisodeToDownload(one,one).click();
         detailsPage.waitForOneEpisodeDownloadToComplete(episodeTimeout, polling);

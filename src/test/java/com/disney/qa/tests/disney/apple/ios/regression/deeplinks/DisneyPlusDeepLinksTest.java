@@ -147,7 +147,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_details_deeplink"));
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING),
                 "Only Murders In The Building - Hulu Series Details Page did not open via deeplink.");
@@ -536,7 +536,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
-    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
+    public void verifyHuluDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
         String unentitledSeriesId = "entity-d8ea2b7d-d87d-4e5b-bfee-719a39e95129";
 
         SoftAssert sa = new SoftAssert();
