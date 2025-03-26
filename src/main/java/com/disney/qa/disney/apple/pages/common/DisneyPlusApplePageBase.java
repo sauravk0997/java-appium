@@ -355,6 +355,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement downloadsTabNotificationBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'loader'`]")
     private ExtendedWebElement loader;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"backgroundGradient\"`]")
+    private ExtendedWebElement backgroundImage;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1539,7 +1541,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             }
             count--;
         }
-        throw new NoSuchElementException("Desired element was not focused after '" + count + "' retries");
+        throw new NoSuchElementException("Desired element was not focused after given retries");
     }
 
     public void waitForLoaderToDisappear(int timeout) {
@@ -1577,5 +1579,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getThumbnailView() {
         return thumbnailView;
+    }
+
+    public ExtendedWebElement getBackgroundImage() {
+        return backgroundImage;
     }
 }

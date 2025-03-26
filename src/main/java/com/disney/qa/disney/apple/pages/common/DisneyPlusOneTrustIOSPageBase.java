@@ -96,7 +96,10 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickYourCaliforniaPrivacyRightsLink(){
-        clickElementAtLocation(customHyperlinkByLabel.format(californiaPrivacyRights), 10, 80);
+        ExtendedWebElement element = customHyperlinkByLabel.format(californiaPrivacyRights);
+        var dimension = element.getSize();
+        Point location = element.getLocation();
+        tap(location.getX() , location.getY() + dimension.getHeight());
     }
 
     public boolean isYourCaliforniaPrivacyRightsPageOpened(int timeout){
