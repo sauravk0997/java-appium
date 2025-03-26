@@ -368,6 +368,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         while (count > 0) {
             moveDown(1, 1);
             if (element.isPresent(ONE_SEC_TIMEOUT)) {
+                moveDown(1, 1);
                 break;
             }
             count--;
