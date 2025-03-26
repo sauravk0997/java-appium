@@ -69,7 +69,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
 
         String lockedHuluContentCollectionName =
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
+                getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
 
         logIn(getUnifiedAccount());
 
@@ -140,7 +140,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "Hulu background artwork was not present");
 
         brandPage.moveDownUntilCollectionContentIsFocused(
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), 10);
+                getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), 10);
         Assert.assertTrue(brandPage.getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent(),
                 "Studios and Networks collection was not present");
 
@@ -157,7 +157,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();
         List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
-                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
+                (getCollectionName(CollectionConstant.Collection.TRENDING), 30);
         if (trendingTitlesFromApi.isEmpty()) {
             throw new NoSuchElementException("Failed to get Trending collection titles from Explore API");
         }
@@ -177,7 +177,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 CollectionConstant.Collection.TRENDING, matchingTitle.get().getVisuals().getTitle());
 
         homePage.moveDownUntilCollectionContentIsFocused(
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 15);
+                getCollectionName(CollectionConstant.Collection.TRENDING), 15);
         homePage.moveRightUntilElementIsFocused(huluTitleCell, 30);
         Assert.assertTrue(huluTitleCell.isElementPresent(),
                 "Hulu title cell was not present under Trending collection UI");
