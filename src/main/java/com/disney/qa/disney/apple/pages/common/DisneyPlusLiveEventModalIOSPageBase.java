@@ -7,6 +7,9 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase {
 
@@ -46,5 +49,11 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
 
     public ExtendedWebElement getSubtitleLabel() {
         return subtitleLabel;
+    }
+
+    public double getThumbnailAspectRatio() {
+        double rawAspectRatio = Math.abs((double)
+                thumbnailView.getSize().getWidth() / thumbnailView.getSize().getHeight());
+        return BigDecimal.valueOf(rawAspectRatio).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
 }
