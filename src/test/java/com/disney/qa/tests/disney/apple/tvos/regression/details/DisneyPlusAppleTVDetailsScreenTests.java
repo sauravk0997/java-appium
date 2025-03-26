@@ -200,7 +200,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Validate other UI elements
         sa.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata text is not present");
         sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), "Badge label is not present");
-        sa.assertTrue(detailsPage.getExtrasTabTitle().isPresent(), "Title is not present");
+        sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), "Title is not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present");
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
         sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
