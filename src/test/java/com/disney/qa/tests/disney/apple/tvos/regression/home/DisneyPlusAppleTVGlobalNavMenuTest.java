@@ -240,7 +240,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
 
         homePage.moveDown(1, 1);
-        homePage.navigateToShelf(homePage.getStaticTextByLabelContains(recommendedForYou);
+        homePage.navigateToShelf(homePage.getStaticTextByLabelContains(recommendedForYou));
         sa.assertTrue(homePage.getStaticTextByLabel(recommendedForYou).isPresent(),
                 "Recommended For You is not present");
 
