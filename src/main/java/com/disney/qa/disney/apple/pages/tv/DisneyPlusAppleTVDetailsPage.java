@@ -203,10 +203,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return extrasTab.isPresent();
     }
 
-    public ExtendedWebElement getBackgroundImage() {
-        return backgroundImage;
-    }
-
     public ExtendedWebElement getDetailsTitleLabel() {
         return titleLabel;
     }
