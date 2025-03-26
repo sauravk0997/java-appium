@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
+import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -67,7 +69,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
 
         String lockedHuluContentCollectionName =
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
+                getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
 
         logIn(getUnifiedAccount());
 
@@ -138,7 +140,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "Hulu background artwork was not present");
 
         brandPage.moveDownUntilCollectionContentIsFocused(
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), 10);
+                getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), 10);
         Assert.assertTrue(brandPage.getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent(),
                 "Studios and Networks collection was not present");
 
@@ -155,7 +157,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();
         List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
-                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
+                (getCollectionName(CollectionConstant.Collection.TRENDING), 30);
         if (trendingTitlesFromApi.isEmpty()) {
             throw new NoSuchElementException("Failed to get Trending collection titles from Explore API");
         }
@@ -175,10 +177,66 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 CollectionConstant.Collection.TRENDING, matchingTitle.get().getVisuals().getTitle());
 
         homePage.moveDownUntilCollectionContentIsFocused(
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 15);
+                getCollectionName(CollectionConstant.Collection.TRENDING), 15);
         homePage.moveRightUntilElementIsFocused(huluTitleCell, 30);
         Assert.assertTrue(huluTitleCell.isElementPresent(),
                 "Hulu title cell was not present under Trending collection UI");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118739"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyLiveModalEpisodicInfo() {
+        int maxQuantityOfExpectedChannels = 10;
+        String episodicInfoLabelFormat = "Season %s Episode %s %s";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+
+        String streamsCollectionName =
+                getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
+
+        Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
+        homePage.moveRightUntilElementIsFocused(
+                homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                        channelItemWithEpisodicInfo.getVisuals().getTitle()),
+                maxQuantityOfExpectedChannels);
+        String seasonNumber = "";
+        String episodeNumber = "";
+        String episodeTitle = "";
+        try {
+            seasonNumber = channelItemWithEpisodicInfo.getVisuals().getSeasonNumber();
+            episodeNumber = channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber();
+            episodeTitle = channelItemWithEpisodicInfo.getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            Assert.fail("Exception occurred: " + e.getMessage());
+        }
+        LOGGER.info("Episodic Info from Explore API: Season number '{}', Episode number '{}', Episode title '{}'",
+                seasonNumber, episodeNumber, episodeTitle);
+        homePage.clickSelect();
+
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
+        Assert.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), "Watch Live CTA is not present");
+        Assert.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), "Details CTA is not present");
+        Assert.assertEquals(liveEventModal.getSubtitleLabel().getAttribute(LABEL),
+                String.format(episodicInfoLabelFormat, seasonNumber, episodeNumber, episodeTitle),
+                "Episodic Info label doesn't match expected format or element has more than just episodic info");
+    }
+
+    private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
+        List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
+                getCollectionName(STREAMS_NON_STOP_PLAYLISTS), titlesLimit);
+        Assert.assertNotNull(liveChannelsFromApi,
+                String.format("No items for '%s' collection were fetched from Explore API",
+                        STREAMS_NON_STOP_PLAYLISTS));
+        for (Item liveChannelFromApi : liveChannelsFromApi) {
+            if (liveChannelFromApi.getVisuals().getEpisodeNumber() != null) {
+                return liveChannelFromApi;
+            }
+        }
+        throw new NoSuchElementException("Failed to fetch a live channel that has Episodic info");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118738"})

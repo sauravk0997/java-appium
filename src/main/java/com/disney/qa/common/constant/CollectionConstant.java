@@ -32,6 +32,7 @@ public class CollectionConstant {
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         REPLAYS_COLLECTION,
+        STREAMS_NON_STOP_PLAYLISTS,
         SPORT_REPLAYS,
         STREAMS_NON_STOP_PLAYLISTS,
         STUDIOS_AND_NETWORKS,
@@ -141,6 +142,8 @@ public class CollectionConstant {
                 return "Sports";
             case REPLAYS_COLLECTION:
                 return "Replays";
+            case STREAMS_NON_STOP_PLAYLISTS:
+                return "Streams: Non-Stop Playlists";
             case STUDIOS_AND_NETWORKS:
                 return "Studios and Networks";
             default:

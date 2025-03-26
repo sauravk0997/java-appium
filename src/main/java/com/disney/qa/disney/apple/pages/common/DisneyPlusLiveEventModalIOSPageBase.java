@@ -47,6 +47,10 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
         return watchLiveButton;
     }
 
+    public ExtendedWebElement getSubtitleLabel() {
+        return subtitleLabel;
+    }
+
     public double getThumbnailAspectRatio() {
         double rawAspectRatio = Math.abs((double)
                 thumbnailView.getSize().getWidth() / thumbnailView.getSize().getHeight());
