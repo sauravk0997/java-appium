@@ -334,9 +334,10 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                     "Global Nav menu is not collapsed after clicking select from expanded global nav");
             if (focused = true && menu == DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE.getText()) {
                 homePage.clickMenuTimes(2, 2);
-            } else {
-                homePage.moveLeft(1, 2);
+            } else if (focused = true && menu == DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()) {
+                homePage.moveDownFromHeroTileToBrandTile();
             }
+            homePage.navigateToGlobalNav();
         });
         sa.assertAll();
     }
