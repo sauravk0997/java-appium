@@ -97,18 +97,6 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickYourCaliforniaPrivacyRightsLink(){
-//        clickElementAtLocation(customHyperlinkByLabel.format(californiaPrivacyRights), 10, 75);
-//        ExtendedWebElement element = customHyperlinkByLabel.format(californiaPrivacyRights);
-//        int heightValue = 60;
-//        Dimension dimension = element.getSize();
-//        Point location = element.getLocation();
-//        System.out.println(location);
-//        System.out.println(dimension);
-//        if (element.getSize().getHeight() > heightValue) {
-//            tap(location.getX() + 55 , location.getY() + dimension.getHeight()*2/3, 2);
-//        } else {
-//            element.click();
-//        }
         ExtendedWebElement element = customHyperlinkByLabel.format(californiaPrivacyRights);
         var dimension = element.getSize();
         Point location = element.getLocation();
