@@ -244,13 +244,14 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         }
         LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
         homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
+        // Verify airing badge to validate if there is a live event occurring
         String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
         LOGGER.info("Airing badge: {}", airingBadge);
         if (airingBadge.equals(UPCOMING)) {
             throw new SkipException("Skipping test, no live events were found at this moment");
         }
-
+        // Open live event
         detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()).click();
         detailsPage.getDetailsButton().click();
         // Validate logo and play button
