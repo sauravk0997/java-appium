@@ -1296,4 +1296,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getParentalControlIcon() {
         return parentalControlIcon;
     }
+
+    public ExtendedWebElement getDetailsButton() {
+        return detailsTab;
+    }
  }
