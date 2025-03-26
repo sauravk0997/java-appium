@@ -244,7 +244,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         }
         LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
         homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
-        homePage.moveDown(1, 1);
         String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
         LOGGER.info("Airing badge: {}", airingBadge);
