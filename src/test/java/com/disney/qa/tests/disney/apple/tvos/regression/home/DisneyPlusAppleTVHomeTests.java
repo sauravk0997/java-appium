@@ -213,6 +213,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         } catch (Exception e) {
             Assert.fail("Exception occurred: " + e.getMessage());
         }
+        LOGGER.info("Episodic Info from Explore API: Season number '{}', Episode number '{}', Episode title '{}'",
+                seasonNumber, episodeNumber, episodeTitle);
         homePage.clickSelect();
 
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
