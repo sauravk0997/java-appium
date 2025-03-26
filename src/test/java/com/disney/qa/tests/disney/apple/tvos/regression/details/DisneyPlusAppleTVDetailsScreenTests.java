@@ -243,22 +243,22 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         if (espnLiveEvent == null) {
             throw new SkipException(errorMessage);
         }
-        String titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
         try {
+            String titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
             LOGGER.info("Event title: {}", titleEvent);
             homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(titleEvent));
+            // Verify airing badge to validate if there is a live event occurring
+            String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
+                    .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
+            LOGGER.info("Airing badge: {}", airingBadge);
+            if (airingBadge.equals(UPCOMING)) {
+                throw new SkipException(errorMessage);
+            }
+            // Open live event
+            detailsPage.getTypeCellLabelContains(titleEvent).click();
         } catch(Exception e) {
-            throw new SkipException(errorMessage + e.getMessage());
+            Assert.fail(errorMessage + e.getMessage());
         }
-        // Verify airing badge to validate if there is a live event occurring
-        String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
-                .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
-        LOGGER.info("Airing badge: {}", airingBadge);
-        if (airingBadge.equals(UPCOMING)) {
-            throw new SkipException(errorMessage);
-        }
-        // Open live event
-        detailsPage.getTypeCellLabelContains(titleEvent).click();
         Assert.assertTrue(liveEventModal.isOpened(), "Live event modal did not open");
         liveEventModal.getDetailsButton().click();
         // Validate logo and play button
