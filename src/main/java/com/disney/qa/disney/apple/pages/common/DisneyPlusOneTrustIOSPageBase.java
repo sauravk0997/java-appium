@@ -97,7 +97,7 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickYourCaliforniaPrivacyRightsLink(){
-        clickElementAtLocation(customHyperlinkByLabel.format(californiaPrivacyRights), 10, 75);
+//        clickElementAtLocation(customHyperlinkByLabel.format(californiaPrivacyRights), 10, 75);
 //        ExtendedWebElement element = customHyperlinkByLabel.format(californiaPrivacyRights);
 //        int heightValue = 60;
 //        Dimension dimension = element.getSize();
@@ -109,6 +109,10 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
 //        } else {
 //            element.click();
 //        }
+        ExtendedWebElement element = customHyperlinkByLabel.format(californiaPrivacyRights);
+        var dimension = element.getSize();
+        Point location = element.getLocation();
+        tap(location.getX() , location.getY() + dimension.getHeight());
     }
 
     public boolean isYourCaliforniaPrivacyRightsPageOpened(int timeout){
