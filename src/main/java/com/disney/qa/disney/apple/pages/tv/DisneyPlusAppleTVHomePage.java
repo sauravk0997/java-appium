@@ -377,7 +377,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     public void navigateToGlobalNav(String menu) {
         int count = 5;
         while (!isGlobalNavExpanded()) {
-            if (menu.equalsIgnoreCase(DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE.getText())) {
+            if (count > 0 && menu.equalsIgnoreCase(DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE.getText())) {
                 clickMenuTimes(1, 2);
             } else {
                 moveLeft(1, 2);
