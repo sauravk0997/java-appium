@@ -1,9 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.alice.AliceAssertion;
-import com.disney.alice.AliceDriver;
-import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
