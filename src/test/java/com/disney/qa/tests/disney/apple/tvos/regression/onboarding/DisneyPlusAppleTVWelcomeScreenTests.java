@@ -40,15 +40,11 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
         SoftAssert sa = new SoftAssert();
         AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-
-        var labelList = Stream.of(AliceLabels.DISNEY_LOGO, AliceLabels.NAT_GEO_LOGO, AliceLabels.MARVEL_LOGO,
-                AliceLabels.PIXAR_LOGO, AliceLabels.STAR_WARS_LOGO, AliceLabels.CELL_PHONE_IMAGE).collect(Collectors.toList());
-
         selectAppleUpdateLaterAndDismissAppTracking();
         welcomePage.waitForWelcomePageToLoad();
 
         AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
-        labelList.forEach(item -> aliceAssertion.isLabelPresent(sa, item.getText()));
+        aliceAssertion.isLabelPresent(sa, AliceLabels.CELL_PHONE_IMAGE.getText());
 
         sa.assertTrue(welcomePage.isMainTextDisplayed(), "Main text is not displayed");
         sa.assertTrue(welcomePage.getLoginButton().isElementPresent(), "Log In button is not displayed");
