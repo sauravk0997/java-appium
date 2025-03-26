@@ -2,10 +2,8 @@ package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVCommonPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVVideoPlayerPage;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -132,5 +130,51 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertFalse(videoPlayer.isOpened(),"Playback initiated for the mature content");
         Assert.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
                 "Rating restriction message was not displayed");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102801"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyVODReplay() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String sports = "Sports";
+        String basketball = "Basketball";
+        String espn = "ESPN+";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
+
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                ESPN_PAGE_DID_NOT_OPEN);
+
+        // Navigate to Sports and basketball sport
+        homePage.navigateToShelf(brandPage.getBrandShelf(sports));
+        homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
+        detailsPage.getTypeCellLabelContains(basketball).click();
+        Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
+                "Sport page did not open");
+
+        // Navigate to a Replay and validate playback
+        homePage.navigateToShelf(espnPage.getReplayLabel());
+        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        if (replayTitle == null) {
+            throw new IndexOutOfBoundsException("No replay events found");
+        }
+        LOGGER.info("Replay title  {}", replayTitle);
+        detailsPage.getTypeCellLabelContains(replayTitle).click();
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
+                "Video title does not match with the expected");
+        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(espn), "ESPN Network watermark is not present");
+        sa.assertAll();
     }
 }

@@ -960,14 +960,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return formats.getText().contains(IMAX_ENHANCED);
     }
 
-    public boolean isNegativeStereotypeAdvisoryLabelPresent() {
-        String contentAdvisoryText = String.format("%s, %s ",
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_CONTENT_ADVISORY_TITLE.getText()),
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DETAILS_NEGATIVE_STEREOTYPE_ADVISORY_FULL.getText()).trim()).replaceAll("\\s+", " ");
-        swipePageTillElementPresent(contentAdvisory, 1, contentDetailsPage, Direction.UP, 900);
-        return contentAdvisoryText.contains(contentAdvisory.getText().replaceAll("\\s+", " "));
-    }
-
     public ExtendedWebElement getRatingRestrictionDetailMessage() {
         String upcomingBadge = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, RATING_RESTRICTION_DETAIL_MESSAGE.getText());
         return getStaticTextByLabel(upcomingBadge);
