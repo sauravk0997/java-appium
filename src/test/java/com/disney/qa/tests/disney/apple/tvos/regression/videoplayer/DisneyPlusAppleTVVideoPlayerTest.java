@@ -156,7 +156,6 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         // Navigate to Sports and basketball sport
         homePage.navigateToShelf(brandPage.getBrandShelf(sports));
-        detailsPage.moveDown(1, 1);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
