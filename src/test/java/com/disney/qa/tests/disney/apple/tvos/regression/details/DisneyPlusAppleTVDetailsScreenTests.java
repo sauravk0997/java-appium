@@ -215,6 +215,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), "Background image is not present");
         sa.assertAll();
     }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102798"})
     @Test(groups = {TestGroup.VIDEO_PLAYER,  US})
     public void verifyLiveEventAppearance() {
