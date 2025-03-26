@@ -735,7 +735,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         applePageBase.removeDomainIdentifier();
-        applePageBase.getClearTextBtn().click();
+        applePageBase.getClearTextBtn().clickIfPresent(FIVE_SEC_TIMEOUT);
         applePageBase.saveDomainIdentifier(newValue);
     }
 
