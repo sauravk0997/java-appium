@@ -39,4 +39,12 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.BTN_DETAILS.getText()));
     }
+
+    public ExtendedWebElement getWatchLiveButton() {
+        return watchLiveButton;
+    }
+
+    public ExtendedWebElement getSubtitleLabel() {
+        return subtitleLabel;
+    }
 }
