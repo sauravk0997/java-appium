@@ -20,7 +20,7 @@
     <parameter name="stringParam::appVersion::input app version for oneTrustConfig" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
                value=",Smoke,Anthology,Deeplinks,DetailsPage,Downloads,Home,Hulu,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
-    <parameter name="jenkinsBuild" value="4.2.5.77106"/>
+    <parameter name="jenkinsBuild" value="4.2.5.77144"/>
 
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
     <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
