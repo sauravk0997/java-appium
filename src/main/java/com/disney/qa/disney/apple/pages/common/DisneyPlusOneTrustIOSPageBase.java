@@ -102,6 +102,8 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
         int heightValue = 60;
         Dimension dimension = element.getSize();
         Point location = element.getLocation();
+        System.out.println(location);
+        System.out.println(dimension);
         if (element.getSize().getHeight() > heightValue) {
             tap(location.getX() + 55 , location.getY() + dimension.getHeight()*2/3, 2);
         } else {
