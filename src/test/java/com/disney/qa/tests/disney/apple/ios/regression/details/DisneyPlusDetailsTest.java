@@ -48,6 +48,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public static final String UPCOMING = "Upcoming";
     public static final String LIVE = "LIVE";
     private static final String ESPN_CONTENT = "NFL 2025 Winter Classic";
+    public static final String NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION = "This program is presented as originally " +
+            "created and may contain stereotypes or negative depictions.";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -106,7 +108,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
+        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
                 "Negative Stereotype Advisory text was not found on details page");
 
         //movie
@@ -118,7 +121,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
+        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
                 "Negative Stereotype Advisory text was not found on details page");
 
         sa.assertAll();
