@@ -371,4 +371,14 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
             count--;
         }
     }
+
+    public void findCollection(String collection, int countNum) {
+        int count = countNum;
+        LOGGER.info("Looking for collection: {}", collection);
+        while (!getStaticTextByLabel(collection).isPresent(THREE_SEC_TIMEOUT) && count >= 0) {
+            LOGGER.info("Collection {} not found, navigating down page", collection);
+            moveDown(1, 2);
+            count--;
+        }
+    }
 }
