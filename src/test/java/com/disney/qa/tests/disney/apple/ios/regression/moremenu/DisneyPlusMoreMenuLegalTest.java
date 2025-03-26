@@ -328,7 +328,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         //Verify US State Privacy Rights Link
         oneTrustPage.clickYourUSStatePrivacyRightsLink();
         sa.assertTrue(oneTrustPage.isYourUSStatePrivacyRightsPageOpened(15), "US State Privacy Rights Link page not opened");
-        oneTrustPage.getTypeButtonByLabel("Done").click();
+        tap(oneTrustPage.getTypeButtonByLabel("Done"));
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Verify California Privacy Rights Link
