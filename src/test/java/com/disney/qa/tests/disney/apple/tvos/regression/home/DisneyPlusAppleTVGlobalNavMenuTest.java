@@ -6,6 +6,7 @@ import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.disney.DisneyEntityIds;
 
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -30,7 +31,6 @@ import java.util.stream.Stream;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.RECOMMENDED_FOR_YOU;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTest {
@@ -221,6 +221,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90928"})
     @Test(groups = {TestGroup.HOME, US})
     public void hiddenStateHeroCarousel() {
+        String recommendedForYou = CollectionConstant.getCollectionTitle(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
@@ -239,8 +240,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
 
         homePage.moveDown(1, 1);
-        homePage.findCollection(RECOMMENDED_FOR_YOU, 10);
-        sa.assertTrue(homePage.getStaticTextByLabel(RECOMMENDED_FOR_YOU).isPresent(),
+        homePage.findCollection(recommendedForYou, 10);
+        sa.assertTrue(homePage.getStaticTextByLabel(recommendedForYou).isPresent(),
                 "Recommended For You is not present");
 
         sa.assertAll();

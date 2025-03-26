@@ -29,7 +29,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusHomeIOSPageBase.class)
 public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    public static final String RECOMMENDED_FOR_YOU = "Recommended For You";
 
     @ExtendedFindBy(accessibilityId = "profileTab")
     private ExtendedWebElement profileBtnGlobalNav;
