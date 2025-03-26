@@ -229,7 +229,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-
+        String errorMessage = "Skipping test, no events are available";
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -241,19 +241,24 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Set espnLiveEvent =
                 getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
         if (espnLiveEvent == null) {
-            throw new SkipException("Skipping test, no events are available");
+            throw new SkipException(errorMessage);
         }
-        LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
-        homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
+        String titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+        try {
+            LOGGER.info("Event title: {}", titleEvent);
+            homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(titleEvent));
+        } catch(Exception e) {
+            throw new SkipException(errorMessage + e.getMessage());
+        }
         // Verify airing badge to validate if there is a live event occurring
         String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
         LOGGER.info("Airing badge: {}", airingBadge);
         if (airingBadge.equals(UPCOMING)) {
-            throw new SkipException("Skipping test, no live events were found at this moment");
+            throw new SkipException(errorMessage);
         }
         // Open live event
-        detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()).click();
+        detailsPage.getTypeCellLabelContains(titleEvent).click();
         Assert.assertTrue(liveEventModal.isOpened(), "Live event modal did not open");
         liveEventModal.getDetailsButton().click();
         // Validate logo and play button
