@@ -199,4 +199,8 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public boolean isExtrasTabPresent() {
         return extrasTab.isPresent();
     }
+
+    public ExtendedWebElement getDetailsTitleLabel() {
+        return titleLabel;
+    }
 }
