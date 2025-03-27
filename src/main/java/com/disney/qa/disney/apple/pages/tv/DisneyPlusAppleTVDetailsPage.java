@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusDetailsIOSPageBase.class)
 public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
@@ -202,5 +205,15 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     public ExtendedWebElement getDetailsTitleLabel() {
         return titleLabel;
+    }
+
+    public ExtendedWebElement getAddToWatchlistText() {
+        return getTypeButtonContainsLabel(getAppleTVLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_WATCHLIST.getText()));
+    }
+
+    public ExtendedWebElement getRemoveFromWatchlistText() {
+        return getTypeButtonContainsLabel(getAppleTVLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_WATCHLIST_REMOVE_BTN.getText()));
     }
 }
