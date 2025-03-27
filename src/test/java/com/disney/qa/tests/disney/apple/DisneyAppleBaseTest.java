@@ -483,8 +483,28 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return unifiedOfferRequest;
     }
 
+    public UnifiedOfferRequest getUnifiedOfferRequest(DisneyUnifiedOfferPlan planName,
+                                                      PurchaseFlow purchaseFlow,
+                                                      CampaignType campaignType) {
+        return UnifiedOfferRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .partner(Partner.DISNEY)
+                .searchText(planName.getValue())
+                .skuPlatform(SkuPlatform.WEB)
+                .purchaseFlow(purchaseFlow)
+                .campaignType(campaignType)
+                .build();
+    }
+
     public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName) {
         return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName.getValue()));
+    }
+
+    public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName,
+                                        PurchaseFlow purchaseFlow,
+                                        CampaignType campaignType) {
+        return getUnifiedSubscriptionApi().lookupUnifiedOffer(
+                getUnifiedOfferRequest(planName, purchaseFlow, campaignType));
     }
 
     public CreateUnifiedAccountRequest getDefaultCreateUnifiedAccountRequest() {
