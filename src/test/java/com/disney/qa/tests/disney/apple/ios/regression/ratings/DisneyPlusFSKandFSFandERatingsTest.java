@@ -49,7 +49,6 @@ public class DisneyPlusFSKandFSFandERatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_FSK, DE})
     public void verifyGermanyFSKRating18() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, EIGHTEEN.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(EIGHTEEN.getContentRating());
     }
 }
