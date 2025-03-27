@@ -313,7 +313,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         //Navigate to watchlist
         detailsPage.clickMenuTimes(1,1);
-        homePage.waitForHomePageToOpen();
+        pause(1);
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
