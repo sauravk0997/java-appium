@@ -278,7 +278,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void verifyUpcomingEventAppearance() {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
@@ -288,17 +287,17 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         // Navigate to the first event from Live and Upcoming shelf
         Set espnLiveEvent =
-                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
+               getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
         if (espnLiveEvent == null) {
             throw new SkipException("Skipping test, no upcoming events are available");
         }
         LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
         homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
-        homePage.moveDown(1, 1);
+        // Explore the espnLiveEvent Set to find an upcoming event and open it
+        String upcomingTitle = searchForUpcomingEvent(espnLiveEvent);
+        detailsPage.getTypeCellLabelContains(upcomingTitle).click();
 
-        moveRightForUpcomingEvent(espnLiveEvent);
-
-        // Validate logo and play button
+        // Validate details page, logo and play button
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         // Validate other UI elements
         sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
@@ -309,25 +308,18 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
-    public void moveRightForUpcomingEvent(Set event) {
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+    public String searchForUpcomingEvent(Set event) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        int limit = 10;
-        int count = 0;
-        String startedEvent = "Started";
-        while(limit > 0){
-            if(detailsPage.getTypeCellLabelContains(
-                    event.getItems().get(count).getVisuals().getTitle()).isPresent(THREE_SEC_TIMEOUT)
-                    && !event.getItems().get(count).getVisuals().getPrompt().contains(startedEvent)) {
-                limit = 0;
-                detailsPage.getTypeCellLabelContains(
-                        event.getItems().get(count).getVisuals().getTitle()).click();
-            } else {
-                homePage.moveRightUntilElementIsFocused(
-                        detailsPage.getTypeCellLabelContains(event.getItems().get(count).getVisuals().getTitle()), 10);
-                limit--; count++;
+        String upcomingEvent = "";
+        for(int i = 0; i< event.getItems().size(); i++) {
+            if(!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
+                upcomingEvent = event.getItems().get(i).getVisuals().getTitle();
+                break;
             }
         }
+        LOGGER.info("Upcoming event {}", upcomingEvent);
+        homePage.moveRightUntilElementIsFocused(homePage.getTypeCellLabelContains(upcomingEvent), 15);
+        return upcomingEvent;
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {
