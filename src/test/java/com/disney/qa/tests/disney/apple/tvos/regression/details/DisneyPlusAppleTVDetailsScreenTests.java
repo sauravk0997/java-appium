@@ -293,7 +293,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         try {
             String firstEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
             LOGGER.info("Event title: {}", firstEvent);
-            homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(firstEvent));
+            homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(firstEvent), 10);
             // Explore the espnLiveEvent Set to find an upcoming event and open it
             String upcomingTitle = navigateToUpcomingEvent(espnLiveEvent);
             detailsPage.getTypeCellLabelContains(upcomingTitle).click();
