@@ -296,7 +296,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             LOGGER.info("Event title: {}", firstEvent);
             homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(firstEvent),10);
             // Explore the espnLiveEvent Set to find an upcoming event and open it
-            upcomingTitle = searchForUpcomingEvent(espnLiveEvent);
+            upcomingTitle = navigateToUpcomingEvent(espnLiveEvent);
             detailsPage.getTypeCellLabelContains(upcomingTitle).click();
         } catch(Exception e) {
             Assert.fail("No events are available" + e.getMessage());
@@ -322,7 +322,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
-    public String searchForUpcomingEvent(Set event) {
+    public String navigateToUpcomingEvent(Set event) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String upcomingEvent = "";
         for(int i = 0; i< event.getItems().size(); i++) {
