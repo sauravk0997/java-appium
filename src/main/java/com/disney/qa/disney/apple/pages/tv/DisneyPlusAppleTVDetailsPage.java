@@ -211,9 +211,4 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return getTypeButtonContainsLabel(getAppleTVLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_WATCHLIST.getText()));
     }
-
-    public ExtendedWebElement getRemoveFromWatchlistText() {
-        return getTypeButtonContainsLabel(getAppleTVLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_WATCHLIST_REMOVE_BTN.getText()));
-    }
 }
