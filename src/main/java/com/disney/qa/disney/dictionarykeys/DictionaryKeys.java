@@ -152,6 +152,7 @@ public enum DictionaryKeys {
     DETAILS_TOTAL_SEASONS("detail_total_seasons"),
     DETAILS_VERSIONS_IMAX_ENHANCED_DESCRIPTION("details_versions_description_imax_enhanced"),
     DETAILS_VERSIONS_IMAX_ENHANCED_TITLE("details_versions_title_imax_enhanced"),
+    DETAILS_WATCHLIST("details_watchlist"),
     DETAILS_WATCHLIST_REMOVE_BTN("details_watchlist_remove"),
     DEVICE_MANAGEMENT_BUTTON_LABEL("device_management_button_label"),
     DEVICE_STORAGE("app_settings_storagelocation_label"),
