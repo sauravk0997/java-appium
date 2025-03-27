@@ -141,13 +141,13 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74858"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluSeriesDetailDeepLink() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulk_series_details_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_details_deeplink"));
         detailsPage.isOpened();
         Assert.assertTrue(detailsPage.getMediaTitle().contains(ONLY_MURDERS_IN_THE_BUILDING),
                 "Only Murders In The Building - Hulu Series Details Page did not open via deeplink.");
@@ -182,7 +182,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkNewURLStructureHuluNetworkPage() {
         String abcNetwork = "ABC";
         String abcNetworkDeepLink = R.TESTDATA.get("disney_prod_hulu_abc_network_language_deeplink");
@@ -275,7 +275,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75302"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluSeriesVideoPlayerDeepLink() {
         int seasonNumber = 0;
         int episodeNumber = 0;
@@ -341,7 +341,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72028"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMissingVideoDeepLink() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -356,7 +356,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74587"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkNewURLStructureHuluVideoPlayback() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -426,7 +426,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74589"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkNewURLStructureHuluBrandLanding() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -452,7 +452,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75028"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkNewURLStructureHuluJuniorMode() {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -536,7 +536,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
-    public void verifyHulkDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
+    public void verifyHuluDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
         String unentitledSeriesId = "entity-d8ea2b7d-d87d-4e5b-bfee-719a39e95129";
 
         SoftAssert sa = new SoftAssert();

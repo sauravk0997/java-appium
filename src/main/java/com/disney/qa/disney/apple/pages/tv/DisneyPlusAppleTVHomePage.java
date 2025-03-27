@@ -146,6 +146,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     public String whichGlobalNavMenuIsFocused() {
         for (globalNavigationMenu menu : globalNavigationMenu.values()) {
             String currentMenu = menu.getText();
+            waitForPresenceOfAnElement(getDynamicAccessibilityId(menu.getText()));
             if (isFocused(getDynamicAccessibilityId(menu.getText()))) {
                 LOGGER.info(String.format("%s is focused on global nav", currentMenu));
                 return currentMenu;
@@ -366,9 +367,22 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         while (count > 0) {
             moveDown(1, 1);
             if (element.isPresent(ONE_SEC_TIMEOUT)) {
+                moveDown(1, 1);
                 break;
             }
             count--;
+        }
+    }
+
+    public void navigateToGlobalNav(String menu) {
+        int count = 5;
+        while (!isGlobalNavExpanded()) {
+            if (count > 0 && menu.equalsIgnoreCase(DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE.getText())) {
+                clickMenuTimes(1, 2);
+            } else {
+                moveLeft(1, 2);
+            }
+            count --;
         }
     }
 }
