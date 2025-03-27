@@ -291,8 +291,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             throw new SkipException("Skipping test, no upcoming events are available");
         }
         try {
-            LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
-            homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
+            String firstEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+            LOGGER.info("Event title: {}", firstEvent);
+            homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(firstEvent));
             // Explore the espnLiveEvent Set to find an upcoming event and open it
             String upcomingTitle = navigateToUpcomingEvent(espnLiveEvent);
             detailsPage.getTypeCellLabelContains(upcomingTitle).click();
