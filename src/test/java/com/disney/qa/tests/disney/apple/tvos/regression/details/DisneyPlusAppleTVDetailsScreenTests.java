@@ -316,7 +316,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.clickMenuTimes(1,1);
         pause(1);
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
-        sa.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
         sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isPresent(),
                 "The asset was not found in the watchlist");
