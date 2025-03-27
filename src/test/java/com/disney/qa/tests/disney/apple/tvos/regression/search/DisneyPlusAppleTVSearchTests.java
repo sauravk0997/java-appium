@@ -39,7 +39,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         searchPage.typeInSearchField(UNENTITLED_HULU_CONTENT);
-        System.out.println(searchPage.getSearchBarText());
+        System.out.println("Debug:" + searchPage.getSearchBar().getAttribute("value"));
         Assert.assertEquals(searchPage.getSearchBar().getAttribute("value").equals(UNENTITLED_HULU_CONTENT),
                 "Search text was not displayed in the search field");
     }
