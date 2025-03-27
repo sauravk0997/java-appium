@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -138,13 +139,12 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
-        searchPage.typeInSearchField(SERIES_LOKI);
-        searchPage.waitForPresenceOfAnElement(searchPage.getSearchResults(SERIES_LOKI).get(0));
-        searchPage.keyPressTimes(searchPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 1, 1);
-        Assert.assertTrue(searchPage.isFocused(searchPage.getSearchResults(SERIES_LOKI).get(0)),
+        searchPage.typeInSearchField(END_GAME.getTitle());
+        searchPage.waitForPresenceOfAnElement(searchPage.getSearchResults(END_GAME.getTitle()).get(0));
+        searchPage.keyPressTimes(searchPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        Assert.assertTrue(searchPage.isFocused(searchPage.getSearchResults(END_GAME.getTitle()).get(0)),
                 "First Top Left of the tile is not focused");
-        searchPage.moveRight(7, 1);
-        searchPage.moveUp(2, 1);
+        searchPage.navigateToKeyboardFromResult();
         LOGGER.info("Page Source:- " + getDriver().getPageSource());
         Assert.assertTrue(searchPage.isFocused(searchPage.getKeyboardByPredicate()),
                 "Keyboard not focused");
