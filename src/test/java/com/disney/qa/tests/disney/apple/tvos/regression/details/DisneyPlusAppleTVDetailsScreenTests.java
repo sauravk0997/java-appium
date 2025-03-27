@@ -351,12 +351,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.getAddToWatchlistText().isElementPresent(),
                 "Item is not available to be added to the watchlist");
         detailsPage.getWatchlistButton().click();
-        sa.assertTrue(detailsPage.getRemoveFromWatchlistText().isElementPresent(),
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isElementPresent(),
                 "Item was not added to the watchlist");
 
         //Navigate to watchlist
         detailsPage.clickMenuTimes(1,1);
-        pause(1);
+        homePage.waitForPresenceOfAnElement(homePage.getActiveHomeIcon());
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
@@ -368,7 +368,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public String navigateToUpcomingEvent(Set event) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String upcomingEvent = "";
-        for(int i = 0; i< event.getItems().size(); i++) {
+        for (int i = 0; i < event.getItems().size(); i++) {
             if(!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
                 upcomingEvent = event.getItems().get(i).getVisuals().getTitle();
                 break;
