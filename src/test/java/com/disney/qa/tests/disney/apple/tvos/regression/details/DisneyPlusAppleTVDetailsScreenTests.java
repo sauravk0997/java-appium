@@ -277,11 +277,14 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void verifyUpcomingEventWatchlist() {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         SoftAssert sa = new SoftAssert();
+        String addToWatchlist = "Add the current title to your Watchlist";
+        String removeFromWatchlist = "Remove the current title from your watchlist";
+        String upcomingTitle = "";
+
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
-
         homePage.waitForHomePageToOpen();
 
         // Navigate to the first event from Live and Upcoming shelf
@@ -294,15 +297,28 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
             homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
             // Explore the espnLiveEvent Set to find an upcoming event and open it
-            String upcomingTitle = searchForUpcomingEvent(espnLiveEvent);
+            upcomingTitle = searchForUpcomingEvent(espnLiveEvent);
             detailsPage.getTypeCellLabelContains(upcomingTitle).click();
         } catch(Exception e) {
             Assert.fail("No events are available" + e.getMessage());
         }
 
-        // Validate details page, logo and play button
+        // Validate details page and add item to the watchlist
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getTypeButtonContainsLabel(addToWatchlist).isPresent(),
+                "Item is not available to be added to the watchlist");
+        detailsPage.getWatchlistButton().click();
+        sa.assertTrue(detailsPage.getTypeButtonContainsLabel(removeFromWatchlist).isPresent(),
+           "Item was not added to the watchlist");
+        detailsPage.clickWatchlistButton();
+
+        detailsPage.clickMenuTimes(1,1);
+        pause(1); //from transition to search bar
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        sa.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isElementPresent(),
+                "The asset was not found in the watchlist");
 
         sa.assertAll();
     }
