@@ -69,6 +69,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
+    public static final String TERTIARY_PROFILE = "Tertiary";
     public static final String KIDS_DOB =
             Person.MINOR.getYear() + "-" + Person.MINOR.getMonth().getNum() + "-" + Person.MINOR.getDay(true);
     public static final String U18_DOB =
@@ -105,6 +106,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     //Common error messages
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
+    public static final String ADD_PROFILE_PAGE_NOT_DISPLAYED = "Add Profile Page is not displayed";
+    public static final String CHOOSE_AVATAR_PAGE_NOT_DISPLAYED = "Choose Avatar Page is not displayed";
+    public static final String ESPN_PAGE_DID_NOT_OPEN = "ESPN page did not open";
+    public static final String LIVE_MODAL_NOT_DISPLAYED = "Live Modal is not displayed";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -443,7 +448,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-
     public void downloadDisneyApp() {
         String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
                 .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
@@ -514,29 +518,17 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             return getExploreApi().getMovie(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
-        try {
-            return getExploreApi().getPage(getDisneyExploreSearchRequest()
-                            .setEntityId(pageID)
-                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
-                            .setProfileId(getUnifiedAccount().getProfileId()))
-                    .getData()
-                    .getPage()
-                    .getContainers();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException("Exception occurred..." + e);
-        }
-    }
-
     public ArrayList<Container> getHuluAPIPage(String pageID) throws URISyntaxException, JsonProcessingException {
         return getExploreApi().getPage(getHuluExploreSearchRequest()
                         .setEntityId(pageID)
+                        .setUnifiedAccount(getUnifiedAccount())
                         .setProfileId(getUnifiedAccount().getProfileId()))
                 .getData()
                 .getPage()
@@ -548,6 +540,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()).setLimit(30));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
@@ -555,32 +548,33 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return pageResponse.getData().getPage().getVisuals();
     }
 
+    public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
+        try {
+            return getExploreApi().getPage(getDisneyExploreSearchRequest()
+                            .setEntityId(pageID)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
+                            .setProfileId(getUnifiedAccount().getProfileId()))
+                    .getData()
+                    .getPage()
+                    .getContainers();
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred..." + e);
+        }
+    }
+
     public ArrayList<Container> getDisneyAPIPage(String pageID, String locale, String language) {
         ArrayList<Container> container;
         try {
             container = getExploreApi().getPage(getDisneyExploreSearchRequest()
-                    .setEntityId(pageID)
-                    .setProfileId(getUnifiedAccount().getProfileId())
-                    .setCountryCode(locale)
-                    .setMaturity(getMaxMaturityRating(locale))
-                    .setRoamingDas(getRoamingDas(locale))
-                    .setLanguage(language)).getData().getPage().getContainers();
-        } catch (URISyntaxException | JsonProcessingException e) {
-            throw new RuntimeException("Exception occurred..." + e);
-        }
-        return container;
-    }
-
-    public ArrayList<Container> getDisneyAPIPageUnifiedAccount(String pageID, String locale, String language) {
-        ArrayList<Container> container;
-        try {
-            container = getExploreApi().getPage(getDisneyExploreSearchRequest()
-                    .setEntityId(pageID)
-                    .setProfileId(getUnifiedAccount().getProfileId())
-                    .setCountryCode(locale)
-                    .setMaturity(getMaxMaturityRating(locale))
-                    .setRoamingDas(getRoamingDas(locale))
-                    .setLanguage(language)).getData().getPage().getContainers();
+                            .setEntityId(pageID)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setProfileId(getUnifiedAccount().getProfileId())
+                            .setCountryCode(locale)
+                            .setMaturity(getMaxMaturityRating(locale))
+                            .setRoamingDas(getRoamingDas(locale))
+                            .setLanguage(language))
+                    .getData().getPage().getContainers();
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
         }
@@ -593,6 +587,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
                     .setSetId(setID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
             firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
         } catch (IndexOutOfBoundsException | URISyntaxException e) {
@@ -641,11 +636,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public Set getExploreAPISet(String setId, int limit) {
         try {
             return getExploreApi().getSet(getDisneyExploreSearchRequest()
-                    .setSetId(setId)
-                    .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
-                    .setUnifiedAccount(getUnifiedAccount())
-                    .setProfileId(getUnifiedAccount().getProfileId())
-                    .setLimit(limit)).getData().getSet();
+                            .setSetId(setId)
+                            .setContentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                            .setUnifiedAccount(getUnifiedAccount())
+                            .setProfileId(getUnifiedAccount().getProfileId())
+                            .setLimit(limit))
+                    .getData()
+                    .getSet();
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -739,7 +736,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         applePageBase.removeDomainIdentifier();
-        applePageBase.getClearTextBtn().click();
+        applePageBase.getClearTextBtn().clickIfPresent(FIVE_SEC_TIMEOUT);
         applePageBase.saveDomainIdentifier(newValue);
     }
 

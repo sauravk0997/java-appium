@@ -34,7 +34,7 @@ import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
  */
 @SuppressWarnings("squid:S2187")
 public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     public static final String SUB_VERSION = "V1";
     public static final String ENTITLEMENT_LOOKUP = "Yearly";
@@ -138,9 +138,15 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 "Home page did not launch for single profile user after logging in");
     }
 
-    public void logIn(UnifiedAccount user) {
+    public void logIn(UnifiedAccount user, String... profileName) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage =
+                new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         logInWithoutHomeCheck(user);
+        if (profileName.length > 0 && !(homePage.isOpened())) {
+            Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+            whoIsWatchingPage.clickProfile(String.valueOf(profileName[0]), true);
+        }
         collapseGlobalNav();
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
