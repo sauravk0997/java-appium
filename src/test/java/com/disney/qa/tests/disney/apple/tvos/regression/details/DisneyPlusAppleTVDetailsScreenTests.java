@@ -311,10 +311,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.getWatchlistButton().click();
         sa.assertTrue(detailsPage.getTypeButtonContainsLabel(removeFromWatchlist).isPresent(),
            "Item was not added to the watchlist");
-        pause(3);
 
+        //Navigate to watchlist
         detailsPage.clickMenuTimes(1,1);
-        pause(1); //from transition to search bar
+        pause(1);
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         sa.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
