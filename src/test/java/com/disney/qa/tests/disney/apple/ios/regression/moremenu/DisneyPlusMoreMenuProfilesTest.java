@@ -1593,6 +1593,24 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Live content title was present after turning off the live toggle");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78050"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExtraMemberCanNotSeeOwnersProfile() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+
+        Assert.assertTrue(editProfile.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertEquals(editProfile.getQuantityOfProfileCells(), 1,
+                "Number of profile cells wasn't equal to 1");
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
