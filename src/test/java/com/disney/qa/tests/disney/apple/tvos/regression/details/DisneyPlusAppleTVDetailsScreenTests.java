@@ -272,6 +272,49 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102799"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyUpcomingEventAppearance() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String channelAttribution = "Included with your ESPN+ subscription";
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        Set espnLiveEvent =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
+        if (espnLiveEvent == null) {
+            throw new SkipException("Skipping test, no upcoming events are available");
+        }
+        try {
+            String firstEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+            LOGGER.info("Event title: {}", firstEvent);
+            homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(firstEvent), 10);
+            // Explore the espnLiveEvent Set to find an upcoming event and open it
+            String upcomingTitle = navigateToUpcomingEvent(espnLiveEvent);
+            detailsPage.getTypeCellLabelContains(upcomingTitle).click();
+        } catch (Exception e) {
+            Assert.fail("No events are available" + e.getMessage());
+        }
+
+        // Validate details page, logo and play button
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        // Validate other UI elements
+        sa.assertTrue(detailsPage.isLogoPresent(), "Logo image is not present");
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(channelAttribution).isPresent(),
+                "Channel network attribution is not present");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102803"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifyUpcomingEventWatchlist() {
