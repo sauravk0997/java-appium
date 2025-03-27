@@ -9,8 +9,11 @@ import java.util.stream.Stream;
 
 import com.disney.qa.api.account.*;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.accountsharing.AccountSharingHelper;
+import com.disney.qa.api.accountsharing.AccountSharingUnifiedAccounts;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.requests.offer.*;
+import com.disney.qa.api.client.responses.graphql.campaign.CampaignType;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
@@ -73,6 +76,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     protected static final String TRUE = "true";
     protected static final String FALSE = "false";
     public static final String APPLE = "apple";
+    public static final String WEB = "web";
     public static final String DISNEY = "disney";
     public static final String APP = "app";
     //Keeping this not to a specific plan name to support localization tests
@@ -217,6 +221,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             throw new RuntimeException("Error initializing EmailApi", e);
         }
     });
+
+    private static final LazyInitializer<AccountSharingHelper> ACCOUNT_SHARING_HELPER = new LazyInitializer<>() {
+        @Override
+        protected AccountSharingHelper initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(WEB)
+                    .partner(DisneyConfiguration.getPartner().toUpperCase())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new AccountSharingHelper(apiConfiguration);
+        }
+    };
 
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
@@ -425,6 +441,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     public static EmailApi getEmailApi() {
         return Objects.requireNonNull(EMAIL_API.get());
+    }
+
+    public static AccountSharingHelper getAccountSharingHelper() {
+        try {
+            return ACCOUNT_SHARING_HELPER.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
     }
 
     /**
