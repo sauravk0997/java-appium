@@ -297,7 +297,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             String upcomingTitle = searchForUpcomingEvent(espnLiveEvent);
             detailsPage.getTypeCellLabelContains(upcomingTitle).click();
         } catch(Exception e) {
-        Assert.fail("No events are available" + e.getMessage());
+            Assert.fail("No events are available" + e.getMessage());
         }
 
         // Validate details page, logo and play button
