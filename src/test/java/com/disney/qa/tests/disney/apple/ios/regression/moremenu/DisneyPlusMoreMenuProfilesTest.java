@@ -1597,17 +1597,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExtraMemberCanNotSeeOwnersProfile() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
         setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickMoreTab();
-        moreMenu.clickEditProfilesBtn();
+        moreMenuPage.clickEditProfilesBtn();
 
-        Assert.assertTrue(editProfile.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
-        Assert.assertEquals(editProfile.getQuantityOfProfileCells(), 1,
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertEquals(editProfilePage.getQuantityOfProfileCells(), 1,
                 "Number of profile cells wasn't equal to 1");
     }
 
