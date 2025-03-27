@@ -33,6 +33,7 @@ public class CollectionConstant {
         RECOMMENDED_FOR_YOU,
         REPLAYS_COLLECTION,
         SPORT_REPLAYS,
+        STREAMS_NON_STOP_PLAYLISTS,
         STUDIOS_AND_NETWORKS,
         TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
@@ -89,6 +90,8 @@ public class CollectionConstant {
                 return "c7e20abb-ff52-4d21-a2f6-46618c4118e8";
             case RECOMMENDED_FOR_YOU:
                 return "7894d9c6-43ab-4691-b349-cf72362095dd";
+            case STREAMS_NON_STOP_PLAYLISTS:
+                return "041c9af9-841e-428b-8e9d-0821defc90df";
             case TRENDING:
                 return "25b87551-fd19-421a-be0f-b7f2eea978b3";
             case HULU_FEATURED:
@@ -138,6 +141,8 @@ public class CollectionConstant {
                 return "Sports";
             case REPLAYS_COLLECTION:
                 return "Replays";
+            case STREAMS_NON_STOP_PLAYLISTS:
+                return "Streams: Non-Stop Playlists";
             case STUDIOS_AND_NETWORKS:
                 return "Studios and Networks";
             default:

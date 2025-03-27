@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -94,7 +93,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74451"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluVideoPlayerNetworkWatermark() {
         String network = "FX";
         String networkTitle = "Pose";
@@ -155,7 +154,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74454"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluVideoPlayerNetworkWatermarkUserInterruptedSkipFFRW() {
         String network = "FX";
         String networkTitle = "Pose";
@@ -210,7 +209,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74452"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluVideoPlayerNetworkWatermarkAutoInterrupted() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);

@@ -5,7 +5,6 @@ import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -24,9 +23,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
 
@@ -433,7 +430,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74453"})
-    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HULK, TestGroup.VIDEO_PLAYER, US})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.HULU, TestGroup.VIDEO_PLAYER, US})
     public void testNetworkWatermarkUserInterrupted() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

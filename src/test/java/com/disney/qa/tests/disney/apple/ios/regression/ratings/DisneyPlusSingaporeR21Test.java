@@ -2,8 +2,10 @@ package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PREMIUM_MONTHLY_SINGAPORE;
 import static com.disney.qa.common.constant.IConstantHelper.SG;
+import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
@@ -799,6 +801,32 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         detailsPage.waitForPresenceOfAnElement(detailsPage.getLogoImage());
         Assert.assertTrue(detailsPage.getMediaTitle().equals(OUT_TITLE),
                 "User is not navigated to the details page after pause timeout");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74837"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.R21, US})
+    public void testR21PlaybackNoPauseTimeOutWhenNotInSG() {
+        int pauseTimeoutInSeconds = 30;
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        ratingsSetupWithPINNew(DISNEY_PLUS_PREMIUM, US);
+        navigateToHomePageForPinUser();
+        setR21PauseTimeOut(pauseTimeoutInSeconds);
+        setPictureInPictureConfig(DISABLED);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.clickPlayButton();
+
+        videoPlayer.clickPauseButton();
+        pause(pauseTimeoutInSeconds);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.clickPlayButton();
+        videoPlayer.verifyVideoPlaying(sa);
+        sa.assertAll();
     }
 
     private void navigateToHomePageForPinUser() {
