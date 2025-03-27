@@ -317,9 +317,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         pause(1); //from transition to search bar
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         sa.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
-        sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isElementPresent(),
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isPresent(),
                 "The asset was not found in the watchlist");
-
         sa.assertAll();
     }
 
