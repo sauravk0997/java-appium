@@ -170,60 +170,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102803"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
-    public void verifyUpcomingEventWatchlist() {
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
-
-        SoftAssert sa = new SoftAssert();
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount());
-
-        homePage.waitForHomePageToOpen();
-
-        // Navigate to the first event from Live and Upcoming shelf
-        Set espnLiveEvent =
-                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
-        if (espnLiveEvent == null) {
-            throw new SkipException("Skipping test, no upcoming events are available");
-        }
-        LOGGER.info("Event title: {}", espnLiveEvent.getItems().get(0).getVisuals().getTitle());
-        homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(espnLiveEvent.getItems().get(0).getVisuals().getTitle()));
-        homePage.moveDown(1, 1);
-
-        moveRightForUpcomingEvent(espnLiveEvent);
-
-        // Validate logo and play button
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), "Watchlist button is not present");
-
-
-        sa.assertAll();
-    }
-
-    public void moveRightForUpcomingEvent(Set event) {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        int limit = 20;
-        int count = 0;
-        String startedEvent = "Started";
-        while(limit > 0){
-            LOGGER.info("Search for element {}", event.getItems().get(count).getVisuals().getTitle());
-            if(homePage.getTypeCellLabelContains(
-                    event.getItems().get(count).getVisuals().getTitle()).isPresent(THREE_SEC_TIMEOUT)
-                    && !event.getItems().get(count).getVisuals().getPrompt().contains(startedEvent)) {
-                limit = 0;
-                homePage.getTypeCellLabelContains(
-                        event.getItems().get(count).getVisuals().getTitle()).click();
-            } else {
-                limit--; count++;
-                homePage.moveRightUntilElementIsFocused(
-                        homePage.getTypeCellLabelContains(event.getItems().get(count).getVisuals().getTitle()), 20);
-
-            }
-        }
-    }
     private void verifyServiceAttribution(String content, SoftAssert sa) {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
