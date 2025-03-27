@@ -781,12 +781,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
     }
 
-    public void skipPromoIfPresent() {
-        getSkipPromoButton().clickIfPresent(THREE_SEC_TIMEOUT);
-    }
-
-    public void skipPromoIfPresent(int timeout) {
-        getSkipPromoButton().clickIfPresent(timeout);
+    public void skipPromoIfPresent(long... timeout) {
+        long waitTime = timeout.length > 0 ? timeout[0] : THREE_SEC_TIMEOUT;
+        getSkipPromoButton().clickIfPresent(waitTime);
     }
 
     public void waitForAdGracePeriodToEnd(int remainingTime) {
