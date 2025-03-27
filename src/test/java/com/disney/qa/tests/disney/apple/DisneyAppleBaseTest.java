@@ -575,6 +575,30 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_HULU);
     }
 
+    public AccountSharingUnifiedAccounts createAccountSharingUnifiedAccounts() {
+        //Create the test accounts
+        AccountSharingUnifiedAccounts accountSharingAccounts = getAccountSharingHelper().createSharingUnifiedAccounts(
+                CampaignType.STANDARD_CAMPAIGN,
+                getUnifiedOffer(
+                        DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM,
+                        PurchaseFlow.SIGNUP_FLOW,
+                        CampaignType.STANDARD_CAMPAIGN),
+                getUnifiedOffer(
+                        DisneyUnifiedOfferPlan.DISNEY_EXTRA_MEMBER_ADD_ON,
+                        PurchaseFlow.SWITCH_FLOW,
+                        CampaignType.UPSELL_CAMPAIGN));
+        //Create and accept the invitation
+        boolean invitationSuccess = getAccountSharingHelper().acceptExtraMemberInvite(
+                accountSharingAccounts, getAccountSharingHelper().sendExtraMemberInvite(accountSharingAccounts));
+        if (!invitationSuccess) {
+            throw new RuntimeException("Consumption of extra member slot should be successful");
+        }
+        LOGGER.info("Receiving account - Email Created: {} Password: {}",
+                accountSharingAccounts.getReceivingAccount().getEmail(),
+                accountSharingAccounts.getReceivingAccount().getUserPass());
+        return accountSharingAccounts;
+    }
+
     ////////////////////////////
     protected BuildType buildType;
     protected Map<String, String> sessionBundles = new HashMap<>();
