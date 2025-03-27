@@ -22,6 +22,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD_WITH_ADS_NON_US;
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -201,16 +202,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String toggleOff = "Off";
         SoftAssert sa = new SoftAssert();
 
-        // Disable one trust banner Jarvis config and set account
-        jarvisDisableOneTrustBanner();
-
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD, GERMANY,
+        setAccount(getUnifiedAccountApi()
+                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_NON_US, GERMANY,
                 getLocalizationUtils().getUserLanguage())));
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), GERMANY);
 
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
 
         // Add profile
         moreMenu.clickMoreTab();
@@ -219,6 +218,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.getCellsWithLabels().get(0).click();
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        String enteredDOB = addProfile.getValueFromDOB();
 
         // Validate Junior Mode toggle and toggled it ON
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOff, "Junior Mode is not toggled OFF");
@@ -228,13 +228,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         // Validate Content Rating and Birthdate are disabled
         sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), "DOB field is not present");
         addProfile.getDynamicTextEntryFieldByName(addProfile.getBirthdateTextField()).click();
-        Assert.assertFalse(editProfile.getTypeButtonByLabel("Done").isPresent(), "Date of birth is not disabled");
+        Assert.assertTrue(editProfile.getDoneButton().isElementNotPresent(THREE_SEC_TIMEOUT),
+                "Date of birth is not disabled");
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
 
         // Toggle Junior Mode OFF and validate content
         addProfile.tapJuniorModeToggle();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOff, "Junior Mode is not toggled OFF");
-        Assert.assertTrue(addProfile.getValueFromDOB().isPresent(),
+        Assert.assertNotEquals(addProfile.getValueFromDOB(), enteredDOB,
                 "Date Of Birth field did not get empty after toggle Junior Mode OFF");
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(),
                 "Choose Content Rating did not get empty after toggle Junior Mode OFF");
