@@ -568,7 +568,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             container = getExploreApi().getPage(getDisneyExploreSearchRequest()
                             .setEntityId(pageID)
-//                            .setUnifiedAccount(getUnifiedAccount())
+                            .setUnifiedAccount(getUnifiedAccount())
                             .setProfileId(getUnifiedAccount().getProfileId())
                             .setCountryCode(locale)
                             .setMaturity(getMaxMaturityRating(locale))
