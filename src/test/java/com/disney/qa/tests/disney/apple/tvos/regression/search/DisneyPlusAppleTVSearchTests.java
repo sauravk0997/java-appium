@@ -144,7 +144,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(searchPage.isFocused(searchPage.getSearchResults(SERIES_LOKI).get(0)),
                 "First Top Left of the tile is not focused");
         searchPage.moveRight(7, 1);
-        searchPage.moveUp(1, 1);
+        searchPage.moveUp(2, 1);
         LOGGER.info("Page Source:- " + getDriver().getPageSource());
         Assert.assertTrue(searchPage.isFocused(searchPage.getKeyboardByPredicate()),
                 "Keyboard not focused");
