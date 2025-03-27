@@ -80,6 +80,9 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     }
 
     public void navigateToKeyboardFromResult() {
+        if (!localizedKeyboard.isPresent())
+            moveUp(2, 1);
+
         if (localizedKeyboard.getSize().getWidth() > 1000) {
             LOGGER.info("Detected horizontal keyboard, clicking Up");
             keyPressTimes(IRemoteControllerAppleTV::clickUp, 2, 1);
