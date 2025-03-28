@@ -16,6 +16,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.time.temporal.ValueRange;
 import java.util.List;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
@@ -188,10 +189,11 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-
         SoftAssert sa = new SoftAssert();
         String basketball = "Basketball";
         String continueButton = "CONTINUE";
+        int latency = 60;
+
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
@@ -214,23 +216,29 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
         videoPlayer.waitForVideoToStart();
+        // Forward video and get remaining time
         commonPage.clickRight(6, 1, 1);
         commonPage.clickDown(1);
         int timeBeforeRestart = videoPlayer.getRemainingTimeThreeIntegers();
         LOGGER.info("timeBeforeRestart {}", timeBeforeRestart);
+        // Go back to details page and tap in Continue button
         homePage.clickMenuTimes(1, 1);
-        if(!detailsPage.isOpened()) {
-            LOGGER.info("Entering ***");
+        if (!detailsPage.isOpened()) {
             homePage.clickMenuTimes(1, 1);
         }
         sa.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
                 "Continue button is not present");
         detailsPage.getTypeButtonContainsLabel(continueButton).click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        // Get remaining time and validate if video restarted
         commonPage.clickDown(1);
         int timeAfterRestart = videoPlayer.getRemainingTimeThreeIntegers();
         LOGGER.info("timeAfterRestart {}", timeAfterRestart);
 
+        int duration = timeBeforeRestart - timeAfterRestart;
+        ValueRange range = ValueRange.of(0, latency);
+        sa.assertTrue(range.isValidIntValue(duration),
+                "Video did not restart from expected position");
         sa.assertAll();
     }
 }
