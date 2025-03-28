@@ -21,6 +21,7 @@ import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
+import com.disney.qa.api.search.UnifiedSearchApi;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.constant.*;
@@ -183,6 +184,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         @Override
         protected DisneySearchApi initialize() {
             return new DisneySearchApi(APPLE, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DisneyConfiguration.getPartner());
+        }
+    };
+
+    private static final LazyInitializer<UnifiedSearchApi> UNIFIED_SEARCH_API = new LazyInitializer<>() {
+        @Override
+        protected UnifiedSearchApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(APPLE)
+                    .partner(DisneyConfiguration.getPartner())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new UnifiedSearchApi(apiConfiguration);
         }
     };
 
@@ -538,6 +551,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static DisneySearchApi getSearchApi() {
         try {
             return SEARCH_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public static UnifiedSearchApi getUnifiedSearchApi() {
+        try {
+            return UNIFIED_SEARCH_API.get();
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
