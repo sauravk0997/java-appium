@@ -409,7 +409,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
         handleAlert();
         setAppToHomeScreen(getUnifiedAccount());
-
         handleOneTrustPopUp();
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
