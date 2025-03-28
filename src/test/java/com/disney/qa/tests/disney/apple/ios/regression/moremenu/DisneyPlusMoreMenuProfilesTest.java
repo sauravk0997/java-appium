@@ -8,6 +8,7 @@ import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -36,7 +37,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MICKEY_MOUSE;
@@ -1623,6 +1624,16 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         navElements.add(moreMenu.getDownloadNav());
         navElements.add(moreMenu.getMoreMenuTab());
         return navElements;
+    }
+
+    private List<ContentSet> getAvatarSets(UnifiedAccount account) {
+        List<ContentSet> avatarSets = getUnifiedSearchApi()
+                .getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
+        if (avatarSets.isEmpty()) {
+            throw new NoSuchElementException("No avatar sets were found");
+        } else {
+            return avatarSets;
+        }
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
