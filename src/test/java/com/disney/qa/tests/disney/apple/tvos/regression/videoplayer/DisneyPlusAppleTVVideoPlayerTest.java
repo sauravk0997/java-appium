@@ -214,6 +214,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Video title does not match with the expected");
         commonPage.clickPlay();
         commonPage.clickRight(6, 1, 1);
+        commonPage.clickPlay();
         homePage.clickMenuTimes(1, 1);
         pause(5);
         LOGGER.info(getDriver().getPageSource());
