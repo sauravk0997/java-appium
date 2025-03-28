@@ -1609,6 +1609,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         Assert.assertEquals(editProfilePage.getQuantityOfProfileCells(), 1,
                 "Number of profile cells wasn't equal to 1");
+        Assert.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Add Profile button is present");
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
