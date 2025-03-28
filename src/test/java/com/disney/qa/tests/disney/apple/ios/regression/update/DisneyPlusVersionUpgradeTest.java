@@ -48,7 +48,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         // Assert that version installed it is the previous FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
                 "App Version was not displayed");
-        Assert.assertEquals(appPreviousFCVersion, moreMenu.getAppVersion(), "Version is not the previous expected");
+        Assert.assertEquals(moreMenu.getAppVersion(), appPreviousFCVersion, "Version is not the previous expected");
 
         // Terminate app and upgrade application to current version
         terminateApp(sessionBundles.get(DISNEY));
