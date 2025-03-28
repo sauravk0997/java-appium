@@ -187,6 +187,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+
         SoftAssert sa = new SoftAssert();
         String basketball = "Basketball";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
@@ -210,7 +212,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
-        pause(15);
+        commonPage.clickPlay();
+        commonPage.clickRight(6, 1, 1);
         homePage.clickMenuTimes(1, 1);
         pause(5);
         LOGGER.info(getDriver().getPageSource());
