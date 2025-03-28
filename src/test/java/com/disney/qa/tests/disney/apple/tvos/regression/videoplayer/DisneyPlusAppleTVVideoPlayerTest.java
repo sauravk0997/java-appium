@@ -191,6 +191,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         SoftAssert sa = new SoftAssert();
         String basketball = "Basketball";
+        String continueButton = "CONTINUE";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
@@ -212,16 +213,24 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
-        pause(5);
+        videoPlayer.waitForVideoToStart();
         commonPage.clickRight(6, 1, 1);
+        commonPage.clickDown(1);
+        int timeBeforeRestart = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("timeBeforeRestart {}", timeBeforeRestart);
         homePage.clickMenuTimes(1, 1);
-        pause(5);
         if(!detailsPage.isOpened()) {
+            LOGGER.info("Entering ***");
             homePage.clickMenuTimes(1, 1);
         }
-        pause(3);
-        LOGGER.info(getDriver().getPageSource());
-        pause(5);
+        sa.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+                "Continue button is not present");
+        detailsPage.getTypeButtonContainsLabel(continueButton).click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        commonPage.clickDown(1);
+        int timeAfterRestart = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("timeAfterRestart {}", timeAfterRestart);
+
         sa.assertAll();
     }
 }
