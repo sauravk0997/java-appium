@@ -25,40 +25,33 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
     public void originalsAppearance() {
         int originalTitleIndex = 4;
         SoftAssert sa = new SoftAssert();
-
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVOriginalsPage originalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
-
         logIn(getUnifiedAccount());
 
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.
                 globalNavigationMenu.ORIGINALS.getText());
-
+        List<String> originalContent = originalsPage.getContentItems(originalTitleIndex);
         Assert.assertTrue(originalsPage.isOpened(), "Originals page is not open");
         sa.assertTrue(originalsPage.isContentShownCertainNumberPerRow(3, 7),
                 "Original items are not arranged 5 per row");
-        List<String> originalContent = originalsPage.getContentItems(originalTitleIndex); //Originals begins at 3
-        LOGGER.info("what are the titles in original content items starting at index 1? " + originalsPage.getContentItems(1));
-        LOGGER.info("WHAT ARE TITLES IN ORIGINAL CONTENT LIST (starting at index 2)?" + originalsPage.getContentItems(2));
-        LOGGER.info("WHAT ARE TITLES IN ORIGINAL CONTENT LIST (starting at index 3)?" + originalsPage.getContentItems(3));
-        LOGGER.info("WHAT ARE TITLES IN ORIGINAL CONTENT LIST (starting at index 4)?" + originalContent);
-        originalsPage.moveRight(1, 1);
-        System.out.println(getDriver().getPageSource());
+
+        originalsPage.moveRight(1, 2);
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
-                originalContent.get(2))), "Moving right did not focus the 2nd item in Series");
-        originalsPage.moveRight(1, 1);
+                originalsPage.getFormattedOriginalsTitle(originalContent,1))), "Moving right did not focus the 2nd item in Series");
+        originalsPage.moveRight(2, 2);
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
-                originalContent.get(3))), "Moving right did not focus the 3rd item in Series");
-        originalsPage.moveLeft(2, 1);
+                originalsPage.getFormattedOriginalsTitle(originalContent,3))), "Moving right did not focus the 3rd item in Series");
+        originalsPage.moveLeft(3, 2);
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
-                originalContent.get(1))), "Moving left did not focus the 1st item in Series");
-        originalsPage.moveDown(1, 1);
+                originalsPage.getFormattedOriginalsTitle(originalContent,0))), "Moving left 2 times did not focus the 1st item in Series");
+        originalsPage.moveDown(1, 2);
         //First 6 cells visible in Series collection, so 7th is 1st item in Movies
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
-                originalContent.get(7))), "Moving down did not focus the 1st item in Movies");
-        originalsPage.moveUp(1, 1);
+                originalsPage.getFormattedOriginalsTitle(originalContent, 7))), "Moving down did not focus the 1st item in Movies");
+        originalsPage.moveUp(1, 2);
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
-                originalContent.get(1))), "Moving up did not focus the 1st item in Series");
+                originalsPage.getFormattedOriginalsTitle(originalContent, 0))), "Moving up did not focus the 1st item in Series");
         sa.assertAll();
     }
 }

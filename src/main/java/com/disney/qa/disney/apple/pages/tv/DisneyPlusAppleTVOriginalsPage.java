@@ -10,6 +10,8 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
+import java.util.List;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusOriginalsIOSPageBase.class)
 public class DisneyPlusAppleTVOriginalsPage extends DisneyPlusOriginalsIOSPageBase {
@@ -19,5 +21,12 @@ public class DisneyPlusAppleTVOriginalsPage extends DisneyPlusOriginalsIOSPageBa
 
     public DisneyPlusAppleTVOriginalsPage(WebDriver driver) {
         super(driver);
+    }
+
+    public String getFormattedOriginalsTitle(List<String> list, int title) {
+
+
+        String formattedTitle = list.get(title).split(",")[0];
+        return formattedTitle;
     }
 }
