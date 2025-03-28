@@ -215,7 +215,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         commonPage.clickPlay();
         commonPage.clickRight(6, 1, 1);
         commonPage.clickPlay();
-        homePage.clickMenuTimes(1, 1);
+        homePage.clickMenuTimes(2, 1);
         pause(5);
         LOGGER.info(getDriver().getPageSource());
         pause(5);
