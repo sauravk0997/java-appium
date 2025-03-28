@@ -59,7 +59,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         // Verify version is current FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version was not displayed");
-        Assert.assertEquals(formatAppVersion(currentBuildVersion), moreMenu.getAppVersion(),
+        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(currentBuildVersion),
                 "Version is not the current expected");
         // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
