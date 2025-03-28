@@ -898,8 +898,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         editProfilePage.enterProfileName(NEW_PROFILE_NAME);
         editProfilePage.getDoneButton().click();
-        whoIsWatching.clickProfile(DEFAULT_PROFILE);
-        homePage.clickMoreTab();
         sa.assertTrue(whoIsWatching.isAccessModeProfileIconPresent(NEW_PROFILE_NAME), "Profile name was not updated to " + NEW_PROFILE_NAME);
         sa.assertAll();
     }
