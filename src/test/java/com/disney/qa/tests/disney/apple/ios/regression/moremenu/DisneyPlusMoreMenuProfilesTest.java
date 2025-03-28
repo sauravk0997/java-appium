@@ -33,6 +33,7 @@ import java.util.*;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -1591,6 +1592,26 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setContentTitle), Direction.DOWN, swipeCount, duration),
                 "Live content title was present after turning off the live toggle");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78050"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExtraMemberCanNotSeeOwnersProfile() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        homePage.clickMoreTab();
+        moreMenuPage.clickEditProfilesBtn();
+
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertEquals(editProfilePage.getQuantityOfProfileCells(), 1,
+                "Number of profile cells wasn't equal to 1");
+        Assert.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Add Profile button is present");
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
