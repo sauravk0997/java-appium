@@ -25,6 +25,8 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    private static final String SPORT_PAGE_DID_NOT_OPEN = "Sport page did not open";
+    private static final String NO_REPLAYS_FOUND = "No replay events found";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120534"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULU, US})
@@ -159,13 +161,13 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
-                "Sport page did not open");
+                SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
         homePage.navigateToShelf(espnPage.getReplayLabel());
         String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
         if (replayTitle == null) {
-            throw new IndexOutOfBoundsException("No replay events found");
+            throw new IndexOutOfBoundsException(NO_REPLAYS_FOUND);
         }
         LOGGER.info("Replay title  {}", replayTitle);
         detailsPage.getTypeCellLabelContains(replayTitle).click();
@@ -175,6 +177,41 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
         Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(espn), "ESPN Network watermark is not present");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102802"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyVodReplayResume() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String basketball = "Basketball";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_basketball_sport_deeplink"));
+        Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
+                SPORT_PAGE_DID_NOT_OPEN);
+
+        // Navigate to a Replay and validate playback
+        homePage.navigateToShelf(espnPage.getReplayLabel());
+        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        if (replayTitle == null) {
+            throw new IndexOutOfBoundsException(NO_REPLAYS_FOUND);
+        }
+        LOGGER.info("Replay title {}", replayTitle);
+        detailsPage.getTypeCellLabelContains(replayTitle).click();
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
+                "Video title does not match with the expected");
+        homePage.clickMenuTimes(1, 1);
+        pause(5);
         sa.assertAll();
     }
 }
