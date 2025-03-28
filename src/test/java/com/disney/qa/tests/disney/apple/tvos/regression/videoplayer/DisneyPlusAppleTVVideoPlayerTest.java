@@ -210,7 +210,10 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
+        pause(15);
         homePage.clickMenuTimes(1, 1);
+        pause(5);
+        LOGGER.info(getDriver().getPageSource());
         pause(5);
         sa.assertAll();
     }
