@@ -33,6 +33,7 @@ import java.util.*;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.US;
