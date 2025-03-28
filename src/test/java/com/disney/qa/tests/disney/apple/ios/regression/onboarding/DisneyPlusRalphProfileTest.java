@@ -390,12 +390,15 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74308"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
     public void testRalphAddProfileSuggestMatureContentRating() {
+        initialSetup();
+        handleAlert();
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         int age = 59;
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
@@ -411,6 +414,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();
         }
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         homePage.clickMoreTab();
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");

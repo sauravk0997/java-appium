@@ -870,6 +870,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66807"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileDuplicateProfileError() {
+        initialSetup();
+        handleAlert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
