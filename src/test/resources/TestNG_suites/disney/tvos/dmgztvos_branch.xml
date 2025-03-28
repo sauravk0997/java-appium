@@ -26,6 +26,7 @@
     <test verbose="1" name="DisneyPlus tvOS Details" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.details.DisneyPlusAppleTVDetailsScreenTests"/>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.details.DisneyPlusAppleTVDetailsSeriesTest"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus tvOS Home" parallel="methods">
