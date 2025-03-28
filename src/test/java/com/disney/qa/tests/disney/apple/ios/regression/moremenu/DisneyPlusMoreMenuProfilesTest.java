@@ -1615,6 +1615,73 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Add Profile button is present");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77236"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExtraMemberCanUpdateProfile() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
+
+        //Get possible avatars from Unified Search API and save the ID for the first avatar from the last set
+        List<ContentSet> avatarSets = getAvatarSets(getUnifiedAccount());
+        String lastSetFirstAvatarId = "";
+        try {
+            lastSetFirstAvatarId = avatarSets.get(avatarSets.size() - 1).getAvatarIds().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail("Index out of bounds: " + e);
+        }
+
+        setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        homePage.clickMoreTab();
+        BufferedImage originalAvatar = getElementImage(moreMenuPage.getProfileAvatar(DEFAULT_PROFILE));
+        moreMenuPage.clickEditProfilesBtn();
+
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
+
+        //Update profile's name
+        editProfilePage.enterProfileName(EXTRA_MEMBER_PROFILE);
+
+        //Update profile's avatar
+        editProfilePage.getAddProfileAvatar().click();
+        swipePageTillElementTappable(
+                chooseAvatarPage.getTypeCellNameContains(lastSetFirstAvatarId),
+                10,
+                null,
+                Direction.UP,
+                1000);
+        chooseAvatarPage.getTypeCellNameContains(lastSetFirstAvatarId).click();
+
+        //Update profile's gender and save all changes
+        editProfilePage.clickGenderButton();
+        editGenderPage.clickGenderDropDown();
+        String desiredGender = editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN);
+        editGenderPage.getTypeButtonByLabel(desiredGender).click();
+        editGenderPage.tapSaveButton();
+        editProfilePage.getDoneButton().click();
+
+        //Go from Home to More Options and validate avatar and name changed
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        moreMenuPage.clickMoreTab();
+        Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        Assert.assertTrue(moreMenuPage.getStaticTextByLabel(EXTRA_MEMBER_PROFILE).isElementPresent(),
+                "Extra Member profile is not visible");
+        BufferedImage updatedAvatar = getElementImage(moreMenuPage.getProfileAvatar(EXTRA_MEMBER_PROFILE));
+        Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same");
+
+        //Go to edit profile to validate gender changed
+        moreMenuPage.clickEditProfilesBtn();
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        editProfilePage.clickEditModeProfile(EXTRA_MEMBER_PROFILE);
+        Assert.assertTrue(editProfilePage.isGenderButtonPresent(), "Gender button is not present");
+        Assert.assertTrue(editProfilePage.getStaticTextByLabel(desiredGender).isElementPresent(),
+                "Gender is not updated");
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
