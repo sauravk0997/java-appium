@@ -408,10 +408,12 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 Map.of("content_rating", getRecommendedContentRating(CANADA, age, AGE_VALUES_CANADA)));
         LOGGER.info("RecommendedContentRating {}", recommendedContentRatingByAge);
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+
         setAppToHomeScreen(getUnifiedAccount());
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
+//        if (oneTrustPage.isAllowAllButtonPresent()) {
+//            oneTrustPage.tapAcceptAllButton();
+//        }
+        handleOneTrustPopUp();
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         homePage.clickMoreTab();
         moreMenu.clickAddProfile();
