@@ -48,7 +48,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         // Assert that version installed it is the previous FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
                 "App Version was not displayed");
-        Assert.assertEquals(appPreviousFCVersion, moreMenu.getAppVersion(), "Version is not the previous expected");
+        Assert.assertEquals(moreMenu.getAppVersion(), appPreviousFCVersion, "Version is not the previous expected");
 
         // Terminate app and upgrade application to current version
         terminateApp(sessionBundles.get(DISNEY));
@@ -58,9 +58,9 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         handleGenericPopup(5,1);
         moreMenu.clickMoreTab();
         // Verify version is current FC Version
-        Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
-                "App Version was not displayed");
-        Assert.assertEquals(currentBuildVersion, moreMenu.getAppVersion(), "Version is not the current expected");
+        Assert.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version was not displayed");
+        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(currentBuildVersion),
+                "Version is not the current expected");
         // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
@@ -150,6 +150,11 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         installApp(AppCenterManager.getInstance()
                 .getAppInfo(String.format(APP_URL, version))
                 .getDirectLink());
+    }
+
+    private String formatAppVersion(String appVersion) {
+        int index = appVersion.lastIndexOf(".");
+        return String.join("+", appVersion.substring(0, index), appVersion.substring(index + 1));
     }
 
     @AfterMethod(alwaysRun = true)
