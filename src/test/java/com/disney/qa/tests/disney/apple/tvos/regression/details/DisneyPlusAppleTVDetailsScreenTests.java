@@ -286,7 +286,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         // Navigate to the first event from Live and Upcoming shelf
         Set espnLiveEvent =
-               getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
         if (espnLiveEvent == null) {
             throw new SkipException("Skipping test, no upcoming events are available");
         }
@@ -297,7 +297,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             // Explore the espnLiveEvent Set to find an upcoming event and open it
             String upcomingTitle = navigateToUpcomingEvent(espnLiveEvent);
             detailsPage.getTypeCellLabelContains(upcomingTitle).click();
-        } catch(Exception e) {
+        } catch (Exception e) {
             Assert.fail("No events are available" + e.getMessage());
         }
 
@@ -315,10 +315,60 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102803"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyUpcomingEventWatchlist() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String upcomingTitle = "";
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        Set espnLiveEvent =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
+        if (espnLiveEvent == null) {
+            throw new SkipException("Skipping test, no upcoming events are available");
+        }
+        try {
+            String firstEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+            LOGGER.info("Event title: {}", firstEvent);
+            homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(firstEvent),10);
+            // Explore the espnLiveEvent Set to find an upcoming event and open it
+            upcomingTitle = navigateToUpcomingEvent(espnLiveEvent);
+            detailsPage.getTypeCellLabelContains(upcomingTitle).click();
+        } catch(Exception e) {
+            Assert.fail("No events are available" + e.getMessage());
+        }
+
+        // Validate details page and add item to the watchlist
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getAddToWatchlistText().isElementPresent(),
+                "Item is not available to be added to the watchlist");
+        detailsPage.getWatchlistButton().click();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isElementPresent(),
+                "Item was not added to the watchlist");
+
+        //Navigate to watchlist
+        detailsPage.clickMenuTimes(1,1);
+        homePage.pause(1);
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isPresent(),
+                "The asset was not found in the watchlist");
+        sa.assertAll();
+    }
+
     public String navigateToUpcomingEvent(Set event) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String upcomingEvent = "";
-        for(int i = 0; i< event.getItems().size(); i++) {
+        for (int i = 0; i < event.getItems().size(); i++) {
             if(!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
                 upcomingEvent = event.getItems().get(i).getVisuals().getTitle();
                 break;

@@ -27,6 +27,23 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67362"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchGlobalMenuLanding() {
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+
+        logIn(getUnifiedAccount());
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+
+        home.moveDownFromHeroTileToBrandTile();
+        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(UNENTITLED_HULU_CONTENT);
+        Assert.assertEquals(searchPage.getSearchBar().getAttribute("value"), UNENTITLED_HULU_CONTENT,
+                "Search text was not displayed in the search field");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121506"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifyHuluHubSearchContentWithStandaloneAccount() {
