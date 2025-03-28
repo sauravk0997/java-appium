@@ -164,6 +164,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return getDynamicAccessibilityId(toastText);
     }
 
+    public ExtendedWebElement getAddProfileBtn() {
+        return addProfileBtn;
+    }
+
     public boolean isEditProfilesTitlePresent() {
         return collectionHeadlineTitle.getText().equals(editProfileTitle);
     }
