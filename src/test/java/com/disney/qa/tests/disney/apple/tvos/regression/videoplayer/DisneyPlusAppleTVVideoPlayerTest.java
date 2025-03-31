@@ -208,15 +208,14 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         // Navigate to a Replay and validate playback
         homePage.navigateToShelf(espnPage.getReplayLabel());
         List<ExtendedWebElement> collectionList = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS);
-        if(collectionList.size() > 0) {
+        if (collectionList.size() > 0) {
             replayTitle = collectionList.get(0).getText();
-        } else {
+        }
+        
+        if (collectionList.size() == 0 || replayTitle == null || replayTitle.isEmpty()) {
             throw new SkipException(NO_REPLAYS_FOUND);
         }
 
-        if (replayTitle == null || replayTitle.isEmpty()) {
-            throw new SkipException(NO_REPLAYS_FOUND);
-        }
         LOGGER.info("Replay title {}", replayTitle);
         detailsPage.getTypeCellLabelContains(replayTitle).click();
         detailsPage.waitForDetailsPageToOpen();
@@ -228,8 +227,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         // Forward video and get remaining time
         commonPage.clickRight(6, 1, 1);
         commonPage.clickDown(1);
-        int timeBeforeRestart = videoPlayer.getRemainingTimeThreeIntegers();
-        LOGGER.info("timeBeforeRestart {}", timeBeforeRestart);
+        int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("remainingTime {}", remainingTime);
         // Go back to details page and tap in Continue button
         homePage.clickMenuTimes(1, 1);
         if (!detailsPage.isOpened()) {
@@ -241,10 +240,10 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         // Get remaining time and validate if video restarted
         commonPage.clickDown(1);
-        int timeAfterRestart = videoPlayer.getRemainingTimeThreeIntegers();
-        LOGGER.info("timeAfterRestart {}", timeAfterRestart);
+        int remainingTimeAfterContinue = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("remainingTimeAfterContinue {}", remainingTimeAfterContinue);
 
-        int duration = timeBeforeRestart - timeAfterRestart;
+        int duration = remainingTime - remainingTimeAfterContinue;
         ValueRange range = ValueRange.of(0, latency);
         sa.assertTrue(range.isValidIntValue(duration),
                 "Video did not restart from expected position");
