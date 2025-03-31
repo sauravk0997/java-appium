@@ -27,7 +27,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
         settingsPage.clickSubscriptionsCell();
-        LOGGER.info("Page element:- " + getDriver().getPageSource());
         Assert.assertTrue(settingsPage.isExtraMemberSubscriptionDetailTitlePresent(),
                 "Extra member subscription detail title not displayed");
         Assert.assertTrue(settingsPage.isExtraMemberSubscriptionDetailSubCopyPresent(),
