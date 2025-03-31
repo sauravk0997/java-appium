@@ -357,6 +357,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement loader;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"backgroundGradient\"`]")
     private ExtendedWebElement backgroundImage;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name ENDSWITH 'ProfileCell'`]")
+    private ExtendedWebElement genericProfileCell;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1583,5 +1585,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getBackgroundImage() {
         return backgroundImage;
+    }
+
+    public int getQuantityOfProfileCells() {
+        return findExtendedWebElements(genericProfileCell.getBy()).size();
     }
 }

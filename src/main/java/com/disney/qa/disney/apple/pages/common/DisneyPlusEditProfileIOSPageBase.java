@@ -146,7 +146,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @Override
     public boolean isOpened() {
-        return getDynamicAccessibilityId(editProfileTitle).isPresent(SHORT_TIMEOUT);
+        return getStaticTextByLabel(editProfileTitle).isPresent(SHORT_TIMEOUT);
     }
 
     public ExtendedWebElement getSharePlay() {
@@ -162,6 +162,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.COVIEWING_ADS_TOOLTIP.getText());
         return getDynamicAccessibilityId(toastText);
+    }
+
+    public ExtendedWebElement getAddProfileBtn() {
+        return addProfileBtn;
     }
 
     public boolean isEditProfilesTitlePresent() {
