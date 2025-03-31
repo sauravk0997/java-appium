@@ -28,22 +28,21 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final String SUGGESTED = "SUGGESTED";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifySeriesDetailsPageSuggestedTab() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
-        SoftAssert sa = new SoftAssert();
         String series = LOKI.getTitle();
 
         logIn(getUnifiedAccount());
 
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         searchPage.typeInSearchField(series);
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(series).isPresent(), CONTENT_ERROR_MESSAGE);
         searchPage.getSearchResults(series).get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.moveDown(1, 1);
         detailsPage.moveRight(1, 1);
