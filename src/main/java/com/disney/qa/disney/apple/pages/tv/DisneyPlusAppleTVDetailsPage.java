@@ -62,9 +62,13 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return getStaticTextByLabel("Dancing with the Stars").isElementPresent();
     }
 
+    public  ExtendedWebElement getPlayButton() {
+        return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_PLAY.getText()));
+    }
+
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
-        getTypeButtonByName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_PLAY.getText())).click();
+        getPlayButton().click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
