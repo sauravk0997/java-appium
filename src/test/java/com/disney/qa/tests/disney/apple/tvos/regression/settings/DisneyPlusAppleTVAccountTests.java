@@ -21,7 +21,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
         setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
-        logInWithoutHomeCheck(getUnifiedAccount());
+        logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
         LOGGER.info("Page element:- " + getDriver().getPageSource());
