@@ -24,6 +24,7 @@ public enum DictionaryKeys {
     ALERT_MESSAGE_CROSSING_AD_BOUNDARY("alert_message_crossing_ad_boundary"),
     APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK("apple_link_out_subscription_mgmt_link"),
     APP_SETTINGS_TITLE("app_settings_title"),
+    APP_SETTINGS_SUBSCRIPTIONS_LABEL("app_settings_subscriptions_label"),
     APP_VERSION_NUMBER("app_version_number"),
     ATTRIBUTE_VALIDATION("attributeValidation"),
     AUTH_MINOR_PASSWORD("auth_minor_password_body"),
