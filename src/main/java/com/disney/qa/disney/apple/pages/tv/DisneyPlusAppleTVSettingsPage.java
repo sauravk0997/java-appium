@@ -45,13 +45,13 @@ public class DisneyPlusAppleTVSettingsPage extends DisneyPlusMoreMenuIOSPageBase
     }
 
     public boolean isExtraMemberSubscriptionDetailTitlePresent() {
-        return getStaticCellByLabel(getLocalizationUtils().getDictionaryItem(
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                 EM_SUBSCRIPTION_DETAIL_TITLE.getText())).isPresent();
     }
 
     public boolean isExtraMemberSubscriptionDetailSubCopyPresent() {
-        return getStaticCellByLabel(getLocalizationUtils().getDictionaryItem(
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                 EM_SUBSCRIPTION_DETAIL_SUBCOPY.getText())).isPresent();
     }
