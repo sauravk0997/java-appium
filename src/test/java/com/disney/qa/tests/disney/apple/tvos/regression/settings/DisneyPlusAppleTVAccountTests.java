@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSettingsPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -19,11 +20,13 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyPlanNameForExtraMemberAddOnUser() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
 
         setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
         logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
+        settingsPage.getSubscriptionsCell().click();
         LOGGER.info("Page element:- " + getDriver().getPageSource());
     }
 }

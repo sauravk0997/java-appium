@@ -186,6 +186,8 @@ public enum DictionaryKeys {
     EDIT_PROFILE_EDIT("editprofiles_edit"),
     EDIT_PROFILE_TITLE("edit_profile_title"),
     EDIT_PROFILE_TITLE_2("edit_profile_title_2"),
+    EM_SUBSCRIPTION_DETAIL_SUBCOPY("em_subscription_detail_subcopy"),
+    EM_SUBSCRIPTION_DETAIL_TITLE("em_subscription_detail_title"),
     EMAIL_CODE_TITLE("email_code_title"),
     EMAIL_RESEND_TITLE("email_resend_title"),
     ENTER_YOUR_PASSWORD("enter_your_password"),
