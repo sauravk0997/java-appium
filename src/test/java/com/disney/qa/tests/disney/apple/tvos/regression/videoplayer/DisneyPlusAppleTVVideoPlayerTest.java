@@ -11,6 +11,7 @@ import com.zebrunner.carina.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -192,6 +193,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         SoftAssert sa = new SoftAssert();
         String basketball = "Basketball";
         String continueButton = "CONTINUE";
+        String replayTitle = "";
         int latency = 60;
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
@@ -204,7 +206,12 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         // Navigate to a Replay and validate playback
         homePage.navigateToShelf(espnPage.getReplayLabel());
-        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        if(detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).size() > 0) {
+            replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        } else {
+            throw new SkipException(NO_REPLAYS_FOUND);
+        }
+
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException(NO_REPLAYS_FOUND);
         }
