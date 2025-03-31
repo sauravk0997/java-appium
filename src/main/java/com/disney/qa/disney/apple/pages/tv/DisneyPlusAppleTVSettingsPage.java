@@ -21,6 +21,9 @@ public class DisneyPlusAppleTVSettingsPage extends DisneyPlusMoreMenuIOSPageBase
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'logOutAllDevicesCell'`]")
     private ExtendedWebElement  logOutAllDevicesBtn;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label='%s'$]")
+    private ExtendedWebElement  settingsCellItem;
+
     @ExtendedFindBy(accessibilityId = "accountView")
     ExtendedWebElement accountView;
 
@@ -32,8 +35,9 @@ public class DisneyPlusAppleTVSettingsPage extends DisneyPlusMoreMenuIOSPageBase
     public void clickLogOutAllDevicesBtn() { logOutAllDevicesBtn.click(); }
 
     public ExtendedWebElement getSubscriptionsCell() {
-        return getStaticCellByLabel(getLocalizationUtils().getDictionaryItem(
+        String cellName = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                APP_SETTINGS_SUBSCRIPTIONS_LABEL.getText()));
+                APP_SETTINGS_SUBSCRIPTIONS_LABEL.getText());
+        return settingsCellItem.format(cellName);
     }
 }
