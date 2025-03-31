@@ -18,7 +18,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
-    public void verifyPlanNameForExtraMemberAddOnUser() {
+    public void verifySubCopyForExtraMemberAddOnUser() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
 
