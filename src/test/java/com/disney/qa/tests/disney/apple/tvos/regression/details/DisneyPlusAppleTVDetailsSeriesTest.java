@@ -25,6 +25,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String CONTENT_ERROR_MESSAGE = "Content is not found";
+    private static final String SUGGESTED = "SUGGESTED";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, US})
@@ -51,9 +52,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         ArrayList<Container> lokiPageDetails = getDisneyAPIPage(LOKI.getEntityId(), false);
         List<Item> list = lokiPageDetails.stream()
-                .filter(container -> container.getVisuals().getName().equals("SUGGESTED"))
+                .filter(container -> container.getVisuals().getName().equals(SUGGESTED))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("container not present in API response"))
+                .orElseThrow(() -> new RuntimeException("suggested container not present in API response"))
                 .getItems().subList(0, 1);
 
         list.forEach(i -> {
