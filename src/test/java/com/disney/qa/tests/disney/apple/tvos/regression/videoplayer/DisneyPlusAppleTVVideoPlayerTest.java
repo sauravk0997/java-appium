@@ -8,6 +8,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -206,14 +207,15 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         // Navigate to a Replay and validate playback
         homePage.navigateToShelf(espnPage.getReplayLabel());
-        if(detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).size() > 0) {
-            replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        List<ExtendedWebElement> collectionList = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS);
+        if(collectionList.size() > 0) {
+            replayTitle = collectionList.get(0).getText();
         } else {
             throw new SkipException(NO_REPLAYS_FOUND);
         }
 
-        if (replayTitle == null) {
-            throw new IndexOutOfBoundsException(NO_REPLAYS_FOUND);
+        if (replayTitle == null || replayTitle.isEmpty()) {
+            throw new SkipException(NO_REPLAYS_FOUND);
         }
         LOGGER.info("Replay title {}", replayTitle);
         detailsPage.getTypeCellLabelContains(replayTitle).click();
@@ -233,7 +235,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         if (!detailsPage.isOpened()) {
             homePage.clickMenuTimes(1, 1);
         }
-        sa.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+        Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
                 "Continue button is not present");
         detailsPage.getTypeButtonContainsLabel(continueButton).click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
