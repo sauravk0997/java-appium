@@ -8,6 +8,7 @@ import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -36,7 +37,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MICKEY_MOUSE;
@@ -1595,7 +1596,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78050"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExtraMemberCanNotSeeOwnersProfile() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
@@ -1614,6 +1615,74 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Add Profile button is present");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77236"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExtraMemberCanUpdateProfile() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
+
+        //Get possible avatars from Unified Search API and save the ID for the first avatar from the last set
+        List<ContentSet> avatarSets = getAvatarSets(getUnifiedAccount());
+        String lastSetFirstAvatarId = "";
+        try {
+            lastSetFirstAvatarId = avatarSets.get(avatarSets.size() - 1).getAvatarIds().get(0);
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail("Index out of bounds: " + e);
+        }
+
+        setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        homePage.clickMoreTab();
+        BufferedImage originalAvatar = getElementImage(moreMenuPage.getProfileAvatar(DEFAULT_PROFILE));
+        moreMenuPage.clickEditProfilesBtn();
+
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
+
+        //Update profile's name
+        editProfilePage.enterProfileName(EXTRA_MEMBER_PROFILE);
+
+        //Update profile's avatar
+        editProfilePage.getAddProfileAvatar().click();
+        swipePageTillElementTappable(
+                chooseAvatarPage.getTypeCellNameContains(lastSetFirstAvatarId),
+                10,
+                null,
+                Direction.UP,
+                1000);
+        chooseAvatarPage.getTypeCellNameContains(lastSetFirstAvatarId).click();
+
+        //Update profile's gender and save all changes
+        editProfilePage.clickGenderButton();
+        editGenderPage.clickGenderDropDown();
+        String desiredGender = editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN);
+        editGenderPage.getTypeButtonByLabel(desiredGender).click();
+        editGenderPage.tapSaveButton();
+        editProfilePage.getDoneButton().click();
+
+        //Go from Home to More Options and validate avatar and name changed
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        moreMenuPage.clickMoreTab();
+        Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        Assert.assertTrue(moreMenuPage.getStaticTextByLabel(EXTRA_MEMBER_PROFILE).isElementPresent(),
+                "Extra Member profile is not visible");
+        BufferedImage updatedAvatar = getElementImage(moreMenuPage.getProfileAvatar(EXTRA_MEMBER_PROFILE));
+        Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar),
+                "Avatar image is not updated");
+
+        //Go to edit profile to validate gender changed
+        moreMenuPage.clickEditProfilesBtn();
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        editProfilePage.clickEditModeProfile(EXTRA_MEMBER_PROFILE);
+        Assert.assertTrue(editProfilePage.isGenderButtonPresent(), "Gender button is not present");
+        Assert.assertTrue(editProfilePage.getStaticTextByLabel(desiredGender).isElementPresent(),
+                "Gender is not updated");
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
@@ -1623,6 +1692,16 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         navElements.add(moreMenu.getDownloadNav());
         navElements.add(moreMenu.getMoreMenuTab());
         return navElements;
+    }
+
+    private List<ContentSet> getAvatarSets(UnifiedAccount account) {
+        List<ContentSet> avatarSets = getUnifiedSearchApi()
+                .getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
+        if (avatarSets.isEmpty()) {
+            throw new NoSuchElementException("No avatar sets were found");
+        } else {
+            return avatarSets;
+        }
     }
 
     private List<ContentSet> getAvatarSets(DisneyAccount account) {
