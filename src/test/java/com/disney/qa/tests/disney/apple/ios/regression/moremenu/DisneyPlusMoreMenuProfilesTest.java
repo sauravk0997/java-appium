@@ -1671,7 +1671,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenuPage.getStaticTextByLabel(EXTRA_MEMBER_PROFILE).isElementPresent(),
                 "Extra Member profile is not visible");
         BufferedImage updatedAvatar = getElementImage(moreMenuPage.getProfileAvatar(EXTRA_MEMBER_PROFILE));
-        Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar), "Avatar images are the same");
+        Assert.assertTrue(areImagesDifferent(originalAvatar, updatedAvatar),
+                "Avatar image is not updated");
 
         //Go to edit profile to validate gender changed
         moreMenuPage.clickEditProfilesBtn();
