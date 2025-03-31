@@ -11,6 +11,7 @@ public final class TestGroup {
 
     //Feature Groups
     public static final String SMOKE = "Smoke";
+    public static final String ACCOUNT_SHARING = "AccountSharing";
     public static final String ANTHOLOGY = "Anthology";
     public static final String CONCURRENCY = "Concurrency";
     public static final String DEEPLINKS = "Deeplinks";

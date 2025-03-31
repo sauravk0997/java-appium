@@ -22,7 +22,7 @@
     <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression. Some Groups may not have associated tests at this time."
-               value=",Smoke,Anthology,DetailsPage,Downloads,Home,Hulu,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
+               value=",Smoke,AccountSharing,Anthology,DetailsPage,Downloads,Home,Hulu,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
 <!--    <parameter name="scheduling" value="H 0 * * 1-5"/>-->
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=0,init_retry_interval=15,capabilities.newCommandTimeout=360"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
@@ -60,6 +60,7 @@
     <test verbose="1" name="DisneyPlus tvOS Settings" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.settings.DisneyPlusAppleTVProfilesTest"/>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.settings.DisneyPlusAppleTVAccountTests"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus tvOS Watchlist" parallel="methods">
