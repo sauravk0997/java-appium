@@ -26,7 +26,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
-        settingsPage.moveDownUntilElementIsFocused(settingsPage.getSubscriptionsCell(), 6);
+        settingsPage.clickSubscriptionsCell();
         LOGGER.info("Page element:- " + getDriver().getPageSource());
     }
 }

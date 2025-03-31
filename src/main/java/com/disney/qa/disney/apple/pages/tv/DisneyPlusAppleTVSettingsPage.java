@@ -34,10 +34,11 @@ public class DisneyPlusAppleTVSettingsPage extends DisneyPlusMoreMenuIOSPageBase
 
     public void clickLogOutAllDevicesBtn() { logOutAllDevicesBtn.click(); }
 
-    public ExtendedWebElement getSubscriptionsCell() {
+    public void clickSubscriptionsCell() {
         String cellName = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 APP_SETTINGS_SUBSCRIPTIONS_LABEL.getText());
-        return settingsCellItem.format(cellName);
+        moveDownUntilElementIsFocused(settingsCellItem.format(cellName), 6);
+        clickSelect();
     }
 }
