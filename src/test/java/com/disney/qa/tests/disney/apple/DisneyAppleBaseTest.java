@@ -294,11 +294,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     @BeforeSuite(alwaysRun = true)
     public final void cleanAppInstall() {
         R.CONFIG.put("capabilities.fullReset", "true");
-        R.CONFIG.put("capabilities.app",
-                "https://testfairy-disney.s3.amazonaws.com/releases/46/f9c1fc92165e67537583c08759627ed8edfd0e55/" +
-                        "Disney-Dominguez_iOS_Enterprise_Prod-4.3.0-77460.ipa?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=" +
-                        "AKIATDHZWC54HSUEIBPE%2F20250331%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250331T200023Z&X-Amz-SignedHeaders=host&X-Amz-Expires=" +
-                        "86400&X-Amz-Signature=64818cbb7296bd0ef001380a85ca7ec0e31885ac98f790cd6ba62e97deffe7ec");
     }
 
     @BeforeMethod(alwaysRun = true)
