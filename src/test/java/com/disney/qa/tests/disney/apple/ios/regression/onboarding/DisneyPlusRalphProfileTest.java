@@ -409,7 +409,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
         homePage.waitForHomePageToOpen();
-        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickMoreTab();
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
