@@ -55,7 +55,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         .build()));
 
         setAppToHomeScreen(getUnifiedAccount());
-        handleOneTrustPopUp();
+        handleAlert();
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         if (homePage.isTravelAlertTitlePresent()) {
             homePage.getTravelAlertOk().click();
@@ -65,6 +65,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
         }
+        moreMenu.clickAddProfile();
         whoIsWatching.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
