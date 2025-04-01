@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST_REMOVE_BTN;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusDetailsIOSPageBase.class)
@@ -62,11 +61,14 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return getStaticTextByLabel("Dancing with the Stars").isElementPresent();
     }
 
+    @Override
     public  ExtendedWebElement getPlayButton() {
-        return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_PLAY.getText()));
     }
 
+    @Override
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
         getPlayButton().click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -184,8 +186,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
      * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
      */
     private static final String WATCH = "WATCH";
-    private static final String BOOKMARKED = "BOOKMARKED";
-    private static final String PLAY = "PLAY";
 
     @Override
     public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
