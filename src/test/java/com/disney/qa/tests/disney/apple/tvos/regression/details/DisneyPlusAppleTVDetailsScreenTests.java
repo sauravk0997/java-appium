@@ -49,6 +49,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String DESCRIPTION_NOT_PRESENT = "Description is not present";
     private static final String WATCHLIST_NOT_PRESENT = "Watchlist button is not present";
     private static final String BACKGROUND_IMAGE_NOT_PRESENT = "Background image is not present";
+    private static final String ASSET_NOT_FOUND_IN_WATCHLIST = "The asset was not found in the watchlist";
+    private static final String LIVE_MODAL_NOT_OPEN = "Live event modal did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66642"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
@@ -282,7 +284,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         } catch(Exception e) {
             Assert.fail(errorMessage + e.getMessage());
         }
-        Assert.assertTrue(liveEventModal.isOpened(), "Live event modal did not open");
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
         liveEventModal.getDetailsButton().click();
         // Validate logo and play button
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -384,7 +386,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
         sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isPresent(),
-                "The asset was not found in the watchlist");
+                ASSET_NOT_FOUND_IN_WATCHLIST);
         sa.assertAll();
     }
 
@@ -405,7 +407,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Navigate to the first event from Live and Upcoming shelf
         String titleEvent = navigateToLiveEvent();
 
-        Assert.assertTrue(liveEventModal.isOpened(), "Live event modal did not open");
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
         liveEventModal.getDetailsButton().click();
         // Validate details page and add item to the watchlist
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -424,7 +426,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(titleEvent));
         sa.assertTrue(detailsPage.getTypeCellLabelContains(titleEvent).isPresent(),
-                "The asset was not found in the watchlist");
+                ASSET_NOT_FOUND_IN_WATCHLIST);
         sa.assertAll();
     }
 
