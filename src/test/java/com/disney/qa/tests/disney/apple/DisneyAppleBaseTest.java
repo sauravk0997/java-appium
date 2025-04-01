@@ -9,8 +9,11 @@ import java.util.stream.Stream;
 
 import com.disney.qa.api.account.*;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.accountsharing.AccountSharingHelper;
+import com.disney.qa.api.accountsharing.AccountSharingUnifiedAccounts;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.requests.offer.*;
+import com.disney.qa.api.client.responses.graphql.campaign.CampaignType;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
@@ -18,6 +21,7 @@ import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
+import com.disney.qa.api.search.UnifiedSearchApi;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.constant.*;
@@ -73,6 +77,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     protected static final String TRUE = "true";
     protected static final String FALSE = "false";
     public static final String APPLE = "apple";
+    public static final String WEB = "web";
     public static final String DISNEY = "disney";
     public static final String APP = "app";
     //Keeping this not to a specific plan name to support localization tests
@@ -182,6 +187,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     };
 
+    private static final LazyInitializer<UnifiedSearchApi> UNIFIED_SEARCH_API = new LazyInitializer<>() {
+        @Override
+        protected UnifiedSearchApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(APPLE)
+                    .partner(DisneyConfiguration.getPartner())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new UnifiedSearchApi(apiConfiguration);
+        }
+    };
+
     private static final LazyInitializer<ExploreApi> EXPLORE_API = new LazyInitializer<>() {
         @Override
         protected ExploreApi initialize() {
@@ -217,6 +234,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             throw new RuntimeException("Error initializing EmailApi", e);
         }
     });
+
+    private static final LazyInitializer<AccountSharingHelper> ACCOUNT_SHARING_HELPER = new LazyInitializer<>() {
+        @Override
+        protected AccountSharingHelper initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(WEB)
+                    .partner(DisneyConfiguration.getPartner().toUpperCase())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new AccountSharingHelper(apiConfiguration);
+        }
+    };
 
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
@@ -427,6 +456,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return Objects.requireNonNull(EMAIL_API.get());
     }
 
+    public static AccountSharingHelper getAccountSharingHelper() {
+        try {
+            return ACCOUNT_SHARING_HELPER.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
     /**
      * Get account<br>
      * <b>Unique for each test method</b>
@@ -459,8 +496,28 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return unifiedOfferRequest;
     }
 
+    public UnifiedOfferRequest getUnifiedOfferRequest(DisneyUnifiedOfferPlan planName,
+                                                      PurchaseFlow purchaseFlow,
+                                                      CampaignType campaignType) {
+        return UnifiedOfferRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .partner(Partner.DISNEY)
+                .searchText(planName.getValue())
+                .skuPlatform(SkuPlatform.WEB)
+                .purchaseFlow(purchaseFlow)
+                .campaignType(campaignType)
+                .build();
+    }
+
     public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName) {
         return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName.getValue()));
+    }
+
+    public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName,
+                                        PurchaseFlow purchaseFlow,
+                                        CampaignType campaignType) {
+        return getUnifiedSubscriptionApi().lookupUnifiedOffer(
+                getUnifiedOfferRequest(planName, purchaseFlow, campaignType));
     }
 
     public CreateUnifiedAccountRequest getDefaultCreateUnifiedAccountRequest() {
@@ -499,6 +556,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
+    public static UnifiedSearchApi getUnifiedSearchApi() {
+        try {
+            return UNIFIED_SEARCH_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
     public static ExploreApi getExploreApi() {
         try {
             return EXPLORE_API.get();
@@ -529,6 +594,30 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     public static ExploreSearchRequest getHuluExploreSearchRequest() {
         return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_HULU);
+    }
+
+    public AccountSharingUnifiedAccounts createAccountSharingUnifiedAccounts() {
+        //Create the test accounts
+        AccountSharingUnifiedAccounts accountSharingAccounts = getAccountSharingHelper().createSharingUnifiedAccounts(
+                CampaignType.STANDARD_CAMPAIGN,
+                getUnifiedOffer(
+                        DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM,
+                        PurchaseFlow.SIGNUP_FLOW,
+                        CampaignType.STANDARD_CAMPAIGN),
+                getUnifiedOffer(
+                        DisneyUnifiedOfferPlan.DISNEY_EXTRA_MEMBER_ADD_ON,
+                        PurchaseFlow.SWITCH_FLOW,
+                        CampaignType.UPSELL_CAMPAIGN));
+        //Create and accept the invitation
+        boolean invitationSuccess = getAccountSharingHelper().acceptExtraMemberInvite(
+                accountSharingAccounts, getAccountSharingHelper().sendExtraMemberInvite(accountSharingAccounts));
+        if (!invitationSuccess) {
+            throw new RuntimeException("Consumption of extra member slot should be successful");
+        }
+        LOGGER.info("Receiving account - Email Created: {} Password: {}",
+                accountSharingAccounts.getReceivingAccount().getEmail(),
+                accountSharingAccounts.getReceivingAccount().getUserPass());
+        return accountSharingAccounts;
     }
 
     ////////////////////////////
