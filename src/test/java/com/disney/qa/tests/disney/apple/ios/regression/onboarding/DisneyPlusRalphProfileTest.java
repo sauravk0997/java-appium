@@ -40,6 +40,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     private static final String RATING_VALUES = "ratingValues";
     private static final String RECOMMENDED_RATING_ERROR_MESSAGE = "Recommended rating is not present";
     public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
+    public static final String JUNIOR_MODE_NOT_TOGGLED_OFF = "Junior Mode is not toggled OFF";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
@@ -249,11 +250,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         String EXPECTED_RATING = "12";
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+        setAccount(getUnifiedAccountApi()
+                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_NON_US,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), DE);
@@ -264,34 +265,29 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .dateOfBirth(KIDS_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
-                .kidsModeEnabled(true)
+                .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), GERMANY);
 
         setAppToHomeScreen(getUnifiedAccount());
 
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
-        //Dismiss ATT Popup
-        if (isAlertPresent()) {
-            handleGenericPopup(5, 1);
-        }
+        handleOneTrustPopUp();
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        //Dismiss ATT Popup
-        if (isAlertPresent()) {
-            handleGenericPopup(5, 1);
-        }
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        Assert.assertTrue(editProfile.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         swipeUp(2, 500);
-        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+        String toggleOffValue = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_OFF.getText());
+        String toggleOnValue = getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText());
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOffValue, JUNIOR_MODE_NOT_TOGGLED_OFF);
         editProfile.toggleJuniorMode();
         editProfile.waitForUpdatedToastToDisappear();
-        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "On",
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOnValue,
                 "Profile is converted to General Audience");
         swipeDown(2, 500);
         sa.assertTrue(editProfile.isDateFieldNotRequiredLabelPresent(),
@@ -300,9 +296,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.toggleJuniorMode();
         passwordPage.enterPassword(getUnifiedAccount());
         editProfile.waitForUpdatedToastToDisappear();
-        sa.assertEquals(editProfile.getJuniorModeToggleValue(), "Off", "Junior Mode is not toggled OFF");
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOffValue, JUNIOR_MODE_NOT_TOGGLED_OFF);
         swipeUp(2, 500);
-        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(EXPECTED_RATING), "Profile rating is not as expected");
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(EXPECTED_RATING),
+                "Profile rating is not as expected");
         sa.assertAll();
     }
 
