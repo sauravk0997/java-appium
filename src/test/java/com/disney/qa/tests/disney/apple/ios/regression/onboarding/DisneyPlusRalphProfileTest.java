@@ -278,7 +278,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
-        Assert.assertTrue(editProfile.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         swipeUp(2, 500);
         String toggleOffValue = getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_OFF.getText());
