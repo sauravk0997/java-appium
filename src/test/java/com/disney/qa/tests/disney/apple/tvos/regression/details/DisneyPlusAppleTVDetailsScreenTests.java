@@ -338,10 +338,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66642"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67716"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
     public void verifyNavigationFromWatchlistToDetailsPage() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -354,12 +353,11 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         logIn(getUnifiedAccount());
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
-        sa.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
 
         watchListPage.clickSelect();
-        sa.assertTrue(detailsPage.isOpened(), "Movies details page did not launch");
-        sa.assertTrue(detailsPage.isBriefDescriptionPresent(description), "description is not present");
-        sa.assertAll();
+        Assert.assertTrue(detailsPage.isOpened(), "Movies details page did not launch");
+        Assert.assertTrue(detailsPage.isBriefDescriptionPresent(description), "description is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102803"})
