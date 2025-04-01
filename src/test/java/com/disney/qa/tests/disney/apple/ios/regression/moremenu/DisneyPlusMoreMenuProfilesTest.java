@@ -1232,7 +1232,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
 
         updateProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
