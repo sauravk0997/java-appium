@@ -39,14 +39,14 @@ public class DisneyPlusAppleTVOriginalsTest extends DisneyPlusAppleTVBaseTest {
                 originalsPage.getFormattedOriginalsTitle(originalContent,1))), "Moving right did not focus the 2nd item in Series");
         originalsPage.moveRight(2, 2);
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
-                originalsPage.getFormattedOriginalsTitle(originalContent,4))), "Moving right 2 did not focus the 3rd item in Series");
+                originalsPage.getFormattedOriginalsTitle(originalContent,3))), "Moving right 2 did not focus the 3rd item in Series");
         originalsPage.moveLeft(3, 2);
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
                 originalsPage.getFormattedOriginalsTitle(originalContent,0))), "Moving left 3 times did not focus the 1st item in Series");
         originalsPage.moveDown(1, 2);
         //First 6 cells visible in Series collection, so 7th is 1st item in Movies
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
-                originalsPage.getFormattedOriginalsTitle(originalContent, 7))), "Moving down did not focus the 1st item in Movies");
+                originalsPage.getFormattedOriginalsTitle(originalContent, 6))), "Moving down did not focus the 1st item in Movies");
         originalsPage.moveUp(1, 2);
         sa.assertTrue(originalsPage.isFocused(homePage.getTypeCellLabelContains(
                 originalsPage.getFormattedOriginalsTitle(originalContent, 0))), "Moving up did not focus the 1st item in Series");

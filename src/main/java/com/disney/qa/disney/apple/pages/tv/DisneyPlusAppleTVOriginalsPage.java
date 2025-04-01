@@ -24,8 +24,6 @@ public class DisneyPlusAppleTVOriginalsPage extends DisneyPlusOriginalsIOSPageBa
     }
 
     public String getFormattedOriginalsTitle(List<String> list, int title) {
-
-
         String formattedTitle = list.get(title).split(",")[0];
         return formattedTitle;
     }
