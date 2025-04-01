@@ -176,6 +176,29 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66644"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyUpAndDownArrowFocusesPlayButton() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(END_GAME.getTitle());
+        searchPage.clickSearchResult(END_GAME.getTitle());
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getPlayButton()),
+                "Play button was not focused when details page opened");
+        detailsPage.moveDown(1,1);
+        detailsPage.moveUp(1,1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getPlayButton()),
+                "Play button was not focused after navigating up from details tab");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102800"})
     @Test(groups = {TestGroup.DETAILS_PAGE, US})
     public void verifyVODReplayAppearance() {
