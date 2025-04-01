@@ -437,7 +437,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Set espnLiveEvent =
                 getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
         if (espnLiveEvent == null) {
-            throw new SkipException("Error");
+            throw new SkipException(errorMessage);
         }
         try {
             titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
