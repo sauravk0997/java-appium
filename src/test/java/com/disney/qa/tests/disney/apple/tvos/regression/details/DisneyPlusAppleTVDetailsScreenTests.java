@@ -356,11 +356,74 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         //Navigate to watchlist
         detailsPage.clickMenuTimes(1,1);
-        homePage.pause(1);
+        homePage.waitForPresenceOfAnElement(homePage.getGlobalNav());
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
         sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isPresent(),
+                "The asset was not found in the watchlist");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102804"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyLiveEventWatchlist() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+
+        String errorMessage = "Skipping test, no events are available";
+        String titleEvent = "";
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        Set espnLiveEvent =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
+        if (espnLiveEvent == null) {
+            throw new SkipException("Error");
+        }
+        try {
+            titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+            LOGGER.info("Event title: {}", titleEvent);
+            homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(titleEvent));
+            // Verify airing badge to validate if there is a live event occurring
+            String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
+                    .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
+            LOGGER.info("Airing badge: {}", airingBadge);
+            if (airingBadge.equals(UPCOMING)) {
+                throw new SkipException(errorMessage);
+            }
+            // Open live event
+            detailsPage.getTypeCellLabelContains(titleEvent).click();
+        } catch(Exception e) {
+            Assert.fail("Error" + e.getMessage());
+        }
+
+        Assert.assertTrue(liveEventModal.isOpened(), "Live event modal did not open");
+        liveEventModal.getDetailsButton().click();
+        // Validate details page and add item to the watchlist
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getAddToWatchlistText().isElementPresent(),
+                "Item is not available to be added to the watchlist");
+        detailsPage.getWatchlistButton().click();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isElementPresent(),
+                "Item was not added to the watchlist");
+
+        //Navigate to watchlist
+        detailsPage.clickMenuTimes(1,1);
+
+        homePage.waitForPresenceOfAnElement(homePage.getGlobalNav());
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(titleEvent));
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(titleEvent).isPresent(),
                 "The asset was not found in the watchlist");
         sa.assertAll();
     }
