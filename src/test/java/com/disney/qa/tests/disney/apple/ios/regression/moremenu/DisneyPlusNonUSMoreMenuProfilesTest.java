@@ -65,7 +65,6 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
         }
-        moreMenu.clickAddProfile();
         whoIsWatching.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
