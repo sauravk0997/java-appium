@@ -31,6 +31,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         initialSetup();
         handleAlert();
@@ -56,6 +57,9 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
 
         moreMenu.clickMoreTab();
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
