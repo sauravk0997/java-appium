@@ -504,7 +504,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         int heightValue;
         int tapOffset;
 
-        Dimension screenSize = driver.manage().window().getSize();
+        Dimension screenSize = getDriver().manage().window().getSize();
         int screenWidth = screenSize.getWidth();
 
         if (screenWidth < 768) {
