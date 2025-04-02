@@ -390,7 +390,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68876"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
     public void verifyHomeTitleSelectionRedirectsToDetailsPage() {
         int titlesLimit = 10;
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
