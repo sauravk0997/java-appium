@@ -104,7 +104,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecommendedForYouContainer() {
         int limit = 30;
-        int swipeCount = 5;
+        int verticalSwipeCount = 5;
+        int horizontalSwipeCount = 30;
+        int swipeDuration = 100;
         String recommendedContainerNotFound = "Recommended For You container was not found";
         String recommendedHeaderNotFound = "Recommended For You Header was not found";
         CollectionConstant.Collection collection = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
@@ -115,9 +117,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
-        homePage.swipeTillCollectionTappable(collection, Direction.UP, swipeCount);
-        sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
-        sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
+        homePage.swipeTillCollectionTappable(collection, Direction.UP, verticalSwipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
+        Assert.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
 
         List<String> recommendationTitlesFromApi = getContainerTitlesFromApi
                 (CollectionConstant.getCollectionName(collection), limit);
@@ -130,27 +132,23 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         ExtendedWebElement lastTitle = homePage.getCellElementFromContainer(
                 collection,
                 recommendationTitlesFromApi.get(size - 1));
-        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)),
+        Assert.assertEquals(firstCellTitle, recommendationTitlesFromApi.get(0),
                 "UI title value not matched with API title value");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection),
-                lastTitle,
-                30,
-                Direction.LEFT);
+        ExtendedWebElement recommendedForYouCollection = homePage.getCollection(collection);
+        homePage.swipePageTillElementPresent(lastTitle, horizontalSwipeCount, recommendedForYouCollection,
+                Direction.LEFT, swipeDuration);
         Assert.assertTrue(lastTitle.isPresent(),
                 "User is not able to swipe through end of container");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection),
-                firstTitle,
-                30,
-                Direction.RIGHT);
+        homePage.swipePageTillElementPresent(firstTitle, horizontalSwipeCount, recommendedForYouCollection,
+                Direction.RIGHT, swipeDuration);
         Assert.assertTrue(firstTitle.isPresent(),
                 "User is not able to swipe to the beginning of container");
 
         firstTitle.click();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle),
-                "Content title not matched");
+        sa.assertEquals(detailsPage.getMediaTitle(), firstCellTitle, "Content title not matched");
         detailsPage.clickCloseButton();
         sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
