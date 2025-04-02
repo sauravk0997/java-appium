@@ -27,6 +27,7 @@ public class CollectionConstant {
         KIDS_MICKEY_AND_FRIENDS,
         KIDS_PRINCESSES_AND_FAIRY_TALES,
         LIVE_AND_UPCOMING_FROM_ESPN, //live collection for D+ premium user
+        NEWLY_ADDED,
         NEW_TO_DISNEY,
         ORIGINALS,
         ORIGINALS_DISNEY_CAROUSEL,
@@ -82,6 +83,8 @@ public class CollectionConstant {
                 return "4e177574-aed4-4ad5-8d01-6fc7513bd3e5";
             case LIVE_AND_UPCOMING_FROM_ESPN:
                 return "3fd573af-c11c-4f29-a201-b543829aad21";
+            case NEWLY_ADDED:
+                return "210555fa-3fbd-4565-85c4-1b785d08be91";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:

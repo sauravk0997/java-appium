@@ -340,6 +340,28 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67716"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
+    public void verifyNavigationFromWatchlistToDetailsPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(), getUnifiedAccount().getAccountToken(),
+                getUnifiedAccount().getProfileId(),
+                getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
+        ExploreContent movieApiContent = getMovieApi(END_GAME.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String description = movieApiContent.getDescription().getBrief();
+
+        logIn(getUnifiedAccount());
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+
+        watchListPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), "Movies details page did not launch");
+        Assert.assertTrue(detailsPage.isBriefDescriptionPresent(description), "description is not present");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102803"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifyUpcomingEventWatchlist() {
@@ -388,6 +410,28 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isPresent(),
                 ASSET_NOT_FOUND_IN_WATCHLIST);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68876"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
+    public void verifyHomeTitleSelectionRedirectsToDetailsPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        homePage.moveDownUntilCollectionContentIsFocused(
+                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 5);
+        String firstNewlyAddedTitleName = homePage.getFirstCellTitleFromContainer(
+                CollectionConstant.Collection.NEWLY_ADDED).split(",")[0];
+
+        homePage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1,1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(), firstNewlyAddedTitleName,
+                "Current details page title doesn't match API fetched title");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102804"})
