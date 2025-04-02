@@ -410,6 +410,28 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68876"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
+    public void verifyHomeTitleSelectionRedirectsToDetailsPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        homePage.moveDownUntilCollectionContentIsFocused(
+                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 5);
+        String firstNewlyAddedTitleName = homePage.getFirstCellTitleFromContainer(
+                CollectionConstant.Collection.NEWLY_ADDED).split(",")[0];
+
+        homePage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1,1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(), firstNewlyAddedTitleName,
+                "Current details page title doesn't match API fetched title");
+    }
+
     public String navigateToUpcomingEvent(Set event) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String upcomingEvent = "";
