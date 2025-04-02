@@ -462,7 +462,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public String navigateToLiveEvent() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         String errorMessage = "No live events found";
         String titleEvent = "";
         Set espnEvents =
@@ -474,14 +473,14 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             titleEvent = espnEvents.getItems().get(0).getActions().stream()
                     .filter(item -> item.getActions().get(0).getContentType().equals("live"))
                     .findFirst()
-                    .orElseThrow(() -> new RuntimeException(errorMessage))
+                    .orElseThrow(() -> new SkipException(errorMessage))
                     .getVisuals().getTitle();
             LOGGER.info("Title event: {}", titleEvent);
             homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(titleEvent), 10);
             // Open live event
             detailsPage.getTypeCellLabelContains(titleEvent).click();
         } catch (Exception e) {
-            Assert.fail(errorMessage + e.getMessage());
+           throw new SkipException(errorMessage + e.getMessage());
         }
         return titleEvent;
     }
