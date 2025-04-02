@@ -471,7 +471,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             throw new SkipException(errorMessage);
         }
         try {
-            LOGGER.info(" espnEvents *** {}", espnEvents.getItems().get(0).getVisuals().getTitle());
             titleEvent = espnEvents.getItems().get(0).getActions().stream()
                     .filter(item -> item.getActions().get(0).getContentType().equals("live"))
                     .findFirst()
