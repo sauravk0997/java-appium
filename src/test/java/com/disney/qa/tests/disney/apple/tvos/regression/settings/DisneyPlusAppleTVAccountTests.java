@@ -93,6 +93,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                                 DictionaryKeys.OOH_VERIFY_DEVICE_DISMISS_CTA.getText())).isPresent(),
                 "No Thanks/Dismiss button not displayed");
+        homePage.clickSelect();
+        sa.assertTrue(homePage.getStaticTextByLabelContains(getLocalizationUtils()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                DictionaryKeys.CHECK_EMAIL_TITLE.getText())).isPresent(),
+                "User not navigated to OTP page");
         sa.assertAll();
     }
 
