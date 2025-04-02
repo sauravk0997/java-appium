@@ -433,6 +433,46 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Current details page title doesn't match API fetched title");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102804"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyLiveEventWatchlist() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        String titleEvent = navigateToLiveEvent();
+
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
+        liveEventModal.getDetailsButton().click();
+        // Validate details page and add item to the watchlist
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getAddToWatchlistText().isElementPresent(),
+                "Item is not available to be added to the watchlist");
+        detailsPage.getWatchlistButton().click();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isElementPresent(),
+                "Item was not added to the watchlist");
+
+        //Navigate to watchlist
+        detailsPage.clickMenuTimes(1, 1);
+
+        homePage.waitForPresenceOfAnElement(homePage.getGlobalNav());
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(titleEvent));
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(titleEvent).isPresent(),
+                ASSET_NOT_FOUND_IN_WATCHLIST);
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102805"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifyWatchLiveEvent() {
