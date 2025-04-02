@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
-import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -392,7 +391,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68876"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
     public void verifyHomeTitleSelectionRedirectsToDetailsPage() {
-        int titlesLimit = 10;
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
@@ -401,14 +399,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         homePage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 5);
-
-        List<Item> newlyAddedTitlesFromApi = getExploreAPIItemsFromSet(
-                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), titlesLimit);
-        Assert.assertNotNull(newlyAddedTitlesFromApi,
-                "No items for 'Newly Added' collection were fetched from Explore API");
-        String firstNewlyAddedTitleName = newlyAddedTitlesFromApi.get(0).getVisuals().getTitle();
-        Assert.assertNotNull(firstNewlyAddedTitleName,
-                "First 'Newly Added' element did not have a title");
+        String firstNewlyAddedTitleName = homePage.getFirstCellTitleFromContainer(
+                CollectionConstant.Collection.NEWLY_ADDED).split(",")[0];
 
         homePage.clickSelect();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
