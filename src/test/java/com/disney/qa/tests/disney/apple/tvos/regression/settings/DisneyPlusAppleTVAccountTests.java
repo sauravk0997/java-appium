@@ -65,7 +65,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "OOH Soft Block page subcopy 2 not displayed");
         sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_CTA.getText())).isPresent(),
+                                DictionaryKeys.OOH_CONTINUE_CTA.getText())).isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
