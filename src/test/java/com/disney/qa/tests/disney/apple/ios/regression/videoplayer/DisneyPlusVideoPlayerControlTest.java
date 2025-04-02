@@ -10,7 +10,6 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.lang3.time.StopWatch;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
@@ -19,7 +18,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.time.temporal.ValueRange;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
@@ -29,7 +27,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.MARVELS;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
-    
+
     protected static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
 
@@ -483,13 +481,16 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(content);
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
-        detailsPage.waitForDetailsPageToOpen();
-        detailsPage.clickPlayButton().waitForVideoToStart().isOpened();
+        searchPage.getDynamicAccessibilityId(content).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
     }
 }
