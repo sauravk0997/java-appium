@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.home;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -29,6 +30,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121503"})
     @Test(groups = {TestGroup.HOME, TestGroup.HULU, US})
     public void verifyStandaloneESPNAndHuluBrandTiles() {
+        SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
@@ -43,20 +45,25 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "ESPN brand tile was not present on home page screen");
 
         homePage.moveDownFromHeroTileToBrandTile();
-        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
-        Assert.assertTrue(
+
+
+//        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
+        sa.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)),
                 "Hulu Hub page did not open");
-        brandPage.clickBack();
+        brandPage.clickMenuTimes(1, 2);
 
         homePage.waitForPresenceOfAnElement(
                 homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)));
-        homePage.clickUp();
+        homePage.moveUp(1, 2);
         homePage.moveDownFromHeroTileToBrandTile();
-        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
-        Assert.assertTrue(
+//        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
+        homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
+        sa.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121502"})

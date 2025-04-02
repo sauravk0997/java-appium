@@ -36,7 +36,7 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isBrandScreenDisplayed(String brandName) {
-        return getDynamicAccessibilityId(
+        return getTypeCellLabelContains(
                 String.format(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
                                 .getDictionaryItem(
                                         DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
