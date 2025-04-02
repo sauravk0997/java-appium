@@ -419,7 +419,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Item was not added to the watchlist");
 
         //Navigate to watchlist
-        detailsPage.clickMenuTimes(1,1);
+        detailsPage.clickMenuTimes(1, 1);
 
         homePage.waitForPresenceOfAnElement(homePage.getGlobalNav());
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
@@ -436,25 +436,28 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         String errorMessage = "No live events found";
         String titleEvent = "";
-        Set espnLiveEvent =
+        Set espnEvents =
                 getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
-        if (espnLiveEvent == null) {
+        if (espnEvents == null) {
             throw new SkipException(errorMessage);
         }
         try {
-            titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
-            LOGGER.info("Event title: {}", titleEvent);
-            homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(titleEvent));
-            // Verify airing badge to validate if there is a live event occurring
+            titleEvent = espnEvents.getItems().get(0).getActions().get(0).getActions().stream()
+                    .filter(item -> item.getContentType().equals("live"))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException(errorMessage))
+                    .getVisuals().getTitle();
+            LOGGER.info("Title event: {}", titleEvent);
+            homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(titleEvent), 10);
+            // Verify airing badge is present
             String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
                     .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
             LOGGER.info("Airing badge: {}", airingBadge);
-            if (airingBadge.equals(UPCOMING)) {
-                throw new SkipException(errorMessage);
-            }
+            Assert.assertTrue(homePage.getStaticTextByLabelContains(airingBadge).isPresent(),
+                    "Airing live badge is not present");
             // Open live event
             detailsPage.getTypeCellLabelContains(titleEvent).click();
-        } catch(Exception e) {
+        } catch (Exception e) {
             Assert.fail(errorMessage + e.getMessage());
         }
         return titleEvent;
