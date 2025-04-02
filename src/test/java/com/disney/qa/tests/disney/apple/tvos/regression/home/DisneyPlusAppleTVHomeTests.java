@@ -139,7 +139,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
 //        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
-        Assert.assertTrue(
+        pause(10);
+        getDriver().getPageSource();
+        sa.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)),
                 "Hulu Hub page did not open");
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(),
