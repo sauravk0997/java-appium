@@ -520,7 +520,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             // Open live event
             detailsPage.getTypeCellLabelContains(titleEvent).click();
         } catch (Exception e) {
-           throw new SkipException(errorMessage + e.getMessage());
+            throw new SkipException(errorMessage + e.getMessage());
         }
         return titleEvent;
     }
