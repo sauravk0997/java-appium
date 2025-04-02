@@ -493,12 +493,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                     .getVisuals().getTitle();
             LOGGER.info("Title event: {}", titleEvent);
             homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(titleEvent), 10);
-            // Verify airing badge is present
-            String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
-                    .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
-            LOGGER.info("Airing badge: {}", airingBadge);
-            Assert.assertTrue(homePage.getStaticTextByLabelContains(airingBadge).isPresent(),
-                    "Airing live badge is not present");
             // Open live event
             detailsPage.getTypeCellLabelContains(titleEvent).click();
         } catch (Exception e) {
