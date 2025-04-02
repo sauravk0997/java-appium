@@ -1225,14 +1225,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(KIDS_PROFILE)
-                .dateOfBirth(KIDS_DOB)
+                .dateOfBirth(null)
                 .language(getLocalizationUtils().getUserLanguage())
-                .avatarId(BABY_YODA)
-                .kidsModeEnabled(true)
+                .avatarId(null)
+                .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
 
         updateProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
