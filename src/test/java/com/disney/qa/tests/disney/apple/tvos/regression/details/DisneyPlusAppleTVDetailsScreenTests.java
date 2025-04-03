@@ -49,6 +49,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String DESCRIPTION_NOT_PRESENT = "Description is not present";
     private static final String WATCHLIST_NOT_PRESENT = "Watchlist button is not present";
     private static final String BACKGROUND_IMAGE_NOT_PRESENT = "Background image is not present";
+    private static final String ASSET_NOT_FOUND_IN_WATCHLIST = "The asset was not found in the watchlist";
+    private static final String LIVE_MODAL_NOT_OPEN = "Live event modal did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66642"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
@@ -282,7 +284,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         } catch(Exception e) {
             Assert.fail(errorMessage + e.getMessage());
         }
-        Assert.assertTrue(liveEventModal.isOpened(), "Live event modal did not open");
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
         liveEventModal.getDetailsButton().click();
         // Validate logo and play button
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -401,12 +403,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         //Navigate to watchlist
         detailsPage.clickMenuTimes(1,1);
-        homePage.pause(1);
+        homePage.waitForPresenceOfAnElement(homePage.getGlobalNav());
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
         detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
         sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isPresent(),
-                "The asset was not found in the watchlist");
+                ASSET_NOT_FOUND_IN_WATCHLIST);
         sa.assertAll();
     }
 
@@ -430,6 +432,72 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
         Assert.assertEquals(detailsPage.getDetailsTabTitle(), firstNewlyAddedTitleName,
                 "Current details page title doesn't match API fetched title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102804"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyLiveEventWatchlist() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        String titleEvent = navigateToLiveEvent();
+
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
+        liveEventModal.getDetailsButton().click();
+        // Validate details page and add item to the watchlist
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getAddToWatchlistText().isElementPresent(),
+                "Item is not available to be added to the watchlist");
+        detailsPage.getWatchlistButton().click();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isElementPresent(),
+                "Item was not added to the watchlist");
+
+        //Navigate to watchlist
+        detailsPage.clickMenuTimes(1, 1);
+
+        homePage.waitForPresenceOfAnElement(homePage.getGlobalNav());
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(titleEvent));
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(titleEvent).isPresent(),
+                ASSET_NOT_FOUND_IN_WATCHLIST);
+        sa.assertAll();
+    }
+
+    public String navigateToLiveEvent() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        String errorMessage = "No live events found";
+        String titleEvent = "";
+        Set espnEvents =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
+        if (espnEvents == null) {
+            throw new SkipException(errorMessage);
+        }
+        try {
+            titleEvent = espnEvents.getItems().get(0).getActions().stream()
+                    .filter(item -> item.getActions().get(0).getContentType().equals("live"))
+                    .findFirst()
+                    .orElseThrow(() -> new SkipException(errorMessage))
+                    .getVisuals().getTitle();
+            LOGGER.info("Title event: {}", titleEvent);
+            homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(titleEvent), 10);
+            // Open live event
+            detailsPage.getTypeCellLabelContains(titleEvent).click();
+        } catch (Exception e) {
+            throw new SkipException(errorMessage + e.getMessage());
+        }
+        return titleEvent;
     }
 
     public String navigateToUpcomingEvent(Set event) {
