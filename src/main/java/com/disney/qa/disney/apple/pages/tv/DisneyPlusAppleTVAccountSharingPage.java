@@ -53,13 +53,13 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     }
 
     public boolean isOOHVerifyDeviceSubCopyPresent() {
-        return getStaticTextByLabel(getLocalizationUtils()
+        return getStaticTextByLabelContains(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                         DictionaryKeys.OOH_VERIFY_DEVICE_SUBCOPY.getText())).isPresent();
     }
 
     public boolean isOOHVerifyDeviceSubCopyTwoPresent() {
-        return getStaticTextByLabel(getLocalizationUtils()
+        return getStaticTextByLabelContains(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                         DictionaryKeys.OOH_VERIFY_DEVICE_SUBCOPY_2.getText())).isPresent();
     }
