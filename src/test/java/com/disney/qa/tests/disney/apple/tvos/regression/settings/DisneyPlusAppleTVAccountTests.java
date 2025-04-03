@@ -75,7 +75,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHVerifyDeviceDismissButton().isPresent(),
                 "No Thanks/Dismiss button not displayed");
         homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isAccountSharingOTPPagePresent(),
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 "User not navigated to OTP page");
         sa.assertAll();
     }
@@ -97,7 +97,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
                 "OOH Verify Device headline/screen not displayed");
         homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isAccountSharingOTPPagePresent(),
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 "User not navigated to OTP page");
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),

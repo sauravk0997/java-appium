@@ -76,7 +76,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                         DictionaryKeys.OOH_VERIFY_DEVICE_DISMISS_CTA.getText()));
     }
 
-    public boolean isAccountSharingOTPPagePresent() {
+    public boolean isOOHEnterOtpPagePresent() {
         return getStaticTextByLabelContains(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.CHECK_EMAIL_TITLE.getText())).isPresent();
