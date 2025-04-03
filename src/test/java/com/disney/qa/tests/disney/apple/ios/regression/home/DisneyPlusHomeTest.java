@@ -69,14 +69,14 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.getTypeOtherContainsName(NEWLY_ADDED).isPresent(),
                 "'Newly Added' collection was not found");
         homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.NEWLY_ADDED);
-        BufferedImage recommendedForYouLastTileInView = getElementImage(
+        BufferedImage collectionLastTileInView = getElementImage(
                 homePage.getCollection(CollectionConstant.Collection.NEWLY_ADDED));
         homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.NEWLY_ADDED);
-        BufferedImage recommendedForYouFirstTileInView = getElementImage(
+        BufferedImage collectionFirstTileInView = getElementImage(
                 homePage.getCollection(CollectionConstant.Collection.NEWLY_ADDED));
         sa.assertTrue(areImagesDifferent(
-                        recommendedForYouFirstTileInView,
-                        recommendedForYouLastTileInView),
+                        collectionFirstTileInView,
+                        collectionLastTileInView),
                 "Recommended For You first tile in view and last tile in view images are the same");
 
         BufferedImage topOfHome = getCurrentScreenView();
