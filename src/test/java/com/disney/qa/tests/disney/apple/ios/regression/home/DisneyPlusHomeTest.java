@@ -77,7 +77,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(areImagesDifferent(
                         collectionFirstTileInView,
                         collectionLastTileInView),
-                "Recommended For You first tile in view and last tile in view images are the same");
+                "Collection first tile in view and last tile in view images are the same");
 
         BufferedImage topOfHome = getCurrentScreenView();
 
