@@ -2,7 +2,7 @@
 <suite verbose="1" name="dmgztvos_reg_fc" annotations="JDK" configfailurepolicy="continue" thread-count="9" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="reporting.project-key" value="DIS"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-tv-4.3.0-fc"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-tv-4.3.0-dev"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
     <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
     <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
@@ -10,7 +10,6 @@
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47916"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XCDQA"/>
     <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XCDQA-123869"/>
-    <parameter name="jenkinsBuild" value="4.3.0.77460"/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_reg_fc"/>
@@ -18,8 +17,6 @@
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4_Gen_9,ATV_4_Gen_10,ATV_4_Gen_11,ATV_4_Gen_12,ATV_4_Gen_13;platformName=iOS;deviceType=tvOS"/>
-    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS,Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
-    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression. Some Groups may not have associated tests at this time."
                value=",Smoke,AccountSharing,Anthology,DetailsPage,Downloads,Home,Hulu,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
