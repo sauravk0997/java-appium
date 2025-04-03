@@ -10,8 +10,6 @@
     <parameter name="provider" value="mcloud"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
     <parameter name="scheduling" value="H 0 * * 1-5"/>
-    <parameter name="stringParam::appcenter_app_name::app center app name"
-               value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <test verbose="1" name="DisneyPlus tvOS Disable Jarvis Config on ATV_4_Gen_12">
         <parameter name="tvOSDeviceName" value="ATV_4_Gen_12"/>
