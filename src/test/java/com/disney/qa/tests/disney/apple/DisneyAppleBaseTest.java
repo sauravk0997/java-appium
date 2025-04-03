@@ -22,7 +22,6 @@ import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
 import com.disney.qa.api.search.UnifiedSearchApi;
-import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.IOSUtils;
@@ -34,11 +33,9 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.config.Configuration;
-import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.proxy.ZebrunnerProxyBuilder;
 import io.appium.java_client.remote.MobilePlatform;
-import io.appium.java_client.remote.options.SupportsAppOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
@@ -50,7 +47,6 @@ import org.slf4j.LoggerFactory;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
 import org.testng.ITestContext;
@@ -88,35 +84,35 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
+    private static final String S3_TVOS_BUILD_4_3_0_DEV =
+            "https://testfairy-disney.s3.amazonaws.com/releases/46/868c67bccb7a7b5b7e48626c3bd1cc1e8055a134/" +
+                    "Disney-Dominguez_Non-IAP_Prod_Enterprise_tvOS-4.3.0-77460.ipa?X-Amz-Content-Sha256=" +
+                    "UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=" +
+                    "AKIATDHZWC54HSUEIBPE%2F20250402%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=" +
+                    "20250402T190446Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=" +
+                    "5b34c07bba7ce5a3e176fbe6aef0e84cc693551d1b766f30ee67bfc804b721ed";
+    private static final String S3_IOS_BUILD_4_3_0_DEV =
+            "https://testfairy-disney.s3.amazonaws.com/releases/46/f9c1fc92165e67537583c08759627ed8edfd0e55/" +
+                    "Disney-Dominguez_iOS_Enterprise_Prod-4.3.0-77460.ipa?X-Amz-Content-Sha256=" +
+                    "UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=" +
+                    "AKIATDHZWC54HSUEIBPE%2F20250402%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=" +
+                    "20250402T215935Z&X-Amz-SignedHeaders=" +
+                    "host&X-Amz-Expires=86400&X-Amz-Signature=" +
+                    "e4ccfe9f9febb782f49ac038f20b5f3d7537961583c4a5e8728e9aa0f2ddde44";
+
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
     ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
             ThreadLocal.withInitial(CreateUnifiedAccountRequest::new);
 
-    private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
-        @Override
-        protected DisneyContentApiChecker initialize() {
-            if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                return new DisneyContentApiChecker(MobilePlatform.TVOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                        DisneyConfiguration.getPartner());
-            } else {
-                return new DisneyContentApiChecker(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-            }
-        }
-    };
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = AppCenterManager.getInstance()
-                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                            .orElseThrow(
-                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
-                    .getVersion();
-            LOGGER.info("version:{}", version);
+            LOGGER.info("version:{}", APP_VERSION);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), version);
+                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), APP_VERSION);
             } else {
-                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version);
+                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, APP_VERSION);
             }
         }
     };
@@ -278,13 +274,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     @BeforeSuite(alwaysRun = true)
     public void setXRayExecution() {
-        // QCE-545 Jenkins- XML: Set x-ray execution key dynamically
-        /*
-         * Register custom parameter in TestNG suite xml
-         * <parameter name="stringParam::reporting.tcm.xray.test-execution-key::XRay test execution value" value="XWEBQAS-31173"/>
-         *
-         * Run a job and provide updated execution key if necessary
-         */
         Configuration.get(DisneyConfiguration.Parameter.REPORTING_TCM_XRAY_TEST_EXECUTION_KEY).ifPresent(key -> {
             LOGGER.info("{} {} will be assigned to run", "reporting.tcm.xray.test-execution-key", key);
             Xray.setExecutionKey(key);
@@ -296,10 +285,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         R.CONFIG.put("capabilities.fullReset", "true");
     }
 
+    @BeforeSuite(alwaysRun = true)
+    public final void initApp() {
+        if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
+            LOGGER.info("Installing tvOS build 4.3.0-77460...");
+            R.CONFIG.put("capabilities.app", S3_TVOS_BUILD_4_3_0_DEV);
+        } else {
+            LOGGER.info("Installing iOS build 4.3.0-77460...");
+            R.CONFIG.put("capabilities.app", S3_IOS_BUILD_4_3_0_DEV);
+        }
+    }
+
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
         List<String> groups = Arrays.asList(result.getMethod().getGroups());
-        String country;
         if (groups.contains(US)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
