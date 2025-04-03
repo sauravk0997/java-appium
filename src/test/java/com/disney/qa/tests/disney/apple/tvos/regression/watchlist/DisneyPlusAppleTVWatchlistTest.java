@@ -77,6 +77,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                 getUnifiedAccount().getAccountToken(),getUnifiedAccount().getProfileId(), infoBlockList.get(i)));
 
         logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
         int watchlistItems = watchListPage.getNumberOfItemsByCell();
         sa.assertTrue(titles.size() == watchlistItems, "Number of added items did not match.");
