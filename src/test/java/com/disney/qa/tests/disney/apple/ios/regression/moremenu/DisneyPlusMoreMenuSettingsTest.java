@@ -24,15 +24,13 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RA
 public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
 
     private static final String ADULT_DOB = "1923-10-23";
-    private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String DEFAULT_PROFILE = "Test";
     private static final String KIDS_DOB = "2018-01-01";
     private static final String KIDS_PROFILE = "KIDS";
     private static final String TEST_USER = "Test User";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67276"})
-    @Test(description = "Verify: More Menu Page UI", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION,
-            TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
