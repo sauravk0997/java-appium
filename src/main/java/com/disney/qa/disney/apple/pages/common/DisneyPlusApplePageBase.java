@@ -965,6 +965,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isGlobalNavExpanded() {
+        waitForPresenceOfAnElement(globalNavBarView);
         if (globalNavBarView.isElementPresent(TEN_SEC_TIMEOUT)) {
             Dimension size = globalNavBarView.getSize();
             int x = size.getWidth();
