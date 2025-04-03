@@ -57,6 +57,7 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
 
         minorPage.waitForPresenceOfAnElement(minorPage.getDismissButton());
         minorPage.clickDismissButton();
+        handleAlert();
         Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isLogInButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
         softAssert.assertAll();
