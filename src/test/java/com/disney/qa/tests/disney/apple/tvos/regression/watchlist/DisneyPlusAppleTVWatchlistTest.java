@@ -6,7 +6,6 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVDetailsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSearchPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWatchListPage;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -77,6 +76,7 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                 getUnifiedAccount().getAccountToken(),getUnifiedAccount().getProfileId(), infoBlockList.get(i)));
 
         logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
         int watchlistItems = watchListPage.getNumberOfItemsByCell();
         sa.assertTrue(titles.size() == watchlistItems, "Number of added items did not match.");
