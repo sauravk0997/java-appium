@@ -1,14 +1,14 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVAccountSharingPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVOneTimePasscodePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSettingsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -48,56 +48,65 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         String email = "accountsharingsofttest@disneyplustesting.com";
         String password = "Test1234!";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
         loginWithAccountSharingUser(email, password);
 
-        sa.assertTrue(homePage.getStaticTextByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_SOFT_BLOCK_HEADLINE.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 "OOH Soft Block page headline not displayed");
-        sa.assertTrue(homePage.getStaticTextByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_SOFT_BLOCK_SUBCOPY.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyPresent(),
                 "OOH Soft Block page subcopy not displayed");
-        sa.assertTrue(homePage.getStaticTextByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_SOFT_BLOCK_SUBCOPY_2.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyTwoPresent(),
                 "OOH Soft Block page subcopy 2 not displayed");
-        sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_CONTINUE_CTA.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
-        sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_LOGOUT_CTA.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockLogOutButton().isPresent(),
                 "Log out button not displayed");
         homePage.clickSelect();
 
-        sa.assertTrue(homePage.getStaticTextByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_HEADLINE.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
                 "OOH Verify Device headline/screen not displayed");
-        sa.assertTrue(homePage.getStaticTextByLabelContains(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_SUBCOPY.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyPresent(),
                 "OOH Verify Device subcopy not displayed");
-        sa.assertTrue(homePage.getStaticTextByLabelContains(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_SUBCOPY_2.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
                 "OOH Verify Device subcopy, 'learn more' not displayed");
-        sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_OTP_CTA.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHVerifyDeviceButton().isPresent(),
                 "Verify Device button not displayed");
-        sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_DISMISS_CTA.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHVerifyDeviceDismissButton().isPresent(),
                 "No Thanks/Dismiss button not displayed");
         homePage.clickSelect();
-        sa.assertTrue(homePage.getStaticTextByLabelContains(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.CHECK_EMAIL_TITLE.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isAccountSharingOTPPagePresent(),
                 "User not navigated to OTP page");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118365"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHSoftBlockOTPConfirmationPage() {
+        String email = "qait.disneystreaming+17436766163694450disneystreaming@gmail.com";
+        String password = "M1ck3yM0us3#";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
+                "OOH Soft Block page headline not displayed");
+        homePage.clickSelect();
+
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
+                "OOH Verify Device headline/screen not displayed");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isAccountSharingOTPPagePresent(),
+                "User not navigated to OTP page");
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                "Confirmation page not displayed after entering OTP");
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                "'Continue To Disney+' button not displayed");
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        homePage.waitForHomePageToOpen();
+        sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
         sa.assertAll();
     }
 
@@ -114,5 +123,24 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
         passcodePage.clickLoginWithPassword();
         passwordPage.logInWithPasswordLocalized(password);
+    }
+
+    public String getOTPFromApi(String email) {
+        int emailAPILatency = 10;
+        try {
+            String firstOTP = getEmailApi().getDisneyOTP(email);
+            pause(emailAPILatency);
+            String secondOTP = getEmailApi().getDisneyOTP(email);
+
+            if (!secondOTP.equals(firstOTP)) {
+                LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+                return secondOTP;
+            } else {
+                LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+                return firstOTP;
+            }
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

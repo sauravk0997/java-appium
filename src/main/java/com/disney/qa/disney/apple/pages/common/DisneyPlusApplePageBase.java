@@ -359,6 +359,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement backgroundImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name ENDSWITH 'ProfileCell'`]")
     private ExtendedWebElement genericProfileCell;
+    @ExtendedFindBy(accessibilityId = "textFieldInputCode")
+    protected ExtendedWebElement otpField;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1593,5 +1595,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getGlobalNav() {
         return globalNavBarView;
+    }
+
+    public void enterOtpOnModal(String otp) {
+        otpField.click();
+        waitForPresenceOfAnElement(getStaticTextByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, EMAIL_CODE_TITLE.getText())));
+        typeTextView.type(otp);
+        moveDown(1,1);
+        clickSelect();
     }
 }
