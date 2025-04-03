@@ -100,7 +100,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                     "host&X-Amz-Expires=86400&X-Amz-Signature=" +
                     "e4ccfe9f9febb782f49ac038f20b5f3d7537961583c4a5e8728e9aa0f2ddde44";
 
-
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
     ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
@@ -288,15 +287,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     @BeforeSuite(alwaysRun = true)
     public final void initApp() {
-        String buildType;
         if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
             LOGGER.info("Installing tvOS build 4.3.0-77460...");
-            buildType = S3_TVOS_BUILD_4_3_0_DEV;
+            R.CONFIG.put("capabilities.app", S3_TVOS_BUILD_4_3_0_DEV);
         } else {
             LOGGER.info("Installing iOS build 4.3.0-77460...");
-            buildType = S3_IOS_BUILD_4_3_0_DEV;
+            R.CONFIG.put("capabilities.app", S3_IOS_BUILD_4_3_0_DEV);
         }
-        R.CONFIG.put("capabilities.app", buildType);
     }
 
     @BeforeMethod(alwaysRun = true)
