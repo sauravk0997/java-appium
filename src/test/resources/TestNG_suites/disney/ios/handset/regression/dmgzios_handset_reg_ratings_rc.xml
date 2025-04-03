@@ -11,13 +11,10 @@
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
     <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-79915"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.2.0-rc"/>
-    <parameter name="jenkinsBuild" value="4.2.5.77146"/>
-    <parameter name="hiddenParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_handset_reg_ratings_rc"/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
-    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_Xs,iPhone_Xr,iPhone_11_Pro_Max,iPhone_15_1,iPhone_15_5,iPhone_15_Plus_2,iPhone_15_3,iPhone_13_Pro,iPhone_15_Plus_1,iPhone_15_2,iPhone_15_Plus_3,iPhone_15_4;deviceType=Phone;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
