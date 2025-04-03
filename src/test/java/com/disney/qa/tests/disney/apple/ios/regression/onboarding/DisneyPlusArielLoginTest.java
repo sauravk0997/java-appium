@@ -28,7 +28,7 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
         DisneyPlusPasswordIOSPageBase disneyPlusPasswordIOSPageBase = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
-        DisneyPlusAccountIsMinorIOSPageBase disneyPlusAccountIsMinorIOSPageBase = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
+        DisneyPlusAccountIsMinorIOSPageBase minorPage = new DisneyPlusAccountIsMinorIOSPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         //Create Disney account without DOB and Gender
@@ -50,12 +50,13 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         ednaDOBCollectionPage.enterDOB(Person.MINOR.getMonth(), Person.MINOR.getDay(), Person.MINOR.getYear());
         ednaDOBCollectionPage.tapSaveAndContinueButton();
 
-        softAssert.assertTrue(disneyPlusAccountIsMinorIOSPageBase.isOpened(),
+        softAssert.assertTrue(minorPage.isOpened(),
                 "Contact CS screen did not appear.");
-        disneyPlusAccountIsMinorIOSPageBase.clickHelpCenterButton();
+        minorPage.clickHelpCenterButton();
         moreMenu.goBackToDisneyAppFromSafari();
 
-        disneyPlusAccountIsMinorIOSPageBase.clickDismissButton();
+        minorPage.waitForPresenceOfAnElement(minorPage.getDismissButton());
+        minorPage.clickDismissButton();
         Assert.assertTrue(disneyPlusWelcomeScreenIOSPageBase.isLogInButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
         softAssert.assertAll();
