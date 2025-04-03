@@ -815,7 +815,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_the_last_dance_deeplkink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         swipe(detailsPage.getSuggestedTab(), 2);
