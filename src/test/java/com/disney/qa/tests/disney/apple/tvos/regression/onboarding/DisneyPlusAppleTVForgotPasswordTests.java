@@ -215,11 +215,11 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void otpDoesNotWorkAfterFifteenMinutes() {
         SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
                 DISNEY_PLUS_PREMIUM,
@@ -227,31 +227,32 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
                 getLocalizationUtils().getUserLanguage())));
 
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
+        sa.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
 
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(getUnifiedAccount().getEmail());
+        welcomePage.clickLogInButton();
+        loginPage.proceedToPasswordScreen(getUnifiedAccount().getEmail());
 
-        Assert.assertTrue(disneyPlusAppleTVOneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
+        oneTimePasscodePage.waitForPresenceOfAnElement(oneTimePasscodePage.getOneTimePasscode());
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
 
-        disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPassword();
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
+        oneTimePasscodePage.clickLoginWithPassword();
+        passwordPage.clickHavingTroubleLogginInBtn();
 
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Forgot password page did not launch");
+        sa.assertTrue(forgotPasswordPage.isOpened(), "Forgot password page did not launch");
         String otp = getOTPFromApi(getUnifiedAccount());
 
         AtomicInteger count = new AtomicInteger(0);
         IntStream.range(0, 60).forEach(i -> {
             pause(15);
             count.addAndGet(15);
-            Assert.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(),
+            Assert.assertTrue(forgotPasswordPage.isOpened(),
                     String.format("Forgot password screen closed after %d seconds elapsed.", count.get()));
         });
 
-        disneyPlusAppleTVForgotPasswordPage.enterOTP(otp);
-        disneyPlusAppleTVForgotPasswordPage.clickAgreeAndContinue();
+        forgotPasswordPage.enterOTP(otp);
+        forgotPasswordPage.clickAgreeAndContinue();
 
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOtpIncorrectErrorPresent());
+        sa.assertTrue(forgotPasswordPage.isOtpIncorrectErrorPresent());
 
         sa.assertAll();
     }
