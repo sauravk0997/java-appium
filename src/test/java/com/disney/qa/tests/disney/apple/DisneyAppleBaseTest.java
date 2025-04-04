@@ -289,7 +289,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public final void initApp() {
         if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
             LOGGER.info("Installing tvOS build 4.3.0-77460...");
-            R.CONFIG.put("capabilities.app", S3_TVOS_BUILD_4_3_0_DEV);
+            //R.CONFIG.put("capabilities.app", S3_TVOS_BUILD_4_3_0_DEV);
+            R.CONFIG.put("capabilities.app", "appcenter://Disney-Non-IAP-Prod-Enterprise-tvOS/tvOS/PROD/latest");
         } else {
             LOGGER.info("Installing iOS build 4.3.0-77460...");
             R.CONFIG.put("capabilities.app", S3_IOS_BUILD_4_3_0_DEV);
