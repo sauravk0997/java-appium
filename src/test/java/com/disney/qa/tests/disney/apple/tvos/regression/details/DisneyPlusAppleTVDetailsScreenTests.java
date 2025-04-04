@@ -139,7 +139,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66646"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
     public void verifyMovieDetailsVODBookmarkRefresh() {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -147,6 +147,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         String continueWatchingCollection = CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
         int maxCount = 20;
+        String continueButton = "CONTINUE";
 
         logIn(getUnifiedAccount());
 
@@ -170,6 +171,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
         commonPage.clickSelect();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+                "Continue button was not present on details page");
         Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(remainingTime),
                 "Correct remaining time is not reflecting in progress bar on details page");
     }
