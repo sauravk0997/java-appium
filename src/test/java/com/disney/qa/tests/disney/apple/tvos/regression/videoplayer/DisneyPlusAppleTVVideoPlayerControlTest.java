@@ -206,6 +206,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         int totalDurationTime = exploreMovieContent.getDurationMs() / 1000;
 
         logIn(getUnifiedAccount());
+        home.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
         Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayerTVPage.waitForVideoToStart();
