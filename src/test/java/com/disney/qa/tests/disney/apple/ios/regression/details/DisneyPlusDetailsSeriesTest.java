@@ -642,8 +642,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
         //Verify if ratings value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RATING)) {
-            LOGGER.info(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString() + "This is the Rating " +
-                    "Explore API Data");
+            LOGGER.info(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString()) + "This is the Rating");
             sa.assertTrue(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString()).isPresent(),
                     "Rating value is not present on details page featured area for coming soon content");
         }
