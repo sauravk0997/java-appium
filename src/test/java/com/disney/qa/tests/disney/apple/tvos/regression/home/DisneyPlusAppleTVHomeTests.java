@@ -29,7 +29,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121503"})
     @Test(groups = {TestGroup.HOME, TestGroup.HULU, US})
     public void verifyStandaloneESPNAndHuluBrandTiles() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
@@ -44,10 +43,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "ESPN brand tile was not present on home page screen");
 
         homePage.moveDownFromHeroTileToBrandTile();
-
-
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
-        sa.assertTrue(
+        Assert.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)),
                 "Hulu Hub page did not open");
         brandPage.clickBack();
@@ -57,10 +54,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickUp();
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
-        sa.assertTrue(
+        Assert.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121502"})
