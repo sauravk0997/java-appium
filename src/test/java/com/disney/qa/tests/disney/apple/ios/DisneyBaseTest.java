@@ -22,11 +22,10 @@ import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.config.Configuration;
-import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.*;
-import io.appium.java_client.remote.options.SupportsAppOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -46,7 +45,6 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
@@ -65,7 +63,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
-    public static final String DISNEY_URL = "disneyplus.com";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
@@ -369,7 +366,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     protected void installJarvis() {
         String platformName;
-
         if (StringUtils.equalsIgnoreCase(getDevice().getCapabilities().getCapability("deviceType").toString(), MobilePlatform.TVOS)) {
             platformName = MobilePlatform.TVOS;
         } else {
@@ -430,13 +426,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 });
     }
 
-    public void installAndLaunchJarvis() {
-        installJarvis();
-        startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
-                .until(it -> isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS)));
-    }
-
     public void removeJarvis() {
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         removeApp(sessionBundles.get(JarvisAppleBase.JARVIS));
@@ -447,22 +436,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             rotate(orientation);
         } catch (WebDriverException wde) {
             LOGGER.error("Error rotating screen. Device may already be oriented.");
-        }
-    }
-
-    public void downloadDisneyApp() {
-        String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
-        String appVersion = Configuration.getRequired(DisneyConfiguration.Parameter.APP_VERSION);
-        LOGGER.info("App Download: {}", appCenterAppName);
-        if (appCenterAppName.contains("for_Automation")) {
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Dominguez-Non-IAP-Prod-Enterprise-for-Automation/ios/enterprise/%s", appVersion))
-                    .getDirectLink());
-        } else if (appCenterAppName.contains("Disney")) {
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
-                    .getDirectLink());
         }
     }
 
@@ -790,36 +763,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-    }
-
-    public void jarvisDisableOneTrustBanner() {
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        boolean isOneTrustEnabled = true;
-        int jarvisAttempt = 1;
-        removeJarvis();
-        installAndLaunchJarvis();
-        // Validate Jarvis Config
-        while (isOneTrustEnabled && jarvisAttempt < 3)
-            try {
-                LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
-                if (isJarvisOneTrustDisabled(applePageBase)) {
-                    isOneTrustEnabled = false;
-                    LOGGER.info("Successfully disabled One Trust");
-                } else {
-                    terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-                    launchJarvis(false);
-                    jarvisAttempt++;
-                }
-            } catch (Exception e) {
-                LOGGER.info("Exception occurred attempting to disable One Trust");
-                terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-                launchJarvis(false);
-                jarvisAttempt++;
-            }
-
-        // Relaunch Disney app
-        terminateApp(sessionBundles.get(DISNEY));
-        launchApp(sessionBundles.get(DISNEY));
     }
 
     private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {

@@ -7,12 +7,11 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.testng.annotations.Listeners;
 import com.zebrunner.carina.appcenter.AppCenterManager;
+import org.testng.annotations.Listeners;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -27,9 +26,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
        and upgrades against the latest FC approved (appCurrentFCVersion) it is in the current FC XML
      */
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77606"})
-    @Parameters({"build"})
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
-    public void verifyAppUpgrade(String currentBuildVersion) {
+    public void verifyAppUpgrade() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -39,7 +37,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         String appPreviousFCVersion =  R.TESTDATA.get("disney_app_previous_fc_version");
 
         // Install previous FC Version and log in
-        installApplication(appPreviousFCVersion);
+        installAppCenterApp(appPreviousFCVersion);
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         setAppToHomeScreen(getUnifiedAccount());
@@ -52,14 +50,14 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         // Terminate app and upgrade application to current version
         terminateApp(sessionBundles.get(DISNEY));
-        installApplication(currentBuildVersion);
+        installApp(TEST_FAIRY_URL.get()); // temp solution until TestFairy integration is complete
         startApp(sessionBundles.get(DISNEY));
         //Handle ATT Modal
         handleGenericPopup(5,1);
         moreMenu.clickMoreTab();
         // Verify version is current FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version was not displayed");
-        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(currentBuildVersion),
+        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(TEST_FAIRY_APP_VERSION.get()),
                 "Version is not the current expected");
         // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
@@ -146,7 +144,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 FORCE_UPDATE_ERROR + " Title not found");
     }
 
-    private void installApplication(String version) {
+    private void installAppCenterApp(String version) {
         installApp(AppCenterManager.getInstance()
                 .getAppInfo(String.format(APP_URL, version))
                 .getDirectLink());
