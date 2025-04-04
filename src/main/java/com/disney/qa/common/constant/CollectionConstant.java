@@ -148,6 +148,8 @@ public class CollectionConstant {
                 return "Streams: Non-Stop Playlists";
             case STUDIOS_AND_NETWORKS:
                 return "Studios and Networks";
+            case NEWLY_ADDED:
+                return "Newly Added";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }
