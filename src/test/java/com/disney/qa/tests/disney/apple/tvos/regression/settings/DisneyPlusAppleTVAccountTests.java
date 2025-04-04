@@ -122,9 +122,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 "OOH Hard Block screen not displayed");
-        homePage.clickDown();
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 "'I'm Away From Home' button not displayed");
+        homePage.clickDown();
+        homePage.clickRight();
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
@@ -138,6 +139,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "Confirmation page not displayed after entering OTP");
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
                 "'Continue To Disney+' button not displayed");
+        accountSharingPage.getOOHConfirmationPageCTA().click();
         homePage.waitForHomePageToOpen();
         sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
         sa.assertAll();
