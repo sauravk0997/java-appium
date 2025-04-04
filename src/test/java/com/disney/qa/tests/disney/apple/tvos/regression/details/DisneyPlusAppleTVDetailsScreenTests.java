@@ -23,6 +23,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.time.temporal.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -156,12 +157,14 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         videoPlayer.waitForVideoToStart();
 
         // Forward video and get remaining time
-        commonPage.clickRight(6, 1, 1);
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
         commonPage.clickDown(1);
+        commonPage.clickSelect();
         String remainingTime = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
         LOGGER.info("remainingTime {}", remainingTime);
-        terminateApp("com.disney.disneyplus.enterprise");
-        startApp("com.disney.disneyplus.enterprise");
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
 
         //Navigate to continue watching collection
         commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
