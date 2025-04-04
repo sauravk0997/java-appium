@@ -359,6 +359,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement backgroundImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name ENDSWITH 'ProfileCell'`]")
     private ExtendedWebElement genericProfileCell;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`label CONTAINS \"%s\"`]")
+    protected ExtendedWebElement collectionViewLabelContains;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1594,5 +1596,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getGlobalNav() {
         return globalNavBarView;
+    }
+
+    public ExtendedWebElement getCollectionViewLabelContains(String label) {
+        return collectionViewLabelContains.format(label);
     }
 }
