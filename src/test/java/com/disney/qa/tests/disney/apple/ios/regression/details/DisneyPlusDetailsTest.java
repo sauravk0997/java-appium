@@ -771,7 +771,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         int swipeCount = 5;
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
