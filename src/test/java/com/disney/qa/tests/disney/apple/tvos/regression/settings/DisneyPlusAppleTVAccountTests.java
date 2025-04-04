@@ -77,6 +77,14 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 "User not navigated to OTP page");
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                "Confirmation page not displayed after entering OTP");
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                "'Continue To Disney+' button not displayed");
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        homePage.waitForHomePageToOpen();
+        sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
         sa.assertAll();
     }
 
