@@ -131,7 +131,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "ESPN brand tile was not present on home page screen");
 
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
-        sa.assertTrue(
+        Assert.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)),
                 "Hulu Hub page did not open");
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(),
@@ -141,7 +141,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         brandPage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.STUDIOS_AND_NETWORKS), 10);
-        sa.assertTrue(brandPage.getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent(),
+        Assert.assertTrue(brandPage.getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent(),
                 "Studios and Networks collection was not present");
 
         sa.assertAll();
