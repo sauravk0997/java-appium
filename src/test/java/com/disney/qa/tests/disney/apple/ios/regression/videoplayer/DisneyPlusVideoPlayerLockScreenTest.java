@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
@@ -19,6 +20,7 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
 
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
+    private static final String UNLOCK_ICON_NOT_PRESENT = "Unlock icon is not present";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73738"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
@@ -50,5 +52,35 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         sa.assertFalse(videoPlayer.getLockScreenToolTip().isPresent(), "Video player tooltip is present");
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74131"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyPlaybackDismissLockedOverlay() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        // Login and open deeplink to movie and validate lock controls tooltip
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+
+        // Click in the screen to make lock control appear
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).isPresent(),
+                "Lock icon is not present");
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
+        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
+                UNLOCK_ICON_NOT_PRESENT);
+        // Click in the screen to make unlock control disappear
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        Assert.assertFalse(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
+                "Unlock icon was not hidden");
+        // Click in the screen to make unlock control appear
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
+                UNLOCK_ICON_NOT_PRESENT);
     }
 }
