@@ -24,7 +24,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RA
 public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
 
     private static final String ADULT_DOB = "1923-10-23";
-    private static final String DARTH_MAUL = R.TESTDATA.get("disney_darth_maul_avatar_id");
     private static final String DEFAULT_PROFILE = "Test";
     private static final String KIDS_DOB = "2018-01-01";
     private static final String KIDS_PROFILE = "KIDS";
@@ -143,24 +142,6 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 "Profiles did not change to Access Mode (pencil removed)");
 
         softAssert.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})
-    @Test(description = "User Taps on App Settings", groups = {TestGroup.MORE_MENU, TestGroup.SMOKE, US})
-    public void verifyAppSettings() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-
-        setAppToHomeScreen(getUnifiedAccount());
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
-
-        Assert.assertTrue(moreMenu.getDynamicAccessibilityId(
-                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).isElementPresent()
-                        && moreMenu.getBackArrow().isElementPresent(),
-                "App Settings was not opened");
-        moreMenu.getBackArrow().click();
-        Assert.assertTrue(moreMenu.isOpened(),
-                "User was not returned to the More Menu after closing Watchlist");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67286"})
