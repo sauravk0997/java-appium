@@ -3,12 +3,9 @@ package com.disney.qa.common.utils.helpers;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.config.Configuration;
-import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
-import io.appium.java_client.remote.options.SupportsAppOption;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -25,21 +22,17 @@ import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEVICE_TYPE;
 
 public interface IAPIHelper {
+    String TEST_FAIRY_APP_VERSION = R.CONFIG.get("test_fairy_app_version");
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> APPLE_TV_LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = AppCenterManager.getInstance()
-                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                            .orElseThrow(
-                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
-                    .getVersion();
             String platform = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ? "tvos" : "ios";
-            I_API_HELPER_LOGGER.info("App version: {}", version);
+            I_API_HELPER_LOGGER.info("App version: {}", TEST_FAIRY_APP_VERSION);
             return new DisneyMobileConfigApi(platform, Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
-                    version);
+                    TEST_FAIRY_APP_VERSION);
         }
     };
 

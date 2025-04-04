@@ -1591,4 +1591,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public int getQuantityOfProfileCells() {
         return findExtendedWebElements(genericProfileCell.getBy()).size();
     }
+
+    public ExtendedWebElement getGlobalNav() {
+        return globalNavBarView;
+    }
 }
