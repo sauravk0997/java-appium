@@ -124,8 +124,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "OOH Hard Block screen not displayed");
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 "'I'm Away From Home' button not displayed");
-        homePage.clickDown();
-        homePage.clickRight();
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
