@@ -1,6 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite verbose="1" name="dmgztvos_reg_fc" annotations="JDK" configfailurepolicy="continue" thread-count="9" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
+    <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value=""/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-tv-4.3.0-dev"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
