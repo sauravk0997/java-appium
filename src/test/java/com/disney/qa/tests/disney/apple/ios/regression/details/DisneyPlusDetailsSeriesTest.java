@@ -544,13 +544,120 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72419"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyComingSoonSeriesBehavior() {
-        throw new SkipException("Skipping Test, no Coming Soon Title Available");
+        String httpPrefix = "https://";
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
+        setAppToHomeScreen(getUnifiedAccount());
+
+        //TODO: Replace entity-id, deeplink from API when https://jira.disney.com/browse/QP-3247 is ready
+        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+
+        launchDeeplink(deeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+
+        sa.assertEquals(detailsPage.getPromoLabelText(), visualsResponse.getPromoLabel().getHeader(),
+                "Promo title didn't match with api promo title");
+
+        //Subscriber can play trailer (if available)
+        String contentTitle = detailsPage.getContentTitle();
+        detailsPage.getTrailerActionButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart().verifyVideoPlaying(sa);
+        Assert.assertTrue(videoPlayer.clickBackButton().isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        //Subscriber can add title to Watchlist
+        detailsPage.clickWatchlistButton();
+        detailsPage.clickMoreTab();
+        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
+        sa.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(contentTitle),
+                "Titles were not added to the Watchlist");
+        moreMenu.clickHomeIcon();
+
+        //Subscriber can interact with tabs
+        detailsPage.getSuggestedTab().click();
+        detailsPage.clickExtrasTab();
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(),
+                "Content title is missing from the extra tab");
+        detailsPage.clickDetailsTab();
+        sa.assertTrue(detailsPage.getDetailsTabTitle().contains(contentTitle), DETAILS_PAGE_NOT_DISPLAYED);
+
+        //Subscriber can share link to title over social media
+        detailsPage.getShareBtn().click();
+        String expectedLabel = String.format("%s | Disney+", contentTitle);
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(expectedLabel).isPresent(),
+                String.format("'%s' title was not found on share actions", expectedLabel));
+
+        detailsPage.clickOnCopyShareLink();
+        detailsPage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.getSearchBar().click();
+        String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
+        String expectedUrl = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+        sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
+                String.format("Share link for coming soon series %s is not as expected", contentTitle));
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71701"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyComingSoonSeriesUI() {
-        throw new SkipException("Skipping Test, no Coming Soon Title Available");
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        setAppToHomeScreen(getUnifiedAccount());
+
+        //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
+        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
+
+        launchDeeplink(deeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIData.get(CONTENT_PROMO_TITLE),
+                "Promo title didn't match with api promo title");
+        sa.assertEquals(detailsPage.getMediaTitle(), exploreAPIData.get(CONTENT_TITLE),
+                "Content title didn't match with api content title");
+        sa.assertEquals(detailsPage.getContentDescriptionText(), exploreAPIData.get(CONTENT_DESCRIPTION),
+                "Description didn't match with api description value");
+
+        //Featured Metadata
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
+                    sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                            String.format("Audio video badge %s is not present on details page featured area for " +
+                                    "coming soon content", badge)));
+        }
+        //Verify if ratings value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area for coming soon content");
+        }
+
+        //Verify if CTA buttons are present
+        sa.assertTrue(detailsPage.getTrailerActionButton().isPresent(),
+                "Trailer button is not present on coming soon content");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_BTN_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getShareBtn().isPresent(), SHARE_BTN_NOT_DISPLAYED);
+
+        //Verify if tabs are present
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), DETAILS_TAB_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getExtrasTab().isPresent(), EXTRAS_TAB_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getSuggestedTab().isPresent(), SUGGESTED_TAB_NOT_DISPLAYED);
+
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75416"})
