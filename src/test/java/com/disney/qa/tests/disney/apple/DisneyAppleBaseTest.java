@@ -84,22 +84,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
-    private static final String S3_TVOS_BUILD_4_3_0_DEV =
-            "https://testfairy-disney.s3.amazonaws.com/releases/46/868c67bccb7a7b5b7e48626c3bd1cc1e8055a134/" +
-                    "Disney-Dominguez_Non-IAP_Prod_Enterprise_tvOS-4.3.0-77460.ipa?X-Amz-Content-Sha256=" +
-                    "UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=" +
-                    "AKIATDHZWC54HSUEIBPE%2F20250402%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=" +
-                    "20250402T190446Z&X-Amz-SignedHeaders=host&X-Amz-Expires=86400&X-Amz-Signature=" +
-                    "5b34c07bba7ce5a3e176fbe6aef0e84cc693551d1b766f30ee67bfc804b721ed";
-    private static final String S3_IOS_BUILD_4_3_0_DEV =
-            "https://testfairy-disney.s3.amazonaws.com/releases/46/f9c1fc92165e67537583c08759627ed8edfd0e55/" +
-                    "Disney-Dominguez_iOS_Enterprise_Prod-4.3.0-77460.ipa?X-Amz-Content-Sha256=" +
-                    "UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=" +
-                    "AKIATDHZWC54HSUEIBPE%2F20250402%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=" +
-                    "20250402T215935Z&X-Amz-SignedHeaders=" +
-                    "host&X-Amz-Expires=86400&X-Amz-Signature=" +
-                    "e4ccfe9f9febb782f49ac038f20b5f3d7537961583c4a5e8728e9aa0f2ddde44";
-
+    protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
+    protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
     ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
@@ -108,11 +94,12 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            LOGGER.info("version:{}", APP_VERSION);
+            String testFairyAppVersion = TEST_FAIRY_APP_VERSION.get();
+            LOGGER.info("version: {}", testFairyAppVersion);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), APP_VERSION);
+                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), testFairyAppVersion);
             } else {
-                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, APP_VERSION);
+                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, testFairyAppVersion);
             }
         }
     };
@@ -287,13 +274,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     @BeforeSuite(alwaysRun = true)
     public final void initApp() {
-        if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-            LOGGER.info("Installing tvOS build 4.3.0-77460...");
-            R.CONFIG.put("capabilities.app", S3_TVOS_BUILD_4_3_0_DEV);
-        } else {
-            LOGGER.info("Installing iOS build 4.3.0-77460...");
-            R.CONFIG.put("capabilities.app", S3_IOS_BUILD_4_3_0_DEV);
+        String testFairyUrl = R.CONFIG.get("test_fairy_url");
+        String appVersion = R.CONFIG.get("test_fairy_app_version");
+        if (testFairyUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_url IS MISSING!!!");
         }
+        if (appVersion.isEmpty()) {
+            throw new RuntimeException("APP VERSION CONFIG test_fairy_app_version IS MISSING!!!");
+        }
+        LOGGER.info("Installing build {} from TestFairy...", appVersion);
+        R.CONFIG.put("capabilities.app", testFairyUrl);
+        TEST_FAIRY_URL.set(testFairyUrl);
+        TEST_FAIRY_APP_VERSION.set(appVersion);
     }
 
     @BeforeMethod(alwaysRun = true)

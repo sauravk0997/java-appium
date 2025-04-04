@@ -22,7 +22,7 @@ import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEVICE_TYPE;
 
 public interface IAPIHelper {
-    String APP_VERSION = "4.3.0";
+    String TEST_FAIRY_APP_VERSION = R.CONFIG.get("test_fairy_app_version");
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> APPLE_TV_LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -30,9 +30,9 @@ public interface IAPIHelper {
         @Override
         protected DisneyMobileConfigApi initialize() {
             String platform = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ? "tvos" : "ios";
-            I_API_HELPER_LOGGER.info("App version: {}", APP_VERSION);
+            I_API_HELPER_LOGGER.info("App version: {}", TEST_FAIRY_APP_VERSION);
             return new DisneyMobileConfigApi(platform, Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
-                    APP_VERSION);
+                    TEST_FAIRY_APP_VERSION);
         }
     };
 
