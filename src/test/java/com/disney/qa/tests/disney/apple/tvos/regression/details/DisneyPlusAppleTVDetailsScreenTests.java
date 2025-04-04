@@ -29,8 +29,7 @@ import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
-import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -472,6 +471,32 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.getTypeCellLabelContains(titleEvent).isPresent(),
                 ASSET_NOT_FOUND_IN_WATCHLIST);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102805"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyWatchLiveEvent() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayerPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        String titleEvent = navigateToLiveEvent();
+
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
+        liveEventModal.getDetailsButton().click();
+        // Validate details page and add item to the watchlist
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickWatchButton();
+        Assert.assertTrue(videoPlayerPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(titleEvent.contains(videoPlayerPage.getTitleLabel()),
+                "Video title does not match with the expected");
     }
 
     public String navigateToLiveEvent() {
