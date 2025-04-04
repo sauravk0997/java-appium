@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVAccountSharingPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVOneTimePasscodePage;
@@ -48,55 +49,34 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         String email = "accountsharingsofttest@disneyplustesting.com";
         String password = "Test1234!";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
         loginWithAccountSharingUser(email, password);
 
-        sa.assertTrue(homePage.getStaticTextByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_SOFT_BLOCK_HEADLINE.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 "OOH Soft Block page headline not displayed");
-        sa.assertTrue(homePage.getStaticTextByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_SOFT_BLOCK_SUBCOPY.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyPresent(),
                 "OOH Soft Block page subcopy not displayed");
-        sa.assertTrue(homePage.getStaticTextByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_SOFT_BLOCK_SUBCOPY_2.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyTwoPresent(),
                 "OOH Soft Block page subcopy 2 not displayed");
-        sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_CONTINUE_CTA.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
-        sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_LOGOUT_CTA.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockLogOutButton().isPresent(),
                 "Log out button not displayed");
         homePage.clickSelect();
 
-        sa.assertTrue(homePage.getStaticTextByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_HEADLINE.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
                 "OOH Verify Device headline/screen not displayed");
-        sa.assertTrue(homePage.getStaticTextByLabelContains(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_SUBCOPY.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyPresent(),
                 "OOH Verify Device subcopy not displayed");
-        sa.assertTrue(homePage.getStaticTextByLabelContains(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_SUBCOPY_2.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
                 "OOH Verify Device subcopy, 'learn more' not displayed");
-        sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_OTP_CTA.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHVerifyDeviceButton().isPresent(),
                 "Verify Device button not displayed");
-        sa.assertTrue(homePage.getTypeButtonByLabel(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                                DictionaryKeys.OOH_VERIFY_DEVICE_DISMISS_CTA.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHVerifyDeviceDismissButton().isPresent(),
                 "No Thanks/Dismiss button not displayed");
         homePage.clickSelect();
-        sa.assertTrue(homePage.getStaticTextByLabelContains(getLocalizationUtils()
-                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                                DictionaryKeys.CHECK_EMAIL_TITLE.getText())).isPresent(),
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 "User not navigated to OTP page");
         sa.assertAll();
     }
