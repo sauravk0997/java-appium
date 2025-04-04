@@ -33,7 +33,8 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`focused==1`]/**/XCUIElementTypeStaticText[`name=='titleLabel'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`focused==1`]" +
+            "/**/XCUIElementTypeStaticText[`name=='titleLabel'`]")
     protected ExtendedWebElement extraEpisodeTitle;
 
     @ExtendedFindBy(accessibilityId = "title")
