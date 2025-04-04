@@ -33,6 +33,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`focused==1`]/**/XCUIElementTypeStaticText[`name=='titleLabel'`]")
+    protected ExtendedWebElement extraEpisodeTitle;
+
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
 
@@ -84,6 +87,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public ExtendedWebElement getContinueButton() {
         return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_CONTINUE_DETAILS.getText()));
+    }
+
+    public String getExtraEpisodeTitle() {
+        return extraEpisodeTitle.getText();
     }
 
     @Override

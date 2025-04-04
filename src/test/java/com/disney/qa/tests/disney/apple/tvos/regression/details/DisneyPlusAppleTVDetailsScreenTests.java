@@ -62,9 +62,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.moveDown(1, 1);
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getExtrasTab(), 6);
         detailsPage.moveDown(1, 1);
+        String extraTitle = detailsPage.getExtraEpisodeTitle();
         detailsPage.clickSelect();
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.getTitleLabel().contains(extraTitle),
+                "Playback is not initiated for the extra content");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66642"})
