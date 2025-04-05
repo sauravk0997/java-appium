@@ -75,8 +75,6 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
         Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 UNLOCK_ICON_NOT_PRESENT);
-        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
-                UNLOCK_ICON_NOT_PRESENT);
         videoPlayer.waitForElementToDisappear(
                 videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
                 DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT);
