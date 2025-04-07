@@ -55,6 +55,35 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74131"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyPlaybackDismissLockedOverlay() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        // Login and open deeplink to movie and validate lock controls
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+
+        // Click in the screen to make lock control appear
+        Assert.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON),
+                "Lock icon is not present");
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
+        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
+                UNLOCK_ICON_NOT_PRESENT);
+        // Click in the screen to make unlock control disappear
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        Assert.assertFalse(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
+                "Unlock icon was not hidden");
+        // Click in the screen to make unlock control appear
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
+                UNLOCK_ICON_NOT_PRESENT);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73814"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlaybackLockedOverlayAutoDismiss() {
