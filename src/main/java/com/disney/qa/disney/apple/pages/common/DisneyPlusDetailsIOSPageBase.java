@@ -39,6 +39,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK = "UNLOCK";
+    private static final String STARRING = "Starring";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
