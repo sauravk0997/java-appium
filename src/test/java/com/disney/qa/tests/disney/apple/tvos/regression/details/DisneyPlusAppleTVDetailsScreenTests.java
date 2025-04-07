@@ -191,6 +191,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         String continueWatchingCollection = CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
         SoftAssert sa = new SoftAssert();
@@ -212,6 +213,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         startApp(sessionBundles.get(DISNEY));
 
         //Navigate to continue watching collection
+        homePage.waitForHomePageToOpen();
         commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
         commonPage.clickSelect();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
