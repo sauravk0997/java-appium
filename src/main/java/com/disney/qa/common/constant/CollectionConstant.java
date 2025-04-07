@@ -84,7 +84,7 @@ public class CollectionConstant {
             case LIVE_AND_UPCOMING_FROM_ESPN:
                 return "3fd573af-c11c-4f29-a201-b543829aad21";
             case NEWLY_ADDED:
-                return "210555fa-3fbd-4565-85c4-1b785d08be91";
+                return "67340996-8d48-4b09-8e8c-153cd46e36e2";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
