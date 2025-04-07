@@ -88,5 +88,4 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(videoPlayer.getTitleLabel().contains(extraTitle),
                 "Playback is not initiated for the extra content expected");
     }
-
 }
