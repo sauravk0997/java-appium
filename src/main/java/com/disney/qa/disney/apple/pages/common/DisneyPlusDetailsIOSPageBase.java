@@ -466,7 +466,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean areActorsDisplayed() {
-        return getActors().isPresent(5) || dynamicOtherFindByNameContains.format("Starring").isPresent(5);
+        return getActors().isPresent(5) || dynamicOtherFindByNameContains.format(STARRING).isPresent(5);
     }
 
     public boolean isDurationDisplayed() {
@@ -619,7 +619,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void swipeTillActorsElementPresent() {
         ExtendedWebElement element = getActors().isPresent(THREE_SEC_TIMEOUT) ? getActors() :
-                dynamicOtherFindByNameContains.format("Starring");
+                dynamicOtherFindByNameContains.format(STARRING);
         swipe(element, Direction.UP, 2, 500);
     }
 
