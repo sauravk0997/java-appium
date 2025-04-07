@@ -224,6 +224,54 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-101242"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMovieDetailsAppearanceMetadata() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        SoftAssert sa = new SoftAssert();
+        int maxCount = 20;
+        String continueButton = "CONTINUE";
+        String restartButton = "RESTART";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.PREY.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
+        logIn(getUnifiedAccount());
+
+        //Populate continue watching collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Navigate to continue watching collection
+        homePage.waitForHomePageToOpen();
+        commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+
+        sa.assertTrue(detailsPage.getTypeButtonByLabel(restartButton).isPresent(),
+                "Restart button is not displayed on details page");
+        sa.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+                "Continue button was not present on details page");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "metadata label is not displayed");
+        sa.assertTrue(detailsPage.getProgressContainer().isPresent(),
+                "Progress container view is not present for the movies");
+        if (movieApiContent != null) {
+            sa.assertEquals(detailsPage.getContentDescriptionText(), movieApiContent.getDescription().getBrief(),
+                    "Description didn't match with api description value");
+        }
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112611"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifyNetworkAttributionWithBundleUserAccount() {
