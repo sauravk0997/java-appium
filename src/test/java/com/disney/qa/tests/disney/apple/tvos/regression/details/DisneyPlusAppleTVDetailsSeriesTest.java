@@ -73,7 +73,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         logIn(getUnifiedAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
-        pause(20);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1, 1);
         // Navigate to extra tab and play first asset
