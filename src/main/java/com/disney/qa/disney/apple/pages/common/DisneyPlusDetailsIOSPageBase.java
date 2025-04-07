@@ -126,6 +126,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement stopOfflineDownload;
     @ExtendedFindBy(accessibilityId = "titleLabel_9")
     private ExtendedWebElement tenthTitleLabel;
+    @ExtendedFindBy(accessibilityId = "progressContainerView")
+    private ExtendedWebElement progressContainerView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"copy\"`]")
     private ExtendedWebElement copyShareLink;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$]")
@@ -234,6 +236,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getDownloadButton() {
         return dynamicBtnFindByLabelContains.format("downloadEpisodeList");
+    }
+    public ExtendedWebElement getProgressContainer() {
+        return progressContainerView;
     }
 
     public ExtendedWebElement getDownloadCompleteButton() {
