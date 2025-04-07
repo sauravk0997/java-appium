@@ -22,6 +22,7 @@ import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.IConstantHelper.LABEL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -39,6 +40,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK = "UNLOCK";
+    private static final String STARRING = "Starring";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
@@ -465,7 +467,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean areActorsDisplayed() {
-        return getActors().isPresent(5) || dynamicOtherFindByNameContains.format("Starring").isPresent(5);
+        return getActors().isPresent(5) || dynamicOtherFindByNameContains.format(STARRING).isPresent(5);
+    }
+
+    public int getQuantityOfActors() {
+        String actorsFullString = dynamicOtherFindByNameContains.format(STARRING).getAttribute(LABEL);
+        return actorsFullString.split("\n").length;
     }
 
     public boolean isDurationDisplayed() {
@@ -618,7 +625,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void swipeTillActorsElementPresent() {
         ExtendedWebElement element = getActors().isPresent(THREE_SEC_TIMEOUT) ? getActors() :
-                dynamicOtherFindByNameContains.format("Starring");
+                dynamicOtherFindByNameContains.format(STARRING);
         swipe(element, Direction.UP, 2, 500);
     }
 
