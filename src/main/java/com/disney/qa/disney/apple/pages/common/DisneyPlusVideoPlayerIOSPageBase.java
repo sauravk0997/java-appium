@@ -67,6 +67,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement airplayButton;
     @ExtendedFindBy(accessibilityId = "lockPlayerControlsButton")
     private ExtendedWebElement iconPinUnlocked;
+    @ExtendedFindBy(accessibilityId = "unlockPlayerControlsButton")
+    private ExtendedWebElement iconPinLocked;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
     private ExtendedWebElement currentlyPlayingTitle;
     @ExtendedFindBy(accessibilityId = "brandImageView")
@@ -165,6 +167,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 return rewindButton;
             case LOCK_ICON:
                 return iconPinUnlocked;
+            case UNLOCK_ICON:
+                return iconPinLocked;
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' is an invalid player control", control));
@@ -769,7 +773,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         PLAY,
         PAUSE,
         RESTART,
-        REWIND
+        REWIND,
+        UNLOCK_ICON
     }
 
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {

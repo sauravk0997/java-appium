@@ -38,7 +38,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     private static final String HOME_PAGE_NOT_DISPLAYED = "Home page not displayed";
     private static final String HULU_PAGE_NOT_DISPLAYED = "Hulu Page is not displayed";
     private static final String NETWORK_LOGO_IMAGE_NOT_DISPLAYED = "Network Logo Image is not displayed";
-    private static final String WATCHLIST_IS_EMPTY_ERROR = "Your watchlist is empty";
+    private static final String WATCHLIST_IS_EMPTY_ERROR = "You haven't added anything yet";
     private static final String WATCHLIST_DEEP_LINK_ERROR = "Watchlist Page did not open via Deep Link";
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
 
