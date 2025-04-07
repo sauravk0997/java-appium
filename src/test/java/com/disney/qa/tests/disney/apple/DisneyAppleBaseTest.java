@@ -22,7 +22,6 @@ import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
 import com.disney.qa.api.search.UnifiedSearchApi;
-import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.IOSUtils;
@@ -34,11 +33,9 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.config.Configuration;
-import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.proxy.ZebrunnerProxyBuilder;
 import io.appium.java_client.remote.MobilePlatform;
-import io.appium.java_client.remote.options.SupportsAppOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
@@ -50,7 +47,6 @@ import org.slf4j.LoggerFactory;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
 import org.testng.ITestContext;
@@ -88,35 +84,22 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
+    protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
+    protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
     ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
             ThreadLocal.withInitial(CreateUnifiedAccountRequest::new);
 
-    private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
-        @Override
-        protected DisneyContentApiChecker initialize() {
-            if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                return new DisneyContentApiChecker(MobilePlatform.TVOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                        DisneyConfiguration.getPartner());
-            } else {
-                return new DisneyContentApiChecker(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-            }
-        }
-    };
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = AppCenterManager.getInstance()
-                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                            .orElseThrow(
-                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
-                    .getVersion();
-            LOGGER.info("version:{}", version);
+            String testFairyAppVersion = TEST_FAIRY_APP_VERSION.get();
+            LOGGER.info("version: {}", testFairyAppVersion);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), version);
+                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), testFairyAppVersion);
             } else {
-                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version);
+                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, testFairyAppVersion);
             }
         }
     };
@@ -278,13 +261,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     @BeforeSuite(alwaysRun = true)
     public void setXRayExecution() {
-        // QCE-545 Jenkins- XML: Set x-ray execution key dynamically
-        /*
-         * Register custom parameter in TestNG suite xml
-         * <parameter name="stringParam::reporting.tcm.xray.test-execution-key::XRay test execution value" value="XWEBQAS-31173"/>
-         *
-         * Run a job and provide updated execution key if necessary
-         */
         Configuration.get(DisneyConfiguration.Parameter.REPORTING_TCM_XRAY_TEST_EXECUTION_KEY).ifPresent(key -> {
             LOGGER.info("{} {} will be assigned to run", "reporting.tcm.xray.test-execution-key", key);
             Xray.setExecutionKey(key);
@@ -296,10 +272,25 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         R.CONFIG.put("capabilities.fullReset", "true");
     }
 
+    @BeforeSuite(alwaysRun = true)
+    public final void initApp() {
+        String testFairyUrl = R.CONFIG.get("test_fairy_url");
+        String appVersion = R.CONFIG.get("test_fairy_app_version");
+        if (testFairyUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_url IS MISSING!!!");
+        }
+        if (appVersion.isEmpty()) {
+            throw new RuntimeException("APP VERSION CONFIG test_fairy_app_version IS MISSING!!!");
+        }
+        LOGGER.info("Installing build {} from TestFairy...", appVersion);
+        R.CONFIG.put("capabilities.app", testFairyUrl);
+        TEST_FAIRY_URL.set(testFairyUrl);
+        TEST_FAIRY_APP_VERSION.set(appVersion);
+    }
+
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
         List<String> groups = Arrays.asList(result.getMethod().getGroups());
-        String country;
         if (groups.contains(US)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);

@@ -1,6 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite verbose="1" name="dmgztvos_reg_fc" annotations="JDK" configfailurepolicy="continue" thread-count="9" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
+    <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.0-77583"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-tv-4.3.0-fc"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
@@ -9,8 +11,7 @@
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47916"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XCDQA"/>
-    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XCDQA-123869"/>
-    <parameter name="jenkinsBuild" value="4.3.0.77460"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XCDQA-124078"/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgztvos_reg_fc"/>
@@ -18,12 +19,10 @@
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4_Gen_9,ATV_4_Gen_10,ATV_4_Gen_11,ATV_4_Gen_12,ATV_4_Gen_13;platformName=iOS;deviceType=tvOS"/>
-    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Non-IAP-Prod-Enterprise-tvOS,Dominguez-Non-IAP-Prod-Enterprise-for-Automation-tvOS"/>
-    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression. Some Groups may not have associated tests at this time."
                value=",Smoke,AccountSharing,Anthology,DetailsPage,Downloads,Home,Hulu,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
-    <parameter name="scheduling" value="H 0 * * 1-5"/>
+<!--    <parameter name="scheduling" value="H 0 * * 1-5"/>-->
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=360,init_retry_count=0,init_retry_interval=15,capabilities.newCommandTimeout=360"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
 
