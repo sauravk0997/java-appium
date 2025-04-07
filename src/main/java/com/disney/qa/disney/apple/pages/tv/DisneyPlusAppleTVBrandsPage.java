@@ -27,17 +27,17 @@ public class DisneyPlusAppleTVBrandsPage extends DisneyPlusBrandIOSPageBase {
         return brandShelf.format(element);
     }
 
-    @Override
-    public boolean isBrandScreenDisplayed(String brandName) {
-        return getCollectionViewLabelContains(
-                String.format(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
-                                .getDictionaryItem(
-                                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                                        DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
-                                        false),
-                        Map.of(BRAND_NAME, brandName))))
-                .isPresent();
-    }
+//    @Override
+//    public boolean isBrandScreenDisplayed(String brandName) {
+//        return getCollectionViewLabelContains(
+//                String.format(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
+//                                .getDictionaryItem(
+//                                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+//                                        DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+//                                        false),
+//                        Map.of(BRAND_NAME, brandName))))
+//                .isPresent();
+//    }
 
     @Override
     public ExtendedWebElement getBrandLogoImage() {
