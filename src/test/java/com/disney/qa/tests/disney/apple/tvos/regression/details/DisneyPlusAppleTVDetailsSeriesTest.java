@@ -6,18 +6,17 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
+import com.zebrunner.carina.utils.R;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.*;
 import org.testng.annotations.*;
-import org.testng.asserts.*;
 
 import java.lang.invoke.MethodHandles;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
-import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -64,5 +63,28 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.clickSelect();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64975"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsExtraTab() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        // Navigate to extra tab and play first asset
+        Assert.assertTrue(detailsPage.isExtrasTabPresent(), EXTRAS_TAB_NOT_DISPLAYED);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getExtrasTab(), 6);
+        detailsPage.moveDown(1, 1);
+        String extraTitle = detailsPage.getExtraEpisodeTitle();
+        LOGGER.info("Extra title: {}", extraTitle);
+        detailsPage.clickSelect();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.getTitleLabel().contains(extraTitle),
+                "Playback is not initiated for the extra content expected");
     }
 }
