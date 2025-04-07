@@ -101,7 +101,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         int maxCount = 20;
         String continueButton = "CONTINUE";
 
-        logIn(getUnifiedAccount());
+        logInWithoutHomeCheck(getUnifiedAccount());
 
         //Populate continue watching collection
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
