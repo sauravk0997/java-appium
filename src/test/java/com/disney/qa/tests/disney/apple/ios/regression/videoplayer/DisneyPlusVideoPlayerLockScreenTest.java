@@ -69,9 +69,8 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
 
         // Click in the screen to make lock control appear and lock screen
-        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
-        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).isPresent(),
-                LOCK_ICON_NOT_PRESENT);
+        Assert.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON),
+                "Lock icon is not present");
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
         Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 UNLOCK_ICON_NOT_PRESENT);
