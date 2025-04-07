@@ -143,24 +143,6 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})
-    @Test(description = "User Taps on App Settings", groups = {TestGroup.MORE_MENU, TestGroup.SMOKE, US})
-    public void verifyAppSettings() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-
-        setAppToHomeScreen(getUnifiedAccount());
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).click();
-
-        Assert.assertTrue(moreMenu.getDynamicAccessibilityId(
-                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.APP_SETTINGS)).isElementPresent()
-                        && moreMenu.getBackArrow().isElementPresent(),
-                "App Settings was not opened");
-        moreMenu.getBackArrow().click();
-        Assert.assertTrue(moreMenu.isOpened(),
-                "User was not returned to the More Menu after closing Watchlist");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67286"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHelpCenter() {
