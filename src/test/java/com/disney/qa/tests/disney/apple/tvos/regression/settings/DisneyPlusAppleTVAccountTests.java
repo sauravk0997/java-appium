@@ -60,7 +60,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "OOH Soft Block page subcopy 2 not displayed");
         sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.getOOHSoftBlockLogOutButton().isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
                 "Log out button not displayed");
         homePage.clickSelect();
 
@@ -96,6 +96,39 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
                 "OOH Verify Device headline/screen not displayed");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                "User not navigated to OTP page");
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                "Confirmation page not displayed after entering OTP");
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                "'Continue To Disney+' button not displayed");
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        homePage.waitForHomePageToOpen();
+        sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118363"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHFlaggedTravelModeOTPConfirmationPage() {
+        String email = "qait.disneystreaming+174401552714361cfdisneystreaming@gmail.com";
+        String password = "M1ck3yM0us3#";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                "OOH Hard Block screen not displayed");
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                "'I'm Away From Home' button not displayed");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                "Travel mode 'Confirm you are away from home' screen not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                "Send Code button not displayed");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 "User not navigated to OTP page");

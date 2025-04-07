@@ -39,7 +39,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                         DictionaryKeys.OOH_CONTINUE_CTA.getText()));
     }
 
-    public ExtendedWebElement getOOHSoftBlockLogOutButton() {
+    public ExtendedWebElement getOOHLogOutButton() {
         return getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                         DictionaryKeys.OOH_LOGOUT_CTA.getText()));
@@ -91,5 +91,29 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
         return getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                         DictionaryKeys.OOH_CONFIRMATION_CTA.getText()));
+    }
+
+    public boolean isOOHHardBlockScreenHeadlinePresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_HARD_BLOCK_HEADLINE.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getOOHIAmAwayFromHomeCTA() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_TRAVEL_MODE_CTA.getText()));
+    }
+
+    public boolean isOOHTravelModeScreenHeadlinePresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_TRAVEL_MODE_HEADLINE.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getOOHTravelModeOTPCTA() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_TRAVEL_MODE_SEND_CODE_CTA.getText()));
     }
 }
