@@ -22,6 +22,7 @@ import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.constant.IConstantHelper.LABEL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -467,6 +468,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean areActorsDisplayed() {
         return getActors().isPresent(5) || dynamicOtherFindByNameContains.format(STARRING).isPresent(5);
+    }
+
+    public int getQuantityOfActors() {
+        String actorsFullString = dynamicOtherFindByNameContains.format(STARRING).getAttribute(LABEL);
+        return actorsFullString.split("\n").length;
     }
 
     public boolean isDurationDisplayed() {
