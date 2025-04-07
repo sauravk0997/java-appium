@@ -443,7 +443,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
-        contentList.add(PREY);
+        contentList.add(BILL_BURR);
 
         IntStream.range(0, contentList.size()).forEach(i -> {
             homePage.clickSearchIcon();
@@ -454,7 +454,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             detailsPage.isOpened();
-            Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+            Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(),
+                    "Hulu Detail Page Service attribution was not found");
         });
     }
 
