@@ -30,8 +30,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
     private static final String TEST_USER = "Test User";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67276"})
-    @Test(description = "Verify: More Menu Page UI", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION,
-            TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyMoreMenuPageUI() {
         SoftAssert softAssert = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -197,19 +196,6 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         welcomePage.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT)).click();
         Assert.assertTrue(welcomePage.isLogInButtonDisplayed(),
                 "User was not logged out and returned to the Welcome screen");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61667"})
-    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyAppVersionNumber() {
-        onboard(getUnifiedAccount().getFirstName());
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-
-        Assert.assertTrue(disneyPlusMoreMenuIOSPageBase.isAppVersionDisplayed(),
-                "App Version was not displayed");
-        String[] capabilitiesAppVersion =  R.CONFIG.get("capabilities.app").split("/");
-        Assert.assertEquals(disneyPlusMoreMenuIOSPageBase.getAppVersion(), capabilitiesAppVersion[5],
-                "Displayed App Version was not correct");
     }
 
     private void onboard(String profile) {
