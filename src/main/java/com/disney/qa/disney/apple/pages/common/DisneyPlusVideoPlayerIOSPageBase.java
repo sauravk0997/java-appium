@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -421,7 +422,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
      * @return Playback remaining time in seconds
      */
     public int getRemainingTime() {
-        displayVideoController();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE) || R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            displayVideoController();
+        } else {
+            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(1);
+        }
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         int remainingTimeInSec =
                 (Math.abs(Integer.parseInt(remainingTime[0])) * 60) + (Integer.parseInt(remainingTime[1]));
