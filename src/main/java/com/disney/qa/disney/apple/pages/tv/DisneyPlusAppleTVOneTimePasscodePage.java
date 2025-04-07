@@ -4,6 +4,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTimePasscodeIOSPageB
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -18,7 +19,7 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
 
     @Override
     public boolean isOpened() {
-        return getTypeOtherByName(ONE_TIME_PASSCODE).isPresent();
+        return getOneTimePasscode().isPresent();
     }
 
     //TODO: QAA-16993 - Move OneTimePasscode identifiers and elements from ForgotPasswordPage
@@ -34,5 +35,9 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
     public void clickLoginWithPassword() {
         moveDown(3, 1);
         clickSelect();
+    }
+
+    public ExtendedWebElement getOneTimePasscode() {
+        return getTypeOtherByName(ONE_TIME_PASSCODE);
     }
 }
