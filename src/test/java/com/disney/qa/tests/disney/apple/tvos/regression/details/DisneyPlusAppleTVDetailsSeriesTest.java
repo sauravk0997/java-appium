@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
@@ -86,5 +87,46 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().contains(extraTitle),
                 "Playback is not initiated for the extra content expected");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64899"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsVODBookmarkRefresh() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        int maxCount = 20;
+        String continueButton = "CONTINUE";
+
+        logIn(getUnifiedAccount());
+
+        //Populate continue watching collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+
+        // Forward video and get remaining time
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        commonPage.clickSelect();
+        String remainingTime = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
+        LOGGER.info("remainingTime {}", remainingTime);
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Navigate to continue watching collection
+        homePage.waitForHomePageToOpen();
+        commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), "");
+        Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+                "Continue button was not present on details page");
+        Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(remainingTime),
+                "Correct remaining time is not reflecting in progress bar on details page");
     }
 }
