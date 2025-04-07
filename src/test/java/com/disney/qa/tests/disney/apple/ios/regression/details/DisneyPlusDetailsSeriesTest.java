@@ -557,8 +557,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disney.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_daredevil_born_again_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_daredevil_born_again_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
 
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -602,7 +602,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_series_daredevil_born_again_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for coming soon series %s is not as expected", contentTitle));
         sa.assertAll();
@@ -616,8 +616,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_daredevil_born_again_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_daredevil_born_again_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
@@ -645,7 +645,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
         //Verify if ratings value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RATING)) {
-            sa.assertTrue(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString()).isPresent(),
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
                     "Rating value is not present on details page featured area for coming soon content");
         }
 
