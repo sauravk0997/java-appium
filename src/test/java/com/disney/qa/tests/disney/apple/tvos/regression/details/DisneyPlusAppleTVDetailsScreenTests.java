@@ -23,6 +23,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.time.temporal.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -155,6 +156,45 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         sa.assertAll();
 
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66646"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMovieDetailsVODBookmarkRefresh() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        int maxCount = 20;
+        String continueButton = "CONTINUE";
+
+        logIn(getUnifiedAccount());
+
+        //Populate continue watching collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_moana_2_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+
+        // Forward video and get remaining time
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        commonPage.clickSelect();
+        String remainingTime = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
+        LOGGER.info("remainingTime {}", remainingTime);
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Navigate to continue watching collection
+        commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+                "Continue button was not present on details page");
+        Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(remainingTime),
+                "Correct remaining time is not reflecting in progress bar on details page");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90976"})
