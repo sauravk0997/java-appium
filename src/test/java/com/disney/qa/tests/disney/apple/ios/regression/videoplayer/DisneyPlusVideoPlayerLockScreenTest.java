@@ -183,4 +183,33 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         Assert.assertFalse(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 "Playback screen was locked after reopening the video player");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73793"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyUnlockedTapLock() {
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        // Login and open deeplink to movie and validate lock controls
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        videoPlayer.waitForVideoToStart();
+
+        // Lock screen
+        Assert.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON),
+                LOCK_ICON_NOT_PRESENT);
+        videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
+        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
+                UNLOCK_ICON_NOT_PRESENT);
+        videoPlayer.waitForElementToDisappear(
+                videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
+                DisneyAbstractPage.TEN_SEC_TIMEOUT);
+
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        videoPlayer.clickUnlockButton();
+        Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).isPresent(),
+                LOCK_ICON_NOT_PRESENT);
+    }
 }
