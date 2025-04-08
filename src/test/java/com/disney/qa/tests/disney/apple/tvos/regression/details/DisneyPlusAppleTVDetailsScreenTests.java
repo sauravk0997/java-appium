@@ -23,7 +23,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.time.temporal.*;
 import java.util.*;
 import java.util.stream.*;
 
@@ -222,6 +221,54 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         disneyPlusAppleTVVideoPlayerPage.waitUntilDetailsPageIsLoadedFromTrailer(200, 20);
 
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-101242"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMovieDetailsAppearanceMetadata() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        SoftAssert sa = new SoftAssert();
+        int maxCount = 20;
+        String continueButton = "CONTINUE";
+        String restartButton = "RESTART";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.PREY.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
+        logIn(getUnifiedAccount());
+
+        //Populate continue watching collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Navigate to continue watching collection
+        homePage.waitForHomePageToOpen();
+        commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+
+        sa.assertTrue(detailsPage.getTypeButtonByLabel(restartButton).isPresent(),
+                "Restart button is not displayed on details page");
+        sa.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+                "Continue button was not present on details page");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "metadata label is not displayed");
+        sa.assertTrue(detailsPage.getProgressContainer().isPresent(),
+                "Progress container view is not present for the movies");
+        if (movieApiContent != null) {
+            sa.assertEquals(detailsPage.getContentDescriptionText(), movieApiContent.getDescription().getBrief(),
+                    "Description didn't match with api description value");
+        }
         sa.assertAll();
     }
 
@@ -558,6 +605,33 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(videoPlayerPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(titleEvent.contains(videoPlayerPage.getTitleLabel()),
                 "Video title does not match with the expected");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66648"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMoviesDetailsTabMetadata() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Details Tab title not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
+        sa.assertTrue(detailsPage.isDurationDisplayed(), "Detail Tab duration not present");
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
+        sa.assertTrue(detailsPage.isRatingPresent(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
+        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
+        sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect");
+        sa.assertAll();
     }
 
     public String navigateToLiveEvent() {

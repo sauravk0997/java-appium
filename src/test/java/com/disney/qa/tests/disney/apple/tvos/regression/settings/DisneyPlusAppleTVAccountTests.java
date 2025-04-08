@@ -8,6 +8,7 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVOneTimePasscodePage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSettingsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
+import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -23,6 +24,10 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
+
+    private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block page headline not displayed";
+    private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen not displayed";
+    private static final String OTP_PAGE_DID_NOT_OPEN = "User not navigated to OTP page";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -43,7 +48,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116817"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
-    public void verifyOOHSoftBlockVerification() {
+    public void verifyOOHSoftBlockVerifyDeviceUIVerification() {
         String email = "accountsharingsofttest@disneyplustesting.com";
         String password = "Test1234!";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
@@ -52,7 +57,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         loginWithAccountSharingUser(email, password);
 
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
-                "OOH Soft Block page headline not displayed");
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyPresent(),
                 "OOH Soft Block page subcopy not displayed");
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyTwoPresent(),
@@ -64,7 +69,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
-                "OOH Verify Device headline/screen not displayed");
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyPresent(),
                 "OOH Verify Device subcopy not displayed");
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
@@ -75,7 +80,37 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "No Thanks/Dismiss button not displayed");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
-                "User not navigated to OTP page");
+                OTP_PAGE_DID_NOT_OPEN);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118365"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHSoftBlockVerifyDeviceOTPConfirmationPage() {
+        String email = "qait.disneystreaming+1744102243522aebcdisneystreaming@gmail.com";
+        String password = "M1ck3yM0us3#";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                "Confirmation page not displayed after entering OTP");
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                "'Continue To Disney+' button not displayed");
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        homePage.waitForHomePageToOpen();
+        sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
         sa.assertAll();
     }
 
@@ -92,5 +127,26 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
         passcodePage.clickLoginWithPassword();
         passwordPage.logInWithPasswordLocalized(password);
+    }
+
+    //TODO Once QP-4003 and QP-4001 fixed and API available to create HouseHold account, Need to remove this method,
+    //we can use existing getOTPFromApi method from BaseTest class
+    public String getOTPFromApi(String email) {
+        int emailAPILatency = 10;
+        try {
+            String firstOTP = getEmailApi().getDisneyOTP(email);
+            pause(emailAPILatency);
+            String secondOTP = getEmailApi().getDisneyOTP(email);
+
+            if (!secondOTP.equals(firstOTP)) {
+                LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
+                return secondOTP;
+            } else {
+                LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
+                return firstOTP;
+            }
+        } catch (GMailUtilsException e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

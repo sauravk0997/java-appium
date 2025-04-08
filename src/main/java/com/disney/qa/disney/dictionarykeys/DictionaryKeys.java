@@ -334,6 +334,8 @@ public enum DictionaryKeys {
     OK_BTN("btn_ok"),
     ONBOARDING_ENTER_EMAIL("onboardingemail_text_enteremail"),
     ONBOARDING_STEPPER("onboarding_stepper"),
+    OOH_CONFIRMATION_CTA("ooh_confirmation_cta"),
+    OOH_CONFIRMATION_HEADLINE("ooh_confirmation_headline"),
     OOH_CONTINUE_CTA("ooh_continue_cta"),
     OOH_LOGOUT_CTA("ooh_logout_cta"),
     OOH_SOFT_BLOCK_HEADLINE("ooh_soft_block_headline"),

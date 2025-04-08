@@ -80,4 +80,16 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.CHECK_EMAIL_TITLE.getText())).isPresent();
     }
+
+    public boolean isOOHConfirmationHeadlinePresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_CONFIRMATION_HEADLINE.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getOOHConfirmationPageCTA() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_CONFIRMATION_CTA.getText()));
+    }
 }
