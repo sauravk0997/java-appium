@@ -653,13 +653,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.moveDown(1, 1);
 
         ArrayList<Container> movieDetailsPageContainers = getDisneyAPIPage(THE_AVENGERS.getEntityId(), false);
-        List<Item> movieFirstTwoSuggestedContainers = movieDetailsPageContainers.stream()
+        List<Item> movieFirstThreeSuggestedContainers = movieDetailsPageContainers.stream()
                 .filter(container -> container.getVisuals().getName().equals(SUGGESTED))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("suggested container not present in API response"))
-                .getItems().subList(0, 2);
+                .getItems().subList(0, 3);
 
-        movieFirstTwoSuggestedContainers.forEach(i -> {
+        movieFirstThreeSuggestedContainers.subList(0, 2).forEach(i -> {
             Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellLabelContains(i.getVisuals().getTitle())),
                     "Suggested title was not focussed");
             detailsPage.moveRight(1, 1);
@@ -667,6 +667,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.clickSelect();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(),
+                movieFirstThreeSuggestedContainers.get(2).getVisuals().getTitle(),
+                "Current details page title doesn't match API fetched title");
     }
 
     public String navigateToLiveEvent() {
