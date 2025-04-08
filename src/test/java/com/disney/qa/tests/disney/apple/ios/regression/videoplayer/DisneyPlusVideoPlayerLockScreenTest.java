@@ -147,6 +147,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_content_mulan_playback_deeplink"));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         Assert.assertFalse(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 "Playback screen was locked");
     }
