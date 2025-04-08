@@ -20,6 +20,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
 
     private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
     private static final String UNLOCK_ICON_NOT_PRESENT = "Unlock icon is not present";
+    private static final String LOCK_ICON_NOT_PRESENT = "Lock icon is not present";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73738"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
@@ -68,7 +69,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
 
         // Click in the screen to make lock control appear
         Assert.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON),
-                "Lock icon is not present");
+                LOCK_ICON_NOT_PRESENT);
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
         Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 UNLOCK_ICON_NOT_PRESENT);
@@ -97,7 +98,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
 
         // Click in the screen to make lock control appear and lock screen
         Assert.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON),
-                "Lock icon is not present");
+                LOCK_ICON_NOT_PRESENT);
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
         Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 UNLOCK_ICON_NOT_PRESENT);
@@ -110,6 +111,6 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         // Validate playback is not locked
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         Assert.assertFalse(videoPlayer.getElementFor(
-                DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),"Playback is locked");
+                DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(), "Playback is locked");
     }
 }
