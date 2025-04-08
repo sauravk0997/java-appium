@@ -102,9 +102,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String continueButton = "CONTINUE";
 
         logInWithoutHomeCheck(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
 
         //Populate continue watching collection
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_daredevil_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
@@ -114,8 +115,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForVideoToStart();
         commonPage.clickDown(1);
         commonPage.clickSelect();
-        String remainingTime = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
+        String remainingTime = videoPlayer.getRemainingTimeInDetailsFormatString();
         LOGGER.info("remainingTime {}", remainingTime);
+
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
 
@@ -123,7 +125,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         homePage.waitForHomePageToOpen();
         commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
         commonPage.clickSelect();
-        Assert.assertTrue(detailsPage.isOpened(), "");
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
                 "Continue button was not present on details page");
         Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(remainingTime),

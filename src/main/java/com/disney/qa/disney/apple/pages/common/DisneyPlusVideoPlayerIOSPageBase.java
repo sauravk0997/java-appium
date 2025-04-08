@@ -506,6 +506,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return String.format("%dh %dm", hours, minutes);
     }
 
+    public String getRemainingTimeInDetailsFormatString() {
+        int remainingTimeInSeconds = getRemainingTimeThreeIntegers();
+        if(remainingTimeInSeconds > 3600) {
+            long hours = remainingTimeInSeconds / 60;
+            long minutes = remainingTimeInSeconds % 60;
+            return String.format("%dh %dm", hours, minutes);
+        } else {
+            long minutes = remainingTimeInSeconds / 60;
+            return String.format("%dm", minutes);
+        }
+    }
+    
     public void tapAudioSubtitleMenu() {
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "subtitle menu overlay didn't open")
                 .until(it -> {
