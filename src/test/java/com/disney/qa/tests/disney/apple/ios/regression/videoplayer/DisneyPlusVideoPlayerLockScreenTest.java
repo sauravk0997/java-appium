@@ -142,6 +142,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         // Validate playback is not locked
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         Assert.assertFalse(videoPlayer.getElementFor(
-                DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(), "Playback is locked");
+                DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
+                "Playback is in locked state after exiting the app");
     }
 }
