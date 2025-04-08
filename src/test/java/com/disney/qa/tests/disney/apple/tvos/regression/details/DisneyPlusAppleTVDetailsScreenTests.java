@@ -3,6 +3,8 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.response.Container;
+import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
@@ -27,7 +29,7 @@ import java.util.*;
 import java.util.stream.*;
 
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
-import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
+import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -51,6 +53,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String BACKGROUND_IMAGE_NOT_PRESENT = "Background image is not present";
     private static final String ASSET_NOT_FOUND_IN_WATCHLIST = "The asset was not found in the watchlist";
     private static final String LIVE_MODAL_NOT_OPEN = "Live event modal did not open";
+    private static final String SUGGESTED = "SUGGESTED";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66656"})
     @Test(groups = {TestGroup.DETAILS_PAGE,TestGroup.MOVIES, US})
@@ -632,6 +635,44 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64730"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMovieDetailsPageSuggestedTab() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getSuggestedTab()), "Suggested tab was not focussed");
+        detailsPage.moveDown(1, 1);
+
+        ArrayList<Container> movieDetailsPageContainers = getDisneyAPIPage(THE_AVENGERS.getEntityId(), false);
+        List<Item> movieFirstThreeSuggestedContainers = movieDetailsPageContainers.stream()
+                .filter(container -> container.getVisuals().getName().equals(SUGGESTED))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("suggested container not present in API response"))
+                .getItems().subList(0, 3);
+
+        movieFirstThreeSuggestedContainers.subList(0, 2).forEach(i -> {
+            Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellLabelContains(i.getVisuals().getTitle())),
+                    "Suggested title was not focussed");
+            detailsPage.moveRight(1, 1);
+        });
+        detailsPage.clickSelect();
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(),
+                movieFirstThreeSuggestedContainers.get(2).getVisuals().getTitle(),
+                "Current details page title doesn't match API fetched title");
     }
 
     public String navigateToLiveEvent() {
