@@ -90,8 +90,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label CONTAINS " +
             "'%s'$]/**/XCUIElementTypeButton")
     private ExtendedWebElement feedOptionCheckmark;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label \"Tap and hold to unlock\"`]")
-    private ExtendedWebElement tapAndHold;
 
 
     public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
