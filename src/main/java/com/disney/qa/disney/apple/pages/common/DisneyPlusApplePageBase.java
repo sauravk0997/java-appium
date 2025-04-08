@@ -46,6 +46,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected static final String BRAND_NAME = "brand_name";
     public static final String MICKEY_MOUSE = "442af7db-85f7-5e1d-96f0-b2c517be4085";
     public static final String RAYA = "edb6c80b-9f97-5bf2-9c8f-b861feb2062e";
+    public static final String BILL_BURR = "Bill Burr";
     public static final String ONLY_MURDERS_IN_THE_BUILDING = "Only Murders in the Building";
     public static final String PREY = "Prey";
     public static final String DEUTSCH = "Deutsch";

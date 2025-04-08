@@ -64,18 +64,20 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         //Validate top of home
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found");
-        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(),
-                "'Recommend For You' collection was not found");
-        homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-        BufferedImage recommendedForYouLastTileInView = getElementImage(
-                homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
-        homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-        BufferedImage recommendedForYouFirstTileInView = getElementImage(
-                homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.NEWLY_ADDED, 5);
+        sa.assertTrue(homePage.getTypeOtherContainsName(CollectionConstant.getCollectionTitle
+                        (CollectionConstant.Collection.NEWLY_ADDED)).isPresent(),
+                "'Newly Added' collection was not found");
+        homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.NEWLY_ADDED);
+        BufferedImage collectionLastTileInView = getElementImage(
+                homePage.getCollection(CollectionConstant.Collection.NEWLY_ADDED));
+        homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.NEWLY_ADDED);
+        BufferedImage collectionFirstTileInView = getElementImage(
+                homePage.getCollection(CollectionConstant.Collection.NEWLY_ADDED));
         sa.assertTrue(areImagesDifferent(
-                        recommendedForYouFirstTileInView,
-                        recommendedForYouLastTileInView),
-                "Recommended For You first tile in view and last tile in view images are the same");
+                        collectionFirstTileInView,
+                        collectionLastTileInView),
+                "Collection first tile in view and last tile in view images are the same");
 
         BufferedImage topOfHome = getCurrentScreenView();
 
@@ -89,10 +91,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 null,
                 Direction.DOWN,
                 300);
-        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(),
-                "'Recommend For You' collection was not found");
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(),
                 "`Disney Plus` image was not found after return to top of home");
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.NEWLY_ADDED, 5);
+        sa.assertTrue(homePage.getTypeOtherContainsName(CollectionConstant.getCollectionTitle
+                        (CollectionConstant.Collection.NEWLY_ADDED)).isPresent(),
+                "'Newly Added' collection was not found");
 
         //Validate images are different
         sa.assertTrue(areImagesDifferent(topOfHome, closeToBottomOfHome),
