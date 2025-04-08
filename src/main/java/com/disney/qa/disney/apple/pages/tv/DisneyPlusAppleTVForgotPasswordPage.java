@@ -33,8 +33,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     private ExtendedWebElement checkEmailTitle = getStaticTextByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, CHECK_EMAIL_TITLE.getText()));
-    private ExtendedWebElement enterCodeTitle = getStaticTextByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.APPLICATION, EMAIL_CODE_TITLE.getText()));
 
     @Override
     public boolean isOpened() {
@@ -93,14 +91,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
 
     public void enterOTPLocalized(String otp) {
         getDynamicTextEntryFieldByName(TEXT_FIELD_INPUT_CODE).type(otp);
-        moveDown(1,1);
-        clickSelect();
-    }
-
-    public void enterOtpOnModal(String otp) {
-        getDynamicTextEntryFieldByName(TEXT_FIELD_INPUT_CODE).click();
-        waitForPresenceOfAnElement(enterCodeTitle);
-        typeTextView.type(otp);
         moveDown(1,1);
         clickSelect();
     }

@@ -12,6 +12,8 @@ public class DisneyPlusAppleTVBrandsPage extends DisneyPlusBrandIOSPageBase {
 
     @ExtendedFindBy(iosPredicate = "name == \"headerViewTitleLabel\" AND label == '%s'")
     protected ExtendedWebElement brandShelf;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeImage")
+    private ExtendedWebElement brandLogoImage;
 
     public DisneyPlusAppleTVBrandsPage(WebDriver driver) {
         super(driver);
@@ -19,5 +21,10 @@ public class DisneyPlusAppleTVBrandsPage extends DisneyPlusBrandIOSPageBase {
 
     public ExtendedWebElement getBrandShelf(String element) {
         return brandShelf.format(element);
+    }
+
+    @Override
+    public ExtendedWebElement getBrandLogoImage() {
+        return brandLogoImage;
     }
 }
