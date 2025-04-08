@@ -18,12 +18,22 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.CONTINUE_BTN_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.HOME_PAGE_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.IConstantHelper.WELCOME_SCREEN_NOT_DISPLAYED;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
+
+    private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block page headline not displayed";
+    private static final String OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Hard Block page headline not displayed";
+    private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen not displayed";
+    private static final String OTP_PAGE_DID_NOT_OPEN = "User not navigated to OTP page";
+    private static final String OTP_SUCCESS_MESSAGE_NOT_DISPLAYED =
+            "Confirmation page not displayed after entering OTP";
+    private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
+    private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -53,7 +63,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         loginWithAccountSharingUser(email, password);
 
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
-                "OOH Soft Block page headline not displayed");
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyPresent(),
                 "OOH Soft Block page subcopy not displayed");
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyTwoPresent(),
@@ -65,7 +75,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
-                "OOH Verify Device headline/screen not displayed");
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyPresent(),
                 "OOH Verify Device subcopy not displayed");
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
@@ -76,14 +86,14 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "No Thanks/Dismiss button not displayed");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
-                "User not navigated to OTP page");
+                OTP_PAGE_DID_NOT_OPEN);
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118365"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHSoftBlockVerifyDeviceOTPConfirmationPage() {
-        String email = "qait.disneystreaming+1744015175774a76fdisneystreaming@gmail.com";
+        String email = "qait.disneystreaming+1744102243522aebcdisneystreaming@gmail.com";
         String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
@@ -91,29 +101,29 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         loginWithAccountSharingUser(email, password);
 
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
-                "OOH Soft Block page headline not displayed");
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
         homePage.clickSelect();
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
-                "OOH Verify Device headline/screen not displayed");
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
-                "User not navigated to OTP page");
+                OTP_PAGE_DID_NOT_OPEN);
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
-                "Confirmation page not displayed after entering OTP");
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
-                "'Continue To Disney+' button not displayed");
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
         homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118363"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHFlaggedTravelModeOTPConfirmationPage() {
-        String email = "qait.disneystreaming+174401552714361cfdisneystreaming@gmail.com";
+        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
         String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
@@ -121,32 +131,32 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         loginWithAccountSharingUser(email, password);
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
-                "OOH Hard Block screen not displayed");
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 "'I'm Away From Home' button not displayed");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
-                "Send Code button not displayed");
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
-                "User not navigated to OTP page");
+                OTP_PAGE_DID_NOT_OPEN);
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
-                "Confirmation page not displayed after entering OTP");
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
-                "'Continue To Disney+' button not displayed");
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
         homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118364"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHFlaggedUpdateHouseHoldOTPConfirmationPage() {
-        String email = "qait.disneystreaming+174401965306208afdisneystreaming@gmail.com";
+        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
         String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
@@ -154,7 +164,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         loginWithAccountSharingUser(email, password);
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
-                "OOH Hard Block screen not displayed");
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
                 "Update Household button not displayed");
         homePage.clickDown();
@@ -162,18 +172,18 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
                 "'Update your Disney+ Household' screen not displayed");
         sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
-                "Send Code button not displayed");
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
-                "User not navigated to OTP page");
+                OTP_PAGE_DID_NOT_OPEN);
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
-                "Confirmation page not displayed after entering OTP");
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
-                "'Continue To Disney+' button not displayed");
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
         homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
