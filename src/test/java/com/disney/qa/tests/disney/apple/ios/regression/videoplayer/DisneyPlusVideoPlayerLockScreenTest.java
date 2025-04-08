@@ -197,7 +197,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
         videoPlayer.waitForVideoToStart();
 
-        // Lock screen
+        // Lock playback screen
         Assert.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON),
                 LOCK_ICON_NOT_PRESENT);
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
@@ -206,7 +206,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         videoPlayer.waitForElementToDisappear(
                 videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
                 DisneyAbstractPage.TEN_SEC_TIMEOUT);
-
+        // Long tap in unlock button and verify it is unlocked
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         videoPlayer.clickUnlockButton();
         Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).isPresent(),

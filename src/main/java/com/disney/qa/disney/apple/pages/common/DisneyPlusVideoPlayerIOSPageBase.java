@@ -963,8 +963,4 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public void clickUnlockButton() {
         longTap(iconPinLocked);
     }
-
-    public void clickUnlockButtonByText() {
-        longTap(tapAndHold);
-    }
 }
