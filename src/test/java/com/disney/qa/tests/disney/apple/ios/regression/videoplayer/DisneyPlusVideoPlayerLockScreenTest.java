@@ -105,7 +105,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
                 UNLOCK_ICON_NOT_PRESENT);
         videoPlayer.waitForElementToDisappear(
                 videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
-                DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT);
+                DisneyAbstractPage.TEN_SEC_TIMEOUT);
         Assert.assertFalse(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 "Unlock icon was not automatically dismissed");
         // Click in the screen to make lock control appear
