@@ -112,7 +112,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     }
 
     public boolean isOOHTravelModeScreenSubCopyPresent() {
-        return getStaticTextByLabel(getLocalizationUtils()
+        return getStaticTextByLabelContains(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                         DictionaryKeys.OOH_TRAVEL_MODE_SUB_COPY.getText())).isPresent();
     }
