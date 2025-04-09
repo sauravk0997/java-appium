@@ -199,12 +199,16 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
 
         // Click in the screen to make lock control appear and lock screen
+     //   clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+     //   Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).isPresent(),
+       //                 LOCK_ICON_NOT_PRESENT);
         Assert.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON),
                 LOCK_ICON_NOT_PRESENT);
         videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).click();
         Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 UNLOCK_ICON_NOT_PRESENT);
 
+        // Video plays with no overlay
         videoPlayer.waitForElementToDisappear(
                 videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
                 DisneyAbstractPage.TEN_SEC_TIMEOUT);
@@ -215,5 +219,17 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
                 UNLOCK_ICON_NOT_PRESENT);
         Assert.assertTrue(videoPlayer.getTypeOtherContainsLabel(tapAndHold).isPresent(),
                 "Tap and hold text is not present");
+        videoPlayer.waitForElementToDisappear(
+                videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
+                DisneyAbstractPage.TEN_SEC_TIMEOUT);
+
+        // Validate unlock icon is at the bottom and center
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        validateElementPositionAlignment(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON), CENTER_POSITION);
+
+        // Click again in the screen to get height position
+        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        validateElementExpectedHeightPosition(
+                videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON), BOTTOM);
     }
 }
