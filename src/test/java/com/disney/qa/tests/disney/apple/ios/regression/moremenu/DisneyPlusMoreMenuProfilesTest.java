@@ -852,7 +852,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        List<ContentSet> avatarSets = getAvatarSets(getAccount());
+        List<ContentSet> avatarSets = getAvatarSets(getUnifiedAccount());
         int lastSetId = avatarSets.size() - 1;
         String lastSetAvatarId = "";
         String avatarSetName = "";
@@ -866,7 +866,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } catch (IndexOutOfBoundsException e) {
             Assert.fail("Index out of bounds: " + e);
         }
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         moreMenu.clickEditProfilesBtn();
