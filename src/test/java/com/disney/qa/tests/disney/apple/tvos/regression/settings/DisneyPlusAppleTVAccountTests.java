@@ -153,6 +153,40 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118364"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHFlaggedUpdateHouseHoldOTPConfirmationPage() {
+        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
+        String password = "M1ck3yM0us3#";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
+                "Update Household button not displayed");
+        homePage.clickDown();
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                "'Update your Disney+ Household' screen not displayed");
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        homePage.waitForHomePageToOpen();
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
     private void loginWithAccountSharingUser(String email, String password) {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
