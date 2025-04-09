@@ -24,7 +24,6 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA, EMEA})
     public void verifyRatingSystemEMEA0() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, ZERO_PLUS.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(ZERO_PLUS.getContentRating());
     }
 
@@ -32,7 +31,6 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA, EMEA})
     public void verifyRatingSystemEMEA6() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, SIX_PLUS.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIX_PLUS.getContentRating());
     }
 
@@ -40,7 +38,6 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA, EMEA})
     public void verifyRatingSystemEMEA9() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, NINE_PLUS.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(NINE_PLUS.getContentRating());
     }
 
@@ -48,7 +45,6 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA, EMEA})
     public void verifyEMEARating12() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, TWELVE_PLUS.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TWELVE_PLUS.getContentRating());
     }
 
@@ -56,7 +52,6 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA, EMEA})
     public void verifyRatingSystemEMEA14() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, FOURTEEN_PLUS.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(FOURTEEN_PLUS.getContentRating());
     }
 
@@ -64,7 +59,6 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA, EMEA})
     public void verifyRatingSystemEMEA16() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, SIXTEEN_PLUS.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(SIXTEEN_PLUS.getContentRating());
     }
 
@@ -72,7 +66,6 @@ public class DisneyPlusEMEARatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_EMEA, EMEA})
     public void verifyRatingSystemEMEA18() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, EIGHTEEN_PLUS.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(EIGHTEEN_PLUS.getContentRating());
     }
 }

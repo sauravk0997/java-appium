@@ -28,7 +28,7 @@ import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DIS
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
     public static ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
     public static ThreadLocal<Boolean> IS_MOVIE = new ThreadLocal<>();
-    public static ThreadLocal<String> EPISODIC_RATING = new ThreadLocal<>();;
+    public static ThreadLocal<String> EPISODIC_RATING = new ThreadLocal<>();
     static final String PAGE_IDENTIFIER = "page-";
     static final String ENTITY_IDENTIFIER = "entity-";
     static final String EPISODES = "episodes";
@@ -48,7 +48,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
 
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName,
                 locale,
                 getLocalizationUtils().getUserLanguage(),
@@ -59,18 +58,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
-        //TEMP fix for ATT pop-up
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
         setAppToHomeScreen(getUnifiedAccount());
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
-        //Dismiss ATT Popup
-        if (isAlertPresent()) {
-            handleGenericPopup(5, 1);
-        }
+        handleOneTrustPopUp();
     }
 
     public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
