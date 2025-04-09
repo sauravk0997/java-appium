@@ -31,6 +31,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.ValueRange;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -995,7 +996,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         LOGGER.info("screen size width: {} ", screenWidth);
         // Get 50 percent of the screen width size to validate if elements are on the right or left
         double percentageToValidate = 0.5 * screenWidth;
-        double thirtyPercent = 0.3 * screenWidth;
+        int limit = 10;
         LOGGER.info("percentageToValidate size: {} ", percentageToValidate);
         switch(alignment) {
             case RIGHT_POSITION:
@@ -1006,8 +1007,9 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
                 Assert.assertTrue(elementPosition < percentageToValidate, "Element is not at the left position");
                 break;
             case CENTER_POSITION:
-                Assert.assertTrue(elementPosition > thirtyPercent && elementPosition < (thirtyPercent * 2) ,
-                        "Element is not at the center position");
+                int position = elementPosition - (int) (percentageToValidate);
+                ValueRange range = ValueRange.of(0, limit);
+                Assert.assertTrue(range.isValidIntValue(position), "Element is not at the center position");
                 break;
             default: throw new IllegalArgumentException("Invalid alignment String");
         }
