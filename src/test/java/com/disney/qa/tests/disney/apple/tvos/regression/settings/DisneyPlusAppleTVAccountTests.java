@@ -95,7 +95,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyOOHSoftBlockVerifyDeviceOTPConfirmationPage() {
         String email = "qait.disneystreaming+1744102243522aebcdisneystreaming@gmail.com";
         String password = "M1ck3yM0us3#";
-        getOTPFromApi(email);
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
