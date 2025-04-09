@@ -438,11 +438,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickDetailsTab() {
-        if (!getDetailsTab().isPresent(TEN_SEC_TIMEOUT)) {
-            swipeInContainer(null, Direction.UP, 1200);
-            pause(2); //transition
+        swipePageTillElementTappable(getTabBar(), 1, null, Direction.UP, 1500);
+        if (getDetailsTab().isElementNotPresent(THREE_SEC_TIMEOUT))
             swipeTabBar(Direction.LEFT, 1000);
-        }
         getDetailsTab().click();
     }
 
