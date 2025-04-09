@@ -207,7 +207,6 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
                 videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
                 DisneyAbstractPage.TEN_SEC_TIMEOUT);
         // Long tap in unlock button and verify it is unlocked
-        clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         videoPlayer.clickUnlockButton();
         Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.LOCK_ICON).isPresent(),
                 LOCK_ICON_NOT_PRESENT);

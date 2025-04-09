@@ -971,6 +971,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickUnlockButton() {
+        if (getElementFor(PlayerControl.UNLOCK_ICON).isElementNotPresent(ONE_SEC_TIMEOUT)) {
+            clickElementAtLocation(getPlayerView(), 10, 50);
+        }
         longTap(iconPinLocked);
     }
 }
