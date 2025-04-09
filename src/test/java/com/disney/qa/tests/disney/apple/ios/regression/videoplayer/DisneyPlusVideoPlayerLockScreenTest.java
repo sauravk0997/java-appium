@@ -233,7 +233,6 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON).isPresent(),
                 UNLOCK_ICON_NOT_PRESENT);
 
-        // Video plays with no overlay
         videoPlayer.waitForElementToDisappear(
                 videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
                 DisneyAbstractPage.TEN_SEC_TIMEOUT);
