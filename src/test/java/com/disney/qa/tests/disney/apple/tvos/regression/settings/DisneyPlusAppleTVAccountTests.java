@@ -202,6 +202,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         passwordPage.logInWithPasswordLocalized(password);
     }
 
+    //TODO Once QP-4003 and QP-4001 fixed and API available to create HouseHold account, Need to remove this method,
+    //we can use existing getOTPFromApi method from BaseTest class
     public String getOTPFromApi(String email) {
         int emailAPILatency = 10;
         try {
