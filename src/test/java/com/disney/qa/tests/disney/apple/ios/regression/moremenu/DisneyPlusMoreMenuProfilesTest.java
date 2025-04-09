@@ -1704,15 +1704,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         }
     }
 
-    private List<ContentSet> getAvatarSets(DisneyAccount account) {
-        List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
-        if (avatarSets.isEmpty()) {
-            throw new SkipException("Skipping test, no avatar sets were found.");
-        } else {
-            return avatarSets;
-        }
-    }
-
     private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
