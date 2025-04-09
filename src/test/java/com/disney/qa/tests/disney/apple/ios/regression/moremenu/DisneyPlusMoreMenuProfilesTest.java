@@ -852,7 +852,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        List<ContentSet> avatarSets = getAvatarSets(getAccount());
+        List<ContentSet> avatarSets = getAvatarSets(getUnifiedAccount());
         int lastSetId = avatarSets.size() - 1;
         String lastSetAvatarId = "";
         String avatarSetName = "";
@@ -866,7 +866,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } catch (IndexOutOfBoundsException e) {
             Assert.fail("Index out of bounds: " + e);
         }
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         moreMenu.clickEditProfilesBtn();
@@ -1699,15 +1699,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
         if (avatarSets.isEmpty()) {
             throw new NoSuchElementException("No avatar sets were found");
-        } else {
-            return avatarSets;
-        }
-    }
-
-    private List<ContentSet> getAvatarSets(DisneyAccount account) {
-        List<ContentSet> avatarSets = getSearchApi().getAllSetsInAvatarCollection(account, getCountry(), getLanguage());
-        if (avatarSets.isEmpty()) {
-            throw new SkipException("Skipping test, no avatar sets were found.");
         } else {
             return avatarSets;
         }
