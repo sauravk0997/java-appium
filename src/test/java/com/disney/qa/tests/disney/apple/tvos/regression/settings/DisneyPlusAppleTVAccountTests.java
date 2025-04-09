@@ -18,6 +18,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.CONTINUE_BTN_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.HOME_PAGE_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.common.constant.IConstantHelper.WELCOME_SCREEN_NOT_DISPLAYED;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS;
@@ -25,9 +26,14 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
-    private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block page headline not displayed";
+    private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block screen not displayed";
+    private static final String OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Hard Block screen not displayed";
     private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen not displayed";
     private static final String OTP_PAGE_DID_NOT_OPEN = "User not navigated to OTP page";
+    private static final String OTP_SUCCESS_MESSAGE_NOT_DISPLAYED =
+            "Confirmation page not displayed after entering OTP";
+    private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
+    private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -64,7 +70,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "OOH Soft Block page subcopy 2 not displayed");
         sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.getOOHSoftBlockLogOutButton().isPresent(),
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
                 "Log out button not displayed");
         homePage.clickSelect();
 
@@ -105,12 +111,45 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OTP_PAGE_DID_NOT_OPEN);
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
-                "Confirmation page not displayed after entering OTP");
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
-                "'Continue To Disney+' button not displayed");
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
         homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), "User not navigated to home page");
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118363"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHFlaggedTravelModeOTPConfirmationPage() {
+        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
+        String password = "M1ck3yM0us3#";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                "'I'm Away From Home' button not displayed");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                "Travel mode 'Confirm you are away from home' screen not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        homePage.waitForHomePageToOpen();
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
