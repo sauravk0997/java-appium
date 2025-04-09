@@ -253,7 +253,7 @@ public class DisneyPlusVideoPlayerLockScreenTest extends DisneyBaseTest {
         videoPlayer.waitForElementToDisappear(
                 videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON),
                 DisneyAbstractPage.TEN_SEC_TIMEOUT);
-        // Click again in the screen to get height position
+        // Click again in the screen to validate center position
         clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
         validateElementExpectedHeightPosition(
                 videoPlayer.getElementFor(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.UNLOCK_ICON), BOTTOM);
