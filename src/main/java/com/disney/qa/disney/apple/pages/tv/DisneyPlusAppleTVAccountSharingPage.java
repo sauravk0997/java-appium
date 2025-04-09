@@ -111,6 +111,12 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                         DictionaryKeys.OOH_TRAVEL_MODE_HEADLINE.getText())).isPresent();
     }
 
+    public boolean isOOHTravelModeScreenSubCopyPresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_TRAVEL_MODE_SUB_COPY.getText())).isPresent();
+    }
+
     public ExtendedWebElement getOOHTravelModeOTPCTA() {
         return getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
