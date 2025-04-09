@@ -94,7 +94,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHSoftBlockVerifyDeviceOTPConfirmationPage() {
         String email = "qait.disneystreaming+1744102243522aebcdisneystreaming@gmail.com";
-        String password = "Test1234!";
+        String password = "M1ck3yM0us3#";
         getOTPFromApi(email);
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
@@ -125,7 +125,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHFlaggedTravelModeOTPConfirmationPage() {
         String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
-        String password = "Test1234!";
+        String password = "M1ck3yM0us3#";
         getOTPFromApi(email);
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
