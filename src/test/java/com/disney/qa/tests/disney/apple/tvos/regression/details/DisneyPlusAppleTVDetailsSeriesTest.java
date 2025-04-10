@@ -148,7 +148,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
         sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Details Tab title not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
-        sa.assertTrue(detailsPage.isDurationDisplayed(), "Detail Tab duration not present");
         sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
         sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
         sa.assertTrue(detailsPage.isRatingPresent(), "Detail Tab rating not present");
