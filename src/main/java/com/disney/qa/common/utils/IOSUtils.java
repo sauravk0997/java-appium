@@ -31,6 +31,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.ValueRange;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +57,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String RIGHT_POSITION = "RIGHT";
     String LEFT_POSITION = "LEFT";
+    String CENTER_POSITION = "CENTER";
     String TOP = "TOP";
     String BOTTOM = "BOTTOM";
 
@@ -975,10 +977,12 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     default Point getCenterCoordinate(ExtendedWebElement element) {
-        int startX = element.getLocation().getX();
-        int startY = element.getLocation().getY();
-        int width = element.getSize().getWidth();
-        int height = element.getSize().getHeight();
+        Point elementLocation = element.getLocation();
+        Dimension elementSize = element.getSize();
+        int startX = elementLocation.getX();
+        int startY = elementLocation.getY();
+        int width = elementSize.getWidth();
+        int height = elementSize.getHeight();
         int centerX = startX + (width / 2);
         int centerY = startY + (height / 2);
         return new Point(centerX, centerY);
@@ -992,6 +996,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         LOGGER.info("screen size width: {} ", screenWidth);
         // Get 50 percent of the screen width size to validate if elements are on the right or left
         double percentageToValidate = 0.5 * screenWidth;
+        int limit = 10;
         LOGGER.info("percentageToValidate size: {} ", percentageToValidate);
         switch(alignment) {
             case RIGHT_POSITION:
@@ -1000,6 +1005,11 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
                 break;
             case LEFT_POSITION:
                 Assert.assertTrue(elementPosition < percentageToValidate, "Element is not at the left position");
+                break;
+            case CENTER_POSITION:
+                int position = elementPosition - (int) (percentageToValidate);
+                ValueRange range = ValueRange.of(0, limit);
+                Assert.assertTrue(range.isValidIntValue(position), "Element is not at the center position");
                 break;
             default: throw new IllegalArgumentException("Invalid alignment String");
         }
