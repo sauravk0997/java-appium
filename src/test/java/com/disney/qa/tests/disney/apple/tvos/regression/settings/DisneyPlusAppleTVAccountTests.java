@@ -123,9 +123,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118363"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHFlaggedTravelModeOTPConfirmationPage() {
-        //String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
-        String email = "hir+67f60762disneystreaming@gmail.com";
-        String password = "Test1234!";
+        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
+        String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -157,10 +156,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118364"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHFlaggedUpdateHouseHoldOTPConfirmationPage() {
-        //String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
-        //String password = "M1ck3yM0us3#";
-        String email = "anderson.velasquez.-nd+67f54167disneyplustesting@gmail.com";
-        String password = "Test1234!";
+        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
+        String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
