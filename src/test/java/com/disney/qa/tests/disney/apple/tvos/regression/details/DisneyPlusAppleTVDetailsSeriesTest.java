@@ -135,7 +135,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64901"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
-    public void verifyDetailsTabContent() {
+    public void verifySeriesDetailsTabContent() {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
