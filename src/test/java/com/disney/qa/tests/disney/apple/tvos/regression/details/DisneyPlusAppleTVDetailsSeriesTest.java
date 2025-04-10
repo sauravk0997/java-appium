@@ -157,6 +157,4 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect");
         sa.assertAll();
     }
-
-
 }
