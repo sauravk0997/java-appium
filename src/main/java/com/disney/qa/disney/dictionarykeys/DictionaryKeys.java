@@ -345,6 +345,7 @@ public enum DictionaryKeys {
     OOH_TRAVEL_MODE_CTA("ooh_travel_mode_cta"),
     OOH_TRAVEL_MODE_HEADLINE("ooh_travel_mode_headline"),
     OOH_TRAVEL_MODE_SEND_CODE_CTA("ooh_travel_mode_otp_cta"),
+    OOH_TRAVEL_MODE_SUB_COPY("ooh_travel_mode_subcopy"),
     OOH_VERIFY_DEVICE_DISMISS_CTA("ooh_verify_device_dismiss_cta"),
     OOH_VERIFY_DEVICE_HEADLINE("ooh_verify_device_headline"),
     OOH_VERIFY_DEVICE_OTP_CTA("ooh_verify_device_otp_cta"),
