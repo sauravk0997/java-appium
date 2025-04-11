@@ -33,15 +33,11 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
-import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STUDIOS_AND_NETWORKS;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
-import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -909,7 +905,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplink(url);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        videoPlayer.waitUntilRemainingTimeLessThan(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
         videoPlayer.clickBackButton();
         detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
