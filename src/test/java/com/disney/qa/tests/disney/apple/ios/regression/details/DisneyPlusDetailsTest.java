@@ -413,12 +413,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickEspnTile();
         Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
 
-        swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
-                homePage.getBrandLandingView(), Direction.UP, 1000);
         String espnSportCollectionId = CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS);
+        ExtendedWebElement sportsContainer = homePage.getCollection(espnSportCollectionId);
+        swipePageTillElementPresent(sportsContainer, 5,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
 
         // Get first sport and validate page
-        sa.assertTrue(homePage.getCollection(espnSportCollectionId).isPresent(), "Sports container was not found");
+        sa.assertTrue(sportsContainer.isPresent(), "Sports container was not found");
         String sportTitle = getContainerTitlesFromApi(espnSportCollectionId, 5).get(0);
         if(!sportTitle.isEmpty()) {
             espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle).click();
