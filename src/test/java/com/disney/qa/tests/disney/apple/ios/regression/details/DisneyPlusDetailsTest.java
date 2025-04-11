@@ -421,7 +421,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(homePage.getCollection(espnSportCollectionId).isPresent(), "Sports container was not found");
         String sportTitle = getContainerTitlesFromApi(espnSportCollectionId, 5).get(0);
         if(!sportTitle.isEmpty()) {
-            espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle).click();
+            ExtendedWebElement sportsElement =
+                    espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle);
+            espnPage.swipeInContainerTillElementIsPresent(
+                    espnPage.getCollection(CollectionConstant.Collection.ESPN_SPORTS),
+                    sportsElement,
+                    3,
+                    Direction.LEFT);
+            sportsElement.click();
             sa.assertTrue(espnPage.isSportTitlePresent(sportTitle), "Sport title was not found");
             sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
             sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
