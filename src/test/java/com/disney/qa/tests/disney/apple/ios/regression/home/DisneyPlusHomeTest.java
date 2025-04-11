@@ -683,7 +683,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
-
+        homePage.waitForHomePageToOpen();
         addContentInContinueWatchingWithExpectedRemainingTime(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
                 expectedRemainingTimeInSec);
