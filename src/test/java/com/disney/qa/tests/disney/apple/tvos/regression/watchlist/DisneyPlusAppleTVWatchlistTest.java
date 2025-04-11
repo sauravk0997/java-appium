@@ -41,6 +41,18 @@ public class DisneyPlusAppleTVWatchlistTest extends DisneyPlusAppleTVBaseTest {
                 DisneyEntityIds.IRONMAN));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67702"})
+    @Test(groups = {TestGroup.WATCHLIST, TestGroup.SMOKE, US})
+    public void verifyUserLandsOnWatchlistScreen() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchlistPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.openGlobalNavAndSelectOneMenu(DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST.getText());
+
+        Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102674"})
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.SMOKE, US})
     public void verifyNoWatchlistAppearance() {
