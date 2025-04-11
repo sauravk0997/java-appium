@@ -146,13 +146,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1, 1);
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
-        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Details Tab title not present");
+        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Details Tab series title not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
-        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab release date not present");
         sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
         sa.assertTrue(detailsPage.isRatingPresent(), "Detail Tab rating not present");
         sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
-        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab creator not present");
         sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect");
         sa.assertAll();
