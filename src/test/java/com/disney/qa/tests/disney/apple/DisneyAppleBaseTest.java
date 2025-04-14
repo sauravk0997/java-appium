@@ -487,6 +487,15 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return unifiedOfferRequest;
     }
 
+    public UnifiedOfferRequest getUnifiedOfferRequest(String searchTerm, String locale) {
+        return UnifiedOfferRequest.builder()
+                .country(locale)
+                .partner(Partner.DISNEY)
+                .searchText(searchTerm)
+                .skuPlatform(SkuPlatform.WEB)
+                .build();
+    }
+
     public UnifiedOfferRequest getUnifiedOfferRequest(DisneyUnifiedOfferPlan planName,
                                                       PurchaseFlow purchaseFlow,
                                                       CampaignType campaignType) {
@@ -502,6 +511,10 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName) {
         return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName.getValue()));
+    }
+
+    public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName, String locale) {
+        return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName.getValue(), locale));
     }
 
     public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName,
@@ -533,7 +546,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return getDefaultCreateUnifiedAccountRequest()
                 .setPartner(Partner.DISNEY)
                 .addEntitlement(UnifiedEntitlement.builder()
-                        .unifiedOffer(getUnifiedOffer(planName))
+                        .unifiedOffer(getUnifiedOffer(planName, locale))
                         .subVersion(UNIFIED_ORDER).build())
                 .setCountry(locale)
                 .setLanguage(language);
