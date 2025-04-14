@@ -3,35 +3,77 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceUtilities;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.response.Container;
+import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.lang.invoke.MethodHandles;
 import java.util.*;
 import java.util.stream.*;
 
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
-import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
+import static com.disney.qa.api.disney.DisneyEntityIds.*;
+import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
+import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.UPCOMING;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTest {
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String HOME_PAGE_ERROR_MESSAGE = "Home page did not open";
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String WATCHLIST_SCREEN_ERROR_MESSAGE = "Watchlist page did not open";
+    private static final String BADGE_LABEL_NOT_PRESENT = "Badge label is not present";
+    private static final String TITLE_NOT_PRESENT = "Title is not present";
+    private static final String DESCRIPTION_NOT_PRESENT = "Description is not present";
+    private static final String WATCHLIST_NOT_PRESENT = "Watchlist button is not present";
+    private static final String BACKGROUND_IMAGE_NOT_PRESENT = "Background image is not present";
+    private static final String ASSET_NOT_FOUND_IN_WATCHLIST = "The asset was not found in the watchlist";
+    private static final String LIVE_MODAL_NOT_OPEN = "Live event modal did not open";
+    private static final String SUGGESTED = "SUGGESTED";
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66656"})
+    @Test(groups = {TestGroup.DETAILS_PAGE,TestGroup.MOVIES, US})
+    public void verifyMovieDetailsExtraTab() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getExtrasTab(), 6);
+        detailsPage.moveDown(1, 1);
+        String extraTitle = detailsPage.getExtraEpisodeTitle();
+        detailsPage.clickSelect();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.getTitleLabel().contains(extraTitle),
+                "Playback is not initiated for the extra content");
+    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66642"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
@@ -118,6 +160,45 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66646"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMovieDetailsVODBookmarkRefresh() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        int maxCount = 20;
+        String continueButton = "CONTINUE";
+
+        logIn(getUnifiedAccount());
+
+        //Populate continue watching collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_moana_2_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+
+        // Forward video and get remaining time
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        commonPage.clickSelect();
+        String remainingTime = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
+        LOGGER.info("remainingTime {}", remainingTime);
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Navigate to continue watching collection
+        commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+                "Continue button was not present on details page");
+        Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(remainingTime),
+                "Correct remaining time is not reflecting in progress bar on details page");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90976"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
     public void trailerCompletionTakesUserToDetailsPage() {
@@ -146,8 +227,56 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-101242"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMovieDetailsAppearanceMetadata() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        SoftAssert sa = new SoftAssert();
+        int maxCount = 20;
+        String continueButton = "CONTINUE";
+        String restartButton = "RESTART";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.PREY.getEntityId(),
+                DisneyPlusBrandIOSPageBase.Brand.HULU);
+        logIn(getUnifiedAccount());
+
+        //Populate continue watching collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        //Navigate to continue watching collection
+        homePage.waitForHomePageToOpen();
+        commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+
+        sa.assertTrue(detailsPage.getTypeButtonByLabel(restartButton).isPresent(),
+                "Restart button is not displayed on details page");
+        sa.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
+                "Continue button was not present on details page");
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "metadata label is not displayed");
+        sa.assertTrue(detailsPage.getProgressContainer().isPresent(),
+                "Progress container view is not present for the movies");
+        if (movieApiContent != null) {
+            sa.assertEquals(detailsPage.getContentDescriptionText(), movieApiContent.getDescription().getBrief(),
+                    "Description didn't match with api description value");
+        }
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112611"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifyNetworkAttributionWithBundleUserAccount() {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -159,6 +288,433 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66644"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyUpAndDownArrowFocusesPlayButton() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(END_GAME.getTitle());
+        searchPage.clickSearchResult(END_GAME.getTitle());
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getPlayButton()),
+                "Play button was not focused when details page opened");
+        detailsPage.moveDown(1,1);
+        detailsPage.moveUp(1,1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getPlayButton()),
+                "Play button was not focused after navigating up from details tab");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102800"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    public void verifyVODReplayAppearance() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String sports = "Sports";
+        String basketball = "Basketball";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                ESPN_PAGE_DID_NOT_OPEN);
+
+        // Navigate to Sports and basketball sport
+        homePage.navigateToShelf(brandPage.getBrandShelf(sports));
+        homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
+        detailsPage.getTypeCellLabelContains(basketball).click();
+        Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
+                "Sport page did not open");
+
+        // Navigate to a Replay and validate the page
+        homePage.navigateToShelf(espnPage.getReplayLabel());
+        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        if (replayTitle == null) {
+            throw new IndexOutOfBoundsException("No replay events found");
+        }
+        detailsPage.getTypeCellLabelContains(replayTitle).click();
+        detailsPage.waitForDetailsPageToOpen();
+        // Validate logo and play button
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        // Validate other UI elements
+        sa.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata text is not present");
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102798"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER,  US})
+    public void verifyLiveEventAppearance() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        String errorMessage = "Skipping test, no events are available";
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+
+        // Navigate to a live event
+        Set espnLiveEvent =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
+        if (espnLiveEvent == null) {
+            throw new SkipException(errorMessage);
+        }
+        try {
+            String titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+            LOGGER.info("Event title: {}", titleEvent);
+            homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(titleEvent));
+            // Verify airing badge to validate if there is a live event occurring
+            String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
+                    .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
+            LOGGER.info("Airing badge: {}", airingBadge);
+            if (airingBadge.equals(UPCOMING)) {
+                throw new SkipException(errorMessage);
+            }
+            // Open live event
+            detailsPage.getTypeCellLabelContains(titleEvent).click();
+        } catch(Exception e) {
+            Assert.fail(errorMessage + e.getMessage());
+        }
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
+        liveEventModal.getDetailsButton().click();
+        // Validate logo and play button
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        // Validate other UI elements
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102799"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyUpcomingEventAppearance() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String channelAttribution = "Included with your ESPN+ subscription";
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        Set espnLiveEvent =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
+        if (espnLiveEvent == null) {
+            throw new SkipException("Skipping test, no upcoming events are available");
+        }
+        try {
+            String firstEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+            LOGGER.info("Event title: {}", firstEvent);
+            homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(firstEvent), 10);
+            // Explore the espnLiveEvent Set to find an upcoming event and open it
+            String upcomingTitle = navigateToUpcomingEvent(espnLiveEvent);
+            detailsPage.getTypeCellLabelContains(upcomingTitle).click();
+        } catch (Exception e) {
+            Assert.fail("No events are available" + e.getMessage());
+        }
+
+        // Validate details page, logo and play button
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        // Validate other UI elements
+        sa.assertTrue(detailsPage.isLogoPresent(), "Logo image is not present");
+        sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(channelAttribution).isPresent(),
+                "Channel network attribution is not present");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67716"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
+    public void verifyNavigationFromWatchlistToDetailsPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(), getUnifiedAccount().getAccountToken(),
+                getUnifiedAccount().getProfileId(),
+                getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
+        ExploreContent movieApiContent = getMovieApi(END_GAME.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String description = movieApiContent.getDescription().getBrief();
+
+        logIn(getUnifiedAccount());
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+
+        watchListPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), "Movies details page did not launch");
+        Assert.assertTrue(detailsPage.isBriefDescriptionPresent(description), "description is not present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102803"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyUpcomingEventWatchlist() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String upcomingTitle = "";
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        Set espnLiveEvent =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 10);
+        if (espnLiveEvent == null) {
+            throw new SkipException("Skipping test, no upcoming events are available");
+        }
+        try {
+            String firstEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+            LOGGER.info("Event title: {}", firstEvent);
+            homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(firstEvent),10);
+            // Explore the espnLiveEvent Set to find an upcoming event and open it
+            upcomingTitle = navigateToUpcomingEvent(espnLiveEvent);
+            detailsPage.getTypeCellLabelContains(upcomingTitle).click();
+        } catch(Exception e) {
+            Assert.fail("No events are available" + e.getMessage());
+        }
+
+        // Validate details page and add item to the watchlist
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getAddToWatchlistText().isElementPresent(),
+                "Item is not available to be added to the watchlist");
+        detailsPage.getWatchlistButton().click();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isElementPresent(),
+                "Item was not added to the watchlist");
+
+        //Navigate to watchlist
+        detailsPage.clickMenuTimes(1,1);
+        homePage.waitForPresenceOfAnElement(homePage.getGlobalNav());
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(upcomingTitle));
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(upcomingTitle).isPresent(),
+                ASSET_NOT_FOUND_IN_WATCHLIST);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68876"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SMOKE, US})
+    public void verifyHomeTitleSelectionRedirectsToDetailsPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        homePage.moveDownUntilCollectionContentIsFocused(
+                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 5);
+        String firstNewlyAddedTitleName = homePage.getFirstCellTitleFromContainer(
+                CollectionConstant.Collection.NEWLY_ADDED).split(",")[0];
+
+        homePage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1,1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(), firstNewlyAddedTitleName,
+                "Current details page title doesn't match API fetched title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102804"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyLiveEventWatchlist() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWatchListPage watchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        String titleEvent = navigateToLiveEvent();
+
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
+        liveEventModal.getDetailsButton().click();
+        // Validate details page and add item to the watchlist
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
+        sa.assertTrue(detailsPage.getAddToWatchlistText().isElementPresent(),
+                "Item is not available to be added to the watchlist");
+        detailsPage.getWatchlistButton().click();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isElementPresent(),
+                "Item was not added to the watchlist");
+
+        //Navigate to watchlist
+        detailsPage.clickMenuTimes(1, 1);
+
+        homePage.waitForPresenceOfAnElement(homePage.getGlobalNav());
+        homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
+        Assert.assertTrue(watchListPage.isOpened(), WATCHLIST_SCREEN_ERROR_MESSAGE);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getTypeCellLabelContains(titleEvent));
+        sa.assertTrue(detailsPage.getTypeCellLabelContains(titleEvent).isPresent(),
+                ASSET_NOT_FOUND_IN_WATCHLIST);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102805"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyWatchLiveEvent() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayerPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        // Navigate to the first event from Live and Upcoming shelf
+        String titleEvent = navigateToLiveEvent();
+
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
+        liveEventModal.getDetailsButton().click();
+        // Validate details page and add item to the watchlist
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickWatchButton();
+        Assert.assertTrue(videoPlayerPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(titleEvent.contains(videoPlayerPage.getTitleLabel()),
+                "Video title does not match with the expected");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66648"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMoviesDetailsTabMetadata() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Details Tab title not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
+        sa.assertTrue(detailsPage.isDurationDisplayed(), "Detail Tab duration not present");
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
+        sa.assertTrue(detailsPage.isRatingPresent(), "Detail Tab rating not present");
+        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
+        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
+        sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64730"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
+    public void verifyMovieDetailsPageSuggestedTab() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getSuggestedTab()), "Suggested tab was not focussed");
+        detailsPage.moveDown(1, 1);
+
+        ArrayList<Container> movieDetailsPageContainers = getDisneyAPIPage(THE_AVENGERS.getEntityId(), false);
+        List<Item> movieFirstThreeSuggestedContainers = movieDetailsPageContainers.stream()
+                .filter(container -> container.getVisuals().getName().equals(SUGGESTED))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("suggested container not present in API response"))
+                .getItems().subList(0, 3);
+
+        movieFirstThreeSuggestedContainers.subList(0, 2).forEach(i -> {
+            Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellLabelContains(i.getVisuals().getTitle())),
+                    "Suggested title was not focussed");
+            detailsPage.moveRight(1, 1);
+        });
+        detailsPage.clickSelect();
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(),
+                movieFirstThreeSuggestedContainers.get(2).getVisuals().getTitle(),
+                "Current details page title doesn't match API fetched title");
+    }
+
+    public String navigateToLiveEvent() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        String errorMessage = "No live events found";
+        String titleEvent = "";
+        Set espnEvents =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
+        if (espnEvents == null) {
+            throw new SkipException(errorMessage);
+        }
+        try {
+            titleEvent = espnEvents.getItems().get(0).getActions().stream()
+                    .filter(item -> item.getActions().get(0).getContentType().equals("live"))
+                    .findFirst()
+                    .orElseThrow(() -> new SkipException(errorMessage))
+                    .getVisuals().getTitle();
+            LOGGER.info("Title event: {}", titleEvent);
+            homePage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(titleEvent), 10);
+            // Open live event
+            detailsPage.getTypeCellLabelContains(titleEvent).click();
+        } catch (Exception e) {
+            throw new SkipException(errorMessage + e.getMessage());
+        }
+        return titleEvent;
+    }
+
+    public String navigateToUpcomingEvent(Set event) {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String upcomingEvent = "";
+        for (int i = 0; i < event.getItems().size(); i++) {
+            if(!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
+                upcomingEvent = event.getItems().get(i).getVisuals().getTitle();
+                break;
+            }
+        }
+        LOGGER.info("Upcoming event {}", upcomingEvent);
+        homePage.moveRightUntilElementIsFocused(homePage.getTypeCellLabelContains(upcomingEvent), 15);
+        return upcomingEvent;
+    }
+
     private void verifyServiceAttribution(String content, SoftAssert sa) {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -167,6 +723,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        searchPage.waitForPresenceOfAnElement(searchPage.getSearchField());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         searchPage.clearSearchBar();
         searchPage.typeInSearchField(content);

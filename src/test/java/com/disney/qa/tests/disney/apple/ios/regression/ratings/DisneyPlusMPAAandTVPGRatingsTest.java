@@ -28,7 +28,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemTV_Y() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, TV_Y.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_Y.getContentRating());
     }
 
@@ -36,7 +35,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemTV_Y7() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, TV_Y7.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_Y7.getContentRating());
     }
 
@@ -44,7 +42,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemTV_Y7_FV() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, TV_Y7_FV.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_Y7_FV.getContentRating());
     }
 
@@ -52,7 +49,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemTV_G() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, TV_G.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_G.getContentRating());
     }
 
@@ -60,7 +56,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemG() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, G.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(G.getContentRating());
     }
 
@@ -68,7 +63,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemTV_PG() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, TV_PG.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_PG.getContentRating());
     }
 
@@ -76,7 +70,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemPG() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, PG.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(PG.getContentRating());
     }
 
@@ -84,7 +77,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemPG_13() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, PG_13.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(PG_13.getContentRating());
     }
 
@@ -92,7 +84,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemTV_14() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, TV_14.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_14.getContentRating());
     }
 
@@ -100,7 +91,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemR() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, RatingConstant.Rating.RESTRICTED.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(RatingConstant.Rating.RESTRICTED.getContentRating());
     }
 
@@ -108,7 +98,6 @@ public class DisneyPlusMPAAandTVPGRatingsTest extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.RATINGS, TestGroup.RATING_SYSTEM_MPAATVPG, MPAA})
     public void verifyRatingSystemTV_MA() {
         ratingsSetup(DISNEY_PLUS_PREMIUM, TV_MA.getContentRating(), getCountry());
-        handleOneTrustPopUp();
         confirmRegionalRatingsDisplays(TV_MA.getContentRating());
     }
 }

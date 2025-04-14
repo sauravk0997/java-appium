@@ -858,7 +858,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74554"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchHuluContent() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -882,7 +882,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-69570"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -931,7 +931,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchEmptyPageMaxMaturityRating() {
         String searchQuery = "robocop";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -958,7 +958,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74557"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMaxLimitSearchQuery() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -983,7 +983,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77872"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifySearchHuluContentForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1001,7 +1001,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77875"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifyEntitleAndNonEntitleHuluContentForNonBundleUser() {
         String entitleHuluContent = "Solar Opposites";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -1032,7 +1032,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77874"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifySearchHuluContentForBundleUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1053,7 +1053,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77873"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, CA})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, CA})
     public void verifySearchHuluContentForStandaloneUserInEligible() {
         String unavailableContentInCA = "Normal People";
 
@@ -1113,7 +1113,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         searchPage.getKeyboardSearchButton().click();
         Assert.assertTrue(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(),
                 "An ESPN+ title was not found when searching for Sports content");
-        Assert.assertTrue(searchPage.getStaticTextByLabel(ESPN_LEAGUE).isElementPresent(),
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE).isElementPresent(),
                 "Search did not show titles related to the given ESPN League search");
     }
 

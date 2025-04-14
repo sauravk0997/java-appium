@@ -144,27 +144,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 "Direct Billing Web subscription message was not displayed");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75401"})
-    @Test(description = "Verify that the correct description for Google displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifySubscriptionDetails_GooglePlay() {
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isGoogleSubscriptionTitlePresent(),
-                "Google Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isGoogleSubscriptionMessagePresent(),
-                "Google Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openGoogleWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(GOOGLE_URL),
-                "Webview did not open to the expected url");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
     @Test(description = "Verify that the correct description for Roku displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySubscriptionDetails_Roku() {
@@ -221,6 +200,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
+        Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
+                MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
         accountPage.getEditPasswordButton().click();
         String otp = getOTPFromApi(getUnifiedAccount());
 
@@ -574,10 +555,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         setAppToAccountSettings(getUnifiedAccount());
         accountPage.waitForAccountPageToOpen();
-
         Assert.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
-        accountPage.tapEditProfilesLink();
 
+        accountPage.tapEditProfilesLink();
         Assert.assertTrue(editProfilePage.isEditProfilesTitlePresent(), "Edit profile screen is not displayed");
         Assert.assertTrue(editProfilePage.isEditModeProfileIconPresent(DEFAULT_PROFILE),
                 "Profiles are not in Edit Mode (pencil shown)");

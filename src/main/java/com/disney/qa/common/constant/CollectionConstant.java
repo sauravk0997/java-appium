@@ -27,11 +27,14 @@ public class CollectionConstant {
         KIDS_MICKEY_AND_FRIENDS,
         KIDS_PRINCESSES_AND_FAIRY_TALES,
         LIVE_AND_UPCOMING_FROM_ESPN, //live collection for D+ premium user
+        NEWLY_ADDED,
         NEW_TO_DISNEY,
         ORIGINALS,
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         REPLAYS_COLLECTION,
+        SPORT_REPLAYS,
+        STREAMS_NON_STOP_PLAYLISTS,
         STUDIOS_AND_NETWORKS,
         TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
@@ -51,7 +54,7 @@ public class CollectionConstant {
             case BRANDS_COLLECTION:
                 return "5fc710db-490e-405e-b753-7c0a697696db";
             case BRANDS_DISNEY_ORIGINALS:
-                return "33b99ab4-5306-4099-9c4b-0845876a0834";
+                return "e7af894d-04f6-47df-a43c-f982ea67d214";
             case BRANDS_PIXAR_FEATURED:
                 return "dd6dda68-2634-4f3d-90ba-af5f99a070f4";
             case BRANDS_NATIONAL_GEOGRAPHIC_FEATURED:
@@ -80,6 +83,8 @@ public class CollectionConstant {
                 return "4e177574-aed4-4ad5-8d01-6fc7513bd3e5";
             case LIVE_AND_UPCOMING_FROM_ESPN:
                 return "3fd573af-c11c-4f29-a201-b543829aad21";
+            case NEWLY_ADDED:
+                return "67340996-8d48-4b09-8e8c-153cd46e36e2";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
@@ -88,6 +93,8 @@ public class CollectionConstant {
                 return "c7e20abb-ff52-4d21-a2f6-46618c4118e8";
             case RECOMMENDED_FOR_YOU:
                 return "7894d9c6-43ab-4691-b349-cf72362095dd";
+            case STREAMS_NON_STOP_PLAYLISTS:
+                return "041c9af9-841e-428b-8e9d-0821defc90df";
             case TRENDING:
                 return "25b87551-fd19-421a-be0f-b7f2eea978b3";
             case HULU_FEATURED:
@@ -102,6 +109,8 @@ public class CollectionConstant {
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case REPLAYS_COLLECTION:
                 return "971963b2-2bf5-4416-aa7d-41950d5760d7";
+            case SPORT_REPLAYS:
+                return "b9fac575-876d-4a06-aafc-1ab8ab7a34b5";
             case STUDIOS_AND_NETWORKS:
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
             case TREEHOUSE_OF_HORROR_I_TO_V:
@@ -135,8 +144,12 @@ public class CollectionConstant {
                 return "Sports";
             case REPLAYS_COLLECTION:
                 return "Replays";
+            case STREAMS_NON_STOP_PLAYLISTS:
+                return "Streams: Non-Stop Playlists";
             case STUDIOS_AND_NETWORKS:
                 return "Studios and Networks";
+            case NEWLY_ADDED:
+                return "Newly Added";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }

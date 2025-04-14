@@ -23,6 +23,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
@@ -46,6 +47,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String CONTENT_TITLE = "Content_Title";
     private static final String DISNEY_JUNIOR_ARIEL = "Disney Junior Ariel";
     private static final String PLAY = "Play";
+    private static final String DOWNLOAD_MODAL_IS_VISIBLE = "Download Modal was still visible";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
@@ -113,6 +115,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -141,7 +144,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         moreMenuPage.getDynamicCellByLabel(moreMenuPage.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         sa.assertFalse(moreMenuPage.getTypeCellLabelContains(contentTitle).isPresent(),
                 "Series title was not removed from watchlist");
-        sa.assertTrue(moreMenuPage.isWatchlistEmptyBackgroundDisplayed(),
+        sa.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
     }
@@ -301,6 +304,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi()
+                .createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+
         //Get duration from explore api
         ExploreContent series = getExploreApi().getSeries(
                 getDisneyExploreSearchRequest()
@@ -308,13 +316,11 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                         .setProfileId(getUnifiedAccount().getProfileId()));
         int seriesExtrasDuration = 0;
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount());
-
-        Assert.assertTrue(homePage.isOpened(), "Home page did not open");
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.searchForMedia(FOUR_EVER);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(FOUR_EVER).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.isExtrasTabPresent(), EXTRAS_TAB_NOT_DISPLAYED);
 
@@ -547,11 +553,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disney.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_daredevil_born_again_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_daredevil_born_again_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
 
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -572,7 +579,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickWatchlistButton();
         detailsPage.clickMoreTab();
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(contentTitle),
+        sa.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(contentTitle),
                 "Titles were not added to the Watchlist");
         moreMenu.clickHomeIcon();
 
@@ -595,7 +602,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_series_daredevil_born_again_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for coming soon series %s is not as expected", contentTitle));
         sa.assertAll();
@@ -609,8 +616,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_daredevil_born_again_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_daredevil_born_again_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
@@ -638,7 +645,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
         //Verify if ratings value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RATING)) {
-            sa.assertTrue(detailsPage.getStaticTextByLabel(exploreAPIData.get(RATING).toString()).isPresent(),
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
                     "Rating value is not present on details page featured area for coming soon content");
         }
 
@@ -1144,8 +1151,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     public void verifyDownloadModalWhenEpisodeDownloadIsPaused() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        String firstEpisodeTitle = "Glorious Purpose";
-        String seriesDeeplink = R.TESTDATA.get("disney_prod_series_detail_loki_deeplink");
+        String firstEpisodeTitle = "Heaven’s Half Hour";
+        String seriesDeeplink = DEEPLINKURL.concat(DAREDEVIL_BORN_AGAIN.getEntityId());
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -1162,8 +1169,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isPauseDownloadButtonDisplayed(),
                 "Pause Download button was not displayed on Download modal");
         detailsPage.getPauseDownloadButton().click();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getViewAlert().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
+                DOWNLOAD_MODAL_IS_VISIBLE);
         detailsPage.getFirstEpisodeDownloadButton().click();
 
         //Validate download modal elements presence when download is paused
@@ -1179,8 +1186,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Validate Dismiss button behavior when download is paused
         detailsPage.clickAlertDismissBtn();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getViewAlert().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
+                DOWNLOAD_MODAL_IS_VISIBLE);
         Assert.assertTrue(detailsPage.getFirstEpisodeDownloadButton().isElementPresent(),
                 "Download is not paused. Download icon was not displayed");
         detailsPage.getFirstEpisodeDownloadButton().click();
@@ -1189,8 +1196,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         //Validate Resume Download button does resume the download when the download was paused
         detailsPage.getResumeDownloadButton().click();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
+        Assert.assertTrue(detailsPage.getViewAlert().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
+                DOWNLOAD_MODAL_IS_VISIBLE);
         Assert.assertTrue(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(),
                 "Download was not resumed. Stop/Pause Download icon was not present");
         detailsPage.clickStopOrPauseDownload();
@@ -1201,9 +1208,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getPauseDownloadButton().click();
         detailsPage.getFirstEpisodeDownloadButton().click();
         detailsPage.getRemoveDownloadButton().click();
-        Assert.assertFalse(detailsPage.getViewAlert().isElementPresent(THREE_SEC_TIMEOUT),
-                "Download Modal was still visible");
-        Assert.assertFalse(detailsPage.getStopOrPauseDownloadIcon().isElementPresent(THREE_SEC_TIMEOUT),
+        Assert.assertTrue(detailsPage.getViewAlert().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
+                DOWNLOAD_MODAL_IS_VISIBLE);
+        Assert.assertTrue(detailsPage.getStopOrPauseDownloadIcon().waitUntilElementDisappear(THREE_SEC_TIMEOUT),
                 "Download was not removed. Stop/Pause Download icon was displayed");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloadsPage.getEmptyDownloadImage().isPresent(),
@@ -1215,8 +1222,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73825"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHulkDetailsTabs() {
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluDetailsTabs() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1252,7 +1259,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75021"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifySeriesDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1280,7 +1287,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75023"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesDetailsVideoPlayerRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

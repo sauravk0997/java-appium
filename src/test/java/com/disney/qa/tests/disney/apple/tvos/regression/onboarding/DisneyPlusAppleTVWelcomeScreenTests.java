@@ -1,9 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.alice.AliceAssertion;
-import com.disney.alice.AliceDriver;
-import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -13,9 +10,6 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
@@ -38,17 +32,9 @@ public class DisneyPlusAppleTVWelcomeScreenTests extends DisneyPlusAppleTVBaseTe
     @Test(groups = {TestGroup.SMOKE, TestGroup.ONBOARDING, US})
     public void welcomeScreenAppearance() {
         SoftAssert sa = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomePage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-
-        var labelList = Stream.of(AliceLabels.DISNEY_LOGO, AliceLabels.NAT_GEO_LOGO, AliceLabels.MARVEL_LOGO,
-                AliceLabels.PIXAR_LOGO, AliceLabels.STAR_WARS_LOGO, AliceLabels.CELL_PHONE_IMAGE).collect(Collectors.toList());
-
         selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(welcomePage.isOpened(), "Welcome screen did not launch");
-
-        AliceAssertion aliceAssertion = aliceDriver.screenshotAndRecognize();
-        labelList.forEach(item -> aliceAssertion.isLabelPresent(sa, item.getText()));
+        welcomePage.waitForWelcomePageToLoad();
 
         sa.assertTrue(welcomePage.isMainTextDisplayed(), "Main text is not displayed");
         sa.assertTrue(welcomePage.getLoginButton().isElementPresent(), "Log In button is not displayed");

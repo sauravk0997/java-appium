@@ -22,11 +22,10 @@ import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.config.Configuration;
-import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import io.appium.java_client.remote.*;
-import io.appium.java_client.remote.options.SupportsAppOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -46,7 +45,6 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 import com.disney.qa.tests.disney.apple.DisneyAppleBaseTest;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
@@ -65,10 +63,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     private static final ThreadLocal<ITestContext> localContext = new ThreadLocal<>();
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String DEFAULT_PROFILE = "Test";
-    public static final String DISNEY_URL = "disneyplus.com";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
     public static final String SECONDARY_PROFILE = "Secondary";
+    public static final String TERTIARY_PROFILE = "Tertiary";
+    public static final String EXTRA_MEMBER_PROFILE = "EM";
     public static final String KIDS_DOB =
             Person.MINOR.getYear() + "-" + Person.MINOR.getMonth().getNum() + "-" + Person.MINOR.getDay(true);
     public static final String U18_DOB =
@@ -107,6 +106,9 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
     public static final String ADD_PROFILE_PAGE_NOT_DISPLAYED = "Add Profile Page is not displayed";
     public static final String CHOOSE_AVATAR_PAGE_NOT_DISPLAYED = "Choose Avatar Page is not displayed";
+    public static final String ESPN_PAGE_DID_NOT_OPEN = "ESPN page did not open";
+    public static final String LIVE_MODAL_NOT_DISPLAYED = "Live Modal is not displayed";
+    public static final String EDIT_PROFILE_PAGE_NOT_DISPLAYED = "Edit Profile Page is not displayed";
 
     @BeforeMethod(alwaysRun = true, onlyForGroups = TestGroup.PRE_CONFIGURATION)
     public void beforeAnyAppActions(ITestContext context) {
@@ -364,7 +366,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
     protected void installJarvis() {
         String platformName;
-
         if (StringUtils.equalsIgnoreCase(getDevice().getCapabilities().getCapability("deviceType").toString(), MobilePlatform.TVOS)) {
             platformName = MobilePlatform.TVOS;
         } else {
@@ -425,13 +426,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 });
     }
 
-    public void installAndLaunchJarvis() {
-        installJarvis();
-        startApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        JarvisAppleBase.fluentWait(getDriver(), 60, 0, "Unable to launch Jarvis")
-                .until(it -> isAppRunning(sessionBundles.get(JarvisAppleBase.JARVIS)));
-    }
-
     public void removeJarvis() {
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         removeApp(sessionBundles.get(JarvisAppleBase.JARVIS));
@@ -442,22 +436,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             rotate(orientation);
         } catch (WebDriverException wde) {
             LOGGER.error("Error rotating screen. Device may already be oriented.");
-        }
-    }
-
-    public void downloadDisneyApp() {
-        String appCenterAppName = WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                .orElseThrow(() -> new InvalidConfigurationException("Add 'app' capability to the configuration."));
-        String appVersion = Configuration.getRequired(DisneyConfiguration.Parameter.APP_VERSION);
-        LOGGER.info("App Download: {}", appCenterAppName);
-        if (appCenterAppName.contains("for_Automation")) {
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Dominguez-Non-IAP-Prod-Enterprise-for-Automation/ios/enterprise/%s", appVersion))
-                    .getDirectLink());
-        } else if (appCenterAppName.contains("Disney")) {
-            installApp(AppCenterManager.getInstance()
-                    .getAppInfo(String.format("appcenter://Disney-Prod-Enterprise/ios/enterprise/%s", appVersion))
-                    .getDirectLink());
         }
     }
 
@@ -733,7 +711,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         applePageBase.removeDomainIdentifier();
-        applePageBase.getClearTextBtn().click();
+        applePageBase.getClearTextBtn().clickIfPresent(FIVE_SEC_TIMEOUT);
         applePageBase.saveDomainIdentifier(newValue);
     }
 
@@ -785,36 +763,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-    }
-
-    public void jarvisDisableOneTrustBanner() {
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        boolean isOneTrustEnabled = true;
-        int jarvisAttempt = 1;
-        removeJarvis();
-        installAndLaunchJarvis();
-        // Validate Jarvis Config
-        while (isOneTrustEnabled && jarvisAttempt < 3)
-            try {
-                LOGGER.info("Attempt {} to configure Jarvis", jarvisAttempt);
-                if (isJarvisOneTrustDisabled(applePageBase)) {
-                    isOneTrustEnabled = false;
-                    LOGGER.info("Successfully disabled One Trust");
-                } else {
-                    terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-                    launchJarvis(false);
-                    jarvisAttempt++;
-                }
-            } catch (Exception e) {
-                LOGGER.info("Exception occurred attempting to disable One Trust");
-                terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-                launchJarvis(false);
-                jarvisAttempt++;
-            }
-
-        // Relaunch Disney app
-        terminateApp(sessionBundles.get(DISNEY));
-        launchApp(sessionBundles.get(DISNEY));
     }
 
     private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {

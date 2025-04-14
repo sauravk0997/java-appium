@@ -1,25 +1,23 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite verbose="1" name="dmgzios_tablet_concurrency_fc" annotations="JDK" configfailurepolicy="continue" thread-count="14" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
+    <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.0-77583"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobName" value="dmgzios_tablet_concurrency_fc"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
     <parameter name="jenkinsJobExecutionMode" value="continue"/>
-    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.2.0-fc"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.3.0-fc"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
     <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
     <parameter name="stringParam::RP_PROJECT_NAME::Report Portal project name" value="dominguez"/>
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
-    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-79288"/>
-    <parameter name="choiceParam::appcenter_app_name::app center app name"
-               value="Disney-Prod-Enterprise,Disney-Non-IAP-PreProd-Enterprise"/>
-    <parameter name="jenkinsBuild" value="4.2.5.77106"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-80313"/>
     <parameter name="jenkinsEnvironments" value="Prod,PreProd"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Air_M2_1,iPad_Air_M2_2,iPad_Air_M2_3,iPad_Air_M2_4,iPad_Air_M2_5,iPad_Air_M2_6,iPad_Gen_10_1,iPad_Gen_10_2,iPad_Gen_10_3,iPad_Pro_M4_1,iPad_Pro_M4_3,iPad_Pro_M4_5,iPad_Pro_M4_2,iPad_Gen_9;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>

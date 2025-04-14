@@ -48,6 +48,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public static final String UPCOMING = "Upcoming";
     public static final String LIVE = "LIVE";
     private static final String ESPN_CONTENT = "NFL 2025 Winter Classic";
+    public static final String NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION = "This program is presented as originally " +
+            "created and may contain stereotypes or negative depictions.";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -106,7 +108,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
+        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
                 "Negative Stereotype Advisory text was not found on details page");
 
         //movie
@@ -118,7 +121,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(details.isNegativeStereotypeAdvisoryLabelPresent(),
+        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
+        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
                 "Negative Stereotype Advisory text was not found on details page");
 
         sa.assertAll();
@@ -400,7 +404,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String sportsLabel = "Sports";
         String leagues = "Leagues";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
@@ -409,12 +412,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickEspnTile();
         Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
 
-        swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
-                homePage.getBrandLandingView(), Direction.UP, 1000);
         String espnSportCollectionId = CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS);
+        ExtendedWebElement sportsContainer = homePage.getCollection(espnSportCollectionId);
+        swipePageTillElementPresent(sportsContainer, 5,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
 
         // Get first sport and validate page
-        sa.assertTrue(homePage.getCollection(espnSportCollectionId).isPresent(), "Sports container was not found");
+        sa.assertTrue(sportsContainer.isPresent(), "Sports container was not found");
         String sportTitle = getContainerTitlesFromApi(espnSportCollectionId, 5).get(0);
         if(!sportTitle.isEmpty()) {
             espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle).click();
@@ -428,8 +432,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHulkSeriesAndMovieServiceAttribution() {
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluSeriesAndMovieServiceAttribution() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -439,7 +443,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
-        contentList.add(PREY);
+        contentList.add(BILL_BURR);
 
         IntStream.range(0, contentList.size()).forEach(i -> {
             homePage.clickSearchIcon();
@@ -450,13 +454,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             detailsPage.isOpened();
-            Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+            Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(),
+                    "Hulu Detail Page Service attribution was not found");
         });
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72248"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHulkExtrasTab() {
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluExtrasTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -498,8 +503,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74254"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHulkShare() {
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluShare() {
         String grootSeries = "I Am Groot";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -557,8 +562,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHulkSeriesAndMovieNetworkAttribution() {
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluSeriesAndMovieNetworkAttribution() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -593,7 +598,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION}, enabled = false)
     public void verifyJuniorProfileNoHulu() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -658,7 +663,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74448"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluAdTierMovieSeriesNoDownloadButton() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -687,7 +692,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74630"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluDetailPagesFeaturedAreaAVBadgesAdsAccount() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -711,7 +716,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74586"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluDetailsPageRatings() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -729,7 +734,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76389"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluSeriesDetailsTabContentBadges() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -758,8 +763,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77868"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULK, US})
-    public void verifyHulkUpsellStandaloneUserInEligibleFlow() {
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, US})
+    public void verifyHuluUpsellStandaloneUserInEligibleFlow() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
@@ -767,7 +772,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         int swipeCount = 5;
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
@@ -811,7 +815,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_the_last_dance_deeplkink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         swipe(detailsPage.getSuggestedTab(), 2);

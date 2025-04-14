@@ -2,6 +2,8 @@
 <suite verbose="1" name="dmgztvos-disable-jarvis-config" annotations="JDK" thread-count="9"
        parallel="tests" configfailurepolicy="continue">
     <parameter name="suiteOwner" value="apple-automation"/>
+    <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.0-77614"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="stringParam::env::Test ENV" value="PROD"/>
@@ -9,9 +11,7 @@
     <parameter name="capabilities" value="deviceName=ATV_4_Gen_2,ATV_4_Gen_3,ATV_4_Gen_4,ATV_4_Gen_5,ATV_4_Gen_9,ATV_4_Gen_10,ATV_4_Gen_11,ATV_4_Gen_12,ATV_4_Gen_13;platformName=iOS;deviceType=tvOS"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="overrideFields" value="init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=240"/>
-    <parameter name="scheduling" value="H 0 * * 1-5"/>
-    <parameter name="stringParam::appcenter_app_name::app center app name"
-               value="Disney-Non-IAP-Prod-Enterprise-tvOS"/>
+<!--    <parameter name="scheduling" value="H 0 * * 1-5"/>-->
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
     <test verbose="1" name="DisneyPlus tvOS Disable Jarvis Config on ATV_4_Gen_12">
         <parameter name="tvOSDeviceName" value="ATV_4_Gen_12"/>

@@ -56,7 +56,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
                 "Back button was not found when at bottom of brand page");
 
         brandPage.swipePageTillElementPresent(brandPage.getBrandLogoImage(),
-                5, null, Direction.DOWN, 500);
+                8, null, Direction.DOWN, 500);
         sa.assertTrue(brandPage.getBrandLogoImage().isPresent(TEN_SEC_TIMEOUT),
                 brandPage.getBrand(brand) + "Brand logo image is not present");
         brandPage.tapBackButton();

@@ -80,7 +80,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         moreMenu.getDynamicCellByLabel(
                 moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
-        sa.assertTrue(moreMenu.isWatchlistEmptyBackgroundDisplayed(),
+        sa.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist text/logo was not properly displayed");
         sa.assertAll();
     }
@@ -368,11 +368,12 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_moana_2_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_moana_2_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_snow_white_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_snow_white_deeplink");
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
@@ -391,7 +392,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         detailsPage.clickWatchlistButton();
         detailsPage.clickMoreTab();
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(contentTitle),
+        sa.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(contentTitle),
                 "Titles were not added to the Watchlist");
         moreMenu.clickHomeIcon();
 
@@ -412,7 +413,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_movie_moana_2_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_movie_snow_white_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for movie %s is not the expected", contentTitle));
         sa.assertAll();
@@ -426,8 +427,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_moana_2_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_moana_2_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_snow_white_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_snow_white_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 
@@ -757,8 +758,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67891"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHulkMovieDetailsTab() {
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluMovieDetailsTab() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
@@ -790,7 +791,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75020"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovieDetailsPageRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -819,8 +820,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74845"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHulkBaseUIMovies() {
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluBaseUIMovies() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -883,7 +884,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74450"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluMovieDownloadAsset() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -918,7 +919,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75022"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMovieDetailsVideoPlayerRestartButton() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);

@@ -9,8 +9,11 @@ import java.util.stream.Stream;
 
 import com.disney.qa.api.account.*;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.accountsharing.AccountSharingHelper;
+import com.disney.qa.api.accountsharing.AccountSharingUnifiedAccounts;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.requests.offer.*;
+import com.disney.qa.api.client.responses.graphql.campaign.CampaignType;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
@@ -18,7 +21,7 @@ import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.search.DisneySearchApi;
 import com.disney.proxy.GeoedgeProxyServer;
-import com.disney.qa.api.utils.DisneyContentApiChecker;
+import com.disney.qa.api.search.UnifiedSearchApi;
 import com.disney.qa.api.watchlist.*;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.IOSUtils;
@@ -30,11 +33,9 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
 import com.zebrunner.carina.utils.config.Configuration;
-import com.zebrunner.carina.utils.exception.InvalidConfigurationException;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import com.zebrunner.carina.webdriver.proxy.ZebrunnerProxyBuilder;
 import io.appium.java_client.remote.MobilePlatform;
-import io.appium.java_client.remote.options.SupportsAppOption;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
@@ -46,7 +47,6 @@ import org.slf4j.LoggerFactory;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
 import org.testng.ITestContext;
@@ -73,6 +73,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     protected static final String TRUE = "true";
     protected static final String FALSE = "false";
     public static final String APPLE = "apple";
+    public static final String WEB = "web";
     public static final String DISNEY = "disney";
     public static final String APP = "app";
     //Keeping this not to a specific plan name to support localization tests
@@ -83,35 +84,22 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
+    protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
+    protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
     private static final ThreadLocal<ExploreSearchRequest> EXPLORE_SEARCH_REQUEST = ThreadLocal.withInitial(() -> ExploreSearchRequest.builder().build());
     ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
             ThreadLocal.withInitial(CreateUnifiedAccountRequest::new);
 
-    private static final LazyInitializer<DisneyContentApiChecker> API_PROVIDER = new LazyInitializer<>() {
-        @Override
-        protected DisneyContentApiChecker initialize() {
-            if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                return new DisneyContentApiChecker(MobilePlatform.TVOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                        DisneyConfiguration.getPartner());
-            } else {
-                return new DisneyContentApiChecker(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY);
-            }
-        }
-    };
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String version = AppCenterManager.getInstance()
-                    .getAppInfo(WebDriverConfiguration.getAppiumCapability(SupportsAppOption.APP_OPTION)
-                            .orElseThrow(
-                                    () -> new InvalidConfigurationException("The configuration must contains the 'capabilities.app' parameter.")))
-                    .getVersion();
-            LOGGER.info("version:{}", version);
+            String testFairyAppVersion = TEST_FAIRY_APP_VERSION.get();
+            LOGGER.info("version: {}", testFairyAppVersion);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), version);
+                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), testFairyAppVersion);
             } else {
-                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, version);
+                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, testFairyAppVersion);
             }
         }
     };
@@ -182,6 +170,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     };
 
+    private static final LazyInitializer<UnifiedSearchApi> UNIFIED_SEARCH_API = new LazyInitializer<>() {
+        @Override
+        protected UnifiedSearchApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(APPLE)
+                    .partner(DisneyConfiguration.getPartner())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new UnifiedSearchApi(apiConfiguration);
+        }
+    };
+
     private static final LazyInitializer<ExploreApi> EXPLORE_API = new LazyInitializer<>() {
         @Override
         protected ExploreApi initialize() {
@@ -218,6 +218,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     });
 
+    private static final LazyInitializer<AccountSharingHelper> ACCOUNT_SHARING_HELPER = new LazyInitializer<>() {
+        @Override
+        protected AccountSharingHelper initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(WEB)
+                    .partner(DisneyConfiguration.getPartner().toUpperCase())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new AccountSharingHelper(apiConfiguration);
+        }
+    };
+
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
         WebDriverConfiguration.addIgnoredNewSessionErrorMessages(Stream.concat(
@@ -249,13 +261,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     @BeforeSuite(alwaysRun = true)
     public void setXRayExecution() {
-        // QCE-545 Jenkins- XML: Set x-ray execution key dynamically
-        /*
-         * Register custom parameter in TestNG suite xml
-         * <parameter name="stringParam::reporting.tcm.xray.test-execution-key::XRay test execution value" value="XWEBQAS-31173"/>
-         *
-         * Run a job and provide updated execution key if necessary
-         */
         Configuration.get(DisneyConfiguration.Parameter.REPORTING_TCM_XRAY_TEST_EXECUTION_KEY).ifPresent(key -> {
             LOGGER.info("{} {} will be assigned to run", "reporting.tcm.xray.test-execution-key", key);
             Xray.setExecutionKey(key);
@@ -267,10 +272,25 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         R.CONFIG.put("capabilities.fullReset", "true");
     }
 
+    @BeforeSuite(alwaysRun = true)
+    public final void initApp() {
+        String testFairyUrl = R.CONFIG.get("test_fairy_url");
+        String appVersion = R.CONFIG.get("test_fairy_app_version");
+        if (testFairyUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_url IS MISSING!!!");
+        }
+        if (appVersion.isEmpty()) {
+            throw new RuntimeException("APP VERSION CONFIG test_fairy_app_version IS MISSING!!!");
+        }
+        LOGGER.info("Installing build {} from TestFairy...", appVersion);
+        R.CONFIG.put("capabilities.app", testFairyUrl);
+        TEST_FAIRY_URL.set(testFairyUrl);
+        TEST_FAIRY_APP_VERSION.set(appVersion);
+    }
+
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
         List<String> groups = Arrays.asList(result.getMethod().getGroups());
-        String country;
         if (groups.contains(US)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), US, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
@@ -427,6 +447,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return Objects.requireNonNull(EMAIL_API.get());
     }
 
+    public static AccountSharingHelper getAccountSharingHelper() {
+        try {
+            return ACCOUNT_SHARING_HELPER.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
     /**
      * Get account<br>
      * <b>Unique for each test method</b>
@@ -459,8 +487,28 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return unifiedOfferRequest;
     }
 
+    public UnifiedOfferRequest getUnifiedOfferRequest(DisneyUnifiedOfferPlan planName,
+                                                      PurchaseFlow purchaseFlow,
+                                                      CampaignType campaignType) {
+        return UnifiedOfferRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .partner(Partner.DISNEY)
+                .searchText(planName.getValue())
+                .skuPlatform(SkuPlatform.WEB)
+                .purchaseFlow(purchaseFlow)
+                .campaignType(campaignType)
+                .build();
+    }
+
     public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName) {
         return getUnifiedSubscriptionApi().lookupUnifiedOffer(getUnifiedOfferRequest(planName.getValue()));
+    }
+
+    public UnifiedOffer getUnifiedOffer(DisneyUnifiedOfferPlan planName,
+                                        PurchaseFlow purchaseFlow,
+                                        CampaignType campaignType) {
+        return getUnifiedSubscriptionApi().lookupUnifiedOffer(
+                getUnifiedOfferRequest(planName, purchaseFlow, campaignType));
     }
 
     public CreateUnifiedAccountRequest getDefaultCreateUnifiedAccountRequest() {
@@ -499,6 +547,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
+    public static UnifiedSearchApi getUnifiedSearchApi() {
+        try {
+            return UNIFIED_SEARCH_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
     public static ExploreApi getExploreApi() {
         try {
             return EXPLORE_API.get();
@@ -529,6 +585,30 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     public static ExploreSearchRequest getHuluExploreSearchRequest() {
         return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_HULU);
+    }
+
+    public AccountSharingUnifiedAccounts createAccountSharingUnifiedAccounts() {
+        //Create the test accounts
+        AccountSharingUnifiedAccounts accountSharingAccounts = getAccountSharingHelper().createSharingUnifiedAccounts(
+                CampaignType.STANDARD_CAMPAIGN,
+                getUnifiedOffer(
+                        DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM,
+                        PurchaseFlow.SIGNUP_FLOW,
+                        CampaignType.STANDARD_CAMPAIGN),
+                getUnifiedOffer(
+                        DisneyUnifiedOfferPlan.DISNEY_EXTRA_MEMBER_ADD_ON,
+                        PurchaseFlow.SWITCH_FLOW,
+                        CampaignType.UPSELL_CAMPAIGN));
+        //Create and accept the invitation
+        boolean invitationSuccess = getAccountSharingHelper().acceptExtraMemberInvite(
+                accountSharingAccounts, getAccountSharingHelper().sendExtraMemberInvite(accountSharingAccounts));
+        if (!invitationSuccess) {
+            throw new RuntimeException("Consumption of extra member slot should be successful");
+        }
+        LOGGER.info("Receiving account - Email Created: {} Password: {}",
+                accountSharingAccounts.getReceivingAccount().getEmail(),
+                accountSharingAccounts.getReceivingAccount().getUserPass());
+        return accountSharingAccounts;
     }
 
     ////////////////////////////

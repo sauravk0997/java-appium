@@ -501,12 +501,26 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void tapEditProfilesLink() {
-        int heightValue = 60;
+        int heightValue;
+        int tapOffset;
+
+        Dimension screenSize = getDriver().manage().window().getSize();
+        int screenWidth = screenSize.getWidth();
+
+        if (screenWidth < 768) {
+            heightValue = 40;
+            tapOffset = 30;
+        } else {
+            heightValue = 60;
+            tapOffset = 55;
+        }
+
         ExtendedWebElement element = getEditProfileLink();
         Dimension dimension = element.getSize();
         Point location = element.getLocation();
-        if (element.getSize().getHeight() > heightValue) {
-            tap(location.getX() + 55 , location.getY() + dimension.getHeight()*2/3, 2);
+
+        if (dimension.getHeight() > heightValue) {
+            tap(location.getX() + tapOffset, location.getY() + dimension.getHeight() * 2 / 3, 2);
         } else {
             element.click();
         }

@@ -7,6 +7,8 @@ import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISP
 import static com.disney.qa.common.constant.IConstantHelper.US;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
+import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
@@ -18,13 +20,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusDownloadsIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusSearchIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
@@ -63,6 +58,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     public void verifyAnthologyWatchlist() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
@@ -71,7 +67,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         detailsPage.addToWatchlist();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(moreMenu.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added.");
+        sa.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added.");
         moreMenu.getDynamicCellByLabel(mediaTitle).click();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         sa.assertAll();
@@ -216,10 +212,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72253" })
     @Test(description = "Verify Anthology Series - Suggested Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologySuggestedTab() {
+        DisneyPlusAppleTVHomePage homePage = initPage(DisneyPlusAppleTVHomePage.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
@@ -230,10 +228,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72248" })
     @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyAnthologyExtrasTab() {
+        DisneyPlusAppleTVHomePage homePage = initPage(DisneyPlusAppleTVHomePage.class);
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");

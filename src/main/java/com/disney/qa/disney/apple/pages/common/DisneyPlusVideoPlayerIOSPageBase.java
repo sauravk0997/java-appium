@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -66,6 +67,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement airplayButton;
     @ExtendedFindBy(accessibilityId = "lockPlayerControlsButton")
     private ExtendedWebElement iconPinUnlocked;
+    @ExtendedFindBy(accessibilityId = "unlockPlayerControlsButton")
+    private ExtendedWebElement iconPinLocked;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
     private ExtendedWebElement currentlyPlayingTitle;
     @ExtendedFindBy(accessibilityId = "brandImageView")
@@ -164,6 +167,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 return rewindButton;
             case LOCK_ICON:
                 return iconPinUnlocked;
+            case UNLOCK_ICON:
+                return iconPinLocked;
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' is an invalid player control", control));
@@ -417,7 +422,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
      * @return Playback remaining time in seconds
      */
     public int getRemainingTime() {
-        displayVideoController();
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE) || R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            displayVideoController();
+        } else {
+            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(1);
+        }
         String[] remainingTime = timeRemainingLabel.getText().split(":");
         int remainingTimeInSec =
                 (Math.abs(Integer.parseInt(remainingTime[0])) * 60) + (Integer.parseInt(remainingTime[1]));
@@ -497,6 +506,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return String.format("%dh %dm", hours, minutes);
     }
 
+    public String getRemainingTimeInDetailsFormatString() {
+        int remainingTimeInSeconds = getRemainingTimeThreeIntegers();
+        if(remainingTimeInSeconds > 3600) {
+            long hours = remainingTimeInSeconds / 60;
+            long minutes = remainingTimeInSeconds % 60;
+            return String.format("%dh %dm", hours, minutes);
+        } else {
+            long minutes = remainingTimeInSeconds / 60;
+            return String.format("%dm", minutes);
+        }
+    }
+    
     public void tapAudioSubtitleMenu() {
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "subtitle menu overlay didn't open")
                 .until(it -> {
@@ -764,11 +785,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         PLAY,
         PAUSE,
         RESTART,
-        REWIND
+        REWIND,
+        UNLOCK_ICON
     }
 
     public void validateRatingsOnPlayer(String rating, SoftAssert sa, DisneyPlusDetailsIOSPageBase detailsPage) {
         detailsPage.getPlayButton().click();
+        skipPromoIfPresent(FIFTEEN_SEC_TIMEOUT);
         sa.assertTrue(isRatingPresent(rating), rating + " Rating was not found on video player");
         waitForVideoToStart();
         scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
@@ -780,8 +803,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BTN_SKIP_PROMO.getText()));
     }
 
-    public void skipPromoIfPresent() {
-        getSkipPromoButton().clickIfPresent(THREE_SEC_TIMEOUT);
+    public void skipPromoIfPresent(long... timeout) {
+        long waitTime = timeout.length > 0 ? timeout[0] : THREE_SEC_TIMEOUT;
+        getSkipPromoButton().clickIfPresent(waitTime);
     }
 
     public void waitForAdGracePeriodToEnd(int remainingTime) {
@@ -944,5 +968,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getTitleVideoLabel() {
         return titleLabel;
+    }
+
+    public void clickUnlockButton() {
+        if (getElementFor(PlayerControl.UNLOCK_ICON).isElementNotPresent(ONE_SEC_TIMEOUT)) {
+            clickElementAtLocation(getPlayerView(), 10, 50);
+        }
+        longTap(iconPinLocked);
     }
 }

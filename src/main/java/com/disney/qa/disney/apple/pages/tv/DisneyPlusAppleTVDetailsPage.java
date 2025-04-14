@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusDetailsIOSPageBase.class)
 public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
@@ -30,6 +32,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`focused==1`]" +
+            "/**/XCUIElementTypeStaticText[`name=='titleLabel'`]")
+    protected ExtendedWebElement extraEpisodeTitle;
 
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
@@ -59,9 +65,16 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return getStaticTextByLabel("Dancing with the Stars").isElementPresent();
     }
 
+    @Override
+    public  ExtendedWebElement getPlayButton() {
+        return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_PLAY.getText()));
+    }
+
+    @Override
     public DisneyPlusAppleTVVideoPlayerPage clickPlayButton() {
-        getTypeButtonByName(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.BTN_PLAY.getText())).click();
+        getPlayButton().click();
         return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
@@ -75,6 +88,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public ExtendedWebElement getContinueButton() {
         return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_CONTINUE_DETAILS.getText()));
+    }
+
+    public String getExtraEpisodeTitle() {
+        return extraEpisodeTitle.getText();
     }
 
     @Override
@@ -177,8 +194,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
      * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
      */
     private static final String WATCH = "WATCH";
-    private static final String BOOKMARKED = "BOOKMARKED";
-    private static final String PLAY = "PLAY";
 
     @Override
     public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
@@ -198,5 +213,14 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public boolean isExtrasTabPresent() {
         return extrasTab.isPresent();
+    }
+
+    public ExtendedWebElement getDetailsTitleLabel() {
+        return titleLabel;
+    }
+
+    public ExtendedWebElement getAddToWatchlistText() {
+        return getTypeButtonContainsLabel(getAppleTVLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_WATCHLIST.getText()));
     }
 }

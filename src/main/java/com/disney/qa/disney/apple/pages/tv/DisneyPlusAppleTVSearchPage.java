@@ -74,4 +74,21 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         moveRight(2, 1);
         keyPressTimes(IRemoteControllerAppleTV::clickSelect, 1, 5);
     }
+
+    public ExtendedWebElement getSearchField() {
+        return searchField;
+    }
+
+    public void navigateToKeyboardFromResult() {
+        if (!localizedKeyboard.isPresent())
+            moveUp(2, 1);
+
+        if (localizedKeyboard.getSize().getWidth() > 1000) {
+            LOGGER.info("Detected horizontal keyboard, clicking Up");
+            keyPressTimes(IRemoteControllerAppleTV::clickUp, 2, 1);
+        } else {
+            LOGGER.info("Detected vertical keyboard, clicking Left");
+            keyPressTimes(IRemoteControllerAppleTV::clickLeft, 2, 1);
+        }
+    }
 }

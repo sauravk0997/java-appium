@@ -10,6 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -26,8 +27,25 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67362"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchGlobalMenuLanding() {
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+
+        logIn(getUnifiedAccount());
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+
+        home.moveDownFromHeroTileToBrandTile();
+        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(UNENTITLED_HULU_CONTENT);
+        Assert.assertEquals(searchPage.getSearchBar().getAttribute("value"), UNENTITLED_HULU_CONTENT,
+                "Search text was not displayed in the search field");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121506"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifyHuluHubSearchContentWithStandaloneAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
@@ -42,7 +60,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121508"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifyHuluHubSearchContentWithBundleUserAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
@@ -64,7 +82,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121507"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, CA})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, CA})
     public void verifyHuluHubSearchContentInNonEligibleCountry() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
@@ -90,7 +108,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121509"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
     public void verifyHuluHubSearchContentWithNonBundleUserAccount() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
@@ -100,6 +118,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
         home.moveDownFromHeroTileToBrandTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        searchPage.waitForPresenceOfAnElement(searchPage.getSearchField());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
 
         // Look for entitled Hulu content
@@ -122,5 +141,28 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Hulu ineligible screen header is not present");
         Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Hulu ineligible screen description is not present");
         Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible CTA button is not present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-100354"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchNavigation() {
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        home.moveDownFromHeroTileToBrandTile();
+        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(END_GAME.getTitle());
+        searchPage.waitForPresenceOfAnElement(searchPage.getSearchResults(END_GAME.getTitle()).get(0));
+        searchPage.keyPressTimes(searchPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        Assert.assertTrue(searchPage.isFocused(searchPage.getSearchResults(END_GAME.getTitle()).get(0)),
+                "First Top Left of the tile is not focused");
+        searchPage.navigateToKeyboardFromResult();
+        Assert.assertTrue(searchPage.isFocused(searchPage.getKeyboardByPredicate()),
+                "Keyboard not focused");
     }
 }

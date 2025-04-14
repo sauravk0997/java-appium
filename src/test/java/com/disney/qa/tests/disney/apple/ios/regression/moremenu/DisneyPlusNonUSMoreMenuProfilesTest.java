@@ -31,6 +31,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         initialSetup();
         handleAlert();
@@ -53,14 +54,18 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         .isStarOnboarded(true)
                         .build()));
 
-        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount());
         handleAlert();
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
 
         moreMenu.clickMoreTab();
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
         }
-        moreMenu.clickAddProfile();
+        whoIsWatching.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();

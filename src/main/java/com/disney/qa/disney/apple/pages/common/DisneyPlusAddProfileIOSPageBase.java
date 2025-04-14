@@ -49,12 +49,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "submitButtonCellIdentifier")
     private ExtendedWebElement saveButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"Choose content rating\"`]")
-    private ExtendedWebElement chooseContentRating;
-
-    @ExtendedFindBy(iosPredicate = "name == \"birthdateTextFieldIdentifier\" AND value == \"MM/DD/YYYY\"\n")
-    protected ExtendedWebElement birthDateValue;
-
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
     private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
@@ -259,15 +253,16 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getChooseContentRating() {
-        return chooseContentRating;
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.CHOOSE_CONTENT_RATING.getText()));
     }
 
     public String getBirthdateTextField(){
         return BIRTHDATE_TEXT_FIELD;
     }
 
-    public ExtendedWebElement getValueFromDOB() {
-        return birthDateValue;
+    public String getValueFromDOB() {
+        return getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).getAttribute(VALUE);
     }
 
     public boolean isContentRatingDropdownEnabled(String value) {

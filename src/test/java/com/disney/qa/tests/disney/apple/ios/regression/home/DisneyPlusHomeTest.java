@@ -64,18 +64,20 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         //Validate top of home
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found");
-        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(),
-                "'Recommend For You' collection was not found");
-        homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-        BufferedImage recommendedForYouLastTileInView = getElementImage(
-                homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
-        homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
-        BufferedImage recommendedForYouFirstTileInView = getElementImage(
-                homePage.getCollection(CollectionConstant.Collection.RECOMMENDED_FOR_YOU));
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.NEWLY_ADDED, 5);
+        sa.assertTrue(homePage.getTypeOtherContainsName(CollectionConstant.getCollectionTitle
+                        (CollectionConstant.Collection.NEWLY_ADDED)).isPresent(),
+                "'Newly Added' collection was not found");
+        homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.NEWLY_ADDED);
+        BufferedImage collectionLastTileInView = getElementImage(
+                homePage.getCollection(CollectionConstant.Collection.NEWLY_ADDED));
+        homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.NEWLY_ADDED);
+        BufferedImage collectionFirstTileInView = getElementImage(
+                homePage.getCollection(CollectionConstant.Collection.NEWLY_ADDED));
         sa.assertTrue(areImagesDifferent(
-                        recommendedForYouFirstTileInView,
-                        recommendedForYouLastTileInView),
-                "Recommended For You first tile in view and last tile in view images are the same");
+                        collectionFirstTileInView,
+                        collectionLastTileInView),
+                "Collection first tile in view and last tile in view images are the same");
 
         BufferedImage topOfHome = getCurrentScreenView();
 
@@ -89,10 +91,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 null,
                 Direction.DOWN,
                 300);
-        sa.assertTrue(homePage.getTypeOtherContainsName(RECOMMENDED_FOR_YOU).isPresent(),
-                "'Recommend For You' collection was not found");
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(),
                 "`Disney Plus` image was not found after return to top of home");
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.NEWLY_ADDED, 5);
+        sa.assertTrue(homePage.getTypeOtherContainsName(CollectionConstant.getCollectionTitle
+                        (CollectionConstant.Collection.NEWLY_ADDED)).isPresent(),
+                "'Newly Added' collection was not found");
 
         //Validate images are different
         sa.assertTrue(areImagesDifferent(topOfHome, closeToBottomOfHome),
@@ -104,7 +108,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecommendedForYouContainer() {
         int limit = 30;
-        int swipeCount = 5;
+        int verticalSwipeCount = 5;
+        int horizontalSwipeCount = 30;
+        int swipeDuration = 100;
         String recommendedContainerNotFound = "Recommended For You container was not found";
         String recommendedHeaderNotFound = "Recommended For You Header was not found";
         CollectionConstant.Collection collection = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
@@ -115,9 +121,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
-        homePage.swipeTillCollectionTappable(collection, Direction.UP, swipeCount);
-        sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
-        sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
+        homePage.swipeTillCollectionTappable(collection, Direction.UP, verticalSwipeCount);
+        Assert.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
+        Assert.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
 
         List<String> recommendationTitlesFromApi = getContainerTitlesFromApi
                 (CollectionConstant.getCollectionName(collection), limit);
@@ -130,27 +136,23 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         ExtendedWebElement lastTitle = homePage.getCellElementFromContainer(
                 collection,
                 recommendationTitlesFromApi.get(size - 1));
-        Assert.assertTrue(firstCellTitle.equals(recommendationTitlesFromApi.get(0)),
+        Assert.assertEquals(firstCellTitle, recommendationTitlesFromApi.get(0),
                 "UI title value not matched with API title value");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection),
-                lastTitle,
-                30,
-                Direction.LEFT);
+        ExtendedWebElement recommendedForYouCollection = homePage.getCollection(collection);
+        homePage.swipePageTillElementPresent(lastTitle, horizontalSwipeCount, recommendedForYouCollection,
+                Direction.LEFT, swipeDuration);
         Assert.assertTrue(lastTitle.isPresent(),
                 "User is not able to swipe through end of container");
 
-        homePage.swipeInContainerTillElementIsPresent(homePage.getCollection(collection),
-                firstTitle,
-                30,
-                Direction.RIGHT);
+        homePage.swipePageTillElementPresent(firstTitle, horizontalSwipeCount, recommendedForYouCollection,
+                Direction.RIGHT, swipeDuration);
         Assert.assertTrue(firstTitle.isPresent(),
                 "User is not able to swipe to the beginning of container");
 
         firstTitle.click();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(detailsPage.getMediaTitle().equals(firstCellTitle),
-                "Content title not matched");
+        sa.assertEquals(detailsPage.getMediaTitle(), firstCellTitle, "Content title not matched");
         detailsPage.clickCloseButton();
         sa.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         sa.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
@@ -603,7 +605,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77869"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, US})
     public void verifyStandaloneUserSubBrandTile() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
@@ -720,7 +722,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74564"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluBrandTileOnHome() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -736,7 +738,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74829"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluBrandPage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -772,7 +774,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74642"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluPageContent() throws URISyntaxException, JsonProcessingException {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
@@ -802,7 +804,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78296"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULK, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.HULU, US})
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
@@ -839,8 +841,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
-    @Test(groups = {TestGroup.HULK, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyHulkCollectionPagesNetworkPageUI() {
+    @Test(groups = {TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    public void verifyHuluCollectionPagesNetworkPageUI() {
         List<String> networkLogos = new ArrayList<String>(
                 Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
                         "Cartoon Network", "CBS", "Discovery", "Disney XD", "FOX", "Freeform", "FX", "FYI", "HGTV",

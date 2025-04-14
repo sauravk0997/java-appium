@@ -1,6 +1,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite verbose="1" name="dmgzios_tablet_reg_rc" annotations="JDK" configfailurepolicy="continue" thread-count="14" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
+    <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.0-77614"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
     <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>
@@ -8,16 +10,13 @@
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
-    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-79161"/>
-    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.2.0-rc"/>
-    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-79161"/>
-    <parameter name="jenkinsBuild" value="4.2.0.77099"/>
-    <parameter name="choiceParam::appcenter_app_name::app center app name" value="Disney-Prod-Enterprise,Dominguez-Editorial-Preview-Enterprise"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-80581"/>
+    <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.3.0-rc"/>
+    <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-80581"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_tablet_reg_rc"/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="choiceParam::env::Test ENV" value="Prod,Preview"/>
-    <parameter name="jenkinsFetchAppFrom" value="appcenter"/>
     <parameter name="provider" value="mcloud"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Air_M2_1,iPad_Air_M2_2,iPad_Air_M2_3,iPad_Air_M2_4,iPad_Air_M2_5,iPad_Air_M2_6,iPad_Gen_10_1,iPad_Gen_10_2,iPad_Gen_10_3,iPad_Pro_M4_1,iPad_Pro_M4_3,iPad_Pro_M4_5,iPad_Pro_M4_2,iPad_Gen_9;deviceType=Tablet;timeoutMs=120000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
@@ -28,7 +27,7 @@
     <parameter name="overrideFields"
                value="JOB_MAX_RUN_TIME=480,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=300"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Smoke,Anthology,Ariel,Deeplinks,DetailsPage,Downloads,Home,Hulk,IAP,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
+               value=",Smoke,AccountSharing,Anthology,Deeplinks,DetailsPage,Downloads,Home,Hulu,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
     <test verbose="1" name="DisneyPlus iOS Tablet Onboarding1" parallel="methods">
         <classes>
             <class name="com.disney.qa.tests.disney.apple.ios.regression.onboarding.DisneyPlusLoginTest"/>
