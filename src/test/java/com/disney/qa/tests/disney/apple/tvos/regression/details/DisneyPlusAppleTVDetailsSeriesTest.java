@@ -131,4 +131,26 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(remainingTime),
                 "Correct remaining time is not reflecting in progress bar on details page");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64883"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageTrailerButton() {
+        String trailer = "Trailer";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Visuals visualsResponse = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_loki_entity_id"));
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isTrailerButtonDisplayed(), TRAILER_BTN_NOT_DISPLAYED);
+        detailsPage.getTrailerButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        String title = videoPlayer.getTitleLabel();
+        Assert.assertTrue(title.contains(trailer) || title.contains(visualsResponse.getTitle()),
+                "Expected Trailer not playing");
+    }
 }
