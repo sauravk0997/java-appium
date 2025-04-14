@@ -503,6 +503,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileMovieDetailsPage() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
@@ -516,6 +517,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         String entityID = R.TESTDATA.get("disney_prod_movie_the_tigger_movie_entity_id");
         String deeplink = R.TESTDATA.get("disney_prod_movie_the_tigger_movie_deeplink");
