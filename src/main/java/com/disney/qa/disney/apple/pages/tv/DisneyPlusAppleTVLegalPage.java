@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.tv;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.Screenshot;
@@ -33,13 +34,17 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Legal\"`]")
     private ExtendedWebElement legalTitle;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Disney Terms of Use\"`]")
+    private ExtendedWebElement disneyTermsUse;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Privacy Policy\"`]")
     private ExtendedWebElement privacyPolicy;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Subscriber Agreement\"`]")
     private ExtendedWebElement subscriberAgreement;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Your US State Privacy Rights\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"US State Privacy Rights Notice\"`]")
     private ExtendedWebElement yourUSPrivacyRights;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Do Not Sell or Share My Personal Information\"`]")
@@ -69,6 +74,31 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
         boolean isPresent = legalTitle.isPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
+    }
+
+    public String getLegalOption() {
+        return getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText());
+    }
+
+    public ExtendedWebElement getDisneyTermsUse() {
+        return disneyTermsUse;
+    }
+
+    public ExtendedWebElement getSubscriberAgreement() {
+        return subscriberAgreement;
+    }
+
+    public ExtendedWebElement getPrivacyPolicy() {
+        return privacyPolicy;
+    }
+
+    public ExtendedWebElement getUSPrivacyRights() {
+        return yourUSPrivacyRights;
+    }
+
+    public ExtendedWebElement getDoNotSellMyPersonalInfo() {
+        return doNotSellMyPersonalInfo;
     }
 
     public void areAllLegalDocumentsPresentAndScrollable(String siteConfig, SoftAssert sa, DisneyContentApiChecker apiChecker) {
