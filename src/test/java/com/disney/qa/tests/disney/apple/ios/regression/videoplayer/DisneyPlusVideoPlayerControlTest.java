@@ -70,8 +70,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Remaining time in pause mode time after Rewind tap " + remainingTimeAfterRwdTapInPauseMode +
                         " is not greater than remaining time before Rewind tap " + remainingTimeInPauseMode);
 
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
-        remainingTimeInPauseMode = videoPlayer.getRemainingTime();
+        remainingTimeInPauseMode = videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN).getRemainingTime();
         int remainingTimeAfterFastForwardTapInPauseMode = videoPlayer.tapRewindButton(4).getRemainingTime();
         sa.assertTrue(remainingTimeInPauseMode > remainingTimeAfterFastForwardTapInPauseMode,
                 "Remaining time in pause mode time after Forward tap " + remainingTimeAfterRwdTapInPauseMode +
