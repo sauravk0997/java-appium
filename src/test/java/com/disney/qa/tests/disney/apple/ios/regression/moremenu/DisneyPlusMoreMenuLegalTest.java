@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.common.constant.DisneyUnifiedOfferPlan;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -23,6 +24,9 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM_YEARLY_AT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM_YEARLY_CH;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM_YEARLY_DE;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -47,7 +51,11 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
     @DataProvider
     private Object[] impressumCountries() {
-        return new String[]{"TUID: DE", "TUID: AT", "TUID: CH"};
+        return new Object[][]{
+                {"TUID: DE", DISNEY_PLUS_PREMIUM_YEARLY_DE},
+                {"TUID: AT", DISNEY_PLUS_PREMIUM_YEARLY_AT},
+                {"TUID: CH", DISNEY_PLUS_PREMIUM_YEARLY_CH}
+        };
     }
 
     /**
@@ -139,40 +147,32 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62266"})
-    @Test(dataProvider = "impressumCountries", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyImpressumTab(String TUID) {
-        initialSetup();
-        handleAlert();
+    @Test(dataProvider = "impressumCountries", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, DE})
+    public void verifyImpressumTab(String TUID, DisneyUnifiedOfferPlan offer) {
+        String imprintHeader = "Impressum";
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
 
         String country = StringUtils.substringAfter(TUID, "TUID: ");
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
-
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(offer, country, DE_LANG)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), country);
 
         Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomePage.clickLogInButton();
         login(getUnifiedAccount());
 
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
-        //Dismiss ATT Popup
-        handleGenericPopup(5,1);
+        handleOneTrustPopUp();
         if (homePage.isTravelAlertTitlePresent()) {
             homePage.getTravelAlertOk().click();
         }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        sa.assertTrue(legalPage.isOpened(),"Legal Page did not open on navigation");
+        Assert.assertTrue(legalPage.isOpened(),"Legal Page did not open on navigation");
 
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, "en",
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, DE_LANG,
                 MobilePlatform.IOS,
                 DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
                 DISNEY);
@@ -184,13 +184,11 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                     String.format("Header '%s' was not displayed", header));
         });
 
-        legalPage.getTypeButtonByLabel("Imprint").click();
-        String apiResponse = cleanDocument(disneyLocalizationUtils.getLegalDocumentBody("Imprint"));
+        legalPage.getTypeButtonByLabel(imprintHeader).click();
+        String apiResponse = cleanDocument(disneyLocalizationUtils.getLegalDocumentBody(imprintHeader));
         String appDisplay = cleanDocument(legalPage.getLegalText());
-        sa.assertEquals(appDisplay, apiResponse,
+        Assert.assertEquals(appDisplay, apiResponse,
                 String.format("'Impressum' text was not correctly displayed for '%s'", country));
-
-        sa.assertAll();
     }
 
     private String cleanDocument(String original) {
