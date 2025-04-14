@@ -16,6 +16,7 @@ import org.testng.annotations.*;
 import java.lang.invoke.MethodHandles;
 import java.util.*;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -142,8 +143,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
-        Visuals visualsResponse = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_loki_entity_id"));
+        launchDeeplink(R.TESTDATA.get(DEEPLINKURL.concat(DAREDEVIL_BORN_AGAIN.getEntityId())));
+        Visuals visualsResponse = getExploreAPIPageVisuals(DAREDEVIL_BORN_AGAIN.getEntityId());
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.isTrailerButtonDisplayed(), TRAILER_BTN_NOT_DISPLAYED);
