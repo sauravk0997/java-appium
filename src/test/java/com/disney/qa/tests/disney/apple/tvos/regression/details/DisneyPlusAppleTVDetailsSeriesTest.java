@@ -145,8 +145,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         searchPage.typeInSearchField(seriesName);
-        Assert.assertTrue(searchPage.getStaticTextByLabelContains(seriesName).isPresent(), CONTENT_ERROR_MESSAGE);
-        searchPage.getSearchResults(seriesName).get(0).click();
+        searchPage.clickSearchResult(seriesName);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Move down to first episode and validate back button change focus to Episodes tab
