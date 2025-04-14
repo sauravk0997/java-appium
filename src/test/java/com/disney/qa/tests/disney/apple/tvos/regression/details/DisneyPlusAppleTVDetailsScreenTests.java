@@ -731,4 +731,22 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.getServiceAttribution().isPresent(),
                 "Service attribution was not found on Hulu series detail page");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64736"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.WATCHLIST, TestGroup.MOVIES, US})
+    public void verifyMovieDetailsPageWatchListPlusIcon() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_NOT_PRESENT);
+        Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
+                "Plus Icon, Add content to your watchlist not displayed");
+        detailsPage.getWatchlistButton().click();
+        Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+                "Checkmark icon, Remove the content from watchlist not displayed");
+    }
 }
