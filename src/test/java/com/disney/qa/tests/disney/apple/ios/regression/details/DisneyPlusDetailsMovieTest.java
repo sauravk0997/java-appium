@@ -517,7 +517,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.waitForHomePageToOpen();
 
         String entityID = R.TESTDATA.get("disney_prod_movie_the_tigger_movie_entity_id");
         String deeplink = R.TESTDATA.get("disney_prod_movie_the_tigger_movie_deeplink");
