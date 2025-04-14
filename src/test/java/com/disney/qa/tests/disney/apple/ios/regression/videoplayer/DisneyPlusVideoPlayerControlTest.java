@@ -57,8 +57,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})
-    @Test(description = " Video Player > Tap on screen to Rewind", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyRewindButtonControlOnPlayer() {
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyRewindAndForwardButtonControlOnPlayerWhilePaused() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(SERIES_BLUEY);
@@ -67,35 +67,16 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         int remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
         int remainingTimeAfterRwdTapInPauseMode = videoPlayer.tapRewindButton(1).getRemainingTime();
         sa.assertTrue(remainingTimeInPauseMode < remainingTimeAfterRwdTapInPauseMode,
-                "Remaining time in pause mode time after rwd tap " + remainingTimeAfterRwdTapInPauseMode +
-                        " is not greater than remaining time before rwd tap " + remainingTimeInPauseMode);
+                "Remaining time in pause mode time after Rewind tap " + remainingTimeAfterRwdTapInPauseMode +
+                        " is not greater than remaining time before Rewind tap " + remainingTimeInPauseMode);
 
-        //TODO: IOS-3974 - blocks the below scenario, commenting it out till bug is resolved.
-        /*int fastRewindRemainingTime = videoPlayer.tapPlayerScreen(PlayerControl.REWIND, 3).getRemainingTime();
-        sa.assertTrue((fastRewindRemainingTime - remainingTimeAfterRwdTapInPauseMode) > 15,
-                "Remaining time after, Fast Rewinding the content" + fastRewindRemainingTime +
-                        " is not greater than the remaining time after, single rewind" + remainingTimeAfterRwdTapInPauseMode
-                );*/
-        sa.assertAll();
-    }
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
+        remainingTimeInPauseMode = videoPlayer.getRemainingTime();
+        int remainingTimeAfterFastForwardTapInPauseMode = videoPlayer.tapRewindButton(4).getRemainingTime();
+        sa.assertTrue(remainingTimeInPauseMode > remainingTimeAfterFastForwardTapInPauseMode,
+                "Remaining time in pause mode time after Forward tap " + remainingTimeAfterRwdTapInPauseMode +
+                        " is not less than remaining time before Forward tap " + remainingTimeInPauseMode);
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66529"})
-    @Test(description = " Video Player > Tap on screen to Forward", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyForwardButtonControlOnPlayer() {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        loginAndStartPlayback(SERIES_BLUEY);
-
-        int remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
-        int remainingTimeAfterFwdTapInPauseMode = videoPlayer.tapForwardButton(1).getRemainingTime();
-        sa.assertTrue(remainingTimeInPauseMode > remainingTimeAfterFwdTapInPauseMode,
-                "Remaining time in pause mode before fwd tap " + remainingTimeInPauseMode +
-                        " is not greater than remaining time after fwd tap " + remainingTimeAfterFwdTapInPauseMode);
-        //TODO: IOS-3974 - blocks the below scenario, commenting it out till bug is resolved.
-        /*int fastForwardRemainingTime = videoPlayer.tapPlayerScreen(PlayerControl.FAST_FORWARD, 3).getRemainingTime();
-        sa.assertTrue((remainingTimeAfterFwdTapInPauseMode - fastForwardRemainingTime) > 15,
-                "Remaining time after single fwd tap " + remainingTimeAfterFwdTapInPauseMode +
-                        " is not greater than remaining time after fast forwarding the content " + fastForwardRemainingTime);*/
 
         sa.assertAll();
     }
@@ -109,7 +90,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_debug_video_player_episode_deeplink"));
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), "Details Page is not shown after closing the player");
         Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
@@ -197,7 +178,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72690"})
-    @Test(description = "VOD Player - RW & FW - Play State", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRewindAndForwardButtonControlOnPlayerWhilePlaying() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
