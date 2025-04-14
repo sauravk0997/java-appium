@@ -156,7 +156,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         String country = StringUtils.substringAfter(TUID, "TUID: ");
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(offer, country, DE_LANG)));
+        setAccount(getUnifiedAccountApi()
+                .createAccount(getCreateUnifiedAccountRequestForCountryWithPlan(offer, country, DE_LANG)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), country);
 
         Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
