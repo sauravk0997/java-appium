@@ -404,7 +404,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String sportsLabel = "Sports";
         String leagues = "Leagues";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
@@ -413,12 +412,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickEspnTile();
         Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
 
-        swipePageTillElementPresent(homePage.getStaticTextByLabel(sportsLabel), 5,
-                homePage.getBrandLandingView(), Direction.UP, 1000);
         String espnSportCollectionId = CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS);
+        ExtendedWebElement sportsContainer = homePage.getCollection(espnSportCollectionId);
+        swipePageTillElementPresent(sportsContainer, 5,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
 
         // Get first sport and validate page
-        sa.assertTrue(homePage.getCollection(espnSportCollectionId).isPresent(), "Sports container was not found");
+        sa.assertTrue(sportsContainer.isPresent(), "Sports container was not found");
         String sportTitle = getContainerTitlesFromApi(espnSportCollectionId, 5).get(0);
         if(!sportTitle.isEmpty()) {
             espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle).click();
@@ -443,7 +443,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         ArrayList<String> contentList = new ArrayList<>();
         contentList.add(ONLY_MURDERS_IN_THE_BUILDING);
-        contentList.add(PREY);
+        contentList.add(BILL_BURR);
 
         IntStream.range(0, contentList.size()).forEach(i -> {
             homePage.clickSearchIcon();
@@ -454,7 +454,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             detailsPage.isOpened();
-            Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(), "Service attribution was not found on Hulu series detail page.");
+            Assert.assertTrue(detailsPage.getServiceAttribution().isPresent(),
+                    "Hulu Detail Page Service attribution was not found");
         });
     }
 
