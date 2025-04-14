@@ -727,8 +727,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 RatingConstant.Rating.TV_Y.getContentRating());
 
         setAppToHomeScreen(getUnifiedAccount());
-
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
         searchPage.clickMoviesTab();
         mediaCollectionPage.waitForPresenceOfAnElement(mediaCollectionPage.getMoviesHeader());
 
