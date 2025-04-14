@@ -143,7 +143,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get(DEEPLINKURL.concat(DAREDEVIL_BORN_AGAIN.getEntityId())));
+        launchDeeplink(DEEPLINKURL.concat(DAREDEVIL_BORN_AGAIN.getEntityId()));
         Visuals visualsResponse = getExploreAPIPageVisuals(DAREDEVIL_BORN_AGAIN.getEntityId());
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
