@@ -133,6 +133,19 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Correct remaining time is not reflecting in progress bar on details page");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64877"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageLanding() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getPlayButton()),
+                "Play button was not focused when details page opened");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64901"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifySeriesDetailsTabContent() {
@@ -146,8 +159,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1, 1);
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
-        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Details Tab series title not present");
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Detail Tab description not present");
+        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Title not present under Details Tab");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present under Details Tab");
         sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab release date not present");
         sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
         sa.assertTrue(detailsPage.isRatingPresent(), "Detail Tab rating not present");
