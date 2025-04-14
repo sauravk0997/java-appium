@@ -159,15 +159,15 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1, 1);
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
-        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Title not present under Details Tab");
+        sa.assertTrue(detailsPage.isDetailsTabTitlePresent(), "Title is not present under Details Tab");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), "Description is not present under Details Tab");
-        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab release date not present");
-        sa.assertTrue(detailsPage.isGenreDisplayed(), "Detail Tab genre is not present");
-        sa.assertTrue(detailsPage.isRatingPresent(), "Detail Tab rating not present");
-        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Detail Tab formats not present");
-        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab creator not present");
-        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
-        sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect");
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Release date is not present under Details Tab");
+        sa.assertTrue(detailsPage.isGenreDisplayed(), "Genre is not present under Details Tab");
+        sa.assertTrue(detailsPage.isRatingPresent(), "Rating is not present under Details Tab");
+        sa.assertTrue(detailsPage.areFormatsDisplayed(), "Formats are not present under Details Tab");
+        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Creator is not present under Details Tab");
+        sa.assertTrue(detailsPage.areActorsDisplayed(), "Actors are not present under Details Tab");
+        sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect under Details Tab");
         sa.assertAll();
     }
 }
