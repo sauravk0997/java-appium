@@ -191,7 +191,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.getTrailerButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
-        String title = videoPlayer.getTrailerTitle();
+        String title = videoPlayer.getTitleLabel();
         Assert.assertTrue(title.contains(trailer) || title.contains(visualsResponse.getTitle()),
                 "Expected Trailer not playing");
     }
