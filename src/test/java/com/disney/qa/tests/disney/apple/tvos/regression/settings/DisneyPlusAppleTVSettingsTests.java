@@ -59,10 +59,9 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(WATCHLIST.getText());
         Assert.assertTrue(watchlistPage.isOpened(), WATCHLIST_PAGE_NOT_DISPLAYED);
 
-       // homePage.clickLeft();
-      //  homePage.navigateToOneGlobalNavMenu(MOVIES.getText());
-      //  homePage.clickSelect();
-        homePage.openGlobalNavAndSelectOneMenu(MOVIES.getText());
+        homePage.clickLeft();
+        homePage.navigateToOneGlobalNavMenu(MOVIES.getText());
+        homePage.clickSelect();
         Assert.assertTrue(moviesPage.isOpened(), "Movies page was not open");
         homePage.openGlobalNavAndSelectOneMenu(SERIES.getText());
         Assert.assertTrue(seriesPage.isOpened(), "Series page was not open");
