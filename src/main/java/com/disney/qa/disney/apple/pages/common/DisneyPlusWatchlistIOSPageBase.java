@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.zebrunner.carina.utils.mobile.IMobileUtils.Direction.LEFT;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWatchlistIOSPageBase extends DisneyPlusApplePageBase {
@@ -54,10 +52,8 @@ public class DisneyPlusWatchlistIOSPageBase extends DisneyPlusApplePageBase {
     public boolean areWatchlistTitlesDisplayed(String... titles) {
         List<String> items = Arrays.asList(titles);
         List<Boolean> validations = new ArrayList<>();
-        CollectionConstant.Collection watchlist = CollectionConstant.Collection.WATCHLIST;
         items.forEach(title -> {
             ExtendedWebElement watchlistItem = getTypeCellLabelContains(title);
-            swipeInContainerTillElementIsPresent(getCollection(watchlist), watchlistItem, 1, LEFT);
             validations.add(watchlistItem.isElementPresent());
         });
         return !validations.contains(false);
