@@ -149,16 +149,11 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifyEpisodesTabBackButtonBehavior() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        String seriesName = LOKI.getTitle();
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
-        searchPage.typeInSearchField(seriesName);
-        searchPage.clickSearchResult(seriesName);
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //Move down to first episode and validate back button change focus to Episodes tab
