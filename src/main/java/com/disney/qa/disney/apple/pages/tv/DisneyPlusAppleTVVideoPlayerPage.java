@@ -102,7 +102,6 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     }
 
     public String getTrailerTitle() {
-        keyPressTimes(IRemoteControllerAppleTV::clickDown, 3, 1);
         clickPlay();
         return titleLabel.getText();
     }
