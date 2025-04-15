@@ -8,6 +8,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.*;
@@ -193,7 +194,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         //Below line to display controller for long time so that script can get title
-        String title = videoPlayer.getTitleLabel();
+        videoPlayer.keyPressTimes(IRemoteControllerAppleTV::clickDown, 2, 1);
+        String title = videoPlayer.getTitleVideoLabel().getText();
         Assert.assertTrue(title.contains(trailer) || title.contains(visualsResponse.getTitle()),
                 "Expected Trailer not playing");
     }
