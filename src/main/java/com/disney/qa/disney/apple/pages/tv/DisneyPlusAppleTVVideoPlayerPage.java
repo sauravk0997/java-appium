@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -98,5 +99,10 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         int thumbnailRightXCoordinate = thumbnailView.getLocation().getX() + thumbnailView.getSize().getWidth();
 
         return  seekBarRightXCoordinate == thumbnailRightXCoordinate;
+    }
+
+    public String getTrailerTitle() {
+        keyPressTimes(IRemoteControllerAppleTV::clickDown, 3, 1);
+        return titleLabel.getText();
     }
 }
