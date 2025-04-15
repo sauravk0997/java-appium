@@ -192,7 +192,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.getTrailerButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
-        commonPage.clickDown(3);
+        //Below 2 line to display controller for long time so that script can get title
+        commonPage.clickDown(2);
+        commonPage.clickRight(2);
         String title = videoPlayer.getTitleVideoLabel().getText();
         Assert.assertTrue(title.contains(trailer) || title.contains(visualsResponse.getTitle()),
                 "Expected Trailer not playing");
