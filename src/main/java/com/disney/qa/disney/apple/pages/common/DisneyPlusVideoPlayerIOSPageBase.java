@@ -201,6 +201,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return serviceAttribution;
     }
 
+    public ExtendedWebElement getSubtitleLabel() {
+        return subtitleLabel;
+    }
+
     public boolean isServiceAttributionLabelVisible() {
         try {
             return fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
