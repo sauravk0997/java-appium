@@ -29,6 +29,9 @@ public class DisneyPlusAppleTVSettingsPage extends DisneyPlusMoreMenuIOSPageBase
     @ExtendedFindBy(accessibilityId = "accountView")
     ExtendedWebElement accountView;
 
+    @ExtendedFindBy(accessibilityId = "logOutCell")
+    ExtendedWebElement logOutCell;
+
     @Override
     public boolean isOpened() { return accountView.isElementPresent(); }
 
@@ -54,5 +57,9 @@ public class DisneyPlusAppleTVSettingsPage extends DisneyPlusMoreMenuIOSPageBase
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                 EM_SUBSCRIPTION_DETAIL_SUBCOPY.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getLogOutCell() {
+        return logOutCell;
     }
 }
