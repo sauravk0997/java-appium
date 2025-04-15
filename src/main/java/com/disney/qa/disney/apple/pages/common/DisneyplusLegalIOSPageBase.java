@@ -26,7 +26,8 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "legalConsole")
     private ExtendedWebElement legalPage;
 
-    private ExtendedWebElement legalHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE);
+    private ExtendedWebElement legalHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+            DictionaryKeys.LEGAL_TITLE);
 
     @FindBy(xpath = "//XCUIElementTypeLink")
     private ExtendedWebElement hyperlink;
