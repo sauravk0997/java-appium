@@ -2,7 +2,9 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
@@ -170,5 +172,29 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         //Validate back button redirects to Home page
         detailsPage.clickBack();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64881"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPagePlayButtonBehavior() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        ExploreContent seriesApiContent = getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String firstEpisodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(0)
+                .getVisuals().getEpisodeTitle();
+
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(2);
+        Assert.assertTrue(videoPlayer.getSubtitleLabel().getText().contains(firstEpisodeTitle),
+                "Video Player subtitle doesn't contains expected episode title");
     }
 }
