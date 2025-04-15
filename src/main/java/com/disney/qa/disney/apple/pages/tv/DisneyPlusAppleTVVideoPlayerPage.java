@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
-import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
