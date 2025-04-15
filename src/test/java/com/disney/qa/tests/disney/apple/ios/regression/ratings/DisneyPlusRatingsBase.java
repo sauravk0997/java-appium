@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.exception.*;
@@ -187,7 +189,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-                if (! item.getVisuals().getPromoLabel().getHeader().contains("Coming to Disney+")) {
+//                if (! item.getVisuals().getPromoLabel().getHeader().contains("Coming to Disney+")) {
+                if (! item.getVisuals().getPromoLabel().getHeader().contains((getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_BODY.getText())))) {
                     if (item.getVisuals().getMetastringParts() != null) {
                         if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
                             if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
