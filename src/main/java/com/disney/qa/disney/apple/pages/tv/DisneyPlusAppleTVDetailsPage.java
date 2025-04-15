@@ -29,14 +29,14 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     @ExtendedFindBy(accessibilityId = "contentSummaryView")
     private ExtendedWebElement contentSummaryView;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentDetailsPage\"`]/XCUIElementTypeOther[1]/XCUIElementTypeImage")
     private ExtendedWebElement heroImage;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`focused==1`]" +
             "/**/XCUIElementTypeStaticText[`name=='titleLabel'`]")
     protected ExtendedWebElement extraEpisodeTitle;
-
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeScrollView[`name == \"tabBar\"`]/**/XCUIElementTypeButton[`accessible=true`]")
+    private ExtendedWebElement tabBarTitles;
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
 
@@ -222,5 +222,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public ExtendedWebElement getAddToWatchlistText() {
         return getTypeButtonContainsLabel(getAppleTVLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_WATCHLIST.getText()));
+    }
+
+    public List<ExtendedWebElement> getTabBarTitleInfo() {
+        return findExtendedWebElements(tabBarTitles.getBy());
     }
 }
