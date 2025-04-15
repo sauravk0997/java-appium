@@ -186,11 +186,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
         CONTENT_TITLE.remove();
+        String comingSoon = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.PROMO_COMING_LATER.getText());
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-//                if (! item.getVisuals().getPromoLabel().getHeader().contains("Coming to Disney+")) {
-                if (! item.getVisuals().getPromoLabel().getHeader().contains((getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_CHANGE_EMAIL_BODY.getText())))) {
+                if (! item.getVisuals().getPromoLabel().getHeader().contains(comingSoon)) {
                     if (item.getVisuals().getMetastringParts() != null) {
                         if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
                             if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {

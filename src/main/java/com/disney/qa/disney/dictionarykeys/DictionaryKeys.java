@@ -131,6 +131,7 @@ public enum DictionaryKeys {
     CONSENT_MINOR_MOBILE_SCROLL_HEADER("consent_minor_mobile_scroll_header"),
     CONTENT_RATING("content_rating"),
     CONTENT_TILE_INTERACT("contenttile_interact"),
+    PROMO_COMING_LATER("promo_cominglater"),
     COOKIE_POLICY("footer_eup_login_cookie_policy"),
     COVIEWING_ADS_TOOLTIP("coviewing_ads_settings_tooltip"),
     CREATE_NEW_PASSWORD("create_new_password"),
