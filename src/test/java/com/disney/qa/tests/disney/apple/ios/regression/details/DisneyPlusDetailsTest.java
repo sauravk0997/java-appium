@@ -112,8 +112,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Details tab was not found on details page");
         details.clickDetailsTab();
         String contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory().getText();
-        sa.assertTrue(contentAdvisory.matches(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION),
-                "Negative Stereotype Advisory text was not found on details page");
+        String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
+        sa.assertTrue(contentAdvisoryUI.contains(contentAdvisory),
+                "Content Advisory Description not as expected");
         //movie
         home.clickSearchIcon();
         search.clearText();
@@ -123,8 +124,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(contentAdvisory.matches(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION),
-                "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(contentAdvisoryUI.contains(contentAdvisory),
+                "Content Advisory Description not as expected");
 
         sa.assertAll();
     }
