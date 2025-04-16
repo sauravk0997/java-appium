@@ -1,9 +1,13 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
@@ -195,6 +199,61 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Creator is not present under Details Tab");
         sa.assertTrue(detailsPage.areActorsDisplayed(), "Actors are not present under Details Tab");
         sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect under Details Tab");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64885"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifyBookmarkSeriesDetailsAppearance() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        logIn(getUnifiedAccount());
+
+        String seriesDeeplink = R.TESTDATA.get("disney_prod_series_detail_loki_deeplink");
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        String featuredEpisodeTitle = seasonDetails.getEpisodeTitle();
+        String bookmarkEpisodeTitle = getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.SEASON_EPISODE_TITLE_PLACEHOLDER.getText()),
+                Map.of("S", 1, "E", 1, "TITLE", featuredEpisodeTitle));
+        String bookmarkEpisodeBriefDesc = seasonDetails.getDescription().getBrief();
+
+        //Populate continue watching collection
+        launchDeeplink(seriesDeeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+
+        // Forward video and get remaining time
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickPlay();
+        String remainingTime = videoPlayer.getRemainingTimeInDetailsFormatString();
+        LOGGER.info("remainingTime {}", remainingTime);
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(seriesDeeplink);
+        detailsPage.waitForDetailsPageToOpen();
+        sa.assertTrue(detailsPage.getStaticTextByLabel(bookmarkEpisodeTitle).isPresent(),
+                "Bookmark episode title not displayed");
+        sa.assertTrue(detailsPage.getStaticTextByLabel(bookmarkEpisodeBriefDesc).isPresent(),
+                "Bookmark episode description not displayed");
+        sa.assertTrue(detailsPage.getProgressBar().isPresent(), "Progress bar is not present");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(),
+                "Continue watching time remaining is not present");
+        sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(remainingTime),
+                "Correct remaining time is not reflecting in progress bar on details page");
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getRestartButton().isPresent(), RESTART_BTN_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_BTN_NOT_DISPLAYED);
         sa.assertAll();
     }
 }
