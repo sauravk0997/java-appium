@@ -17,9 +17,11 @@ import org.testng.asserts.SoftAssert;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
@@ -54,43 +56,31 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.WATCHLIST, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPopulatedWatchlistDisplay() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
 
         onboard();
-        //Adding a Pixar item to Watchlist
-        homePage.clickPixarTile();
-        brandPage.isOpened();
-        brandPage.clickFirstCarouselPoster();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
-        String firstTitle = detailsPage.getMediaTitle();
-        detailsPage.addToWatchlist();
-        //Adding a Disney item to Watchlist
-        detailsPage.getHomeNav().click();
-        homePage.clickDisneyTile();
-        brandPage.isOpened();
-        brandPage.clickFirstCarouselPoster();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
-        String secondTitle = detailsPage.getMediaTitle();
-        detailsPage.addToWatchlist();
-        //Adding a Marvel item to Watchlist
-        detailsPage.getHomeNav().click();
-        homePage.clickMarvelTile();
-        brandPage.isOpened();
-        brandPage.clickFirstCarouselPoster();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT));
-        String thirdTitle = detailsPage.getMediaTitle();
-        detailsPage.addToWatchlist();
+        List<DisneyEntityIds> contentList = new ArrayList<>(Arrays.asList(
+                DisneyEntityIds.LOKI,
+                DisneyEntityIds.IRONMAN,
+                DisneyEntityIds.WANDA_VISION));
+        List<String> titleList = new ArrayList<>();
+
+        contentList.forEach(content -> {
+            getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
+                    getUnifiedAccount().getAccountToken(),
+                    getUnifiedAccount().getProfileId(),
+                    getWatchlistInfoBlock(content.getEntityId()));
+            titleList.add(content.getTitle());
+        });
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
 
-        Assert.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(thirdTitle, secondTitle, firstTitle),
+        Assert.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(titleList.toArray(String[]::new)),
                 "Titles were not added to the Watchlist");
 
-        Assert.assertTrue(watchlistPage.areWatchlistTitlesProperlyOrdered(thirdTitle, secondTitle, firstTitle),
+        Collections.reverse(titleList);
+        Assert.assertTrue(watchlistPage.areWatchlistTitlesProperlyOrdered(titleList.toArray(String[]::new)),
                 "Titles were not placed in the correct order");
     }
 
