@@ -19,7 +19,7 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
-    private static final String SETTINGS_PAGE_ERROR_MESSAGE = "Settings page did not open";
+    private static final String SETTINGS_PAGE_NOT_DISPLAYED = "Settings page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68157"})
     @Test(groups = {TestGroup.SMOKE, US})
