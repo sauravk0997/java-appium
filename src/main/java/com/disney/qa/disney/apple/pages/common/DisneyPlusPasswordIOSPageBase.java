@@ -46,7 +46,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForPasswordPageToOpen() {
-        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Home page is not opened")
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Password Page is not opened")
                 .until(it -> headlineHeader.isPresent(THREE_SEC_TIMEOUT));
     }
 

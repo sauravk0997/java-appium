@@ -87,6 +87,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         sa.assertTrue(verifyAgePage.isOpened(), "'Verify your age' page should open");
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         Assert.assertTrue(passwordPage.isOpened(), "Password page did not open");
         passwordPage.enterPassword(getUnifiedAccount());
         sa.assertTrue(verifyAgeDOBPage.isOpened(), "Enter your birthdate page should open");

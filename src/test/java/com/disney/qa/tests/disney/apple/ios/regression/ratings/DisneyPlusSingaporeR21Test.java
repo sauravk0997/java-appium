@@ -71,6 +71,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
                 DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
         sa.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, WE_COULD_NOT_LOG_YOU_IN_ERROR_MESSAGE);
@@ -87,6 +88,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
         passwordPage.enterPassword(getUnifiedAccount());
         sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
@@ -106,6 +108,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         ratingsSetupForOTPAccount(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
         passwordPage.clickR21ForgotPasswordLink();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
@@ -139,6 +142,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
@@ -204,6 +208,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
@@ -227,6 +232,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
 
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
@@ -235,6 +241,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getClearTextBtn());
         verifyAgeDOBPage.getClearTextBtn().click();
@@ -296,6 +303,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -315,6 +323,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
     }
 
@@ -329,6 +338,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -354,6 +364,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         SoftAssert sa = new SoftAssert();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -390,6 +401,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         detailsPage.startDownload();
 
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
 
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
@@ -410,12 +422,14 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
     @Test(groups = {TestGroup.PROFILES, TestGroup.R21, SG})
     public void verifyR21HasPINVerifyPasswordScreen() {
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+
         ratingsSetupWithPINNew(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         navigateToHomePageForPinUser();
-
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
-        Assert.assertTrue(initPage(DisneyPlusPasswordIOSPageBase.class).isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
+        passwordPage.waitForPasswordPageToOpen();
+        Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74659"})
@@ -448,6 +462,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNextPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
@@ -458,6 +473,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         detailsPage.clickPlayButton();
 
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         verifyAgePage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
@@ -489,6 +505,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusVerifyAgeDOBCollectionIOSPageBase verifyAgeDOBPage = initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
@@ -511,6 +528,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
         passwordPage.clickR21ForgotPasswordLink();
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "OTP Page was not opened");
@@ -541,6 +559,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.startDownload();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
@@ -580,6 +599,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
     }
@@ -597,6 +617,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         launchDeeplinkAndPlay();
 
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         verifyAgeDOBPage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
@@ -647,6 +668,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
@@ -666,6 +688,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
@@ -686,6 +709,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         launchDeeplinkAndPlay();
 
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
@@ -707,6 +731,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
@@ -737,6 +762,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        passwordPage.waitForPasswordPageToOpen();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
         passwordPage.enterPasswordNoAccount(INVALID_PASSWORD);
         Assert.assertEquals(passwordPage.getErrorMessageString(), incorrectPasswordError, WE_COULD_NOT_LOG_YOU_IN_ERROR_MESSAGE);
