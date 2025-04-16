@@ -56,12 +56,8 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         legalPage.getTypeCellLabelContains(legalPage.getLegalOption().getText()).click();
 
         Assert.assertTrue(legalPage.isOpened(), "Legal page did not open");
-        sa.assertTrue(legalPage.getDisneyTermsUse().isPresent(), "Disney terms of use option is not present");
-        sa.assertTrue(legalPage.getSubscriberAgreement().isPresent(), "Subscriber Agreement option is not present");
-        sa.assertTrue(legalPage.getPrivacyPolicy().isPresent(), "Privacy Policy option is not present");
-        sa.assertTrue(legalPage.getUSPrivacyRights().isPresent(), "US Privacy Rights option is not present");
-        sa.assertTrue(legalPage.getDoNotSellMyPersonalInfo().isPresent(),
-                "Do Not Sell My Personal Info option is not present");
+        legalPage.verifyLegalHeadersValidation();
+
         // Validate first option is focused and opened
         sa.assertTrue(legalPage.isFocused(legalPage.getDisneyTermsUse()), "First option is not focused");
         sa.assertTrue(legalPage.getStaticTextLabelName(firstParagraphTerms).isPresent(),

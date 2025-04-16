@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.tv;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.utils.DisneyContentApiChecker;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -13,6 +14,7 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
@@ -85,20 +87,14 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
         return disneyTermsUse;
     }
 
-    public ExtendedWebElement getSubscriberAgreement() {
-        return subscriberAgreement;
-    }
+    public void verifyLegalHeadersValidation() {
+        DisneyplusLegalIOSPageBase legalPage = new DisneyplusLegalIOSPageBase(getDriver());
 
-    public ExtendedWebElement getPrivacyPolicy() {
-        return privacyPolicy;
-    }
-
-    public ExtendedWebElement getUSPrivacyRights() {
-        return yourUSPrivacyRights;
-    }
-
-    public ExtendedWebElement getDoNotSellMyPersonalInfo() {
-        return doNotSellMyPersonalInfo;
+        getLocalizationUtils().getLegalHeaders().forEach(header -> {
+            LOGGER.info("Verifying header is present: {}", header);
+            Assert.assertTrue(legalPage.isLegalHeadersPresent(header),
+                    String.format("Header '%s' was not displayed", header));
+        });
     }
 
     public void areAllLegalDocumentsPresentAndScrollable(String siteConfig, SoftAssert sa, DisneyContentApiChecker apiChecker) {
