@@ -220,7 +220,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         commonPage.clickDown(2);
-        Assert.assertTrue(videoPlayer.getSubtitleLabel().getText().contains(firstEpisodeTitle),
+        Assert.assertTrue(videoPlayer.getSubtitleLabelElement().getText().contains(firstEpisodeTitle),
                 "Video Player subtitle doesn't contains expected episode title");
     }
 }
