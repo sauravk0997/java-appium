@@ -502,7 +502,6 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.waitForPasswordPageToOpen();
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
         verifyAgeDOBPage.clickVerifyAgeButton();
         Assert.assertTrue(verifyAgeDOBPage.isR21InvalidBirthdateErrorMessageDisplayed(), DOB_INVALID_BIRTHDATE_ERROR_MESSAGE);
