@@ -34,7 +34,7 @@ import static com.disney.qa.common.constant.CollectionConstant.getCollectionName
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.PREY;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BILL_BURR;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
 import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.UPCOMING;
@@ -284,7 +284,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         verifyServiceAttribution(ONLY_MURDERS_IN_THE_BUILDING, sa);
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-        verifyServiceAttribution(PREY, sa);
+        verifyServiceAttribution(BILL_BURR, sa);
         sa.assertAll();
     }
 
