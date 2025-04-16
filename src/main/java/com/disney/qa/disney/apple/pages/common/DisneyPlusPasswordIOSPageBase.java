@@ -45,6 +45,11 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return isPresent;
     }
 
+    public void waitForPasswordPageToOpen() {
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Home page is not opened")
+                .until(it -> headlineHeader.isPresent(THREE_SEC_TIMEOUT));
+    }
+
     public boolean isPasswordPagePresent() {
         return getDynamicAccessibilityId(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
