@@ -114,8 +114,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String contentAdvisory = null;
         try {
             contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory().getText();
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            Assert.fail("Error accessing content advisory: " + e.getClass().getSimpleName() + " - " + e.getMessage());
         } catch (Exception e) {
-            Assert.fail(e.getMessage());
+            Assert.fail("Unexpected exception occurred: " + e.getMessage());
         }
         String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
         sa.assertTrue(contentAdvisoryUI.contains(contentAdvisory),
