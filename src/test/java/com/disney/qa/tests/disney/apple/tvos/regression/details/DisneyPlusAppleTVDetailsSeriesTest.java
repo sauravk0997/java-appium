@@ -252,6 +252,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().getText().contains(remainingTime),
                 "Correct remaining time is not reflecting in progress bar on details page");
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
+        LOGGER.info("Page source "+ getDriver().getPageSource());
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), RESTART_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_BTN_NOT_DISPLAYED);
         sa.assertAll();
