@@ -4,8 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PREMIUM_MONTHLY_SINGAPORE;
-import static com.disney.qa.common.constant.IConstantHelper.SG;
-import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.SINGAPORE;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
@@ -859,6 +858,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
+        Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
         passwordPage.enterPassword(getUnifiedAccount());
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
@@ -870,6 +870,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         relaunch();
         navigateToHomePageForPinUser();
         homePage.goToDetailsPageFromContinueWatching(OUT_TITLE);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickContinueButton();
         Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
     }
