@@ -666,7 +666,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int expectedRemainingTimeInSec = 45;
+        int expectedRemainingTimeInSec = 55;
         String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -905,6 +905,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         launchDeeplink(url);
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        videoPlayer.clickBackButton();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
     }
