@@ -61,7 +61,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_the_last_dance_deeplkink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_the_last_dance_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.getESPNPlusEntitlementAttributionText().isElementPresent(),
                 "ESPN+ entitlement attribution is not present on Details page");
