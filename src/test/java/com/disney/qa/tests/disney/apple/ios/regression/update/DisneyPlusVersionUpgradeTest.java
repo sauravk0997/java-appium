@@ -44,8 +44,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         moreMenu.clickMoreTab();
         // Assert that version installed it is the previous FC Version
-        Assert.assertTrue(moreMenu.isAppVersionDisplayed(),
-                "App Version was not displayed");
+        Assert.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version was not displayed");
         Assert.assertEquals(moreMenu.getAppVersion(), appPreviousFCVersion, "Version is not the previous expected");
 
         // Terminate app and upgrade application to current version
@@ -151,7 +150,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     }
 
     private String formatAppVersion(String appVersion) {
-        int index = appVersion.lastIndexOf(".");
+        int index = appVersion.indexOf("-");
         return String.join("+", appVersion.substring(0, index), appVersion.substring(index + 1));
     }
 

@@ -60,6 +60,7 @@
         <classes>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.settings.DisneyPlusAppleTVProfilesTest"/>
             <class name="com.disney.qa.tests.disney.apple.tvos.regression.settings.DisneyPlusAppleTVAccountTests"/>
+            <class name="com.disney.qa.tests.disney.apple.tvos.regression.settings.DisneyPlusAppleTVSettingsTests"/>
         </classes>
     </test>
     <test verbose="1" name="DisneyPlus tvOS Watchlist" parallel="methods">
