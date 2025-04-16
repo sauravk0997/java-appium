@@ -383,6 +383,7 @@ public enum DictionaryKeys {
     PROFILE_SETTINGS_LIVE_UNRATED_TOOL_TIP("profile_settings_live_unrated_tool_tip"),
     PROFILE_SETTINGS_MATURITY_RATING_LABEL("profile_settings_maturity_rating_label"),
     PROFILE_SETTINGS_PERSONAL_INFORMATION_HEADER("profile_settings_personal_information_header"),
+    PROMO_COMING_LATER("promo_cominglater"),
     R21_BIRTHDAY_FORMAT("r21_birthday_format"),
     R21_CREATE_PIN_CREATE_PIN("r21_createpin_createpin"),
     R21_CREATE_PIN_SET_PIN("r21_createpin_setpin"),
