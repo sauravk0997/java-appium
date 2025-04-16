@@ -31,7 +31,7 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
-        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
         homePage.moveDownUntilElementIsFocused(settingsPage.getLogOutCell(), 8);
         // Log out and validate welcome screen is open
         settingsPage.getLogOutCell().click();
@@ -50,7 +50,7 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
-        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
         // Navigate and select Legal option and validate options
         homePage.moveDownUntilElementIsFocused(legalPage.getTypeCellLabelContains(legalPage.getLegalOption()), 8);
         legalPage.getTypeCellLabelContains(legalPage.getLegalOption()).click();
