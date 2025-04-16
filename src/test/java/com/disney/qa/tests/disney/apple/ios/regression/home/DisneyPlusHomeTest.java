@@ -907,7 +907,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
         videoPlayer.clickBackButton();
-        detailsPage.waitForPresenceOfAnElement(detailsPage.getContinueButton());
+        detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
     }
