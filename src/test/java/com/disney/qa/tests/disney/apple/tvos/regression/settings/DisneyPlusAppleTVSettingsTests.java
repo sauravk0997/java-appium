@@ -52,8 +52,8 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
         Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
         // Navigate and select Legal option and validate options
-        homePage.moveDownUntilElementIsFocused(legalPage.getTypeCellLabelContains(legalPage.getLegalOption()), 8);
-        legalPage.getTypeCellLabelContains(legalPage.getLegalOption()).click();
+        homePage.moveDownUntilElementIsFocused(legalPage.getTypeCellLabelContains(legalPage.getLegalOption().getText()), 8);
+        legalPage.getTypeCellLabelContains(legalPage.getLegalOption().getText()).click();
 
         Assert.assertTrue(legalPage.isOpened(), "Legal page did not open");
         sa.assertTrue(legalPage.getDisneyTermsUse().isPresent(), "Disney terms of use option is not present");

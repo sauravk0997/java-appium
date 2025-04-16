@@ -76,9 +76,9 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
         return isPresent;
     }
 
-    public String getLegalOption() {
-        return getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText());
+    public ExtendedWebElement getLegalOption() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText()));
     }
 
     public ExtendedWebElement getDisneyTermsUse() {
