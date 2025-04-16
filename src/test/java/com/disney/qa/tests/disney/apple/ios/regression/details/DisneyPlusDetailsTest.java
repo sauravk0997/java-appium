@@ -111,7 +111,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        String contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory().getText();
+        String contentAdvisory = null;
+        try {
+            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory().getText();
+        } catch (Exception e) {
+            Assert.fail(e.getMessage());
+        }
         String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
         sa.assertTrue(contentAdvisoryUI.contains(contentAdvisory),
                 "Content Advisory Description not as expected");
