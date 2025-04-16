@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -40,12 +41,18 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return headlineHeader.isElementPresent();
+        return headlineHeader.isPresent();
     }
 
     public void waitForPasswordPageToOpen() {
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Password Page is not opened")
                 .until(it -> headlineHeader.isPresent(THREE_SEC_TIMEOUT));
+    }
+
+    public void enterPassword(UnifiedAccount account) {
+        String password = account.getUserPass();
+        passwordEntryField.type(password);
+        clickPrimaryButton();
     }
 
     public boolean isPasswordPagePresent() {
