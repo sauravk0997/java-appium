@@ -5,7 +5,6 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -99,14 +98,5 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         int thumbnailRightXCoordinate = thumbnailView.getLocation().getX() + thumbnailView.getSize().getWidth();
 
         return  seekBarRightXCoordinate == thumbnailRightXCoordinate;
-    }
-
-    @Override
-    public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart() {
-        LOGGER.info("Waiting for video buffering to complete...");
-        waitUntil(ExpectedConditions.visibilityOf(loader), FIFTEEN_SEC_TIMEOUT);
-        waitForLoaderToDisappear(FIFTEEN_SEC_TIMEOUT);
-        LOGGER.info("Buffering completed.");
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 }
