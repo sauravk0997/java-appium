@@ -392,8 +392,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             }
             // Open live event
             detailsPage.getTypeCellLabelContains(titleEvent).click();
+        } catch(SkipException e) {
+            throw new SkipException(e.getMessage());
         } catch(Exception e) {
-            Assert.fail(errorMessage + e.getMessage());
+            Assert.fail(e.getMessage());
         }
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
         liveEventModal.getDetailsButton().click();
