@@ -1,11 +1,13 @@
 package com.disney.qa.tests.disney.apple.ios.regression.ratings;
 
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.lang3.exception.*;
@@ -184,30 +186,34 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
         CONTENT_TITLE.remove();
+        String comingSoon = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.PROMO_COMING_LATER.getText());
         for (String disneyCollectionsID : disneyCollectionsIDs) {
             List<Item> disneyCollectionItems = getExploreAPIItemsFromSet(disneyCollectionsID, locale, language);
             for (Item item : disneyCollectionItems) {
-                if (item.getVisuals().getMetastringParts() != null) {
-                    if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
-                        if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
-                            LOGGER.info("Title returned: " + item.getVisuals().getTitle());
-                            CONTENT_TITLE.set(item.getVisuals().getTitle());
-                            Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
-                            if (pageContainer != null) {
-                                if (!pageContainer.getType().equals(EPISODES)) {
-                                    IS_MOVIE.set(true);
-                                } else {
-                                    if (pageContainer.getSeasons().get(0) != null) {
-                                        IS_MOVIE.set(false);
-                                        List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
-                                        if (seasonItems.get(0) != null) {
-                                            EPISODIC_RATING.set(seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText());
-                                        } else {
-                                            throw new NullPointerException("Episodic rating is null");
+                if ((item.getVisuals().getPromoLabel() == null) || !(item.getVisuals().getPromoLabel().getHeader().contains(comingSoon))) {
+                    if (item.getVisuals().getMetastringParts() != null) {
+                        if (item.getVisuals().getMetastringParts().getRatingInfo() != null) {
+                            if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
+                                LOGGER.info("Title returned: " + item.getVisuals().getTitle());
+                                CONTENT_TITLE.set(item.getVisuals().getTitle());
+                                Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
+                                if (pageContainer != null) {
+                                    if (!pageContainer.getType().equals(EPISODES)) {
+                                        IS_MOVIE.set(true);
+                                    } else {
+                                        if (pageContainer.getSeasons().get(0) != null) {
+                                            IS_MOVIE.set(false);
+                                            List<Item> seasonItems = pageContainer.getSeasons().get(0).getItems();
+                                            if (seasonItems.get(0) != null) {
+                                                EPISODIC_RATING.set(seasonItems.get(0).getVisuals().getMetastringParts().getRatingInfo().getRating().getText());
+                                            } else {
+                                                throw new NullPointerException("Episodic rating is null");
+                                            }
                                         }
                                     }
+                                    return CONTENT_TITLE.get();
                                 }
-                                return CONTENT_TITLE.get();
                             }
                         }
                     }
