@@ -72,7 +72,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
-        remainingTimeInPauseMode = videoPlayer.getRemainingTime();
+        videoPlayer.clickPlayButton();
+        videoPlayer.waitForVideoControlToDisappear();
+        remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
         int remainingTimeAfterForwardTapInPauseMode = videoPlayer.tapForwardButton(2).getRemainingTime();
         int remainingTimeDifferenceWhileForward = remainingTimeAfterForwardTapInPauseMode - remainingTimeInPauseMode;
         sa.assertTrue(remainingTimeDifferenceWhileForward <= 20 && remainingTimeDifferenceWhileForward > 0,
