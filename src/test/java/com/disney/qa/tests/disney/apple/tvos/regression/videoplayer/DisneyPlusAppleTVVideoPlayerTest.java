@@ -148,13 +148,14 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String sports = "Sports";
         String basketball = "Basketball";
         String espn = "ESPN+";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
+                .isPresent(), "ESPN brand tile was not present on home page screen");
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
 
@@ -162,15 +163,17 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 ESPN_PAGE_DID_NOT_OPEN);
 
         // Navigate to Sports and basketball sport
-        homePage.navigateToShelf(brandPage.getBrandShelf(sports));
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
-        homePage.navigateToShelf(espnPage.getReplayLabel());
-        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
+        homePage.moveDownUntilCollectionContentIsFocused(CollectionConstant.getCollectionName(replaysCollection), 10);
+        String replayTitle = detailsPage.getAllCollectionCells(replaysCollection).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException(NO_REPLAYS_FOUND);
         }
@@ -208,8 +211,9 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
-        homePage.navigateToShelf(espnPage.getReplayLabel());
-        List<ExtendedWebElement> collectionList = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS);
+        CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
+        homePage.moveDownUntilCollectionContentIsFocused(CollectionConstant.getCollectionName(replaysCollection), 10);
+        List<ExtendedWebElement> collectionList = detailsPage.getAllCollectionCells(replaysCollection);
         if (collectionList.size() > 0) {
             replayTitle = collectionList.get(0).getText();
         }

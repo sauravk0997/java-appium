@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
+import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -22,9 +23,11 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     private static final String EXPANDED = "Expanded";
     private static final String COLLAPSED = "Collapsed";
 
-    private ExtendedWebElement legalHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE);
+    @ExtendedFindBy(accessibilityId = "legalConsole")
+    private ExtendedWebElement legalPage;
 
-    private ExtendedWebElement backupHeader = findByFallbackAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE);
+    private ExtendedWebElement legalHeader = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+            DictionaryKeys.LEGAL_TITLE);
 
     @FindBy(xpath = "//XCUIElementTypeLink")
     private ExtendedWebElement hyperlink;
@@ -35,11 +38,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        if(getLocalizationUtils().isSelectedLanguageSupported()) {
-            return legalHeader.isElementPresent() && getBackButton().isElementPresent();
-        } else {
-            return backupHeader.isElementPresent() && getBackButton().isElementPresent();
-        }
+            return legalPage.isPresent() && getBackButton().isPresent();
     }
 
     public boolean isLegalHeaderPresent() {
