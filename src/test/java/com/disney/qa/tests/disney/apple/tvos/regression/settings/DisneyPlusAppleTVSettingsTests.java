@@ -56,7 +56,7 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         legalPage.getTypeCellLabelContains(legalPage.getLegalOption().getText()).click();
 
         Assert.assertTrue(legalPage.isOpened(), "Legal page did not open");
-        legalPage.verifyLegalHeadersValidation();
+        legalPage.verifyLegalHeaders();
 
         // Validate first option is focused and opened
         sa.assertTrue(legalPage.isFocused(legalPage.getDisneyTermsUse()), "First option is not focused");

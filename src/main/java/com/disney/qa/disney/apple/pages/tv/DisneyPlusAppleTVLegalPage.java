@@ -87,7 +87,7 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
         return disneyTermsUse;
     }
 
-    public void verifyLegalHeadersValidation() {
+    public void verifyLegalHeaders() {
         DisneyplusLegalIOSPageBase legalPage = new DisneyplusLegalIOSPageBase(getDriver());
 
         getLocalizationUtils().getLegalHeaders().forEach(header -> {
