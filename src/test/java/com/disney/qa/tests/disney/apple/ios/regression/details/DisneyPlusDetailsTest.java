@@ -115,7 +115,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         ContentAdvisory contentAdvisory = null;
         String contentAdvisoryText = null;
         try {
-            contentAdvisory = seriesApiContent.getContainers().get(5).getVisuals().getContentAdvisory();
+            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
             if (contentAdvisory != null) {
                 contentAdvisoryText = contentAdvisory.getText();
             }
