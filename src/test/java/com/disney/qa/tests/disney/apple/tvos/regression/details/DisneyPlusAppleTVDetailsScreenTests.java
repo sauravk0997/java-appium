@@ -319,27 +319,30 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        String sports = "Sports";
         String basketball = "Basketball";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
+                        .isPresent(), "ESPN brand tile was not present on home page screen");
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
 
         // Navigate to Sports and basketball sport
-        homePage.navigateToShelf(brandPage.getBrandShelf(sports));
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
                 "Sport page did not open");
 
         // Navigate to a Replay and validate the page
-        homePage.navigateToShelf(espnPage.getReplayLabel());
-        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
+        homePage.moveDownUntilCollectionContentIsFocused(CollectionConstant.getCollectionName(replaysCollection), 10);
+        String replayTitle = detailsPage.getAllCollectionCells(replaysCollection).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException("No replay events found");
         }
@@ -371,28 +374,30 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
-
-        // Navigate to a live event
-        Set espnLiveEvent =
-                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 5);
+        String liveAndUpcomingEventsCollection =
+                getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING);
+                // Navigate to a live event
+                Set espnLiveEvent = getExploreAPISet(liveAndUpcomingEventsCollection, 5);
         if (espnLiveEvent == null) {
             throw new SkipException(errorMessage);
         }
         try {
             String titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
             LOGGER.info("Event title: {}", titleEvent);
-            homePage.navigateToShelf(detailsPage.getTypeCellLabelContains(titleEvent));
+            homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 10);
             // Verify airing badge to validate if there is a live event occurring
-            String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(CollectionConstant
-                    .getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING)).getText();
+            String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(
+                    liveAndUpcomingEventsCollection).getText();
             LOGGER.info("Airing badge: {}", airingBadge);
             if (airingBadge.equals(UPCOMING)) {
                 throw new SkipException(errorMessage);
             }
             // Open live event
             detailsPage.getTypeCellLabelContains(titleEvent).click();
+        } catch(SkipException e) {
+            throw new SkipException(e.getMessage());
         } catch(Exception e) {
-            Assert.fail(errorMessage + e.getMessage());
+            Assert.fail(e.getMessage());
         }
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_OPEN);
         liveEventModal.getDetailsButton().click();
