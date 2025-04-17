@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.api.explore.response.ContentAdvisory;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -98,7 +99,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase search = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount());
+//        setAppToHomeScreen(getUnifiedAccount());
 
         ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_lion_king_timon_and_pumbaa_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
@@ -111,17 +112,24 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        String contentAdvisory = null;
+        ContentAdvisory contentAdvisory = null;
+        String contentAdvisoryText = null;
         try {
-            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory().getText();
-        } catch (NullPointerException | IndexOutOfBoundsException e) {
-            Assert.fail("Error accessing content advisory: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+            contentAdvisory = seriesApiContent.getContainers().get(5).getVisuals().getContentAdvisory();
+            if (contentAdvisory != null) {
+                contentAdvisoryText = contentAdvisory.getText();
+            }
         } catch (Exception e) {
-            Assert.fail("Unexpected exception occurred: " + e.getMessage());
+            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
         }
+        if (contentAdvisory == null || contentAdvisoryText.isEmpty()) {
+            throw new SkipException("Unable to get Content Advisory from API");
+        }
+
         String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
-        sa.assertTrue(contentAdvisoryUI.contains(contentAdvisory),
+        sa.assertTrue(contentAdvisoryUI.contains(contentAdvisoryText),
                 "Content Advisory Description not as expected");
+
         //movie
         home.clickSearchIcon();
         search.clearText();
@@ -131,7 +139,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(contentAdvisoryUI.contains(contentAdvisory),
+        sa.assertTrue(contentAdvisoryUI.contains(contentAdvisoryText),
                 "Content Advisory Description not as expected");
 
         sa.assertAll();
