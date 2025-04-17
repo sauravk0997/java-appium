@@ -17,7 +17,10 @@ public enum DisneyUnifiedOfferPlan {
     DISNEY_PREMIUM_MONTHLY_SINGAPORE("Disney+ Premium - 18.98 SGD - Monthly - Signup"),
     DISNEY_PREMIUM_YEARLY_NETHERLANDS("Disney+ Premium - P2 - 139.90 EUR - Yearly - Signup"),
     DISNEY_PREMIUM_YEARLY_TURKEY("Disney+ Without Ads Annual Sign-Up"),
-    DISNEY_EXTRA_MEMBER_ADD_ON("Extra Member Add-On");
+    DISNEY_EXTRA_MEMBER_ADD_ON("Extra Member Add-On"),
+    DISNEY_PLUS_PREMIUM_YEARLY_DE("Disney+ Premium - DE - 139.90 EUR - Yearly"),
+    DISNEY_PLUS_PREMIUM_YEARLY_AT("Disney+ Premium - 139.90 EUR - Yearly - Signup"),
+    DISNEY_PLUS_PREMIUM_YEARLY_CH("Disney+ Premium - 209.00 CHF - P1 - Yearly - Signup");
 
     private final String key;
 
