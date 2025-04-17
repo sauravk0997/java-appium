@@ -144,7 +144,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         sa.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
 
         //Verify Continue button on alert
-        verifyAgeDOBPage.dismissPickerWheelKeyboard();
+        hideKeyboard();
         verifyAgeDOBPage.clickCancelButton();
         sa.assertTrue(verifyAgeDOBPage.isR21VerifyYourAgeModalDisplayed(), MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE);
         verifyAgeDOBPage.clickSystemAlertSecondaryBtn();

@@ -1389,7 +1389,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public void clickCancelButton() {
-        waitForPresenceOfAnElement(cancelButton);
         cancelButton.click();
     }
 
