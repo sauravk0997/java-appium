@@ -159,6 +159,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         setToNewOrientation(DeviceType.Type.IOS_TABLET, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         //Navigate to All Metadata Series
         homePage.clickSearchIcon();

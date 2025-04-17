@@ -106,7 +106,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
-
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         searchPage.searchForMedia(networkTitle);
         searchPage.getDisplayedTitles().get(0).click();
