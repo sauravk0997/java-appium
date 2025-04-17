@@ -728,7 +728,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.verifyRatingsInDetailsFeaturedArea(TV_PG.getContentRating(), sa);
         detailsPage.validateRatingsInDetailsTab(TV_PG.getContentRating(), sa);
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_bohemian_rhapsody_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_deeplink"));
         detailsPage.verifyRatingsInDetailsFeaturedArea(PG_13.getContentRating(), sa);
         detailsPage.validateRatingsInDetailsTab(PG_13.getContentRating(), sa);
     }
