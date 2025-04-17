@@ -647,10 +647,11 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         launchDeeplinkAndPlay();
         verifyAgePage.clickIAm21PlusButton();
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);
+        verifyAgeDOBPage.waitForVerifyAgeDOBCollectionPageToOpen();
 
         //Click Continue button on alert
-        verifyAgePage.clickCancelButton();
+        hideKeyboard();
+        verifyAgeDOBPage.clickCancelButton();
         Assert.assertTrue(verifyAgeDOBPage.isR21VerifyYourAgeModalDisplayed(), MUST_VERIFY_YOUR_AGE_MODAL_ERROR_MESSAGE);
         verifyAgeDOBPage.clickSystemAlertSecondaryBtn();
         Assert.assertTrue(verifyAgeDOBPage.isOpened(), DOB_PAGE_ERROR_MESSAGE);

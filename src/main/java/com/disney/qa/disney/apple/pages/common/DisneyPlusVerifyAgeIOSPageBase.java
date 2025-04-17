@@ -36,7 +36,8 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickNoButton() {
-        declineMaturityButton.click();
+        waitForPresenceOfAnElement(declineMaturityButton);
+        tap(declineMaturityButton);
     }
 
     public boolean isR21MustBe21YearOlderModalDisplayed() {
