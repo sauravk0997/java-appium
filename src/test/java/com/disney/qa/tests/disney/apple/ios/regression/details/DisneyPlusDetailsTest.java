@@ -28,7 +28,6 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
-import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -729,8 +728,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.validateRatingsInDetailsTab(TV_PG.getContentRating(), sa);
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_deeplink"));
-        detailsPage.verifyRatingsInDetailsFeaturedArea(PG_13.getContentRating(), sa);
-        detailsPage.validateRatingsInDetailsTab(PG_13.getContentRating(), sa);
+        detailsPage.verifyRatingsInDetailsFeaturedArea(RatingConstant.Rating.RESTRICTED.getContentRating(), sa);
+        detailsPage.validateRatingsInDetailsTab(RatingConstant.Rating.RESTRICTED.getContentRating(), sa);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76389"})
