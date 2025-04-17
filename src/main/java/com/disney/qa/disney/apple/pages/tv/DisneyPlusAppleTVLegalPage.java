@@ -37,7 +37,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Legal\"`]")
     private ExtendedWebElement legalTitle;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Privacy Policy\"`]")
     private ExtendedWebElement privacyPolicy;
 
