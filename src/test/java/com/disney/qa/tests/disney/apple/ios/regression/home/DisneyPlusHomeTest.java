@@ -33,20 +33,15 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
-import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.SIXTY_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STUDIOS_AND_NETWORKS;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
-import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusHomeTest extends DisneyBaseTest {
-    private static final String RECOMMENDED_FOR_YOU = "Recommended For You";
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
     private static final String HOME_PAGE_DID_NOT_OPEN = "Home page did not open";
     private static final String HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE = "Hulu tile is not visible on home page";
@@ -671,7 +666,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int expectedRemainingTimeInSec = 50;
+        int expectedRemainingTimeInSec = 55;
         String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -688,7 +683,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
-
+        homePage.waitForHomePageToOpen();
         addContentInContinueWatchingWithExpectedRemainingTime(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
                 expectedRemainingTimeInSec);
@@ -906,13 +901,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     private void addContentInContinueWatchingWithExpectedRemainingTime(String url, int expectedRemainingTime) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplink(url);
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
         videoPlayer.clickBackButton();
-        detailsPage.waitForDetailsPageToOpen();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
     }
