@@ -2,7 +2,9 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
@@ -196,5 +198,83 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(detailsPage.areActorsDisplayed(), "Actors are not present under Details Tab");
         sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect under Details Tab");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64952"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageNoBookmarkEpisodesTab() {
+        String episodeTitle;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            episodeTitle = seriesApiContent.getSeasons()
+                    .get(0)
+                    .getItems()
+                    .get(0)
+                    .getVisuals()
+                    .getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Episode title not found" + e.getMessage());
+        }
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), "Episodes tab is not focused");
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellLabelContains(episodeTitle)),
+                "First episode in episode tab is not focused");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64954"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageBookmarkEpisodesTab() {
+        String episodeTitle;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+
+        String seriesDeeplink = R.TESTDATA.get("disney_prod_series_detail_loki_deeplink");
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            episodeTitle = seriesApiContent.getSeasons()
+                    .get(0)
+                    .getItems()
+                    .get(2)
+                    .getVisuals()
+                    .getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Episode title not found" + e.getMessage());
+        }
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(seriesDeeplink);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(episodeTitle), 6);
+        detailsPage.clickSelect();
+        videoPlayer.waitForVideoToStart();
+        // Forward video and get remaining time
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickPlay();
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(seriesDeeplink);
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.getProgressContainer().isPresent(),
+                "Progress container view is not present");
+        detailsPage.moveDown(2, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellLabelContains(episodeTitle)),
+                "Bookmark episode in episode tab is not focused");
     }
 }
