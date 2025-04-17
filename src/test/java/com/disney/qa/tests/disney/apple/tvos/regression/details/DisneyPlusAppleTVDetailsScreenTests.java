@@ -749,7 +749,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_NOT_PRESENT);
         Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
-                "Plus Icon, Add content to your watchlist not displayed");
+                "Plus Icon - to add content to the watchlist is not displayed");
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "Checkmark icon, Remove the content from watchlist not displayed");
