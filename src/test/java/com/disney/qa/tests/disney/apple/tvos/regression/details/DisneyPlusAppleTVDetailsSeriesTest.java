@@ -216,6 +216,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         ExploreContent seriesApiContent = getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String firstEpisodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(0)
                 .getVisuals().getEpisodeTitle();
+        Assert.assertNotNull(firstEpisodeTitle, "Unable to fetch first episode title from Explore API");
 
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
