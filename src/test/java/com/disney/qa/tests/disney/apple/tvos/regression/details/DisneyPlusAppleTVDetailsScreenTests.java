@@ -752,6 +752,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Plus Icon - to add content to the watchlist is not displayed");
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
-                "Checkmark icon, Remove the content from watchlist not displayed");
+                "Checkmark icon- to remove the content from the watchlist is not displayed");
     }
 }
