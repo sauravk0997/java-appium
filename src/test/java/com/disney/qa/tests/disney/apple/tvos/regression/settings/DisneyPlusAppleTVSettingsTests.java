@@ -8,6 +8,7 @@ import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -45,7 +46,7 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusAppleTVLegalPage legalPage = new DisneyPlusAppleTVLegalPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String firstParagraphTerms = "ENGLISH – DISNEY TERMS OF USE – UNITED STATES";
+        String disneyTerms = "Disney Terms of Use";
 
         logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTileToBrandTile();
@@ -57,11 +58,9 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
 
         Assert.assertTrue(legalPage.isOpened(), "Legal page did not open");
         legalPage.verifyLegalHeaders();
-
         // Validate first option is focused and opened
-        sa.assertTrue(legalPage.isFocused(legalPage.getDisneyTermsUse()), "First option is not focused");
-        sa.assertTrue(legalPage.getStaticTextLabelName(firstParagraphTerms).isPresent(),
-                "First option's view is not displayed");
+        sa.assertTrue(legalPage.isFocused(legalPage.getTypeButtonByLabel(disneyTerms)), "First option is not focused");
+        legalPage.verifyLegalOptionExpanded(disneyTerms);
         sa.assertAll();
     }
 }

@@ -12,6 +12,7 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -36,9 +37,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Legal\"`]")
     private ExtendedWebElement legalTitle;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Disney Terms of Use\"`]")
-    private ExtendedWebElement disneyTermsUse;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Privacy Policy\"`]")
     private ExtendedWebElement privacyPolicy;
@@ -83,10 +81,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText()));
     }
 
-    public ExtendedWebElement getDisneyTermsUse() {
-        return disneyTermsUse;
-    }
-
     public void verifyLegalHeaders() {
         DisneyplusLegalIOSPageBase legalPage = new DisneyplusLegalIOSPageBase(getDriver());
 
@@ -95,6 +89,14 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
             Assert.assertTrue(legalPage.isLegalHeadersPresent(header),
                     String.format("Header '%s' was not displayed", header));
         });
+    }
+
+    public void verifyLegalOptionExpanded(String option) {
+        String expandedHeader = getLocalizationUtils().getLegalDocumentBody(option).split("\\n")[0];
+        expandedHeader = expandedHeader.trim();
+        Assert.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(
+                        getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT),
+                expandedHeader + " Expanded Header is not visible");
     }
 
     public void areAllLegalDocumentsPresentAndScrollable(String siteConfig, SoftAssert sa, DisneyContentApiChecker apiChecker) {
