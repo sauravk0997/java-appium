@@ -33,6 +33,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     }
 
     public void clickVerifyAgeButton() {
+        waitForPresenceOfAnElement(verifyAgeButton);
         verifyAgeButton.click();
     }
 
