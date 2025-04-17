@@ -205,6 +205,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64885"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifyBookmarkSeriesDetailsAppearance() {
+        String episodeTitle, episodeBriefDesc;
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
@@ -215,14 +216,19 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String seriesDeeplink = R.TESTDATA.get("disney_prod_series_detail_loki_deeplink");
         ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
-        String featuredEpisodeTitle = seasonDetails.getEpisodeTitle();
-        String bookmarkEpisodeTitle = getLocalizationUtils().formatPlaceholderString(
+        try {
+            Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+            episodeTitle = seasonDetails.getEpisodeTitle();
+            episodeBriefDesc = seasonDetails.getDescription().getBrief();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Episode title and description not found" + e.getMessage());
+        }
+
+        String episodeTitleWithPlaceHolder = getLocalizationUtils().formatPlaceholderString(
                 getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.SEASON_EPISODE_TITLE_PLACEHOLDER.getText()),
-                Map.of("S", 1, "E", 1, "TITLE", featuredEpisodeTitle));
-        String bookmarkEpisodeBriefDesc = seasonDetails.getDescription().getBrief();
+                Map.of("S", 1, "E", 1, "TITLE", episodeTitle));
 
         //Populate continue watching collection
         launchDeeplink(seriesDeeplink);
@@ -242,9 +248,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         homePage.waitForHomePageToOpen();
         launchDeeplink(seriesDeeplink);
         detailsPage.waitForDetailsPageToOpen();
-        sa.assertTrue(detailsPage.getStaticTextByLabel(bookmarkEpisodeTitle).isPresent(),
+        sa.assertTrue(detailsPage.getStaticTextByLabel(episodeTitleWithPlaceHolder).isPresent(),
                 "Bookmark episode title not displayed");
-        sa.assertTrue(detailsPage.getStaticTextByLabel(bookmarkEpisodeBriefDesc).isPresent(),
+        sa.assertTrue(detailsPage.getStaticTextByLabel(episodeBriefDesc).isPresent(),
                 "Bookmark episode description not displayed");
         sa.assertTrue(detailsPage.getProgressBar().isPresent(), "Progress bar is not present");
         sa.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(),
