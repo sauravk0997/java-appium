@@ -28,7 +28,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     }
 
     public void waitForVerifyAgeDOBCollectionPageToOpen() {
-        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Password Page is not opened")
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Verify Age DOB Page is not opened")
                 .until(it -> verifyAgeDOBPage.isPresent(THREE_SEC_TIMEOUT));
     }
 
