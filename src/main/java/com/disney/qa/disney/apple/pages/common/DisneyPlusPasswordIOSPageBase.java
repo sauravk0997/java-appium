@@ -49,12 +49,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
                 .until(it -> headlineHeader.isPresent(THREE_SEC_TIMEOUT));
     }
 
-    public void enterPassword(UnifiedAccount account) {
-        String password = account.getUserPass();
-        passwordEntryField.type(password);
-        clickPrimaryButton();
-    }
-
     public boolean isPasswordPagePresent() {
         return getDynamicAccessibilityId(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
