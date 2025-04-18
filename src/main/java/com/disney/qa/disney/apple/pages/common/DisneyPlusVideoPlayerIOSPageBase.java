@@ -704,7 +704,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForAdToCompleteIfPresent(int polling) {
-        int bufferTime = 5; //Margin Of Error
+        int bufferTime = 3; //Margin Of Error
         if (isAdBadgeLabelPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
             int waitTime = remainingTime + bufferTime;
