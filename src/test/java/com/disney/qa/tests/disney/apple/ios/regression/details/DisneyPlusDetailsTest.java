@@ -112,22 +112,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        ContentAdvisory contentAdvisory = null;
-        String contentAdvisoryText = null;
-        try {
-            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
-            if (contentAdvisory != null) {
-                contentAdvisoryText = contentAdvisory.getText();
-            }
-        } catch (Exception e) {
-            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
-        }
-        if (contentAdvisory == null || contentAdvisoryText.isEmpty()) {
-            throw new SkipException("Unable to get Content Advisory from API");
-        }
-
         String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
-        sa.assertTrue(contentAdvisoryUI.contains(contentAdvisoryText),
+        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory Description not as expected");
 
         //movie
@@ -139,7 +125,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(contentAdvisoryUI.contains(contentAdvisoryText),
+        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory Description not as expected");
 
         sa.assertAll();
@@ -983,5 +969,22 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
+    }
+
+    public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
+        ContentAdvisory contentAdvisory = null;
+        String contentAdvisoryText = null;
+        try {
+            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
+            if (contentAdvisory != null) {
+                contentAdvisoryText = contentAdvisory.getText();
+            }
+        } catch (Exception e) {
+            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+        }
+        if (contentAdvisory == null || contentAdvisoryText.isEmpty()) {
+            throw new SkipException("Unable to get Content Advisory from API");
+        }
+        return contentAdvisoryText;
     }
 }
