@@ -373,7 +373,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
 
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            detailsPage.swipeUp(1000);
+            detailsPage.swipeUp(700);
         }
 //        if (! (detailsPage.getEpisodesTab().isPresent())) {
 //            detailsPage.swipePageTillElementPresent(detailsPage.getEpisodesTab(), 2, null, Direction.UP, 1);
