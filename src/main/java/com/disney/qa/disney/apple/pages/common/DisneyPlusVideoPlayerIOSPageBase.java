@@ -704,9 +704,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void waitForAdToCompleteIfPresent(int polling) {
+        int bufferTime = 5; //Margin Of Error
         if (isAdBadgeLabelPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
-            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime)
+            int waitTime = remainingTime + bufferTime;
+            fluentWait(getDriver(), waitTime, polling, "Ad did not end after " + waitTime)
                     .until(it -> getAdBadge().isElementNotPresent(ONE_SEC_TIMEOUT));
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
