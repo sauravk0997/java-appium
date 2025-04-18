@@ -375,8 +375,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 //        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
 //            detailsPage.swipeUp(1500);
 //        }
-        if (! (detailsPage.getSeasonSelectorButton().isPresent())) {
-            detailsPage.swipePageTillElementPresent(detailsPage.getSeasonSelectorButton(), 2, null, Direction.UP, 1);
+        if (! (detailsPage.getEpisodesTab().isPresent())) {
+            detailsPage.swipePageTillElementPresent(detailsPage.getEpisodesTab(), 2, null, Direction.UP, 1);
         }
         sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
         detailsPage.getEpisodesTab().click();
