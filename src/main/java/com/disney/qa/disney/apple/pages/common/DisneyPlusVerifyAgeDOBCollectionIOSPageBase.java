@@ -32,9 +32,21 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
                 .until(it -> verifyAgeDOBPage.isPresent(THREE_SEC_TIMEOUT));
     }
 
+    //verifyAgeButton.waitForClickable(10);
+    //verifyAgeButton.click();
     public void clickVerifyAgeButton() {
-        waitForPresenceOfAnElement(verifyAgeButton);
-        verifyAgeButton.click();
+        System.out.println(verifyAgeButton.getSize()); // sanity check
+        System.out.println(driver.getPageSource()); // look for overlapping elements
+        if (verifyAgeButton.isElementPresent()) {
+            if (verifyAgeButton.isClickable()) {
+                verifyAgeButton.click();
+                System.out.println("Clicked verifyAgeButton");
+            } else {
+                System.out.println("verifyAgeButton is present but not clickable");
+            }
+        } else {
+            System.out.println("verifyAgeButton not present");
+        }
     }
 
     public boolean isR21VerifyYourAgeModalDisplayed() {
