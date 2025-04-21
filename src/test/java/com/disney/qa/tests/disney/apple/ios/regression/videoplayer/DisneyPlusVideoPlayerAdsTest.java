@@ -41,6 +41,10 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     private static final double SCRUB_PERCENTAGE_TEN = 10;
     private static final double SCRUB_PERCENTAGE_SIXTY = 60;
     private static final int UI_LATENCY = 25;
+    private static final int BUFFER_TIME_THREE = 3;
+    private static final int BUFFER_TIME_ZERO = 0;
+    private static final int POLLING_FIVE = 5;
+    private static final int POLLING_SIX = 6;
     private static final String FRANCAIS = "Français";
     private static final String DURING_SECOND_AD_POD = "During second ad pod,";
     private static final String DURING_PRE_ROLL = "During pre-roll,";
@@ -71,7 +75,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), AD_DURATION_NOT_DISPLAYED);
         videoPlayer.waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT);
-        videoPlayer.waitForAdToCompleteIfPresent(6);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
         videoPlayer.skipPromoIfPresent();
         int remainingTimeAfterAd = videoPlayer.getRemainingTime();
         int playDuration = (remainingTimeBeforeAd - remainingTimeAfterAd);
@@ -114,7 +118,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(6);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(), AD_IS_PRESENT_MESSAGE);
@@ -135,7 +139,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
                 "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE),
                 "Restart button is clickable and not disabled on ad player overlay");
-        videoPlayer.waitForAdToCompleteIfPresent(5);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_FIVE, BUFFER_TIME_ZERO);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(TRUE),
@@ -233,7 +237,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         Assert.assertTrue(videoPlayer.getPlayerView().isPresent(TEN_SEC_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(5);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_FIVE, BUFFER_TIME_ZERO);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTimeThreeIntegers());
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
@@ -254,14 +258,14 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(6);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
         videoPlayer.skipPromoIfPresent();
         videoPlayer.waitForAdGracePeriodToEnd(videoPlayer.getRemainingTime());
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_THIRTY);
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(),
                 AD_BADGE_NOT_PRESENT_ERROR_MESSAGE + " after scrubbing forward after an ad grace period");
 
-        videoPlayer.waitForAdToCompleteIfPresent(6);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_SIXTY);
         sa.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(), AD_IS_PRESENT_MESSAGE);
         sa.assertAll();
@@ -294,7 +298,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.getPlayerView().isPresent(SHORT_TIMEOUT), PLAYER_DID_NOT_OPEN_ERROR_MESSAGE);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(timeout), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
-        videoPlayer.waitForAdToCompleteIfPresent(5);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_FIVE, BUFFER_TIME_ZERO);
         sa.assertTrue(videoPlayer.getRemainingTimeInStringWithHourAndMinutes().equals(contentTimeFromAPI), durationNotmatchedErrorMessage);
         sa.assertAll();
     }
@@ -322,7 +326,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getAdBadge());
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(2);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_THREE);
         Assert.assertTrue(videoPlayer.isRatingPresent(DictionaryKeys.RATING_TVPG_TV_PG),
                 "Video Player Content Rating was not shown for " + MS_MARVEL);
     }
@@ -339,13 +343,12 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76660"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.VIDEO_PLAYER_ADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerBehaviorAfterBackgroundingAppForAdsUser() {
-        int polling = 5;
         int backgroundDuration = 20;
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.waitForAdToCompleteIfPresent(polling);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_FIVE, BUFFER_TIME_ZERO);
         videoPlayer.waitForVideoToStart();
         lockDevice(Duration.ofSeconds(backgroundDuration));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
@@ -376,7 +379,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(6);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
         // Rewind to the beginning and validate Ad should not be playing
         videoPlayer.scrubToPlaybackPercentage(0);
         Assert.assertFalse(videoPlayer.isCrossingAdBoundaryMessagePresent(), adBoundaryPresentMessage);
@@ -393,7 +396,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         // Validate and wait for Ad to complete
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getAdBadge());
         Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(6);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
         // Wait to be outside grace period
         pause(FORTY_FIVE_SEC_TIMEOUT);
         // Scrub to an Ad area
@@ -413,7 +416,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
         sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
-        videoPlayer.waitForAdToCompleteIfPresent(6);
+        videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
         // Need to be inside grace period
         videoPlayer.waitForVideoToStart();
         pause(FIVE_SEC_TIMEOUT);
