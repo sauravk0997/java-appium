@@ -355,7 +355,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             "**/XCUIElementTypeCell[`name == 'downloadsTab'`]/**/XCUIElementTypeButton[`name MATCHES '\\\\d+'`]")
     protected ExtendedWebElement downloadsTabNotificationBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'loader'`]")
-    protected ExtendedWebElement loader;
+    private ExtendedWebElement loader;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name CONTAINS \"backgroundGradient\"`]")
     private ExtendedWebElement backgroundImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name ENDSWITH 'ProfileCell'`]")
