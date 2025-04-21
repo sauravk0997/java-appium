@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLegalPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSettingsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -17,6 +18,7 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
+    private static final String SETTINGS_PAGE_NOT_DISPLAYED = "Settings page did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68157"})
     @Test(groups = {TestGroup.SMOKE, US})
@@ -28,10 +30,33 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
-        Assert.assertTrue(settingsPage.isOpened(), "Settings page did not open");
+        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
         homePage.moveDownUntilElementIsFocused(settingsPage.getLogOutCell(), 8);
         // Log out and validate welcome screen is open
         settingsPage.getLogOutCell().click();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68357"})
+    @Test(groups = {TestGroup.SMOKE, US})
+    public void verifyLegalPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
+        DisneyPlusAppleTVLegalPage legalPage = new DisneyPlusAppleTVLegalPage(getDriver());
+        String disneyTerms = getLocalizationUtils().getLegalHeaders().iterator().next();
+
+        logIn(getUnifiedAccount());
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
+        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
+        // Navigate and select Legal option and validate options
+        homePage.moveDownUntilElementIsFocused(legalPage.getLegalOption(), 8);
+        legalPage.getLegalOption().click();
+
+        Assert.assertTrue(legalPage.isOpened(), "Legal page did not open");
+        legalPage.verifyLegalHeaders();
+        // Validate first option is focused and opened
+        Assert.assertTrue(legalPage.isFocused(legalPage.getTypeButtonByLabel(disneyTerms)), "First option is not focused");
+        legalPage.verifyLegalOptionExpanded(disneyTerms);
     }
 }
