@@ -36,7 +36,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     //verifyAgeButton.click();
     public void clickVerifyAgeButton() {
         System.out.println(verifyAgeButton.getSize()); // sanity check
-        System.out.println(driver.getPageSource()); // look for overlapping elements
+      //  System.out.println(driver().getPageSource()); // look for overlapping elements
         if (verifyAgeButton.isElementPresent()) {
             if (verifyAgeButton.isClickable()) {
                 verifyAgeButton.click();
