@@ -101,6 +101,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE = "expiredAllowRenewal";
     protected static final String DOLBY_VISION = "Dolby Vision";
     public static final String ESPN_PLUS = "ESPN+";
+    public static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
+    public static final String RATING = "Rating";
+    public static final String RELEASE_YEAR_DETAILS = "Release_Year";
+    public static final String CONTENT_DESCRIPTION = "Content_Description";
+    public static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
+    public static final String CONTENT_TITLE = "Content_Title";
 
     //Common error messages
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
@@ -834,5 +840,35 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         if (isAlertPresent()) {
             handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
         }
+    }
+
+    public Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
+        Map<String, Object> exploreAPIMetadata = new HashMap<>();
+
+        exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
+        exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
+        if (visualsResponse.getPromoLabel() != null) {
+            exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+        }
+
+        //Audio visual badge
+        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
+            List<String> audioVideoApiBadge = new ArrayList<>();
+            visualsResponse.getMetastringParts().getAudioVisual().getFlags()
+                    .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            exploreAPIMetadata.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+        }
+
+        //Rating
+        if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
+            exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        }
+
+        //Release Year
+        if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
+            exploreAPIMetadata.put(RELEASE_YEAR_DETAILS,
+                    visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
+        }
+        return exploreAPIMetadata;
     }
 }

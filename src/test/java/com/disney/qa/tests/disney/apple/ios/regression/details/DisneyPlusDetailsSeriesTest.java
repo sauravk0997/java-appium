@@ -39,12 +39,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
     String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
-    private static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
-    private static final String RATING = "Rating";
-    private static final String RELEASE_YEAR_DETAILS = "Release_Year";
-    private static final String CONTENT_DESCRIPTION = "Content_Description";
-    private static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
-    private static final String CONTENT_TITLE = "Content_Title";
     private static final String DISNEY_JUNIOR_ARIEL = "Disney Junior Ariel";
     private static final String PLAY = "Play";
     private static final String DOWNLOAD_MODAL_IS_VISIBLE = "Download Modal was still visible";
@@ -1319,35 +1313,5 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue((currentTimeAfterRestartClick < currentTimeBeforeRestartClick)
                         && (currentTimeAfterRestartClick < limitTime),
                 "Restart button did not restarted the video");
-    }
-
-    private Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
-        Map<String, Object> exploreAPIMetadata = new HashMap<>();
-
-        exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
-        exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
-        if (visualsResponse.getPromoLabel() != null) {
-            exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
-        }
-
-        //Audio visual badge
-        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
-            List<String> audioVideoApiBadge = new ArrayList<>();
-            visualsResponse.getMetastringParts().getAudioVisual().getFlags()
-                    .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
-            exploreAPIMetadata.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
-        }
-
-        //Rating
-        if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
-            exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
-        }
-
-        //Release Year
-        if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
-            exploreAPIMetadata.put(RELEASE_YEAR_DETAILS,
-                    visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
-        }
-        return exploreAPIMetadata;
     }
 }
