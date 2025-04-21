@@ -46,7 +46,7 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusAppleTVLegalPage legalPage = new DisneyPlusAppleTVLegalPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String disneyTerms = "Disney Terms of Use";
+        String disneyTerms = getLocalizationUtils().getLegalHeaders().iterator().next();
 
         logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTileToBrandTile();

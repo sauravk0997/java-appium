@@ -29,7 +29,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.LEGAL_TITLE;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusApplePageBase.class)
-public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
+public class DisneyPlusAppleTVLegalPage extends DisneyplusLegalIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private static String errorMessage = "'%s' is not shown";
@@ -81,11 +81,9 @@ public class DisneyPlusAppleTVLegalPage extends DisneyPlusApplePageBase {
     }
 
     public void verifyLegalHeaders() {
-        DisneyplusLegalIOSPageBase legalPage = new DisneyplusLegalIOSPageBase(getDriver());
-
         getLocalizationUtils().getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
-            Assert.assertTrue(legalPage.isLegalHeadersPresent(header),
+            Assert.assertTrue(isLegalHeadersPresent(header),
                     String.format("Header '%s' was not displayed", header));
         });
     }
