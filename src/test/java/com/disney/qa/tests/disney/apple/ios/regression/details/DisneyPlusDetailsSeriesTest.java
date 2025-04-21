@@ -377,9 +377,10 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 //        }
 //        System.out.println(detailsPage.getEpisodesTab().isVisible());
 //        System.out.println(! detailsPage.getEpisodesTab().isVisible());
-        if (! detailsPage.getEpisodesTab().isVisible()) {
-            detailsPage.swipePageTillElementPresent(detailsPage.getEpisodesTab(), 1, null, Direction.UP, 1);
-        }
+//        if (! detailsPage.getEpisodesTab().isVisible()) {
+//            detailsPage.swipePageTillElementPresent(detailsPage.getEpisodesTab(), 1, null, Direction.UP, 1);
+//        }
+        detailsPage.swipePageTillElementTappable(detailsPage.getEpisodesTab(), 1, null, Direction.UP, 1);
         sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
         detailsPage.getEpisodesTab().click();
         sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
