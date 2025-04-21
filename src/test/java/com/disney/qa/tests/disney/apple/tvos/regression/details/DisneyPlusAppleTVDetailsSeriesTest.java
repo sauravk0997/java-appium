@@ -243,7 +243,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
             firstEpisodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(0)
                     .getVisuals().getEpisodeTitle();
         } catch (Exception e) {
-            throw new RuntimeException("Unable to fetch first episode title from Explore API", e);
+            throw new SkipException("Unable to fetch first episode title from Explore API", e);
         }
 
         detailsPage.clickPlayButton();
