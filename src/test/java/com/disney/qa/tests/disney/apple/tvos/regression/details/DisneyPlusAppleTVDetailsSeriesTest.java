@@ -238,9 +238,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         ExploreContent seriesApiContent = getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        String firstEpisodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(0)
-                .getVisuals().getEpisodeTitle();
-        Assert.assertNotNull(firstEpisodeTitle, "Unable to fetch first episode title from Explore API");
+        String firstEpisodeTitle;
+        try {
+            firstEpisodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(0)
+                    .getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to fetch first episode title from Explore API", e);
+        }
 
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
