@@ -160,6 +160,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'progressBar'`]/XCUIElementTypeOther")
     private ExtendedWebElement progressBarBookmark;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]/**/XCUIElementTypeOther[`name == " +
+            "'progressBar'`]")
+    private ExtendedWebElement progressBarBookmarkOnEpisodeTab;
+
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeStaticText[`label =[c] 'Included with your ESPN+ subscription'`]")
     private ExtendedWebElement espnPlusEntitlementAttributionText;
@@ -1274,6 +1278,15 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isBookmarkRefreshed(double scrubPercentage, int latency) {
         double bookmarkWidth = progressBarBookmark.getSize().getWidth();
         double expectedWidth = progressBar.getSize().getWidth() / (100 / scrubPercentage);
+        ValueRange range = ValueRange.of(-latency, latency);
+        return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
+    }
+
+    public boolean isProgressBarIndicatingCorrectPositionOnEpisodeTab(String episodeTitle,
+                                                                      double scrubPercentage,
+                                                                      int latency) {
+        double bookmarkWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth();
+        double expectedWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth() / (100 / scrubPercentage);
         ValueRange range = ValueRange.of(-latency, latency);
         return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
     }

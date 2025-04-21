@@ -4,6 +4,7 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,8 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Restart'`]")
     private ExtendedWebElement restartBtn;
+    @ExtendedFindBy(accessibilityId = "seekTimeLabel")
+    protected ExtendedWebElement seekTimeLabel;
 
     public DisneyPlusAppleTVVideoPlayerPage(WebDriver driver) {
         super(driver);
@@ -98,5 +101,23 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         int thumbnailRightXCoordinate = thumbnailView.getLocation().getX() + thumbnailView.getSize().getWidth();
 
         return  seekBarRightXCoordinate == thumbnailRightXCoordinate;
+    }
+
+    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
+        LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
+        clickPlay();
+        int destinationX = seekBar.getLocation().getX() +
+                (int)(seekBar.getSize().getWidth() * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
+        clickDown();
+        Point currentTimeMarkerLocation = seekTimeLabel.getLocation();
+        LOGGER.info("Scrubbing from X:{},Y:{} to X:{},Y:{}",
+                currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
+                destinationX, currentTimeMarkerLocation.getY());
+        clickRight();
+        swipeLeft(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
+                destinationX, currentTimeMarkerLocation.getY(), 500);
+        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
+                destinationX, currentTimeMarkerLocation.getY());
+        return initPage(DisneyPlusAppleTVVideoPlayerPage.class);
     }
 }

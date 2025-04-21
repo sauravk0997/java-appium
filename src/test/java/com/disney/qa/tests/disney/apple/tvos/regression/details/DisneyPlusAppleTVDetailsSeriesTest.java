@@ -2,7 +2,9 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
@@ -28,6 +30,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String CONTENT_ERROR_MESSAGE = "Content is not found";
     private static final String SUGGESTED = "SUGGESTED";
+    private static final double SCRUB_PERCENTAGE_FIFTY = 50;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -220,5 +223,46 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String title = videoPlayer.getTitleLabel();
         Assert.assertTrue(title.contains(trailer) && title.contains(visualsResponse.getTitle()),
                 "Expected Trailer not playing");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64956"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifyEpisodeTabProgressBarUpdates() {
+        int latency = 20;
+        String episodeTitle;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            episodeTitle = seriesApiContent.getSeasons()
+                    .get(0)
+                    .getItems()
+                    .get(0)
+                    .getVisuals()
+                    .getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Episode title not found" + e.getMessage());
+        }
+        //logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.clickSelect();
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickRight(4, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        detailsPage.clickMenu();
+
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getContinueButton());
+        Assert.assertTrue(detailsPage.getProgressContainer().isPresent(),
+                "Progress container view is not present");
+       Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
+                SCRUB_PERCENTAGE_FIFTY, latency));
     }
 }
