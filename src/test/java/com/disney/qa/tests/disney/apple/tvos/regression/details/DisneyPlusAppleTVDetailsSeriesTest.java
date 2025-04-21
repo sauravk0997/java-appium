@@ -290,7 +290,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.clickPlay();
         int remainingTimeAfterAppRelaunch = videoPlayer.getRemainingTimeThreeIntegers();
         ValueRange acceptableDeltaRange = ValueRange.of(0, uiLatencyInSeconds);
-        LOGGER.info("REMOVE. DELTA: {}", Math.abs(remainingTimeAfterAppRelaunch - remainingTimeAfterForward));
         Assert.assertTrue(
                 acceptableDeltaRange.isValidIntValue(
                         Math.abs(remainingTimeAfterAppRelaunch - remainingTimeAfterForward)),
