@@ -22,6 +22,7 @@ import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
+import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -258,7 +259,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64887"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifySeriesDetailsPageContinueButtonBehavior() {
-        int uiLatencyInSeconds = 35;
+        int uiLatencyInSeconds = 10;
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
@@ -269,8 +270,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
-        videoPlayer.waitForVideoToStart();
-        commonPage.clickRight(3, 1, 1);
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        commonPage.clickRight(3, 2, 1);
         videoPlayer.clickPlay();
         int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), TEN_SEC_TIMEOUT);
@@ -285,7 +286,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.clickContinueButton();
 
         // Pause playback and validate elapsed time difference using a range to avoid problems due to latency
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
         videoPlayer.clickPlay();
         int remainingTimeAfterAppRelaunch = videoPlayer.getRemainingTimeThreeIntegers();
         ValueRange acceptableDeltaRange = ValueRange.of(0, uiLatencyInSeconds);
