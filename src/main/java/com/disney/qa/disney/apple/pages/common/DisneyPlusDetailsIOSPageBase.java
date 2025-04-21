@@ -543,6 +543,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_PLAY_TRAILER.getText()));
     }
 
+    public ExtendedWebElement getTrailerActionButton() {
+        return dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                BTN_TRAILER.getText()));
+    }
+
     public boolean isMovieDownloadButtonDisplayed() {
         return movieDownloadButton.isPresent();
     }
@@ -669,11 +674,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText())
                 );
-    }
-
-    public ExtendedWebElement getTrailerActionButton() {
-        return dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                BTN_TRAILER.getText()));
     }
 
     public ExtendedWebElement getSeasonSelectorButton() {
