@@ -1048,4 +1048,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         ExtendedWebElement toggleSlider = toggleSubElements.get(1);
         return toggleSlider.getLocation().getX() > toggleTrack.getLocation().getX();
     }
+
+    default String escapeSingleQuotes(String input) {
+        return input.replaceAll("'", "\\\\'");
+    }
 }
