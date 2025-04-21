@@ -176,6 +176,8 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.skipPromoIfPresent();
         Assert.assertTrue(videoPlayer.getServiceAttribution().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE));
     }
 
