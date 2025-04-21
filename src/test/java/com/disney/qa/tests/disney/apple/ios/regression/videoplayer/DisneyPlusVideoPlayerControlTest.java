@@ -164,7 +164,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        String seriesDeliBoys = "Deli Boys";
+        String seriesDeliBoys = "The Handmaid's Tale";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
         setAppToHomeScreen(getUnifiedAccount());
@@ -177,7 +177,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.skipPromoIfPresent();
         Assert.assertTrue(videoPlayer.getServiceAttribution().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE));
     }
 
