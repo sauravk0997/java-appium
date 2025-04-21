@@ -226,7 +226,8 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90928"})
     @Test(groups = {TestGroup.HOME, US})
     public void hiddenStateHeroCarousel() {
-        String recommendedForYou = CollectionConstant.getCollectionTitle(CollectionConstant.Collection.RECOMMENDED_FOR_YOU);
+        CollectionConstant.Collection recommendedForYouCollection = CollectionConstant.Collection.RECOMMENDED_FOR_YOU;
+        String recommendedForYouTitle = CollectionConstant.getCollectionTitle(recommendedForYouCollection);
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
@@ -245,8 +246,9 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         sa.assertFalse(homePage.isGlobalNavPresent(), "Global Nav menu is present");
 
         homePage.moveDown(1, 1);
-        homePage.navigateToShelf(homePage.getStaticTextByLabelContains(recommendedForYou));
-        sa.assertTrue(homePage.getStaticTextByLabel(recommendedForYou).isPresent(),
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(recommendedForYouCollection), 3);
+        sa.assertTrue(homePage.getStaticTextByLabel(recommendedForYouTitle).isPresent(),
                 "Recommended For You is not present");
 
         sa.assertAll();

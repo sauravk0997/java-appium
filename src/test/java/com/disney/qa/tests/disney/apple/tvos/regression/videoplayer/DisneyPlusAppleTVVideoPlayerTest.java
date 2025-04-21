@@ -139,6 +139,49 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Rating restriction message was not displayed");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120559"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyTrailerAction() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_trailer_kardashians_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+
+        detailsPage.getTrailerActionButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        int remainingTimeBeforeForward = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("Remaining time before forward: {}", remainingTimeBeforeForward);
+        commonPage.clickRight(2, 1, 1);
+        commonPage.clickDown(1);
+        int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("Remaining time after forward: {}", remainingTimeAfterForward);
+        Assert.assertTrue(remainingTimeBeforeForward > remainingTimeAfterForward, "Video did not progress");
+
+        // Go back to details page and start trailer
+        homePage.clickMenuTimes(1, 1);
+        if (!detailsPage.isOpened()) {
+            homePage.clickMenuTimes(1, 1);
+        }
+
+        detailsPage.getTrailerActionButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        int remainingTimeTrailerRestart = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("Remaining time after trailer restart: {}", remainingTimeTrailerRestart);
+        Assert.assertTrue(remainingTimeTrailerRestart > remainingTimeAfterForward,
+                "Trailer did not start from the beginning");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102801"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, US})
     public void verifyVODReplay() {
@@ -148,13 +191,14 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String sports = "Sports";
         String basketball = "Basketball";
         String espn = "ESPN+";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
+                .isPresent(), "ESPN brand tile was not present on home page screen");
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
 
@@ -162,15 +206,17 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 ESPN_PAGE_DID_NOT_OPEN);
 
         // Navigate to Sports and basketball sport
-        homePage.navigateToShelf(brandPage.getBrandShelf(sports));
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
-        homePage.navigateToShelf(espnPage.getReplayLabel());
-        String replayTitle = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS).get(0).getText();
+        CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
+        homePage.moveDownUntilCollectionContentIsFocused(CollectionConstant.getCollectionName(replaysCollection), 10);
+        String replayTitle = detailsPage.getAllCollectionCells(replaysCollection).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException(NO_REPLAYS_FOUND);
         }
@@ -208,8 +254,9 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
-        homePage.navigateToShelf(espnPage.getReplayLabel());
-        List<ExtendedWebElement> collectionList = detailsPage.getAllCollectionCells(CollectionConstant.Collection.SPORT_REPLAYS);
+        CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
+        homePage.moveDownUntilCollectionContentIsFocused(CollectionConstant.getCollectionName(replaysCollection), 10);
+        List<ExtendedWebElement> collectionList = detailsPage.getAllCollectionCells(replaysCollection);
         if (collectionList.size() > 0) {
             replayTitle = collectionList.get(0).getText();
         }

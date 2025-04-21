@@ -66,7 +66,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     @Override
     public String getTitleLabel() {
         LOGGER.info("Pause/play player to see title..");
-        clickSelect();
+        clickPlay();
         return titleLabel.getText();
     }
 
