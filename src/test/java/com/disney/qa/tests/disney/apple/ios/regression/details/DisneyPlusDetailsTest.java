@@ -727,7 +727,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.verifyRatingsInDetailsFeaturedArea(TV_PG.getContentRating(), sa);
         detailsPage.validateRatingsInDetailsTab(TV_PG.getContentRating(), sa);
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_grimcutty_detailspage_deeplink"));
         detailsPage.verifyRatingsInDetailsFeaturedArea(RatingConstant.Rating.RESTRICTED.getContentRating(), sa);
         detailsPage.validateRatingsInDetailsTab(RatingConstant.Rating.RESTRICTED.getContentRating(), sa);
     }
