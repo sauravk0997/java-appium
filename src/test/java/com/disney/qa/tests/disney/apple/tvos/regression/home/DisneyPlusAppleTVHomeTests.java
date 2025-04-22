@@ -10,6 +10,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -262,64 +263,40 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.HOME, US})
     public void verifyStandardPromptEpisodicSeries() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
         String streamsNonStopPlaylists =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
 
-     //   logIn(getUnifiedAccount());
-     //   homePage.waitForHomePageToOpen();
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 6);
 
-        // Get first series item
-        Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(10);
-        homePage.moveRightUntilElementIsFocused(
-                homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
-                        channelItemWithEpisodicInfo.getVisuals().getTitle()),
-                10);
-     /*   sa.assertTrue(homePage.getStaticTextByLabelContains(channelItemWithEpisodicInfo.getVisuals().getEpisodeTitle()).isPresent(),
-                "Series episode title is not present");
-        sa.assertTrue(homePage.getStaticTextByLabelContains("S" + channelItemWithEpisodicInfo.getVisuals().getSeasonNumber()).isPresent(),
-                "Series episode season number is not present");
-        sa.assertTrue(homePage.getStaticTextByLabelContains("E" + channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber()).isPresent(),
-                "Series episode number is not present");
-        sa.assertTrue(homePage.isRatingPresent(channelItemWithEpisodicInfo.getVisuals().getRatingInfo().getRating().getText()),
-                "Series episode rating is not present");
-      //  sa.assertFalse(homePage.isRatingPresent(channelItemWithEpisodicInfo.getVisuals().info()),
-        //        "Release year is present");
+        try {
+            // Get first series item
+            Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(10);
+            homePage.moveRightUntilElementIsFocused(
+                    homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                            channelItemWithEpisodicInfo.getVisuals().getTitle()), 10);
 
-      */
-        //    sa.assertTrue(homePage.channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber());
-        String expectedEpisodicSeriesInfo = getEpisodicSeriesMetadataInfo(channelItemWithEpisodicInfo).get(0);
-     /*   Assert.assertTrue(verifyContentMetadataInfo(metadataFromUI, expectedEpisodicSeriesInfo),
-                "Episodic series info not displayed as expected");
-        sa.assertAll();
+            String rating = channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+            String seasonNumber = channelItemWithEpisodicInfo.getVisuals().getSeasonNumber();
+            String episodeNumber = channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber();
+            String episodeTitle = channelItemWithEpisodicInfo.getVisuals().getEpisodeTitle();
+            String metadataEpisode = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
+            sa.assertTrue(homePage.getElementTypeCellByLabel(rating).isPresent(), "Rating is not present in cell episode");
+            sa.assertTrue(homePage.getStaticTextByLabel(metadataEpisode).isPresent(),
+                    "Episode metadata is not present");
 
-      */
-    }
-
-    public boolean verifyContentMetadataInfo(List<String> metadataFromUI, String expectedMetadata) {
-        for (String metadataInfo : metadataFromUI) {
-            if (metadataInfo.trim().equalsIgnoreCase(expectedMetadata)) {
-                LOGGER.info("Metadata is displayed as expected: {}", expectedMetadata);
-                return true;
+            if (channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getGenres() != null) {
+                sa.assertFalse(homePage.getStaticTextByLabel(
+                                channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getGenres().getLabel()).isPresent(),
+                        "Genre is present");
             }
+        } catch(SkipException e) {
+            throw new SkipException(e.getMessage());
         }
-        return false;
-    }
-    private List<String> getEpisodicSeriesMetadataInfo(Item itemEpisode) {
-        List<String> episodicSeriesMeta =  new ArrayList<>();
-        String seasonNumber = itemEpisode.getVisuals().getSeasonNumber();
-        String episodeNumber = itemEpisode.getVisuals().getEpisodeNumber();
-        String episodeTitle = itemEpisode.getVisuals().getEpisodeTitle();
-        String rating = itemEpisode.getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
-        episodicSeriesMeta.add(String.format("%s  S%s:E%s %s", rating, seasonNumber, episodeNumber,
-                episodeTitle));
-        if (episodicSeriesMeta.isEmpty()) {
-            throw new IndexOutOfBoundsException("Episodic series metadata info list is empty");
-        }
-        return episodicSeriesMeta;
+        sa.assertAll();
     }
 
     private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
