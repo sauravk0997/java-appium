@@ -283,7 +283,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickDown();
-        Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(nextEpisodeTitle),
+        Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
                 "Playback is not initiated for episode expected");
     }
 }
