@@ -175,8 +175,10 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.MORE_MENU, JP})
     public void verifyAddProfilePageUI() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        String offInJP = "オフ";
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(
@@ -188,15 +190,16 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         handleAlert();
         moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
+        whoseWatchingPage.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
-        sa.assertTrue(addProfile.isAddProfileHeaderPresent(), "Add Profile header was not found");
+        sa.assertTrue(addProfile.isWhoIsWatchingAddProfileHeaderPresent(), "Add Profile header was not found");
         sa.assertTrue(addProfile.isProfileNameFieldPresent(), "Profile Name field was not found");
-        sa.assertTrue(addProfile.isKidsProfileToggleCellPresent(), " Kids profile toogle was not found");
-        sa.assertTrue(addProfile.getKidsProfileToggleCellValue().equalsIgnoreCase("off"), "Kid profile toogle was not turned off by default");
+        sa.assertTrue(addProfile.isKidsProfileToggleCellPresent(), " Kids profile toggle was not found");
+        sa.assertTrue(addProfile.getKidsProfileToggleCellValue().equalsIgnoreCase(offInJP),
+                "Kid profile toggle was not turned off by default");
         sa.assertTrue(addProfile.isSaveBtnPresent(), "Save button was not found");
         sa.assertTrue(addProfile.isCancelButtonPresent(), "Cancel button was not found");
         sa.assertFalse(addProfile.isDateOfBirthFieldPresent(), "Date Of Birth field was found");
