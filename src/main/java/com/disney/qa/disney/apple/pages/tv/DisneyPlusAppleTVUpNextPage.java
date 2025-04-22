@@ -32,6 +32,9 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
     @ExtendedFindBy(accessibilityId = "upNextExtraActionButton")
     public ExtendedWebElement upNextExtraActionButton;
 
+    @ExtendedFindBy(accessibilityId = "upNextPlayButton")
+    private ExtendedWebElement upNextPlayButton;
+
     //FUNCTIONS
     public DisneyPlusAppleTVUpNextPage(WebDriver driver) {
         super(driver);
@@ -40,4 +43,8 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
     public boolean isUpNextExtraActionButtonPresent() { return upNextExtraActionButton.isElementPresent(); }
 
     public void clickUpNextExtraActionButton() { upNextExtraActionButton.clickIfPresent(); }
+
+    public ExtendedWebElement getUpNextPlayButton() {
+        return upNextPlayButton;
+    }
 }
