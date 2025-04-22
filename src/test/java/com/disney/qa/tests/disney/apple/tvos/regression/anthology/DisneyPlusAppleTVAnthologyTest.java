@@ -239,7 +239,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         IntStream.range(0, dwtsDetailsPageContainers.size()).forEach(i -> {
             String expectedTabBarTitleName = dwtsDetailsPageContainers.get(i).getVisuals().getName();
             if (expectedTabBarTitleName == null || expectedTabBarTitleName.isEmpty()) {
-                throw new RuntimeException("TabBar title not found in API");
+                throw new SkipException("Not able to get the TabBar title values from API");
             }
             Assert.assertTrue(details.getTypeButtonByLabel(expectedTabBarTitleName).isPresent(),
                     expectedTabBarTitleName + " tabBar title is not displayed");
