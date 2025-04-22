@@ -56,6 +56,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.clickMoviesTab();
         searchPage.selectRandomTitle();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         String contentTitle = detailsPage.getMediaTitle();
 
         //Add to watchlist
