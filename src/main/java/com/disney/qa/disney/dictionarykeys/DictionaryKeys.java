@@ -508,7 +508,7 @@ public enum DictionaryKeys {
     WIFI_SAVE_DATA("settings_datausage_tier3_header"),
     WIFI_SAVE_DATA_BODY("settings_datausage_tier3_body"),
     WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message"),
-    WHOS_WATCHING_ADD_PROFILE("whoswatching_addprofile"),;
+    WHOS_WATCHING_ADD_PROFILE("whoswatching_addprofile");
 
     private final String dictionaryKey;
 
