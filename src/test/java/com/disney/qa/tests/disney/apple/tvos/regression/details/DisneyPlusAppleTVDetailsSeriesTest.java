@@ -33,6 +33,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String CONTENT_ERROR_MESSAGE = "Content is not found";
     private static final String SUGGESTED = "SUGGESTED";
+    private static final String WATCHLIST_ICON_NOT_PRESENT = "Watchlist plus icon is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -405,7 +406,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_BTN_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
-                "Watchlist plus icon is not displayed");
+                WATCHLIST_ICON_NOT_PRESENT);
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "Watchlist checkmark icon is not displayed");
@@ -413,6 +414,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         // Click again and verify plus icon
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
-                "Watchlist plus icon is not displayed");
+                WATCHLIST_ICON_NOT_PRESENT);
     }
 }
