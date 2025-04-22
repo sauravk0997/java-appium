@@ -19,6 +19,9 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Restart'`]")
     private ExtendedWebElement restartBtn;
 
+    @ExtendedFindBy(accessibilityId = "seekTimeLabel")
+    private ExtendedWebElement seekTimeLabel;
+
     public DisneyPlusAppleTVVideoPlayerPage(WebDriver driver) {
         super(driver);
     }
