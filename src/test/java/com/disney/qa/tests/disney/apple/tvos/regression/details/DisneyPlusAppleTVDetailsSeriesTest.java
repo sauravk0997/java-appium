@@ -24,6 +24,7 @@ import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
@@ -425,9 +426,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
-        commonPage.clickRight(4, 2, 1);
-        detailsPage.clickPlay();
-        commonPage.clickMenu();
+        commonPage.clickRight(3, 2, 1);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), THREE_SEC_TIMEOUT);
+        videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.getProgressContainer().isPresent(),
                 "Progress container view is not present");
@@ -438,16 +439,14 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
         commonPage.clickRight(2,2,1);
-        detailsPage.clickPlay();
-        commonPage.clickMenu();
+        videoPlayer.clickBack();
         Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
                 SCRUB_PERCENTAGE_SIXTY, latency), bookmarkErrorMessage);
 
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
         commonPage.clickRight(2,2,1);
-        detailsPage.clickPlay();
-        commonPage.clickMenu();
+        videoPlayer.clickBack();
         Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
                 SCRUB_PERCENTAGE_HUNDRED, latency), bookmarkErrorMessage);
     }
