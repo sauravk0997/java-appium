@@ -295,7 +295,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
      /*   Assert.assertTrue(verifyContentMetadataInfo(metadataFromUI, expectedEpisodicSeriesInfo),
                 "Episodic series info not displayed as expected");
         sa.assertAll();
-        
+
       */
     }
 
