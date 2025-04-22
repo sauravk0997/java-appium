@@ -178,7 +178,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.clickSelect();
         addProfilePage.enterProfileName(SECONDARY_PROFILE);
         addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-//        addProfilePage.moveDownUntilElementIsFocused(addProfilePage.getKeyboardDoneButton(), 6);
         addProfilePage.clickSelect();
         addProfilePage.getEnterProfileNameContinueButton().click();
 
