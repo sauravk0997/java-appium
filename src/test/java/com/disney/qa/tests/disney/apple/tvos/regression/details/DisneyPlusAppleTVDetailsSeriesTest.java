@@ -299,4 +299,42 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                         remainingTimeAfterForward, remainingTimeAfterAppRelaunch,
                         acceptableDeltaRange.getMinimum(), acceptableDeltaRange.getMaximum()));
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68346"})
+    @Test(groups = {TestGroup.SERIES, TestGroup.SMOKE, US})
+    public void verifySeriesUpNextPlayButtonBehavior() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        String nextEpisodeTitle = "";
+        logIn(getUnifiedAccount());
+
+        // Get second episode title
+        try {
+            ExploreContent seriesApiContent =
+                    getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_entity"),
+                            DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+            nextEpisodeTitle =
+                    seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, series title was not found" + e.getMessage());
+        }
+
+        // Play first episode
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        // Scrub to the end and start next episode
+        commonPage.clickRight(6, 1, 1);
+        videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
+        Assert.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next button is not present");
+        upNextPage.getUpNextPlayButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickDown();
+        Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
+                "Playback is not initiated for expected episode");
+    }
 }
