@@ -287,6 +287,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             sa.assertTrue(homePage.getStaticTextByLabelContains(metadataEpisode).isPresent(),
                     "Episode metadata is not present");
 
+            // Verify genre info and if exists assert that is not present
             if (channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getGenres() != null) {
                 sa.assertFalse(homePage.getStaticTextByLabel(
                                 channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getGenres().getLabel()).isPresent(),
