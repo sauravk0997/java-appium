@@ -259,6 +259,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         String nextEpisodeTitle = "";
         logIn(getUnifiedAccount());
 
@@ -280,9 +281,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForVideoToStart();
         // Scrub to the end and start next episode
         commonPage.clickRight(6, 1, 1);
-        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getUpNextPlayButton());
-        Assert.assertTrue(videoPlayer.getUpNextPlayButton().isPresent(), "Up Next button is not present");
-        videoPlayer.getUpNextPlayButton().click();
+        videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
+        Assert.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next button is not present");
+        upNextPage.getUpNextPlayButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickDown();

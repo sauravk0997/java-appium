@@ -19,9 +19,6 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Restart'`]")
     private ExtendedWebElement restartBtn;
 
-    @ExtendedFindBy(accessibilityId = "upNextPlayButton")
-    private ExtendedWebElement upNextPlayButton;
-
     public DisneyPlusAppleTVVideoPlayerPage(WebDriver driver) {
         super(driver);
     }
@@ -101,9 +98,5 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         int thumbnailRightXCoordinate = thumbnailView.getLocation().getX() + thumbnailView.getSize().getWidth();
 
         return  seekBarRightXCoordinate == thumbnailRightXCoordinate;
-    }
-
-    public ExtendedWebElement getUpNextPlayButton() {
-        return upNextPlayButton;
     }
 }
