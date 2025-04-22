@@ -57,7 +57,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement rewindButton;
     @ExtendedFindBy(accessibilityId = "ucp.fastForward")
     private ExtendedWebElement forwardButton;
-    @FindBy(xpath = "//*[@name='ucp.playerView']/following-sibling::*//XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'ucp.playerView'$]/" +
+            "**/XCUIElementTypeImage[`name == 'loader'`]")
     private ExtendedWebElement ucpLoadSpinner;
     @ExtendedFindBy(accessibilityId = "audioSubtitleMenuButton")
     private ExtendedWebElement audioSubtitleMenuButton;
@@ -261,13 +262,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Checking for loading spinner...");
         try {
             fluentWait(getDriver(), timeout, polling, "Loading spinner is not visible")
-                    .until(it -> ucpLoadSpinner.isElementPresent());
+                    .until(it -> ucpLoadSpinner.isElementPresent(ONE_SEC_TIMEOUT));
         } catch (TimeoutException timeoutException) {
             LOGGER.info("Loading spinner not detected and skipping wait");
         }
         LOGGER.info("Loading spinner detected and waiting for animation to complete");
         fluentWait(getDriver(), timeout, polling, "Loading spinner is still visible")
-                .until(it -> ucpLoadSpinner.isElementNotPresent(timeout));
+                .until(it -> !ucpLoadSpinner.isElementPresent(ONE_SEC_TIMEOUT));
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 

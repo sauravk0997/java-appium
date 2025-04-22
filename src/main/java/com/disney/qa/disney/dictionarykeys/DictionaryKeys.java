@@ -411,6 +411,7 @@ public enum DictionaryKeys {
     RESTART_TITLE("restart_title"),
     SDK_ERROR_PROFILE_PIN_MISSING("sdk_error_profilepinmissing"),
     SEARCH_PLACEHOLDER("search_placeholder"),
+    SEASON_EPISODE_TITLE_PLACEHOLDER("season_episode_title_placeholder"),
     SECURE_PROFILE_PIN_ACTION("secure_profile_pin_action"),
     SECURE_PROFILE_PIN_DESCRIPTION("add_profile_secure_profile_pin_description"),
     SECURE_PROFILE_PIN_REMINDER("add_profile_secure_profile_pin_anytime_reminder"),
@@ -506,7 +507,8 @@ public enum DictionaryKeys {
     WIFI_REQUIRED_TITLE("wifi_required_title"),
     WIFI_SAVE_DATA("settings_datausage_tier3_header"),
     WIFI_SAVE_DATA_BODY("settings_datausage_tier3_body"),
-    WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message");
+    WIFI_STREAMING_ONLY_MESSAGE("wifi_streaming_only_message"),
+    WHOS_WATCHING_ADD_PROFILE("whoswatching_addprofile");
 
     private final String dictionaryKey;
 

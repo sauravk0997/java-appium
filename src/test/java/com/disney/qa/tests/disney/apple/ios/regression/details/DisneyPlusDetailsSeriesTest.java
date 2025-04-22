@@ -372,9 +372,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
 
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            detailsPage.swipeUp(1500);
-        }
+        detailsPage.swipePageTillElementTappable(detailsPage.getEpisodesTab(), 1, null, Direction.UP, 1);
         sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
         detailsPage.getEpisodesTab().click();
         sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
