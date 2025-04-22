@@ -14,9 +14,11 @@ import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST;
 
@@ -39,6 +41,8 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentSummaryView\"`]/**/XCUIElementTypeStaticText[1]")
+    protected ExtendedWebElement ratingAudioVideoFormatLabel;
 
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
@@ -222,5 +226,12 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public ExtendedWebElement getAddToWatchlistText() {
         return getTypeButtonContainsLabel(getAppleTVLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_WATCHLIST.getText()));
+    }
+
+    public List<String> getAudioVideoFormatValue(){
+        List<String> ratingAudioVideoFormat = List.of(ratingAudioVideoFormatLabel.getText().split(","));
+        List<String> audioVideoFormatLabel = new ArrayList<>();
+        IntStream.range(1, ratingAudioVideoFormat.size()).forEach(i -> audioVideoFormatLabel.add(ratingAudioVideoFormat.get(i)));
+        return audioVideoFormatLabel;
     }
 }

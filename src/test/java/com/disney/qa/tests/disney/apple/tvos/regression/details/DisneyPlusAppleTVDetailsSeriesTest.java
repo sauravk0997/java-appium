@@ -255,7 +255,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64879"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
-    public void verifySeriesDetailsUI() {
+    public void verifySeriesDetailsPageUI() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -282,14 +282,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
-            ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge -> {
-                if (badge.equalsIgnoreCase(DOLBY_VISION)) {
-                    detailsPage.isDolbyVisionPresentOrNot(sa);
-                } else {
-                    sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
-                            String.format("Audio video badge %s is not present on details page featured area", badge));
-                }
-            });
+            sa.assertTrue(((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).contains(detailsPage.getAudioVideoFormatValue()),
+                    "Expected Audio and video badge not displayed");
         }
         //Verify if ratings value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RATING)) {
