@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.explore.response.ExploreSetResponse;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -13,6 +14,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -254,6 +256,70 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertEquals(liveEventModal.getThumbnailAspectRatio(), 1.78,
                 "Thumbnail aspect ratio wasn't the standard (1.78)");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118742"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyStandardPromptEpisodicSeries() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        String streamsNonStopPlaylists =
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
+
+     //   logIn(getUnifiedAccount());
+     //   homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 6);
+
+        // Get first series item
+        Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(10);
+        homePage.moveRightUntilElementIsFocused(
+                homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                        channelItemWithEpisodicInfo.getVisuals().getTitle()),
+                10);
+     /*   sa.assertTrue(homePage.getStaticTextByLabelContains(channelItemWithEpisodicInfo.getVisuals().getEpisodeTitle()).isPresent(),
+                "Series episode title is not present");
+        sa.assertTrue(homePage.getStaticTextByLabelContains("S" + channelItemWithEpisodicInfo.getVisuals().getSeasonNumber()).isPresent(),
+                "Series episode season number is not present");
+        sa.assertTrue(homePage.getStaticTextByLabelContains("E" + channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber()).isPresent(),
+                "Series episode number is not present");
+        sa.assertTrue(homePage.isRatingPresent(channelItemWithEpisodicInfo.getVisuals().getRatingInfo().getRating().getText()),
+                "Series episode rating is not present");
+      //  sa.assertFalse(homePage.isRatingPresent(channelItemWithEpisodicInfo.getVisuals().info()),
+        //        "Release year is present");
+
+      */
+        //    sa.assertTrue(homePage.channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber());
+        String expectedEpisodicSeriesInfo = getEpisodicSeriesMetadataInfo(channelItemWithEpisodicInfo).get(0);
+     /*   Assert.assertTrue(verifyContentMetadataInfo(metadataFromUI, expectedEpisodicSeriesInfo),
+                "Episodic series info not displayed as expected");
+        sa.assertAll();
+        
+      */
+    }
+
+    public boolean verifyContentMetadataInfo(List<String> metadataFromUI, String expectedMetadata) {
+        for (String metadataInfo : metadataFromUI) {
+            if (metadataInfo.trim().equalsIgnoreCase(expectedMetadata)) {
+                LOGGER.info("Metadata is displayed as expected: {}", expectedMetadata);
+                return true;
+            }
+        }
+        return false;
+    }
+    private List<String> getEpisodicSeriesMetadataInfo(Item itemEpisode) {
+        List<String> episodicSeriesMeta =  new ArrayList<>();
+        String seasonNumber = itemEpisode.getVisuals().getSeasonNumber();
+        String episodeNumber = itemEpisode.getVisuals().getEpisodeNumber();
+        String episodeTitle = itemEpisode.getVisuals().getEpisodeTitle();
+        String rating = itemEpisode.getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+        episodicSeriesMeta.add(String.format("%s  S%s:E%s %s", rating, seasonNumber, episodeNumber,
+                episodeTitle));
+        if (episodicSeriesMeta.isEmpty()) {
+            throw new IndexOutOfBoundsException("Episodic series metadata info list is empty");
+        }
+        return episodicSeriesMeta;
     }
 
     private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
