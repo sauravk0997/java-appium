@@ -57,7 +57,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement rewindButton;
     @ExtendedFindBy(accessibilityId = "ucp.fastForward")
     private ExtendedWebElement forwardButton;
-    @FindBy(xpath = "//*[@name='ucp.playerView']/following-sibling::*//XCUIElementTypeImage")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'ucp.playerView'$]/" +
+            "**/XCUIElementTypeImage[`name == 'loader'`]")
     private ExtendedWebElement ucpLoadSpinner;
     @ExtendedFindBy(accessibilityId = "audioSubtitleMenuButton")
     private ExtendedWebElement audioSubtitleMenuButton;
