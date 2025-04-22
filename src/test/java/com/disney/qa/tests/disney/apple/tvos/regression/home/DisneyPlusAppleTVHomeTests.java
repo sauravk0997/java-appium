@@ -293,7 +293,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                         "Genre is present");
             }
         } catch(SkipException e) {
-            throw new SkipException(e.getMessage());
+            throw new SkipException("Series episode stream expected is not available" + e.getMessage());
         }
         sa.assertAll();
     }
