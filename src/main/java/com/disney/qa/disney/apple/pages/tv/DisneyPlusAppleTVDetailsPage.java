@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_DETAILS_RESTART;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -222,6 +223,11 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public ExtendedWebElement getAddToWatchlistText() {
         return getTypeButtonContainsLabel(getAppleTVLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DETAILS_WATCHLIST.getText()));
+    }
+
+    public ExtendedWebElement getRestartButton() {
+        return getTypeButtonByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_DETAILS_RESTART.getText()));
     }
 
     public List<ExtendedWebElement> getTabBarTitleInfo() {
