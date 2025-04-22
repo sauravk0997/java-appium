@@ -346,12 +346,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     public void verifyEpisodeTabProgressBarUpdates() {
         int latency = 20;
         String episodeTitle;
+        String bookmarkErrorMessage = "Bookmark not indicating correct position";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
 
-        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_entity"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         try {
             episodeTitle = seriesApiContent.getSeasons()
@@ -365,11 +366,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         }
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
-        detailsPage.waitForDetailsPageToOpen();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-
-        detailsPage.clickSelect();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         commonPage.clickRight(4, 2, 1);
         detailsPage.clickPlay();
@@ -379,7 +377,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Progress container view is not present");
         commonPage.clickDown();
         Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
-                SCRUB_PERCENTAGE_FIFTY, latency));
+                SCRUB_PERCENTAGE_FIFTY, latency), bookmarkErrorMessage);
 
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
@@ -387,7 +385,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.clickPlay();
         commonPage.clickMenu();
         Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
-                SCRUB_PERCENTAGE_SIXTY, latency));
+                SCRUB_PERCENTAGE_SIXTY, latency), bookmarkErrorMessage);
 
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
@@ -395,6 +393,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.clickPlay();
         commonPage.clickMenu();
         Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
-                SCRUB_PERCENTAGE_HUNDRED, latency));
+                SCRUB_PERCENTAGE_HUNDRED, latency), bookmarkErrorMessage);
     }
 }
