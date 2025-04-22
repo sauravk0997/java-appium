@@ -409,5 +409,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "Watchlist checkmark icon is not displayed");
+
+        // Click again and verify plus icon
+        detailsPage.getWatchlistButton().click();
+        Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
+                "Watchlist plus icon is not displayed");
     }
 }
