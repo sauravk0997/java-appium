@@ -281,7 +281,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         // Scrub to the end and start next episode
         commonPage.clickRight(6, 1, 1);
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getUpNextPlayButton());
-        videoPlayer.getUpNextPlayButton().isPresent();
+        Assert.assertTrue(videoPlayer.getUpNextPlayButton().isPresent(), "Up Next button is not present");
         videoPlayer.getUpNextPlayButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
