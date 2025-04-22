@@ -201,6 +201,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return serviceAttribution;
     }
 
+    public ExtendedWebElement getSubtitleLabelElement() {
+        return subtitleLabel;
+    }
+
     public boolean isServiceAttributionLabelVisible() {
         try {
             return fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
@@ -703,10 +707,11 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return adTimeBadge.isPresent();
     }
 
-    public void waitForAdToCompleteIfPresent(int polling) {
+    public void waitForAdToCompleteIfPresent(int polling, int bufferTime) {
         if (isAdBadgeLabelPresent()) {
             int remainingTime = getAdRemainingTimeInSeconds();
-            fluentWait(getDriver(), remainingTime, polling, "Ad did not end after " + remainingTime)
+            int waitTime = remainingTime + bufferTime;
+            fluentWait(getDriver(), waitTime, polling, "Ad did not end after " + waitTime)
                     .until(it -> getAdBadge().isElementNotPresent(ONE_SEC_TIMEOUT));
         } else {
             LOGGER.info("No ad time badge detected, continuing with test..");
