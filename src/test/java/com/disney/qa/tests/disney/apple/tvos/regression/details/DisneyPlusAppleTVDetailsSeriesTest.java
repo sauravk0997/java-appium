@@ -259,12 +259,18 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        String entityID = "entity-b3563311-3e65-42d5-921c-9c9c3a43cb0f";
+        String nextEpisodeTitle = "";
         logIn(getUnifiedAccount());
 
-        ExploreContent seriesApiContent = getSeriesApi(entityID, DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        String nextEpisodeTitle =
-                seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+        try {
+            ExploreContent seriesApiContent =
+                    getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_entity"),
+                            DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+            nextEpisodeTitle =
+                    seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, series title was not found" + e.getMessage());
+        }
 
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
@@ -278,6 +284,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickDown();
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(nextEpisodeTitle),
-                "Playback is not initiated for content expected");
+                "Playback is not initiated for episode expected");
     }
 }
