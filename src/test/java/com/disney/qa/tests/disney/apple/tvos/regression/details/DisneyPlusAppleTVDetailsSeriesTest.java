@@ -22,8 +22,7 @@ import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
-import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
@@ -408,6 +407,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
         videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
         commonPage.clickRight(5, 2, 1);
         videoPlayer.clickPlay();
         int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
@@ -425,6 +425,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         // Pause playback. Validate new remaining time is greater than previous remaining time and
         // current elapsed time is in the initial seconds of playback
         videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
         videoPlayer.clickPlay();
         int remainingTimeAfterRestart = videoPlayer.getRemainingTimeThreeIntegers();
         int elapsedPlaybackTime = videoPlayer.getCurrentTime();
