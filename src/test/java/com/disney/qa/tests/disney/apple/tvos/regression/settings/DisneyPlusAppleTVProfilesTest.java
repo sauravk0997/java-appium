@@ -10,7 +10,7 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
-import org.testng.Assert;
+import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -430,5 +430,34 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         Assert.assertTrue(whoIsWatchingPage.isProfileIconPresent(TERTIARY_PROFILE),
                 PROFILE_ICON_CELL_NOT_DISPLAYED + TERTIARY_PROFILE);
+    }
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-99289"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyLockedProfilePINEntry() {
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVPinPage pinPage = new DisneyPlusAppleTVPinPage(getDriver());
+
+        String incorrectPIN = "1112";
+
+        try {
+            getUnifiedAccountApi().updateProfilePin(getUnifiedAccount(),
+                    getUnifiedAccount().getProfileId(DEFAULT_PROFILE),
+                    PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+
+        logInWithoutHomeCheck(getUnifiedAccount());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.clickPinProtectedProfile(DEFAULT_PROFILE);
+
+        pinPage.enterProfilePin(incorrectPIN);
+        Assert.assertTrue(pinPage.getProfilePinInvalidErrorMessage().isPresent(),
+                "Incorrect Profile pin error message was not displayed");
+
+        pinPage.enterProfilePin(PROFILE_PIN);
+        homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 }
