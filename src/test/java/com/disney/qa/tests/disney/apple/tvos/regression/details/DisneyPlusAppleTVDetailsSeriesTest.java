@@ -17,10 +17,13 @@ import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.time.temporal.ValueRange;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
+import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
@@ -254,6 +257,88 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickDown(2);
         Assert.assertTrue(videoPlayer.getSubtitleLabelElement().getText().contains(firstEpisodeTitle),
                 "Video Player subtitle doesn't contains expected episode title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64887"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageContinueButtonBehavior() {
+        int uiLatencyInSeconds = 10;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        commonPage.clickRight(3, 2, 1);
+        videoPlayer.clickPlay();
+        int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), TEN_SEC_TIMEOUT);
+
+        // Restart app, move to 'Continue Watching' collection, select bookmarked series and resume episode playback
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        homePage.waitForHomePageToOpen();
+        videoPlayer.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), 20);
+        videoPlayer.clickSelect();
+        detailsPage.clickContinueButton();
+
+        // Pause playback and validate elapsed time difference using a range to avoid problems due to latency
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.clickPlay();
+        int remainingTimeAfterAppRelaunch = videoPlayer.getRemainingTimeThreeIntegers();
+        ValueRange acceptableDeltaRange = ValueRange.of(0, uiLatencyInSeconds);
+        Assert.assertTrue(
+                acceptableDeltaRange.isValidIntValue(
+                        Math.abs(remainingTimeAfterAppRelaunch - remainingTimeAfterForward)),
+                String.format("The difference between the remaining time after fast-forwarding (%d seconds) and " +
+                                "the remaining time after the relaunch and resume of content (%d seconds) " +
+                                "is not between the expected range (%d-%d seconds)",
+                        remainingTimeAfterForward, remainingTimeAfterAppRelaunch,
+                        acceptableDeltaRange.getMinimum(), acceptableDeltaRange.getMaximum()));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-68346"})
+    @Test(groups = {TestGroup.SERIES, TestGroup.SMOKE, US})
+    public void verifySeriesUpNextPlayButtonBehavior() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        String nextEpisodeTitle = "";
+        logIn(getUnifiedAccount());
+
+        // Get second episode title
+        try {
+            ExploreContent seriesApiContent =
+                    getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_entity"),
+                            DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+            nextEpisodeTitle =
+                    seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, series title was not found" + e.getMessage());
+        }
+
+        // Play first episode
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        // Scrub to the end and start next episode
+        commonPage.clickRight(6, 1, 1);
+        videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
+        Assert.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next button is not present");
+        upNextPage.getUpNextPlayButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickDown();
+        Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
+                "Playback is not initiated for expected episode");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64956"})
