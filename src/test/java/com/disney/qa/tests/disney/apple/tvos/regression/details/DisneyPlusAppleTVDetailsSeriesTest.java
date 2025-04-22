@@ -277,12 +277,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
             throw new SkipException("Skipping test, Episode title and description not found" + e.getMessage());
         }
 
-        String episodeTitleWithPlaceHolder = getLocalizationUtils().formatPlaceholderString(
-                getLocalizationUtils().getDictionaryItem(
-                        DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.SEASON_EPISODE_TITLE_PLACEHOLDER.getText()),
-                Map.of("S", 1, "E", 1, "TITLE", episodeTitle));
-
         //Populate continue watching collection
         launchDeeplink(seriesDeeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -301,7 +295,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         homePage.waitForHomePageToOpen();
         launchDeeplink(seriesDeeplink);
         detailsPage.waitForDetailsPageToOpen();
-        sa.assertTrue(detailsPage.getStaticTextByLabel(episodeTitleWithPlaceHolder).isPresent(),
+        sa.assertTrue(detailsPage.getStaticTextByLabel(
+                        detailsPage.getEpisodeTitleWithSeasonAndEpisodeNumber(episodeTitle)).isPresent(),
                 "Bookmark episode title not displayed");
         sa.assertTrue(detailsPage.getStaticTextByLabel(episodeBriefDesc).isPresent(),
                 "Bookmark episode description not displayed");
