@@ -282,6 +282,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             String episodeNumber = channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber();
             String episodeTitle = channelItemWithEpisodicInfo.getVisuals().getEpisodeTitle();
             String metadataEpisode = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
+            LOGGER.info("Metadata episode {}", metadataEpisode);
             sa.assertTrue(homePage.getElementTypeCellByLabel(rating).isPresent(), "Rating is not present in cell episode");
             sa.assertTrue(homePage.getStaticTextByLabel(metadataEpisode).isPresent(),
                     "Episode metadata is not present");
