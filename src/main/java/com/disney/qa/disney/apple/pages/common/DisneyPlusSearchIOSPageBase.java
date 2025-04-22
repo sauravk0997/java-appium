@@ -271,6 +271,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getTitleContainer(String titleName, String titleRating) {
-        return searchResultCellwithTitleAndRatingValues.format(titleName, titleRating);
+        return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating);
     }
 }
