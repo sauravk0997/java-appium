@@ -393,4 +393,48 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_BTN_NOT_DISPLAYED);
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64889"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageRestartButtonBehavior() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        commonPage.clickRight(5, 2, 1);
+        videoPlayer.clickPlay();
+        int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), TEN_SEC_TIMEOUT);
+
+        // Restart app, move to 'Continue Watching' collection, select bookmarked series and restart episode playback
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        homePage.waitForHomePageToOpen();
+        videoPlayer.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), 20);
+        videoPlayer.clickSelect();
+        detailsPage.getRestartButton().click();
+
+        // Pause playback. Validate new remaining time is greater than previous remaining time and
+        // current elapsed time is in the initial seconds of playback
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.clickPlay();
+        int remainingTimeAfterRestart = videoPlayer.getRemainingTimeThreeIntegers();
+        int elapsedPlaybackTime = videoPlayer.getCurrentTime();
+        Assert.assertTrue(remainingTimeAfterRestart > remainingTimeAfterForward,
+                String.format("Remaining time after restart (%d seconds) is not greater than " +
+                        "original remaining time (%d seconds)", remainingTimeAfterRestart, remainingTimeAfterForward));
+        ValueRange playbackStartRange = ValueRange.of(0, 30);
+        Assert.assertTrue(playbackStartRange.isValidIntValue(elapsedPlaybackTime),
+                String.format("Current elapsed time (%d seconds) is not between the expected range (%d-%d seconds)" +
+                        "of the beginning of the playback", elapsedPlaybackTime,
+                        playbackStartRange.getMinimum(), playbackStartRange.getMaximum()));
+    }
 }
