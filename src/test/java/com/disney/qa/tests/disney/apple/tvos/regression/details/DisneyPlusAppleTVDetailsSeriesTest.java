@@ -271,8 +271,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         commonPage.clickRight(6, 1, 1);
-        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getNextEpisodeButton());
-        videoPlayer.getNextEpisodeButton().isPresent();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getUpNextPlayButton());
+        videoPlayer.getUpNextPlayButton().isPresent();
         videoPlayer.getUpNextPlayButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().contains(nextEpisodeTitle),
