@@ -282,7 +282,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
-            sa.assertTrue(((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).contains(detailsPage.getAudioVideoFormatValue()),
+            sa.assertTrue(((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).containsAll(detailsPage.getAudioVideoFormatValue()),
                     "Expected Audio and video badge not displayed");
         }
         //Verify if ratings value matches with api, if api has returned any value
