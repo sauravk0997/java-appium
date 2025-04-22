@@ -91,9 +91,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label CONTAINS " +
             "'%s'$]/**/XCUIElementTypeButton")
     private ExtendedWebElement feedOptionCheckmark;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'ucp.playerView'$]/" +
-            "**/XCUIElementTypeImage[`name == 'loader'`]")
-    private ExtendedWebElement loaderImage;
 
 
 
