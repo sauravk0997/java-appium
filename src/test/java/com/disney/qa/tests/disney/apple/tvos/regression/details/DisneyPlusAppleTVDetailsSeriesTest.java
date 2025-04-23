@@ -22,8 +22,7 @@ import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
-import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
@@ -416,6 +415,53 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
                 WATCHLIST_ICON_NOT_PRESENT);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64889"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageRestartButtonBehavior() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
+        commonPage.clickRight(5, 2, 1);
+        videoPlayer.clickPlay();
+        int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), TEN_SEC_TIMEOUT);
+
+        // Restart app, move to 'Continue Watching' collection, select bookmarked series and restart episode playback
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), 20);
+        homePage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.getRestartButton().click();
+
+        // Pause playback. Validate new remaining time is greater than previous remaining time and
+        // current elapsed time is in the initial seconds of playback
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
+        videoPlayer.clickPlay();
+        int remainingTimeAfterRestart = videoPlayer.getRemainingTimeThreeIntegers();
+        int elapsedPlaybackTime = videoPlayer.getCurrentTime();
+        Assert.assertTrue(remainingTimeAfterRestart > remainingTimeAfterForward,
+                String.format("Remaining time after restart (%d seconds) is not greater than " +
+                        "original remaining time (%d seconds)", remainingTimeAfterRestart, remainingTimeAfterForward));
+        ValueRange playbackStartRange = ValueRange.of(0, 30);
+        Assert.assertTrue(playbackStartRange.isValidIntValue(elapsedPlaybackTime),
+                String.format("Current elapsed time (%d seconds) is not between the expected range (%d-%d seconds)" +
+                        "of the beginning of the playback", elapsedPlaybackTime,
+                        playbackStartRange.getMinimum(), playbackStartRange.getMaximum()));
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64952"})
