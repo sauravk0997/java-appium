@@ -6,7 +6,6 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
 
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM_YEARLY;
 import static com.disney.qa.common.constant.RatingConstant.Rating.FOURTEEN_PLUS;
 import static com.disney.qa.common.constant.RatingConstant.Rating.SEVEN_PLUS;
