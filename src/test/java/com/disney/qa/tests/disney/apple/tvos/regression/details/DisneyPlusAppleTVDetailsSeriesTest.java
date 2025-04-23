@@ -32,6 +32,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String CONTENT_ERROR_MESSAGE = "Content is not found";
     private static final String SUGGESTED = "SUGGESTED";
+    private static final String WATCHLIST_ICON_NOT_PRESENT = "Watchlist plus icon is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -391,6 +392,28 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), RESTART_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_BTN_NOT_DISPLAYED);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64987"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.WATCHLIST, TestGroup.SERIES, US})
+    public void verifySeriesDetailsWatchlistPlusIcon() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_BTN_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
+                WATCHLIST_ICON_NOT_PRESENT);
+        detailsPage.getWatchlistButton().click();
+        Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+                "Watchlist checkmark icon is not displayed");
+
+        // Click again and verify plus icon
+        detailsPage.getWatchlistButton().click();
+        Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
+                WATCHLIST_ICON_NOT_PRESENT);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64889"})
