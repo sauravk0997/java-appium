@@ -1301,7 +1301,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(MICKEY_MOUSE)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(true)
+                .isStarOnboarded(false)
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
