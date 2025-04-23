@@ -450,6 +450,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTimeThreeIntegers() {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE) || R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             displayVideoController();
+        } else {
+            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(1);
         }
         String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
         int remainingTimeInSec;
