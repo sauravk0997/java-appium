@@ -6,7 +6,7 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.pojos.UnifiedAccount;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -25,6 +25,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
+import java.net.*;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.Set;
@@ -1761,6 +1762,42 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Number of profile cells wasn't equal to 1");
         Assert.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
                 "Add Profile button is present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76767"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExtraMembersProfileLimits() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        homePage.clickMoreTab();
+        Assert.assertFalse(moreMenuPage.isAddProfileButtonPresent(),
+                "Add profile button was present for the extra members account");
+
+        // Revoke  subscription
+        getUnifiedSubscriptionApi().revokeSubscription(getUnifiedAccount(),
+                getUnifiedAccount().getAgreement(0).getAgreementId());
+
+        //Entitle account with D+
+        UnifiedEntitlement disneyEntitlements = UnifiedEntitlement.builder()
+                .unifiedOffer(getUnifiedOffer(DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM)).subVersion(UNIFIED_ORDER).build();
+        try {
+            getUnifiedSubscriptionApi().entitleAccount(getUnifiedAccount(), Arrays.asList(disneyEntitlements));
+        } catch (MalformedURLException | URISyntaxException | InterruptedException e) {
+            Assert.fail("Failed to entitle the account with new entitlement");
+        }
+        // Terminate app and relaunch
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        // Verify content on watchlist after revoke HULU entitlement
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+
+        //Create 6 additional profiles via api and ensure that we can see add profile button
+
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77236"})
