@@ -2,15 +2,20 @@ package com.disney.qa.tests.disney.apple.tvos.regression.anthology;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DANCING_WITH_THE_STARS;
 import static com.disney.qa.common.constant.IConstantHelper.US;
@@ -217,6 +222,32 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(details.isOpened(), "After trailer completed, did not return to details page.");
         sa.assertTrue(details.isFocused(details.getTrailerButton()), "Trailer button is not focused on.");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-109773"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.VIDEO_PLAYER, US})
+    public void verifyAnthologyTabsAndOrderingUI() {
+        DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
+        logIn(getUnifiedAccount());
+        searchAndOpenDWTSDetails();
+
+        ArrayList<Container> dwtsDetailsPageContainers =
+                getDisneyAPIPage(DANCING_WITH_THE_STARS.getEntityId(),
+                        getLocalizationUtils().getLocale(),
+                        getLocalizationUtils().getUserLanguage());
+
+        IntStream.range(0, dwtsDetailsPageContainers.size()).forEach(i -> {
+            String expectedTabBarTitleName = dwtsDetailsPageContainers.get(i).getVisuals().getName();
+            if (expectedTabBarTitleName == null || expectedTabBarTitleName.isEmpty()) {
+                throw new SkipException("Not able to get the TabBar title values from API");
+            }
+            Assert.assertTrue(details.getTypeButtonByLabel(expectedTabBarTitleName).isPresent(),
+                    expectedTabBarTitleName + " tabBar title is not displayed");
+            Assert.assertEquals(
+                    expectedTabBarTitleName,
+                    details.getTabBarTitleInfo().get(i).getAttribute(Attributes.NAME.getAttribute()),
+                    "Tabs are not displayed in expected order");
+        });
     }
 
     private void searchAndOpenDWTSDetails() {
