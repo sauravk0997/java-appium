@@ -2,7 +2,7 @@
 <suite verbose="1" name="dmgzios_tablet_reg_ratings_rc" annotations="JDK" configfailurepolicy="continue" thread-count="14" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
-    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.0-77614"/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.5-77643"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
     <parameter name="booleanParam::EXECUTE_POST_PROCESSOR::Post results in Comments" value="true"/>

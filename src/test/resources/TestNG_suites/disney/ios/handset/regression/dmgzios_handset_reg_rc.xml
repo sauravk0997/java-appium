@@ -2,7 +2,7 @@
 <suite verbose="1" name="dmgzios_handset_reg_rc" annotations="JDK" configfailurepolicy="continue" thread-count="12" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
-    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.0-77614"/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.5-77643"/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-81323"/>
     <parameter name="booleanParam::is_outrider_execution::Outrider cloud workflow" value="true"/>
