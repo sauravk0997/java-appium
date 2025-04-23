@@ -32,6 +32,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String CONTENT_ERROR_MESSAGE = "Content is not found";
+    private static final String EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE = "Episodes tab is not focused";
     private static final String SUGGESTED = "SUGGESTED";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
@@ -167,7 +168,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.moveDown(2, 1);
         Assert.assertFalse(detailsPage.isFocused(detailsPage.getEpisodesTab()), "Episodes tab is focused");
         detailsPage.clickBack();
-        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), "Episodes tab is not focused");
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE);
 
         //Validate back button changes focus to Play/Continue CTA
         detailsPage.clickBack();
@@ -419,7 +420,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1, 1);
-        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), "Episodes tab is not focused");
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE);
         detailsPage.moveDown(1, 1);
         Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellLabelContains(episodeTitle)),
                 "First episode in episode tab is not focused");
@@ -456,7 +457,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.moveDownUntilElementIsFocused(detailsPage.getTypeCellLabelContains(episodeTitle), 6);
         detailsPage.clickSelect();
         videoPlayer.waitForVideoToStart();
-        // Forward video and get remaining time
+        // Forward video
         commonPage.clickRight(4, 1, 1);
         videoPlayer.waitForVideoToStart();
         commonPage.clickPlay();
