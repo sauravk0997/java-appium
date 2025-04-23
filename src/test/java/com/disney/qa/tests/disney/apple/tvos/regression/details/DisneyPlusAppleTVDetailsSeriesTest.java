@@ -403,7 +403,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     public void verifyEpisodeTabProgressBarUpdates() {
         int latency = 20;
         String episodeTitle;
-        String bookmarkErrorMessage = "Bookmark not indicating correct position";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
