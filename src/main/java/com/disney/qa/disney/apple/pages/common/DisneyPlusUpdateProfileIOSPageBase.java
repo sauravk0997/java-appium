@@ -39,7 +39,7 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
 
 
     public boolean doesUpdateProfileTitleExist() {
-        return staticTextByLabel.format(updateProfileTitle).isPresent(FIVE_SEC_TIMEOUT);
+        return getUpdateProfileTitle().isPresent(FIVE_SEC_TIMEOUT);
     }
 
     public boolean isCompleteProfileDescriptionPresent() {
@@ -64,5 +64,9 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
         String chooseContentRating = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.CHOOSE_CONTENT_RATING.getText());
         return contentRatingContainer.format(chooseContentRating);
+    }
+
+    public ExtendedWebElement getUpdateProfileTitle() {
+        return staticTextByLabel.format(updateProfileTitle);
     }
 }
