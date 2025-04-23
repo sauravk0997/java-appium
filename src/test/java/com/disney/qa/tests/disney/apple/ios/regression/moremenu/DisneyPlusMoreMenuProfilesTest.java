@@ -1290,7 +1290,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         String dismissCatalog = "NOT NOW";
         String cancelButton = "Cancel";
         SoftAssert sa = new SoftAssert();
@@ -1301,7 +1300,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .dateOfBirth(null)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(MICKEY_MOUSE)
-                .kidsModeEnabled(true)
+                .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
 
