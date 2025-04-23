@@ -462,4 +462,25 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                         "of the beginning of the playback", elapsedPlaybackTime,
                         playbackStartRange.getMinimum(), playbackStartRange.getMaximum()));
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64950"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesEpisodeExclusiveFocus() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        //Move down to first episode and validate episode is focused and the others aren't
+        detailsPage.moveDown(2, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodeCell("1", "1")),
+                "First episode is not focused");
+        Assert.assertFalse(detailsPage.isFocused(detailsPage.getEpisodeCell("1", "2")),
+                "Second episode is focused");
+        Assert.assertFalse(detailsPage.isFocused(detailsPage.getEpisodeCell("1", "3")),
+                "Third episode is focused");
+    }
 }
