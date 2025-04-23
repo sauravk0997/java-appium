@@ -835,4 +835,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
         }
     }
+
+    public void removeUnsupportedFormats(List<String> audioVideoBadgeList) {
+        audioVideoBadgeList.removeAll(List.of("4K Ultra HD", "Dolby Atmos", "HDR10"));
+    }
 }

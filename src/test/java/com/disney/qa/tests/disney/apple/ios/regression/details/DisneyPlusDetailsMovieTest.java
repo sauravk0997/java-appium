@@ -970,6 +970,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         if (visualsResponse.getMetastringParts().getAudioVisual().getFlags() != null) {
             List<String> audioVideoApiBadge = new ArrayList<>();
             visualsResponse.getMetastringParts().getAudioVisual().getFlags().forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            removeUnsupportedFormats(audioVideoApiBadge);
             exploreAPIMetaData.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
         }
 
