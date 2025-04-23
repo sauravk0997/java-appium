@@ -427,7 +427,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
         int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
-        commonPage.clickRight(5, 2, 1);
+        commonPage.clickRight(6, 2, 1);
         videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
         commonPage.clickRight(3, 1, 1);
         videoPlayer.waitUntilRemainingTimeLessThan(TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, (remainingTime / 2) - latency);
