@@ -22,6 +22,9 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     @ExtendedFindBy(accessibilityId = "seekTimeLabel")
     protected ExtendedWebElement seekTimeLabel;
 
+    @ExtendedFindBy(accessibilityId = "seekTimeLabel")
+    private ExtendedWebElement seekTimeLabel;
+
     public DisneyPlusAppleTVVideoPlayerPage(WebDriver driver) {
         super(driver);
     }
@@ -101,6 +104,21 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         int thumbnailRightXCoordinate = thumbnailView.getLocation().getX() + thumbnailView.getSize().getWidth();
 
         return  seekBarRightXCoordinate == thumbnailRightXCoordinate;
+    }
+
+    @Override
+    public int getCurrentTime() {
+        String[] currentTimeTokens = seekTimeLabel.getText().split(":");
+        int currentTimeInSec;
+        if (currentTimeTokens.length > 2) {
+            currentTimeInSec = Integer.parseInt(currentTimeTokens[0]) * 3600
+                    + Integer.parseInt(currentTimeTokens[1]) * 60
+                    + (Integer.parseInt(currentTimeTokens[2]));
+        } else {
+            currentTimeInSec = (Integer.parseInt(currentTimeTokens[0]) * 60) + (Integer.parseInt(currentTimeTokens[1]));
+        }
+        LOGGER.info("Playback currently at '{}' seconds", currentTimeInSec);
+        return currentTimeInSec;
     }
 
     public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
