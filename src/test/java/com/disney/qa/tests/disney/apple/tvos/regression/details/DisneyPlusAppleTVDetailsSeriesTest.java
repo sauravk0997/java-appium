@@ -34,9 +34,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String CONTENT_ERROR_MESSAGE = "Content is not found";
     private static final String SUGGESTED = "SUGGESTED";
-    private static final double SCRUB_PERCENTAGE_FIFTY = 50;
-    private static final double SCRUB_PERCENTAGE_SIXTY = 60;
-    private static final double SCRUB_PERCENTAGE_HUNDRED = 100;
+    private static final long SCRUB_PERCENTAGE_FIFTY = 50;
+    private static final long SCRUB_PERCENTAGE_SIXTY = 60;
+    private static final long SCRUB_PERCENTAGE_HUNDRED = 100;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -425,28 +425,25 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
-        commonPage.clickRight(5, 3, 1);
+        commonPage.clickRight(6, 3, 1);
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), THREE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.getProgressContainer().isPresent(),
                 "Progress container view is not present");
         commonPage.clickDown();
-        Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
-                SCRUB_PERCENTAGE_FIFTY, latency), bookmarkErrorMessage);
+        detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_FIFTY, latency);
 
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
         commonPage.clickRight(2,2,1);
         videoPlayer.clickBack();
-        Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
-                SCRUB_PERCENTAGE_SIXTY, latency), bookmarkErrorMessage);
+        detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_SIXTY, latency);
 
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
         commonPage.clickRight(2,2,1);
         videoPlayer.clickBack();
-        Assert.assertTrue(detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle,
-                SCRUB_PERCENTAGE_HUNDRED, latency), bookmarkErrorMessage);
+        detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_HUNDRED, latency);
     }
 }

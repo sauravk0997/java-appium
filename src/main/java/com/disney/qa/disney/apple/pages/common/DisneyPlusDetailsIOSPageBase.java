@@ -1282,13 +1282,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
     }
 
-    public boolean isProgressBarIndicatingCorrectPositionOnEpisodeTab(String episodeTitle,
-                                                                      double scrubPercentage,
+    public void isProgressBarIndicatingCorrectPositionOnEpisodeTab(String episodeTitle,
+                                                                      long scrubPercentage,
                                                                       int latency) {
-        double bookmarkWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth();
-        double expectedWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth() / (100 / scrubPercentage);
+        long bookmarkWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth();
+        long expectedWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth() / (100 / scrubPercentage);
         ValueRange range = ValueRange.of(-latency, latency);
-        return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
+        Assert.assertTrue(range.isValidIntValue(Math.abs(expectedWidth - bookmarkWidth)),
+                String.format("Actual Progress bar indicator (%d) and " +
+                                "Expected Progress bar indicator (%d) " +
+                                "is not between the expected range (%d-%d seconds)",
+                        bookmarkWidth, expectedWidth,
+                        range.getMinimum(), range.getMaximum()));
     }
 
     public ExtendedWebElement getTabBar() {
