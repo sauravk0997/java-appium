@@ -408,6 +408,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
 
         ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_entity"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
@@ -427,6 +428,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForVideoToStart();
         int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
         commonPage.clickRight(5, 2, 1);
+        videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
+        commonPage.clickRight(3, 1, 1);
         videoPlayer.waitUntilRemainingTimeLessThan(TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, (remainingTime / 2) - latency);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
