@@ -10,6 +10,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.*;
@@ -20,8 +21,7 @@ import java.lang.invoke.MethodHandles;
 import java.time.temporal.ValueRange;
 import java.util.*;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
-import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
+import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -553,9 +553,23 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
+        String firstSeasonsFirstEpisodeTitle;
+        try {
+            firstSeasonsFirstEpisodeTitle = getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY)
+                    .getSeasons().get(0).getItems().get(0).
+                    getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Unable to retrieve episode title from Explore API.", e);
+        }
+
         //Move down to first episode and validate episode is focused and the others aren't
-        detailsPage.moveDown(2, 1);
-        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodeCell("1", "1")),
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE);
+        detailsPage.moveDown(1, 1);
+        ExtendedWebElement firstEpisodeCell = detailsPage.getEpisodeCell("1", "1");
+        Assert.assertTrue(firstEpisodeCell.getAttribute(LABEL).contains(firstSeasonsFirstEpisodeTitle),
+                "First episode cell does not contain episode title retrieved from Explore API");
+        Assert.assertTrue(detailsPage.isFocused(firstEpisodeCell),
                 "First episode is not focused");
         Assert.assertFalse(detailsPage.isFocused(detailsPage.getEpisodeCell("1", "2")),
                 "Second episode is focused");
