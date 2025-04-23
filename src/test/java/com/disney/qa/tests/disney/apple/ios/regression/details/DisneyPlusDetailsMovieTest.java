@@ -814,7 +814,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         videoPlayer.scrubToPlaybackPercentage(50);
         pause(5);
         videoPlayer.clickBackButton();
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(detailsPage.getRestartButton().getBy()), TEN_SEC_TIMEOUT);
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(detailsPage.getRestartButton().getBy()), SHORT_TIMEOUT);
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
         detailsPage.getRestartButton().click();
         videoPlayer.waitForVideoToStart();
