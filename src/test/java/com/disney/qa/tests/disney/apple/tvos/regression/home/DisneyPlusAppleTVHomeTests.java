@@ -16,7 +16,9 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
@@ -268,7 +270,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 6);
+        homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 10);
 
         try {
             // Get first series item
@@ -281,11 +283,15 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             String seasonNumber = channelItemWithEpisodicInfo.getVisuals().getSeasonNumber();
             String episodeNumber = channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber();
             String episodeTitle = channelItemWithEpisodicInfo.getVisuals().getEpisodeTitle();
-            String metadataEpisode = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
-            LOGGER.info("Metadata episode {}", metadataEpisode);
-            sa.assertTrue(homePage.getTypeCellLabelContains(rating).isPresent(), "Rating is not present in cell episode");
-            sa.assertTrue(homePage.getStaticTextByLabelContains(metadataEpisode).isPresent(),
-                    "Episode metadata is not present");
+            if (Stream.of(rating, seasonNumber, episodeNumber, episodeTitle).noneMatch(Objects::isNull)) {
+                String metadataEpisode = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
+                LOGGER.info("Metadata episode {}", metadataEpisode);
+                sa.assertTrue(homePage.getTypeCellLabelContains(rating).isPresent(), "Rating is not present in cell episode");
+                sa.assertTrue(homePage.getStaticTextByLabelContains(metadataEpisode).isPresent(),
+                        "Episode metadata is not present");
+            } else {
+                throw new SkipException("Series episodes metadata expected is not available");
+            }
 
             // Verify genre info and if exists assert that is not present
             if (channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getGenres() != null) {
