@@ -417,9 +417,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
         homePage.waitForHomePageToOpen();
-        videoPlayer.moveDownUntilCollectionContentIsFocused(
+        homePage.moveDownUntilCollectionContentIsFocused(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), 20);
-        videoPlayer.clickSelect();
+        homePage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.getRestartButton().click();
 
         // Pause playback. Validate new remaining time is greater than previous remaining time and
