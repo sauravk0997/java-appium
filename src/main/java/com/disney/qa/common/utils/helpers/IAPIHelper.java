@@ -54,6 +54,24 @@ public interface IAPIHelper {
     }
 
     /**
+     * Get localization utils for specific country and language
+     * @param country
+     * @param language
+     * @return {@link DisneyLocalizationUtils}
+     */
+    default DisneyLocalizationUtils getLocalizationUtils(String country, String language) {
+        return LOCALIZATION_UTILS.computeIfAbsent(new ImmutablePair<>(country, language), pair -> {
+            DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(),
+                    "iOS",
+                    Configuration.getRequired(Configuration.Parameter.ENV),
+                    DisneyConfiguration.getPartner());
+            localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
+            localizationUtils.setLegalDocuments();
+            return localizationUtils;
+        });
+    }
+
+    /**
      * Get Apple TV specific localization utils
      * @return {@link DisneyLocalizationUtils}
      */
