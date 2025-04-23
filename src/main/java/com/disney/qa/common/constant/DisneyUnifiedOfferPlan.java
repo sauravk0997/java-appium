@@ -3,6 +3,7 @@ package com.disney.qa.common.constant;
 public enum DisneyUnifiedOfferPlan {
     //US disney plans
     DISNEY_PLUS_PREMIUM("Disney+ Premium"),
+    DISNEY_PLUS_PREMIUM_YEARLY("Disney+ Premium Yearly"),
     DISNEY_BASIC_MONTHLY("Disney+ Basic - 9.99 USD - Monthly"),
     DISNEY_BUNDLE_TRIO_BASIC("Disney Bundle Trio Basic"),
     DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY("Disney Bundle Trio Premium - 26.99 USD - Monthly"),
