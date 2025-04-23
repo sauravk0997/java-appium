@@ -175,6 +175,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
     private ExtendedWebElement espnPlusGenericErrorText;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name BEGINSWITH 'content'`]/**/XCUIElementTypeStaticText[1]")
+    protected ExtendedWebElement ratingAudioVideoFormatLabel;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -1312,5 +1315,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                         DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.SEASON_EPISODE_TITLE_PLACEHOLDER.getText()),
                 Map.of("S", 1, "E", 1, "TITLE", episodeTitle));
+    }
+
+    public List<String> getAudioVideoFormatValue(){
+        List<String> ratingAudioVideoFormat = List.of(ratingAudioVideoFormatLabel.getText().split(","));
+        List<String> audioVideoFormatLabel = new ArrayList<>();
+        IntStream.range(1, ratingAudioVideoFormat.size())
+                .forEach(i -> audioVideoFormatLabel.add(ratingAudioVideoFormat.get(i)));
+        return audioVideoFormatLabel;
     }
  }
