@@ -55,7 +55,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116817"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHSoftBlockVerifyDeviceUIVerification() {
-        String email = "accountsharingsofttest@disneyplustesting.com";
+        String email = "victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com";
         String password = "Test1234!";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
@@ -213,6 +213,20 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116861"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingErrorHandling() {
+        String email = "testerrorhandling@disneyplustesting.com";
+        String password = "Test123#";
+      //  testerrorhandling@disneyplustesting.com/Test123#
+// victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com/Test1234!
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        pause(15);
+    }
+
     private void loginWithAccountSharingUser(String email, String password) {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
@@ -222,11 +236,14 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomeScreen.clickLogInButton();
+        pause(4);
         loginPage.proceedToLocalizedPasswordScreen(email);
+        pause(4);
         Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
         passcodePage.clickLoginWithPassword();
         passwordPage.logInWithPasswordLocalized(password);
     }
+
 
     //TODO Once QP-4003 and QP-4001 fixed and API available to create HouseHold account, Need to remove this method,
     //we can use existing getOTPFromApi method from BaseTest class
