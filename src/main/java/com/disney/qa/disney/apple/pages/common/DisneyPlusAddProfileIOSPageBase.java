@@ -37,7 +37,7 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeImage' AND name='badgeIcon'$]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage[1]")
     protected ExtendedWebElement addProfileAvatar;
 
-    @ExtendedFindBy(accessibilityId = "Cancel")
+    @ExtendedFindBy(accessibilityId = "cancelBarButton")
     private ExtendedWebElement cancelButton;
 
     @ExtendedFindBy(accessibilityId = "Skip")
@@ -83,6 +83,11 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isAddProfileHeaderPresent(){
         String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
         return staticTextByLabel.format(addProfileHeader).isPresent();
+    }
+
+    public boolean isWhoIsWatchingAddProfileHeaderPresent() {
+        String whoIsWatchingAddProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WHOS_WATCHING_ADD_PROFILE.getText());
+        return staticTextByLabel.format(whoIsWatchingAddProfile).isPresent();
     }
 
     public boolean isProfilePresent(String profileName) {
