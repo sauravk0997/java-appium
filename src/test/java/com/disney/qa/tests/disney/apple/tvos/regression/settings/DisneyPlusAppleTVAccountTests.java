@@ -216,8 +216,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116861"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyAccountSharingErrorHandling() {
-        String email = "testerrorhandling@disneyplustesting.com";
-        String password = "Test123#";
+        String email = "victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com";
+        String password = "Test1234!";
       //  testerrorhandling@disneyplustesting.com/Test123#
 // victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com/Test1234!
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
