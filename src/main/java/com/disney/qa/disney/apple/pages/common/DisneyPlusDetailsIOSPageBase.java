@@ -161,7 +161,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement progressBarBookmark;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]/**/XCUIElementTypeOther[`name == " +
-            "'progressBar'`]")
+            "'progressBar'`]/XCUIElementTypeOther")
     private ExtendedWebElement progressBarBookmarkOnEpisodeTab;
 
     @ExtendedFindBy(iosClassChain =
@@ -1287,6 +1287,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                                                                       int latency) {
         long bookmarkWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth();
         long expectedWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth() / (100 / scrubPercentage);
+        LOGGER.info("Progress bar Info "+ getDriver().getPageSource());
         ValueRange range = ValueRange.of(-latency, latency);
         Assert.assertTrue(range.isValidIntValue(Math.abs(expectedWidth - bookmarkWidth)),
                 String.format("Actual Progress bar indicator (%d) and " +
