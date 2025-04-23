@@ -1306,4 +1306,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getParentalControlIcon() {
         return parentalControlIcon;
     }
+
+    public String getEpisodeTitleWithSeasonAndEpisodeNumber(String episodeTitle) {
+        return getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.SEASON_EPISODE_TITLE_PLACEHOLDER.getText()),
+                Map.of("S", 1, "E", 1, "TITLE", episodeTitle));
+    }
  }
