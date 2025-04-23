@@ -973,18 +973,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
         ContentAdvisory contentAdvisory = null;
-        String contentAdvisoryText = null;
         try {
             contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
-            if (contentAdvisory != null) {
-                contentAdvisoryText = contentAdvisory.getText();
-            }
         } catch (Exception e) {
             Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
         }
-        if (contentAdvisory == null || contentAdvisoryText.isEmpty()) {
+        if (contentAdvisory == null || contentAdvisory.getText().isEmpty()) {
             throw new SkipException("Unable to get Content Advisory from API");
         }
-        return contentAdvisoryText;
+        return contentAdvisory.getText();
     }
 }
