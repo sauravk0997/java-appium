@@ -1305,7 +1305,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
-        updateProfilePage.waitForPresenceOfAnElement(updateProfilePage.getUpdateProfileTitleExist());
+        updateProfilePage.waitForPresenceOfAnElement(updateProfilePage.getUpdateProfileTitle());
         Assert.assertTrue(updateProfilePage.isOpened(),
                 "'Let's update your profile' page is not opened");
 
