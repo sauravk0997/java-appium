@@ -9,13 +9,16 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
@@ -253,6 +256,52 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(liveEventModal.getThumbnailView().isElementPresent(), "Episodic artwork is not present");
         sa.assertEquals(liveEventModal.getThumbnailAspectRatio(), 1.78,
                 "Thumbnail aspect ratio wasn't the standard (1.78)");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118742"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyStandardPromptEpisodicSeries() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        String streamsNonStopPlaylists =
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 10);
+
+        try {
+            // Get first series item
+            Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(10);
+            homePage.moveRightUntilElementIsFocused(
+                    homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                            channelItemWithEpisodicInfo.getVisuals().getTitle()), 10);
+
+            String rating = channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+            String seasonNumber = channelItemWithEpisodicInfo.getVisuals().getSeasonNumber();
+            String episodeNumber = channelItemWithEpisodicInfo.getVisuals().getEpisodeNumber();
+            String episodeTitle = channelItemWithEpisodicInfo.getVisuals().getEpisodeTitle();
+            if (Stream.of(rating, seasonNumber, episodeNumber, episodeTitle).noneMatch(Objects::isNull)) {
+                String metadataEpisode = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
+                LOGGER.info("Metadata episode {}", metadataEpisode);
+                sa.assertTrue(homePage.getTypeCellLabelContains(rating).isPresent(), "Rating is not present in cell episode");
+                sa.assertTrue(homePage.getStaticTextByLabelContains(metadataEpisode).isPresent(),
+                        "Episode metadata is not present");
+            } else {
+                throw new SkipException("Series episodes metadata expected is not available");
+            }
+
+            // Verify genre info and if exists assert that is not present
+            if (channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getGenres() != null) {
+                sa.assertFalse(homePage.getStaticTextByLabel(
+                                channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getGenres().getLabel()).isPresent(),
+                        "Genre is present");
+            }
+        } catch(SkipException e) {
+            throw new SkipException("Series episode stream expected is not available" + e.getMessage());
+        }
         sa.assertAll();
     }
 
