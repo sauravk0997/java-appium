@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.api.explore.response.ContentAdvisory;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -100,6 +101,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_lion_king_timon_and_pumbaa_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+
         //series
         home.clickSearchIcon();
         search.searchForMedia(THE_LION_KINGS_TIMON_AND_PUUMBA);
@@ -108,9 +112,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
-        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
-                "Negative Stereotype Advisory text was not found on details page");
+        String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
+        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+                "Content Advisory Description not as expected");
 
         //movie
         home.clickSearchIcon();
@@ -121,9 +125,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
-        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
-                "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+                "Content Advisory Description not as expected");
 
         sa.assertAll();
     }
@@ -966,5 +969,18 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
+    }
+
+    public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
+        ContentAdvisory contentAdvisory = null;
+        try {
+            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
+        } catch (Exception e) {
+            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+        }
+        if (contentAdvisory == null || contentAdvisory.getText().isEmpty()) {
+            throw new SkipException("Unable to get Content Advisory from API");
+        }
+        return contentAdvisory.getText();
     }
 }
