@@ -22,9 +22,6 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     @ExtendedFindBy(accessibilityId = "seekTimeLabel")
     protected ExtendedWebElement seekTimeLabel;
 
-    @ExtendedFindBy(accessibilityId = "seekTimeLabel")
-    private ExtendedWebElement seekTimeLabel;
-
     public DisneyPlusAppleTVVideoPlayerPage(WebDriver driver) {
         super(driver);
     }
