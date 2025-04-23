@@ -65,4 +65,8 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
                 DictionaryKeys.CHOOSE_CONTENT_RATING.getText());
         return contentRatingContainer.format(chooseContentRating);
     }
+
+    public ExtendedWebElement getUpdateProfileTitleExist() {
+        return staticTextByLabel.format(updateProfileTitle);
+    }
 }
