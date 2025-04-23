@@ -7,7 +7,6 @@ import com.disney.config.DisneyParameters;
 import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.common.utils.helpers.DateHelper;
@@ -800,7 +799,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68341"})
     @Test(description = "Localization - UI Languages & Ability to Change Language", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUIAppAbilityToChangeLanguage() {
-        String spanishLanguageCode = "es";
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
@@ -813,11 +811,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
         appLanguage.selectLanguage(ESPAÑOL);
 
-        getLocalizationUtils().setLanguageCode(spanishLanguageCode);
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(getCountry(), getLocalizationUtils().getUserLanguage(), MobilePlatform.IOS,
-                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                DISNEY);
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+        DisneyLocalizationUtils disneyLocalizationUtils = getLocalizationUtils(getCountry(), ES_LANG);
 
         String editProfileInSpanish = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_TITLE_2.getText());
         String doneInSpanish = disneyLocalizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EDIT_PROFILE_DONE_BUTTON.getText());
