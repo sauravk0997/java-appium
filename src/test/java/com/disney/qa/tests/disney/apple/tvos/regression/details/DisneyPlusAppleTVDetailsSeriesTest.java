@@ -541,4 +541,25 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellLabelContains(episodeTitle)),
                 "Bookmark episode in episode tab is not focused");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64895"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDisplayedRating() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        String seriesRating;
+        try {
+            seriesRating = getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY).getRating();
+        } catch (Exception e) {
+            throw new SkipException("Unable to retrieve rating from Explore API.", e);
+        }
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seriesRating).isElementPresent(),
+                "Series rating retrieved from API is not present on details page");
+    }
 }
