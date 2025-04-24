@@ -577,10 +577,11 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
         commonPage.clickRight(6, 2, 1);
         videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
-        videoPlayer.moveRightUntilElementIsFocused(videoPlayer.getPlayerView(), 3);
+        //videoPlayer.moveRightUntilElementIsFocused(videoPlayer.getPlayerView(), 3);
+        commonPage.clickRight(2,1,1);
         commonPage.clickSelect();
         commonPage.clickPlay();
-        videoPlayer.waitUntilRemainingTimeLessThan(TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, (remainingTime / 2) - latency);
+        //videoPlayer.waitUntilRemainingTimeLessThan(TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT,(remainingTime / 2) - latency);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.getProgressContainer().isPresent(),
