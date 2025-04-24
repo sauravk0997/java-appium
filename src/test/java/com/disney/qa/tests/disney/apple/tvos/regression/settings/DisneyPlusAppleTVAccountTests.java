@@ -246,6 +246,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "Error message is not present");
         sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(forgotPasswordPage.getOTPErrorMessage()).isPresent(),
                 "Error 2 message is not present");
+        accountSharingPage.getTypeButtonByLabel("Resend").click();
         pause(10);
         sa.assertAll();
     }
