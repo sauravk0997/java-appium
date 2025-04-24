@@ -46,6 +46,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String WATCHLIST_SCREEN_ERROR_MESSAGE = "Watchlist page did not open";
+    private static final String WATCHLIST_ICON_NOT_PRESENT = "Watchlist plus icon is not displayed";
     private static final String BADGE_LABEL_NOT_PRESENT = "Badge label is not present";
     private static final String TITLE_NOT_PRESENT = "Title is not present";
     private static final String DESCRIPTION_NOT_PRESENT = "Description is not present";
@@ -749,9 +750,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_NOT_PRESENT);
         Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
-                "Plus Icon - to add content to the watchlist is not displayed");
+                WATCHLIST_ICON_NOT_PRESENT);
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
                 "Checkmark icon - to remove the content from the watchlist is not displayed");
+        // Click again and verify plus icon
+        detailsPage.getWatchlistButton().click();
+        Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
+                WATCHLIST_ICON_NOT_PRESENT);
     }
 }

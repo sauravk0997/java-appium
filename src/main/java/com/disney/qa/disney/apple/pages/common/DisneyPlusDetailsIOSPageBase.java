@@ -175,7 +175,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
     private ExtendedWebElement espnPlusGenericErrorText;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name BEGINSWITH 'content'`]/**/XCUIElementTypeStaticText[1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name BEGINSWITH 'content'`]" +
+            "/**/XCUIElementTypeStaticText[1]")
     protected ExtendedWebElement ratingAudioVideoFormatLabel;
 
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
