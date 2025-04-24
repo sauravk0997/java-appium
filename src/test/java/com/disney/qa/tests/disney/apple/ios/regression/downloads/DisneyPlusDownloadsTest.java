@@ -680,9 +680,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.getEpisodeToDownload(firstSeason, episodeThreeString).click();
         // Need some time to appropriate populate downloads and have episodes to compare after
         detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            swipe(detailsPage.getEpisodeToDownload(), Direction.DOWN, 1, 3800);
-        }
 
         // Get details episodes list
         episodeTitleList.add(detailsPage.getEpisodeTitleLabel(episodeOne).getText());

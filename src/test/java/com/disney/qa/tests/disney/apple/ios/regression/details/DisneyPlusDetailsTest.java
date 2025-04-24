@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.api.explore.response.ContentAdvisory;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -28,7 +29,6 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
-import static com.disney.qa.common.constant.RatingConstant.Rating.PG_13;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -100,6 +100,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_lion_king_timon_and_pumbaa_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+
         //series
         home.clickSearchIcon();
         search.searchForMedia(THE_LION_KINGS_TIMON_AND_PUUMBA);
@@ -108,9 +111,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
-        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
-                "Negative Stereotype Advisory text was not found on details page");
+        String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
+        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+                "Content Advisory Description not as expected");
 
         //movie
         home.clickSearchIcon();
@@ -121,9 +124,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        // TODO : QAA-19373 for removing the hardcoded description and to use API response post QAIT fix
-        sa.assertTrue(details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).isPresent(),
-                "Negative Stereotype Advisory text was not found on details page");
+        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+                "Content Advisory Description not as expected");
 
         sa.assertAll();
     }
@@ -728,9 +730,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.verifyRatingsInDetailsFeaturedArea(TV_PG.getContentRating(), sa);
         detailsPage.validateRatingsInDetailsTab(TV_PG.getContentRating(), sa);
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_bohemian_rhapsody_deeplink"));
-        detailsPage.verifyRatingsInDetailsFeaturedArea(PG_13.getContentRating(), sa);
-        detailsPage.validateRatingsInDetailsTab(PG_13.getContentRating(), sa);
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_grimcutty_detailspage_deeplink"));
+        detailsPage.verifyRatingsInDetailsFeaturedArea(RatingConstant.Rating.RESTRICTED.getContentRating(), sa);
+        detailsPage.validateRatingsInDetailsTab(RatingConstant.Rating.RESTRICTED.getContentRating(), sa);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76389"})
@@ -966,5 +968,18 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
+    }
+
+    public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
+        ContentAdvisory contentAdvisory = null;
+        try {
+            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
+        } catch (Exception e) {
+            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+        }
+        if (contentAdvisory == null || contentAdvisory.getText().isEmpty()) {
+            throw new SkipException("Unable to get Content Advisory from API");
+        }
+        return contentAdvisory.getText();
     }
 }
