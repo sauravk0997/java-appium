@@ -1297,14 +1297,15 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
-                .dateOfBirth(KIDS_DOB)
+                .dateOfBirth(null)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(MICKEY_MOUSE)
-                .kidsModeEnabled(true)
-                .isStarOnboarded(true)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(false)
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
+        updateProfilePage.waitForPresenceOfAnElement(updateProfilePage.getUpdateProfileTitle());
         Assert.assertTrue(updateProfilePage.isOpened(),
                 "'Let's update your profile' page is not opened");
 
