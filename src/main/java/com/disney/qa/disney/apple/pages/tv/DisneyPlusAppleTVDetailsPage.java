@@ -42,8 +42,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     private ExtendedWebElement tabBarTitles;
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentSummaryView\"`]/**/XCUIElementTypeStaticText[1]")
-    protected ExtendedWebElement ratingAudioVideoFormatLabel;
 
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
@@ -236,12 +234,5 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     public List<ExtendedWebElement> getTabBarTitleInfo() {
         return findExtendedWebElements(tabBarTitles.getBy());
-    }
-
-    public List<String> getAudioVideoFormatValue(){
-        List<String> ratingAudioVideoFormat = List.of(ratingAudioVideoFormatLabel.getText().split(","));
-        List<String> audioVideoFormatLabel = new ArrayList<>();
-        IntStream.range(1, ratingAudioVideoFormat.size()).forEach(i -> audioVideoFormatLabel.add(ratingAudioVideoFormat.get(i)));
-        return audioVideoFormatLabel;
     }
 }
