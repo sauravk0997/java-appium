@@ -99,7 +99,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEEPLINKURL = "disneyplus://www.disneyplus.com/browse/";
     public static final String JARVIS_PLAYBACK = "Playback";
     public static final String JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE = "expiredAllowRenewal";
-    protected static final String DOLBY_VISION = "Dolby Vision";
     public static final String ESPN_PLUS = "ESPN+";
     public static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
     public static final String RATING = "Rating";
