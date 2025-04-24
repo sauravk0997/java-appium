@@ -216,8 +216,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        String email = "victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com";
-        String password = "Test1234!";
+        String email = "testerrorhandling@disneyplustesting.com";
+        String password = "Test123#";
         String invalidCode = "111111";
         String errorMessage = "Sorry, we could not connect you to Disney+ using the passcode you provided. " +
                 "Please re-enter your passcode and try again. " +
