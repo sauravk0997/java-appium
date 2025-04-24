@@ -1,13 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVAccountSharingPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVOneTimePasscodePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSettingsPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -34,6 +28,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
             "Confirmation page not displayed after entering OTP";
     private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
     private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
+    private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -133,7 +128,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
-                "'I'm Away From Home' button not displayed");
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
@@ -200,7 +195,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
-                "'I'm Away From Home' button not displayed");
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
@@ -216,15 +211,43 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116861"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyAccountSharingErrorHandling() {
-        String email = "victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com";
-        String password = "Test1234!";
       //  testerrorhandling@disneyplustesting.com/Test123#
 // victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com/Test1234!
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        String email = "victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com";
+        String password = "Test1234!";
+        String invalidCode = "111111";
+        String errorMessage = "Sorry, we could not connect you to Disney+ using the passcode you provided. " +
+                "Please re-enter your passcode and try again. " +
+                "If the problem persists, visit the Disney+ Help Centre (error code 21).";
         SoftAssert sa = new SoftAssert();
         loginWithAccountSharingUser(email, password);
         pause(15);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHIAmAwayFromHomeCTA()),
+                "'I'm Away From Home' button is not focused");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+               "Travel mode 'Confirm you are away from home' screen not displayed");
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenSubCopyPresent(),
+                "Travel mode screen sub copy not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        accountSharingPage.enterOtpOnModal(invalidCode);
+        sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(errorMessage).isPresent(),
+                "Error message is not present");
+        sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(forgotPasswordPage.getOTPErrorMessage()).isPresent(),
+                "Error 2 message is not present");
+        pause(10);
+        sa.assertAll();
     }
 
     private void loginWithAccountSharingUser(String email, String password) {
@@ -236,9 +259,9 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomeScreen.clickLogInButton();
-        pause(4);
+        pause(5);
         loginPage.proceedToLocalizedPasswordScreen(email);
-        pause(4);
+        pause(5);
         Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
         passcodePage.clickLoginWithPassword();
         passwordPage.logInWithPasswordLocalized(password);
