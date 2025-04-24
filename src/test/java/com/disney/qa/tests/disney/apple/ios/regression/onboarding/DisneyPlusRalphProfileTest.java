@@ -7,7 +7,7 @@ import com.disney.qa.api.dictionary.*;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.utils.DisneyCountryData;
-import com.disney.qa.common.utils.IOSUtils;
+import com.disney.qa.common.constant.DisneyUnifiedOfferPlan;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -23,8 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD;
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD_WITH_ADS_NON_US;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -204,7 +203,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
 
         setAccount(getUnifiedAccountApi()
-                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_NON_US, GERMANY,
+                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_DE, GERMANY,
                 getLocalizationUtils().getUserLanguage())));
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), GERMANY);
@@ -254,7 +253,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String EXPECTED_RATING = "12";
 
         setAccount(getUnifiedAccountApi()
-                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_NON_US,
+                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_DE,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), DE);
@@ -316,7 +315,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .formatPlaceholderString(contentRating.getRecommendedRating(),
                 Map.of("content_rating", getRecommendedContentRating(GERMANY, under18Age, AGE_VALUES_GERMANY)));
         LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
-        createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage());
+        createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage(), DISNEY_PLUS_STANDARD_WITH_ADS_DE);
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
@@ -342,7 +341,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 Map.of("content_rating", getRecommendedContentRating(CANADA, under18Age, AGE_VALUES_CANADA)));
         LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
 
-        createAccountAndAddSecondaryProfile(CANADA, getLocalizationUtils().getUserLanguage());
+        createAccountAndAddSecondaryProfile(CANADA, getLocalizationUtils().getUserLanguage(), DISNEY_PLUS_STANDARD_WITH_ADS_CA);
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
@@ -371,7 +370,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         if (recommendedContentRatingByAge.contains("0 (Recommended)")) {
             recommendedContentRatingByAge = "AL (Recommended)";
         }
-        createAccountAndAddSecondaryProfile(getLocalizationUtils().getLocale(), DE);
+        createAccountAndAddSecondaryProfile(getLocalizationUtils().getLocale(), DE, DISNEY_PLUS_STANDARD_WITH_ADS_DE);
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
@@ -521,7 +520,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         String ratingToChoose = "TV-Y7";
         int age = 59;
 
-        createAccountAndAddSecondaryProfile(CA, ENGLISH_LANG);
+        createAccountAndAddSecondaryProfile(CA, ENGLISH_LANG, DISNEY_PLUS_STANDARD_WITH_ADS_CA);
 
         String recommendedContentRatingByAge = getLocalizationUtils()
                 .formatPlaceholderString(contentRating.getRecommendedRating(),
@@ -609,10 +608,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfile.enterPassword(getUnifiedAccount());
     }
 
-    private void createAccountAndAddSecondaryProfile(String locale, String language) {
+    private void createAccountAndAddSecondaryProfile(String locale, String language, DisneyUnifiedOfferPlan planName) {
         // Create standard account with Ads subscription
         setAccount(getUnifiedAccountApi()
-                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_NON_US,
+                .createAccount(getCreateUnifiedAccountRequest(planName,
                         locale, language)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
 
