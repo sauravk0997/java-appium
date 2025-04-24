@@ -14,11 +14,9 @@ import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_DETAILS_RESTART;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST;
