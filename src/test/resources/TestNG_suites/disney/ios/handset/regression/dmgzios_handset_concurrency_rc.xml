@@ -20,7 +20,7 @@
     <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-81323"/>
     <parameter name="stringParam::reporting.tcm.xray.test-execution-key::Enter Xray Execution value" value="XMOBQA-81323"/>
     <parameter name="jenkinsEnvironments" value="Prod,PreProd"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11_2,iPhone_11_4,iPhone_11_Pro_Max,iPhone_13_Pro,iPhone_15_1,iPhone_15_2,iPhone_15_3,iPhone_15_4,iPhone_15_5,iPhone_15_6,iPhone_15_7,iPhone_15_Plus_1,iPhone_15_Plus_2,iPhone_15_Plus_3,iPhone_Xr,iPhone_Xs;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11_2,iPhone_11_Pro_Max,iPhone_13_Pro,iPhone_15_1,iPhone_15_2,iPhone_15_3,iPhone_15_4,iPhone_15_5,iPhone_15_6,iPhone_15_7,iPhone_15_Plus_1,iPhone_15_Plus_2,iPhone_15_Plus_3,iPhone_Xr,iPhone_Xs;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="overrideFields" value="JOB_MAX_RUN_TIME=300,capabilities.newCommandTimeout=240,init_retry_count=2,init_retry_interval=15"/>
     <parameter name="stringParam::accountEmail::Account email to be used" value="defaultEmailValue"/>
