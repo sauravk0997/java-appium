@@ -134,7 +134,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String onStatus = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+        String onStatusValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 PROFILE_SETTINGS_KIDPROOF_STATUS_ON.getText());
 
         initialSetup();
@@ -168,7 +168,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(), "Playback setting section is not as expected");
         sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(), "Feature setting section is not as expected");
         sa.assertTrue(editProfile.isParentalControlSectionDisplayed(), "Parental control section is not as expected");
-        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals(onStatus),
+        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals(onStatusValue),
                 "Junior mode toggle was not present");
         sa.assertTrue(editProfile.getProfilePinHeader().isPresent(), "Profile pin header is not displayed");
         sa.assertTrue(editProfile.getProfilePinDescription().isPresent(), "Profile pin description is not displayed");
