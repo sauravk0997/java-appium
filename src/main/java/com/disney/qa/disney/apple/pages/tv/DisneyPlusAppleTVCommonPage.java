@@ -41,6 +41,10 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
         LOGGER.info("TV OS RemoteController '{}' clicked", controlKeywordName);
     }
 
+    public void clickHome(int duration) {
+        pressButtonForDuration(RemoteControlKeyword.HOME, duration);
+    }
+
     public void clickRight(int duration) {
         pressButtonForDuration(RemoteControlKeyword.RIGHT, duration);
     }
