@@ -142,7 +142,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     }
 
     public ExtendedWebElement getResendEmailCopy() {
-        return  getTypeButtonByLabel(getLocalizationUtils()
+        return getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.RESEND_EMAIL_COPY_2.getText()));
     }
@@ -158,5 +158,4 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.ERROR_ACTIVATION_GENERIC_COPY.getText()));
     }
-
 }

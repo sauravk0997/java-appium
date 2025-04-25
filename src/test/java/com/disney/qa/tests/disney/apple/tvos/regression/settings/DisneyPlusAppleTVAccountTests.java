@@ -219,7 +219,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         String errorMessage = "Sorry, we could not connect you to Disney+ using the passcode you provided. " +
                 "Please re-enter your passcode and try again. " +
                 "If the problem persists, visit the Disney+ Help Centre (error code 21).";
-        String ok = "OK";
         SoftAssert sa = new SoftAssert();
         loginWithAccountSharingUser(email, password);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
@@ -241,11 +240,12 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         accountSharingPage.enterOtpOnModal(invalidCode);
         sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(errorMessage).isPresent(),
                 "Error message is not present");
+        homePage.clickDown();
         accountSharingPage.getResendEmailCopy().click();
 
         sa.assertTrue(accountSharingPage.getOOHErrorPageHeadline().isPresent(), "Error page headline is not present");
         sa.assertTrue(accountSharingPage.getOOHErrorActivationGenericCopy().isPresent(), "Error activation text is not present");
-        accountSharingPage.getTypeButtonByLabel(ok).click();
+        accountSharingPage.getOkButton().click();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
         pause(10);
@@ -261,9 +261,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomeScreen.clickLogInButton();
-        pause(5);
         loginPage.proceedToLocalizedPasswordScreen(email);
-        pause(5);
         Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
         passcodePage.clickLoginWithPassword();
         passwordPage.logInWithPasswordLocalized(password);
