@@ -211,20 +211,17 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116861"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyAccountSharingErrorHandling() {
-      //  testerrorhandling@disneyplustesting.com/Test123#
-// victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com/Test1234!
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        String email = "victoria.ruiz.martinez.-nd+68081a77@disneyplustesting.com";
+        String email = "testerrorhandling2@disneyplustesting.com";
         String password = "Test1234!";
         String invalidCode = "111111";
         String errorMessage = "Sorry, we could not connect you to Disney+ using the passcode you provided. " +
                 "Please re-enter your passcode and try again. " +
                 "If the problem persists, visit the Disney+ Help Centre (error code 21).";
+        String ok = "OK";
         SoftAssert sa = new SoftAssert();
         loginWithAccountSharingUser(email, password);
-        pause(15);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
@@ -244,9 +241,13 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         accountSharingPage.enterOtpOnModal(invalidCode);
         sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(errorMessage).isPresent(),
                 "Error message is not present");
-        sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(forgotPasswordPage.getOTPErrorMessage()).isPresent(),
-                "Error 2 message is not present");
-        accountSharingPage.getTypeButtonByLabel("Resend").click();
+        accountSharingPage.getResendEmailCopy().click();
+
+        sa.assertTrue(accountSharingPage.getOOHErrorPageHeadline().isPresent(), "Error page headline is not present");
+        sa.assertTrue(accountSharingPage.getOOHErrorActivationGenericCopy().isPresent(), "Error activation text is not present");
+        accountSharingPage.getTypeButtonByLabel(ok).click();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
         pause(10);
         sa.assertAll();
     }
