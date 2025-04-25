@@ -377,6 +377,7 @@ public enum DictionaryKeys {
     PROFILE_SETTINGS_GENERIC_TOAST("profile_settings_generic_toast"),
     PROFILE_SETTINGS_HEADER("profile_settings_header"),
     PROFILE_SETTINGS_KIDPROOF_EXIT_DESCRIPTION("profile_settings_kidproof_description"),
+    PROFILE_SETTINGS_KIDPROOF_STATUS_ON("profile_settings_kidproof_status_on"),
     PROFILE_SETTINGS_LIVE_UNRATED_HEADER("profile_settings_live_unrated"),
     PROFILE_SETTINGS_LIVE_UNRATED_DESCRIPTION("profile_settings_live_unrated_description_all"),
     PROFILE_SETTINGS_LIVE_UNRATED_HELP_LINK("profile_settings_live_unrated_help_link_1_text"),
