@@ -675,7 +675,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
         Assert.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next button is not present");
         commonPage.clickHome();
-        startApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         terminateApp(sessionBundles.get(DISNEY));
