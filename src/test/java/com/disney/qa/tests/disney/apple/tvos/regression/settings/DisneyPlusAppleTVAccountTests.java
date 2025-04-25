@@ -237,18 +237,17 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
+        // Enter invalid OTP code and validate error in screen
         accountSharingPage.enterOtpOnModal(invalidCode);
         sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(errorMessage).isPresent(),
                 "Error message is not present");
         homePage.clickDown();
         accountSharingPage.getResendEmailCopy().click();
-
         sa.assertTrue(accountSharingPage.getOOHErrorPageHeadline().isPresent(), "Error page headline is not present");
         sa.assertTrue(accountSharingPage.getOOHErrorActivationGenericCopy().isPresent(), "Error activation text is not present");
         accountSharingPage.getOkButton().click();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        pause(10);
         sa.assertAll();
     }
 
