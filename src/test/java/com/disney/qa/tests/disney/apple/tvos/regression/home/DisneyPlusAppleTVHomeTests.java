@@ -319,7 +319,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
-        LOGGER.info("Debugger "+getDriver().getPageSource());
         try {
             brandCollection = getDisneyAPIPage(DisneyEntityIds.HOME_PAGE.getEntityId(),
                     getLocalizationUtils().getLocale(),
