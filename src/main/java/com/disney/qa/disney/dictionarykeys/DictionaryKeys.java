@@ -244,7 +244,6 @@ public enum DictionaryKeys {
     LOGIN_INVALID_EMAIL_ERROR("log_in_email_error_no_account"),
     LOGIN_NO_ACCOUNT("log_in_noaccount"),
     LOGIN_NO_ACCOUNT_SUB_TEXT("log_in_noaccount_subcopy"),
-    LOG_OUT("log_out"),
     LOGOUT_ALL_DEVICES_PASSWORD_COPY("log_out_all_devices_change_password_copy"),
     LOGOUT_BTN("cdsettings_logout"),
     LOG_OUT_CONFIRMATION_TITLE("log_out_confirmation_title"),
