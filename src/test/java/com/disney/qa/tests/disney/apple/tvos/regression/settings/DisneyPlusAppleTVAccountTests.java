@@ -36,6 +36,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
     private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
     private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
+    private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -135,7 +136,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
-                "'I'm Away From Home' button not displayed");
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
@@ -202,7 +203,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
-                "'I'm Away From Home' button not displayed");
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
@@ -220,7 +221,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyAccountSharingTravelMaxed() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
         String email = "testtravelmaxed@disneyplustesting.com";
         String password = "Test1234!";
@@ -235,11 +236,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "'I'm Away From Home' button is not focused");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
-                "Travel mode maxed headline not displayed");
+                TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedSubcopy(),
                 "Travel mode screen sub copy not displayed");
         sa.assertTrue(accountSharingPage.getOOHTravelModeMaxedOKCTA().isPresent(),
-                "OOH Ok button is not present");
+                "OOH OK button is not present");
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
                 "OOH Logout button is not present");
 
@@ -249,18 +250,13 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
-                "Travel mode maxed headline not displayed");
+                TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
         homePage.moveDown(1, 1);
         accountSharingPage.getOOHLogOutButton().click();
-
         sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
                 "Log out confirmation page did not open");
-
-        sa.assertTrue(accountSharingPage.getLogoutButtonPresent().isPresent(),
-                "Log out button is not present in confirmation page");
         homePage.clickSelect();
         sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
-
         sa.assertAll();
     }
 

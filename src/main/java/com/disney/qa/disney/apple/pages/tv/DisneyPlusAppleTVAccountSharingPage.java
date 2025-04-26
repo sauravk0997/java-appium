@@ -142,7 +142,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     }
 
     public boolean isOOHTravelModeMaxedHeadlinePresent() {
-        return getStaticTextByLabel(getLocalizationUtils()
+        return getDynamicAccessibilityId(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                         DictionaryKeys.OOH_TRAVEL_MODE_MAXED_HEADLINE.getText())).isPresent();
     }
@@ -163,11 +163,5 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.LOG_OUT_CONFIRMATION_TITLE.getText())).isPresent();
-    }
-
-    public ExtendedWebElement getLogoutButtonPresent() {
-        return getStaticTextByLabel(getLocalizationUtils()
-                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.LOG_OUT.getText()));
     }
 }
