@@ -252,6 +252,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
                 TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
         homePage.moveDown(1, 1);
+        // Click in logout button and confirm logout in confirmation page
         accountSharingPage.getOOHLogOutButton().click();
         sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
                 "Log out confirmation page did not open");
