@@ -40,9 +40,12 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = headlineHeader.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
+        return headlineHeader.isPresent();
+    }
+
+    public void waitForPasswordPageToOpen() {
+        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Password Page is not opened")
+                .until(it -> headlineHeader.isPresent(THREE_SEC_TIMEOUT));
     }
 
     public boolean isPasswordPagePresent() {
