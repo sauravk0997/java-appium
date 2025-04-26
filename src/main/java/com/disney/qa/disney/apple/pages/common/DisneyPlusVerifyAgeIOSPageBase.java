@@ -26,7 +26,8 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        return verifyAge.isPresent();
+        return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Verify Age Page is not opened")
+                .until(it -> verifyAge.isPresent(THREE_SEC_TIMEOUT));
     }
 
     public void clickIAm21PlusButton() {
@@ -35,7 +36,8 @@ public class DisneyPlusVerifyAgeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickNoButton() {
-        declineMaturityButton.click();
+        waitForPresenceOfAnElement(declineMaturityButton);
+        tap(declineMaturityButton);
     }
 
     public boolean isR21MustBe21YearOlderModalDisplayed() {
