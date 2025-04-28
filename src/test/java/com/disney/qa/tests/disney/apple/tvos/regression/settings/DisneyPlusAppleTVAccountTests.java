@@ -230,6 +230,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         SoftAssert sa = new SoftAssert();
         loginWithAccountSharingUser(email, password);
+        // Verify Soft Block screen and click in continue
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyPresent(),
@@ -242,6 +243,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 LOG_OUT_BUTTON_NOT_PRESENT);
         homePage.clickSelect();
 
+        // Validate verify screen and click in verify device button
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
                 OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceNoCyosSubCopyPresent(),
@@ -252,8 +254,9 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OOH_VERIFY_BUTTON_NOT_PRESENT);
         sa.assertTrue(accountSharingPage.getOOHVerifyDeviceDismissButton().isPresent(),
                 OOH_DISMISS_BUTTON_NOT_PRESENT);
-
         homePage.clickSelect();
+
+        // Verify OTP screen has opened
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
         sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "OOH check mail subtext is not present");
