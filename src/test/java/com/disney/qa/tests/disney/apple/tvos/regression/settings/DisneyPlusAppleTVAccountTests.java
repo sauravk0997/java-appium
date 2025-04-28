@@ -34,6 +34,12 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
             "Confirmation page not displayed after entering OTP";
     private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
     private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
+    private static final String OOH_SOFT_BLOCK_PAGE_NOT_DISPLAYED = "OOH Soft Block page subcopy not displayed";
+    private static final String OOH_SOFT_BLOCK_SUBCOPY_2_NOT_DISPLAYED = "OOH Soft Block page subcopy 2 not displayed";
+    private static final String LOG_OUT_BUTTON_NOT_PRESENT = "Log out button not displayed";
+    private static final String OOH_LEARN_MORE_NOT_DISPLAYED = "OOH Verify Device subcopy, 'learn more' not displayed";
+    private static final String OOH_VERIFY_BUTTON_NOT_PRESENT = "Verify Device button not displayed";
+    private static final String OOH_DISMISS_BUTTON_NOT_PRESENT = "No Thanks/Dismiss button not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -65,13 +71,13 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyPresent(),
-                "OOH Soft Block page subcopy not displayed");
+                OOH_SOFT_BLOCK_PAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyTwoPresent(),
-                "OOH Soft Block page subcopy 2 not displayed");
+                OOH_SOFT_BLOCK_SUBCOPY_2_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                "Log out button not displayed");
+                LOG_OUT_BUTTON_NOT_PRESENT);
         homePage.clickSelect();
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
@@ -79,11 +85,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyPresent(),
                 "OOH Verify Device subcopy not displayed");
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
-                "OOH Verify Device subcopy, 'learn more' not displayed");
+                OOH_LEARN_MORE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHVerifyDeviceButton().isPresent(),
-                "Verify Device button not displayed");
+                OOH_VERIFY_BUTTON_NOT_PRESENT);
         sa.assertTrue(accountSharingPage.getOOHVerifyDeviceDismissButton().isPresent(),
-                "No Thanks/Dismiss button not displayed");
+                OOH_DISMISS_BUTTON_NOT_PRESENT);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
@@ -209,16 +215,15 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                "Log out button not displayed");
+                LOG_OUT_BUTTON_NOT_PRESENT);
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118369"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
-    public void verifyAccountSharingSoftConfirmDevice() {
+    public void verifyAccountSharingSoftBlockConfirmDevice() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
         String email = "testconfirmdevice@disneyplustesting.com";
         String password = "Test1234!";
@@ -228,30 +233,30 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyPresent(),
-                "OOH Soft Block page subcopy not displayed");
+                OOH_SOFT_BLOCK_PAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyTwoPresent(),
-                "OOH Soft Block page subcopy 2 not displayed");
+                OOH_SOFT_BLOCK_SUBCOPY_2_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                "Log out button not displayed");
+                LOG_OUT_BUTTON_NOT_PRESENT);
         homePage.clickSelect();
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
                 OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceNoCyosSubCopyPresent(),
-                "OOH Verify Device subcopy not displayed");
+                "OOH Verify Device No Cyos not displayed");
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
-                "OOH Verify Device subcopy, 'learn more' not displayed");
+                OOH_LEARN_MORE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHVerifyDeviceButton().isPresent(),
-                "Verify Device button not displayed");
+                OOH_VERIFY_BUTTON_NOT_PRESENT);
         sa.assertTrue(accountSharingPage.getOOHVerifyDeviceDismissButton().isPresent(),
-                "No Thanks/Dismiss button not displayed");
+                OOH_DISMISS_BUTTON_NOT_PRESENT);
 
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "Email text subtext is not present");
+        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "OOH check mail subtext is not present");
         sa.assertAll();
     }
 

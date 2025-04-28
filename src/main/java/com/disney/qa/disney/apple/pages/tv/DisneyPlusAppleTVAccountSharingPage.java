@@ -146,11 +146,11 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     }
 
     public boolean isOOHCheckEmailTextPresent(String email) {
-       String subTextLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
+       String subTextEmailLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                        CHECK_EMAIL_COPY.getText()),
-                Map.of("user_email", email));
-        return getStaticTextByLabelContains(subTextLabel).isPresent();
+                Map.of("user_email", email)).replace("'", "’");
+        return getTextViewByLabelContains(subTextEmailLabel).isPresent();
     }
 
     public boolean isOOHVerifyDeviceNoCyosSubCopyPresent() {
