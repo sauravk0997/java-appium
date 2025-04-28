@@ -262,6 +262,9 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "OOH Logout button is not present");
 
        */
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(), "Email text subtext is not present");
         sa.assertAll();
     }
 

@@ -113,6 +113,7 @@ public enum DictionaryKeys {
     CHECKBOX_CHECKED("checkbox_checked"),
     CHECKBOX_UNCHECKED("checkbox_unchecked"),
     CHECK_EMAIL_TITLE("check_email_title"),
+    CHECK_EMAIL_COPY("check_email_copy"),
     CHOOSE_AVATAR_TITLE("chooseprofileicon_title"),
     CHOOSE_CONTENT_RATING("choose_content_rating"),
     CHOOSE_PROFILE_ICON_SKIP("chooseprofileicon_skip"),
