@@ -233,8 +233,13 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void selectInfoHyperlink() {
-        sharePlayHyperLink.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
+        ExtendedWebElement sharePlaySubHeaderLink = sharePlayHyperLink.format(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText()));
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Sub-Header is not displayed")
+                .until(it -> sharePlaySubHeaderLink);
+        swipe(sharePlaySubHeaderLink);
+        sharePlaySubHeaderLink.click();
     }
 
     public ExtendedWebElement getLearnMoreLink() {
