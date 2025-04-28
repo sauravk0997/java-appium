@@ -226,12 +226,31 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         SoftAssert sa = new SoftAssert();
         loginWithAccountSharingUser(email, password);
-        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
-                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
-                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHIAmAwayFromHomeCTA()),
-                "'I'm Away From Home' button is not focused");
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyPresent(),
+                "OOH Soft Block page subcopy not displayed");
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenSubCopyTwoPresent(),
+                "OOH Soft Block page subcopy 2 not displayed");
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
+                CONTINUE_BTN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                "Log out button not displayed");
+        homePage.clickSelect();
+
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyPresent(),
+                "OOH Verify Device subcopy not displayed");
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
+                "OOH Verify Device subcopy, 'learn more' not displayed");
+        sa.assertTrue(accountSharingPage.getOOHVerifyDeviceButton().isPresent(),
+                "Verify Device button not displayed");
+        sa.assertTrue(accountSharingPage.getOOHVerifyDeviceDismissButton().isPresent(),
+                "No Thanks/Dismiss button not displayed");
+
+        homePage.clickSelect();
+        pause(10);
       /*  homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
                 TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
@@ -243,6 +262,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "OOH Logout button is not present");
 
        */
+        sa.assertAll();
     }
 
     private void loginWithAccountSharingUser(String email, String password) {
