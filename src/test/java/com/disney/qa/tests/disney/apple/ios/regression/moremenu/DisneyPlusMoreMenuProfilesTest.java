@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
-import com.disney.config.DisneyParameters;
 import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
@@ -17,7 +16,6 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import io.appium.java_client.remote.MobilePlatform;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -296,12 +294,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66770"})
-    @Test(description = "Add Profile - Seventh Profile", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifySeventhProfile() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void testWhosWatchingTapAddProfile() {
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
-        SoftAssert sa = new SoftAssert();
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         List<String> profiles = Arrays.asList("Profile 2", "Profile 3", "Profile 4", "Profile 5", "Profile 6");
         profiles.forEach(profile ->
                 getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
@@ -314,18 +311,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                         .isStarOnboarded(true).build())
         );
 
-        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-            swipeInContainer(moreMenu.getProfileSelectionCollectionView(), Direction.LEFT, 500);
-        }
-        moreMenu.clickAddProfile();
-        sa.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoseWatching.clickAddProfile();
+        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
 
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
-        sa.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
-        sa.assertAll();
+        Assert.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73707"})
