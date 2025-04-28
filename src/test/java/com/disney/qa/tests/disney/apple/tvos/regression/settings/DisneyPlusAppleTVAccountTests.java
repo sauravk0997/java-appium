@@ -34,7 +34,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
             "Confirmation page not displayed after entering OTP";
     private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
     private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
-    private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -240,7 +239,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
                 OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyPresent(),
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceNoCyosSubCopyPresent(),
                 "OOH Verify Device subcopy not displayed");
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
                 "OOH Verify Device subcopy, 'learn more' not displayed");
@@ -250,18 +249,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "No Thanks/Dismiss button not displayed");
 
         homePage.clickSelect();
-        pause(10);
-      /*  homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
-                TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedSubcopy(),
-                "Travel mode screen sub copy not displayed");
-        sa.assertTrue(accountSharingPage.getOOHTravelModeMaxedOKCTA().isPresent(),
-                "OOH OK button is not present");
-        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                "OOH Logout button is not present");
-
-       */
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
         sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "Email text subtext is not present");

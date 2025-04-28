@@ -10,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import java.util.Map;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CHECK_EMAIL_COPY;
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.WELCOME_SUB_TEXT;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusApplePageBase.class)
@@ -147,14 +146,16 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     }
 
     public boolean isOOHCheckEmailTextPresent(String email) {
-       // return getStaticTextByLabelContains(getLocalizationUtils()
-         //       .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-           //             DictionaryKeys.CHECK_EMAIL_COPY.getText())).isPresent();
-
        String subTextLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                        CHECK_EMAIL_COPY.getText()),
                 Map.of("user_email", email));
         return getDynamicAccessibilityId(subTextLabel).isPresent();
+    }
+
+    public boolean isOOHVerifyDeviceNoCyosSubCopyPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_VERIFY_DEVICE_NO_CYOS_SUBCOPY.getText())).isPresent();
     }
 }

@@ -349,6 +349,7 @@ public enum DictionaryKeys {
     OOH_TRAVEL_MODE_SUB_COPY("ooh_travel_mode_subcopy"),
     OOH_VERIFY_DEVICE_DISMISS_CTA("ooh_verify_device_dismiss_cta"),
     OOH_VERIFY_DEVICE_HEADLINE("ooh_verify_device_headline"),
+    OOH_VERIFY_DEVICE_NO_CYOS_SUBCOPY("ooh_verify_device_no_cyos_subcopy"),
     OOH_VERIFY_DEVICE_OTP_CTA("ooh_verify_device_otp_cta"),
     OOH_VERIFY_DEVICE_SUBCOPY("ooh_verify_device_subcopy"),
     OOH_VERIFY_DEVICE_SUBCOPY_2("ooh_verify_device_subcopy_2"),
