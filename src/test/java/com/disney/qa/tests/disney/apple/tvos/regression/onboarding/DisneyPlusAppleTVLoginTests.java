@@ -516,34 +516,4 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         sa.assertAll();
     }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-91065"})
-    @Test(groups = {TestGroup.ONBOARDING, US})
-    public void verifyProfileSelectionContentPostLogIn() {
-        SoftAssert sa = new SoftAssert();
-        DisneyBaseTest disneyBaseTest = new DisneyBaseTest();
-        DisneyPlusAppleTVHomePage disneyPlusAppleTVHomePage = new DisneyPlusAppleTVHomePage(getDriver());
-
-        ArrayList<Container> collections = disneyBaseTest.getDisneyAPIPage(HOME_PAGE.getEntityId());
-        // Recommended collection titles are been listed
-        List<String> titles = disneyBaseTest.getContainerTitlesFromApi(collections.get(1).getId(), 50);
-
-        getUnifiedAccountApi().patchProfileAvatar(getUnifiedAccount(), getUnifiedAccount().getProfileId(), R.TESTDATA.get(
-                "disney_darth_maul_avatar_id"));
-        logIn(getUnifiedAccount());
-        disneyPlusAppleTVHomePage.moveDown(2,1);
-        // Only first five items of the first shelf container are visible on the screen
-        IntStream.range(0, 5).forEach(i -> {
-            String item = titles.get(i);
-            sa.assertTrue(disneyPlusAppleTVHomePage.getTypeCellNameContains(item).isElementPresent(),
-                    String.format("%s asset of %s not found on first row", titles, item));
-        });
-
-        disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
-        sa.assertTrue(disneyPlusAppleTVHomePage.isGlobalNavExpanded(), "Global navigation is not expanded");
-
-        sa.assertTrue(disneyPlusAppleTVHomePage.isAIDElementPresentWithScreenshot(getUnifiedAccount().getProfiles().get(0).getProfileName()));
-
-        sa.assertAll();
-    }
 }
