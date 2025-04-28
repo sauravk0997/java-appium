@@ -314,11 +314,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoseWatching.clickAddProfile();
-        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+        Assert.assertTrue(chooseAvatar.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
 
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
-        Assert.assertTrue(addProfile.isOpened(), "'Add Profile' page was not opened.");
+        Assert.assertTrue(addProfile.isOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73707"})
