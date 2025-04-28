@@ -370,29 +370,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     protected void installJarvis() {
-        String platformName;
-        if (StringUtils.equalsIgnoreCase(getDevice().getCapabilities().getCapability("deviceType").toString(), MobilePlatform.TVOS)) {
-            platformName = MobilePlatform.TVOS;
-        } else {
-            platformName = getDevice().getCapabilities().getCapability("platformName").toString();
+        String testFairyJarvisUrl = R.CONFIG.get("test_fairy_jarvis_url");
+        if (testFairyJarvisUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY JARVIS CONFIG testFairyJarvisUrl IS MISSING!!!");
         }
-
-        switch (buildType) {
-            case ENTERPRISE:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
-                        .getDirectLink());
-                break;
-            case AD_HOC:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
-                        .getDirectLink());
-                break;
-            case IAP:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
-                        .getDirectLink());
-        }
+        installApp(testFairyJarvisUrl);
     }
 
     public JarvisAppleBase getJarvisPageFactory() {
