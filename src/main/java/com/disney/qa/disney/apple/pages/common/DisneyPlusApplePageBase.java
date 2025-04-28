@@ -652,6 +652,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return element.getAttribute("focused").equalsIgnoreCase("true");
     }
 
+    public ExtendedWebElement getFocusedCell() {
+        List<ExtendedWebElement> cells = findExtendedWebElements(cell.getBy());
+        return cells.stream().filter(cell -> isFocused(cell)).findFirst().get();
+    }
+
     public void keyPressTimes(Consumer<IRemoteControllerAppleTV> action, int times, int timeout) {
         IntStream.range(0, times).forEach(i -> {
             action.accept(this);
