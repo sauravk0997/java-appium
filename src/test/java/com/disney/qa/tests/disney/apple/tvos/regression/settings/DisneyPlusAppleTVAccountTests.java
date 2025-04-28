@@ -34,6 +34,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
             "Confirmation page not displayed after entering OTP";
     private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
     private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
+    private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -211,6 +212,37 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
                 "Log out button not displayed");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118369"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingSoftConfirmDevice() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+
+        String email = "testconfirmdevice@disneyplustesting.com";
+        String password = "Test1234!";
+
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHIAmAwayFromHomeCTA()),
+                "'I'm Away From Home' button is not focused");
+      /*  homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
+                TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedSubcopy(),
+                "Travel mode screen sub copy not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeMaxedOKCTA().isPresent(),
+                "OOH OK button is not present");
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                "OOH Logout button is not present");
+
+       */
     }
 
     private void loginWithAccountSharingUser(String email, String password) {
