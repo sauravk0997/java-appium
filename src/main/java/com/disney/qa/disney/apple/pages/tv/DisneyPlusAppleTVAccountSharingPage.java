@@ -150,7 +150,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                        CHECK_EMAIL_COPY.getText()),
                 Map.of("user_email", email));
-        return getDynamicAccessibilityId(subTextLabel).isPresent();
+        return getStaticTextByLabelContains(subTextLabel).isPresent();
     }
 
     public boolean isOOHVerifyDeviceNoCyosSubCopyPresent() {
