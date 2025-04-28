@@ -264,7 +264,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
        */
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(), "Email text subtext is not present");
+        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "Email text subtext is not present");
         sa.assertAll();
     }
 
