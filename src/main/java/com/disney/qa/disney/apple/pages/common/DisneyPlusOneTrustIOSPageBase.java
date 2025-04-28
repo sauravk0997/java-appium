@@ -29,7 +29,7 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement consentSwitch;
     @ExtendedFindBy(accessibilityId = "pcEditableConsentCellGroupName")
     private ExtendedWebElement consentSwitchTitle;
-    @ExtendedFindBy(accessibilityId = "pcConfirmMyChoiceButton")
+    @ExtendedFindBy(accessibilityId = "pcAllowAllButton")
     private ExtendedWebElement confirmMyChoiceButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"pcEditableConsentCell\"`]/XCUIElementTypeImage")
     protected ExtendedWebElement sellingSharingTargatedAdvertisingArrow;
