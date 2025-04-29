@@ -52,4 +52,8 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
     public ExtendedWebElement getUpNextPlayButton() {
         return upNextPlayButton;
     }
+
+    public ExtendedWebElement getUpNextContentFooterLabel() {
+        return upNextContentFooterLabel;
+    }
 }
