@@ -29,6 +29,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
     private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
     private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
+    private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -208,6 +209,51 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116857"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingTravelModeMaxedOut() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+
+        String email = "testtravelmaxed@disneyplustesting.com";
+        String password = "Test1234!";
+
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHIAmAwayFromHomeCTA()),
+                "'I'm Away From Home' button is not focused");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
+                TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedSubcopy(),
+                "Travel mode screen sub copy not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeMaxedOKCTA().isPresent(),
+                "OOH OK button is not present");
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                "OOH Logout button is not present");
+
+        // Click in OK button and verify we are back in the previous screen
+        accountSharingPage.getOOHTravelModeMaxedOKCTA().click();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
+                TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
+        // Click in logout button and confirm logout in confirmation page
+        accountSharingPage.getOOHLogOutButton().click();
+        sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
+                "Log out confirmation page did not open");
+        homePage.clickSelect();
+        sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116861"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyAccountSharingErrorHandling() {
@@ -229,7 +275,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "'I'm Away From Home' button is not focused");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-               "Travel mode 'Confirm you are away from home' screen not displayed");
+                "Travel mode 'Confirm you are away from home' screen not displayed");
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenSubCopyPresent(),
                 "Travel mode screen sub copy not displayed");
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),

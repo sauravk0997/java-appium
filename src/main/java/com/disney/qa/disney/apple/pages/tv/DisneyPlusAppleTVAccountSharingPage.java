@@ -158,4 +158,28 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.ERROR_ACTIVATION_GENERIC_COPY.getText()));
     }
+
+    public boolean isOOHTravelModeMaxedHeadlinePresent() {
+        return getDynamicAccessibilityId(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_TRAVEL_MODE_MAXED_HEADLINE.getText())).isPresent();
+    }
+
+    public boolean isOOHTravelModeMaxedSubcopy() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_TRAVEL_MODE_MAXED_SUBCOPY.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getOOHTravelModeMaxedOKCTA() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_TRAVEL_MODE_MAXED_CTA.getText()));
+    }
+
+    public boolean isLogoutConfirmationTitlePresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.LOG_OUT_CONFIRMATION_TITLE.getText())).isPresent();
+    }
 }
