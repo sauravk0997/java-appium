@@ -695,7 +695,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         homePage.clickSelect();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
-        // Validate progress bar and remaining time elements are present
+        // Validate progress bar, remaining time and continue button elements are present
+        Assert.assertTrue(detailsPage.getContinueButton().isElementPresent(),
+                "Continue button is not present");
         Assert.assertTrue(detailsPage.isProgressBarPresent(),
                 "Progress bar is not present");
         Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(),
