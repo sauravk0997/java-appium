@@ -8,7 +8,7 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.testng.Assert;
+import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.*;
@@ -189,7 +189,13 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
         //verify that able to navigate to the tabs
         List<String> tabNames = getMovieTabCollection();
-        tabNames.subList(0, 6).forEach(tab -> {
+        if(tabNames.isEmpty()) {
+           throw new SkipException("Not able to get the tab collections from the API");
+        }
+        if(tabNames.size() > 6) {
+            tabNames = tabNames.subList(0, 6);
+        }
+        tabNames.forEach(tab -> {
             sa.assertTrue(commonPage.isFocused(commonPage.getTypeButtonByLabel(tab)),
                     "Unable to navigate to the movies tabs");
             commonPage.moveRight(1, 1);
@@ -213,6 +219,9 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private List<String> getMovieTabCollection() {
         List<Container> pageContainers = getDisneyAPIPage(DisneyEntityIds.MOVIES.getEntityId());
         List<String> tabNames = new ArrayList<>();
+        if(pageContainers.isEmpty()) {
+            throw new SkipException("Not able to get the Movies collection data from the API");
+        }
         pageContainers.forEach(container -> tabNames.add(container.getVisuals().getName()));
         return tabNames;
     }
