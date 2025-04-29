@@ -199,7 +199,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
 
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
         homePage.moveRightUntilElementIsFocused(
@@ -241,7 +241,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
         homePage.moveRightUntilElementIsFocused(
                 homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,

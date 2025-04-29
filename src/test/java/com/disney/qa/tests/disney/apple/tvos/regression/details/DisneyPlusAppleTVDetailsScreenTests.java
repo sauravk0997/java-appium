@@ -538,7 +538,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         homePage.waitForHomePageToOpen();
 
         homePage.moveDownUntilCollectionContentIsFocused(
-                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 5);
+                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 10);
         String firstNewlyAddedTitleName = homePage.getFirstCellTitleFromContainer(
                 CollectionConstant.Collection.NEWLY_ADDED).split(",")[0];
 
