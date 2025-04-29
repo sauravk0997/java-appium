@@ -655,7 +655,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getFocusedCell() {
         List<ExtendedWebElement> cells = findExtendedWebElements(cell.getBy());
         return cells.stream()
-                .filter(element -> isFocused(element))
+                .filter(this::isFocused)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("not able to find the focussed cell"));
     }
