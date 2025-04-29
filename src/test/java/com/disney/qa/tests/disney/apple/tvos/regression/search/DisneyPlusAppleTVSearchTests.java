@@ -204,8 +204,8 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 "Not able to traverse horizontally in movies collection");
 
         commonPage.moveDown(1, 1);
-        String NextRowFocussedCellTitle = commonPage.getFocusedCell().getText();
-        Assert.assertNotEquals(NextRowFocussedCellTitle, nextFocussedCellTitle,
+        String nextRowFocussedCellTitle = commonPage.getFocusedCell().getText();
+        Assert.assertNotEquals(nextRowFocussedCellTitle, nextFocussedCellTitle,
                 "Not able to traverse down in movies collection");
         sa.assertAll();
     }
