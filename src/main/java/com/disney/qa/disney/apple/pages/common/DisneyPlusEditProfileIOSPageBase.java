@@ -233,8 +233,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void selectInfoHyperlink() {
-//        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Sub-Header is not displayed")
-//                .until(it -> getSharePlayHyperLink());
         swipe(getSharePlayHyperLink());
         getSharePlayHyperLink().click();
     }
