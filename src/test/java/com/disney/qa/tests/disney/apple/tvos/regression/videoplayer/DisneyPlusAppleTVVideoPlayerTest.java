@@ -298,4 +298,27 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Video did not restart from expected position");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112598"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifySameSeriesPostPlayUI() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play series' first episode
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+
+        // Scrub to the end and validate Post Play UI doesn't show any Metastring element
+        commonPage.clickRight(7, 1, 1);
+        Assert.assertTrue(upNextPage.isOpened(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        Assert.assertFalse(upNextPage.getUpNextContentFooterLabel().isElementPresent(THREE_SEC_TIMEOUT),
+                "Metastring element is present on Post Play UI");
+    }
 }
