@@ -1320,7 +1320,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isRatingPresent(String rating) {
-        return getStaticTextByLabelContains(rating).isPresent();
+        return getStaticTextByLabelContains(rating).isPresent(FORTY_FIVE_SEC_TIMEOUT);
     }
 
     public boolean isRatingPresent(DictionaryKeys rating) {
