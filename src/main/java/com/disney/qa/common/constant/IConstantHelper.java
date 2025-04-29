@@ -52,6 +52,7 @@ public interface IConstantHelper {
     String WATCHLIST_PAGE_NOT_DISPLAYED = "Watchlist is not displayed";
     String WELCOME_SCREEN_NOT_DISPLAYED = "Welcome screen did not launch";
     String WHOS_WATCHING_NOT_DISPLAYED = "Who's Watching Page is not displayed";
+    String UP_NEXT_PAGE_NOT_DISPLAYED = "Up Next page is not displayed";
 
     //Profile Names
     String PROFILE_NAME_SECONDARY = "Secondary";
