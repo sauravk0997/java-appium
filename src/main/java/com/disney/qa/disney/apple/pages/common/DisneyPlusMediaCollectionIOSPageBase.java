@@ -83,6 +83,9 @@ public class DisneyPlusMediaCollectionIOSPageBase extends DisneyPlusApplePageBas
         return defaultContentPageFilterButton.getAttribute(LABEL);
     }
 
+    public ExtendedWebElement getMoviesCollectionLabel() {
+        return staticTextByLabel.format(MOVIES_COLLECTION_LABEL);
+    }
     public List<String> getCollectionTitles() {
         waitForPresenceOfAnElement(collectionCellNoRow.format(MOVIES_COLLECTION_LABEL));
         List<ExtendedWebElement> collectionTitles =
