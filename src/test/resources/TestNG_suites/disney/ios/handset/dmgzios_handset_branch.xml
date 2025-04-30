@@ -16,7 +16,7 @@
     <parameter name="jenkinsJobName" value="dmgzios_handset_branch"/>
     <parameter name="choiceParam::env::Test ENV" value="Prod,Preview"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11_2,iPhone_11_Pro_Max,iPhone_13_Pro,iPhone_15_1,iPhone_15_2,iPhone_15_3,iPhone_15_4,iPhone_15_5,iPhone_15_6,iPhone_15_7,iPhone_15_Plus_1,iPhone_15_Plus_2,iPhone_15_Plus_3,iPhone_Xr,iPhone_Xs;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11_2,iPhone_11_Pro_Max,iPhone_13_Pro,iPhone_15_1,iPhone_15_2,iPhone_15_3,iPhone_15_4,iPhone_15_5,iPhone_15_6,iPhone_15_7,iPhone_15_Plus_1,iPhone_15_Plus_2,iPhone_15_Plus_3,iPhone_16_1,iPhone_16_Pro_1,iPhone_16_Pro_2,iPhone_16_Pro_3,iPhone_16_Pro_Max,iPhone_16_Pro_Max_2,iPhone_Xr,iPhone_Xs;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="jenkinsJobExecutionOrder" value="1"/>
