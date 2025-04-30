@@ -441,10 +441,11 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         navigateToHomePageForPinUser();
         launchDeeplinkAndPlay();
         verifyAgePage.clickNoButton();
-        sa.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
+        Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
         sa.assertTrue(verifyAgePage.isBrowseOtherTitlesButtonDisplayed(), BROWSE_OTHER_TITLE_ERROR_MESSAGE);
 
         //Tap above the alert to validate that user can not dismiss the modal by clicking outside the bounds
+        Assert.assertTrue(verifyAgePage.getSystemAlert().isPresent(), "Alert not displayed");
         verifyAgePage.tapAboveElement(verifyAgePage.getSystemAlert());
         Assert.assertTrue(verifyAgePage.isR21MustBe21YearOlderModalDisplayed(), MUST_BE_21_YEAR_OLDER_MODAL_ERROR_MESSAGE);
 

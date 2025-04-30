@@ -934,7 +934,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchEmptyPageMaxMaturityRating() {
-        String searchQuery = "robocop";
+        String searchQuery = "The Killer Tomato";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
