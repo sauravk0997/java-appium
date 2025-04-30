@@ -1,19 +1,24 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.search;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusOneTrustConsentBannerIOSPageBase;
+import com.disney.qa.api.disney.*;
+import com.disney.qa.api.explore.response.*;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.testng.Assert;
+import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+import org.testng.asserts.*;
+
+import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
@@ -164,5 +169,60 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         searchPage.navigateToKeyboardFromResult();
         Assert.assertTrue(searchPage.isFocused(searchPage.getKeyboardByPredicate()),
                 "Keyboard not focused");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67280"})
+    @Test(groups = {TestGroup.SMOKE, TestGroup.SEARCH, TestGroup.MOVIES, US})
+    public void verifySearchMoviesNavigation() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage =
+                new DisneyPlusMediaCollectionIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        logIn(getUnifiedAccount());
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(MOVIES.getText());
+        Assert.assertTrue(mediaCollectionPage.getMoviesCollectionLabel().isPresent(),
+                "Unable to navigate to Movies collection page");
+
+        //verify that able to navigate to the tabs
+        List<String> tabNames = getMovieTabCollection();
+        if(tabNames.isEmpty()) {
+           throw new SkipException("Not able to get the tab collections from the API");
+        }
+        if(tabNames.size() > 6) {
+            tabNames = tabNames.subList(0, 6);
+        }
+        tabNames.forEach(tab -> {
+            sa.assertTrue(commonPage.isFocused(commonPage.getTypeButtonByLabel(tab)),
+                    "Unable to navigate to the movies tabs");
+            commonPage.moveRight(1, 1);
+        });
+
+        //verify that able to navigate the collections
+        commonPage.moveDown(1, 1);
+        String currentFocussedCellTitle = commonPage.getFocusedCell().getText();
+        commonPage.moveLeft(2, 1);
+        String nextFocussedCellTitle = commonPage.getFocusedCell().getText();
+        Assert.assertNotEquals(currentFocussedCellTitle, nextFocussedCellTitle,
+                "Not able to traverse horizontally in movies collection");
+
+        commonPage.moveDown(1, 1);
+        String nextRowFocussedCellTitle = commonPage.getFocusedCell().getText();
+        Assert.assertNotEquals(nextRowFocussedCellTitle, nextFocussedCellTitle,
+                "Not able to traverse down in movies collection");
+        sa.assertAll();
+    }
+
+    private List<String> getMovieTabCollection() {
+        List<Container> pageContainers = getDisneyAPIPage(DisneyEntityIds.MOVIES.getEntityId());
+        List<String> tabNames = new ArrayList<>();
+        if(pageContainers.isEmpty()) {
+            throw new SkipException("Not able to get the Movies collection data from the API");
+        }
+        pageContainers.forEach(container -> tabNames.add(container.getVisuals().getName()));
+        return tabNames;
     }
 }
