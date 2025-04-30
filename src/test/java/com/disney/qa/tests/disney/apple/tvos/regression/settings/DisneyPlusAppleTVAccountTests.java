@@ -36,6 +36,9 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
     private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
     private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
+    private static final String LOG_OUT_BUTTON_NOT_PRESENT = "Log out button not displayed";
+    private static final String UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT = "Update Household button not displayed";
+    private static final String UPDATE_HOUSE_SCREEN_NOT_DISPLAYED = "'Update your Disney+ Household' screen not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -73,7 +76,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                "Log out button not displayed");
+                LOG_OUT_BUTTON_NOT_PRESENT);
         homePage.clickSelect();
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
@@ -168,11 +171,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
-                "Update Household button not displayed");
+                UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT);
         homePage.clickDown();
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
-                "'Update your Disney+ Household' screen not displayed");
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
@@ -211,7 +214,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                "Log out button not displayed");
+                LOG_OUT_BUTTON_NOT_PRESENT);
         sa.assertAll();
     }
 
@@ -265,7 +268,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyAccountSharingOTPSupportReasonCodes() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
         String email = "testhardsupport@disneyplustesting.com";
         String password = "Test1234!";
@@ -276,7 +278,23 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
-
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
+                UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT);
+        homePage.moveDown(1, 1);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldCTA()),
+                "Update Household button not focused");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA()),
+                "Send Code button is not focused");
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
         sa.assertAll();
     }
 
