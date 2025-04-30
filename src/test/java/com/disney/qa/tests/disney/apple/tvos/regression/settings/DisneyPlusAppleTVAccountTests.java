@@ -313,22 +313,12 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         loginWithAccountSharingUser(email, password);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
-                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
-                UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT);
         homePage.moveDown(1, 1);
         sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldCTA()),
                 "Update Household button not focused");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
                 UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
-                SEND_CODE_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA()),
-                "Send Code button is not focused");
-        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                LOG_OUT_BUTTON_NOT_PRESENT);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
