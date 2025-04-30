@@ -299,6 +299,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Remaining time label is not visible on player overlay");
 
         videoPlayer.clickPauseButton();
+        videoPlayer.waitForVideoControlToDisappear();
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
 
         sa.assertAll();
