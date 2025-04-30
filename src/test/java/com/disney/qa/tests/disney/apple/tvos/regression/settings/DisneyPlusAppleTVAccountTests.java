@@ -1,13 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVAccountSharingPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVOneTimePasscodePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSettingsPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -262,6 +256,49 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116861"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingErrorHandling() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        String email = "testerrorhandling2@disneyplustesting.com";
+        String password = "Test1234!";
+        String invalidCode = "111111";
+        String errorMessage = "Sorry, we could not connect you to Disney+ using the passcode you provided. " +
+                "Please re-enter your passcode and try again. " +
+                "If the problem persists, visit the Disney+ Help Centre (error code 21).";
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHIAmAwayFromHomeCTA()),
+                "'I'm Away From Home' button is not focused");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                "Travel mode 'Confirm you are away from home' screen not displayed");
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenSubCopyPresent(),
+                "Travel mode screen sub copy not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        // Enter invalid OTP code and validate error in screen
+        accountSharingPage.enterOtpOnModal(invalidCode);
+        sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(errorMessage).isPresent(),
+                "Error message is not present");
+        homePage.clickDown();
+        accountSharingPage.getResendEmailCopy().click();
+        sa.assertTrue(accountSharingPage.getOOHErrorPageHeadline().isPresent(), "Error page headline is not present");
+        sa.assertTrue(accountSharingPage.getOOHErrorActivationGenericCopy().isPresent(), "Error activation text is not present");
+        accountSharingPage.getOkButton().click();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118369"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyAccountSharingSoftBlockConfirmDevice() {
@@ -287,7 +324,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
         sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "OOH check mail subtext is not present");
-        sa.assertAll();
     }
 
     private void loginWithAccountSharingUser(String email, String password) {

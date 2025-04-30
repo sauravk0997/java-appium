@@ -159,6 +159,24 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                         DictionaryKeys.OOH_VERIFY_DEVICE_NO_CYOS_SUBCOPY.getText())).isPresent();
     }
 
+    public ExtendedWebElement getResendEmailCopy() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.RESEND_EMAIL_COPY_2.getText()));
+    }
+
+    public ExtendedWebElement getOOHErrorPageHeadline() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_ERROR_PAGE_HEADLINE.getText()));
+    }
+
+    public ExtendedWebElement getOOHErrorActivationGenericCopy() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.ERROR_ACTIVATION_GENERIC_COPY.getText()));
+    }
+
     public boolean isOOHTravelModeMaxedHeadlinePresent() {
         return getDynamicAccessibilityId(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
