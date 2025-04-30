@@ -182,7 +182,6 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         editProfilePage.clickJuniorModeLearnMoreLink();
-        moreMenu.waitForPresenceOfAnElement(moreMenu.getAddressBar());
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
         sa.assertTrue(editProfilePage.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
     }
