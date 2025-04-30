@@ -331,7 +331,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         ArrayList<String> seriesGenres;
         try {
             nextEpisodeRating = secondEpisodeMetastringParts.getRatingInfo().getRating().getText();
-            nextEpisodeFormattedRuntime = getFormattedStringFromDurationInMs(
+            nextEpisodeFormattedRuntime = getFormattedDurationStringFromDurationInMs(
                     secondEpisodeMetastringParts.getRuntime().getRuntimeMs());
             seriesAudioVisualFlags = seriesMetastringParts.getAudioVisual().getFlags();
             seriesReleaseYear = seriesMetastringParts.getReleaseYearRange().getStartYear();
