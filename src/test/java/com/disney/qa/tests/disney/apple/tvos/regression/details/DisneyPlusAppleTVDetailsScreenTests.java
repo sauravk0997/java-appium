@@ -25,11 +25,13 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.stream.*;
 
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -758,5 +760,44 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
                 WATCHLIST_ICON_NOT_PRESENT);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-113262"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    public void verifyTrailerPlaybackDisregardsBookmark() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play movie trailer, fast-forward 20 seconds and pause it before playback finishes
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_trailer_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        commonPage.clickRight(2, 2, 1);
+        videoPlayer.clickPlay();
+
+        // Go to same movie details page and validate trailer has a bookmark under the Extras tab view
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isExtrasTabPresent(), EXTRAS_TAB_NOT_DISPLAYED);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getExtrasTab(), 6);
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.getContentImageViewProgressBar().isElementPresent(),
+                "Movie trailer image preview doesn't has a progress bar present");
+
+        // Play trailer, pause it and validate current elapsed time is in the initial seconds of playback
+        detailsPage.clickSelect();
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.clickPlay();
+        int elapsedPlaybackTime = videoPlayer.getCurrentTime();
+        ValueRange playbackStartRange = ValueRange.of(0, 15);
+        Assert.assertTrue(playbackStartRange.isValidIntValue(elapsedPlaybackTime),
+                String.format("Current elapsed time (%d seconds) is not between the expected range (%d-%d seconds)" +
+                                "of the beginning of the playback", elapsedPlaybackTime,
+                        playbackStartRange.getMinimum(), playbackStartRange.getMaximum()));
     }
 }
