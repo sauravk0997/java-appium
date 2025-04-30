@@ -254,7 +254,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72539"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.SMOKE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyVideoPlayerControlsUISeries() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -269,25 +269,28 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-
         sa.assertTrue(videoPlayer.getSubTitleLabel().contains(episodeTitle),
                 "Episode title doesn't match from the detail's episode title");
         sa.assertTrue(videoPlayer.getTitleLabel().contains(contentTitle),
                 "Content title doesn't match from the detail's content title");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.BACK), "Back button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.BACK),
+                "Back button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AIRPLAY),
                 "Airplay Button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.LOCK_ICON),
                 "Lock Button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.AUDIO_SUBTITLE_BUTTON),
                 "Audio subtitle Menu Button is not visible on player overlay");
-
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE), "Pause button is not visible on player overlay");
-        videoPlayer.clickPauseButton();
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.REWIND), "Rewind button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.FAST_FORWARD), "Forward button is not visible on player overlay");
-
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.REWIND),
+                "Rewind button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.FAST_FORWARD),
+                "Forward button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PAUSE),
+                "Pause button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.RESTART),
+                "Restart button is not visible on player overlay");
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.NEXT_EPISODE),
+                "Next episode button is not visible on player overlay");
         sa.assertTrue(videoPlayer.isCurrentTimeMarkerVisible(),
                 "Current time marker is not visible on player overlay");
         sa.assertTrue(videoPlayer.isCurrentTimeLabelVisible(),
@@ -295,10 +298,9 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertTrue(videoPlayer.isRemainingTimeLabelVisible(),
                 "Remaining time label is not visible on player overlay");
 
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.RESTART),
-                "Restart button is not visible on player overlay");
-        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.NEXT_EPISODE),
-                "Next episode button is not visible on player overlay");
+        videoPlayer.clickPauseButton();
+        sa.assertTrue(videoPlayer.isElementPresent(PlayerControl.PLAY), "Play button is not visible on player overlay");
+
         sa.assertAll();
     }
 
