@@ -298,7 +298,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-
     private void loginWithAccountSharingUser(String email, String password) {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
