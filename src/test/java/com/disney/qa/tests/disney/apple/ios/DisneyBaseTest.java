@@ -807,6 +807,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             result.append("0m");
         }
 
+        LOGGER.info("Formatted duration: '{}'. Using '{}' ms as input ", result, durationInMs);
         return result.toString();
     }
 
