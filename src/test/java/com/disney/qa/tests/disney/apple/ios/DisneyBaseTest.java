@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -786,6 +787,29 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         long hours = timeInMinutes / 60;
         long minutes = timeInMinutes % 60;
         return String.format("%dh %dm", hours, minutes);
+    }
+
+    public String getFormattedStringFromDurationInMs(int durationInMs) {
+        // Convert to minutes using floating point for rounding
+        long roundedMinutes = Math.round(durationInMs / 60000.0);
+
+        // Derive hours and minutes using TimeUnit
+        long hours = TimeUnit.MINUTES.toHours(roundedMinutes);
+        long minutes = roundedMinutes - TimeUnit.HOURS.toMinutes(hours);
+
+        StringBuilder result = new StringBuilder();
+        if (hours > 0) {
+            result.append(hours).append("h");
+        }
+        if (minutes > 0) {
+            if (result.length() > 0) result.append(" ");
+            result.append(minutes).append("m");
+        }
+        if (result.length() == 0) {
+            result.append("0m");
+        }
+
+        return result.toString();
     }
 
     public String getOTPFromApi(UnifiedAccount testAccount) {
