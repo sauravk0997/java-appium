@@ -47,7 +47,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHomePageMainElement() {
-        return disneyTile;
+        return getTypeCellLabelContains("Disney, Select for details on this title.");
     }
 
     public ExtendedWebElement getActiveHomeIcon() {
