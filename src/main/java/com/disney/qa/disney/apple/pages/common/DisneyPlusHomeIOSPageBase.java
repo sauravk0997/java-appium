@@ -39,7 +39,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement mickeyAndFriends;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name = 'brandTileContentView'$]")
     private ExtendedWebElement brandTileCell;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[@name='DETAILS']")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[name == 'DETAILS']")
     private ExtendedWebElement continueWatchingDetailsBtn;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
@@ -197,6 +197,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public void goToDetailsPageFromContinueWatching(String title) {
         swipeTillContinueWatchingCarouselPresent();
         getStaticTextByLabel(title).click();
+        waitForPresenceOfAnElement(continueWatchingDetailsBtn);
         continueWatchingDetailsBtn.click();
     }
 
