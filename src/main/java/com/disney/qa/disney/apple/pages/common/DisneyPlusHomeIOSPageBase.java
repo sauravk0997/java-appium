@@ -29,7 +29,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement starWarsTile;
     @ExtendedFindBy(accessibilityId = "National Geographic, Select for details on this title.")
     private ExtendedWebElement nationalGeographicTile;
-    @ExtendedFindBy(accessibilityId = "ESPN, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "ESPN, Select for details on this title. | network: none")
     private ExtendedWebElement espnTile;
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
