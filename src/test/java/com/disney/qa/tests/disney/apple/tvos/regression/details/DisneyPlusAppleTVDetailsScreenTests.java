@@ -773,13 +773,14 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
-        // Play movie trailer, fast-forward 20 seconds and pause it before playback finishes
+        // Play movie trailer, fast-forward 20 seconds, pause it before playback finishes and close video player
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_trailer_playback_deeplink"));
         videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
         commonPage.clickRight(2, 2, 1);
         videoPlayer.clickPlay();
+        videoPlayer.clickMenuTimes(1, 1);
 
-        // Go to same movie details page and validate trailer has a bookmark under the Extras tab view
+        // Reload movie details page and validate trailer has a bookmark under the Extras tab view
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1, 1);
