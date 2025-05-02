@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -19,6 +20,7 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_S
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.PROFILE_SETTINGS_KIDPROOF_STATUS_ON;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
@@ -132,6 +134,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String onStatusValue = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                PROFILE_SETTINGS_KIDPROOF_STATUS_ON.getText());
 
         initialSetup();
         handleAlert();
@@ -164,7 +168,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(), "Playback setting section is not as expected");
         sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(), "Feature setting section is not as expected");
         sa.assertTrue(editProfile.isParentalControlSectionDisplayed(), "Parental control section is not as expected");
-        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals("On"), "Junior mode toggle was not present");
+        sa.assertTrue(editProfile.getJuniorModeToggleValue().equals(onStatusValue),
+                "Junior mode toggle was not present");
         sa.assertTrue(editProfile.getProfilePinHeader().isPresent(), "Profile pin header is not displayed");
         sa.assertTrue(editProfile.getProfilePinDescription().isPresent(), "Profile pin description is not displayed");
         sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is displayed");

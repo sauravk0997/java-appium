@@ -1325,4 +1325,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 .forEach(i -> audioVideoFormatLabel.add(ratingAudioVideoFormat.get(i)));
         return audioVideoFormatLabel;
     }
+
+    public int getProgressBarPercentage() {
+        return (progressBarBookmark.getSize().getWidth() * 100) / progressBar.getSize().getWidth();
+    }
  }
