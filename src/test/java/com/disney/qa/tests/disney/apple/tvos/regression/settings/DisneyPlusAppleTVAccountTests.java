@@ -346,7 +346,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
         homePage.clickDown();
         homePage.clickSelect();
-        homePage.waitForHomePageToOpen();
+   //     homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // Steps to verify device
@@ -373,7 +373,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
                 CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
-        homePage.waitForHomePageToOpen();
+      //  homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         pause(20);
