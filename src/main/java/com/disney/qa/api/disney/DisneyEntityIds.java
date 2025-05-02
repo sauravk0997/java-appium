@@ -1,6 +1,7 @@
 package com.disney.qa.api.disney;
 
 public enum DisneyEntityIds {
+    BLUEY_MINISODES("Bluey Minisodes", "entity-b3563311-3e65-42d5-921c-9c9c3a43cb0f"),
     END_GAME("Avengers: Endgame", "entity-b39aa962-be56-4b09-a536-98617031717f"),
     INCREDIBLES_2("Incredibles 2", "entity-9da2c0fb-a380-4180-b67f-006fbaaa89ab"),
     IRONMAN("Iron Man", "entity-3ac839c4-864b-41ed-ad98-043d6b4ac564"),

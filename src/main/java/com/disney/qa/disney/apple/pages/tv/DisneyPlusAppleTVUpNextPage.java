@@ -40,12 +40,21 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
         super(driver);
     }
 
+    @Override
+    public boolean isOpened() {
+        return upNextContentTitleLabel.isElementPresent();
+    }
+
     public boolean isUpNextExtraActionButtonPresent() { return upNextExtraActionButton.isElementPresent(); }
 
     public void clickUpNextExtraActionButton() { upNextExtraActionButton.clickIfPresent(); }
 
     public ExtendedWebElement getUpNextPlayButton() {
         return upNextPlayButton;
+    }
+
+    public ExtendedWebElement getUpNextContentFooterLabel() {
+        return upNextContentFooterLabel;
     }
 
     public ExtendedWebElement getSeeAllEpisodesButton() {
