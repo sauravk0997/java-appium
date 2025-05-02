@@ -652,6 +652,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return element.getAttribute("focused").equalsIgnoreCase("true");
     }
 
+    public ExtendedWebElement getFocusedCell() {
+        List<ExtendedWebElement> cells = findExtendedWebElements(cell.getBy());
+        return cells.stream()
+                .filter(this::isFocused)
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("not able to find the focussed cell"));
+    }
+
     public void keyPressTimes(Consumer<IRemoteControllerAppleTV> action, int times, int timeout) {
         IntStream.range(0, times).forEach(i -> {
             action.accept(this);
@@ -1320,7 +1328,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isRatingPresent(String rating) {
-        return getStaticTextByLabelContains(rating).isPresent();
+        return getStaticTextByLabelContains(rating).isPresent(FORTY_FIVE_SEC_TIMEOUT);
     }
 
     public boolean isRatingPresent(DictionaryKeys rating) {

@@ -20,6 +20,7 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.time.temporal.ValueRange;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
@@ -653,6 +654,66 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         }
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seriesRating).isElementPresent(),
                 "Series rating retrieved from API is not present on details page");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110161"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifyFeaturedEpisodeProgressBar() {
+        int percentageOffset = 5;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        int firstSeasonFirstEpisodeDurationInMinutes;
+        try {
+            firstSeasonFirstEpisodeDurationInMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(
+                    getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY)
+                            .getSeasons().get(0).getItems().get(0).getVisuals().getDurationMs());
+        } catch (Exception e) {
+            throw new SkipException("Unable to retrieve episode duration from Explore API.", e);
+        }
+
+        // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
+        commonPage.clickRight(5, 2, 1);
+        videoPlayer.clickPlay();
+        int estimatedWatchedMinutes = firstSeasonFirstEpisodeDurationInMinutes -
+                (int)TimeUnit.SECONDS.toMinutes(videoPlayer.getRemainingTimeThreeIntegers());
+        LOGGER.info("estimatedWatchedMinutes: '{}' minutes", estimatedWatchedMinutes);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), TEN_SEC_TIMEOUT);
+
+        // Restart app, move to 'Continue Watching' collection and select bookmarked series
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), 20);
+        homePage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        // Validate progress bar, remaining time and continue button elements are present
+        Assert.assertTrue(detailsPage.getContinueButton().isElementPresent(),
+                "Continue button is not present");
+        Assert.assertTrue(detailsPage.isProgressBarPresent(),
+                "Progress bar is not present");
+        Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(),
+                "Continue watching - time remaining is not present");
+
+        // Validate actual progress bar fill percentage approximates to the corresponding actual watched time
+        int estimatedWatchedPercentage = (estimatedWatchedMinutes * 100) / firstSeasonFirstEpisodeDurationInMinutes;
+        ValueRange acceptedPercentageRange = ValueRange.of(
+                estimatedWatchedPercentage - percentageOffset , estimatedWatchedPercentage + percentageOffset);
+        int currentProgressBarPercentage = detailsPage.getProgressBarPercentage();
+        Assert.assertTrue(acceptedPercentageRange.isValidIntValue(currentProgressBarPercentage),
+                String.format("Progress bar fill percentage '%s' isn't between acceptable estimated " +
+                                "percentage range(%s-%s)", currentProgressBarPercentage,
+                        acceptedPercentageRange.getMinimum(), acceptedPercentageRange.getMaximum()));
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67678"})

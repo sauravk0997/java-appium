@@ -233,8 +233,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void selectInfoHyperlink() {
-        sharePlayHyperLink.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).click();
+        swipe(getSharePlayHyperLink());
+        getSharePlayHyperLink().click();
     }
 
     public ExtendedWebElement getLearnMoreLink() {
@@ -604,6 +604,11 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public String getLiveAndUnratedToggleState() {
         return getLiveAndUnratedToggleCell().getText();
+    }
+
+    public ExtendedWebElement getSharePlayHyperLink() {
+        return sharePlayHyperLink.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                        APPLICATION, DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText()));
     }
 
 }

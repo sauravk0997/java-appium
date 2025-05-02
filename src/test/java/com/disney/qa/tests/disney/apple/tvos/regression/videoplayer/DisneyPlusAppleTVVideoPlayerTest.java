@@ -1,7 +1,10 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.explore.response.Flag;
+import com.disney.qa.api.explore.response.MetastringParts;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -19,8 +22,10 @@ import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
 import java.time.temporal.ValueRange;
+import java.util.ArrayList;
 import java.util.List;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.BLUEY_MINISODES;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
@@ -297,5 +302,70 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         sa.assertTrue(range.isValidIntValue(duration),
                 "Video did not restart from expected position");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112598"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifySameSeriesPostPlayUI() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Fetch series and second episode metadata relevant for Post Play UI validations
+        MetastringParts seriesMetastringParts;
+        MetastringParts secondEpisodeMetastringParts;
+        try {
+            seriesMetastringParts = getExploreAPIPageVisuals(BLUEY_MINISODES.getEntityId()).getMetastringParts();
+            secondEpisodeMetastringParts = getSeriesApi(BLUEY_MINISODES.getEntityId(),
+                    DisneyPlusBrandIOSPageBase.Brand.DISNEY).getSeasons().get(0).getItems().get(1)
+                    .getVisuals().getMetastringParts();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test. Episode/Series metastring parts not found using Explore API", e);
+        }
+        ArrayList<Flag> seriesAudioVisualFlags;
+        String nextEpisodeRating, nextEpisodeFormattedRuntime, seriesReleaseYear;
+        ArrayList<String> seriesGenres;
+        try {
+            nextEpisodeRating = secondEpisodeMetastringParts.getRatingInfo().getRating().getText();
+            nextEpisodeFormattedRuntime = getFormattedDurationStringFromDurationInMs(
+                    secondEpisodeMetastringParts.getRuntime().getRuntimeMs());
+            seriesAudioVisualFlags = seriesMetastringParts.getAudioVisual().getFlags();
+            seriesReleaseYear = seriesMetastringParts.getReleaseYearRange().getStartYear();
+            seriesGenres = seriesMetastringParts.getGenres().getValues();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test. Episode/Series metastring parts assignation failed", e);
+        }
+
+        // Play series' first episode
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+
+        // Scrub to the end and validate Post Play UI doesn't show Metastring element
+        commonPage.clickRight(7, 1, 1);
+        Assert.assertTrue(upNextPage.isOpened(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        Assert.assertFalse(upNextPage.getUpNextContentFooterLabel().isElementPresent(THREE_SEC_TIMEOUT),
+                "Metastring element is present on Post Play UI");
+
+        // Validate Metastring parts fetched from Explore API aren't visible as part of a text label element
+        Assert.assertFalse(upNextPage.getStaticTextByLabelContains(nextEpisodeRating).isElementPresent(ONE_SEC_TIMEOUT),
+                "Next episode rating is present on Post Play UI");
+        for (Flag flag : seriesAudioVisualFlags) {
+            Assert.assertFalse(upNextPage.getStaticTextByLabelContains(flag.getTts()).isElementPresent(ONE_SEC_TIMEOUT),
+                    String.format("'%s' flag is present on Post Play UI", flag.getTts()));
+        }
+        Assert.assertFalse(upNextPage.getStaticTextByLabelContains(seriesReleaseYear).isElementPresent(ONE_SEC_TIMEOUT),
+                "Series release year is present on Post Play UI");
+        Assert.assertFalse(
+                upNextPage.getStaticTextByLabelContains(nextEpisodeFormattedRuntime).isElementPresent(ONE_SEC_TIMEOUT),
+                "Next episode runtime is present on Post Play UI");
+        for (String seriesGenre : seriesGenres) {
+            Assert.assertFalse(upNextPage.getStaticTextByLabelContains(seriesGenre).isElementPresent(ONE_SEC_TIMEOUT),
+                    String.format("'%s' series genre is present on Post Play UI", seriesGenre));
+        }
     }
 }
