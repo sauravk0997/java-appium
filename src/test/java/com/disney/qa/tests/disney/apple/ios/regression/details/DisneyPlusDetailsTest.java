@@ -76,7 +76,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             searchPage.clickContentPageFilterDropDown();
             searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
             swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 1, null,
-                    Direction.UP, 100);
+                    Direction.UP, 1000);
             searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
             searchPage.getStaticTextByLabel(filterValue).click();
         } else {
