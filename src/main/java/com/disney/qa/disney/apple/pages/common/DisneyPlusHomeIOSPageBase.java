@@ -19,15 +19,15 @@ import java.util.*;
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private String brandLabelSubString = ", Select for details on this title.";
-    @ExtendedFindBy(accessibilityId = "Disney, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "Disney, Select for details on this title. | network: none")
     private ExtendedWebElement disneyTile;
-    @ExtendedFindBy(accessibilityId = "Pixar, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "Pixar, Select for details on this title. | network: none")
     private ExtendedWebElement pixarTile;
-    @ExtendedFindBy(accessibilityId = "Marvel, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "Marvel, Select for details on this title. | network: none")
     private ExtendedWebElement marvelTile;
-    @ExtendedFindBy(accessibilityId = "Star Wars, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "Star Wars, Select for details on this title. | network: none")
     private ExtendedWebElement starWarsTile;
-    @ExtendedFindBy(accessibilityId = "National Geographic, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "National Geographic, Select for details on this title. | network: none")
     private ExtendedWebElement nationalGeographicTile;
     @ExtendedFindBy(accessibilityId = "ESPN, Select for details on this title. | network: none")
     private ExtendedWebElement espnTile;
