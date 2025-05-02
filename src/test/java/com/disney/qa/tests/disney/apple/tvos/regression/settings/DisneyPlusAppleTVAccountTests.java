@@ -32,8 +32,9 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String OOH_VERIFY_BUTTON_NOT_PRESENT = "Verify Device button not displayed";
     private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
     private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
-    private static final String UPDATE_HOUSEHOLD_SCREEN_NOT_DISPLAYED = "'Update your Disney+ Household' screen not displayed";
+    private static final String OOH_UPDATE_HOUSEHOLD_SCREEN_NOT_DISPLAYED = "'Update your Disney+ Household' screen not displayed";
     private static final String LOG_OUT_CONFIRMATION_NOT_DISPLAYED = "Log out confirmation page did not open";
+    private static final String OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED = "Travel mode 'Confirm you are away from home' screen not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -136,7 +137,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                "Travel mode 'Confirm you are away from home' screen not displayed");
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
@@ -170,7 +171,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickDown();
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
-                UPDATE_HOUSEHOLD_SCREEN_NOT_DISPLAYED);
+                OOH_UPDATE_HOUSEHOLD_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
@@ -203,7 +204,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                "Travel mode 'Confirm you are away from home' screen not displayed");
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenSubCopyPresent(),
                 "Travel mode screen sub copy not displayed");
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
@@ -279,7 +280,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "'I'm Away From Home' button is not focused");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                "Travel mode 'Confirm you are away from home' screen not displayed");
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenSubCopyPresent(),
                 "Travel mode screen sub copy not displayed");
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
@@ -347,7 +348,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                UPDATE_HOUSEHOLD_SCREEN_NOT_DISPLAYED);
+                OOH_UPDATE_HOUSEHOLD_SCREEN_NOT_DISPLAYED);
         homePage.moveDown(1, 1);
         // Click in logout button and confirm logout in confirmation page
         accountSharingPage.getOOHLogOutButton().click();
