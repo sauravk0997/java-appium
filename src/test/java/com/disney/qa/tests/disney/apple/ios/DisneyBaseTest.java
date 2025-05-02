@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,10 +23,8 @@ import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
-import io.appium.java_client.remote.*;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -99,8 +98,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEEPLINKURL = "disneyplus://www.disneyplus.com/browse/";
     public static final String JARVIS_PLAYBACK = "Playback";
     public static final String JARVIS_OFFLINE_EXPIRED_LICENSE_OVERRIDE = "expiredAllowRenewal";
-    protected static final String DOLBY_VISION = "Dolby Vision";
     public static final String ESPN_PLUS = "ESPN+";
+    public static final String AUDIO_VIDEO_BADGE = "Audio_Video_Badge";
+    public static final String RATING = "Rating";
+    public static final String RELEASE_YEAR_DETAILS = "Release_Year";
+    public static final String CONTENT_DESCRIPTION = "Content_Description";
+    public static final String CONTENT_PROMO_TITLE = "Content_Promo_Title";
+    public static final String CONTENT_TITLE = "Content_Title";
 
     //Common error messages
     public static final String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
@@ -365,29 +369,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     protected void installJarvis() {
-        String platformName;
-        if (StringUtils.equalsIgnoreCase(getDevice().getCapabilities().getCapability("deviceType").toString(), MobilePlatform.TVOS)) {
-            platformName = MobilePlatform.TVOS;
-        } else {
-            platformName = getDevice().getCapabilities().getCapability("platformName").toString();
+        String testFairyJarvisUrl = R.CONFIG.get("test_fairy_jarvis_url");
+        if (testFairyJarvisUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY JARVIS CONFIG testFairyJarvisUrl IS MISSING!!!");
         }
-
-        switch (buildType) {
-            case ENTERPRISE:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis-Enterprise/%s/enterprise/latest", platformName))
-                        .getDirectLink());
-                break;
-            case AD_HOC:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Dominguez-Jarvis/%s/adhoc/latest", platformName))
-                        .getDirectLink());
-                break;
-            case IAP:
-                installApp(AppCenterManager.getInstance()
-                        .getAppInfo(String.format("appcenter://Disney-Jarvis/%s/adhoc/latest", platformName))
-                        .getDirectLink());
-        }
+        installApp(testFairyJarvisUrl);
     }
 
     public JarvisAppleBase getJarvisPageFactory() {
@@ -801,6 +787,30 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return String.format("%dh %dm", hours, minutes);
     }
 
+    public String getFormattedDurationStringFromDurationInMs(int durationInMs) {
+        // Convert to minutes using floating point for rounding
+        long roundedMinutes = Math.round(durationInMs / 60000.0);
+
+        // Derive hours and minutes using TimeUnit
+        long hours = TimeUnit.MINUTES.toHours(roundedMinutes);
+        long minutes = roundedMinutes - TimeUnit.HOURS.toMinutes(hours);
+
+        StringBuilder result = new StringBuilder();
+        if (hours > 0) {
+            result.append(hours).append("h");
+        }
+        if (minutes > 0) {
+            if (result.length() > 0) result.append(" ");
+            result.append(minutes).append("m");
+        }
+        if (result.length() == 0) {
+            result.append("0m");
+        }
+
+        LOGGER.info("Formatted duration: '{}'. Using '{}' ms as input ", result, durationInMs);
+        return result.toString();
+    }
+
     public String getOTPFromApi(UnifiedAccount testAccount) {
         int emailAPILatency = 10;
         try {
@@ -834,5 +844,35 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         if (isAlertPresent()) {
             handleGenericPopup(FIVE_SEC_TIMEOUT, 1);
         }
+    }
+
+    public Map<String, Object> getContentMetadataFromAPI(Visuals visualsResponse) {
+        Map<String, Object> exploreAPIMetadata = new HashMap<>();
+
+        exploreAPIMetadata.put(CONTENT_TITLE, visualsResponse.getTitle());
+        exploreAPIMetadata.put(CONTENT_DESCRIPTION, visualsResponse.getDescription().getBrief());
+        if (visualsResponse.getPromoLabel() != null) {
+            exploreAPIMetadata.put(CONTENT_PROMO_TITLE, visualsResponse.getPromoLabel().getHeader());
+        }
+
+        //Audio visual badge
+        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
+            List<String> audioVideoApiBadge = new ArrayList<>();
+            visualsResponse.getMetastringParts().getAudioVisual().getFlags()
+                    .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            exploreAPIMetadata.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+        }
+
+        //Rating
+        if (visualsResponse.getMetastringParts().getRatingInfo() != null) {
+            exploreAPIMetadata.put(RATING, visualsResponse.getMetastringParts().getRatingInfo().getRating().getText());
+        }
+
+        //Release Year
+        if (visualsResponse.getMetastringParts().getReleaseYearRange() != null) {
+            exploreAPIMetadata.put(RELEASE_YEAR_DETAILS,
+                    visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
+        }
+        return exploreAPIMetadata;
     }
 }

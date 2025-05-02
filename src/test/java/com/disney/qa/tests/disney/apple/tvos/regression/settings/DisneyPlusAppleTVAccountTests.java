@@ -1,13 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVAccountSharingPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVLoginPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVOneTimePasscodePage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVPasswordPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVSettingsPage;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVWelcomeScreenPage;
+import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -34,6 +28,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
             "Confirmation page not displayed after entering OTP";
     private static final String CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED = "'Continue To Disney+' button not displayed";
     private static final String SEND_CODE_BUTTON_NOT_DISPLAYED = "Send Code button not displayed";
+    private static final String LOG_OUT_BUTTON_NOT_PRESENT = "Log out button not displayed";
+    private static final String OOH_VERIFY_BUTTON_NOT_PRESENT = "Verify Device button not displayed";
+    private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
+    private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -71,7 +69,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
                 CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                "Log out button not displayed");
+                LOG_OUT_BUTTON_NOT_PRESENT);
         homePage.clickSelect();
 
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
@@ -81,7 +79,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHVerifyDeviceSubCopyTwoPresent(),
                 "OOH Verify Device subcopy, 'learn more' not displayed");
         sa.assertTrue(accountSharingPage.getOOHVerifyDeviceButton().isPresent(),
-                "Verify Device button not displayed");
+                OOH_VERIFY_BUTTON_NOT_PRESENT);
         sa.assertTrue(accountSharingPage.getOOHVerifyDeviceDismissButton().isPresent(),
                 "No Thanks/Dismiss button not displayed");
         homePage.clickSelect();
@@ -133,7 +131,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
-                "'I'm Away From Home' button not displayed");
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
@@ -200,7 +198,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
-                "'I'm Away From Home' button not displayed");
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 "Travel mode 'Confirm you are away from home' screen not displayed");
@@ -209,7 +207,123 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
-                "Log out button not displayed");
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116857"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingTravelModeMaxedOut() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+
+        String email = "testtravelmaxed@disneyplustesting.com";
+        String password = "Test1234!";
+
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHIAmAwayFromHomeCTA()),
+                "'I'm Away From Home' button is not focused");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
+                TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedSubcopy(),
+                "Travel mode screen sub copy not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeMaxedOKCTA().isPresent(),
+                "OOH OK button is not present");
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                "OOH Logout button is not present");
+
+        // Click in OK button and verify we are back in the previous screen
+        accountSharingPage.getOOHTravelModeMaxedOKCTA().click();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeMaxedHeadlinePresent(),
+                TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
+        // Click in logout button and confirm logout in confirmation page
+        accountSharingPage.getOOHLogOutButton().click();
+        sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
+                "Log out confirmation page did not open");
+        homePage.clickSelect();
+        sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116861"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingErrorHandling() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        String email = "testerrorhandling2@disneyplustesting.com";
+        String password = "Test1234!";
+        String invalidCode = "111111";
+        String errorMessage = "Sorry, we could not connect you to Disney+ using the passcode you provided. " +
+                "Please re-enter your passcode and try again. " +
+                "If the problem persists, visit the Disney+ Help Centre (error code 21).";
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHIAmAwayFromHomeCTA()),
+                "'I'm Away From Home' button is not focused");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                "Travel mode 'Confirm you are away from home' screen not displayed");
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenSubCopyPresent(),
+                "Travel mode screen sub copy not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        // Enter invalid OTP code and validate error in screen
+        accountSharingPage.enterOtpOnModal(invalidCode);
+        sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(errorMessage).isPresent(),
+                "Error message is not present");
+        homePage.clickDown();
+        accountSharingPage.getResendEmailCopy().click();
+        sa.assertTrue(accountSharingPage.getOOHErrorPageHeadline().isPresent(), "Error page headline is not present");
+        sa.assertTrue(accountSharingPage.getOOHErrorActivationGenericCopy().isPresent(), "Error activation text is not present");
+        accountSharingPage.getOkButton().click();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118369"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingSoftBlockConfirmDevice() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+
+        String email = "testconfirmdevice@disneyplustesting.com";
+        String password = "Test1234!";
+
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        // Verify Soft Block screen and click in continue
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+
+        // Validate verify screen and click in verify device button
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceNoCyosSubCopyPresent(),
+                "OOH Verify Device No Cyos not displayed");
+        homePage.clickSelect();
+
+        // Verify OTP screen has opened
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "OOH check mail subtext is not present");
         sa.assertAll();
     }
 

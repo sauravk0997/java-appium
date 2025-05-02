@@ -4,6 +4,7 @@ import com.disney.qa.api.explore.request.ExploreSearchRequest;
 
 import java.util.EnumSet;
 
+@SuppressWarnings("squid:S1214")
 public interface IConstantHelper {
     EnumSet<ExploreSearchRequest.ContentEntitlement> CONTENT_ENTITLEMENT_DISNEY =
             EnumSet.of(ExploreSearchRequest.ContentEntitlement.DISNEY_PLUS_BASE);
@@ -52,6 +53,7 @@ public interface IConstantHelper {
     String WATCHLIST_PAGE_NOT_DISPLAYED = "Watchlist is not displayed";
     String WELCOME_SCREEN_NOT_DISPLAYED = "Welcome screen did not launch";
     String WHOS_WATCHING_NOT_DISPLAYED = "Who's Watching Page is not displayed";
+    String UP_NEXT_PAGE_NOT_DISPLAYED = "Up Next page is not displayed";
 
     //Profile Names
     String PROFILE_NAME_SECONDARY = "Secondary";

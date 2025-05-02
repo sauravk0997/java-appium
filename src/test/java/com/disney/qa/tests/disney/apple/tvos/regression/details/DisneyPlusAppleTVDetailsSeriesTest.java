@@ -10,6 +10,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.*;
@@ -19,9 +20,9 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.time.temporal.ValueRange;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
-import static com.disney.qa.api.disney.DisneyEntityIds.LOKI;
+import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.TWENTY_FIVE_SEC_TIMEOUT;
@@ -545,6 +546,177 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.moveDown(2, 1);
         Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellLabelContains(episodeTitle)),
                 "Bookmark episode in episode tab is not focused");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64950"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesEpisodeExclusiveFocus() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        String firstSeasonsFirstEpisodeTitle;
+        try {
+            firstSeasonsFirstEpisodeTitle = getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY)
+                    .getSeasons().get(0).getItems().get(0).
+                    getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Unable to retrieve episode title from Explore API.", e);
+        }
+
+        //Move down to first episode and validate episode is focused and the others aren't
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE);
+        detailsPage.moveDown(1, 1);
+        ExtendedWebElement firstEpisodeCell = detailsPage.getEpisodeCell("1", "1");
+        Assert.assertTrue(firstEpisodeCell.getAttribute(LABEL).contains(firstSeasonsFirstEpisodeTitle),
+                "First episode cell does not contain episode title retrieved from Explore API");
+        Assert.assertTrue(detailsPage.isFocused(firstEpisodeCell),
+                "First episode is not focused");
+        Assert.assertFalse(detailsPage.isFocused(detailsPage.getEpisodeCell("1", "2")),
+                "Second episode is focused");
+        Assert.assertFalse(detailsPage.isFocused(detailsPage.getEpisodeCell("1", "3")),
+                "Third episode is focused");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64879"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageUI() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        String entityID = R.TESTDATA.get("disney_prod_loki_entity_id");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        //Verify main details page UI elements
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
+        sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabel(visualsResponse.getDescription().getBrief()).isPresent(),
+                DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
+
+        //Verify if "Genre" value matches with api, if api has returned any value
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        //Verify if "Audio/Video/Format Quality" value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            sa.assertTrue(((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).containsAll(detailsPage.getAudioVideoFormatValue()),
+                    "Expected Audio and video badge not displayed");
+        }
+        //Verify if ratings value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area");
+        }
+        //Verify if release year value matches with api, if api has returned any value
+        if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
+                    "Release year value is not present on details page featured area");
+        }
+
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
+        sa.assertTrue(detailsPage.isPlayButtonDisplayed(), "Details page play button not present");
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), "Details page watchlist button not present");
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), "Details page trailer button not displayed");
+        sa.assertTrue(detailsPage.doesOneOrMoreSeasonDisplayed(), "One or more season not displayed.");
+        sa.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getSuggestedTab().isPresent(), SUGGESTED_TAB_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getExtrasTab().isPresent(), EXTRAS_TAB_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getDetailsTab().isPresent(), DETAILS_TAB_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64895"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDisplayedRating() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        String seriesRating;
+        try {
+            seriesRating = getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY).getRating();
+        } catch (Exception e) {
+            throw new SkipException("Unable to retrieve rating from Explore API.", e);
+        }
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seriesRating).isElementPresent(),
+                "Series rating retrieved from API is not present on details page");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110161"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifyFeaturedEpisodeProgressBar() {
+        int percentageOffset = 5;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        int firstSeasonFirstEpisodeDurationInMinutes;
+        try {
+            firstSeasonFirstEpisodeDurationInMinutes = (int) TimeUnit.MILLISECONDS.toMinutes(
+                    getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY)
+                            .getSeasons().get(0).getItems().get(0).getVisuals().getDurationMs());
+        } catch (Exception e) {
+            throw new SkipException("Unable to retrieve episode duration from Explore API.", e);
+        }
+
+        // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
+        commonPage.clickRight(5, 2, 1);
+        videoPlayer.clickPlay();
+        int estimatedWatchedMinutes = firstSeasonFirstEpisodeDurationInMinutes -
+                (int)TimeUnit.SECONDS.toMinutes(videoPlayer.getRemainingTimeThreeIntegers());
+        LOGGER.info("estimatedWatchedMinutes: '{}' minutes", estimatedWatchedMinutes);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), TEN_SEC_TIMEOUT);
+
+        // Restart app, move to 'Continue Watching' collection and select bookmarked series
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), 20);
+        homePage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        // Validate progress bar, remaining time and continue button elements are present
+        Assert.assertTrue(detailsPage.getContinueButton().isElementPresent(),
+                "Continue button is not present");
+        Assert.assertTrue(detailsPage.isProgressBarPresent(),
+                "Progress bar is not present");
+        Assert.assertTrue(detailsPage.getContinueWatchingTimeRemaining().isPresent(),
+                "Continue watching - time remaining is not present");
+
+        // Validate actual progress bar fill percentage approximates to the corresponding actual watched time
+        int estimatedWatchedPercentage = (estimatedWatchedMinutes * 100) / firstSeasonFirstEpisodeDurationInMinutes;
+        ValueRange acceptedPercentageRange = ValueRange.of(
+                estimatedWatchedPercentage - percentageOffset , estimatedWatchedPercentage + percentageOffset);
+        int currentProgressBarPercentage = detailsPage.getProgressBarPercentage();
+        Assert.assertTrue(acceptedPercentageRange.isValidIntValue(currentProgressBarPercentage),
+                String.format("Progress bar fill percentage '%s' isn't between acceptable estimated " +
+                                "percentage range(%s-%s)", currentProgressBarPercentage,
+                        acceptedPercentageRange.getMinimum(), acceptedPercentageRange.getMaximum()));
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64956"})

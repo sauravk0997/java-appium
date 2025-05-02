@@ -261,7 +261,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "Create New Password screen wasn't opened");
         changePasswordPage.clickPasswordField();
         changePasswordPage.enterPassword("Abc12!");
-        changePasswordPage.moveDown(3, 1);
+        changePasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         changePasswordPage.clickSelect();
         changePasswordPage.clickSave();
 
