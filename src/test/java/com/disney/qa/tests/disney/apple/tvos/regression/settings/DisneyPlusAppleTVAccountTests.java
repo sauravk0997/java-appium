@@ -11,15 +11,13 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.common.constant.IConstantHelper.CONTINUE_BTN_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.HOME_PAGE_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.common.constant.IConstantHelper.WELCOME_SCREEN_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
+    private static final String PROFILE_NAME = "Test";
     private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block screen not displayed";
     private static final String OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Hard Block screen not displayed";
     private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen not displayed";
@@ -329,22 +327,56 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116762"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
-    public void verifyOOHPendingName() {
+    public void verifyOOHDevicePageSoftBlock() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-     //   String email = "anderson.velasquez.-nd+6806a1f2@disneyplustesting.com";
+        String email = "testsoftblockverifydevice@disneyplustesting.com";
         String password = "Test1234!";
 
-      //  loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(email, password);
 
-        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
-                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        // Steps to verify the no thanks option
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
+                CONTINUE_BTN_NOT_DISPLAYED);
         homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                "Travel mode 'Confirm you are away from home' screen not displayed");
-        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
-                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
+        homePage.clickDown();
+        homePage.clickSelect();
+        homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        // Steps to verify device
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
+
+
+        homePage.moveRight(1, 1);
+        homePage.moveLeft(1, 1);
+        homePage.clickSelect();
+
+        Assert.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        pause(20);
 
 
         sa.assertAll();
