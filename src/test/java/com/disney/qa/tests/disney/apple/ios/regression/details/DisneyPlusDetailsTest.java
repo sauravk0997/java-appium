@@ -75,8 +75,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
             searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
-            swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 5, null,
-                    Direction.UP, 1000);
+            swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 2, null,
+                    Direction.UP, 100);
             searchPage.getStaticTextByLabel(filterValue).click();
         } else {
             searchPage.getTypeButtonByLabel(filterValue).click();
