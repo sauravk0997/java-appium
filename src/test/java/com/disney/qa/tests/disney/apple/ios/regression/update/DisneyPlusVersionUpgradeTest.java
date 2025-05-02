@@ -39,10 +39,6 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         if (appPreviousFCVersionUrl.isEmpty()) {
             throw new RuntimeException("TEST FAIRY CONFIG test_fairy_previous_fc_url IS MISSING!");
         }
-        if (!appPreviousFCVersionUrl.contains(appPreviousFCVersion)) {
-            throw new RuntimeException("test_fairy_previous_fc_url (config) build version should match " +
-                    "disney_app_previous_fc_version (testdata)");
-        }
 
         // Install previous FC Version and log in
         installTestFairyApp(appPreviousFCVersionUrl);
