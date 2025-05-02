@@ -356,7 +356,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         // Scrub to the end and start next episode
-        commonPage.clickRight(6, 1, 1);
+        commonPage.clickRight(7, 1, 1);
         videoPlayer.waitForPresenceOfAnElement(upNextPage.getSeeAllEpisodesButton());
         commonPage.moveRightUntilElementIsFocused(upNextPage.getSeeAllEpisodesButton(), 6);
         Assert.assertTrue(upNextPage.getSeeAllEpisodesButton().isPresent(), "See All Episode CTA is not displayed");
