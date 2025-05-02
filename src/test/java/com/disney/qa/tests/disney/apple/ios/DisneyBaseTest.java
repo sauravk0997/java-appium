@@ -510,12 +510,26 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
+        UnifiedAccount account = null;
+        boolean kidsMode = false;
+        String profileId;
+        if (isKids.length > 0 && isKids[0]) {
+            kidsMode = true;
+            profileId = getUnifiedAccount().getProfiles().stream()
+                    .filter(profile -> profile.getAttributes().getKidsModeEnabled())
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("No KIDS profile found for this account"))
+                    .getProfileId();
+        } else {
+            account = getUnifiedAccount();
+            profileId = getUnifiedAccount().getProfileId();
+        }
         try {
             return getExploreApi().getPage(getDisneyExploreSearchRequest()
                             .setEntityId(pageID)
-                            .setUnifiedAccount(getUnifiedAccount())
-                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
-                            .setProfileId(getUnifiedAccount().getProfileId()))
+                            .setUnifiedAccount(account)
+                            .setKidsMode(kidsMode)
+                            .setProfileId(profileId))
                     .getData()
                     .getPage()
                     .getContainers();
