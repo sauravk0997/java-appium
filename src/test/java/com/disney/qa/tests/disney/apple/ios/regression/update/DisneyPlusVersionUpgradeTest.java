@@ -143,10 +143,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 FORCE_UPDATE_ERROR + " Title not found");
     }
 
-    private void installAppCenterApp(String version) {
-        installApp(AppCenterManager.getInstance()
-                .getAppInfo(String.format(APP_URL, version))
-                .getDirectLink());
+    private void installTestFairyApp(String url) {
+        installApp(url);
     }
 
     private String formatAppVersion(String appVersion) {
