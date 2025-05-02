@@ -29,7 +29,7 @@
     <parameter name="overrideFields"
                value="JOB_MAX_RUN_TIME=360,init_retry_count=2,init_retry_interval=15,capabilities.newCommandTimeout=300"/>
     <parameter name="choiceParam::groups::Test Group selection. Leave blank to run full regression."
-               value=",Smoke,AccountSharing,Anthology,Deeplinks,DetailsPage,Downloads,Home,Hulu,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
+               value=",Smoke,AccountSharing,Anthology,Deeplinks,DetailsPage,Downloads,ESPN,Home,Hulu,LogIn,MoreMenu,Movies,Navigation,Onboarding,Profiles,R21,RalphLogIn,Search,Series,SignUp,Upgrade,UpNext,VideoPlayer,VideoPlayerAds,Watchlist,Welch"/>
 
     <test verbose="1" name="DisneyPlus iOS Handset Onboarding" parallel="methods">
         <classes>

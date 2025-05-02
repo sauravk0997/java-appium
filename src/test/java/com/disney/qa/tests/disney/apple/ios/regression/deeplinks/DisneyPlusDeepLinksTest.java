@@ -561,7 +561,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77699"})
-    @Test(groups = {TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUnavailableContentPopUpForESPNContentJuniorProfile() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
