@@ -7,7 +7,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import org.testng.annotations.Listeners;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
@@ -35,13 +34,9 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         String appPreviousFCVersion =  R.TESTDATA.get("disney_app_previous_fc_version");
-        String appPreviousFCVersionUrl =  R.CONFIG.get("test_fairy_previous_fc_url");
-        if (appPreviousFCVersionUrl.isEmpty()) {
-            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_previous_fc_url IS MISSING!");
-        }
 
         // Install previous FC Version and log in
-        installTestFairyApp(appPreviousFCVersionUrl);
+        installPreviousVersionTestFairyApp();
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         setAppToHomeScreen(getUnifiedAccount());
@@ -147,8 +142,12 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 FORCE_UPDATE_ERROR + " Title not found");
     }
 
-    private void installTestFairyApp(String url) {
-        installApp(url);
+    private void installPreviousVersionTestFairyApp() {
+        String appPreviousFCVersionUrl =  R.CONFIG.get("test_fairy_previous_fc_url");
+        if (appPreviousFCVersionUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_previous_fc_url IS MISSING!");
+        }
+        installApp(appPreviousFCVersionUrl);
     }
 
     private String formatAppVersion(String appVersion) {
