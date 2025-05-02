@@ -13,12 +13,21 @@ public class DisneyPlusAppleTVEditProfilePage extends DisneyPlusEditProfileIOSPa
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Edit %s's profile.\"`]")
     private ExtendedWebElement dynamicEditProfileIcon;
 
+    public DisneyPlusAppleTVEditProfilePage(WebDriver driver) {
+        super(driver);
+    }
+
     @Override
     public boolean isEditModeProfileIconPresent(String username) {
         return dynamicEditProfileIcon.format(username).isElementPresent();
     }
 
-    public DisneyPlusAppleTVEditProfilePage(WebDriver driver) {
-        super(driver);
+    @Override
+    public void toggleAutoplayButton(String newState) {
+        String currentState = autoplayToggleCell.getText();
+        LOGGER.info("Current state of autoplay: {}, requested state: {}", currentState, newState);
+        if (!currentState.equalsIgnoreCase(newState)) {
+            autoplayToggleCell.click();
+        }
     }
 }
