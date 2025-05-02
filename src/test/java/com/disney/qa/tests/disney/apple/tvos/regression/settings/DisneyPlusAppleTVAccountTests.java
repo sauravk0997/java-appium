@@ -327,6 +327,29 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116762"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHPendingName() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+     //   String email = "anderson.velasquez.-nd+6806a1f2@disneyplustesting.com";
+        String password = "Test1234!";
+
+      //  loginWithAccountSharingUser(email, password);
+
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                "Travel mode 'Confirm you are away from home' screen not displayed");
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+
+
+        sa.assertAll();
+    }
+
     private void loginWithAccountSharingUser(String email, String password) {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
