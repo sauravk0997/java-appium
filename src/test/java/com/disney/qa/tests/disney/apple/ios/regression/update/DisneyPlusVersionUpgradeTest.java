@@ -35,9 +35,17 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         String appPreviousFCVersion =  R.TESTDATA.get("disney_app_previous_fc_version");
+        String appPreviousFCVersionUrl =  R.CONFIG.get("test_fairy_previous_fc_url");
+        if (appPreviousFCVersionUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_previous_fc_url IS MISSING!");
+        }
+        if (!appPreviousFCVersionUrl.contains(appPreviousFCVersion)) {
+            throw new RuntimeException("test_fairy_previous_fc_url (config) build version should match " +
+                    "disney_app_previous_fc_version (testdata)");
+        }
 
         // Install previous FC Version and log in
-        installAppCenterApp(appPreviousFCVersion);
+        installTestFairyApp(appPreviousFCVersionUrl);
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         setAppToHomeScreen(getUnifiedAccount());
