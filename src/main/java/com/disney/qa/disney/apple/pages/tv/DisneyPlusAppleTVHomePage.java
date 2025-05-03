@@ -81,7 +81,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = DisneyPlusAppleTVCommonPage.isProd() ? disneyBrandTile.isElementPresent() : homeContentView.isElementPresent();
+        boolean isPresent = DisneyPlusAppleTVCommonPage.isProd() ? brandTileCell.isElementPresent() : homeContentView.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
@@ -90,7 +90,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     public void waitForHomePageToOpen() {
         LOGGER.info("Waiting for Home page to load");
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Home page is not opened")
-                .until(it -> getHomePageMainElement().isPresent(THREE_SEC_TIMEOUT));
+                .until(it -> brandTileCell.isPresent(THREE_SEC_TIMEOUT));
     }
 
     @Override
