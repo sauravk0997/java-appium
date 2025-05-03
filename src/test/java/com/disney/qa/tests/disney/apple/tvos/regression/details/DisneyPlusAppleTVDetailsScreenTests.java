@@ -792,4 +792,22 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertFalse(detailsPage.getDetailsTab().isPresent(FIVE_SEC_TIMEOUT),
                 "Details tab is present");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121954"})
+    @Test(groups = {TestGroup.ESPN, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, JP})
+    public void verifyESPNUnavailableDetailsPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+
+        Assert.assertTrue(homePage.isViewAlertPresent(), "Alert was not present");
+        Assert.assertTrue(homePage.getStaticTextByLabelContains("content-unavailable").isElementPresent(),
+                "Content Unavailable error message was not present");
+        Assert.assertTrue(homePage.getOkButton().isElementPresent(),
+                "OK button text was not present");
+    }
 }
