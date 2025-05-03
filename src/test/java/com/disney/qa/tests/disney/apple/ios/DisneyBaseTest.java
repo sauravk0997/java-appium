@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -22,10 +23,8 @@ import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
-import io.appium.java_client.remote.*;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -511,12 +510,26 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public ArrayList<Container> getDisneyAPIPage(String pageID, boolean... isKids) {
+        UnifiedAccount account = null;
+        boolean kidsMode = false;
+        String profileId;
+        if (isKids.length > 0 && isKids[0]) {
+            kidsMode = true;
+            profileId = getUnifiedAccount().getProfiles().stream()
+                    .filter(profile -> profile.getAttributes().getKidsModeEnabled())
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("No KIDS profile found for this account"))
+                    .getProfileId();
+        } else {
+            account = getUnifiedAccount();
+            profileId = getUnifiedAccount().getProfileId();
+        }
         try {
             return getExploreApi().getPage(getDisneyExploreSearchRequest()
                             .setEntityId(pageID)
-                            .setUnifiedAccount(getUnifiedAccount())
-                            .setKidsMode(isKids.length > 0 ? isKids[0] : false)
-                            .setProfileId(getUnifiedAccount().getProfileId()))
+                            .setUnifiedAccount(account)
+                            .setKidsMode(kidsMode)
+                            .setProfileId(profileId))
                     .getData()
                     .getPage()
                     .getContainers();
@@ -786,6 +799,30 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         long hours = timeInMinutes / 60;
         long minutes = timeInMinutes % 60;
         return String.format("%dh %dm", hours, minutes);
+    }
+
+    public String getFormattedDurationStringFromDurationInMs(int durationInMs) {
+        // Convert to minutes using floating point for rounding
+        long roundedMinutes = Math.round(durationInMs / 60000.0);
+
+        // Derive hours and minutes using TimeUnit
+        long hours = TimeUnit.MINUTES.toHours(roundedMinutes);
+        long minutes = roundedMinutes - TimeUnit.HOURS.toMinutes(hours);
+
+        StringBuilder result = new StringBuilder();
+        if (hours > 0) {
+            result.append(hours).append("h");
+        }
+        if (minutes > 0) {
+            if (result.length() > 0) result.append(" ");
+            result.append(minutes).append("m");
+        }
+        if (result.length() == 0) {
+            result.append("0m");
+        }
+
+        LOGGER.info("Formatted duration: '{}'. Using '{}' ms as input ", result, durationInMs);
+        return result.toString();
     }
 
     public String getOTPFromApi(UnifiedAccount testAccount) {

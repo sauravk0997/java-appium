@@ -7,6 +7,10 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
+import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.CHECK_EMAIL_COPY;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase {
@@ -139,6 +143,38 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
         return getTypeButtonByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                         DictionaryKeys.OOH_UPDATE_HOUSEHOLD_SEND_CODE_CTA.getText()));
+    }
+
+    public boolean isOOHCheckEmailTextPresent(String email) {
+       String subTextEmailLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
+                       .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                       CHECK_EMAIL_COPY.getText()),
+                Map.of("user_email", email)).replace("'", "’");
+        return getTextViewByLabelContains(subTextEmailLabel).isPresent();
+    }
+
+    public boolean isOOHVerifyDeviceNoCyosSubCopyPresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_VERIFY_DEVICE_NO_CYOS_SUBCOPY.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getResendEmailCopy() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.RESEND_EMAIL_COPY_2.getText()));
+    }
+
+    public ExtendedWebElement getOOHErrorPageHeadline() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_ERROR_PAGE_HEADLINE.getText()));
+    }
+
+    public ExtendedWebElement getOOHErrorActivationGenericCopy() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.ERROR_ACTIVATION_GENERIC_COPY.getText()));
     }
 
     public boolean isOOHTravelModeMaxedHeadlinePresent() {

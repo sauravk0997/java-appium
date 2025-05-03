@@ -837,7 +837,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77662"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNSportsUpcomingEventBadges() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -934,7 +934,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67307"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchEmptyPageMaxMaturityRating() {
-        String searchQuery = "robocop";
+        String searchQuery = "The Killer Tomato";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -1073,7 +1073,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77673"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, FRANCE})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, FRANCE})
     public void verifySportsSearchForNonEligibleCountry() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1100,7 +1100,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77669"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifySportsSearchForEligibleCountry() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
