@@ -2,15 +2,15 @@ package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceUtilities;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
+import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -25,16 +25,17 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.time.temporal.ValueRange;
 import java.util.*;
 import java.util.stream.*;
 
 import static com.disney.alice.labels.AliceLabels.DESCRIPTION;
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BILL_BURR;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
 import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.UPCOMING;
@@ -758,5 +759,78 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.getWatchlistButton().click();
         Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
                 WATCHLIST_ICON_NOT_PRESENT);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121956"})
+    @Test(groups = {TestGroup.ESPN, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNUnavailableDetailsPagePCONError() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
+        Profile secondaryProfile = getUnifiedAccount().getProfile(SECONDARY_PROFILE);
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
+                secondaryProfile.getProfileId(),
+                secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
+                secondaryProfile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
+
+        logIn(getUnifiedAccount(), SECONDARY_PROFILE);
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getEspnPlusGenericErrorText().isPresent(),
+                "Inline generic error message is not present");
+        Assert.assertFalse(detailsPage.getDetailsTab().isPresent(FIVE_SEC_TIMEOUT),
+                "Details tab is present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-113262"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    public void verifyTrailerPlaybackDisregardsBookmark() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play movie trailer, fast-forward 20 seconds, pause it before playback finishes and close video player
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_trailer_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        commonPage.clickRight(2, 2, 1);
+        videoPlayer.clickPlay();
+        videoPlayer.clickMenuTimes(1, 1);
+
+        // Reload movie details page and validate trailer has a bookmark under the Extras tab view
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isExtrasTabPresent(), EXTRAS_TAB_NOT_DISPLAYED);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getExtrasTab(), 6);
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.getContentImageViewProgressBar().isElementPresent(),
+                "Movie trailer image preview doesn't has a progress bar present");
+
+        // Play trailer, pause it and validate current elapsed time is in the initial seconds of playback
+        detailsPage.clickSelect();
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+        videoPlayer.clickPlay();
+        int elapsedPlaybackTime = videoPlayer.getCurrentTime();
+        ValueRange playbackStartRange = ValueRange.of(0, 15);
+        Assert.assertTrue(playbackStartRange.isValidIntValue(elapsedPlaybackTime),
+                String.format("Current elapsed time (%d seconds) is not between the expected range (%d-%d seconds)" +
+                                "of the beginning of the playback", elapsedPlaybackTime,
+                        playbackStartRange.getMinimum(), playbackStartRange.getMaximum()));
     }
 }
