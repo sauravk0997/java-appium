@@ -75,6 +75,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
             searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
+            Assert.assertTrue(searchPage.isContentPageFilterSelectableTitlePresent(), "Filter Titles are not displayed");
             swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 1, null,
                     Direction.UP, 200);
             searchPage.waitForLoaderToDisappear(TEN_SEC_TIMEOUT);
