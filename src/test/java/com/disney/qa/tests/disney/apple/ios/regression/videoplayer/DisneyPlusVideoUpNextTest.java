@@ -219,7 +219,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         //Play Bluey season 1
         detailsPage.getEpisodeTitleLabel(first).click();
         videoPlayerPage.waitForVideoToStart();
-        videoPlayerPage.getSkipIntroButton().click();
+        videoPlayerPage.getSkipIntroButton().clickIfPresent();
         videoPlayerPage.clickPauseButton();
         videoPlayerPage.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
 
