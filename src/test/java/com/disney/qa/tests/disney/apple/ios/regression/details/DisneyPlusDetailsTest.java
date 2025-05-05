@@ -27,7 +27,6 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.common.constant.RatingConstant.Rating.TEN;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
