@@ -81,7 +81,8 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     @Override
     public boolean isOpened() {
-        boolean isPresent = DisneyPlusAppleTVCommonPage.isProd() ? brandTileCell.isElementPresent() : homeContentView.isElementPresent();
+        boolean isPresent = DisneyPlusAppleTVCommonPage.isProd() ?
+                brandTileCell.isElementPresent() : homeContentView.isElementPresent();
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
