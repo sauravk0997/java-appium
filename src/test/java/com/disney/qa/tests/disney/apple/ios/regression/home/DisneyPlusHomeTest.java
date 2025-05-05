@@ -666,7 +666,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int expectedRemainingTimeInSec = 70;
+        int expectedRemainingTimeInSec = 30;
         String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -681,6 +681,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .isStarOnboarded(true)
                 .build());
+
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         homePage.waitForHomePageToOpen();
@@ -900,11 +901,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         relaunch();
     }
 
-    private void addContentInContinueWatchingWithExpectedRemainingTime(String url, int expectedRemainingTime) {
+    private void addContentInContinueWatchingWithExpectedRemainingTime(String url, int scrubPercentage) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplink(url);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        Assert.assertTrue(videoPlayer.isOpened(), "Video Player was not opened");
+        videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
         videoPlayer.clickBackButton();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
