@@ -48,8 +48,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
     private ExtendedWebElement firstUpcomingEventCell;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'selectableTitle'`]")
-    private ExtendedWebElement selectableTitle;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeStaticText[`name == 'airingBadgeLabel' AND label =[c] 'Upcoming'`]")
     private ExtendedWebElement upcomingBadge;
@@ -203,10 +201,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
 
     public void clickContentPageFilterDropDown() {
         contentPageFilterDropDown.click();
-    }
-
-    public boolean isContentPageFilterSelectableTitlePresent() {
-        return selectableTitle.isPresent();
     }
 
     public void clickContentPageFilterDropDownAtMiddleTop() {
