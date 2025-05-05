@@ -81,7 +81,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     @Override
     public boolean isOpened() {
-        return disneyBrandTile.isPresent(FIVE_SEC_TIMEOUT) || homeContentView.isPresent(FIVE_SEC_TIMEOUT);
+        return disneyBrandTile.isPresent() || homeContentView.isPresent();
     }
 
     @Override
