@@ -32,6 +32,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String OOH_VERIFY_BUTTON_NOT_PRESENT = "Verify Device button not displayed";
     private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
     private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
+    private static final String UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT = "Update Household button not displayed";
+    private static final String UPDATE_HOUSE_SCREEN_NOT_DISPLAYED = "'Update your Disney+ Household' screen not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -164,11 +166,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
-                "Update Household button not displayed");
+                UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT);
         homePage.clickDown();
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
-                "'Update your Disney+ Household' screen not displayed");
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
@@ -324,6 +326,31 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
         sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "OOH check mail subtext is not present");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118368"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingOTPSupportReasonCodes() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+
+        String email = "testhardsupport@disneyplustesting.com";
+        String password = "Test1234!";
+
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
+        sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldCTA()),
+                "Update Household button not focused");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
         sa.assertAll();
     }
 
