@@ -3,10 +3,18 @@ package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
+import static com.disney.qa.common.constant.IConstantHelper.DETAILS_TAB_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.EPISODE_TAB_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.EXTRAS_TAB_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.SHARE_BTN_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.SUGGESTED_TAB_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.TRAILER_BTN_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.WATCHLIST_BTN_NOT_DISPLAYED;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.util.TestGroup;
@@ -24,6 +32,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
 import java.util.List;
+import java.util.Map;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
@@ -89,19 +98,55 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73780" })
-    @Test(description = "Verify Anthology Series - Title, Description, Date", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyAnthologyTitleDescriptionDate() {
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAnthologyDetailsUIElements() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
         searchAndOpenDWTSDetails();
+        String entityID = R.TESTDATA.get("disney_prod_series_dwts_entity_id");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
-        sa.assertTrue(details.getMediaTitle().equalsIgnoreCase(DANCING_WITH_THE_STARS),
-                "Media title of logo image does not match " + DANCING_WITH_THE_STARS);
+        sa.assertTrue(details.getBackButton().isPresent(), "Close button not present");
+        sa.assertTrue(details.getShareBtn().isPresent(), SHARE_BTN_NOT_DISPLAYED);
+        sa.assertTrue(details.isHeroImagePresent(), "Banner image not present");
+        sa.assertTrue(details.isLogoImageDisplayed(), "Details page logo image not present");
+        sa.assertEquals(details.getMediaTitle(), exploreAPIData.get(CONTENT_TITLE), MEDIA_TITLE_NOT_DISPLAYED);
+
+        if (exploreAPIData.containsKey(CONTENT_PROMO_TITLE)) {
+            sa.assertEquals(details.getPromoLabelText(), exploreAPIData.get(CONTENT_PROMO_TITLE).toString(),
+                    "Promo label mismatch");
+        }
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            sa.assertTrue(((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE))
+                            .containsAll(details.getAudioVideoFormatValue()),
+                    "Expected Audio and video badge not displayed");
+        }
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(details.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area");
+        }
+        if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
+            sa.assertTrue(details.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString())
+                            .isPresent(), "Release year value is not present on details page featured area");
+        }
+        String metadataString = details.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        sa.assertTrue(details.isPlayButtonDisplayed(), "Play button not present");
+        sa.assertTrue(details.isTrailerButtonDisplayed(), TRAILER_BTN_NOT_DISPLAYED);
+        sa.assertTrue(details.isWatchlistButtonDisplayed(), WATCHLIST_BTN_NOT_DISPLAYED);
+        sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
+
+        sa.assertTrue(details.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
+        sa.assertTrue(details.getSuggestedTab().isPresent(), SUGGESTED_TAB_NOT_DISPLAYED);
+        sa.assertTrue(details.getExtrasTab().isPresent(), EXTRAS_TAB_NOT_DISPLAYED);
+        sa.assertTrue(details.getDetailsTab().isPresent(), DETAILS_TAB_NOT_DISPLAYED);
         sa.assertTrue(details.metadataLabelCompareDetailsTab(0, details.getReleaseDate(), 1),
                 "Metadata label date year not found and does not match details tab year.");
-        sa.assertTrue(details.isContentDescriptionDisplayed(), "Content Description not found.");
         sa.assertAll();
     }
 
