@@ -310,8 +310,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67200"})
-    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67200"})
+    @Test(groups = {TestGroup.HOME, US})
     public void verifyHomeBrandTiles() {
         Container brandCollection;
         int totalBrandTile;
