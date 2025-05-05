@@ -177,9 +177,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isElementPresent(PlayerControl control) {
+        ExtendedWebElement controlButton = getElementFor(control);
         waitForPresenceOfAnElement(playerView);
         displayVideoController();
-        return getElementFor(control).isElementPresent();
+        return controlButton.isElementPresent();
     }
 
     public ExtendedWebElement getSeekbar() {
@@ -246,8 +247,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean verifyVideoPaused() {
+        ExtendedWebElement playButton = getPlayButton();
         displayVideoController();
-        return getPlayButton().isElementPresent();
+        return playButton.isElementPresent();
     }
 
     public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart() {
