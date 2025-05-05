@@ -76,7 +76,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             searchPage.clickContentPageFilterDropDown();
             searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
             Assert.assertTrue(searchPage.isContentPageFilterSelectableTitlePresent(), "Filter Titles are not displayed");
-            swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 1, null,
+            swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 50, null,
                     Direction.UP, 200);
             searchPage.waitForLoaderToDisappear(TEN_SEC_TIMEOUT);
             searchPage.getStaticTextByLabel(filterValue).click();
