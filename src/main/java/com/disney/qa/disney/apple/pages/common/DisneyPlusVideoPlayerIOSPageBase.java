@@ -246,8 +246,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean verifyVideoPaused() {
+        ExtendedWebElement playButton = getPlayButton();
         displayVideoController();
-        return getPlayButton().isElementPresent();
+        return playButton.isElementPresent();
     }
 
     public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart() {
