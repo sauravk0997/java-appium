@@ -63,7 +63,8 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
 
     @Override
     public boolean waitForUpNextUIToAppear() {
-        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0, "upNext UI didn't appear on video player")
+        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
+                "upNext UI didn't appear on video player")
                 .until(it -> upNextPlayButton.isElementPresent(THREE_HUNDRED_SEC_TIMEOUT)));
     }
 }
