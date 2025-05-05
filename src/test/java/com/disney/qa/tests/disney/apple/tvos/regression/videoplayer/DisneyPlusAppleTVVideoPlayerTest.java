@@ -35,6 +35,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String SPORT_PAGE_DID_NOT_OPEN = "Sport page did not open";
     private static final String NO_REPLAYS_FOUND = "No replay events found";
+    private static final String PLAYER_CONTROLS_NOT_DISPLAYED =
+            "Player controls were not displayed when playback activated";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120534"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULU, US})
@@ -64,8 +66,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Video player title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSubTitleLabelDisplayed(),
                 "Video player meta data title wasn't visible along with controls");
-        sa.assertTrue(videoPlayer.isSeekbarVisible(),
-                "player controls were not displayed when playback activated");
+        sa.assertTrue(videoPlayer.isSeekbarVisible(), PLAYER_CONTROLS_NOT_DISPLAYED);
         commonPage.clickDown(2);
         sa.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE),
                 "Expected Hulu Service Attribution not displayed");
@@ -113,8 +114,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Video player title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSubTitleLabelDisplayed(),
                 "Video player meta data title wasn't visible along with controls");
-        sa.assertTrue(videoPlayer.isSeekbarVisible(),
-                "player controls were not displayed when playback activated");
+        sa.assertTrue(videoPlayer.isSeekbarVisible(), PLAYER_CONTROLS_NOT_DISPLAYED);
         commonPage.clickDown(2);
         sa.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE),
                 "Expected Hulu Service Attribution not displayed");
