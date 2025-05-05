@@ -3,6 +3,7 @@
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
     <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.3.5-77643"/>
+    <parameter name="stringParam::test_fairy_previous_fc_url::Enter TestFairy previous FC download URL" value=""/>
     <parameter name="stringParam::test_fairy_jarvis_url::Enter TestFairy Jarvis download URL" value=""/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="jenkinsJobName" value="dmgzios_tablet_concurrency_rc"/>
