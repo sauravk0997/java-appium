@@ -3,6 +3,7 @@
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
     <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.4.0-78199"/>
+    <parameter name="stringParam::test_fairy_previous_fc_url::Enter TestFairy previous FC download URL" value=""/>
     <parameter name="stringParam::test_fairy_jarvis_url::Enter TestFairy Jarvis download URL" value=""/>
     <parameter name="reporting.project-key" value="DIS"/>
     <parameter name="stringParam::reporting.milestone.name::Enter Milestone Name" value="apple-4.4.0-fc"/>
@@ -18,7 +19,7 @@
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>
     <parameter name="jenkinsEnvironments" value="Prod"/>
     <parameter name="provider" value="mcloud"/>
-    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11_2,iPhone_11_Pro_Max,iPhone_13_Pro,iPhone_15_1,iPhone_15_2,iPhone_15_3,iPhone_15_4,iPhone_15_5,iPhone_15_6,iPhone_15_7,iPhone_15_Plus_1,iPhone_15_Plus_2,iPhone_15_Plus_3,iPhone_Xr,iPhone_Xs;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
+    <parameter name="capabilities" value="platformName=iOS;deviceName=iPhone_11_2,iPhone_11_Pro_Max,iPhone_13_Pro,iPhone_15_1,iPhone_15_2,iPhone_15_3,iPhone_15_4,iPhone_15_5,iPhone_15_6,iPhone_15_7,iPhone_15_Plus_1,iPhone_15_Plus_2,iPhone_15_Plus_3,iPhone_16_1,iPhone_16_Pro_1,iPhone_16_Pro_2,iPhone_16_Pro_3,iPhone_16_Pro_Max,iPhone_16_Pro_Max_2,iPhone_Xr,iPhone_Xs;deviceType=Phone;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="jenkinsDefaultRetryCount" value="0"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
     <parameter name="reporting.notification.slack-channels" value="cse-apple-zebrunner-reports"/>
