@@ -683,7 +683,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         homePage.waitForHomePageToOpen();
         addContentInContinueWatchingWithExpectedRemainingTime(
@@ -906,8 +905,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplink(url);
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), "Video Player was not opened");
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
+        videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
