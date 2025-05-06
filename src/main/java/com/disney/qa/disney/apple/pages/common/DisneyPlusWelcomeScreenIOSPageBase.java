@@ -69,7 +69,7 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     public boolean isSubCopyDirectTextPresent() {
         String subCopyDirectText = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE_ONBOARDING,
-                        DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY.getText());
+                        DictionaryKeys.WELCOME_UNAUTHENTICATED_SUBCOPY_BOOKWORM.getText());
         return staticTextNameContains.format(subCopyDirectText).isPresent();
     }
 
