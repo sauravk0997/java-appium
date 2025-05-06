@@ -341,21 +341,21 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
+                .profileName(SECONDARY_PROFILE)
                 .dateOfBirth(KIDS_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
-                .kidsModeEnabled(true)
+                .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount());
-        whoIsWatching.clickProfile(KIDS_PROFILE);
+        whoIsWatching.clickProfile(SECONDARY_PROFILE);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
-        
+
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
