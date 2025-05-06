@@ -3,11 +3,13 @@ package com.disney.qa.tests.disney.apple.tvos.regression.anthology;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.Container;
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.Listeners;
@@ -15,10 +17,17 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DANCING_WITH_THE_STARS;
+import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.TRAILER_BTN_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.US;
+import static com.disney.qa.common.constant.IConstantHelper.VIDEO_PLAYER_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.WATCHLIST_BTN_NOT_DISPLAYED;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
@@ -28,6 +37,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
     //Test constants
     private static final String PLAY = "PLAY";
+    private static final String WATCHLIST_ICON_NOT_PRESENT = "Watchlist plus icon is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106662"})
     @Test(description = "Verify Anthology Series - Watchlist", groups = {TestGroup.ANTHOLOGY, US})
@@ -248,6 +258,67 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
                     details.getTabBarTitleInfo().get(i).getAttribute(Attributes.NAME.getAttribute()),
                     "Tabs are not displayed in expected order");
         });
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106004"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, US})
+    public void verifyAnthologyDetailsPageFeatureArea() {
+        String trailer = "Trailer";
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        String entityID = R.TESTDATA.get("disney_prod_series_dwts_entity_id");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
+
+        logIn(getUnifiedAccount());
+        searchAndOpenDWTSDetails();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertEquals(detailsPage.getMediaTitle(), exploreAPIData.get(CONTENT_TITLE), MEDIA_TITLE_NOT_DISPLAYED);
+
+        if (exploreAPIData.containsKey(CONTENT_PROMO_TITLE)) {
+            sa.assertEquals(detailsPage.getPromoLabelText(), exploreAPIData.get(CONTENT_PROMO_TITLE).toString(),
+                    "Promo label mismatch");
+        }
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            sa.assertTrue(((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE))
+                            .containsAll(detailsPage.getAudioVideoFormatValue()),
+                    "Expected Audio and video badge not displayed");
+        }
+        if (exploreAPIData.containsKey(RATING)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
+                    "Rating value is not present on details page featured area");
+        }
+        if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString())
+                    .isPresent(), "Release year value is not present on details page featured area");
+        }
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+
+        sa.assertTrue(detailsPage.isTrailerButtonDisplayed(), TRAILER_BTN_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isWatchlistButtonDisplayed(), WATCHLIST_BTN_NOT_DISPLAYED);
+
+        Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
+                WATCHLIST_ICON_NOT_PRESENT);
+        detailsPage.getWatchlistButton().click();
+        Assert.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+                "Watchlist checkmark icon is not displayed");
+
+        // Click again and verify plus icon
+        detailsPage.getWatchlistButton().click();
+        Assert.assertTrue(detailsPage.getAddToWatchlistText().isPresent(),
+                WATCHLIST_ICON_NOT_PRESENT);
+
+        detailsPage.getTrailerButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        String title = videoPlayer.getTitleLabel();
+        Assert.assertTrue(title.contains(trailer) && title.contains(visualsResponse.getTitle()),
+                "Expected Trailer not playing");
+        sa.assertAll();
     }
 
     private void searchAndOpenDWTSDetails() {
