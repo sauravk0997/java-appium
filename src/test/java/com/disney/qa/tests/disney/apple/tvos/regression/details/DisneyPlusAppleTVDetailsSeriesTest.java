@@ -735,7 +735,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67678"})
     @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
-    public void verifyBackGroundingUpNextWhileAutoplayOnOFF() {
+    public void verifyBackGroundingUpNextWhileAutoplayOFF() {
         String toogleValue = "Off";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
@@ -745,10 +745,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         homePage.waitForHomePageToOpen();
         toogleAutoPlay(toogleValue);
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
-        commonPage.clickHome();
+        commonPage.clickHome(2, 1, 1);
         commonPage.clickMenu();
         LOGGER.info("Launching app again");
-        launchApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
     }
 
