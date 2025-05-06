@@ -357,7 +357,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
 
         moreMenu.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             editProfilePage.swipeUp(FIFTEEN_HUNDRED_SEC_TIMEOUT);
         }
