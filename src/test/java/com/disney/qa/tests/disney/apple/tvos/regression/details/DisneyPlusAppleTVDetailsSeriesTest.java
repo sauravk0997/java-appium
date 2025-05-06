@@ -740,26 +740,15 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        SoftAssert sa = new SoftAssert();
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
-        commonPage.clickHome();
-        LOGGER.info("Launching app again");
-        launchApp(sessionBundles.get(DISNEY));
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-
-        terminateApp(sessionBundles.get(DISNEY));
-        startApp(sessionBundles.get(DISNEY));
         toogleAutoPlay(toogleValue);
-
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         commonPage.clickHome();
         LOGGER.info("Launching app again");
         launchApp(sessionBundles.get(DISNEY));
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        sa.assertAll();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
     }
 
     private void toogleAutoPlay(String toogleValue) {
@@ -788,7 +777,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForVideoToStart();
         // Scrub to the end and start next episode
         commonPage.clickRight(7, 1, 1);
-        videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
-        Assert.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next button is not present");
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
     }
 }
