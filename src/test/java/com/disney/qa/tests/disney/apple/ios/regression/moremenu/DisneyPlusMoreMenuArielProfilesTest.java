@@ -337,15 +337,28 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
 
         setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatching.clickProfile(KIDS_PROFILE);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
-        scrollDown();
-        pause(1);
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            editProfilePage.swipeUp(FIFTEEN_HUNDRED_SEC_TIMEOUT);
+        }
         Assert.assertTrue(editProfilePage.isJuniorModeTextPresent(), JUNIOR_MODE_TEXT_ERROR_MESSAGE);
     }
 
