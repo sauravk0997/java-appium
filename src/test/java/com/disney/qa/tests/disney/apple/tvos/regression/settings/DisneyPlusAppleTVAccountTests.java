@@ -361,8 +361,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         String email = "testsoftblockverifydevice@disneyplustesting.com";
         String password = "Test1234!";
 
-   /*    loginWithAccountSharingUser(email, password);
-
+       loginWithAccountSharingUser(email, password);
+/*
         // Steps to verify the no thanks option
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
