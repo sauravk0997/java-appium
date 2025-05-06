@@ -34,6 +34,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.CONTINUE_WATCHING;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STUDIOS_AND_NETWORKS;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -666,7 +667,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int expectedRemainingTimeInSec = 30;
+        int expectedRemainingTimeInSec = 35;
         String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -689,7 +690,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
                 expectedRemainingTimeInSec);
         homePage.waitForHomePageToOpen();
-        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.CONTINUE_WATCHING, swipeCount);
         sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container not found for Adult profile");
         sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
@@ -707,7 +708,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
-        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.CONTINUE_WATCHING, swipeCount);
         sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container not found for Kid profile");
         sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
