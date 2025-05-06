@@ -499,7 +499,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         welcomePage.clickLogInButton();
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        handleGenericPopup(3, 1);
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
         passwordPage.getTextEntryField().click();
         Assert.assertTrue(passwordPage.getDynamicAccessibilityId(
