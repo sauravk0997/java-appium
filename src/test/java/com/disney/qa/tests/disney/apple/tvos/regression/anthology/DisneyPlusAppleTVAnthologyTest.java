@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.DANCING_WITH_THE_STARS;
+import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISPLAYED;
 import static com.disney.qa.common.constant.IConstantHelper.TRAILER_BTN_NOT_DISPLAYED;
@@ -314,7 +316,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
         detailsPage.getTrailerButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForVideoToStart(THREE_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
         String title = videoPlayer.getTitleLabel();
         Assert.assertTrue(title.contains(trailer) && title.contains(visualsResponse.getTitle()),
                 "Expected Trailer not playing");
