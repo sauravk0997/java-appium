@@ -358,7 +358,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String email = "testsoftblockverifydevice@disneyplustesting.com";
+        String email = "qait.disneystreaming+1767211931324cashdisneystreaming@gmail.com";
         String password = "Test1234!";
 
        loginWithAccountSharingUser(email, password);
@@ -403,6 +403,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
        // homePage.clickUp();
         homePage.clickSelect();
         pause(10);
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
@@ -450,4 +452,5 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
             throw new RuntimeException(e.getMessage());
         }
     }
+
 }
