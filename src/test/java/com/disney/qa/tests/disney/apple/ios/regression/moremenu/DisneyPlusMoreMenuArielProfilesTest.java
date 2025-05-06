@@ -354,6 +354,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
