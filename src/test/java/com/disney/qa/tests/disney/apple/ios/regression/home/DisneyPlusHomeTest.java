@@ -667,7 +667,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int expectedRemainingTimeInSec = 20;
+        int expectedRemainingTimeInSec = 10;
         String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
