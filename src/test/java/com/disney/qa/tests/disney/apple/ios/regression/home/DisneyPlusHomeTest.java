@@ -25,13 +25,11 @@ import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.IntStream;
-
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.CONTINUE_WATCHING;
@@ -907,7 +905,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
-        videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
