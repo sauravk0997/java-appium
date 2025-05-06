@@ -558,8 +558,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         if (homePage.isFocused(liveCell)) {
             homePage.clickSelect();
-            homePage.moveDown(1, 1);
-            Assert.assertTrue(homePage.isFocused(liveEventModalPage.getDetailsButton()),
+            liveEventModalPage.waitForPresenceOfAnElement(liveEventModalPage.getWatchLiveButton());
+            liveEventModalPage.moveDown(1, 1);
+            Assert.assertTrue(liveEventModalPage.isFocused(liveEventModalPage.getDetailsButton()),
                     "Modal details button is not focused");
         }
         homePage.clickSelect();
