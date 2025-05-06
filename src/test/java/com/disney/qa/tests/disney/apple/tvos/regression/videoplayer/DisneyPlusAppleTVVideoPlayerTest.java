@@ -387,7 +387,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         // Scrub to the end, validate Post Play UI is visible and select minimized video player
         commonPage.clickRight(8, 1, 1);
-        Assert.assertTrue(upNextPage.isOpened(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
         upNextPage.moveRight(2, 1);
         upNextPage.clickSelect();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
@@ -399,6 +399,6 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         // Fast-forward to the end of playback and validate Post Play UI is visible again after playback
         commonPage.clickRight(7, 1, 1);
-        Assert.assertTrue(upNextPage.isOpened(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
     }
 }
