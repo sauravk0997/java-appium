@@ -9,19 +9,12 @@ import org.openqa.selenium.WebDriver;
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase {
 
-    //LOCATORS
-
-    @ExtendedFindBy(accessibilityId = "buttonSignUp")
-    protected ExtendedWebElement signUpButton;
-
     @ExtendedFindBy(accessibilityId = "loginButton")
     protected ExtendedWebElement loginButton;
 
     private ExtendedWebElement forceUpdateTitle = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.UPDATE_APP_TITLE.getText()));
-
-    //FUNCTIONS
 
     public DisneyPlusWelcomeScreenIOSPageBase(WebDriver driver) {
         super(driver);
