@@ -85,6 +85,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement contentImageView;
     @ExtendedFindBy(accessibilityId = "contentImageView")
     protected ExtendedWebElement extrasContentImageView;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'contentImageView'`]" +
+            "/XCUIElementTypeOther[`name == 'progressBar'`]")
+    protected ExtendedWebElement contentImageViewProgressBar;
     @ExtendedFindBy(accessibilityId = "shareButton")
     private ExtendedWebElement shareBtn;
     @ExtendedFindBy(accessibilityId = "watchlistButton")
@@ -251,6 +254,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getDownloadStartedButton() {
         return downloadStartedButton;
+    }
+
+    public ExtendedWebElement getContentImageViewProgressBar() {
+        return contentImageViewProgressBar;
     }
 
     public boolean isContinueButtonPresent() {

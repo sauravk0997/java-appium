@@ -24,7 +24,7 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
     private static final String UNENTITLED_HULU_CONTENT = "Only Murders in the Building";
-    private static final String ENTITLED_HULU_CONTENT = "Tell Me Lies";
+    private static final String ENTITLED_HULU_CONTENT = "Solar Opposites";
     private static final String UNLOCK = "Unlock";
     private static final String HOME_PAGE_ERROR_MESSAGE = "Home page did not open";
     private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
