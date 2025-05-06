@@ -186,7 +186,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         videoPlayer.waitForVideoToStart();
         commonPage.clickDown(1);
         commonPage.clickSelect();
-        String remainingTime = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
+        String remainingTime = videoPlayer.getRemainingTimeInDetailsFormatString();
         LOGGER.info("remainingTime {}", remainingTime);
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
