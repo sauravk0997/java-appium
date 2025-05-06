@@ -398,11 +398,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
       */
         pause(6);
         homePage.clickSelect();
-        pause(3);
+        pause(10);
        // homePage.clickDown();
        // homePage.clickUp();
         homePage.clickSelect();
-        pause(3);
+        pause(10);
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
