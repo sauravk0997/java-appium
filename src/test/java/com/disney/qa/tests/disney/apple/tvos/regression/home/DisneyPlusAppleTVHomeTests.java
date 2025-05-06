@@ -1,8 +1,12 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -18,6 +22,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
@@ -303,6 +308,35 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             throw new SkipException("Series episode stream expected is not available" + e.getMessage());
         }
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67200"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyHomeBrandTiles() {
+        Container brandCollection;
+        int totalBrandTile;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        try {
+            brandCollection = getDisneyAPIPage(DisneyEntityIds.HOME_PAGE.getEntityId(),
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage()).get(1);
+            totalBrandTile = brandCollection.getItems().size();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get brand collection details from the api " + e.getMessage());
+        }
+
+        IntStream.range(0, totalBrandTile - 1).forEach(i -> {
+            Visuals brandVisuals = brandCollection.getItems().get(i).getVisuals();
+            if (brandVisuals == null || brandVisuals.getTitle().isEmpty()) {
+                throw new SkipException("Skipping test, failed to get brand collection details from the api");
+            }
+            Assert.assertTrue(homePage.getBrandCells().get(i).getText()
+                            .contains(brandVisuals.getTitle()),
+                    brandVisuals.getTitle() + " title is not matching with UI");
+        });
     }
 
     private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {

@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.update;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -48,14 +49,14 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         // Terminate app and upgrade application to current version
         terminateApp(sessionBundles.get(DISNEY));
-        installApp(TEST_FAIRY_URL.get()); // temp solution until TestFairy integration is complete
+        installApp(sessionBundles.get(APP));
         startApp(sessionBundles.get(DISNEY));
         //Handle ATT Modal
         handleGenericPopup(5,1);
         moreMenu.clickMoreTab();
         // Verify version is current FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version was not displayed");
-        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(TEST_FAIRY_APP_VERSION.get()),
+        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(IAPIHelper.TEST_FAIRY_APP_VERSION),
                 "Version is not the current expected");
         // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
