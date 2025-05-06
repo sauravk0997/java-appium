@@ -32,7 +32,6 @@ import java.util.*;
 import java.util.stream.IntStream;
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
-import static com.disney.qa.common.constant.CollectionConstant.Collection.CONTINUE_WATCHING;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STUDIOS_AND_NETWORKS;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
