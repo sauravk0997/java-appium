@@ -396,6 +396,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
 
       */
+        pause(6);
         homePage.clickSelect();
         pause(3);
        // homePage.clickDown();
