@@ -759,7 +759,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         try {
             seriesBriefDescription = getSeriesApi(BLUEY.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY).getDescription().getBrief();
         } catch (Exception e) {
-            throw new SkipException("Unable to retrieve series brief description from Explore API.", e);
+            throw new SkipException("Unable to retrieve series brief description from Explore API:", e);
         }
 
         // Play last episode through deeplink and fast-forward to the end of episode
@@ -778,6 +778,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seriesBriefDescription).isPresent(),
                 "Element with series brief description is not present");
         Assert.assertFalse(detailsPage.getBookmarkedInfoPanelView().isPresent(ONE_SEC_TIMEOUT),
-                "Bookmarked info panel view is not present");
+                "Bookmarked info panel view is present");
     }
 }
