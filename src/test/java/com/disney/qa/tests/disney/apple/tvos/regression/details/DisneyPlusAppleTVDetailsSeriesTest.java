@@ -479,6 +479,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
         videoPlayer.clickPlay();
         int remainingTimeAfterRestart = videoPlayer.getRemainingTimeThreeIntegers();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getTimeRemainingLabel(), SHORT_TIMEOUT);
+
+        commonPage.clickDown(1);
         int elapsedPlaybackTime = videoPlayer.getCurrentTime();
         Assert.assertTrue(remainingTimeAfterRestart > remainingTimeAfterForward,
                 String.format("Remaining time after restart (%d seconds) is not greater than " +
