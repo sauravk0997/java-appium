@@ -182,11 +182,11 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         videoPlayer.waitForVideoToStart();
 
         // Forward video and get remaining time
-        commonPage.clickRight(4, 1, 1);
+        commonPage.clickRight(6, 1, 1);
         videoPlayer.waitForVideoToStart();
         commonPage.clickDown(1);
         commonPage.clickSelect();
-        String remainingTime = videoPlayer.getRemainingTimeInStringWithHourAndMinutes();
+        String remainingTime = videoPlayer.getRemainingTimeInDetailsFormatString();
         LOGGER.info("remainingTime {}", remainingTime);
         terminateApp(sessionBundles.get(DISNEY));
         startApp(sessionBundles.get(DISNEY));
@@ -832,5 +832,23 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 String.format("Current elapsed time (%d seconds) is not between the expected range (%d-%d seconds)" +
                                 "of the beginning of the playback", elapsedPlaybackTime,
                         playbackStartRange.getMinimum(), playbackStartRange.getMaximum()));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121954"})
+    @Test(groups = {TestGroup.ESPN, TestGroup.DETAILS_PAGE, JP_ENG})
+    public void verifyESPNUnavailableDetailsPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
+
+        Assert.assertTrue(homePage.isViewAlertPresent(), "Alert was not present");
+        Assert.assertTrue(homePage.getContentUnavailableErrorMessageElement().isElementPresent(),
+                "Content Unavailable error message was not present");
+        Assert.assertTrue(homePage.getOkButton().isElementPresent(),
+                "OK button text was not present");
     }
 }

@@ -30,6 +30,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String OOH_VERIFY_BUTTON_NOT_PRESENT = "Verify Device button not displayed";
     private static final String AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED = "'I'm Away From Home' button not displayed";
     private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
+    private static final String LOG_OUT_CONFIRMATION_NOT_DISPLAYED = "Log out confirmation page did not open";
+    private static final String OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED = "Travel mode 'Confirm you are away from home' screen not displayed";
     private static final String UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT = "Update Household button not displayed";
     private static final String UPDATE_HOUSE_SCREEN_NOT_DISPLAYED = "'Update your Disney+ Household' screen not displayed";
 
@@ -134,7 +136,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                "Travel mode 'Confirm you are away from home' screen not displayed");
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
@@ -201,7 +203,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                "Travel mode 'Confirm you are away from home' screen not displayed");
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenSubCopyPresent(),
                 "Travel mode screen sub copy not displayed");
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
@@ -250,7 +252,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         // Click in logout button and confirm logout in confirmation page
         accountSharingPage.getOOHLogOutButton().click();
         sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
-                "Log out confirmation page did not open");
+                LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         sa.assertAll();
@@ -277,7 +279,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "'I'm Away From Home' button is not focused");
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                "Travel mode 'Confirm you are away from home' screen not displayed");
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenSubCopyPresent(),
                 "Travel mode screen sub copy not displayed");
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
@@ -352,6 +354,43 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116822"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHHardNoCyosHousehold() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+
+        String email = "testhardnocyos@disneyplustesting.com";
+        String password = "Test1234!";
+
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(email, password);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        // Following steps will validate navigation between OOH screens
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        homePage.clickBack();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        // Click in logout button and confirm logout in confirmation page
+        homePage.moveDown(1, 1);
+        homePage.moveRight(1, 1);
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
+                LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116762"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHDevicePageSoftBlock() {
@@ -403,10 +442,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
         sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-  
+
         sa.assertAll();
         pause(5);
     }
+
 
     private void loginWithAccountSharingUser(String email, String password) {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());

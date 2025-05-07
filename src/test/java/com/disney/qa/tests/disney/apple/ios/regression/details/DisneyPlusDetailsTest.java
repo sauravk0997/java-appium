@@ -71,10 +71,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.clickMoviesTab();
+        Assert.assertTrue(searchPage.getStaticTextByLabel("Movies").isPresent(), "Movies Content Page is not displayed");
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
             searchPage.clickContentPageFilterDropDown();
-            swipePageTillElementPresent(searchPage.getStaticTextByLabel(filterValue), 2, null,
-                    Direction.DOWN, 100);
+            searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
+            searchPage.swipeItemPicker(Direction.UP);
+            searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
             searchPage.getStaticTextByLabel(filterValue).click();
         } else {
             searchPage.getTypeButtonByLabel(filterValue).click();
@@ -898,7 +900,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         Assert.assertTrue(homePage.isViewAlertPresent(),
                 "Alert was not present");
-        Assert.assertTrue(homePage.getStaticTextByLabelContains("content-unavailable").isElementPresent(),
+        Assert.assertTrue(homePage.getContentUnavailableErrorMessageElement().isElementPresent(),
                 "Content Unavailable error message was not present");
         Assert.assertTrue(homePage.getOkButton().isElementPresent(),
                 "OK button text was not present");

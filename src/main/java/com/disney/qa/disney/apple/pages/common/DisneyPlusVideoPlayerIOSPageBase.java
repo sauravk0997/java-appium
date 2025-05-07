@@ -517,8 +517,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public String getRemainingTimeInDetailsFormatString() {
         int remainingTimeInSeconds = getRemainingTimeThreeIntegers();
         if(remainingTimeInSeconds > 3600) {
-            long hours = remainingTimeInSeconds / 60;
-            long minutes = remainingTimeInSeconds % 60;
+            long hours = remainingTimeInSeconds / 3600;
+            long minutes = (remainingTimeInSeconds % 3600) / 60;
             return String.format("%dh %dm", hours, minutes);
         } else {
             long minutes = remainingTimeInSeconds / 60;
