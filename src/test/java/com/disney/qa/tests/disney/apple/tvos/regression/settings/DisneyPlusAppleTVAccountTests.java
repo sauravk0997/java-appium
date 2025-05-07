@@ -419,7 +419,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         // Cancel log out
         homePage.moveDown(1, 1);
         homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
         homePage.moveUp(1, 1);
+        sa.assertTrue(homePage.isFocused(accountSharingPage.getOOHTravelModeOTPCTA()),
+                "Send code button is not focused");
         homePage.clickSelect();
 
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
