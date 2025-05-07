@@ -898,7 +898,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
-        String entityID = R.TESTDATA.get("disney_prod_series_disney_junior_ariel_entity_id");
+        String entityID = R.TESTDATA.get("disney_prod_series_bluey_entity_id");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
