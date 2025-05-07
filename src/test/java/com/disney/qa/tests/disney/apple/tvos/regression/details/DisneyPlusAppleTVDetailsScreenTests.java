@@ -846,7 +846,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));
 
         Assert.assertTrue(homePage.isViewAlertPresent(), "Alert was not present");
-        Assert.assertTrue(homePage.getStaticTextByLabelContains("content-unavailable").isElementPresent(),
+        Assert.assertTrue(homePage.getContentUnavailableErrorMessageElement().isElementPresent(),
                 "Content Unavailable error message was not present");
         Assert.assertTrue(homePage.getOkButton().isElementPresent(),
                 "OK button text was not present");
