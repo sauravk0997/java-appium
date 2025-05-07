@@ -42,6 +42,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String DISNEY_JUNIOR_ARIEL = "Disney Junior Ariel";
     private static final String PLAY = "Play";
     private static final String DOWNLOAD_MODAL_IS_VISIBLE = "Download Modal was still visible";
+    private static final String BLUEY = "Bluey";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
@@ -894,8 +895,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(DISNEY_JUNIOR_ARIEL);
-        searchPage.getDynamicAccessibilityId(DISNEY_JUNIOR_ARIEL).click();
+        searchPage.searchForMedia(BLUEY);
+        searchPage.getDynamicAccessibilityId(BLUEY).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         String entityID = R.TESTDATA.get("disney_prod_series_bluey_entity_id");
