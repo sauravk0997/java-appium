@@ -406,6 +406,34 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        // Click in logout button and validate confirmation page
+        homePage.moveDown(1, 1);
+        accountSharingPage.getOOHLogOutButton().click();
+        sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
+                LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
+        // Cancel log out
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        homePage.moveUp(1, 1);
+        homePage.clickSelect();
+
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        pause(10);
+
+
+
         sa.assertAll();
     }
 
