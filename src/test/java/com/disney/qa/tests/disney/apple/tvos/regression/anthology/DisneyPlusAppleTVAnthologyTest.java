@@ -277,6 +277,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         searchAndOpenDWTSDetails();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        LOGGER.info("Media title " + detailsPage.getMediaTitle());
+        LOGGER.info("Page Source " + getDriver().getPageSource());
         sa.assertEquals(detailsPage.getMediaTitle(), exploreAPIData.get(CONTENT_TITLE), MEDIA_TITLE_NOT_DISPLAYED);
 
         if (exploreAPIData.containsKey(CONTENT_PROMO_TITLE)) {
