@@ -316,15 +316,25 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67224"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyHomeScreenUI() {
+        ArrayList<Container> collections;
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-        ArrayList<Container> collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        try {
+            collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get collection details from the api " + e.getMessage());
+        }
+
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         for (int i = 2; i < collections.size(); i++) {
             String containerId = collections.get(i).getId();
             String containerName = collections.get(i).getVisuals().getName();
+            if (containerId.isEmpty() && containerId == null && containerName.isEmpty() && containerName == null) {
+                throw new SkipException("Skipping test, failed to get collection name or id from the api ");
+            }
+
             LOGGER.info("Container Name returned: {} ", containerName);
             homePage.moveDownUntilCollectionContentIsFocused(containerId, 5);
             sa.assertTrue(homePage.isFocused(homePage.getFirstCellFromCollection(containerId)),

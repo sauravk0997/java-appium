@@ -71,6 +71,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected static final String DEVICE = "DEVICE";
     public static final String HULU_SERVICE_ATTRIBUTION_MESSAGE = "Included with your Hulu subscription";
     public static final String VALUE = "value";
+    public static final String DESIRED_ELEMENT_FOCUSED = "Desired element was already focused";
+    public static final String DESIRED_ELEMENT_REACHED = "Reached desired element";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -1525,14 +1527,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void moveDownUntilElementIsFocused(ExtendedWebElement element, int count) {
         LOGGER.info("Moving down until desired element is focused");
         if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
-            LOGGER.info("Desired element was already focused");
+            LOGGER.info(DESIRED_ELEMENT_FOCUSED);
             return;
         }
         while (count > 0) {
             moveDown(1, 1);
             if (element.isPresent(ONE_SEC_TIMEOUT) &&
                     isFocused(element)) {
-                LOGGER.info("Reached desired element");
+                LOGGER.info(DESIRED_ELEMENT_REACHED);
                 return;
             }
             count--;
@@ -1543,14 +1545,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void moveUpUntilElementIsFocused(ExtendedWebElement element, int count) {
         LOGGER.info("Moving Up until desired element is focused");
         if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
-            LOGGER.info("Desired element was already focused");
+            LOGGER.info(DESIRED_ELEMENT_FOCUSED);
             return;
         }
         while (count > 0) {
             moveUp(1, 1);
             if (element.isPresent(ONE_SEC_TIMEOUT) &&
                     isFocused(element)) {
-                LOGGER.info("Reached desired element");
+                LOGGER.info(DESIRED_ELEMENT_REACHED);
                 return;
             }
             count--;
@@ -1561,14 +1563,14 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void moveRightUntilElementIsFocused(ExtendedWebElement element, int count) {
         LOGGER.info("Moving right until desired element is focused");
         if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
-            LOGGER.info("Desired element was already focused");
+            LOGGER.info(DESIRED_ELEMENT_FOCUSED);
             return;
         }
         while (count > 0) {
             moveRight(1, 1);
             if (element.isPresent(ONE_SEC_TIMEOUT) &&
                     isFocused(element)) {
-                LOGGER.info("Reached desired element");
+                LOGGER.info(DESIRED_ELEMENT_REACHED);
                 return;
             }
             count--;
