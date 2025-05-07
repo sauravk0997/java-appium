@@ -18,6 +18,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -25,6 +27,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
@@ -307,6 +310,48 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         } catch(SkipException e) {
             throw new SkipException("Series episode stream expected is not available" + e.getMessage());
         }
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67224"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyHomeScreenUI() {
+        ArrayList<Container> collections;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        try {
+            collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get collection details from the api " + e.getMessage());
+        }
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        for (int i = 2; i < collections.size(); i++) {
+            String containerId = collections.get(i).getId();
+            String containerName = collections.get(i).getVisuals().getName();
+            if (containerId.isEmpty() && containerId == null && containerName.isEmpty() && containerName == null) {
+                throw new SkipException("Skipping test, failed to get collection name or id from the api ");
+            }
+
+            LOGGER.info("Container Name returned: {} ", containerName);
+            homePage.moveDownUntilCollectionContentIsFocused(containerId, 5);
+            sa.assertTrue(homePage.isFocused(homePage.getFirstCellFromCollection(containerId)),
+                    "User is not able to swipe to container " + containerName);
+        }
+
+        String topContainerID = collections.get(2).getId();
+
+        homePage.moveUpUntilElementIsFocused(homePage.getFirstCellFromCollection(topContainerID), collections.size());
+        sa.assertTrue(homePage.isFocused(homePage.getFirstCellFromCollection(topContainerID)),
+                "User is not swiped up to top");
+
+        BufferedImage collectionTileBeforeRightSwipe = getElementImage(homePage.getCollection(topContainerID));
+        homePage.moveRight(7, 1);
+        BufferedImage collectionTileAfterRightSwipe = getElementImage(homePage.getCollection(topContainerID));
+        sa.assertTrue(areImagesDifferent(collectionTileBeforeRightSwipe, collectionTileAfterRightSwipe),
+                "Collection tile in view and after right swipe are the same");
         sa.assertAll();
     }
 
