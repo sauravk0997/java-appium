@@ -402,6 +402,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         String password = "Test1234!";
         loginWithAccountSharingUser(email, password);
 
+        // Validate hard block screen
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
@@ -416,7 +417,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         accountSharingPage.getOOHLogOutButton().click();
         sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
                 LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
-        // Cancel log out
+        // Cancel log out and go back to away screen
         homePage.moveDown(1, 1);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
@@ -426,6 +427,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 "Send code button is not focused");
         homePage.clickSelect();
 
+        // Validate OTP
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
@@ -434,10 +436,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
                 CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
-        pause(10);
-
-
-
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
