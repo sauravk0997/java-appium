@@ -357,13 +357,15 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyOOHDevicePageSoftBlock() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
         SoftAssert sa = new SoftAssert();
         String email = "qait.disneystreaming+1767211931324cashdisneystreaming@gmail.com";
         String password = "Test1234!";
 
-       loginWithAccountSharingUser(email, password);
-/*
-        // Steps to verify the no thanks option
+        loginWithAccountSharingUser(email, password);
+
+        // Steps to verify the No thanks option
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
@@ -373,36 +375,25 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
         homePage.clickDown();
         homePage.clickSelect();
-        //     homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // Steps to verify device
+
+        homePage.clickDown();
         homePage.openGlobalNavWithClickingMenu();
         homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
-
-
-        homePage.moveRight(1, 1);
-        homePage.moveLeft(1, 1);
         homePage.clickSelect();
 
-        Assert.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
-                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+
         homePage.clickSelect();
-        Assert.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
+                CONTINUE_BTN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
                 OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
         homePage.clickSelect();
-        Assert.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
-                OTP_PAGE_DID_NOT_OPEN);
 
-
-      */
-        pause(6);
-        homePage.clickSelect();
-        pause(10);
-       // homePage.clickDown();
-       // homePage.clickUp();
-        homePage.clickSelect();
-        pause(10);
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
@@ -411,10 +402,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
                 CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
-        //  homePage.waitForHomePageToOpen();
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-
-        pause(20);
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+  
+        sa.assertAll();
+        pause(5);
     }
 
     private void loginWithAccountSharingUser(String email, String password) {
