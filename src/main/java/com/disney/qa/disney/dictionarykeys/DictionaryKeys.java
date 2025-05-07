@@ -507,7 +507,7 @@ public enum DictionaryKeys {
     VIDEO_QUALITY_TITLE("video_quality_label"),
     WATCHLIST_SCREEN("watchlist_pageload"),
     WELCOME_SUB_TEXT("welcome_subcta_copy"),
-    WELCOME_UNAUTHENTICATED_SUBCOPY("welcome_unauthenticated_subcopy"),
+    WELCOME_UNAUTHENTICATED_SUBCOPY_BOOKWORM("welcome_unauthenticated_subcopy_bookworm"),
     WELCOME_UNAUTHENTICATED_TITLE("welcome_unauthenticated_title"),
     WIFI_AUTOMATIC("settings_datausage_tier1_header"),
     WIFI_AUTOMATIC_BODY("settings_datausage_tier1_body"),
