@@ -38,7 +38,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Mickey Mouse and Friends'`]")
     private ExtendedWebElement mickeyAndFriends;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name = 'brandTileContentView'$]")
-    protected ExtendedWebElement brandTileCell;
+    private ExtendedWebElement brandTileCell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'DETAILS'`]")
     private ExtendedWebElement continueWatchingDetailsBtn;
 
