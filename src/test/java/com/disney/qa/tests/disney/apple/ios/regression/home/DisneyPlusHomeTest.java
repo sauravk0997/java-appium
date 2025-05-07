@@ -664,7 +664,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int expectedRemainingTimeInSec = 10;
+        int scrubPercentage = 10;
         String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -682,9 +682,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         homePage.waitForHomePageToOpen();
-        addContentInContinueWatchingWithExpectedRemainingTime(
+        addContentInContinueWatchingWithScrubPercentage(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
-                expectedRemainingTimeInSec);
+                scrubPercentage);
         homePage.waitForHomePageToOpen();
         homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.CONTINUE_WATCHING, swipeCount);
         sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
@@ -698,9 +698,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
-        addContentInContinueWatchingWithExpectedRemainingTime(
+        addContentInContinueWatchingWithScrubPercentage(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
-                expectedRemainingTimeInSec);
+                scrubPercentage);
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
@@ -898,7 +898,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         relaunch();
     }
 
-    private void addContentInContinueWatchingWithExpectedRemainingTime(String url, int scrubPercentage) {
+    private void addContentInContinueWatchingWithScrubPercentage(String url, int scrubPercentage) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplink(url);
         videoPlayer.waitForVideoToStart();
