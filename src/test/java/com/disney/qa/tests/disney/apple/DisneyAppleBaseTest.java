@@ -84,6 +84,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
+    public static final String JP_ENG = "JP_ENG";
     protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
     protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
@@ -315,6 +316,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(JP)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), JP, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), JA_LANG, true);
+        } else if (groups.contains(JP_ENG)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), JP, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(KR)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), KO_LANG, true);
