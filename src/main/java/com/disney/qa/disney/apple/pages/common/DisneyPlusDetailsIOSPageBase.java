@@ -182,6 +182,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "/**/XCUIElementTypeStaticText[1]")
     protected ExtendedWebElement ratingAudioVideoFormatLabel;
 
+    @ExtendedFindBy(accessibilityId = "bookmarkedInfoPanelView")
+    protected ExtendedWebElement bookmarkedInfoPanelView;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -258,6 +261,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getContentImageViewProgressBar() {
         return contentImageViewProgressBar;
+    }
+
+    public ExtendedWebElement getBookmarkedInfoPanelView() {
+        return bookmarkedInfoPanelView;
     }
 
     public boolean isContinueButtonPresent() {
