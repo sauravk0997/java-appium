@@ -73,6 +73,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public static final String VALUE = "value";
     public static final String DESIRED_ELEMENT_FOCUSED = "Desired element was already focused";
     public static final String DESIRED_ELEMENT_REACHED = "Reached desired element";
+    public static final String CONTENT_UNAVAILABLE = "content-unavailable";
 
     @FindBy(xpath = "%s")
     protected ExtendedWebElement dynamicXpath;
@@ -530,6 +531,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getForgotPasswordButton() {
         return forgotPasswordBtn;
+    }
+
+    public ExtendedWebElement getContentUnavailableErrorMessageElement() {
+        return getStaticTextByLabelContains(CONTENT_UNAVAILABLE);
     }
 
     public String getErrorMessageString() {
