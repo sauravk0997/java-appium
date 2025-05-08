@@ -811,7 +811,6 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getRestartButton().isPresent(), RESTART_BTN_NOT_DISPLAYED);
         detailsPage.getRestartButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.waitForVideoToStart();
         videoPlayer.getSkipIntroButton().clickIfPresent();
         Assert.assertTrue(videoPlayer.getCurrentTime() < 50, "Video didn't start from the beginning");
     }
