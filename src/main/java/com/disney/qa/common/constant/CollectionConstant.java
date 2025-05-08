@@ -19,6 +19,7 @@ public class CollectionConstant {
         DOCUMENTARIES_AND_REALITY,
         ENJOY_THESE_MOVIES_FROM_HULU,
         ENJOY_THESE_SERIES_FROM_HULU,
+        ESPN_EXPLORE_MORE, // collection with locked live and upcoming events for non ESPN entitled user
         ESPN_PLUS_LIVE_AND_UPCOMING,// live collection for bundle user
         ESPN_SPORTS,
         HULU_FEATURED,
@@ -77,6 +78,8 @@ public class CollectionConstant {
                 return "5c721a08-c7ed-4e57-86c4-d781d3727098";
             case ENJOY_THESE_SERIES_FROM_HULU:
                 return "311c4088-0a61-4055-9af0-aefa56fa1f00";
+            case ESPN_EXPLORE_MORE:
+                return "1877aec1-5ff9-447f-a779-534372c0af3c";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "21a6e9fa-2a5c-4f77-b1b1-ec956f3038c7";
             case ESPN_SPORTS:
@@ -136,6 +139,8 @@ public class CollectionConstant {
                 return "The Simpsons Treehouse of Horror";
             case UNLOCK_TO_STREAM_MORE_HULU:
                 return "Unlock to Stream More Hulu";
+            case ESPN_EXPLORE_MORE:
+                return "Explore More with ESPN+";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "ESPN+ Live and Upcoming";
             case LIVE_AND_UPCOMING_FROM_ESPN:
