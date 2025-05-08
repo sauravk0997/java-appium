@@ -25,13 +25,11 @@ import org.testng.SkipException;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.IntStream;
-
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STUDIOS_AND_NETWORKS;
@@ -666,7 +664,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int expectedRemainingTimeInSec = 55;
+        int scrubPercentage = 10;
         String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -684,11 +682,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         homePage.waitForHomePageToOpen();
-        addContentInContinueWatchingWithExpectedRemainingTime(
+        addContentInContinueWatchingWithScrubPercentage(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
-                expectedRemainingTimeInSec);
+                scrubPercentage);
         homePage.waitForHomePageToOpen();
-        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.CONTINUE_WATCHING, swipeCount);
         sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container not found for Adult profile");
         sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
@@ -700,13 +698,13 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
-        addContentInContinueWatchingWithExpectedRemainingTime(
+        addContentInContinueWatchingWithScrubPercentage(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
-                expectedRemainingTimeInSec);
+                scrubPercentage);
 
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
-        homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);
+        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.CONTINUE_WATCHING, swipeCount);
         sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
                 "Continue Watching Container not found for Kid profile");
         sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
@@ -900,11 +898,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         relaunch();
     }
 
-    private void addContentInContinueWatchingWithExpectedRemainingTime(String url, int expectedRemainingTime) {
+    private void addContentInContinueWatchingWithScrubPercentage(String url, int scrubPercentage) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplink(url);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, expectedRemainingTime);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
         videoPlayer.clickBackButton();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
