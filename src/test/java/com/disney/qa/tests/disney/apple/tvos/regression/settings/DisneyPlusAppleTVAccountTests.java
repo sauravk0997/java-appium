@@ -514,7 +514,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
-        // Steps to navigate to Profile and verify device
+        // Steps to verify device
         homePage.clickDown();
         homePage.openGlobalNavWithClickingMenu();
         homePage.moveUp(2, 1);
