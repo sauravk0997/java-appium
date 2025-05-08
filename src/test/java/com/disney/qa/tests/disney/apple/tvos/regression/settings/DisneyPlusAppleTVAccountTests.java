@@ -515,7 +515,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // Steps to navigate to Profile and verify device
-
         homePage.clickDown();
         homePage.openGlobalNavWithClickingMenu();
         homePage.moveUp(2, 1);
@@ -539,9 +538,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
         sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-
         sa.assertAll();
-        pause(5);
     }
 
     private void loginWithAccountSharingUser(String email, String password) {
