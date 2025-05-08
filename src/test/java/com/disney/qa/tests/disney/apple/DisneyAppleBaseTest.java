@@ -95,7 +95,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String testFairyAppVersion = "4.4.0";
+            String testFairyAppVersion = TEST_FAIRY_APP_VERSION.get();
             LOGGER.info("version: {}", testFairyAppVersion);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), testFairyAppVersion);
@@ -275,18 +275,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     @BeforeSuite(alwaysRun = true)
     public final void initApp() {
-//        String testFairyUrl = R.CONFIG.get("test_fairy_url");
-//        String appVersion = R.CONFIG.get("test_fairy_app_version");
-//        if (testFairyUrl.isEmpty()) {
-//            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_url IS MISSING!!!");
-//        }
-//        if (appVersion.isEmpty()) {
-//            throw new RuntimeException("APP VERSION CONFIG test_fairy_app_version IS MISSING!!!");
-//        }
-//        LOGGER.info("Installing build {} from TestFairy...", appVersion);
-//        R.CONFIG.put("capabilities.app", testFairyUrl);
-//        TEST_FAIRY_URL.set(testFairyUrl);
-//        TEST_FAIRY_APP_VERSION.set(appVersion);
+        String testFairyUrl = R.CONFIG.get("test_fairy_url");
+        String appVersion = R.CONFIG.get("test_fairy_app_version");
+        if (testFairyUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_url IS MISSING!!!");
+        }
+        if (appVersion.isEmpty()) {
+            throw new RuntimeException("APP VERSION CONFIG test_fairy_app_version IS MISSING!!!");
+        }
+        LOGGER.info("Installing build {} from TestFairy...", appVersion);
+        R.CONFIG.put("capabilities.app", testFairyUrl);
+        TEST_FAIRY_URL.set(testFairyUrl);
+        TEST_FAIRY_APP_VERSION.set(appVersion);
     }
 
     @BeforeMethod(alwaysRun = true)
@@ -557,8 +557,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     public CreateUnifiedAccountRequest getCreateUnifiedAccountRequestForCountryWithPlan(DisneyUnifiedOfferPlan planName,
-                                                                      String locale,
-                                                                      String language) {
+                                                                                        String locale,
+                                                                                        String language) {
         return getDefaultCreateUnifiedAccountRequest()
                 .setPartner(Partner.DISNEY)
                 .addEntitlement(UnifiedEntitlement.builder()
@@ -696,20 +696,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     private void removeEnterpriseApps() {
         LOGGER.info("Removing Enterprise apps");
-//        removeApp(BuildType.ENTERPRISE.getDisneyBundle());
-//        removeApp(BuildType.ENTERPRISE.getJarvisBundle());
+        removeApp(BuildType.ENTERPRISE.getDisneyBundle());
+        removeApp(BuildType.ENTERPRISE.getJarvisBundle());
     }
 
     private void removeAdHocApps() {
         LOGGER.info("Removing AdHoc apps");
-//        removeApp(BuildType.AD_HOC.getDisneyBundle());
-//        removeApp(BuildType.AD_HOC.getJarvisBundle());
+        removeApp(BuildType.AD_HOC.getDisneyBundle());
+        removeApp(BuildType.AD_HOC.getJarvisBundle());
     }
 
     private void removePurchaseApps() {
         LOGGER.info("Removing Purchase apps");
-//        removeApp(BuildType.IAP.getDisneyBundle());
-//        removeApp(BuildType.IAP.getJarvisBundle());
+        removeApp(BuildType.IAP.getDisneyBundle());
+        removeApp(BuildType.IAP.getJarvisBundle());
     }
 
     private String getLATAMCountryCode() {
