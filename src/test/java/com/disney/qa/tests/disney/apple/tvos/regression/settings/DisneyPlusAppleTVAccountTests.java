@@ -11,10 +11,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import static com.disney.qa.common.constant.IConstantHelper.CONTINUE_BTN_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.HOME_PAGE_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.common.constant.IConstantHelper.WELCOME_SCREEN_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -488,6 +485,58 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         accountSharingPage.getOOHConfirmationPageCTA().click();
         sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116762"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHDevicePageSoftBlock() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        String email = "qait.disneystreaming+1767211931324cashdisneystreaming@gmail.com";
+        String password = "Test1234!";
+
+        loginWithAccountSharingUser(email, password);
+
+        // Steps to verify the No thanks option
+        sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
+                OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
+                CONTINUE_BTN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
+        homePage.clickDown();
+        homePage.clickSelect();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        // Steps to verify device
+        homePage.clickDown();
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.moveUp(2, 1);
+        homePage.clickSelect();
+        sa.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.getOOHSoftBlockContinueButton().isPresent(),
+                CONTINUE_BTN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHVerifyDeviceHeadlinePresent(),
+                OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+
+        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
+                OTP_PAGE_DID_NOT_OPEN);
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
+                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
+                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
+        accountSharingPage.getOOHConfirmationPageCTA().click();
+        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
