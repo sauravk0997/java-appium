@@ -95,7 +95,7 @@ jobs:
           api_credentials: ${{ env.JENKINS_CREDENTIALS }}
           folder_path: ${{ env.JENKINS_FOLDER_PATH }}
           job_name: DisneyPlus-iOS-Api-Utils-Run
-          parameters: ${{ env.JENKINS_PARAMS }}
+          parameters: ${{ steps.build_params.outputs.json }}
           start_timeout: 60
           build_timeout: 1500
           interval: 30
