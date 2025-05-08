@@ -804,8 +804,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
-        commonPage.clickHome();
-        commonPage.clickMenu();
+        //commonPage.clickHome();
+        commonPage.clickMenu(5);
         LOGGER.info("Launching app again");
         startApp(sessionBundles.get(DISNEY));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
