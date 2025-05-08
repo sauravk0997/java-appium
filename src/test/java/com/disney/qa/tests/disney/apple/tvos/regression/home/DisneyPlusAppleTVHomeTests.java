@@ -197,7 +197,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118739"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyLiveModalEpisodicInfo() {
-        int maxQuantityOfExpectedChannels = 10;
+        int maxQuantityOfExpectedChannels = 6;
         String episodicInfoLabelFormat = "Season %s Episode %s %s";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
@@ -207,7 +207,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
 
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
         homePage.moveRightUntilElementIsFocused(
@@ -239,7 +239,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118738"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyLiveModalWithEpisodicArtworkForSeriesLiveEvent() {
-        int maxQuantityOfExpectedChannels = 10;
+        int maxQuantityOfExpectedChannels = 6;
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -249,7 +249,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
         homePage.moveRightUntilElementIsFocused(
                 homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
