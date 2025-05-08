@@ -557,8 +557,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     }
 
     public CreateUnifiedAccountRequest getCreateUnifiedAccountRequestForCountryWithPlan(DisneyUnifiedOfferPlan planName,
-                                                                    String locale,
-                                                                    String language) {
+                                                                      String locale,
+                                                                      String language) {
         return getDefaultCreateUnifiedAccountRequest()
                 .setPartner(Partner.DISNEY)
                 .addEntitlement(UnifiedEntitlement.builder()
