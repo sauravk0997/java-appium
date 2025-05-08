@@ -33,7 +33,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED = "Travel mode 'Confirm you are away from home' screen not displayed";
     private static final String UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT = "Update Household button not displayed";
     private static final String UPDATE_HOUSE_SCREEN_NOT_DISPLAYED = "'Update your Disney+ Household' screen not displayed";
-    private static final String PROFILE_NAME = "Test";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
