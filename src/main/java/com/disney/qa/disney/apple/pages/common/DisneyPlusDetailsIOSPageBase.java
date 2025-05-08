@@ -185,6 +185,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "bookmarkedInfoPanelView")
     protected ExtendedWebElement bookmarkedInfoPanelView;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`focused==1`]" +
+            "/**/XCUIElementTypeStaticText[`name=='titleLabel'`]")
+    protected ExtendedWebElement focusedCellTitleLabel;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -308,6 +312,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getEspnPlusGenericErrorText() {
         return espnPlusGenericErrorText;
+    }
+
+    public ExtendedWebElement getFocusedCellTitleLabel() {
+        return focusedCellTitleLabel;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
