@@ -2,6 +2,9 @@
 <suite verbose="1" name="tvOS - Disney+ - Api - Utils Test - Suite" annotations="JDK" configfailurepolicy="continue" thread-count="13" parallel="tests">
 
     <parameter name="suiteOwner" value="qait"/>
+    <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value=""/>
+    <parameter name="stringParam::test_fairy_jarvis_url::Enter TestFairy Jarvis download URL" value=""/>
     <parameter name="reporting.project-key" value="QAIT"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="DisneyPlus-tvOS-Api-Utils-Run"/>
