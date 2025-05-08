@@ -547,10 +547,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 CollectionConstant.Collection.NEWLY_ADDED).split(",");
         String firstNewlyAddedTitleName = "";
         try {
-            if (liveCell != null) {
-                if (homePage.isFocused(liveCell)) {
+            if (liveCell != null && homePage.isFocused(liveCell)) {
                     firstNewlyAddedTitleName = firstNewlyAddedLongTitle[1].trim();
-                }
             } else {
                 firstNewlyAddedTitleName = firstNewlyAddedLongTitle[0].trim();
             }
