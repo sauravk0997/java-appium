@@ -13,7 +13,6 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -795,27 +794,26 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         searchPage.searchForMedia(PREY);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(PREY).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.scrubToPlaybackPercentage(50);
         pause(5);
         videoPlayer.clickBackButton();
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(detailsPage.getRestartButton().getBy()), SHORT_TIMEOUT);
-        sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
+        Assert.assertTrue(detailsPage.getRestartButton().isPresent(), RESTART_BTN_NOT_DISPLAYED);
         detailsPage.getRestartButton().click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.getSkipIntroButton().clickIfPresent();
-        sa.assertTrue(videoPlayer.getCurrentPositionOnPlayer() < 50, "Video didn't start from the beginning");
-        sa.assertAll();
+        Assert.assertTrue(videoPlayer.getCurrentTime() < 50, "Video didn't start from the beginning");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74845"})
