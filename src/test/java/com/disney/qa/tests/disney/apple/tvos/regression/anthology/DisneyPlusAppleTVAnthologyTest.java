@@ -24,11 +24,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.api.disney.DisneyEntityIds.DANCING_WITH_THE_STARS;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.TRAILER_BTN_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.common.constant.IConstantHelper.VIDEO_PLAYER_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.WATCHLIST_BTN_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
@@ -319,6 +315,33 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(title.contains(trailer) && title.contains(visualsResponse.getTitle()),
                 "Expected Trailer not playing");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110553"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.DETAILS_PAGE, US})
+    public void verifyAnthologySeriesEpisodesPlaybackAndVisibility() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), "Episodes tab is not focused");
+
+        detailsPage.moveDown(1, 1);
+        String currentSelectedEpisodeTitle = detailsPage.getFocusedCellTitleLabel().getText().split("\\. ")[1];
+        detailsPage.clickSelect();
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(2);
+        Assert.assertTrue(
+                videoPlayer.getSubtitleLabelElement().getAttribute(LABEL).contains(currentSelectedEpisodeTitle),
+                "Playback Subtitle doesn't contains selected episode title");
     }
 
     private void searchAndOpenDWTSDetails() {
