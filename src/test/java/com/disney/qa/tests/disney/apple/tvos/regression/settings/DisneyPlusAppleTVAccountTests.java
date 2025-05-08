@@ -500,7 +500,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         String email = "qait.disneystreaming+1767211931324cashdisneystreaming@gmail.com";
         String password = "Test1234!";
 
-        loginWithAccountSharingUser(email, password);
+    //    loginWithAccountSharingUser(email, password);
 
         // Steps to verify the No thanks option
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
@@ -514,13 +514,12 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
-        // Steps to verify device
+        // Steps to navigate to Profile and verify device
 
         homePage.clickDown();
         homePage.openGlobalNavWithClickingMenu();
-        homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
+        homePage.moveUp(2, 1);
         homePage.clickSelect();
-
         sa.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
 
         homePage.clickSelect();
