@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVBrandsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -47,7 +48,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHomePageMainElement() {
-        return disneyTile;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        return homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY));
     }
 
     public ExtendedWebElement getActiveHomeIcon() {

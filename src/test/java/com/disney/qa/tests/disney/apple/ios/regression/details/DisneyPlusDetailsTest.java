@@ -900,7 +900,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         Assert.assertTrue(homePage.isViewAlertPresent(),
                 "Alert was not present");
-        Assert.assertTrue(homePage.getStaticTextByLabelContains("content-unavailable").isElementPresent(),
+        Assert.assertTrue(homePage.getContentUnavailableErrorMessageElement().isElementPresent(),
                 "Content Unavailable error message was not present");
         Assert.assertTrue(homePage.getOkButton().isElementPresent(),
                 "OK button text was not present");

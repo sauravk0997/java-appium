@@ -35,6 +35,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String SPORT_PAGE_DID_NOT_OPEN = "Sport page did not open";
     private static final String NO_REPLAYS_FOUND = "No replay events found";
+    private static final String PLAYER_CONTROLS_NOT_DISPLAYED =
+            "Player controls were not displayed when playback activated";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120534"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.HULU, US})
@@ -64,8 +66,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Video player title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSubTitleLabelDisplayed(),
                 "Video player meta data title wasn't visible along with controls");
-        sa.assertTrue(videoPlayer.isSeekbarVisible(),
-                "player controls were not displayed when playback activated");
+        sa.assertTrue(videoPlayer.isSeekbarVisible(), PLAYER_CONTROLS_NOT_DISPLAYED);
         commonPage.clickDown(2);
         sa.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE),
                 "Expected Hulu Service Attribution not displayed");
@@ -113,8 +114,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Video player title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSubTitleLabelDisplayed(),
                 "Video player meta data title wasn't visible along with controls");
-        sa.assertTrue(videoPlayer.isSeekbarVisible(),
-                "player controls were not displayed when playback activated");
+        sa.assertTrue(videoPlayer.isSeekbarVisible(), PLAYER_CONTROLS_NOT_DISPLAYED);
         commonPage.clickDown(2);
         sa.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE),
                 "Expected Hulu Service Attribution not displayed");
@@ -367,5 +367,38 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
             Assert.assertFalse(upNextPage.getStaticTextByLabelContains(seriesGenre).isElementPresent(ONE_SEC_TIMEOUT),
                     String.format("'%s' series genre is present on Post Play UI", seriesGenre));
         }
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112957"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyPostPlayDismissLogic() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play series' first episode
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+
+        // Scrub to the end, validate Post Play UI is visible and select minimized video player
+        commonPage.clickRight(8, 1, 1);
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        upNextPage.moveRight(2, 1);
+        upNextPage.clickSelect();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+
+        // Validate player controls are still accessible
+        videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
+        commonPage.clickDown(1);
+        Assert.assertTrue(videoPlayer.isSeekbarVisible(), PLAYER_CONTROLS_NOT_DISPLAYED);
+
+        // Fast-forward to the end of playback and validate Post Play UI is visible again after playback
+        commonPage.clickRight(7, 1, 1);
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
     }
 }
