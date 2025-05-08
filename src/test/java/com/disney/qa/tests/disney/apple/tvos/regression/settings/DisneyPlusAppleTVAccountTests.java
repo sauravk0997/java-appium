@@ -500,7 +500,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         String email = "qait.disneystreaming+1767211931324cashdisneystreaming@gmail.com";
         String password = "Test1234!";
 
-    //    loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(email, password);
 
         // Steps to verify the No thanks option
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
