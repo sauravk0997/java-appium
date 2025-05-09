@@ -720,7 +720,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75502"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMoviesLandingPageContentMaturityRatingRestriction() {
-        int apiTitlesSearchLimit = 400;
+        int apiTitlesSearchLimit = 20;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
@@ -756,7 +756,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
-        int apiTitlesSearchLimit = 400;
+        int apiTitlesSearchLimit = 20;
 
         //Assign TV-Y content maturity rating
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
@@ -798,7 +798,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = new DisneyPlusBrandIOSPageBase(getDriver());
 
         SoftAssert sa = new SoftAssert();
-        int apiTitlesSearchLimit = 400;
+        int apiTitlesSearchLimit = 20;
 
         // Edit to get TV-Y maturity rating content
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
