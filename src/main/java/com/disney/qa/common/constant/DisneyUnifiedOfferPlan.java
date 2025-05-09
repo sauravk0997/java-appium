@@ -8,8 +8,7 @@ public enum DisneyUnifiedOfferPlan {
     DISNEY_BUNDLE_TRIO_BASIC("Disney Bundle Trio Basic"),
     DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY("Disney Bundle Trio Premium - 26.99 USD - Monthly"),
     DISNEY_PREMIUM_MONTHLY_AMAZON("Disney Plus Premium - Monthly - Amazon"),
-    DISNEY_PREMIUM_MONTHLY_ROKU("Promotion - Disney+ Premium Monthly - 13.99 USD - 7 Day FT Roku ISU"),
-
+    DISNEY_PLUS_PREMIUM_MONTHLY_ROKU("Promotion - Disney+ Premium Monthly - 13.99 USD - 7 Day FT Roku ISU"),
     //Disney plans in non US countries
     DISNEY_PLUS_STANDARD("Disney+ Standard"),
     DISNEY_PLUS_STANDARD_WITH_ADS_DE("Disney+ Standard with Ads"),

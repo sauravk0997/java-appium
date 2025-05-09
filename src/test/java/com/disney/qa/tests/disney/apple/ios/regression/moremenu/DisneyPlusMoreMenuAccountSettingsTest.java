@@ -32,6 +32,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String GOOGLE_URL = "accounts.google.com";
     private static final String HULU_URL = "auth.hulu.com";
     private static final String ROKU_URL = "my.roku.com";
+    private static final String DISNEYPLUS_WEB_URL_TEXT = "disneyplus.com";
     private static final String AMAZON_URL = "amazon.com";
     private static final String MERCADOLIBRE_URL = "mercadolibre.com";
     private DisneyEntitlement disneyEntitlements;
@@ -130,24 +131,22 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
-    @Test(description = "Verify that the correct description for Roku displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySubscriptionDetails_Roku() {
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_ROKU)));
-        setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
+        SoftAssert sa = new SoftAssert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY_ROKU)));
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
 
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isRokuSubscriptionTitlePresent(),
+        setAppToAccountSettings();
+        sa.assertTrue(accountPage.isPremiumSubscriptionTitlePresent(),
                 "Roku Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isRokuSubscriptionMessagePresent(),
+        sa.assertTrue(accountPage.isRokuSubscriptionMessagePresent(),
                 "Roku Subscription message was not displayed");
 
-        disneyPlusAccountIOSPageBase.openRokuWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(ROKU_URL),
-                "Webview did not open to the expected url");
+        accountPage.openRokuWebview();
+        Assert.assertTrue(accountPage.isWebviewOpen(), "Browser webview did not open");
+        sa.assertTrue(accountPage.getWebviewUrl().contains(DISNEYPLUS_WEB_URL_TEXT), "Webview did not open to the expected url");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75403"})

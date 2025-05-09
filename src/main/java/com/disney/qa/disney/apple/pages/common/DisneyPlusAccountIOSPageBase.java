@@ -13,6 +13,8 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
@@ -136,13 +138,12 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_GOOGLE.getText()));
     }
 
-    public boolean isRokuSubscriptionTitlePresent() {
-        String title = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_TITLE_ROKU.getText());
-        return getStaticTextByLabel(title.concat(" " + ANNUAL)).isPresent();
+    public boolean isPremiumSubscriptionTitlePresent() {
+        return getStaticTextByLabel(String.valueOf(DISNEY_PLUS_PREMIUM)).isPresent();
     }
 
     public ExtendedWebElement getRokuSubscription() {
-        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.SUBSCRIPTIONS_MESSAGE_ROKU.getText()));
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK_V4.getText()));
     }
 
     public boolean isAmazonSubscriptionTitlePresent() {
