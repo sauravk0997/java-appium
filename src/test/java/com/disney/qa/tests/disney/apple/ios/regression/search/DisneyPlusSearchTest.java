@@ -376,7 +376,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67950"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collections", enabled = false)
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collectionNames", enabled = false)
     public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
