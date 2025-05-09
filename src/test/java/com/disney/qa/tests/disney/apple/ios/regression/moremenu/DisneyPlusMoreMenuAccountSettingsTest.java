@@ -139,9 +139,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         setAppToAccountSettings();
         sa.assertTrue(accountPage.isPremiumSubscriptionTitlePresent(),
-                "Roku Subscription title was not displayed");
-        sa.assertTrue(accountPage.isRokuSubscriptionMessagePresent(),
-                "Roku Subscription message was not displayed");
+                "Subscription title was not displayed");
+        Assert.assertTrue(accountPage.isSubscriptionMessageDisplayed(),
+                "Subscription message was not displayed");
 
         accountPage.openRokuWebview();
         Assert.assertTrue(accountPage.isWebviewOpen(), "Browser webview did not open");

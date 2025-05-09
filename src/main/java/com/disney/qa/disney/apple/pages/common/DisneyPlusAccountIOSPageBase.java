@@ -143,7 +143,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public ExtendedWebElement getRokuSubscription() {
-        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE, DictionaryKeys.APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK_V4.getText()));
+        return getStaticTextByLabel(SUBSCRIPTION_MESSAGE);
     }
 
     public boolean isAmazonSubscriptionTitlePresent() {
@@ -389,7 +389,7 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     }
 
     public void openRokuWebview() {
-        getRokuSubscription().click();
+        getSubscriptionMessage().click();
     }
 
     public boolean isAmazonSubscriptionMessagePresent() {

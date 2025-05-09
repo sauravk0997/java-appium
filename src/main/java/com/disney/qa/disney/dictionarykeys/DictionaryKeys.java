@@ -27,7 +27,6 @@ public enum DictionaryKeys {
     APP_SETTINGS_TITLE("app_settings_title"),
     APP_VERSION_NUMBER("app_version_number"),
     APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK("apple_link_out_subscription_mgmt_link"),
-    APPLE_LINK_OUT_SUBSCRIPTION_MGMT_LINK_V4("apple_link_out_subscription_mgmt_link_v4"),
     ATTRIBUTE_VALIDATION("attributeValidation"),
     AUTH_MINOR_PASSWORD("auth_minor_password_body"),
     AUTH_PASSWORD_ADD_PROFILE_BODY("auth_password_add_profile_body"),
