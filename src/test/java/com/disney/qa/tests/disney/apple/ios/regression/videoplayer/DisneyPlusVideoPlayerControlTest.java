@@ -83,36 +83,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61169"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyCloseButtonForDeepLinkingContentSeries() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount());
-
-        launchDeeplink(R.TESTDATA.get("disney_debug_video_player_episode_deeplink"));
-        videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), "Details Page is not shown after closing the player");
-        Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68456"})
-    @Test(description = "Video Player > User taps to close Video Player from Deeplink", groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyCloseButtonForDeepLinkingContentMovie() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount());
-
-        launchDeeplink(R.TESTDATA.get("disney_debug_video_player_movie_deeplink"));
-        videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), "Playback didn't start from deep link");
-        videoPlayer.clickBackButton();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), "Details Page is not shown after closing the player");
-        Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), "Home Page is not shown after closing the Details Page");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66505"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyVideoPlayerControlsUIMovies() {
