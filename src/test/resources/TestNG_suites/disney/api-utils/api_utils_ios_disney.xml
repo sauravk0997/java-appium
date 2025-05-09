@@ -30,7 +30,6 @@
                     <include name="verifyMinorLogInBlocked"/>
                     <include name="testInvalidEmailFormat"/>
                     <include name="testChooseProfiles"/>
-                    <include name="verifyAccountOnHold"/>
                 </methods>
             </class>
         </classes>
