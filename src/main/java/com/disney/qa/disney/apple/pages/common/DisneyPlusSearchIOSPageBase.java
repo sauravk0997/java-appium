@@ -53,6 +53,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement upcomingBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == 'Unlock'`]")
     private ExtendedWebElement unlockBadge;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[name == 'On the Movies Screen.']")
+    private ExtendedWebElement contentTypeMoviesCollapsedHeader;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[name == 'On the Series Screen.']")
+    private ExtendedWebElement contentTypeSeriesCollapsedHeader;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_MOVIES_TITLE.getText()));
@@ -147,6 +151,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getUnlockBadgeForGivenSearchResult(ExtendedWebElement resultCell) {
         return resultCell.findExtendedWebElement(unlockBadge.getBy());
     }
+
+    public ExtendedWebElement getContentTypeMoviesCollapsedHeader() { return contentTypeMoviesCollapsedHeader; }
+
+    public ExtendedWebElement getContentTypeSeriesCollapsedHeader() { return contentTypeSeriesCollapsedHeader; }
 
     public void clearText() {
         LOGGER.info("Clearing text in search bar");
