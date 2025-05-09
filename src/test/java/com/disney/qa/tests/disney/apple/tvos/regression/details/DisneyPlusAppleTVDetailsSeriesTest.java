@@ -781,15 +781,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     public void verifyBackGroundingUpNextWhileAutoplayOFF() {
         String toogleValue = "Off";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         toogleAutoPlay(toogleValue);
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
-        commonPage.clickHome();
-        commonPage.clickMenu();
+        runtvOSAppInBackGround(FIVE_SEC_TIMEOUT);
         LOGGER.info("Launching app again");
         startApp(sessionBundles.get(DISNEY));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -799,15 +797,12 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
     public void verifyBackGroundingUpNextWhileAutoplayOn() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
-        launchApp("com.apple.TVSettings");
-        //commonPage.clickHome();
-        //commonPage.clickMenu();
+        runtvOSAppInBackGround(FIVE_SEC_TIMEOUT);
         LOGGER.info("Launching app again");
         startApp(sessionBundles.get(DISNEY));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);

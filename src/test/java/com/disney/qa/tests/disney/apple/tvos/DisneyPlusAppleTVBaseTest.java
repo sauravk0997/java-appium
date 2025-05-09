@@ -225,4 +225,10 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
             homePage.clickSelect();
         }
     }
+
+    public void runtvOSAppInBackGround(long duration) {
+        launchApp(SystemBundles.TVOS_SETTINGS.getBundleId());
+        pause(duration);
+        startApp(sessionBundles.get(DISNEY));
+    }
 }
