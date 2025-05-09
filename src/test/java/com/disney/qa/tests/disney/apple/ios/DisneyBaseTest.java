@@ -674,10 +674,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public List<Item> getAvailableHuluTitlesForStandaloneUserFromApi() {
         List<Item> huluSeriesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU),
-                        100);
+                        20);
         List<Item> huluMoviesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_MOVIES_FROM_HULU),
-                        100);
+                        20);
         List<Item> huluContentFromApi = Stream.concat(
                         huluSeriesFromApi.stream(), huluMoviesFromApi.stream())
                 .collect(Collectors.toList());

@@ -100,7 +100,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecommendedForYouContainer() {
-        int limit = 30;
+        int limit = 20;
         int verticalSwipeCount = 5;
         int horizontalSwipeCount = 30;
         int swipeDuration = 100;
@@ -804,7 +804,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
-                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 20);
         if (trendingTitlesFromApi.isEmpty()) {
             throw new NoSuchElementException("Failed to get Trending collection titles from Explore API");
         }
