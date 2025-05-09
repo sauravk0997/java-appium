@@ -1171,7 +1171,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             scrollDown();
             //Elements are displayed after scroll
             sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
-                    "Page header '" + contentType + "' was not found after scrolling");
+                    "Page header '" + contentType + "' was not found after scrolling down");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), CONTENT_FILTER_HEADER_NOT_DISLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
             //Elements are displayed after selecting Filter Value
@@ -1188,20 +1188,17 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             //Elements are displayed after scroll
             if(contentType == MOVIES) {
                 sa.assertTrue(searchPage.getContentTypeMoviesCollapsedHeader().isPresent(),
-                        "Page header '" + contentType + "' was not found after scrolling");
+                        "Page header '" + contentType + "' was not found after scrolling down");
             } else if (contentType == SERIES) {
                 sa.assertTrue(searchPage.getContentTypeSeriesCollapsedHeader().isPresent(),
-                        "Page header '" + contentType + "' was not found after scrolling");
+                        "Page header '" + contentType + "' was not found after scrolling down");
             }
-            //sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-            //Elements are displayed after selecting Filter Value
-            //searchPage.clickContentPageFilterDropDown();
-            //searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
-            //searchPage.getStaticTextByLabel(filterValue).click();
+            //Elements are displayed after scrolling up
+            scrollUp();
             sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
-                    "Page header '" + contentType + "' was not found after selecting Filter Value");
-            //sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED);
+                    "Page header '" + contentType + "' was not found after scrolling up");
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         }
 

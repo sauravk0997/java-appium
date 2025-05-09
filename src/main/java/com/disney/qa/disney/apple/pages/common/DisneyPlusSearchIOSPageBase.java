@@ -53,9 +53,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement upcomingBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == 'Unlock'`]")
     private ExtendedWebElement unlockBadge;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[name == 'On the Movies Screen.']")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"On the Movies screen.\"`]")
     private ExtendedWebElement contentTypeMoviesCollapsedHeader;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[name == 'On the Series Screen.']")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"On the Series screen.\"`]")
     private ExtendedWebElement contentTypeSeriesCollapsedHeader;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
