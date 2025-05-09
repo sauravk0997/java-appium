@@ -69,8 +69,6 @@ public interface IConstantHelper {
     String DOB_1990 = "1990-01-01";
 
     //Content
-    String MOVIES = "Movies";
-    String SERIES = "Series";
     String SERIES_BLUEY = "Bluey";
     String SERIES_LOKI = "Loki";
 
