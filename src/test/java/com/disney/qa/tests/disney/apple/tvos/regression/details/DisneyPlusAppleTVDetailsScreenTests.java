@@ -16,6 +16,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.*;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -534,15 +535,34 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void verifyHomeTitleSelectionRedirectsToDetailsPage() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModalPage = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        ExtendedWebElement liveCell = homePage.getTypeCellLabelContains("live");
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         homePage.moveDownUntilCollectionContentIsFocused(
-                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 5);
-        String firstNewlyAddedTitleName = homePage.getFirstCellTitleFromContainer(
-                CollectionConstant.Collection.NEWLY_ADDED).split(",")[0];
+                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 10);
+        String[] firstNewlyAddedLongTitle = homePage.getFirstCellTitleFromContainer(
+                CollectionConstant.Collection.NEWLY_ADDED).split(",");
+        String firstNewlyAddedTitleName = "";
+        try {
+            if (liveCell != null && homePage.isFocused(liveCell)) {
+                    firstNewlyAddedTitleName = firstNewlyAddedLongTitle[1].trim();
+            } else {
+                firstNewlyAddedTitleName = firstNewlyAddedLongTitle[0].trim();
+            }
+        } catch (Exception e) {
+            Assert.fail("Exception occurred: " + e.getMessage());
+        }
 
+        if (homePage.isFocused(liveCell)) {
+            homePage.clickSelect();
+            liveEventModalPage.waitForPresenceOfAnElement(liveEventModalPage.getWatchLiveButton());
+            liveEventModalPage.moveDown(1, 1);
+            Assert.assertTrue(liveEventModalPage.isFocused(liveEventModalPage.getDetailsButton()),
+                    "Modal details button is not focused");
+        }
         homePage.clickSelect();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1,1);

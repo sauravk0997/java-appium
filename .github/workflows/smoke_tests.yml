@@ -28,6 +28,65 @@ jobs:
           repository: qait/qait-github-actions
           token: ${{ secrets.GH_TOKEN }}
 
+      - name: Extract TestFairy values from PR description
+        id: extract_testfairy
+        shell: bash
+        run: |
+          BODY="${{ github.event.pull_request.body }}"
+
+          # Parse test_fairy_url and test_fairy_app_version
+          JARVIS=$(echo "$BODY" | grep '^test_fairy_jarvis_url=' | sed 's/test_fairy_jarvis_url=//')
+          URL=$(echo "$BODY" | grep '^test_fairy_url=' | sed 's/test_fairy_url=//')
+          VERSION=$(echo "$BODY" | grep '^test_fairy_app_version=' | sed 's/test_fairy_app_version=//')
+
+          echo "Extracted Jarvis URL: JARVIS"
+          echo "Extracted TestFairy URL: $URL"
+          echo "Extracted App Version: $VERSION"
+
+          # Output for use in next steps (fallback for self-hosted)
+          echo "::set-output name=test_fairy_jarvis_url::$JARVIS"
+          echo "::set-output name=test_fairy_url::$URL"
+          echo "::set-output name=test_fairy_app_version::$VERSION"
+
+      - name: Build JSON parameters
+        id: build_params
+        shell: bash
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          JARVIS="${{ steps.extract_testfairy.outputs.test_fairy_jarvis_url }}"
+          URL="${{ steps.extract_testfairy.outputs.test_fairy_url }}"
+          VERSION="${{ steps.extract_testfairy.outputs.test_fairy_app_version }}"
+
+          echo "Branch: $BRANCH"
+          echo "TestFairy URL: $JARVIS"
+          echo "TestFairy URL: $URL"
+          echo "App Version: $VERSION"
+
+          # Validate inputs
+          if [[ -z "$JARVIS" || -z "$URL" || -z "$VERSION" ]]; then
+            echo "❌ Error: JARVIS URL or Build URL or Build VERSION is empty"
+            exit 1
+          fi
+
+          # Generate JSON
+          JSON=$(jq -c -n \
+            --arg branch "$BRANCH" \
+            --arg jarvis "$JARVIS" \
+            --arg url "$URL" \
+            --arg version "$VERSION" \
+            '{branch: $branch, test_fairy_jarvis_url: $jarvis, test_fairy_url: $url, test_fairy_app_version: $version}')
+
+          echo "✅ Final JSON to pass to Jenkins:"
+          echo "$JSON"
+
+          # Output correctly
+          echo "::set-output name=json::$JSON"
+
+      - name: Jenkins input parameters
+        run: |
+          echo "Parameters passed to Jenkins:"
+          echo '${{ steps.build_params.outputs.json }}'
+
       - name: Run iOS Handset Smoke Tests
         id: build_ios_handset_smoke
         uses: ./action-build-job
@@ -36,7 +95,7 @@ jobs:
           api_credentials: ${{ env.JENKINS_CREDENTIALS }}
           folder_path: ${{ env.JENKINS_FOLDER_PATH }}
           job_name: DisneyPlus-iOS-Api-Utils-Run
-          parameters: ${{ env.JENKINS_PARAMS }}
+          parameters: ${{ steps.build_params.outputs.json }}
           start_timeout: 60
           build_timeout: 1500
           interval: 30
