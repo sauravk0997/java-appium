@@ -601,4 +601,18 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.getOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67549"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeferredDeeplink() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+
+        welcomePage.clickLogInButton();
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
+        handleAlert();
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        login(getUnifiedAccount());
+        Assert.assertTrue(huluPage.isOpened(), HULU_PAGE_NOT_DISPLAYED);
+    }
 }
