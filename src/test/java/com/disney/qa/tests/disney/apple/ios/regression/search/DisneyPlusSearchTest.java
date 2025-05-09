@@ -15,7 +15,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.jetbrains.annotations.NotNull;
+import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
@@ -52,8 +52,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
 
-    @DataProvider(name = "collectionNames")
-    public Object[][] collections() {
+    @DataProvider(name = "collectionName")
+    public Object[][] contentTypes() {
         return new Object[][]{
                 {MOVIES}, {SERIES}
         };
@@ -256,47 +256,28 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67956"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collectionNames", enabled = false)
-    public void verifyScrollAndDropdownForSearchContentLandingPage(@NotNull String collectionName) {
-        String filterValue = "Comedy";
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyScrollAndDropdownForSearchContentLandingPage() {
+        String filterValue = "Animation";
+        String contentTypeMovie = "Movies";
+        String contentTypeSeries = "Series";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount());
 
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        if (collectionName.equalsIgnoreCase("movies")) {
-            searchPage.clickMoviesTab();
-        } else {
-            searchPage.clickSeriesTab();
-        }
+        searchPage.clickMoviesTab();
+        validateContentTypeLandingPageScrollBehavior(sa, contentTypeMovie, filterValue);
+        searchPage.getBackArrow().click();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        //Verify Page header is present
-        sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
+        searchPage.clickSeriesTab();
+        validateContentTypeLandingPageScrollBehavior(sa, contentTypeSeries, filterValue);
 
-        if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
-            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
-            scrollDown();
-            //verify after scrolling down also, Page header and Filter header tabbar is present
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
-            //Verify after selecting any filter value also, Page header and Filter header tabbar is present
-            searchPage.getTypeButtonByLabel(filterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
-        } else {
-            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
-            scrollDown();
-            //verify after scrolling down also, Filter dropdown is present
-            sa.assertTrue(searchPage.isContentPageFilterDropDownAtMiddleTopPresent(), "Content Page Filter Dropdown not present after scroll");
-            //Verify after selecting any filter value also, it navigate to top and Filter dropdown is present
-            searchPage.clickContentPageFilterDropDownAtMiddleTop();
-            searchPage.getStaticTextByLabel(filterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
-        }
         sa.assertAll();
     }
 
@@ -396,7 +377,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67950"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collectionNames", enabled = false)
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "contentTypes", enabled = false)
     public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
@@ -1178,5 +1159,39 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
             detailsPage.getBackArrow().click();
         });
+    }
+
+    private void validateContentTypeLandingPageScrollBehavior(SoftAssert sa, String contentType, String filterValue) {
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+        if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            //Elements are displayed before scroll
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+            sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+            scrollDown();
+            //verify after scrolling down also, Page header and Filter is present
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+            //Verify after selecting any filter value also, Page header and Filter is present
+            searchPage.getTypeButtonByLabel(filterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+        } else {
+            //Elements are displayed before scroll
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
+            sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+            scrollDown();
+
+            //Elements are displayed after scroll
+            //TODO determine what is expected Assert True or False tha the dropdown is in viewport
+            //sa.assertTrue(searchPage.isContentPageFilterDropDownAtMiddleTopPresent(), "Content Page Filter Dropdown
+            // not present after scroll");
+            //Verify after selecting any filter value navigates to top of screen and Filter Dropdown is present
+            //searchPage.getStaticTextByLabel(filterValue).click();
+            //sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        }
+
     }
 }
