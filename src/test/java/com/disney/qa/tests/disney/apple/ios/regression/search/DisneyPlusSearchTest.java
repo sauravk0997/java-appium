@@ -15,7 +15,6 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
@@ -52,8 +51,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
     private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
 
-    @DataProvider(name = "collectionName")
-    public Object[][] contentTypes() {
+    @DataProvider(name = "collectionNames")
+    public Object[][] collections() {
         return new Object[][]{
                 {MOVIES}, {SERIES}
         };
@@ -377,7 +376,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67950"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "contentTypes", enabled = false)
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collections", enabled = false)
     public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
         String comedyFilterValue = "Comedy";
         String kidsFilterValue = "Kids";
