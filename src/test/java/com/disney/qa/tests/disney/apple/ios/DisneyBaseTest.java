@@ -502,7 +502,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
                     .setEntityId(entityID)
                     .setUnifiedAccount(getUnifiedAccount())
-                    .setProfileId(getUnifiedAccount().getProfileId()).setLimit(30));
+                    .setProfileId(getUnifiedAccount().getProfileId()).setLimit(20));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
         }
