@@ -47,9 +47,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String RECENT_SEARCH_FOUND_ERROR_MESSAGE = "recent search was displayed";
     private static final String CONTENT_NOT_FOUND_IN_RECENT_SEARCH_ERROR_MESSAGE = "content was not displayed in " +
             "recent search results";
+    private static final String CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED = "Content Filter Dropdown not displayed";
+    private static final String CONTENT_FILTER_HEADER_NOT_DISLAYED = "Content Page Filter Header not displayed";
     private static final String PCON_HEADER_ERROR_NOT_FOUND = "PCON restricted title message was not present";
     private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
-    private static final String SEARCH_PAGE_DID_NOT_OPEN = "Search page did not open";
 
     @DataProvider(name = "collectionNames")
     public Object[][] collections() {
@@ -258,8 +259,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifyScrollAndDropdownForSearchContentLandingPage() {
         String filterValue = "Animation";
-        String contentTypeMovie = "Movies";
-        String contentTypeSeries = "Series";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -270,12 +269,12 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.clickMoviesTab();
-        validateContentTypeLandingPageScrollBehavior(sa, contentTypeMovie, filterValue);
+        validateContentTypeLandingPageScrollBehavior(sa, MOVIES, filterValue);
         searchPage.getBackArrow().click();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.clickSeriesTab();
-        validateContentTypeLandingPageScrollBehavior(sa, contentTypeSeries, filterValue);
+        validateContentTypeLandingPageScrollBehavior(sa, SERIES, filterValue);
 
         sa.assertAll();
     }
@@ -864,7 +863,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         homePage.getSearchNav().click();
         searchPage.searchForMedia("Naruto");
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
@@ -942,7 +941,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         homePage.getSearchNav().click();
         searchPage.searchForMedia(searchQuery);
         searchPage.getTypeButtonByLabel("search").clickIfPresent();
@@ -966,7 +965,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         homePage.getSearchNav().click();
         searchPage.searchForMedia(searchLimitQuery);
         sa.assertTrue(searchPage.isNoResultsFoundMessagePresent(searchLimitQuery), "No results found message was not as expected");
@@ -989,7 +988,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         Assert.assertTrue(searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
                 "Hulu Content not found in search result");
@@ -1008,7 +1007,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.searchForMedia(entitleHuluContent);
         Assert.assertTrue(searchPage.getDynamicAccessibilityId(entitleHuluContent).isPresent(),
@@ -1038,7 +1037,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
         Assert.assertTrue(searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).isPresent(),
@@ -1062,7 +1061,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.searchForMedia(unavailableContentInCA);
         Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(unavailableContentInCA),
                 String.format("No results found message was not displayed for, '%s'", unavailableContentInCA));
@@ -1162,33 +1161,37 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
     private void validateContentTypeLandingPageScrollBehavior(SoftAssert sa, String contentType, String filterValue) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
         sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             //Elements are displayed before scroll
-            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), CONTENT_FILTER_HEADER_NOT_DISLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
             scrollDown();
-            //verify after scrolling down also, Page header and Filter is present
+            //Elements are displayed after scroll
             sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
-            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
-            //Verify after selecting any filter value also, Page header and Filter is present
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), CONTENT_FILTER_HEADER_NOT_DISLAYED);
+            sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+            //Elements are displayed after selecting Filter Value
             searchPage.getTypeButtonByLabel(filterValue).click();
             sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
-            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), "Content Page Filter Header was not found");
+            sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), CONTENT_FILTER_HEADER_NOT_DISLAYED);
+            sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         } else {
             //Elements are displayed before scroll
-            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
             scrollDown();
-
             //Elements are displayed after scroll
-            //TODO determine what is expected Assert True or False tha the dropdown is in viewport
-            //sa.assertTrue(searchPage.isContentPageFilterDropDownAtMiddleTopPresent(), "Content Page Filter Dropdown
-            // not present after scroll");
-            //Verify after selecting any filter value navigates to top of screen and Filter Dropdown is present
-            //searchPage.getStaticTextByLabel(filterValue).click();
-            //sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), "Content Page Filter Dropdown was not found");
             sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED);
+            sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+            //Elements are displayed after selecting Filter Value
+            searchPage.clickContentPageFilterDropDown();
+            searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
+            searchPage.getStaticTextByLabel(filterValue).click();
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         }
 
