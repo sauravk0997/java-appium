@@ -23,11 +23,10 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
@@ -35,12 +34,10 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     private static final String CONTENT_UNAVAILABLE_ERROR = "Content Unavailable Error not displayed";
     private static final String CONTENT_UNAVAILABLE_OK_ERROR = "Content Unavailable Error OK cta is not displayed";
-    private static final String HOME_PAGE_NOT_DISPLAYED = "Home page not displayed";
     private static final String HULU_PAGE_NOT_DISPLAYED = "Hulu Page is not displayed";
     private static final String NETWORK_LOGO_IMAGE_NOT_DISPLAYED = "Network Logo Image is not displayed";
     private static final String WATCHLIST_IS_EMPTY_ERROR = "You haven't added anything yet";
     private static final String WATCHLIST_DEEP_LINK_ERROR = "Watchlist Page did not open via Deep Link";
-    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
 
     @DataProvider(name = "watchlistDeepLinks")
     public Object[][] watchlistDeepLinks() {
@@ -274,6 +271,36 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-61169"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyCloseButtonForDeepLinkingContentSeries() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getUnifiedAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_debug_video_player_episode_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68456"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyCloseButtonForDeepLinkingContentMovie() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setAppToHomeScreen(getUnifiedAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_debug_video_player_movie_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.clickBackButton();
+        Assert.assertTrue(detailsPage.isDetailPageOpened(TEN_SEC_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.clickCloseButton().isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75302"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluSeriesVideoPlayerDeepLink() {
@@ -376,7 +403,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_movie_prey_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
                 "Video player deeplink's title doesn't match with api title");
     }
@@ -399,7 +426,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
                 "Video player deeplink title does not match API title");
     }
@@ -420,7 +447,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         }
         launchDeeplink(R.TESTDATA.get("disney_prod_series_me_and_mickey_1st_episode_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(seriesTitle),
                 "Video player deeplink title does not match API title");
     }
