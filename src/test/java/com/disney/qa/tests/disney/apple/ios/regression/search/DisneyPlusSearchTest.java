@@ -1162,19 +1162,22 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private void validateContentTypeLandingPageScrollBehavior(SoftAssert sa, String contentType, String filterValue) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+        sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
+                "Page header '" + contentType + "' was not found after opening the page");
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             //Elements are displayed before scroll
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), CONTENT_FILTER_HEADER_NOT_DISLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
             scrollDown();
             //Elements are displayed after scroll
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
+                    "Page header '" + contentType + "' was not found after scrolling");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), CONTENT_FILTER_HEADER_NOT_DISLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
             //Elements are displayed after selecting Filter Value
             searchPage.getTypeButtonByLabel(filterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
+                    "Page header '" + contentType + "' was not found after selecting Filter Value");
             sa.assertTrue(searchPage.isContentPageFilterHeaderPresent(), CONTENT_FILTER_HEADER_NOT_DISLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         } else {
@@ -1183,14 +1186,16 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
             scrollDown();
             //Elements are displayed after scroll
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
+                    "Page header '" + contentType + "' was not found after scrolling");
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
             //Elements are displayed after selecting Filter Value
             searchPage.clickContentPageFilterDropDown();
             searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
             searchPage.getStaticTextByLabel(filterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(), "Page header '" + contentType + "' was not found");
+            sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
+                    "Page header '" + contentType + "' was not found after selecting Filter Value");
             sa.assertTrue(searchPage.isContentPageFilterDropDownPresent(), CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED);
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         }
