@@ -1,8 +1,12 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.home;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -14,12 +18,16 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
@@ -189,7 +197,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118739"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyLiveModalEpisodicInfo() {
-        int maxQuantityOfExpectedChannels = 10;
+        int maxQuantityOfExpectedChannels = 6;
         String episodicInfoLabelFormat = "Season %s Episode %s %s";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
@@ -199,7 +207,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
 
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
         homePage.moveRightUntilElementIsFocused(
@@ -231,7 +239,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118738"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyLiveModalWithEpisodicArtworkForSeriesLiveEvent() {
-        int maxQuantityOfExpectedChannels = 10;
+        int maxQuantityOfExpectedChannels = 6;
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -241,7 +249,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 6);
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
         homePage.moveRightUntilElementIsFocused(
                 homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
@@ -303,6 +311,77 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             throw new SkipException("Series episode stream expected is not available" + e.getMessage());
         }
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67224"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyHomeScreenUI() {
+        ArrayList<Container> collections;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        try {
+            collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get collection details from the api " + e.getMessage());
+        }
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        for (int i = 2; i < collections.size(); i++) {
+            String containerId = collections.get(i).getId();
+            String containerName = collections.get(i).getVisuals().getName();
+            if (containerId.isEmpty() && containerId == null && containerName.isEmpty() && containerName == null) {
+                throw new SkipException("Skipping test, failed to get collection name or id from the api ");
+            }
+
+            LOGGER.info("Container Name returned: {} ", containerName);
+            homePage.moveDownUntilCollectionContentIsFocused(containerId, 5);
+            sa.assertTrue(homePage.isFocused(homePage.getFirstCellFromCollection(containerId)),
+                    "User is not able to swipe to container " + containerName);
+        }
+
+        String topContainerID = collections.get(2).getId();
+
+        homePage.moveUpUntilElementIsFocused(homePage.getFirstCellFromCollection(topContainerID), collections.size());
+        sa.assertTrue(homePage.isFocused(homePage.getFirstCellFromCollection(topContainerID)),
+                "User is not swiped up to top");
+
+        BufferedImage collectionTileBeforeRightSwipe = getElementImage(homePage.getCollection(topContainerID));
+        homePage.moveRight(7, 1);
+        BufferedImage collectionTileAfterRightSwipe = getElementImage(homePage.getCollection(topContainerID));
+        sa.assertTrue(areImagesDifferent(collectionTileBeforeRightSwipe, collectionTileAfterRightSwipe),
+                "Collection tile in view and after right swipe are the same");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67200"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyHomeBrandTiles() {
+        Container brandCollection;
+        int totalBrandTile;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        try {
+            brandCollection = getDisneyAPIPage(DisneyEntityIds.HOME_PAGE.getEntityId(),
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage()).get(1);
+            totalBrandTile = brandCollection.getItems().size();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get brand collection details from the api " + e.getMessage());
+        }
+
+        IntStream.range(0, totalBrandTile - 1).forEach(i -> {
+            Visuals brandVisuals = brandCollection.getItems().get(i).getVisuals();
+            if (brandVisuals == null || brandVisuals.getTitle().isEmpty()) {
+                throw new SkipException("Skipping test, failed to get brand collection details from the api");
+            }
+            Assert.assertTrue(homePage.getBrandCells().get(i).getText()
+                            .contains(brandVisuals.getTitle()),
+                    brandVisuals.getTitle() + " title is not matching with UI");
+        });
     }
 
     private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {

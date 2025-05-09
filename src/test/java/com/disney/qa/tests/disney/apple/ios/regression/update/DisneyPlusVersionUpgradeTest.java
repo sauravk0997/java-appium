@@ -3,11 +3,11 @@ package com.disney.qa.tests.disney.apple.ios.regression.update;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
 import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.appcenter.AppCenterManager;
 import org.testng.annotations.Listeners;
 import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
@@ -37,7 +37,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         String appPreviousFCVersion =  R.TESTDATA.get("disney_app_previous_fc_version");
 
         // Install previous FC Version and log in
-        installAppCenterApp(appPreviousFCVersion);
+        installPreviousVersionTestFairyApp();
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         setAppToHomeScreen(getUnifiedAccount());
@@ -49,14 +49,14 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
         // Terminate app and upgrade application to current version
         terminateApp(sessionBundles.get(DISNEY));
-        installApp(TEST_FAIRY_URL.get()); // temp solution until TestFairy integration is complete
+        installApp(sessionBundles.get(APP));
         startApp(sessionBundles.get(DISNEY));
         //Handle ATT Modal
         handleGenericPopup(5,1);
         moreMenu.clickMoreTab();
         // Verify version is current FC Version
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version was not displayed");
-        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(TEST_FAIRY_APP_VERSION.get()),
+        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(IAPIHelper.TEST_FAIRY_APP_VERSION),
                 "Version is not the current expected");
         // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
@@ -143,10 +143,12 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 FORCE_UPDATE_ERROR + " Title not found");
     }
 
-    private void installAppCenterApp(String version) {
-        installApp(AppCenterManager.getInstance()
-                .getAppInfo(String.format(APP_URL, version))
-                .getDirectLink());
+    private void installPreviousVersionTestFairyApp() {
+        String appPreviousFCVersionUrl =  R.CONFIG.get("test_fairy_previous_fc_url");
+        if (appPreviousFCVersionUrl.isEmpty()) {
+            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_previous_fc_url IS MISSING!");
+        }
+        installApp(appPreviousFCVersionUrl);
     }
 
     private String formatAppVersion(String appVersion) {

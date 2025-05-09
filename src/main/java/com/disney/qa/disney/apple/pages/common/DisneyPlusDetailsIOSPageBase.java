@@ -85,6 +85,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement contentImageView;
     @ExtendedFindBy(accessibilityId = "contentImageView")
     protected ExtendedWebElement extrasContentImageView;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'contentImageView'`]" +
+            "/XCUIElementTypeOther[`name == 'progressBar'`]")
+    protected ExtendedWebElement contentImageViewProgressBar;
     @ExtendedFindBy(accessibilityId = "shareButton")
     private ExtendedWebElement shareBtn;
     @ExtendedFindBy(accessibilityId = "watchlistButton")
@@ -180,6 +183,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "/**/XCUIElementTypeStaticText[1]")
     protected ExtendedWebElement ratingAudioVideoFormatLabel;
 
+    @ExtendedFindBy(accessibilityId = "bookmarkedInfoPanelView")
+    protected ExtendedWebElement bookmarkedInfoPanelView;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`focused==1`]" +
+            "/**/XCUIElementTypeStaticText[`name=='titleLabel'`]")
+    protected ExtendedWebElement focusedCellTitleLabel;
+
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_PAUSE_DOWNLOAD.getText()));
@@ -254,6 +264,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return downloadStartedButton;
     }
 
+    public ExtendedWebElement getContentImageViewProgressBar() {
+        return contentImageViewProgressBar;
+    }
+
+    public ExtendedWebElement getBookmarkedInfoPanelView() {
+        return bookmarkedInfoPanelView;
+    }
+
     public boolean isContinueButtonPresent() {
         return getContinueButton().isPresent();
     }
@@ -295,6 +313,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getEspnPlusGenericErrorText() {
         return espnPlusGenericErrorText;
+    }
+
+    public ExtendedWebElement getFocusedCellTitleLabel() {
+        return focusedCellTitleLabel;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {

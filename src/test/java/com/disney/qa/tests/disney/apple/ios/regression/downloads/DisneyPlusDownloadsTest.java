@@ -577,7 +577,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
-        swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 900);
+        swipePageTillElementTappable(detailsPage.getFirstEpisodeDownloadButton(), 1, null,
+                Direction.UP, 900);
         detailsPage.getFirstEpisodeDownloadButton().click();
         detailsPage.waitForFirstEpisodeToCompleteDownloadAndShowAsExpired(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
 

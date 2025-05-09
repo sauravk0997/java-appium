@@ -345,6 +345,31 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Playback is not initiated for expected episode");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112653"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, US})
+    public void verifySeriesUpNextSeeAllEpisodesCTA() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        logIn(getUnifiedAccount());
+
+        // Play first episode
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        // Scrub to the end and start next episode
+        commonPage.clickRight(6, 1, 1);
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        commonPage.moveRightUntilElementIsFocused(upNextPage.getSeeAllEpisodesButton(), 6);
+        Assert.assertTrue(upNextPage.getSeeAllEpisodesButton().isPresent(), "See All Episode CTA is not displayed");
+        upNextPage.getSeeAllEpisodesButton().click();
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64885"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifyBookmarkSeriesDetailsAppearance() {
@@ -459,6 +484,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForElementToDisappear(videoPlayer.getContentRatingInfoView(), FIFTEEN_SEC_TIMEOUT);
         videoPlayer.clickPlay();
         int remainingTimeAfterRestart = videoPlayer.getRemainingTimeThreeIntegers();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getTimeRemainingLabel(), SHORT_TIMEOUT);
+
+        commonPage.clickDown(1);
         int elapsedPlaybackTime = videoPlayer.getCurrentTime();
         Assert.assertTrue(remainingTimeAfterRestart > remainingTimeAfterForward,
                 String.format("Remaining time after restart (%d seconds) is not greater than " +
@@ -717,6 +745,45 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 String.format("Progress bar fill percentage '%s' isn't between acceptable estimated " +
                                 "percentage range(%s-%s)", currentProgressBarPercentage,
                         acceptedPercentageRange.getMinimum(), acceptedPercentageRange.getMaximum()));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64893"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifyFeaturedAreaAfterWatchingLastEpisode() {
+        int numberOfAttemptsToReachEnd = 40;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        String seriesBriefDescription;
+        try {
+            seriesBriefDescription = getSeriesApi(BLUEY.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY).getDescription().getBrief();
+        } catch (Exception e) {
+            throw new SkipException("Unable to retrieve series brief description from Explore API:", e);
+        }
+
+        // Play last episode through deeplink and fast-forward to the end of episode
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_last_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPlay();
+        commonPage.clickRightTillEndOfPlaybackIsReached(
+                videoPlayer.getSeekbar(), numberOfAttemptsToReachEnd, 1, 1);
+        videoPlayer.clickPlay();
+        Assert.assertTrue(upNextPage.isOpened(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        upNextPage.clickMenuTimes(1, 1);
+
+        // Go to series details page and validate featured area shows series-level metadata
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        Assert.assertTrue(detailsPage.getPlayButton().isPresent(), "Play button is not present");
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seriesBriefDescription).isPresent(),
+                "Element with series brief description is not present");
+        Assert.assertFalse(detailsPage.getBookmarkedInfoPanelView().isPresent(ONE_SEC_TIMEOUT),
+                "Bookmarked info panel view is present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64956"})

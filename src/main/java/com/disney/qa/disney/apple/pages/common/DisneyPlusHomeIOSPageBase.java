@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.*;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVBrandsPage;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -19,17 +20,17 @@ import java.util.*;
 public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private String brandLabelSubString = ", Select for details on this title.";
-    @ExtendedFindBy(accessibilityId = "Disney, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "Disney, Select for details on this title. | network: none")
     private ExtendedWebElement disneyTile;
-    @ExtendedFindBy(accessibilityId = "Pixar, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "Pixar, Select for details on this title. | network: none")
     private ExtendedWebElement pixarTile;
-    @ExtendedFindBy(accessibilityId = "Marvel, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "Marvel, Select for details on this title. | network: none")
     private ExtendedWebElement marvelTile;
-    @ExtendedFindBy(accessibilityId = "Star Wars, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "Star Wars, Select for details on this title. | network: none")
     private ExtendedWebElement starWarsTile;
-    @ExtendedFindBy(accessibilityId = "National Geographic, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "National Geographic, Select for details on this title. | network: none")
     private ExtendedWebElement nationalGeographicTile;
-    @ExtendedFindBy(accessibilityId = "ESPN, Select for details on this title.")
+    @ExtendedFindBy(accessibilityId = "ESPN, Select for details on this title. | network: none")
     private ExtendedWebElement espnTile;
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
@@ -39,7 +40,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement mickeyAndFriends;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name = 'brandTileContentView'$]")
     private ExtendedWebElement brandTileCell;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[@name='DETAILS']")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'DETAILS'`]")
     private ExtendedWebElement continueWatchingDetailsBtn;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
@@ -47,7 +48,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHomePageMainElement() {
-        return disneyTile;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        return homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY));
     }
 
     public ExtendedWebElement getActiveHomeIcon() {
@@ -197,6 +200,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public void goToDetailsPageFromContinueWatching(String title) {
         swipeTillContinueWatchingCarouselPresent();
         getStaticTextByLabel(title).click();
+        waitForPresenceOfAnElement(continueWatchingDetailsBtn);
         continueWatchingDetailsBtn.click();
     }
 

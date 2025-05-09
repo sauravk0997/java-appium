@@ -5,7 +5,9 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
+import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.constant.RatingConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -15,6 +17,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.jetbrains.annotations.NotNull;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
@@ -26,6 +29,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
+import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.FRANCE;
@@ -837,18 +841,30 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77662"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNSportsUpcomingEventBadges() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
+        ArrayList<Item> lockedEspnTitles =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_EXPLORE_MORE), 20).getItems();
+        if (lockedEspnTitles == null) {
+            throw new SkipException("Skipping test, failed to fetch ESPN events from Explore API");
+        }
+
+        String lastEventSportsLeague = lockedEspnTitles.get(lockedEspnTitles.size() - 1).getVisuals()
+                .getMetastringParts().getSportsLeague().getName();
+        if (lastEventSportsLeague == null ) {
+            throw new SkipException("Skipping test, failed to fetch ESPN event's sports league name from Explore API");
+        }
+
         setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        searchPage.searchForMedia(ESPN_LEAGUE);
+        searchPage.searchForMedia(lastEventSportsLeague);
+        searchPage.getKeyboardSearchButton().click();
 
         ExtendedWebElement firstUpcomingEventCell = searchPage.getFirstUpcomingEventCell();
-        searchPage.hideKeyboard();
         searchPage.swipe(firstUpcomingEventCell, 20);
         Assert.assertTrue(firstUpcomingEventCell.isElementPresent(),
                 "No upcoming events found on search page");
@@ -1073,7 +1089,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77673"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, FRANCE})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, FRANCE})
     public void verifySportsSearchForNonEligibleCountry() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1100,7 +1116,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77669"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.EODPLUS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifySportsSearchForEligibleCountry() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);

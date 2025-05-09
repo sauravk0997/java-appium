@@ -177,9 +177,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isElementPresent(PlayerControl control) {
+        ExtendedWebElement controlButton = getElementFor(control);
         waitForPresenceOfAnElement(playerView);
         displayVideoController();
-        return getElementFor(control).isElementPresent();
+        return controlButton.isElementPresent();
     }
 
     public ExtendedWebElement getSeekbar() {
@@ -246,8 +247,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean verifyVideoPaused() {
+        ExtendedWebElement playButton = getPlayButton();
         displayVideoController();
-        return getPlayButton().isElementPresent();
+        return playButton.isElementPresent();
     }
 
     public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart() {
@@ -517,8 +519,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public String getRemainingTimeInDetailsFormatString() {
         int remainingTimeInSeconds = getRemainingTimeThreeIntegers();
         if(remainingTimeInSeconds > 3600) {
-            long hours = remainingTimeInSeconds / 60;
-            long minutes = remainingTimeInSeconds % 60;
+            long hours = remainingTimeInSeconds / 3600;
+            long minutes = (remainingTimeInSeconds % 3600) / 60;
             return String.format("%dh %dm", hours, minutes);
         } else {
             long minutes = remainingTimeInSeconds / 60;
