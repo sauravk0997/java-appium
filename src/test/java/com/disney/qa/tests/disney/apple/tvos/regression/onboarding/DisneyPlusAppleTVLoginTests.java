@@ -492,7 +492,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         logInWithoutHomeCheck(getUnifiedAccount());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoIsWatchingPage.moveRight(2, 1);
+        whoIsWatchingPage.moveRight(1, 1);
         Assert.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getTypeCellLabelContains(PROFILE_NAME_SECONDARY)),
                 "Secondary profile is not focused");
 
