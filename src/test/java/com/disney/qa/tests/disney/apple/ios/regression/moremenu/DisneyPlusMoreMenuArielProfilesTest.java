@@ -393,8 +393,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72475"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyNoGenderForU13Profiles() {
+        String genderFieldEnabledMessage = "Gender field is enabled for U13 profile";
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -406,12 +407,12 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickAddProfile();
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
         // verify gender field is disabled when you select U13 DOB
-        sa.assertFalse(addProfile.isGenderFieldEnabled(),
-                "Gender field is enabled for U13 profile");
+        sa.assertFalse(addProfile.isGenderFieldEnabled(), genderFieldEnabledMessage);
 
         addProfile.tapCancelButton();
         avatars[0].click();
@@ -420,14 +421,15 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
         // verify gender field is disabled when you selected Gender first then choose the U13 DOB
-        sa.assertFalse(addProfile.isGenderFieldEnabled(),
-                "Gender field is enabled for U13 profile");
+        sa.assertFalse(addProfile.isGenderFieldEnabled(), genderFieldEnabledMessage);
 
         addProfile.clickSaveBtn();
+        Assert.assertTrue(parentalConsent.isOpened(), "Consent page is not displayed");
+
         //minor consent is shown
-        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            scrollDown();
+            parentalConsent.scrollConsentContent(2);
         }
 
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
