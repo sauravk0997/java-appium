@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -779,5 +780,63 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Element with series brief description is not present");
         Assert.assertFalse(detailsPage.getBookmarkedInfoPanelView().isPresent(ONE_SEC_TIMEOUT),
                 "Bookmarked info panel view is present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67663"})
+    @Test(groups = {TestGroup.SERIES, TestGroup.SMOKE, US})
+    public void verifySeriesUpAutoplayCountdown() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVEditProfilePage editProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
+        String nextEpisodeTitle = "";
+        String on = "On";
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.clickEditProfile();
+        Assert.assertTrue(editProfilePage.isEditModeProfileIconPresent(DEFAULT_PROFILE));
+        whoIsWatchingPage.clickSelect();
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        editProfilePage.toggleAutoplayButton(on);
+
+        if (!editProfilePage.getAutoplayToggleCell().getText().equalsIgnoreCase(on)) {
+            editProfilePage.getAutoplayToggleCell().click();
+        }
+        
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        homePage.clickSelect();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        // Get second episode title
+        try {
+            ExploreContent seriesApiContent =
+                    getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_entity"),
+                            DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+            nextEpisodeTitle =
+                    seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, series title was not found" + e.getMessage());
+        }
+
+        // Play first episode
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        // Scrub to the end and start next episode
+        commonPage.clickRight(6, 1, 1);
+        videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
+        Assert.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next button is not present");
+        videoPlayer.waitForElementToDisappear(upNextPage.getUpNextPlayButton(), 30);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.clickDown();
+        Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
+                "Playback is not initiated for expected episode");
     }
 }

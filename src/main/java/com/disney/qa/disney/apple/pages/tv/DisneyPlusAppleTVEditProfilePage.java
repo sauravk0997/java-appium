@@ -18,6 +18,13 @@ public class DisneyPlusAppleTVEditProfilePage extends DisneyPlusEditProfileIOSPa
         return dynamicEditProfileIcon.format(username).isElementPresent();
     }
 
+    @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
+    protected ExtendedWebElement autoplayToggleCell;
+
+    public ExtendedWebElement getAutoplayToggleCell() {
+        return autoplayToggleCell;
+    }
+
     public DisneyPlusAppleTVEditProfilePage(WebDriver driver) {
         super(driver);
     }
