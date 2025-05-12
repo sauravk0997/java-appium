@@ -308,7 +308,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     public void verifySeriesUpNextPlayButtonBehavior() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         String nextEpisodeTitle = "";
         logIn(getUnifiedAccount());
@@ -326,13 +325,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         // Play first episode
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.waitForVideoToStart();
-        // Scrub to the end and start next episode
-        commonPage.clickRight(6, 1, 1);
-        videoPlayer.waitForPresenceOfAnElement(upNextPage.getUpNextPlayButton());
-        Assert.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next button is not present");
+        navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         upNextPage.getUpNextPlayButton().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
@@ -782,6 +775,39 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Bookmarked info panel view is present");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67678"})
+    @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
+    public void verifyBackGroundingUpNextWhileAutoplayOFF() {
+        String toogleValue = "Off";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        toggleAutoPlay(toogleValue);
+        navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        runtvOSAppInBackGround(FIVE_SEC_TIMEOUT);
+        LOGGER.info("Launching app again");
+        startApp(sessionBundles.get(DISNEY));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-125061"})
+    @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
+    public void verifyBackGroundingUpNextWhileAutoplayOn() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        runtvOSAppInBackGround(FIVE_SEC_TIMEOUT);
+        LOGGER.info("Launching app again");
+        startApp(sessionBundles.get(DISNEY));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+    }
+
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67663"})
     @Test(groups = {TestGroup.SERIES, TestGroup.SMOKE, US})
     public void verifySeriesUpAutoplayCountdown() {
@@ -790,28 +816,12 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        DisneyPlusAppleTVEditProfilePage editProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
         String nextEpisodeTitle = "";
-        String on = "On";
+        String toogleValue = "On";
         logIn(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
-        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoIsWatchingPage.clickEditProfile();
-        Assert.assertTrue(editProfilePage.isEditModeProfileIconPresent(DEFAULT_PROFILE));
-        whoIsWatchingPage.clickSelect();
-        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
-        editProfilePage.toggleAutoplayButton(on);
-
-        if (!editProfilePage.getAutoplayToggleCell().getText().equalsIgnoreCase(on)) {
-            editProfilePage.getAutoplayToggleCell().click();
-        }
-        
-        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        homePage.clickSelect();
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        toggleAutoPlay(toogleValue);
 
         // Get second episode title
         try {
@@ -838,5 +848,34 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.clickDown();
         Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
                 "Playback is not initiated for expected episode");
+    }
+
+    private void toggleAutoPlay(String toogleValue) {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVEditProfilePage editProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.clickEditProfile();
+        Assert.assertTrue(editProfilePage.isEditModeProfileIconPresent(DEFAULT_PROFILE));
+        whoIsWatchingPage.clickSelect();
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        editProfilePage.toggleAutoplayButton(toogleValue);
+        homePage.clickMenuTimes(2, 1);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
+
+    private void navigateToUpNextOnVideoPlayer(String deeplink) {
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        launchDeeplink(deeplink);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        // Scrub to the end and start next episode
+        commonPage.clickRight(7, 1, 1);
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
     }
 }

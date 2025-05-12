@@ -211,6 +211,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         REMINDERS("com.apple.reminders"),
         SAFARI("com.apple.mobilesafari"),
         SETTINGS("com.apple.Preferences"),
+        TVOS_SETTINGS("com.apple.TVSettings"),
         SHORTCUTS("is.workflow.my.app"),
         STOCKS("com.apple.stocks"),
         TIPS("com.apple.tips"),
