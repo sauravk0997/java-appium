@@ -115,10 +115,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement detailsTabTitle;
     @ExtendedFindBy(accessibilityId = "promoLabel")
     private ExtendedWebElement promoLabel;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
-    private ExtendedWebElement handsetNetworkAttributionImage;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
-    private ExtendedWebElement tabletNetworkAttributionImage;
+    @ExtendedFindBy(accessibilityId = "networkAttribution")
+    private ExtendedWebElement networkAttributionLogo;
     @ExtendedFindBy(accessibilityId = "descriptionLabel_0")
     private ExtendedWebElement firstDescriptionLabel;
     @ExtendedFindBy(accessibilityId = "descriptionLabel")
@@ -838,12 +836,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return firstTitleLabel;
     }
 
-    public ExtendedWebElement getHandsetNetworkAttributionImage() {
-        return handsetNetworkAttributionImage;
-    }
-
-    public ExtendedWebElement getTabletNetworkAttributionImage() {
-        return tabletNetworkAttributionImage;
+    public ExtendedWebElement getNetworkAttributionLogo() {
+        return networkAttributionLogo;
     }
 
     public ExtendedWebElement getServiceAttribution() {
