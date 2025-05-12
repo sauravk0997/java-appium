@@ -198,8 +198,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        String toggleOn = "On";
-        String toggleOff = "Off";
+        String toggleOnDE = "An";
+        String toggleOffDE = "Aus";
         SoftAssert sa = new SoftAssert();
 
         setAccount(getUnifiedAccountApi()
@@ -220,26 +220,29 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         String dobPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText());
+        String dobPlaceHolderUpdated = dobPlaceholder.replace(".", "/");
 
         // Validate Junior Mode toggle and toggled it ON
-        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOff, "Junior Mode is not toggled OFF");
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOffDE, "Junior Mode is not toggled OFF");
         addProfile.tapJuniorModeToggle();
-        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOn, "Profile is converted to General Audience");
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOnDE, "Profile is converted to General Audience");
 
         // Validate Content Rating and Birthdate are disabled
         sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), "DOB field is not present");
         addProfile.getDynamicTextEntryFieldByName(addProfile.getBirthdateTextField()).click();
         Assert.assertTrue(editProfile.getDoneButton().isElementNotPresent(THREE_SEC_TIMEOUT),
                 "Date of birth is not disabled");
+//        debug **/XCUIElementTypeButton[`label == "Fertig"`] - done moment
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
 
         // Toggle Junior Mode OFF and validate content
         addProfile.tapJuniorModeToggle();
-        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOff, "Junior Mode is not toggled OFF");
-        Assert.assertEquals(addProfile.getValueFromDOB(), dobPlaceholder,
+        sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOffDE, "Junior Mode is not toggled OFF");
+        sa.assertEquals(addProfile.getValueFromDOB(), dobPlaceHolderUpdated,
                 "Date Of Birth field did not get empty after toggle Junior Mode OFF");
-        Assert.assertTrue(addProfile.getChooseContentRating().isPresent(),
+        sa.assertTrue(addProfile.getChooseContentRating().isPresent(),
                 "Choose Content Rating did not get empty after toggle Junior Mode OFF");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75283"})
@@ -683,11 +686,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         }
     }
 
-    @AfterMethod(alwaysRun = true)
-    public void removeJarvisApp() {
-        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
-        if (isInstalled) {
-            removeJarvis();
-        }
-    }
+//    @AfterMethod(alwaysRun = true)
+//    public void removeJarvisApp() {
+//        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+//        if (isInstalled) {
+//            removeJarvis();
+//        }
+//    }
 }
