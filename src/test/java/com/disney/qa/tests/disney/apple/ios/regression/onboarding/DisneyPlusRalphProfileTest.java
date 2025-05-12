@@ -685,11 +685,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         }
     }
 
-//    @AfterMethod(alwaysRun = true)
-//    public void removeJarvisApp() {
-//        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
-//        if (isInstalled) {
-//            removeJarvis();
-//        }
-//    }
+    @AfterMethod(alwaysRun = true)
+    public void removeJarvisApp() {
+        boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
+        if (isInstalled) {
+            removeJarvis();
+        }
+    }
 }
