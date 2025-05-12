@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.utils.IOSUtils;
@@ -793,8 +794,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66818"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileAppUILanguage() {
+        String appLanguagePageNotDisplayed = "App Language screen is not displayed";
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
@@ -803,22 +805,27 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(editProfile.isAppLanguageCellPresent(), "'App Language' option is not displayed");
         editProfile.clickAppLanguage();
 
-        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
+        Assert.assertTrue(appLanguage.isOpened(), appLanguagePageNotDisplayed);
         sa.assertTrue(appLanguage.isAppLanguageHeaderPresent(), "App Language header is not present");
-        sa.assertTrue(appLanguage.isAppLanguageCopyPresent(), "App Language copy is not present");
         sa.assertTrue(appLanguage.getBackButton().isElementPresent(), "Back button is not present");
         sa.assertTrue(appLanguage.isLanguageSelected(ENGLISH_US), "Language selected doesn't have the check mark");
         sa.assertTrue(appLanguage.isLanguageListShownInAlphabeticalOrder(), "Languages are not present in alphabetical order");
-        appLanguage.getBackArrow().click();
+        tap(appLanguage.getBackArrow());
 
-        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile page is not opened");
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.clickAppLanguage();
-        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
-
+        Assert.assertTrue(appLanguage.isOpened(), appLanguagePageNotDisplayed);
+        DisneyLocalizationUtils localizationUtils = getLocalizationUtils(getCountry(), ES_LANG);
+        String toastMessageInSpanish = localizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText());
         appLanguage.selectLanguage(ESPAÑOL);
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not found");
+
+        sa.assertTrue(editProfile.getStaticTextByLabel(toastMessageInSpanish).isPresent(),
+                UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE);
 
         editProfile.clickAppLanguage();
         sa.assertTrue(appLanguage.isLanguageSelected(ESPAÑOL), "Language was not changed to Spanish");
