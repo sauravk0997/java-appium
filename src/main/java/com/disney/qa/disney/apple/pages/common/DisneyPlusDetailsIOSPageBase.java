@@ -1345,4 +1345,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public int getProgressBarPercentage() {
         return (progressBarBookmark.getSize().getWidth() * 100) / progressBar.getSize().getWidth();
     }
+
+    public String getNetworkAttribution() {
+        return networkAttributionLogo.getAttribute(LABEL);
+    }
  }
