@@ -735,7 +735,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
 
         SoftAssert sa = new SoftAssert();
-        int apiTitlesSearchLimit = 400;
+        int apiTitlesSearchLimit = 20;
 
         //Assign TV-Y content maturity rating
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
@@ -777,7 +777,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = new DisneyPlusBrandIOSPageBase(getDriver());
 
         SoftAssert sa = new SoftAssert();
-        int apiTitlesSearchLimit = 400;
+        int apiTitlesSearchLimit = 20;
 
         // Edit to get TV-Y maturity rating content
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
