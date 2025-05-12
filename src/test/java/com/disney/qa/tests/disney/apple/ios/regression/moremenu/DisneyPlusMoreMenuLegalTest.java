@@ -363,7 +363,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sellingLegalTextPage.clickTargetedAdvertisingOptOutRightsLink();
         sa.assertTrue(sellingLegalTextPage.isTargetedAdvertisingOptOutRightsLinkPageOpened(15),
                 "Targeted Advertising Opt Out Rights page not opened");
-        tap(oneTrustPage.getTypeButtonByLabel("Done"));
+        tap(oneTrustPage.getDoneButton());
         sa.assertTrue(sellingLegalTextPage.isOpened(),
                 "Selling, Sharing, Targeted Advertising page was not opened");
         sa.assertAll();
