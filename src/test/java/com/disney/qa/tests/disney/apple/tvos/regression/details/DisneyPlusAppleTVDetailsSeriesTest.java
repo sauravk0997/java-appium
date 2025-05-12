@@ -809,7 +809,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67663"})
-    @Test(groups = {TestGroup.SERIES, TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.SERIES, TestGroup.UP_NEXT, US})
     public void verifySeriesUpAutoplayCountdown() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
