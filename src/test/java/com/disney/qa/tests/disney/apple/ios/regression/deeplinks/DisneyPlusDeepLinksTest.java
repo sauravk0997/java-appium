@@ -635,7 +635,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        welcomePage.clickLogInButton();
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
         handleAlert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
