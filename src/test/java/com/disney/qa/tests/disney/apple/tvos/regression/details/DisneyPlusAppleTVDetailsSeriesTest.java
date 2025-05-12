@@ -831,7 +831,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         }
 
         // Play first episode and verify next episode starts
-        homePage.waitForHomePageToOpen();
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickDown();
