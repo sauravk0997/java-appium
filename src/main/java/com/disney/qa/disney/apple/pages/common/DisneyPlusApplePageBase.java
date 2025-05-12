@@ -1275,8 +1275,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getUnavailableContentErrorPopUpMessage() {
         // This element has hardcoded the text in the app and there is not a dictionary key with the same content
-        return getStaticTextByLabelContains("**/XCUIElementTypeTextView[`label == \"Sorry, content you are trying to " +
-                "access is not available currently. You will be re-directed to Disney+ Home");
+        return getStaticTextByLabelContains("Sorry, content you are trying to access is not available currently. " +
+                "You will be re-directed to Disney+ Home");
     }
 
     public boolean isUnavailableContentErrorPopUpMessageIsPresent() {
