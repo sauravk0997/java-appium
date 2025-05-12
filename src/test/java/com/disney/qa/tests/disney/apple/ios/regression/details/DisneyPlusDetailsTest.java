@@ -593,11 +593,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-                Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on " + i + " series details page.");
-            } else {
-                Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on " + i + " series details page.");
-            }
+            Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
+                    "Network attribution logo was not found on " + i + " series details page");
         });
         sa.assertAll();
     }
