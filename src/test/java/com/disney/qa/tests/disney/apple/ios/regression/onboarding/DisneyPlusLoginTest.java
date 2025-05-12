@@ -298,40 +298,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-62679"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyAccountOnHold() {
-        SoftAssert softAssert = new SoftAssert();
-        AliceDriver aliceDriver = new AliceDriver(getDriver());
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusAccountOnHoldIOSPageBase disneyPlusAccountOnHoldIOSPageBase = initPage(DisneyPlusAccountOnHoldIOSPageBase.class);
-
-        CreateDisneyAccountRequest request = new CreateDisneyAccountRequest();
-        request.setLanguage(getLanguage());
-        request.setCountry(getCountry());
-        request.setSkus(Arrays.asList(DisneySkuParameters.DISNEY_IAP_APPLE_MONTHLY));
-        List<DisneyOrder> orderList = new LinkedList();
-        orderList.add(DisneyOrder.SET_BILLING_HOLD);
-        request.setOrderSettings(orderList);
-        DisneyAccount accountWithBillingHold = getAccountApi().createAccount(request);
-
-        disneyPlusWelcomeScreenIOSPageBase.clickLogInButton();
-        login(accountWithBillingHold);
-
-        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getLogoutButton().isPresent(), LOG_OUT_BTN_NOT_DISPLAYED);
-        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getAccountHoldTitle().isPresent(), "Account Hold Title not present");
-        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getAccountHoldSubText().isPresent(), "Account Hold Subtext not present");
-        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getUpdatePaymentButton().isPresent(), "Update Payment Button not present");
-        softAssert.assertTrue(disneyPlusAccountOnHoldIOSPageBase.getRefreshButton().isPresent(), "Refresh Button not present");
-        //QCE-1253 Causes below to fail on iPhone. Otherwise test passes on iPad.
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(TABLET)) {
-            LOGGER.info("Tablet");
-            aliceDriver.screenshotAndRecognize().isLabelPresent(softAssert, "disney_logo");
-        }
-
-        softAssert.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67266"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.LOG_IN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMinorLogInBlocked() throws InterruptedException {
