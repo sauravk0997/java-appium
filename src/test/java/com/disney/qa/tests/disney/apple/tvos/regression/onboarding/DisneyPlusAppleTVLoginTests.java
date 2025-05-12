@@ -498,7 +498,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         whoIsWatchingPage.clickSelect();
         homePage.waitForHomePageToOpen();
-        Assert.assertTrue(homePage.isOpened(), "Home page is not opened");
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
