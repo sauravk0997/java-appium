@@ -11,7 +11,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -337,7 +336,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.clickYourCaliforniaPrivacyRightsLink();
         sa.assertTrue(oneTrustPage.isYourCaliforniaPrivacyRightsPageOpened(15),
                 "California Privacy Rights Link page not opened");
-        LOGGER.info("PRINT OUT: " + getDriver().getPageSource());
         oneTrustPage.waitForPresenceOfAnElement(oneTrustPage.getDoneButton());
         tap(oneTrustPage.getDoneButton());
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
