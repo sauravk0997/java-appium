@@ -778,13 +778,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67678"})
     @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
     public void verifyBackGroundingUpNextWhileAutoplayOFF() {
-        String toogleValue = "Off";
+        String toggleValue = "Off";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        toggleAutoPlay(toogleValue);
+        toggleAutoPlay(toggleValue);
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         runtvOSAppInBackGround(FIVE_SEC_TIMEOUT);
         LOGGER.info("Launching app again");
@@ -813,15 +813,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     public void verifySeriesUpAutoplayCountdown() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         String nextEpisodeTitle = "";
-        String toogleValue = "On";
+        String toggleValue = "On";
         logIn(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        toggleAutoPlay(toogleValue);
+        toggleAutoPlay(toggleValue);
 
         // Get second episode title
         try {
