@@ -469,7 +469,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         ratingsSetupWithPINNew(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         navigateToHomePageForPinUser();
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_series_love_victor_deeplink"));
-        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
 
         verifyAgePage.clickIAm21PlusButton();
