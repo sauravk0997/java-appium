@@ -640,6 +640,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         handleAlert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         login(getUnifiedAccount());
+        handleGenericPopup(5, 1);
         Assert.assertTrue(huluPage.isOpened(), HULU_PAGE_NOT_DISPLAYED);
     }
 }
