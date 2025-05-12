@@ -219,8 +219,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.enterProfileName(JUNIOR_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         String dobPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText());
-        String dobPlaceHolderUpdated = dobPlaceholder.replace(".", "/");
+                DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText()).replace(".", "/");
 
         // Validate Junior Mode toggle and toggled it ON
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOffDE, "Junior Mode is not toggled OFF");
@@ -237,7 +236,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         // Toggle Junior Mode OFF and validate content
         addProfile.tapJuniorModeToggle();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOffDE, "Junior Mode is not toggled OFF");
-        Assert.assertEquals(addProfile.getValueFromDOB(), dobPlaceHolderUpdated,
+        Assert.assertEquals(addProfile.getValueFromDOB(), dobPlaceholder,
                 "Date Of Birth field did not get empty after toggle Junior Mode OFF");
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(),
                 "Choose Content Rating did not get empty after toggle Junior Mode OFF");
