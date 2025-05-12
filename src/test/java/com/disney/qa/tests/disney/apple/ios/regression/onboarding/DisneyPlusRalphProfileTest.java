@@ -232,15 +232,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfile.getDynamicTextEntryFieldByName(addProfile.getBirthdateTextField()).click();
         Assert.assertTrue(editProfile.getDoneButton().isElementNotPresent(THREE_SEC_TIMEOUT),
                 "Date of birth is not disabled");
-//        debug **/XCUIElementTypeButton[`label == "Fertig"`] - done moment
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
 
         // Toggle Junior Mode OFF and validate content
         addProfile.tapJuniorModeToggle();
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOffDE, "Junior Mode is not toggled OFF");
-        sa.assertEquals(addProfile.getValueFromDOB(), dobPlaceHolderUpdated,
+        Assert.assertEquals(addProfile.getValueFromDOB(), dobPlaceHolderUpdated,
                 "Date Of Birth field did not get empty after toggle Junior Mode OFF");
-        sa.assertTrue(addProfile.getChooseContentRating().isPresent(),
+        Assert.assertTrue(addProfile.getChooseContentRating().isPresent(),
                 "Choose Content Rating did not get empty after toggle Junior Mode OFF");
         sa.assertAll();
     }
