@@ -211,7 +211,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL);
+        disneyPlusMoreMenuIOSPageBase.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL);
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), LEGAL_PAGE_NOT_DISPLAYED);
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         Assert.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
