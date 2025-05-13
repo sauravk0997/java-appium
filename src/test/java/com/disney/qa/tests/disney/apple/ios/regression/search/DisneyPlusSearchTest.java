@@ -1160,7 +1160,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String filterValue2
     ) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
                 "Page header '" + contentType + "' was not found after opening the page");
         sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
@@ -1179,7 +1179,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             List<ExtendedWebElement> filterResults2 = searchPage.getDisplayedTitles();
             //Validate No Filter, First Filter and Second Filter are different
             sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_DIFFERENT);
-            sa.assertFalse(filterResults2.get(20).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
+            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
+            //Select a Tile and Navigate to Detail Page
+            filterResults2.get(0).click();
+            detailsPage.waitForDetailsPageToOpen();
+            sa.assertEquals(detailsPage.getMediaTitle(), filterResults2.get(0).getText(), "Detail Page Title is not expected");
         } else {
             //Select Filter Picker and Select Value and get First Tile
             searchPage.clickContentPageFilterDropDown();
@@ -1194,7 +1198,11 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             List<ExtendedWebElement> filterResults2 = searchPage.getDisplayedTitles();
             //Validate No Filter, First Filter and Second Filter are different
             sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_DIFFERENT);
-            sa.assertFalse(filterResults2.get(10).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
+            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
+            //Select a Tile and Navigate to Detail Page
+            filterResults2.get(0).click();
+            detailsPage.waitForDetailsPageToOpen();
+            sa.assertEquals(detailsPage.getMediaTitle(), filterResults2.get(0).getText(), "Detail Page Title is not expected");
         }
     }
 }
