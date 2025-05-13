@@ -121,9 +121,9 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySubscriptionDetails_Roku() {
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_ROKU)));
-        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
 
         setAppToAccountSettings();
         sa.assertTrue(accountPage.isPremiumSubscriptionTitlePresent(),
