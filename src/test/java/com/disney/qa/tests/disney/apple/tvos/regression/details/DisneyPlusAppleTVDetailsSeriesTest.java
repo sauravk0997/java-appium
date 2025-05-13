@@ -838,7 +838,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Playback is not initiated for expected episode");
     }
 
-    private void toggleAutoPlay(String toogleValue) {
+    private void toggleAutoPlay(String toggleValue) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEditProfilePage editProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
@@ -850,15 +850,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(editProfilePage.isEditModeProfileIconPresent(DEFAULT_PROFILE));
         whoIsWatchingPage.clickSelect();
         Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
-        editProfilePage.toggleAutoplayButton(toogleValue);
+        editProfilePage.toggleAutoplayButton(toggleValue);
         homePage.clickMenuTimes(1, 1);
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        if (editProfilePage.isElementNotPresent(editProfilePage.getBadgeIcon())) {
-            homePage.clickMenuTimes(1, 1);
-        } else {
-            homePage.clickMenuTimes(2, 1);
-        }
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.clickMenuTimes(2, 1);
     }
 
     private void navigateToUpNextOnVideoPlayer(String deeplink) {
