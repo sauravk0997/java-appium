@@ -10,7 +10,6 @@ import java.text.Collator;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.UI_LANGUAGE_COPY;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.UI_LANGUAGE_SETTING;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -34,11 +33,6 @@ public class DisneyPlusAppLanguageIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isAppLanguageHeaderPresent() {
         return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 UI_LANGUAGE_SETTING.getText())).isPresent();
-    }
-
-    public boolean isAppLanguageCopyPresent() {
-        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                UI_LANGUAGE_COPY.getText())).isPresent();
     }
 
     public boolean isLanguageListShownInAlphabeticalOrder() {
