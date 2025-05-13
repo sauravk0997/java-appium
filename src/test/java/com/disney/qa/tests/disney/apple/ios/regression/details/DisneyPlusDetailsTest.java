@@ -593,11 +593,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-                Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on " + i + " series details page.");
-            } else {
-                Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on " + i + " series details page.");
-            }
+            Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
+                    "Network attribution logo was not found on " + i + " series details page");
         });
         sa.assertAll();
     }
@@ -935,6 +932,25 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Inline generic error message was not present");
         Assert.assertFalse(detailsPage.getDetailsTab().isElementPresent(FIVE_SEC_TIMEOUT),
                 "Details tab was present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78420"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluNetworkAttributionInDetailsPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
+                "Network Attribution logo is not present");
+        String currentNetworkAttribution = detailsPage.getNetworkAttributionValue();
+        Assert.assertTrue(currentNetworkAttribution.contains(HULU),
+                String.format("Current network attribution '%s' didn't contain '%s'",
+                        currentNetworkAttribution, HULU));
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
