@@ -273,9 +273,10 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
     }
 
-    public boolean isRatingPresentInSearchResults(String rating) {
+    public boolean isRatingPresentInSearchResults(String titleName, String titleRating) {
         LOGGER.info("Verifying Ratings in search results");
-        return searchResults.format(rating).isPresent();
+//        return searchResults.format(rating).isPresent();
+       return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating).isPresent();
     }
 
     public ExtendedWebElement getTitleContainer(String titleName, String titleRating) {
