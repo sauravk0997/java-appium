@@ -8,8 +8,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -17,25 +15,16 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
-import java.lang.invoke.MethodHandles;
-import java.util.*;
-
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String NEW_PASSWORD = "TestPass1234!";
     private static final String MONTHLY = "Monthly";
     private static final String YEARLY = "Yearly";
-    private static final String GOOGLE_URL = "accounts.google.com";
-    private static final String HULU_URL = "auth.hulu.com";
-    private static final String ROKU_URL = "my.roku.com";
+    private static final String DISNEYPLUS_WEB_URL_TEXT = "disneyplus.com";
     private static final String AMAZON_URL = "amazon.com";
-    private static final String MERCADOLIBRE_URL = "mercadolibre.com";
-    private DisneyEntitlement disneyEntitlements;
-    private static final String EDIT_ICON = "editIcon";
     private static final String ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED = "One time passcode screen is not displayed";
     private static final String CHANGE_EMAIL_SCREEN_DID_NOT_OPEN = "'Change Email' screen did not open";
     private static final String MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN =
@@ -130,24 +119,22 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75402"})
-    @Test(description = "Verify that the correct description for Roku displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySubscriptionDetails_Roku() {
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_ROKU)));
+
         setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
+        sa.assertTrue(accountPage.isPremiumSubscriptionTitlePresent(),
+                "Subscription title was not displayed");
+        Assert.assertTrue(accountPage.isSubscriptionMessageDisplayed(),
+                "Subscription message was not displayed");
 
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isRokuSubscriptionTitlePresent(),
-                "Roku Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isRokuSubscriptionMessagePresent(),
-                "Roku Subscription message was not displayed");
-
-        disneyPlusAccountIOSPageBase.openRokuWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(ROKU_URL),
-                "Webview did not open to the expected url");
+        accountPage.openRokuWebview();
+        Assert.assertTrue(accountPage.isWebviewOpen(), "Browser webview did not open");
+        sa.assertTrue(accountPage.getWebviewUrl().contains(DISNEYPLUS_WEB_URL_TEXT), "Webview did not open to the expected url");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75403"})
