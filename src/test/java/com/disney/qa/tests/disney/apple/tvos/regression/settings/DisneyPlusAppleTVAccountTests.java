@@ -298,9 +298,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyAccountSharingSoftBlockConfirmDevice() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-
+        String email = "testconfirmdevice@disneyplustesting.com";
+        String password = "Test1234!";
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(SOFT_BLOCK_USERNAME, PASSWORD);
+
+        loginWithAccountSharingUser(email, password);
         // Verify Soft Block screen and click in continue
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
