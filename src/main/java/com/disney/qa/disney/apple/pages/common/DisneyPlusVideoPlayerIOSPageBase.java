@@ -291,9 +291,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase clickPauseButton() {
-        ExtendedWebElement pauseButton = getPauseButton();
-        displayVideoController();
-        pauseButton.click();
+        if (!getPauseButton().isElementPresent()) {
+            displayVideoController();
+        }
+        getPauseButton().click();
         LOGGER.info("Pause button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
@@ -334,9 +335,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase tapForwardButton(int times) {
-//        displayVideoController();
+        displayVideoController();
         while (times > 0) {
-            displayVideoController();
             forwardButton.click();
             times--;
         }
