@@ -28,7 +28,6 @@ import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
-import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -200,7 +199,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_Lightyear_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
@@ -223,11 +221,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Widescreen Description was not found");
         sa.assertEquals(detailsPage.getSecondDescriptionLabel().getText(), imaxEnhancedDescription,
                 "IMAX Description was not found");
-        //Get Video duration from API and verify both durations
+        //Validate Video Duration from API
         ExploreContent exploreMovieContent = getMovieApi(R.TESTDATA.get("disney_prod_lightyear_entity_id"), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         int durationAPI = exploreMovieContent.getDurationMs();
         String durationInHoursMinutes = detailsPage.getHourMinFormatForDuration(durationAPI);
-
         sa.assertEquals(detailsPage.getFirstDurationLabel().getText(), durationInHoursMinutes,
                 "Widescreen Duration is not as expected");
         sa.assertEquals(detailsPage.getSecondDurationLabel().getText(), durationInHoursMinutes,
