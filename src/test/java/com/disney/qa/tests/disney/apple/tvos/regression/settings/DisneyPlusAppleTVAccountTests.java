@@ -17,6 +17,9 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
+    private static final String HARD_BLOCK_USERNAME = "qait.disneystreaming+1799211931388caeedisneystreaming@gmail.com";
+    private static final String SOFT_BLOCK_USERNAME = "qait.disneystreaming+1767211931324cashdisneystreaming@gmail.com";
+    private static final String PASSWORD = "Test1234!";
     private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block screen not displayed";
     private static final String OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Hard Block screen not displayed";
     private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen not displayed";
@@ -54,12 +57,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116817"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHSoftBlockVerifyDeviceUIVerification() {
-        String email = "accountsharingsofttest@disneyplustesting.com";
-        String password = "Test1234!";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(SOFT_BLOCK_USERNAME, PASSWORD);
 
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -92,12 +93,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118365"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHSoftBlockVerifyDeviceOTPConfirmationPage() {
-        String email = "qait.disneystreaming+1744102243522aebcdisneystreaming@gmail.com";
-        String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(SOFT_BLOCK_USERNAME, PASSWORD);
 
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -108,7 +107,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(SOFT_BLOCK_USERNAME));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -122,12 +121,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118363"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHFlaggedTravelModeOTPConfirmationPage() {
-        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
-        String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -141,7 +138,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(HARD_BLOCK_USERNAME));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -155,12 +152,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118364"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHFlaggedUpdateHouseHoldOTPConfirmationPage() {
-        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
-        String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -175,7 +170,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(HARD_BLOCK_USERNAME));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -189,12 +184,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118367"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
     public void verifyOOHFlaggedTravelModeUI() {
-        String email = "qait.disneystreaming+1744104491527109cdisneystreaming@gmail.com";
-        String password = "M1ck3yM0us3#";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -306,11 +299,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
 
-        String email = "testconfirmdevice@disneyplustesting.com";
-        String password = "Test1234!";
-
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(SOFT_BLOCK_USERNAME, PASSWORD);
         // Verify Soft Block screen and click in continue
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -324,7 +314,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         // Verify OTP screen has opened
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "OOH check mail subtext is not present");
+        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(SOFT_BLOCK_USERNAME), "OOH check mail subtext is not present");
         sa.assertAll();
     }
 
@@ -334,11 +324,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
 
-        String email = "testhardsupport@disneyplustesting.com";
-        String password = "Test1234!";
-
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         homePage.moveDown(1, 1);
@@ -395,9 +382,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String email = "qait.disneystreaming+1799211931388caeedisneystreaming@gmail.com";
-        String password = "Test1234!";
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
 
         // Validate hard block screen
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
@@ -427,7 +412,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         // Validate OTP
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(HARD_BLOCK_USERNAME));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -443,11 +428,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
 
-        String email = "qait.disneystreaming+1732111943588cieedisneystreaming@gmail.com";
-        String password = "Test1234!";
-
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
@@ -477,7 +459,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         // Validate OTP
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(HARD_BLOCK_USERNAME));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -494,12 +476,9 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-
         SoftAssert sa = new SoftAssert();
-        String email = "qait.disneystreaming+1767211931324cashdisneystreaming@gmail.com";
-        String password = "Test1234!";
 
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(SOFT_BLOCK_USERNAME, PASSWORD);
 
         // Steps to verify the No thanks option
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
@@ -530,7 +509,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(SOFT_BLOCK_USERNAME));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
