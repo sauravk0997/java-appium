@@ -20,7 +20,7 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPageBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected static final String USER_RATING_KEY = "profile_rating_restriction";
     protected static final String EMPTY_PROFILE_NAME_ERROR = "Enter profile name";
     private static final String R21 = "R21";
@@ -50,7 +50,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                     DictionaryKeys.EDIT_PROFILE_TITLE.getText());
 
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
-    private ExtendedWebElement autoplayToggleCell;
+    protected ExtendedWebElement autoplayToggleCell;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
     private ExtendedWebElement addProfileBtn;
