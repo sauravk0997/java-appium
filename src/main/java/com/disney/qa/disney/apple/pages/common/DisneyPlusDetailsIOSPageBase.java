@@ -79,9 +79,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement movieDownloadCompletedButton;
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]/XCUIElementTypeImage[1]")
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]/XCUIElementTypeImage[1]")
     protected ExtendedWebElement firstVersionsImage;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][2]/XCUIElementTypeImage[1]")
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeOther[`name == \"contentImageView\"`][2]/XCUIElementTypeImage[1]")
     protected ExtendedWebElement secondVersionsImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
     protected ExtendedWebElement firstPlayIcon;
