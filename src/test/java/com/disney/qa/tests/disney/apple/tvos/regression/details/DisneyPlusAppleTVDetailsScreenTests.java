@@ -57,8 +57,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String ASSET_NOT_FOUND_IN_WATCHLIST = "The asset was not found in the watchlist";
     private static final String LIVE_MODAL_NOT_OPEN = "Live event modal did not open";
     private static final String SUGGESTED = "SUGGESTED";
-    private static String eventDescription = "";
-    private static String networkAttribution = "";
+    private static boolean eventDescription = false;
+    private static boolean networkAttribution = false;
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66656"})
@@ -453,7 +453,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.isLogoPresent(), "Logo image is not present");
         sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
         sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
-        if (!eventDescription.isEmpty() && !networkAttribution.isEmpty()) {
+        if (eventDescription && networkAttribution) {
             sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
             sa.assertTrue(detailsPage.getStaticTextByLabelContains(channelAttribution).isPresent(),
                     "Channel network attribution is not present");
@@ -747,8 +747,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         if(Stream.of(
                 upcomingEvent.getVisuals().getDescription().getMedium(),
                 upcomingEvent.getVisuals().getNetworkAttribution()).noneMatch(Objects::isNull)) {
-            eventDescription = upcomingEvent.getVisuals().getDescription().getMedium();
-            networkAttribution = upcomingEvent.getVisuals().getNetworkAttribution().getTtsText();
+            eventDescription = true;
+            networkAttribution = true;
         }
 
         LOGGER.info("Upcoming event {}", eventTitle);
