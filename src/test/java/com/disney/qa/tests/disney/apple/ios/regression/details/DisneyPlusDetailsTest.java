@@ -189,47 +189,49 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71128"})
-    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyIMAXEnhancedVersionTab() {
-        String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String widescreenDescription = "Original cinematic release as presented in most theaters.";
+        String imaxEnhancedDescription = "IMAX Enhanced features IMAX’s expanded aspect ratio for some or all scenes, " +
+                "as originally presented in IMAX theaters.";
+
         setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        searchPage.clickMoviesTab();
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            searchPage.clickContentPageFilterDropDown();
-            swipe(searchPage.getStaticTextByLabel(filterValue));
-            searchPage.getStaticTextByLabel(filterValue).click();
-        } else {
-            searchPage.getTypeButtonByLabel(filterValue).click();
-        }
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        String title = results.get(0).getText();
-        results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_Lightyear_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        String title = detailsPage.getMediaTitle();
         detailsPage.clickVersionsTab();
-        sa.assertTrue(detailsPage.getVersionTab().isPresent(), "Versions was not found");
-        sa.assertTrue(detailsPage.isIMAXEnhancedTitlePresentInVersionTab(), "IMAX Enhanced Title was not found");
-        sa.assertTrue(detailsPage.isIMAXEnhancedThumbnailPresentInVersionTab(), "IMAX Enhanced Thumbnail was not found");
-        sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresentInVersionTab(), "IMAX Enhanced Description was not found");
+        Assert.assertTrue(detailsPage.getVersionTab().isPresent(), "Versions Tab was not found");
 
-        //get Video duration from API and verify that its present at last in IMAX Enhance Header
-        String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET.getEntityId());
-        if (entityID != null) {
-            ExploreContent exploreMovieContent = getMovieApi(entityID, DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-            int duration = exploreMovieContent.getDurationMs();
-            LOGGER.info("Duration returned from api: {}", duration);
-            String durationTime = detailsPage.getHourMinFormatForDuration(duration);
-            sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title + " " + durationTime), "Content name and duration was not found in IMAX Enhanced Header");
-            sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
-        } else {
-            sa.assertTrue(false, "Entity ID for IMAX Enhanced set came back empty from api, check the IMAX_ENHANCED_SET_ID value");
-        }
+        //Validate Both Titles
+        scrollDown();
+        sa.assertEquals(detailsPage.getFirstTitleLabel().getText(), title, "Widescreen Title is not displayed");
+        sa.assertEquals(detailsPage.getSecondTitleLabel().getText(), "IMAX Enhanced - " + title,
+                "IMAX Title is not displayed");
+        //Validate Both Images and Play Icon
+        sa.assertTrue(detailsPage.isFirstImageInVersionTabPresent(), "Widescreen Image is not displayed");
+        sa.assertTrue(detailsPage.isSecondImageInVersionTabPresent(), "IMAX Image is not displayed");
+        sa.assertTrue(detailsPage.isFirstPlayIconPresentInVersionTabPresent(), "Widescreen Play Icon is not displayed");
+        sa.assertTrue(detailsPage.isSecondPlayIconPresentInVersionTabPresent(), "IMAX Play Icon is not displayed");
+        //Validate Both Descriptions
+        sa.assertEquals(detailsPage.getFirstDescriptionLabel().getText(), widescreenDescription,
+                "Widescreen Description was not found");
+        sa.assertEquals(detailsPage.getSecondDescriptionLabel().getText(), imaxEnhancedDescription,
+                "IMAX Description was not found");
+        //Get Video duration from API and verify both durations
+        ExploreContent exploreMovieContent = getMovieApi(R.TESTDATA.get("disney_prod_lightyear_entity_id"), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        int durationAPI = exploreMovieContent.getDurationMs();
+        String durationInHoursMinutes = detailsPage.getHourMinFormatForDuration(durationAPI);
+
+        sa.assertEquals(detailsPage.getFirstDurationLabel().getText(), durationInHoursMinutes,
+                "Widescreen Duration is not as expected");
+        sa.assertEquals(detailsPage.getSecondDurationLabel().getText(), durationInHoursMinutes,
+                "IMAX Duration is not as expected");
         sa.assertAll();
     }
 
