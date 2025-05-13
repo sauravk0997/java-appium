@@ -739,7 +739,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         String eventTitle = "";
         for (int i = 0; i < event.getItems().size(); i++) {
             if(!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
-
                 upcomingEvent = event.getItems().get(i);
                 break;
             }
