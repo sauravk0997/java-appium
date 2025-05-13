@@ -493,7 +493,6 @@ public enum DictionaryKeys {
     TRAVEL_MESSAGE_BODY("travel_message_body"),
     TRAVEL_MESSAGE_TITLE("travel_message_title"),
     TRY_AGAIN_BTN("btn_try_again_2"),
-    UI_LANGUAGE_COPY("ui_language_copy"),
     UI_LANGUAGE_SETTING("ui_language_setting"),
     UPDATE_APP_BODY("update_app_body"),
     UPDATE_APP_TITLE("update_app_title"),
