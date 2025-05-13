@@ -502,7 +502,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             pageResponse = getExploreApi().getPage(getDisneyExploreSearchRequest()
                     .setEntityId(entityID)
                     .setUnifiedAccount(getUnifiedAccount())
-                    .setProfileId(getUnifiedAccount().getProfileId()).setLimit(30));
+                    .setProfileId(getUnifiedAccount().getProfileId()).setLimit(20));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred..." + e);
         }
@@ -674,10 +674,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public List<Item> getAvailableHuluTitlesForStandaloneUserFromApi() {
         List<Item> huluSeriesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU),
-                        100);
+                        20);
         List<Item> huluMoviesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_MOVIES_FROM_HULU),
-                        100);
+                        20);
         List<Item> huluContentFromApi = Stream.concat(
                         huluSeriesFromApi.stream(), huluMoviesFromApi.stream())
                 .collect(Collectors.toList());
