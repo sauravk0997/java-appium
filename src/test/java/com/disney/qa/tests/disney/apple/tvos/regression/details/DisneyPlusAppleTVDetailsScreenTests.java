@@ -424,9 +424,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         String channelAttribution = "Included with your ESPN+ subscription";
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-     //   logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount());
 
-      //  homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
 
         // Navigate to the first event from Live and Upcoming shelf
         Set espnLiveEvent =
