@@ -1438,7 +1438,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .build());
 
         com.disney.qa.api.explore.response.Set espnUpcomingSet =
-                getExploreAPISet(getCollectionName(CollectionConstant.Collection.LIVE_AND_UPCOMING_FROM_ESPN), 50);
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.LIVE_AND_UPCOMING_FROM_ESPN), 20);
 
         if (espnUpcomingSet == null) {
             throw new SkipException("Skipping test, not able to get the 'Live and unrated' set data from the explore api");
@@ -1536,7 +1536,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         com.disney.qa.api.explore.response.Set espnUpcomingSet =
-                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 50);
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 20);
 
         if (espnUpcomingSet == null) {
             throw new SkipException("Skipping test, not able to get the 'Live and unrated' set data from the explore api");
