@@ -334,8 +334,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public DisneyPlusVideoPlayerIOSPageBase tapForwardButton(int times) {
-        displayVideoController();
+//        displayVideoController();
         while (times > 0) {
+            displayVideoController();
             forwardButton.click();
             times--;
         }
