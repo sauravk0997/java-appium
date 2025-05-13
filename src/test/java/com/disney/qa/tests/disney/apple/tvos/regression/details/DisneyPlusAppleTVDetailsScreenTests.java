@@ -57,7 +57,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String ASSET_NOT_FOUND_IN_WATCHLIST = "The asset was not found in the watchlist";
     private static final String LIVE_MODAL_NOT_OPEN = "Live event modal did not open";
     private static final String SUGGESTED = "SUGGESTED";
-    String eventDescription = "";
+    private static String eventDescription = "";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66656"})
     @Test(groups = {TestGroup.DETAILS_PAGE,TestGroup.MOVIES, US})
