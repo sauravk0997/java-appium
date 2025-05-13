@@ -1177,13 +1177,18 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.swipeContentPageFilter(Direction.RIGHT);
             searchPage.getTypeButtonByLabel(filterValue2).click();
             List<ExtendedWebElement> filterResults2 = searchPage.getDisplayedTitles();
+            String secondFilterFirstResult = filterResults2.get(0).getText();
+            LOGGER.info("This is the name of the second filter's first tile {}", secondFilterFirstResult);
             //Validate No Filter, First Filter and Second Filter are different
             sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_DIFFERENT);
             sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
             //Select a Tile and Navigate to Detail Page
             filterResults2.get(0).click();
             detailsPage.waitForDetailsPageToOpen();
-            sa.assertEquals(detailsPage.getMediaTitle(), filterResults2.get(0).getText(), "Detail Page Title is not expected");
+            LOGGER.info("This is the name of the media page title", detailsPage.getMediaTitle());
+            sa.assertTrue(detailsPage.getMediaTitle().contains(secondFilterFirstResult.replace(
+                            ", Select for details on this title.", "")),
+                    "Detail Page Title is not expected");
         } else {
             //Select Filter Picker and Select Value and get First Tile
             searchPage.clickContentPageFilterDropDown();
@@ -1196,13 +1201,18 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
             searchPage.getStaticTextByLabel(filterValue2).click();
             List<ExtendedWebElement> filterResults2 = searchPage.getDisplayedTitles();
+            String secondFilterFirstResult = filterResults2.get(0).getText();
+            LOGGER.info("This is the name of the second filter's first tile {}", secondFilterFirstResult);
             //Validate No Filter, First Filter and Second Filter are different
-            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_DIFFERENT);
-            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
+            sa.assertFalse(secondFilterFirstResult.equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_DIFFERENT);
+            sa.assertFalse(secondFilterFirstResult.equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
             //Select a Tile and Navigate to Detail Page
             filterResults2.get(0).click();
             detailsPage.waitForDetailsPageToOpen();
-            sa.assertEquals(detailsPage.getMediaTitle(), filterResults2.get(0).getText(), "Detail Page Title is not expected");
+            LOGGER.info("This is the name of the media page title", detailsPage.getMediaTitle());
+            sa.assertTrue(detailsPage.getMediaTitle().contains(secondFilterFirstResult.replace(
+                    ", Select for details on this title.", "")),
+                            "Detail Page Title is not expected");
         }
     }
 }
