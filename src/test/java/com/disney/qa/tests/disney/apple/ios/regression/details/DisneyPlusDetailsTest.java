@@ -199,7 +199,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_Lightyear_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_lightyear_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         String title = detailsPage.getMediaTitle();
