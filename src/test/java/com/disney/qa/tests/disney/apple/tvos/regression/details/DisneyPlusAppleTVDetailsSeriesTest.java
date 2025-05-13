@@ -853,7 +853,11 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         editProfilePage.toggleAutoplayButton(toogleValue);
         homePage.clickMenuTimes(1, 1);
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        homePage.clickMenuTimes(1, 1);
+        if (editProfilePage.isElementNotPresent(editProfilePage.getBadgeIcon())) {
+            homePage.clickMenuTimes(1, 1);
+        } else {
+            homePage.clickMenuTimes(2, 1);
+        }
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
