@@ -947,7 +947,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
                 "Network Attribution logo is not present");
-        String currentNetworkAttribution = detailsPage.getNetworkAttribution();
+        String currentNetworkAttribution = detailsPage.getNetworkAttributionValue();
         Assert.assertTrue(currentNetworkAttribution.contains(HULU),
                 String.format("Current network attribution '%s' didn't contain '%s'",
                         currentNetworkAttribution, HULU));

@@ -836,10 +836,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return firstTitleLabel;
     }
 
-    public ExtendedWebElement getNetworkAttributionLogo() {
-        return networkAttributionLogo;
-    }
-
     public ExtendedWebElement getServiceAttribution() {
         return staticTextLabelContains.format(HULU_SERVICE_ATTRIBUTION_MESSAGE);
     }
@@ -858,6 +854,14 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getShareBtn() {
         return shareBtn;
+    }
+
+    public ExtendedWebElement getNetworkAttributionLogo() {
+        return networkAttributionLogo;
+    }
+
+    public String getNetworkAttributionValue() {
+        return networkAttributionLogo.getAttribute(LABEL);
     }
 
     public ExtendedWebElement getShopOrPerksBtn() {
@@ -1344,9 +1348,5 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public int getProgressBarPercentage() {
         return (progressBarBookmark.getSize().getWidth() * 100) / progressBar.getSize().getWidth();
-    }
-
-    public String getNetworkAttribution() {
-        return networkAttributionLogo.getAttribute(LABEL);
     }
  }
