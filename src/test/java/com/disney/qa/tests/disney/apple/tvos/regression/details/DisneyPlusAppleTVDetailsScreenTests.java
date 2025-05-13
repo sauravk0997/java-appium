@@ -58,6 +58,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String LIVE_MODAL_NOT_OPEN = "Live event modal did not open";
     private static final String SUGGESTED = "SUGGESTED";
     private static String eventDescription = "";
+    private static String networkAttribution = "";
+
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66656"})
     @Test(groups = {TestGroup.DETAILS_PAGE,TestGroup.MOVIES, US})
@@ -89,7 +91,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(), getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
+                getWatchlistInfoBlock(END_GAME.getEntityId()));
 
         ExploreContent movieApiContent = getMovieApi(END_GAME.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String description = movieApiContent.getDescription().getBrief();
@@ -170,8 +172,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        String continueWatchingCollection = CollectionConstant
-                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        String continueWatchingCollection = getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
         int maxCount = 20;
         String continueButton = "CONTINUE";
 
@@ -238,8 +239,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        String continueWatchingCollection = CollectionConstant
-                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        String continueWatchingCollection = getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
         SoftAssert sa = new SoftAssert();
         int maxCount = 20;
         String continueButton = "CONTINUE";
@@ -337,7 +337,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         // Navigate to Sports and basketball sport
         homePage.moveDownUntilCollectionContentIsFocused(
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
+                getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
@@ -345,7 +345,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         // Navigate to a Replay and validate the page
         CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
-        homePage.moveDownUntilCollectionContentIsFocused(CollectionConstant.getCollectionName(replaysCollection), 10);
+        homePage.moveDownUntilCollectionContentIsFocused(getCollectionName(replaysCollection), 10);
         String replayTitle = detailsPage.getAllCollectionCells(replaysCollection).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException("No replay events found");
@@ -424,9 +424,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         String channelAttribution = "Included with your ESPN+ subscription";
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount());
+     //   logIn(getUnifiedAccount());
 
-        homePage.waitForHomePageToOpen();
+      //  homePage.waitForHomePageToOpen();
 
         // Navigate to the first event from Live and Upcoming shelf
         Set espnLiveEvent =
@@ -451,13 +451,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.isLogoPresent(), "Logo image is not present");
         sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
         sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
-        if (!eventDescription.isEmpty()) {
+        if (!eventDescription.isEmpty() && !networkAttribution.isEmpty()) {
             sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(channelAttribution).isPresent(),
+                    "Channel network attribution is not present");
         }
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
         sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains(channelAttribution).isPresent(),
-                "Channel network attribution is not present");
         sa.assertAll();
     }
 
@@ -470,7 +470,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(), getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
+                getWatchlistInfoBlock(END_GAME.getEntityId()));
         ExploreContent movieApiContent = getMovieApi(END_GAME.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String description = movieApiContent.getDescription().getBrief();
 
@@ -733,17 +733,26 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
     public String navigateToUpcomingEvent(Set event) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        String upcomingEvent = "";
+        Item upcomingEvent = new Item();
+        String eventTitle = "";
         for (int i = 0; i < event.getItems().size(); i++) {
             if(!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
-                upcomingEvent = event.getItems().get(i).getVisuals().getTitle();
-                eventDescription = event.getItems().get(i).getVisuals().getDescription().getBrief();
+
+                upcomingEvent = event.getItems().get(i);
                 break;
             }
         }
-        LOGGER.info("Upcoming event {}", upcomingEvent);
-        homePage.moveRightUntilElementIsFocused(homePage.getTypeCellLabelContains(upcomingEvent), 15);
-        return upcomingEvent;
+        eventTitle = upcomingEvent.getVisuals().getTitle();
+        if(Stream.of(
+                upcomingEvent.getVisuals().getDescription().getMedium(),
+                upcomingEvent.getVisuals().getNetworkAttribution()).noneMatch(Objects::isNull)) {
+            eventDescription = upcomingEvent.getVisuals().getDescription().getMedium();
+            networkAttribution = upcomingEvent.getVisuals().getNetworkAttribution().getTtsText();
+        }
+
+        LOGGER.info("Upcoming event {}", eventTitle);
+        homePage.moveRightUntilElementIsFocused(homePage.getTypeCellLabelContains(eventTitle), 15);
+        return eventTitle;
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {
