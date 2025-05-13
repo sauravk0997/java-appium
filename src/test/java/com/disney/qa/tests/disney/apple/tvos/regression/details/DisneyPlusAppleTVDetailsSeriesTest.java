@@ -814,6 +814,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         String nextEpisodeTitle = "";
         String toggleValue = "On";
+
         logIn(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
@@ -827,7 +828,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
             nextEpisodeTitle =
                     seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
         } catch (Exception e) {
-            throw new SkipException("Skipping test, series title was not found" + e.getMessage());
+            throw new SkipException("Skipping test, next series title was not found" + e.getMessage());
         }
 
         // Play first episode and verify next episode starts
