@@ -91,7 +91,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(), getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlock(END_GAME.getEntityId()));
+                getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
 
         ExploreContent movieApiContent = getMovieApi(END_GAME.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String description = movieApiContent.getDescription().getBrief();
@@ -172,7 +172,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        String continueWatchingCollection = getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
         int maxCount = 20;
         String continueButton = "CONTINUE";
 
@@ -239,7 +240,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        String continueWatchingCollection = getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
         SoftAssert sa = new SoftAssert();
         int maxCount = 20;
         String continueButton = "CONTINUE";
@@ -337,7 +339,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         // Navigate to Sports and basketball sport
         homePage.moveDownUntilCollectionContentIsFocused(
-                getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
         detailsPage.getTypeCellLabelContains(basketball).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
@@ -345,7 +347,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         // Navigate to a Replay and validate the page
         CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
-        homePage.moveDownUntilCollectionContentIsFocused(getCollectionName(replaysCollection), 10);
+        homePage.moveDownUntilCollectionContentIsFocused(CollectionConstant.getCollectionName(replaysCollection), 10);
         String replayTitle = detailsPage.getAllCollectionCells(replaysCollection).get(0).getText();
         if (replayTitle == null) {
             throw new IndexOutOfBoundsException("No replay events found");
@@ -470,7 +472,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(), getUnifiedAccount().getAccountToken(),
                 getUnifiedAccount().getProfileId(),
-                getWatchlistInfoBlock(END_GAME.getEntityId()));
+                getWatchlistInfoBlock(DisneyEntityIds.END_GAME.getEntityId()));
         ExploreContent movieApiContent = getMovieApi(END_GAME.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         String description = movieApiContent.getDescription().getBrief();
 
