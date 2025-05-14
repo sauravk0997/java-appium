@@ -292,7 +292,10 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public DisneyPlusVideoPlayerIOSPageBase clickPauseButton() {
         ExtendedWebElement pauseButton = getPauseButton();
-        displayVideoController();
+        if (!pauseButton.isElementPresent()) {
+            displayVideoController();
+        }
+//        displayVideoController();
         pauseButton.click();
         LOGGER.info("Pause button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
