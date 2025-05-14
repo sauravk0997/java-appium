@@ -172,7 +172,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67380"})
-    @Test(groups = {TestGroup.SEARCH, US})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.SMOKE, US})
     public void verifySearchInputField() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
