@@ -547,7 +547,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String email = "testoohhardblock.-nd+67f54167disneyplustesting@gmail.com";
+        String email = "qait.disneystreaming+1734411943588cleadisneystreaming@gmail.com";
         String password = "Test1234!";
         loginWithAccountSharingUser(email, password);
 
