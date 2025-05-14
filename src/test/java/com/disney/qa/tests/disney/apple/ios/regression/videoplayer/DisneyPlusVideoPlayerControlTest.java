@@ -70,6 +70,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Remaining time in pause mode time after Rewind tap " + remainingTimeAfterRwdTapInPauseMode +
                         " is not greater than remaining time before Rewind tap " + remainingTimeInPauseMode);
 
+        videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitForVideoControlToDisappear();
