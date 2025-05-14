@@ -52,7 +52,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED = "Content Filter Dropdown not displayed";
     private static final String CONTENT_FILTER_HEADER_NOT_DISLAYED = "Content Page Filter Header not displayed";
     private static final String DETAIL_PAGE_TITLE_NOT_EXPECTED ="Detail Page Title is not expected";
-    private static final String DISPLAYED_TILES_ARE_DIFFERENT = "Displayed titles are not different";
+    private static final String DISPLAYED_TILES_ARE_NOT_DIFFERENT = "Displayed titles are not different";
     private static final String PCON_HEADER_ERROR_NOT_FOUND = "PCON restricted title message was not present";
     private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
 
@@ -1157,7 +1157,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private void validateContentTypeLandingPageElements(
             SoftAssert sa,
             String contentType,
-            String filterValue,
+            String filterValue1,
             String filterValue2
     ) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -1171,7 +1171,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             //Swipe and select a Filter Type
             searchPage.swipeContentPageFilter(Direction.LEFT);
-            searchPage.getTypeButtonByLabel(filterValue).click();
+            searchPage.getTypeButtonByLabel(filterValue1).click();
             List<ExtendedWebElement> filterResults = searchPage.getDisplayedTitles();
             String firstFilterResult = filterResults.get(0).getText();
             //Select Second Filter Value
@@ -1180,8 +1180,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             List<ExtendedWebElement> filterResults2 = searchPage.getDisplayedTitles();
             String secondFilterFirstResult = filterResults2.get(0).getText();
             //Validate No Filter, First Filter and Second Filter are different
-            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_DIFFERENT);
-            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
+            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_NOT_DIFFERENT);
+            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_NOT_DIFFERENT);
             //Select a Tile and Navigate to Detail Page
             filterResults2.get(0).click();
             detailsPage.waitForDetailsPageToOpen();
@@ -1191,7 +1191,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             //Select Filter Picker and Select Value and get First Tile
             searchPage.clickContentPageFilterDropDown();
             searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
-            searchPage.getStaticTextByLabel(filterValue).click();
+            searchPage.getStaticTextByLabel(filterValue1).click();
             List<ExtendedWebElement> filterResults = searchPage.getDisplayedTitles();
             String firstFilterResult = filterResults.get(0).getText();
             //Select Second Filter Value
@@ -1201,8 +1201,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             List<ExtendedWebElement> filterResults2 = searchPage.getDisplayedTitles();
             String secondFilterFirstResult = filterResults2.get(0).getText();
             //Validate No Filter, First Filter and Second Filter are different
-            sa.assertFalse(secondFilterFirstResult.equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_DIFFERENT);
-            sa.assertFalse(secondFilterFirstResult.equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_DIFFERENT);
+            sa.assertFalse(secondFilterFirstResult.equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_NOT_DIFFERENT);
+            sa.assertFalse(secondFilterFirstResult.equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_NOT_DIFFERENT);
             //Select a Tile and Navigate to Detail Page
             filterResults2.get(0).click();
             detailsPage.waitForDetailsPageToOpen();
