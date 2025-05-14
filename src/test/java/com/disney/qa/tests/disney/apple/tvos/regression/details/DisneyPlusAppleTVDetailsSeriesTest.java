@@ -848,7 +848,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         SoftAssert sa = new SoftAssert();
         String recommendationText = "You may also like";
-
         String toggleValue = "Off";
 
         logIn(getUnifiedAccount());
