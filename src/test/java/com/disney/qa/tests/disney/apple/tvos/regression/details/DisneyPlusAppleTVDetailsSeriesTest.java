@@ -4,7 +4,6 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -779,13 +778,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67678"})
     @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
     public void verifyBackGroundingUpNextWhileAutoplayOFF() {
-        String toogleValue = "Off";
+        String toggleValue = "Off";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        toogleAutoPlay(toogleValue);
+        toggleAutoPlay(toggleValue);
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         runtvOSAppInBackGround(FIVE_SEC_TIMEOUT);
         LOGGER.info("Launching app again");
@@ -808,7 +807,39 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
     }
 
-    private void toogleAutoPlay(String toogleValue) {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67663"})
+    @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
+    public void verifySeriesUpAutoplayCountdown() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        String nextEpisodeTitle = "";
+        String toggleValue = "On";
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        toggleAutoPlay(toggleValue);
+
+        // Get second episode title
+        try {
+            ExploreContent seriesApiContent =
+                    getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_entity"),
+                            DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+            nextEpisodeTitle =
+                    seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, next series title was not found" + e.getMessage());
+        }
+
+        // Play first episode and verify next episode starts
+        navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickDown();
+        Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
+                "Playback is not initiated for expected episode");
+    }
+
+    private void toggleAutoPlay(String toggleValue) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEditProfilePage editProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
@@ -820,9 +851,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(editProfilePage.isEditModeProfileIconPresent(DEFAULT_PROFILE));
         whoIsWatchingPage.clickSelect();
         Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
-        editProfilePage.toggleAutoplayButton(toogleValue);
+        editProfilePage.toggleAutoplayButton(toggleValue);
+        homePage.clickMenuTimes(1, 1);
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         homePage.clickMenuTimes(2, 1);
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
     private void navigateToUpNextOnVideoPlayer(String deeplink) {
