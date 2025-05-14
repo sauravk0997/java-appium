@@ -575,6 +575,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(homePage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         pause(5);
+        homePage.clickSelect();
+        pause(5);
 
         sa.assertAll();
     }
