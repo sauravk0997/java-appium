@@ -307,7 +307,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         if (!playButton.isElementPresent()) {
             displayVideoController();
         }
-        playButton.click();
+//        playButton.click();
+        tap(playButton);
         LOGGER.info("Play button on player view clicked");
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
