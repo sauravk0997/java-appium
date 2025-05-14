@@ -50,22 +50,18 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         LOGGER.info("Locale and language from getLocalizationUtils: {} {}",
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
-//
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName,
-//                locale,
-//                getLocalizationUtils().getUserLanguage(),
-//                ageVerified)));
-//        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
-//
-//        setAccountRatingsMax(getUnifiedAccount());
-//        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName,
+                locale,
+                getLocalizationUtils().getUserLanguage(),
+                ageVerified)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
+
+        setAccountRatingsMax(getUnifiedAccount());
+        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
-//        setAppToHomeScreen(getUnifiedAccount());
-//
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("qaittestguid+1747246913891d8ad@gsuite.disneyplustesting.com");
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
+        setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
     }
 
