@@ -855,7 +855,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         toggleAutoPlay(toggleValue);
 
-        // Play first episode and verify next episode starts
+        // Play last episode and verify the up next screen
         launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_last_episode_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickPlay();
