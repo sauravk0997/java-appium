@@ -10,6 +10,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
 import org.testng.asserts.SoftAssert;
@@ -232,8 +233,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(CONTENT_TITLE.get(), rating), "Rating was not found in search results");
-        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
+        ExtendedWebElement titleContainer = searchPage.getTitleContainer(CONTENT_TITLE.get(), rating);
+        sa.assertTrue(titleContainer.isPresent(), "Rating was not found in search results");
+        selectSearchResult(titleContainer.getText(), CONTENT_TITLE.get(), rating);
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
@@ -265,8 +267,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(CONTENT_TITLE.get(), rating), "Rating was not found in search results");
-        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
+        ExtendedWebElement titleContainer = searchPage.getTitleContainer(CONTENT_TITLE.get(), rating);
+        sa.assertTrue(titleContainer.isPresent(), "Rating was not found in search results");
+        selectSearchResult(titleContainer.getText(), CONTENT_TITLE.get(), rating);
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //ratings are shown on downloaded content
@@ -284,5 +287,15 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
+    }
+
+    public void selectSearchResult(String titleContainer, String titleName, String titleRating) {
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        List<String> searchResults = searchPage.getContentItems(4);
+        if (searchPage.getSearchResultRatingLength(titleContainer, titleName, titleRating) == titleRating.length()) {
+            searchPage.getTypeCellLabelContains(searchResults.get(0)).click();
+        } else {
+            searchPage.getTypeCellLabelContains(searchResults.get(1)).click();
+        }
     }
 }

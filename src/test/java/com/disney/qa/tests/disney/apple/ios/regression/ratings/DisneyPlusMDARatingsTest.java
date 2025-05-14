@@ -79,7 +79,7 @@ public class DisneyPlusMDARatingsTest extends DisneyPlusRatingsBase {
         // search results validation
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
-        sa.assertTrue(searchPage.isRatingPresentInSearchResults(CONTENT_TITLE.get(), R21.getContentRating()), "Rating was not found in search results");
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(R21.getContentRating()), "Rating was not found in search results");
         searchPage.getDynamicAccessibilityId(CONTENT_TITLE.get()).click();
         // adding title to watchlist and details page validation
         detailsPage.verifyRatingsInDetailsFeaturedArea(R21.getContentRating(), sa);

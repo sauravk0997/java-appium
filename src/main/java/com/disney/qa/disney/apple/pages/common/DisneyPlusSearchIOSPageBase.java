@@ -152,9 +152,13 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return resultCell.findExtendedWebElement(unlockBadge.getBy());
     }
 
-    public ExtendedWebElement getContentTypeMoviesCollapsedHeader() { return contentTypeMoviesCollapsedHeader; }
+    public ExtendedWebElement getContentTypeMoviesCollapsedHeader() {
+        return contentTypeMoviesCollapsedHeader;
+    }
 
-    public ExtendedWebElement getContentTypeSeriesCollapsedHeader() { return contentTypeSeriesCollapsedHeader; }
+    public ExtendedWebElement getContentTypeSeriesCollapsedHeader() {
+        return contentTypeSeriesCollapsedHeader;
+    }
 
     public void clearText() {
         LOGGER.info("Clearing text in search bar");
@@ -273,13 +277,18 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
     }
 
-    public boolean isRatingPresentInSearchResults(String titleName, String titleRating) {
+    public boolean isRatingPresentInSearchResults(String rating) {
         LOGGER.info("Verifying Ratings in search results");
-//        return searchResults.format(rating).isPresent();
-       return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating).isPresent();
+        return searchResults.format(rating).isPresent();
     }
 
     public ExtendedWebElement getTitleContainer(String titleName, String titleRating) {
         return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating);
+    }
+
+    public int getSearchResultRatingLength(String titleContainer, String titleName, String titleRating) {
+        String[] titleContainerParts = titleContainer.split(",");
+        String[] ratingLongTitle = titleContainerParts[2].split(" ");
+        return ratingLongTitle[2].length();
     }
 }
