@@ -295,9 +295,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         if (searchResults.size() == 1) {
             titleContainer.click();
         } else if (searchResults.size() >= 2 && searchPage.getSearchResultRatingLength(titleContainer.getText(),
-                titleName, titleRating) == titleRating.length() && searchResults.get(0).contains(CONTENT_TITLE.get())) {
+                titleName, titleRating) == titleRating.length() &&
+                searchResults.get(0).contains(titleContainer.getText())) {
             searchPage.getTypeCellLabelContains(searchResults.get(0)).click();
-        } else if (searchResults.get(1).contains(CONTENT_TITLE.get())) {
+        } else if (searchResults.get(1).contains(titleContainer.getText())) {
             searchPage.getTypeCellLabelContains(searchResults.get(1)).click();
         }
     }
