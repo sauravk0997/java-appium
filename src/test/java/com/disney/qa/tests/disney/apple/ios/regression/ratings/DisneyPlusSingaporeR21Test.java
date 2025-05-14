@@ -169,7 +169,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
-        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
