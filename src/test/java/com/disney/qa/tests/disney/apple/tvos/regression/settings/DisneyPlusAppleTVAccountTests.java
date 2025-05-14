@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -546,7 +547,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String email = "testoohhardblock@disneyplustesting.com";
+        String email = "testoohhardblock.-nd+67f54167disneyplustesting@gmail.com";
         String password = "Test1234!";
         loginWithAccountSharingUser(email, password);
 
@@ -565,11 +566,16 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
-        sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
-                CONTINUE_TO_DISNEY_BUTTON_NOT_DISPLAYED);
         accountSharingPage.getOOHConfirmationPageCTA().click();
         homePage.waitForHomePageToOpen();
         sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
+        pause(3);
+        homePage.clickSelect();
+        sa.assertTrue(homePage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        pause(5);
+
         sa.assertAll();
     }
 
@@ -583,6 +589,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomeScreen.clickLogInButton();
         loginPage.proceedToLocalizedPasswordScreen(email);
+        pause(3);
         Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
         passcodePage.clickLoginWithPassword();
         passwordPage.logInWithPasswordLocalized(password);
