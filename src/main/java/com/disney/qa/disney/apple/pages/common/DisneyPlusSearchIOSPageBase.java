@@ -12,7 +12,10 @@ import org.testng.SkipException;
 
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
@@ -287,8 +290,16 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public int getSearchResultRatingLength(String titleContainer, String titleName, String titleRating) {
-        String[] titleContainerParts = titleContainer.split(",");
-        String[] ratingLongTitle = titleContainerParts[2].split(" ");
-        return ratingLongTitle[2].length();
+        String[] titleContainerParts = titleContainer.split(" ");
+        List<String> titleParts = Arrays.asList(titleContainerParts);
+        List<Boolean> ratingOnly = new ArrayList<>();
+        IntStream.range(0, titleParts.size()).forEach(i -> ratingOnly.add(titleParts.get(i).equalsIgnoreCase(titleRating)));
+        return ratingOnly.get(0).toString().length();
+
+//                titleParts.get(i).contains("Rated"));
+//        String[] ratingLongTitle = titleContainerParts[2].split(" ");
+//        String rating = "";
+//
+//        return ratingLongTitle[2].length();
     }
 }

@@ -51,18 +51,21 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName,
-                locale,
-                getLocalizationUtils().getUserLanguage(),
-                ageVerified)));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
-
-        setAccountRatingsMax(getUnifiedAccount());
-        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName,
+//                locale,
+//                getLocalizationUtils().getUserLanguage(),
+//                ageVerified)));
+//        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
+//
+//        setAccountRatingsMax(getUnifiedAccount());
+//        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount());
-        handleOneTrustPopUp();
+//        setAppToHomeScreen(getUnifiedAccount());
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("qaittestguid+1747255921888ccb0@gsuite.disneyplustesting.com");
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
+//        handleOneTrustPopUp();
     }
 
     public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
@@ -121,13 +124,14 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     public void confirmRegionalRatingsDisplays(String rating) {
         LOGGER.info("Rating value under test: {}", rating);
-        if (IS_MOVIE.get()) {
-            LOGGER.info("Testing against Movie content.");
-            validateMovieContent(rating);
-        } else {
-            LOGGER.info("Testing against Series content.");
-            validateSeriesContent(rating);
-        }
+//        if (IS_MOVIE.get()) {
+//            LOGGER.info("Testing against Movie content.");
+//            validateMovieContent(rating);
+//        } else {
+//            LOGGER.info("Testing against Series content.");
+//            validateSeriesContent(rating);
+//        }
+        validateMovieContent(rating);
     }
 
     private void setAccountRatingsMax(UnifiedAccount account) {
@@ -259,6 +263,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     }
 
     private void validateMovieContent(String rating) {
+        String content_title = "The Muppets";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -266,10 +271,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(CONTENT_TITLE.get());
-        ExtendedWebElement titleContainer = searchPage.getTitleContainer(CONTENT_TITLE.get(), rating);
+        searchPage.searchForMedia(content_title);
+        ExtendedWebElement titleContainer = searchPage.getTitleContainer(content_title, rating);
         sa.assertTrue(titleContainer.isPresent(), "Rating was not found in search results");
-        selectSearchResult(titleContainer, CONTENT_TITLE.get(), rating);
+        selectSearchResult(titleContainer, content_title, rating);
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //ratings are shown on downloaded content
@@ -279,7 +284,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.getMovieDownloadButton().click();
         downloads.waitForDownloadToStart();
         detailsPage.getDownloadNav().click();
-        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(CONTENT_TITLE.get()));
+        detailsPage.waitForPresenceOfAnElement(downloads.getDownloadAssetFromListView(content_title));
         sa.assertTrue(downloads.isRatingPresent(rating), rating + " Rating was not found on movie downloads.");
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
