@@ -858,11 +858,14 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         // Play last episode and verify the up next screen
         launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_last_episode_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
+        int widthPlayer = videoPlayer.getX();
         videoPlayer.clickPlay();
         commonPage.clickRightTillEndOfPlaybackIsReached(
                 videoPlayer.getSeekbar(), 40, 1, 1);
         videoPlayer.clickPlay();
         Assert.assertTrue(upNextPage.isOpened(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        int widthMiniPlayer = videoPlayer.getX();
+        sa.assertTrue(widthPlayer > widthMiniPlayer, "Video Player did not condense to mini player");
         sa.assertTrue(upNextPage.isUpNextHeaderPresent(), "Up next header is not present");
         sa.assertTrue(upNextPage.getStaticTextByLabelContains(recommendationText).isPresent(),
                 "You may also like text is not present");
