@@ -121,14 +121,13 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     public void confirmRegionalRatingsDisplays(String rating) {
         LOGGER.info("Rating value under test: {}", rating);
-//        if (IS_MOVIE.get()) {
-//            LOGGER.info("Testing against Movie content.");
-//            validateMovieContent(rating);
-//        } else {
-//            LOGGER.info("Testing against Series content.");
-//            validateSeriesContent(rating);
-//        }
-        validateSeriesContent(rating);
+        if (IS_MOVIE.get()) {
+            LOGGER.info("Testing against Movie content.");
+            validateMovieContent(rating);
+        } else {
+            LOGGER.info("Testing against Series content.");
+            validateSeriesContent(rating);
+        }
     }
 
     private void setAccountRatingsMax(UnifiedAccount account) {
