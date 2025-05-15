@@ -122,4 +122,8 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
         sellingSharingTargatedAdvertisingArrow.click();
     }
 
+    public ExtendedWebElement getDoneButton() {
+        return getTypeButtonByLabel("Done");
+    }
+
 }
