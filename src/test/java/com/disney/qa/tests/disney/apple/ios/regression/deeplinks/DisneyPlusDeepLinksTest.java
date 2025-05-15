@@ -738,4 +738,31 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertEquals(videoPlayer.getTitleLabel(), IRONMAN.getTitle(),
                 "Video Player title doesn't match expected title");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67533"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToSeriesPlayback() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        ExploreContent seriesApiContent = getSeriesApi(LOKI.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        String firstEpisodeTitle;
+        try {
+            firstEpisodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(0)
+                    .getVisuals().getEpisodeTitle();
+        } catch (Exception e) {
+            throw new SkipException("Unable to fetch first episode title from Explore API", e);
+        }
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        Assert.assertEquals(videoPlayer.getTitleLabel(), LOKI.getTitle(),
+                "Video Player title doesn't match expected title");
+        Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(firstEpisodeTitle),
+                "Video Player subtitle doesn't contains expected episode title");
+    }
 }
