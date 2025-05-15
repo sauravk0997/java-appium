@@ -12,6 +12,9 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(accessibilityId = "loginButton")
     protected ExtendedWebElement loginButton;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"appLoadingView\"`]")
+    protected ExtendedWebElement appLoadingView;
+
     private ExtendedWebElement forceUpdateTitle = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.UPDATE_APP_TITLE.getText()));
@@ -67,5 +70,9 @@ public class DisneyPlusWelcomeScreenIOSPageBase extends DisneyPlusApplePageBase 
         return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.BTN_UPDATE_APP.getText()).toUpperCase()).isPresent();
+    }
+
+    public ExtendedWebElement getAppLoadingView() {
+        return appLoadingView;
     }
 }
