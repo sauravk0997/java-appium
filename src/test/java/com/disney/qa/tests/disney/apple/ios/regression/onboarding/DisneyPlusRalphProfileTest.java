@@ -599,7 +599,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         swipe(editProfile.getMaturityRatingLabel(), Direction.UP, 2, 500);
         editProfile.getMaturityRatingCell().click();
         editProfile.enterPassword(getUnifiedAccount());
