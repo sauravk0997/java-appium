@@ -685,7 +685,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_watchlist_deeplink_2"));
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
 
-        runAppInBackground(5);
+        runAppInBackground(FIVE_SEC_TIMEOUT);
         launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink_2"));
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
     }
