@@ -234,8 +234,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                     "Widescreen Duration is not as expected");
             sa.assertEquals(detailsPage.getSecondDurationLabel().getText(), durationInHoursMinutes,
                     "IMAX Duration is not as expected");
+        } else {
+            throw new SkipException("Not able to get the Movies collection data from the API");
         }
-
         sa.assertAll();
     }
 
