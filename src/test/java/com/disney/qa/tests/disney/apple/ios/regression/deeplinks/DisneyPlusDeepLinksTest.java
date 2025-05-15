@@ -32,6 +32,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     private static final String COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT = "disneyplus.com";
+    private static final String FEATURED_FILTER_LABEL = "Featured";
 
     private static final String CONTENT_UNAVAILABLE_ERROR = "Content Unavailable Error not displayed";
     private static final String CONTENT_UNAVAILABLE_OK_ERROR = "Content Unavailable Error OK cta is not displayed";
