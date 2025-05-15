@@ -104,6 +104,8 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
                 return "Pixar";
             case STAR_WARS:
                 return "Star Wars";
+            case STAR:
+                return "Star";
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' Brand is not a valid option", brand));
