@@ -676,6 +676,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67576"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkOpenVsClosed() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -685,10 +686,14 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         terminateApp(sessionBundles.get(DISNEY));
 
         launchDeeplink(R.TESTDATA.get("disney_prod_watchlist_deeplink_2"));
+        Assert.assertTrue(welcomePage.getAppLoadingView().isPresent(),
+                "Screen splash was not present");
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
 
         launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
         launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink_2"));
+        Assert.assertFalse(welcomePage.getTypeOtherContainsName(welcomePage.getAppLoadingView().getText()).isPresent(),
+                "Screen splash was present");
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
     }
 }
