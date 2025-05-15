@@ -211,7 +211,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL);
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
+                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), LEGAL_PAGE_NOT_DISPLAYED);
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         Assert.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
@@ -253,7 +254,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
@@ -321,40 +322,50 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
+                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Verify US State Privacy Rights Link
         oneTrustPage.clickYourUSStatePrivacyRightsLink();
-        sa.assertTrue(oneTrustPage.isYourUSStatePrivacyRightsPageOpened(15), "US State Privacy Rights Link page not opened");
-        tap(oneTrustPage.getTypeButtonByLabel("Done"));
+        sa.assertTrue(oneTrustPage.isYourUSStatePrivacyRightsPageOpened(15),
+                "US State Privacy Rights Link page not opened");
+        tap(oneTrustPage.getDoneButton());
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Verify California Privacy Rights Link
         oneTrustPage.clickYourCaliforniaPrivacyRightsLink();
-        sa.assertTrue(oneTrustPage.isYourCaliforniaPrivacyRightsPageOpened(15), "California Privacy Rights Link page not opened");
-        tap(oneTrustPage.getTypeButtonByLabel("Done"));
+        sa.assertTrue(oneTrustPage.isYourCaliforniaPrivacyRightsPageOpened(15),
+                "California Privacy Rights Link page not opened");
+        oneTrustPage.waitForPresenceOfAnElement(oneTrustPage.getDoneButton());
+        tap(oneTrustPage.getDoneButton());
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Verify Opt out form Link
         oneTrustPage.clickSellingSharingTargatedAdvertisingArrow();
         sellingLegalTextPage.clickOptOutFormLink();
-        sa.assertTrue(sellingLegalTextPage.isOptOutFormLinkOpened(25), "Opt Out form Link page not opened");
-        tap(oneTrustPage.getTypeButtonByLabel("Done"));
-        sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
+        sa.assertTrue(sellingLegalTextPage.isOptOutFormLinkOpened(25),
+                "Opt Out form Link page not opened");
+        tap(oneTrustPage.getDoneButton());
+        sa.assertTrue(sellingLegalTextPage.isOpened(),
+                "Selling, Sharing, Targeted Advertising page was not opened");
 
         //Verify IAB opt out list Link
         sellingLegalTextPage.clickIABOptOutListLink();
-        sa.assertTrue(sellingLegalTextPage.isIABOptOutListLinkPageOpened(), "IAB Opt Out List Link page not opened");
-        tap(oneTrustPage.getTypeButtonByLabel("Done"));
-        sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
+        sa.assertTrue(sellingLegalTextPage.isIABOptOutListLinkPageOpened(),
+                "IAB Opt Out List Link page not opened");
+        tap(oneTrustPage.getDoneButton());
+        sa.assertTrue(sellingLegalTextPage.isOpened(),
+                "Selling, Sharing, Targeted Advertising page was not opened");
 
         //Verify Do Not Sell or Share My Personal Information" and "Targeted Advertising" Opt-Out Rights" link
         sellingLegalTextPage.clickTargetedAdvertisingOptOutRightsLink();
-        sa.assertTrue(sellingLegalTextPage.isTargetedAdvertisingOptOutRightsLinkPageOpened(15), "Targeted Advertising Opt Out Rights page not opened");
-        tap(oneTrustPage.getTypeButtonByLabel("Done"));
-        sa.assertTrue(sellingLegalTextPage.isOpened(), "Selling, Sharing, Targeted Advertising page was not opened");
+        sa.assertTrue(sellingLegalTextPage.isTargetedAdvertisingOptOutRightsLinkPageOpened(15),
+                "Targeted Advertising Opt Out Rights page not opened");
+        tap(oneTrustPage.getDoneButton());
+        sa.assertTrue(sellingLegalTextPage.isOpened(),
+                "Selling, Sharing, Targeted Advertising page was not opened");
         sa.assertAll();
     }
 }
