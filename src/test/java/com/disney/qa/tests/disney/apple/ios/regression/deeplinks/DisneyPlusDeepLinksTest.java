@@ -38,6 +38,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     private static final String NETWORK_LOGO_IMAGE_NOT_DISPLAYED = "Network Logo Image is not displayed";
     private static final String WATCHLIST_IS_EMPTY_ERROR = "You haven't added anything yet";
     private static final String WATCHLIST_DEEP_LINK_ERROR = "Watchlist Page did not open via Deep Link";
+    private static final String WEBVIEW_DID_NOT_OPEN = "Deeplink did not redirect to webview";
 
     @DataProvider(name = "watchlistDeepLinks")
     public Object[][] watchlistDeepLinks() {
@@ -525,7 +526,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusApplePageBase commonPage = initPage(DisneyPlusApplePageBase.class);
         terminateApp(sessionBundles.get(DISNEY));
         launchDeeplink(R.TESTDATA.get("disney_prod_sign_up_deeplink"));
-        Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to webview");
+        Assert.assertTrue(commonPage.isWebviewOpen(), WEBVIEW_DID_NOT_OPEN);
         Assert.assertTrue(commonPage.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_ENTER_EMAIL_HEADER.getText())).isPresent(),
                 "Sign Up webview was not opened");
@@ -541,7 +542,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_account_subscription"));
-        Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to mobile web browser");
+        Assert.assertTrue(commonPage.isWebviewOpen(), WEBVIEW_DID_NOT_OPEN);
         Assert.assertTrue(commonPage.getWebviewUrl().contains(COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT),
                 "Webview did not open common Disney+ URL: " + COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT);
     }
@@ -556,7 +557,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_account_cancel_subscription"));
-        Assert.assertTrue(commonPage.isWebviewOpen(), "Deeplink did not redirect to mobile web browser");
+        Assert.assertTrue(commonPage.isWebviewOpen(), WEBVIEW_DID_NOT_OPEN);
         Assert.assertTrue(commonPage.getWebviewUrl().contains(COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT),
                 "Webview did not open common Disney+ URL: " + COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT);
     }
@@ -670,6 +671,31 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_originals_deeplink"));
         Assert.assertTrue(collectionPage.isOpened(originalsPageTitle), "Originals page did not open");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67564"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToHelp() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_help_webview_deeplink"));
+        Assert.assertTrue(moreMenuPage.isHelpWebviewOpen(), "Deeplink did not redirect to help webview");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67585"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToRestartSubscription() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusApplePageBase commonPage = initPage(DisneyPlusApplePageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_restart_subscription_deeplink"));
+        Assert.assertTrue(commonPage.isWebviewOpen(), WEBVIEW_DID_NOT_OPEN);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67533"})
