@@ -37,9 +37,12 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     private static final int[] AGE_VALUES_EMEA = {5, 8, 11, 13, 15, 17, 18};
     private static final String CODE = "code";
     private static final String RATING_VALUES = "ratingValues";
-    private static final String RECOMMENDED_RATING_ERROR_MESSAGE = "Recommended rating is not present";
+    private static final String RECOMMENDED_RATING_ERROR_MESSAGE = "Recommended Rating is not present";
+    private static final String DOB_FIELD_NOT_DISPLAYED = "DOB Field is not present";
     public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
     public static final String JUNIOR_MODE_NOT_TOGGLED_OFF = "Junior Mode is not toggled OFF";
+    public static final String LEARN_MORE_LINK_NOT_DISPLAYED = "Learn More Link Text is not displayed";
+    public static final String UPDATE_PROFILE_PAGE_NOT_DISPLAYED = "Update Profile page is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
@@ -175,12 +178,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(updateProfile.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertTrue(dobCollection.isDOBCollectionTitlePresent(), "DOB Collection Title is not displayed");
-        sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), "Date of Birth field is not present");
+        sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), DOB_FIELD_NOT_DISPLAYED);
         sa.assertFalse(addProfile.isGenderFieldPresent(), "Gender Field is displayed in Ralph Location");
         sa.assertTrue(dobCollection.getStaticTextByLabelContains(learnMoreContentRating).isPresent(),
                 "DOB collection screen learn more support link is not present");
-        sa.assertTrue(updateProfile.isLearnMoreLinkTextPresent(), "Learn More Link Text is not displayed");
+        sa.assertTrue(updateProfile.isLearnMoreLinkTextPresent(), LEARN_MORE_LINK_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75282"})
@@ -219,7 +223,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertEquals(editProfile.getJuniorModeToggleValue(), toggleOnDE, "Profile is converted to General Audience");
 
         // Validate Content Rating and Birthdate are disabled
-        sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), "DOB field is not present");
+        sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), DOB_FIELD_NOT_DISPLAYED);
         addProfile.getDynamicTextEntryFieldByName(addProfile.getBirthdateTextField()).click();
         Assert.assertTrue(editProfile.getDoneButton().isElementNotPresent(THREE_SEC_TIMEOUT),
                 "Date of birth is not disabled");
@@ -525,16 +529,16 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
 
-        Assert.assertTrue(updateProfilePage.isOpened(), "Update Profile page is not displayed");
+        Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
         // Validate Update Profile UI
         sa.assertTrue(updateProfilePage.doesUpdateProfileTitleExist(), "Header profile is not present");
         sa.assertTrue(updateProfilePage.isCompleteProfileDescriptionPresent(), "Profile Description is not present");
         sa.assertTrue(updateProfilePage.isProfileNameFieldPresent(), "Profile Name field is not present");
         sa.assertTrue(editProfile.getDynamicCellByName(BABY_YODA).isPresent(), "Profile icon is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "Pencil icon is not displayed");
-        sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), "DOB field is not present");
+        sa.assertTrue(updateProfilePage.isDateOfBirthFieldPresent(), DOB_FIELD_NOT_DISPLAYED);
         sa.assertTrue(contentRating.isContentRatingPresent(), "Content rating field is not present");
-        sa.assertTrue(updateProfilePage.isLearnMoreLinkTextPresent(), "Learn More link is not present3");
+        sa.assertTrue(updateProfilePage.isLearnMoreLinkTextPresent(), LEARN_MORE_LINK_NOT_DISPLAYED);
         sa.assertTrue(updateProfilePage.getSaveBtn().isPresent(), "Save button is not present");
 
         // Enter DOB and select a different rating to save
