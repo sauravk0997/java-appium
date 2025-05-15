@@ -84,8 +84,8 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         MARVEL,
         NATIONAL_GEOGRAPHIC,
         PIXAR,
-        STAR_WARS
-
+        STAR_WARS,
+        STAR
     }
 
     public String getBrand(Brand brand) {
