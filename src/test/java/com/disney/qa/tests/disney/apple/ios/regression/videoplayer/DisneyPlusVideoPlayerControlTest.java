@@ -77,6 +77,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
         videoPlayer.tapPlayerScreen(PlayerControl.FAST_FORWARD,4);
         int remainingTimeAfterForwardTapInPauseMode = videoPlayer.getRemainingTime();
+        videoPlayer.waitForVideoControlToDisappear();
         sa.assertTrue(remainingTimeAfterForwardTapInPauseMode <= remainingTimeInPauseMode - 20,
                 "Remaining time in pause mode after Forward tap " + remainingTimeAfterForwardTapInPauseMode +
                         " is not at least 20 seconds less than before " + remainingTimeInPauseMode);

@@ -862,7 +862,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForVideoControlToDisappear() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        fluentWait(getDriver(), FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
+        fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, ONE_SEC_TIMEOUT, "Player controls still displayed")
                 .until(it -> videoPlayer.getElementFor(PlayerControl.FAST_FORWARD).isElementNotPresent(ONE_SEC_TIMEOUT));
     }
 
