@@ -910,6 +910,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertEquals(editProfilePage.getAutoplayState(), OFF, "Kids profile autoplay is not turned off by default.");
 
         switchAndValidateAutoplay(ON, sa, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
@@ -1047,8 +1048,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
         editProfilePage.waitForUpdatedToastToDisappear();
         editProfilePage.getDoneButton().click();
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
     }
 }
