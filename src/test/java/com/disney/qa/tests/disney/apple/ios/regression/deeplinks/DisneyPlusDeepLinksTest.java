@@ -21,12 +21,15 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.List;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
+import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
@@ -50,6 +53,38 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public Object[][] huluUnavailableDeepLinks() {
         return new Object[][]{{R.TESTDATA.get("disney_prod_hulu_unavailable_deeplink")},
                 {R.TESTDATA.get("disney_prod_hulu_unavailable_language_deeplink")}
+        };
+    }
+
+    @DataProvider(name = "regionsBrands")
+    public Object[][] regionsBrands() {
+        return new Object[][]{
+                {US, Arrays.asList(
+                        Brand.DISNEY,
+                        Brand.PIXAR,
+                        Brand.MARVEL,
+                        Brand.STAR_WARS,
+                        Brand.NATIONAL_GEOGRAPHIC,
+                        Brand.HULU,
+                        Brand.ESPN
+                )},
+                {CA, Arrays.asList(
+                        Brand.DISNEY,
+                        Brand.PIXAR,
+                        Brand.MARVEL,
+                        Brand.STAR_WARS,
+                        Brand.NATIONAL_GEOGRAPHIC,
+                        Brand.STAR
+                )},
+                {AU, Arrays.asList(
+                        Brand.DISNEY,
+                        Brand.PIXAR,
+                        Brand.MARVEL,
+                        Brand.STAR_WARS,
+                        Brand.NATIONAL_GEOGRAPHIC,
+                        Brand.STAR,
+                        Brand.ESPN
+                )}
         };
     }
 
@@ -670,5 +705,40 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_originals_deeplink"));
         Assert.assertTrue(collectionPage.isOpened(originalsPageTitle), "Originals page did not open");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67537"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "regionsBrands")
+    public void verifyDeepLinkToBrands(String country, List<Brand> brands) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_PREMIUM, country, ENGLISH_LANG)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), country);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
+        homePage.waitForHomePageToOpen();
+
+        for (Brand brand : brands) {
+            launchDeeplink(brandPage.getBrandDeepLink(brand));
+            String brandString = brandPage.getBrand(brand);
+            if (brand.equals(Brand.ESPN) && country.equals(AU)) {
+                String firstEspnCollectionId;
+                try {
+                    firstEspnCollectionId = getDisneyAPIPage(ESPN.getEntityId(), country, ENGLISH_LANG).get(0).getId();
+                } catch (Exception e) {
+                    throw new SkipException(
+                            "Skipping test, failed to get first ESPN collection ID from Explore API", e);
+                }
+                Assert.assertTrue(brandPage.getCollection(firstEspnCollectionId).isPresent(),
+                        String.format("Brand screen for '%s' is not displayed", brandString));
+            } else {
+                Assert.assertTrue(brandPage.isOpened(), "Brand page is not open");
+                Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
+                        String.format("Brand screen for '%s' is not displayed", brandString));
+            }
+        }
     }
 }
