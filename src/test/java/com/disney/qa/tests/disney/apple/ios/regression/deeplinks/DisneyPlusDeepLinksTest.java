@@ -7,6 +7,7 @@ import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -681,11 +682,12 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        terminateApp(sessionBundles.get(DISNEY));
 
         launchDeeplink(R.TESTDATA.get("disney_prod_watchlist_deeplink_2"));
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
 
-        runAppInBackground(FIVE_SEC_TIMEOUT);
+        launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
         launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink_2"));
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
     }
