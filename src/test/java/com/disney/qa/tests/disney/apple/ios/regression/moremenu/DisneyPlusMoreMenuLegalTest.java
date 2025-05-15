@@ -211,7 +211,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL);
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
+                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), LEGAL_PAGE_NOT_DISPLAYED);
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         Assert.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
@@ -321,7 +322,8 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        disneyPlusMoreMenuIOSPageBase.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL);
+        disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
+                DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
         disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
