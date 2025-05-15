@@ -671,4 +671,16 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_originals_deeplink"));
         Assert.assertTrue(collectionPage.isOpened(originalsPageTitle), "Originals page did not open");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67564"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToHelp() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_help_webview_deeplink"));
+        Assert.assertTrue(moreMenuPage.isHelpWebviewOpen(), "Deeplink did not redirect to help webview");
+    }
 }
