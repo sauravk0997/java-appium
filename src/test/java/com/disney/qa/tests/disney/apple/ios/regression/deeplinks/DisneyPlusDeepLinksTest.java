@@ -22,7 +22,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.HULU_PAGE;
+import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -670,5 +670,21 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
         launchDeeplink(R.TESTDATA.get("disney_prod_originals_deeplink"));
         Assert.assertTrue(collectionPage.isOpened(originalsPageTitle), "Originals page did not open");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67531"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToMoviePlayback() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        Assert.assertEquals(videoPlayer.getTitleLabel(), IRONMAN.getTitle(),
+                "Video Player title doesn't match expected title");
     }
 }
