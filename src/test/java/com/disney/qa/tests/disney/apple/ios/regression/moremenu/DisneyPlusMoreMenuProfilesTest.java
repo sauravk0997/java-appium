@@ -8,7 +8,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.common.constant.*;
-import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -202,7 +201,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74601"})
-    @Test(description = "Add Profile(Secondary Profile) Age > 18+ defaults to TV-MA", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyProfileDefaultsToTVMA() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
@@ -214,19 +213,25 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //Choose avatar
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
+        Assert.assertTrue(addProfile.isOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+
         //Finish creating profile
-        addProfile.createProfile(SECONDARY_PROFILE, DateHelper.Month.OCTOBER, "23", "1955");
+        Person adult = Person.ADULT;
+        addProfile.createProfile(SECONDARY_PROFILE, adult.getMonth(), adult.getDay(), adult.getYear());
         //Verify ServiceEnrollment pin page
-        sa.assertTrue(editProfile.isServiceEnrollmentSetPINPresent(), "ServiceEnrollment set pin page is not shown");
+        Assert.assertTrue(editProfile.isServiceEnrollmentSetPINPresent(), "ServiceEnrollment set pin page is not shown");
         sa.assertTrue(editProfile.isProfilePinDescriptionDisplayed(), "Profile pin description is not displayed");
         sa.assertTrue(editProfile.isProfilePinActionDisplayed(), "Profile pin action is not displayed");
         sa.assertTrue(editProfile.isProfilePinReminderDisplayed(), "Profile pin reminder is not displayed");
+        sa.assertEquals(addProfile.getProfileRating(), RATING_MATURE, "Profile rating on set PIN page mismatch");
         LOGGER.info("Selecting 'Not Now' on pin settings page");
         addProfile.clickSecondaryButtonByCoordinates();
+
         //Verify rating is displayed in account's page
         moreMenu.clickEditProfilesBtn();
-        pause(2);
+        Assert.assertTrue(editProfile.isOpened(), "Select Profile page is not displayed");
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
         sa.assertAll();
     }
