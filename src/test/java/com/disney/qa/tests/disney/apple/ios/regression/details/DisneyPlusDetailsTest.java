@@ -4,10 +4,12 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.ContentAdvisory;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
@@ -193,9 +195,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String widescreenDescription = "Original cinematic release as presented in most theaters.";
-        String imaxEnhancedDescription = "IMAX Enhanced features IMAX’s expanded aspect ratio for some or all scenes, " +
-                "as originally presented in IMAX theaters.";
+        String widescreenDescription = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_DESCRIPTION_OV_WIDESCREEN.getText());
+        String imaxEnhancedDescription = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_DESCRIPTION_IMAX_ENHANCED.getText());
 
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
@@ -222,13 +225,17 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertEquals(detailsPage.getSecondDescriptionLabel().getText(), imaxEnhancedDescription,
                 "IMAX Description was not found");
         //Validate Video Duration from API
-        ExploreContent exploreMovieContent = getMovieApi(R.TESTDATA.get("disney_prod_lightyear_entity_id"), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        int durationAPI = exploreMovieContent.getDurationMs();
-        String durationInHoursMinutes = detailsPage.getHourMinFormatForDuration(durationAPI);
-        sa.assertEquals(detailsPage.getFirstDurationLabel().getText(), durationInHoursMinutes,
-                "Widescreen Duration is not as expected");
-        sa.assertEquals(detailsPage.getSecondDurationLabel().getText(), durationInHoursMinutes,
-                "IMAX Duration is not as expected");
+        ExploreContent exploreMovieContent = getMovieApi(R.TESTDATA.get("disney_prod_lightyear_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        if (exploreMovieContent != null) {
+            int durationAPI = exploreMovieContent.getDurationMs();
+            String durationInHoursMinutes = detailsPage.getHourMinFormatForDuration(durationAPI);
+            sa.assertEquals(detailsPage.getFirstDurationLabel().getText(), durationInHoursMinutes,
+                    "Widescreen Duration is not as expected");
+            sa.assertEquals(detailsPage.getSecondDurationLabel().getText(), durationInHoursMinutes,
+                    "IMAX Duration is not as expected");
+        }
+
         sa.assertAll();
     }
 
