@@ -669,6 +669,24 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_originals_deeplink"));
-        Assert.assertTrue(collectionPage.isOpened(originalsPageTitle), "Originals page did not open");
+        Assert.assertTrue(collectionPage.isOpened(originalsPageTitle), ORIGINALS_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67576"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkOpenVsClosed() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_watchlist_deeplink_2"));
+        Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
+
+        runAppInBackground(5);
+        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink_2"));
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
     }
 }
