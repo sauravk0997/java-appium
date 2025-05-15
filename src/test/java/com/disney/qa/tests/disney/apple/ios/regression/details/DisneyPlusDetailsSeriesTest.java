@@ -417,7 +417,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForVideoControlToDisappear();
         int resumeTime = videoPlayer.getRemainingTime();
-        int marginOfError = 60;
+        int marginOfError = 30;
         sa.assertTrue((scrubbedTimeRemaining - resumeTime) <= marginOfError,
                 "Video Player Resumed from bookmark");
         sa.assertAll();
