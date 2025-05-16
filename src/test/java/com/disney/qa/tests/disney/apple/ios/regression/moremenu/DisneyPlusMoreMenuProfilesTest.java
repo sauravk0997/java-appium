@@ -332,7 +332,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(editProfile.getDoneButton().isPresent(), "Done button is not displayed");
         sa.assertTrue(editProfile.isProfileIconDisplayed(THE_CHILD), "profile icon is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "pencil icon is not displayed");
-        sa.assertTrue(editProfile.isProfileNameFieldPresent(), "Profile name is not as displayed");
+        sa.assertTrue(editProfile.isProfileNameFieldPresent(), "Profile name is not displayed");
         sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(), "Playback setting section is not as expected");
         sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(), "Feature setting section is not as expected");
         sa.assertTrue(editProfile.isParentalControlSectionDisplayed(), "Parental control section is not as expected");
