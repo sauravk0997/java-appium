@@ -33,6 +33,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -296,51 +297,48 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73707"})
-    @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, JP})
     public void verifyEditProfileSecondaryProfileUIElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
-        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
-                .dateOfBirth(ADULT_DOB)
+                .dateOfBirth(null)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(THE_CHILD)
-                .kidsModeEnabled(true)
+                .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
 
+        String contentMaturityRating = getUnifiedAccount().getProfile(SECONDARY_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getContentMaturityRating();
+
         setAppToHomeScreen(getUnifiedAccount());
-        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
+        Assert.assertTrue(editProfile.isOpened(), "Select profile page is not displayed");
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
-        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
+        sa.assertTrue(editProfile.getDoneButton().isPresent(), "Done button is not displayed");
         sa.assertTrue(editProfile.isProfileIconDisplayed(THE_CHILD), "profile icon is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "pencil icon is not displayed");
-        sa.assertTrue(editProfile.isPersonalInformationSectionDisplayed(), "Personal information section is not as expected");
+        sa.assertTrue(editProfile.isProfileNameFieldPresent(), "Profile name is not displayed");
         sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(), "Playback setting section is not as expected");
         sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(), "Feature setting section is not as expected");
         sa.assertTrue(editProfile.isParentalControlSectionDisplayed(), "Parental control section is not as expected");
-        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("TV-MA"), "Maturity Rating section is not as expected");
+        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed(contentMaturityRating),
+                "Maturity Rating section is not as expected");
         sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is not displayed");
-        sa.assertTrue(editProfile.getDoneButton().isPresent(), "Done button is not displayed");
-        addProfile.updateUserName("updated_profile");
-        editProfile.getDoneButton().click();
-        moreMenu.clickMoreTab();
-        sa.assertTrue(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "updated profile name is not displayed");
-        whoIsWatching.clickProfile("updated_profile");
-        moreMenu.clickMoreTab();
-        moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile("updated_profile");
-        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is not displayed");
-        editProfile.getDeleteProfileButton().click();
-        editProfile.clickConfirmDeleteButton();
-        sa.assertFalse(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "Profile is not deleted");
         sa.assertAll();
     }
 
