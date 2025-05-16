@@ -161,6 +161,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     public void testLoginAdTierSecondaryProfileCollectDOB() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
+        DisneyPlusDOBCollectionPageBase dobCollection = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfile = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -181,7 +182,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertTrue(updateProfile.getUpdateProfileTitle().isPresent(), "DOB Collection Title is not displayed");
         sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), DOB_FIELD_NOT_DISPLAYED);
         sa.assertFalse(addProfile.isGenderFieldPresent(), "Gender Field is displayed in Ralph Location");
-        sa.assertTrue(updateProfile.getStaticTextByLabelContains(learnMoreContentRating).isPresent(),
+        sa.assertTrue(dobCollection.getStaticTextByLabelContains(learnMoreContentRating).isPresent(),
                 "DOB collection screen learn more support link is not present");
         sa.assertTrue(updateProfile.isLearnMoreLinkTextPresent(), LEARN_MORE_LINK_NOT_DISPLAYED);
         sa.assertAll();
