@@ -833,7 +833,9 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         for (Brand brand : brands) {
             launchDeeplink(brandPage.getBrandDeepLink(brand));
             String brandString = brandPage.getBrand(brand);
-            if (brand.equals(Brand.ESPN) && country.equals(AU)) {
+            // Only US ESPN page uses the same page element hierarchy used in other brands
+            // Therefore, we'll have to use different element validations for other countries that have ESPN brand page
+            if (brand.equals(Brand.ESPN) && !country.equals(US)) {
                 String firstEspnCollectionId;
                 try {
                     firstEspnCollectionId = getDisneyAPIPage(ESPN.getEntityId(), country, ENGLISH_LANG).get(0).getId();
