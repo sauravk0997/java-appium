@@ -82,7 +82,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Remaining time in pause mode after Forward tap " + remainingTimeAfterForwardTapInPauseMode +
                         " is not at least 20 seconds less than before " + remainingTimeInPauseMode);
 
-//        tapPlayerScreen
         sa.assertAll();
     }
 
