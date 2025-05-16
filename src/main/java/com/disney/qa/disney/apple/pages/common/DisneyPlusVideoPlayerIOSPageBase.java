@@ -615,19 +615,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return playerView;
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase validateResumeTimeRemaining(SoftAssert sa) {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        scrubToPlaybackPercentage(30);
-        int scrubbedTimeRemaining = getRemainingTime();
-        clickBackButton();
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), "Continue button is not present after exiting video player.");
-        detailsPage.clickContinueButton();
-        waitForVideoToStart();
-        sa.assertTrue(scrubbedTimeRemaining > getRemainingTime(),
-                "Returned to play-head position before scrubbed to 30% completed, resume did not work.");
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public DisneyPlusVideoPlayerIOSPageBase verifyVideoPlaying(SoftAssert sa) {
         int previousTimeRemaining = getRemainingTime();
         pause(10);
