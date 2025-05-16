@@ -418,10 +418,10 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         // Wait for video controls to disappear and click on the screen to validate FX logo is not present
         videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
-        sa.assertFalse(videoPlayer.getTypeOtherContainsLabel(network).isPresent(2), "Network watermark is present");
+        Assert.assertFalse(videoPlayer.getTypeOtherContainsLabel(network).isPresent(2), "Network watermark is present");
         // Wait for network watermark to disappear and validate time after stop timer
         videoPlayer.waitForVideoControlToDisappear();
-        sa.assertTrue(videoPlayer.waitForNetworkWatermarkLogoToDisappear(network), "Watermark network is present");
+        Assert.assertTrue(videoPlayer.waitForNetworkWatermarkLogoToDisappear(network), "Watermark network is present");
         stopWatch.stop();
         long totalTime = stopWatch.getTime(TimeUnit.SECONDS);
         LOGGER.info("totalTime {}, minimumNetworkEpisodeLogoDuration {}", totalTime, minimumNetworkEpisodeLogoDuration);
