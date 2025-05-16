@@ -761,7 +761,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_deadpool_rated_r_deeplink"));
         Assert.assertTrue(homePage.getParentalControlMediaNotAllowedErrorPopUpMessage().isPresent(),
                 "Parental Control media not allowed error message not found");
-        Assert.assertTrue(homePage.isDismissCTAButtonPresent(), "Ok CTA button is not present");
+        Assert.assertTrue(homePage.isDismissCTAButtonPresent(), "OK CTA is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67531"})
