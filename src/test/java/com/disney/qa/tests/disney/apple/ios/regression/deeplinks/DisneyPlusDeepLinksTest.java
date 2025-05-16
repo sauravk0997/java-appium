@@ -708,7 +708,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
 
         launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink_2"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink"));
         Assert.assertFalse(welcomePage.getAppLoadingView().isElementPresent(THREE_SEC_TIMEOUT),
                 "Screen splash was present");
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
