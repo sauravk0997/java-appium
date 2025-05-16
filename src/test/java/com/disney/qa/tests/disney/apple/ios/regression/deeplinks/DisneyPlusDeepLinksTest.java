@@ -765,4 +765,23 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(firstEpisodeTitle),
                 "Video Player subtitle doesn't contains expected episode title");
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67557"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAccountDeeplink() {
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_account_deeplink"));
+        accountPage.waitForAccountPageToOpen();
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
+        accountPage.clickNavBackBtn();
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_commerce_deeplink"));
+        accountPage.waitForAccountPageToOpen();
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
+    }
 }
