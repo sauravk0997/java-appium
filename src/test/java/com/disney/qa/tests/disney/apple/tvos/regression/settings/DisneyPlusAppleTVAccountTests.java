@@ -524,48 +524,39 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116823"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
-    public void verifyOOHHardBlock() {
+    public void verifyOOHHardBlockNavigation() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
         SoftAssert sa = new SoftAssert();
-        String email = "qait.disneystreaming+1734411943588cleadisneystreaming@gmail.com";
-        String password = "Test1234!";
-        loginWithAccountSharingUser(email, password);
+        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
 
-        pause(7);
-        homePage.clickSelect();
-
-        pause(10);
-        /*
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        homePage.clickBack();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
                 OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
                 SEND_CODE_BUTTON_NOT_DISPLAYED);
-        homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
-                OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(email));
-        sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
-                OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
-        accountSharingPage.getOOHConfirmationPageCTA().click();
-        homePage.waitForHomePageToOpen();
-        sa.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        homePage.openGlobalNavWithClickingMenu();
-        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
-        pause(3);
-        homePage.clickSelect();
-        sa.assertTrue(homePage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        pause(5);
-        homePage.clickSelect();
-        pause(5);
-
-
-         */
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickBack();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickBack();
+        sa.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         sa.assertAll();
     }
 
