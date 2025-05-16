@@ -460,11 +460,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return dynamicCellByName.format(avatarID).isPresent();
     }
 
-    public boolean isPersonalInformationSectionDisplayed() {
-        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                PROFILE_SETTINGS_PERSONAL_INFORMATION_HEADER.getText())).isPresent();
-    }
-
     public boolean isPlayBackSettingsSectionDisplayed() {
         return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 PLAYBACK_LANGUAGE_HEADER.getText())).isPresent() &&
