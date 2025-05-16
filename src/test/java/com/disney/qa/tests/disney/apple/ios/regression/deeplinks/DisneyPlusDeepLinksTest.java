@@ -700,7 +700,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         // Background Disney app
         launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-        // Opening any deeplink should bring back Disney app to foreground
+        // Open any deeplink should bring back Disney app to the foreground
         launchDeeplink(R.TESTDATA.get("disney_prod_watchlist_deeplink_2"));
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
     }
