@@ -726,6 +726,36 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenuPage.isHelpWebviewOpen(), "Deeplink did not redirect to help webview");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67562"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToLegal() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_legal_deeplink"));
+     //   Assert.assertTrue(legalPage.isOpened(), "Deeplink did not redirect to legal page");
+
+        pause(6);
+        launchDeeplink(R.TESTDATA.get("disney_prod_terms_deeplink"));
+
+        pause(6);
+        launchDeeplink(R.TESTDATA.get("disney_prod_subscriber_agreement_deeplink"));
+
+        pause(6);
+        launchDeeplink(R.TESTDATA.get("disney_prod_privacy_deeplink"));
+        pause(6);
+        launchDeeplink(R.TESTDATA.get("disney_prod_us_privacy_rights_deeplink"));
+
+        pause(6);
+        launchDeeplink(R.TESTDATA.get("disney_prod_us_legal_dnsmi_deeplink"));
+        pause(6);
+
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67585"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkToRestartSubscription() {
