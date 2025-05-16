@@ -35,6 +35,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ON
 public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
+    private static final int SCRUB_PERCENTAGE_FIFTY = 50;
     private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
@@ -380,29 +381,46 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72545"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesResumeBehavior() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
         setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
         searchPage.searchForMedia(SECRET_INVASION);
         searchPage.getDisplayedTitles().get(0).click();
-        detailsPage.isOpened();
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
         detailsPage.getTrailerButton().click();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.isOpened(), "Trailer is not opened");
 
         videoPlayer.clickBackButton();
-        detailsPage.isOpened();
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.verifyVideoPlaying(sa);
-        videoPlayer.validateResumeTimeRemaining(sa);
-        sa.assertAll();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
+        videoPlayer.waitForVideoControlToDisappear();
+        int scrubbedTimeRemaining = videoPlayer.getRemainingTime();
+        videoPlayer.clickBackButton();
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayOrContinue();
+        videoPlayer.waitForVideoControlToDisappear();
+        int resumeTime = videoPlayer.getRemainingTime();
+        int marginOfError = 20;
+        Assert.assertTrue((scrubbedTimeRemaining - resumeTime) <= marginOfError,
+                "Video Player did not resume from bookmark");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71700"})
@@ -1264,7 +1282,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.getPlayIcon().click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(50);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         pause(5);
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), "Restart button is not displayed on details page");
@@ -1291,7 +1309,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
-        videoPlayer.scrubToPlaybackPercentage(50);
+        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         int currentTimeBeforeRestartClick = videoPlayer.getCurrentTime();
         LOGGER.info("currentTimeBeforeRestartClick {}", currentTimeBeforeRestartClick);
         videoPlayer.clickBackButton();
