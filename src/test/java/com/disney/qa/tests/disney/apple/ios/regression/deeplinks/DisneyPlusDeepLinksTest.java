@@ -632,10 +632,12 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67541"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67543"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyDeepLinkToCollectionPages() {
-        String expectedCollectionPageTitle = "Walt Disney Animation Studios";
+    public void verifyCollectionEditorialAndFranchiseDeepLinkPages() {
+        String waltDisneyCollectionPageTitle = "Walt Disney Animation Studios";
+        String toyStoryCollectionPageTitle = "Toy Story";
+        String theAvengersCollectionPageTitle = "Marvel's Avengers";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
 
@@ -643,9 +645,22 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_walt_disney_animation_studios"));
-        Assert.assertTrue(collectionPage.isOpened(expectedCollectionPageTitle),
+        collectionPage.waitForCollectionPageToOpen(waltDisneyCollectionPageTitle);
+        Assert.assertTrue(collectionPage.isOpened(waltDisneyCollectionPageTitle),
                 String.format("Expected editorial/franchise collection page '%s' did not open",
-                        expectedCollectionPageTitle));
+                        waltDisneyCollectionPageTitle));
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_toy_story_collection"));
+        collectionPage.waitForCollectionPageToOpen(toyStoryCollectionPageTitle);
+        Assert.assertTrue(collectionPage.isOpened(toyStoryCollectionPageTitle),
+                String.format("Expected editorial/franchise collection page '%s' did not open",
+                        toyStoryCollectionPageTitle));
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_collection"));
+        collectionPage.waitForCollectionPageToOpen(escapeSingleQuotes(theAvengersCollectionPageTitle));
+        Assert.assertTrue(collectionPage.isOpened(escapeSingleQuotes(theAvengersCollectionPageTitle)),
+                String.format("Expected editorial/franchise collection page '%s' did not open",
+                        theAvengersCollectionPageTitle));
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67549"})
