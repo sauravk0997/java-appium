@@ -33,8 +33,6 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement doneBtn;
 
     protected ExtendedWebElement dateOfBirthHeader = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DATE_OF_BIRTH_TITLE.getText()));
-    protected ExtendedWebElement completeProfileTitle =
-            getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.COMPLETE_PROFILE_TITLE.getText()));
 
     //FUNCTIONS
     public DisneyPlusDOBCollectionPageBase(WebDriver driver) {
@@ -47,10 +45,6 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
     public boolean isOpened() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return dateOfBirthHeader.isPresent();
-    }
-
-    public boolean isDOBCollectionTitlePresent() {
-        return completeProfileTitle.isPresent();
     }
 
     public void clickConfirmBtn() { confirmButton.click(); }
