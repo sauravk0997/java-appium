@@ -12,7 +12,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -570,7 +569,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomeScreen.clickLogInButton();
         loginPage.proceedToLocalizedPasswordScreen(email);
-        pause(3);
         Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
         passcodePage.clickLoginWithPassword();
         passwordPage.logInWithPasswordLocalized(password);
