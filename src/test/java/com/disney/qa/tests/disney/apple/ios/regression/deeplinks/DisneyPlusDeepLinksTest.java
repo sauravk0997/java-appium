@@ -35,6 +35,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     private static final String COMMON_DISNEY_PLUS_WEB_VIEW_URL_TEXT = "disneyplus.com";
+    private static final String FEATURED_FILTER_LABEL = "Featured";
 
     private static final String CONTENT_UNAVAILABLE_ERROR = "Content Unavailable Error not displayed";
     private static final String CONTENT_UNAVAILABLE_OK_ERROR = "Content Unavailable Error OK cta is not displayed";
@@ -814,6 +815,28 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 "Video Player title doesn't match expected title");
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(firstEpisodeTitle),
                 "Video Player subtitle doesn't contains expected episode title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67535"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinksToMoviesAndSeriesLandingPages() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_movies_landing_page_deeplink"));
+        Assert.assertTrue(mediaCollectionPage.getMoviesHeader().isPresent(),
+                "Movies landing page is not opened");
+        Assert.assertEquals(mediaCollectionPage.getSelectedCategoryFilterName(), FEATURED_FILTER_LABEL,
+                String.format("Movies filter was not set to '%s' by default", FEATURED_FILTER_LABEL));
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_landing_page_deeplink"));
+        Assert.assertTrue(mediaCollectionPage.getSeriesHeader().isPresent(),
+                "Series landing page is not opened");
+        Assert.assertEquals(mediaCollectionPage.getSelectedCategoryFilterName(), FEATURED_FILTER_LABEL,
+                String.format("Series filter was not set to '%s' by default", FEATURED_FILTER_LABEL));
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67537"})
