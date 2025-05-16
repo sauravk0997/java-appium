@@ -383,7 +383,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72545"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesResumeBehavior() {
-        SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -401,26 +400,27 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.getTrailerButton().click();
-        sa.assertTrue(videoPlayer.isOpened(), "Trailer is not opened");
+        Assert.assertTrue(videoPlayer.isOpened(), "Trailer is not opened");
 
         videoPlayer.clickBackButton();
-        detailsPage.isOpened();
+        detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
         videoPlayer.waitForVideoControlToDisappear();
         int scrubbedTimeRemaining = videoPlayer.getRemainingTime();
         videoPlayer.clickBackButton();
         detailsPage.waitForDetailsPageToOpen();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForVideoControlToDisappear();
         int resumeTime = videoPlayer.getRemainingTime();
         int marginOfError = 20;
-        sa.assertTrue((scrubbedTimeRemaining - resumeTime) <= marginOfError,
-                "Video Player Resumed from bookmark");
-        sa.assertAll();
+        Assert.assertTrue((scrubbedTimeRemaining - resumeTime) <= marginOfError,
+                "Video Player did not resume from bookmark");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71700"})
