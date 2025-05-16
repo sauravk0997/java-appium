@@ -1285,9 +1285,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getParentalControlMediaNotAllowedErrorPopUpMessage() {
         //This error message is hardcoded text in the app, once it available in dictionary need to get it from dict
-        String notAllowedParentalControlMesssgae = "This title cannot be accessed because it exceeds your profile's " +
+        String notAllowedParentalControlMessage = "This title cannot be accessed because it exceeds your profile's " +
                 "parental control settings. You will be re-directed to Disney+ Home.";
-        return getStaticTextByLabel(notAllowedParentalControlMesssgae);
+        return getStaticTextByLabel(notAllowedParentalControlMessage);
     }
 
     public ExtendedWebElement getKeyboardDelete() {
@@ -1639,5 +1639,11 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         typeTextView.type(otp);
         moveDown(1,1);
         clickSelect();
+    }
+
+    public boolean isDismissCTAButtonPresent() {
+        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                DictionaryKeys.DISMISS_BTN.getText())).isPresent();
     }
 }
