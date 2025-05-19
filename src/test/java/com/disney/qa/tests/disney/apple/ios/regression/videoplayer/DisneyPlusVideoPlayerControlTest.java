@@ -70,15 +70,17 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
                 "Remaining time in pause mode time after Rewind tap " + remainingTimeAfterRwdTapInPauseMode +
                         " is not greater than remaining time before Rewind tap " + remainingTimeInPauseMode);
 
+        videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitForVideoControlToDisappear();
         remainingTimeInPauseMode = videoPlayer.clickPauseButton().getRemainingTime();
-        int remainingTimeAfterForwardTapInPauseMode = videoPlayer.tapForwardButton(2).getRemainingTime();
+        videoPlayer.tapForwardButton(2);
+        videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
+        int remainingTimeAfterForwardTapInPauseMode = videoPlayer.getRemainingTime();
         sa.assertTrue(remainingTimeAfterForwardTapInPauseMode <= remainingTimeInPauseMode - 20,
                 "Remaining time in pause mode after Forward tap " + remainingTimeAfterForwardTapInPauseMode +
                         " is not at least 20 seconds less than before " + remainingTimeInPauseMode);
-
 
         sa.assertAll();
     }
@@ -418,7 +420,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         // Wait for video controls to disappear and click on the screen to validate FX logo is not present
         videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickElementAtLocation(videoPlayer.getPlayerView(), 10, 50);
-        sa.assertFalse(videoPlayer.getTypeOtherContainsLabel(network).isPresent(2), "Network watermark is present");
+        sa.assertFalse(videoPlayer.getTypeOtherContainsLabel(network).isElementPresent(2), "Network watermark is present");
         // Wait for network watermark to disappear and validate time after stop timer
         videoPlayer.waitForVideoControlToDisappear();
         sa.assertTrue(videoPlayer.waitForNetworkWatermarkLogoToDisappear(network), "Watermark network is present");
