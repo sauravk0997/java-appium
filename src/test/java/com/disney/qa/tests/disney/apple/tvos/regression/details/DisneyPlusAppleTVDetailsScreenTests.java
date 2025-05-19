@@ -57,6 +57,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     private static final String ASSET_NOT_FOUND_IN_WATCHLIST = "The asset was not found in the watchlist";
     private static final String LIVE_MODAL_NOT_OPEN = "Live event modal did not open";
     private static final String SUGGESTED = "SUGGESTED";
+    private static boolean eventDescription = false;
+    private static boolean networkAttribution = false;
+
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66656"})
     @Test(groups = {TestGroup.DETAILS_PAGE,TestGroup.MOVIES, US})
@@ -450,11 +453,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.isLogoPresent(), "Logo image is not present");
         sa.assertTrue(detailsPage.getAiringBadgeLabel().isPresent(), BADGE_LABEL_NOT_PRESENT);
         sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+        if (eventDescription && networkAttribution) {
+            sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(channelAttribution).isPresent(),
+                    "Channel network attribution is not present");
+        }
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
         sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains(channelAttribution).isPresent(),
-                "Channel network attribution is not present");
         sa.assertAll();
     }
 
@@ -730,16 +735,25 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
     public String navigateToUpcomingEvent(Set event) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        String upcomingEvent = "";
+        Item upcomingEvent = new Item();
+        String eventTitle = "";
         for (int i = 0; i < event.getItems().size(); i++) {
             if(!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
-                upcomingEvent = event.getItems().get(i).getVisuals().getTitle();
+                upcomingEvent = event.getItems().get(i);
                 break;
             }
         }
-        LOGGER.info("Upcoming event {}", upcomingEvent);
-        homePage.moveRightUntilElementIsFocused(homePage.getTypeCellLabelContains(upcomingEvent), 15);
-        return upcomingEvent;
+        eventTitle = upcomingEvent.getVisuals().getTitle();
+        if(Stream.of(
+                upcomingEvent.getVisuals().getDescription().getMedium(),
+                upcomingEvent.getVisuals().getNetworkAttribution()).noneMatch(Objects::isNull)) {
+            eventDescription = true;
+            networkAttribution = true;
+        }
+
+        LOGGER.info("Upcoming event {}", eventTitle);
+        homePage.moveRightUntilElementIsFocused(homePage.getTypeCellLabelContains(eventTitle), 15);
+        return eventTitle;
     }
 
     private void verifyServiceAttribution(String content, SoftAssert sa) {

@@ -33,6 +33,7 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -62,6 +63,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String LIVE_TOGGLE_IS_NOT_ON_BY_DEFAULT = "Live toggle is not ON by default";
     private static final String RIGHT = "RIGHT";
     private static final String LEFT = "LEFT";
+    private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
+
 
     private void onboard() {
         setAppToHomeScreen(getUnifiedAccount());
@@ -152,19 +155,27 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66786"})
-    @Test(description = "Autoplay toggle is Saved if User saves", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAutoplayToggleIsSaved() {
+        String toggleON = "On";
+        String toggleOFF = "Off";
+        String autoplayToggleNotTurnedOn = "GA profile autoplay was not turned on";
+        String autoplayToggleNotTurnedOff = "GA profile autoplay was not turned off";
+
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
         setAppToHomeScreen(getUnifiedAccount());
-        //Turn ON autoplay
+
+        //Verify default status of autoplay toggle
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
-        editProfile.toggleAutoplayButton("OFF");
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        sa.assertEquals(editProfile.getAutoplayState(), toggleON, "GA profile autoplay is not turned ON by default.");
+
+        switchAndValidateAutoplay(toggleOFF, sa, autoplayToggleNotTurnedOff);
+        switchAndValidateAutoplay(toggleON, sa, autoplayToggleNotTurnedOn);
         sa.assertAll();
     }
 
@@ -187,47 +198,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isProfileIconPresent(updatedUserName),
                 "Profile name is not updated as expected");
 
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76067"})
-    @Test(description = "Autoplay toggle is Saved if User saves", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyAutoplayToggleForKidsAndAdultProfile() {
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
-                .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
-                .dateOfBirth(KIDS_DOB)
-                .language(getLocalizationUtils().getUserLanguage())
-                .avatarId(BABY_YODA)
-                .kidsModeEnabled(true)
-                .isStarOnboarded(true)
-                .build());
-
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getFirstName());
-        //Verify autoplay is turned on by default for adult profile
-        verifyAutoPlayStateForProfile(getUnifiedAccount().getFirstName(), "On", sa);
-        //Turn off autoplay for adult profile
-        editProfile.toggleAutoplayButton("OFF");
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
-        sa.assertTrue(editProfile.getAutoplayState().equals("Off"), "Autoplay wasn't turned Off for primary profile");
-        //wait for updated toast to disappear before tapping on done button
-        editProfile.waitForUpdatedToastToDisappear();
-        editProfile.clickDoneBtn();
-        //Verify autoplay is turned off for adult profile
-        verifyAutoPlayStateForProfile(getUnifiedAccount().getFirstName(), "Off", sa);
-        editProfile.clickDoneBtn();
-        //Verify autoplay is turned OFF by default for kids profile
-        verifyAutoPlayStateForProfile(KIDS_PROFILE, "Off", sa);
-        //Turn on autoplay for adult profile
-        editProfile.toggleAutoplayButton("ON");
-        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_WAS_NOT_DISPLAYED);
-        editProfile.waitForUpdatedToastToDisappear();
-        editProfile.clickDoneBtn();
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74601"})
@@ -327,51 +297,48 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73707"})
-    @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, JP})
     public void verifyEditProfileSecondaryProfileUIElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
-        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
-                .dateOfBirth(ADULT_DOB)
+                .dateOfBirth(null)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(THE_CHILD)
-                .kidsModeEnabled(true)
+                .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
 
+        String contentMaturityRating = getUnifiedAccount().getProfile(SECONDARY_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getContentMaturityRating();
+
         setAppToHomeScreen(getUnifiedAccount());
-        whoIsWatching.clickProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
+        Assert.assertTrue(editProfile.isOpened(), "Select profile page is not displayed");
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
-        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
+        sa.assertTrue(editProfile.getDoneButton().isPresent(), "Done button is not displayed");
         sa.assertTrue(editProfile.isProfileIconDisplayed(THE_CHILD), "profile icon is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "pencil icon is not displayed");
-        sa.assertTrue(editProfile.isPersonalInformationSectionDisplayed(), "Personal information section is not as expected");
+        sa.assertTrue(editProfile.isProfileNameFieldPresent(), "Profile name is not displayed");
         sa.assertTrue(editProfile.isPlayBackSettingsSectionDisplayed(), "Playback setting section is not as expected");
         sa.assertTrue(editProfile.isFeatureSettingsSectionDisplayed(), "Feature setting section is not as expected");
         sa.assertTrue(editProfile.isParentalControlSectionDisplayed(), "Parental control section is not as expected");
-        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed("TV-MA"), "Maturity Rating section is not as expected");
+        sa.assertTrue(editProfile.isMaturityRatingSectionDisplayed(contentMaturityRating),
+                "Maturity Rating section is not as expected");
         sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is not displayed");
-        sa.assertTrue(editProfile.getDoneButton().isPresent(), "Done button is not displayed");
-        addProfile.updateUserName("updated_profile");
-        editProfile.getDoneButton().click();
-        moreMenu.clickMoreTab();
-        sa.assertTrue(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "updated profile name is not displayed");
-        whoIsWatching.clickProfile("updated_profile");
-        moreMenu.clickMoreTab();
-        moreMenu.clickEditProfilesBtn();
-        editProfile.clickEditModeProfile("updated_profile");
-        sa.assertTrue(editProfile.isDeleteProfileButtonPresent(), "Delete profile button is not displayed");
-        editProfile.getDeleteProfileButton().click();
-        editProfile.clickConfirmDeleteButton();
-        sa.assertFalse(whoIsWatching.getDynamicAccessibilityId("updated_profile").isPresent(), "Profile is not deleted");
         sa.assertAll();
     }
 
@@ -1740,5 +1707,22 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         passwordPage.enterPassword(getUnifiedAccount());
         editProfile.waitForUpdatedToastToDisappear();
         editProfile.clickDoneBtn();
+    }
+
+    private void switchAndValidateAutoplay(String state, SoftAssert sa, String errorMessage) {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        editProfile.toggleAutoplayButton(state);
+        sa.assertTrue(editProfile.isUpdatedToastPresent(), UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE);
+        sa.assertEquals(editProfile.getAutoplayState(), state, errorMessage);
+        editProfile.waitForUpdatedToastToDisappear();
+        editProfile.getDoneButton().click();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        sa.assertEquals(editProfile.getAutoplayState(), state, errorMessage);
     }
 }
