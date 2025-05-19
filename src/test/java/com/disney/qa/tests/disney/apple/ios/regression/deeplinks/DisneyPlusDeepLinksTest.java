@@ -865,7 +865,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
-        handleOneTrustPopUp();
         homePage.waitForHomePageToOpen();
 
         for (Brand brand : brands) {
