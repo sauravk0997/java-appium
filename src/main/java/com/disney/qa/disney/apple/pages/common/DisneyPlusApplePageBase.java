@@ -521,10 +521,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return staticTypeTextViewValueContains.format(value);
     }
 
-    public ExtendedWebElement getStaticTextViewValue(String value) {
-        return staticTypeTextViewValue.format(value);
-    }
-
     public ExtendedWebElement getViewAlert() {
         return viewAlert;
     }
