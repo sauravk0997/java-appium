@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -84,8 +85,8 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         MARVEL,
         NATIONAL_GEOGRAPHIC,
         PIXAR,
-        STAR_WARS
-
+        STAR_WARS,
+        STAR
     }
 
     public String getBrand(Brand brand) {
@@ -104,6 +105,32 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
                 return "Pixar";
             case STAR_WARS:
                 return "Star Wars";
+            case STAR:
+                return "Star";
+            default:
+                throw new IllegalArgumentException(
+                        String.format("'%s' Brand is not a valid option", brand));
+        }
+    }
+
+    public String getBrandDeepLink(Brand brand) {
+        switch (brand) {
+            case DISNEY:
+                return R.TESTDATA.get("disney_prod_disney_brand_page_deeplink");
+            case ESPN:
+                return R.TESTDATA.get("disney_prod_espn_brand_page_deeplink");
+            case HULU:
+                return R.TESTDATA.get("disney_prod_hulu_brand_deeplink");
+            case MARVEL:
+                return R.TESTDATA.get("disney_prod_marvel_brand_page_deeplink");
+            case NATIONAL_GEOGRAPHIC:
+                return R.TESTDATA.get("disney_prod_national_geographic_brand_page_deeplink");
+            case PIXAR:
+                return R.TESTDATA.get("disney_prod_pixar_brand_page_deeplink");
+            case STAR_WARS:
+                return R.TESTDATA.get("disney_prod_star_wars_brand_page_deeplink");
+            case STAR:
+                return R.TESTDATA.get("disney_prod_star_brand_deeplink");
             default:
                 throw new IllegalArgumentException(
                         String.format("'%s' Brand is not a valid option", brand));
