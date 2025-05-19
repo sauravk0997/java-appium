@@ -169,9 +169,9 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RATING_SUBCOPY.getText());
         createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage(), DISNEY_PLUS_STANDARD_WITH_ADS_DE);
-        learnMoreContentRating.replace("content_rating", defaultRating);
+        learnMoreContentRating.replace("{content_rating}", defaultRating);
         LOGGER.info("This is the new updated learnMoreContentRating: {}", learnMoreContentRating);
-        
+
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
