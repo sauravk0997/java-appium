@@ -22,12 +22,15 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
@@ -869,5 +872,32 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 "Series landing page is not opened");
         Assert.assertEquals(mediaCollectionPage.getSelectedCategoryFilterName(), FEATURED_FILTER_LABEL,
                 String.format("Series filter was not set to '%s' by default", FEATURED_FILTER_LABEL));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67537"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToBrandsForUS() {
+        List<Brand> brands = Arrays.asList(
+                Brand.DISNEY,
+                Brand.PIXAR,
+                Brand.MARVEL,
+                Brand.STAR_WARS,
+                Brand.NATIONAL_GEOGRAPHIC,
+                Brand.HULU,
+                Brand.ESPN
+        );
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        for (Brand brand : brands) {
+            launchDeeplink(brandPage.getBrandDeepLink(brand));
+            String brandString = brandPage.getBrand(brand);
+            Assert.assertTrue(brandPage.isOpened(), "Brand page is not open");
+            Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
+                    String.format("Brand screen for '%s' is not displayed", brandString));
+        }
     }
 }
