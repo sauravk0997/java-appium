@@ -166,7 +166,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfile = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         String learnMoreContentRating = getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RATING_SUBCOPY.getText());
         LOGGER.info("LEARN MORE CONTENT RATING STRING THAT IS FAILING: {}", learnMoreContentRating);
         int under18Age = calculateAge(Person.AGE_17.getMonth(), Person.AGE_17);
