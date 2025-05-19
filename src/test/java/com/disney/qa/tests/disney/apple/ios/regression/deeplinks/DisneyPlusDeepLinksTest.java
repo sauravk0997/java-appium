@@ -358,7 +358,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_series_trailer_playback_dancing_with_the_stars_deeplink"));
         videoPlayer.waitForVideoToStart();
 
-        videoPlayer.scrubToPlaybackPercentage(90);
+        videoPlayer.waitForTrailerToEnd(60, 5);
         Assert.assertFalse(upNextPage.getUpNextImageView().isElementPresent(THREE_SEC_TIMEOUT),
                 "Up Next view was present");
 
