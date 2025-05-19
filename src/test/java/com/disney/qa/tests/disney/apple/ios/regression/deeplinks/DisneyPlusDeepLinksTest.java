@@ -708,7 +708,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
 
         launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink_2"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink"));
         Assert.assertFalse(welcomePage.getAppLoadingView().isElementPresent(THREE_SEC_TIMEOUT),
                 "Screen splash was present");
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -780,6 +780,19 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 "Video Player title doesn't match expected title");
         Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(firstEpisodeTitle),
                 "Video Player subtitle doesn't contains expected episode title");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67525"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToSearchPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink"));
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67535"})
