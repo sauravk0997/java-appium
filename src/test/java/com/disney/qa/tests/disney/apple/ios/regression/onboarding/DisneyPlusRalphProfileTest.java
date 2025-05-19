@@ -170,7 +170,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 DictionaryKeys.RATING_SUBCOPY.getText());
         createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage(), DISNEY_PLUS_STANDARD_WITH_ADS_DE);
         String updatedString = learnMoreContentRating.replace("{content_rating}", defaultRating);
-        LOGGER.info("This is the new updated learnMoreContentRating: {}", learnMoreContentRating);
+        LOGGER.info("This is the new updated learnMoreContentRating: {}", updatedString);
 
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
@@ -179,7 +179,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertTrue(updateProfile.getUpdateProfileTitle().isPresent(), "DOB Collection Title is not displayed");
         sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), DOB_FIELD_NOT_DISPLAYED);
         sa.assertFalse(addProfile.isGenderFieldPresent(), "Gender Field is displayed in Ralph Location");
-        sa.assertTrue(dobCollection.getStaticTextViewValueContains(learnMoreContentRating).isPresent(),
+        sa.assertTrue(dobCollection.getStaticTextViewValueContains(updatedString).isPresent(),
                 "DOB collection screen learn more support link is not present");
         sa.assertTrue(updateProfile.isLearnMoreLinkTextPresent(), LEARN_MORE_LINK_NOT_DISPLAYED);
         sa.assertAll();
