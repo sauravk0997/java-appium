@@ -169,11 +169,14 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RATING_SUBCOPY.getText());
         LOGGER.info("LEARN MORE CONTENT RATING STRING THAT IS FAILING: {}", learnMoreContentRating);
+
         int under18Age = calculateAge(Person.AGE_17.getMonth(), Person.AGE_17);
         String recommendedContentRatingByAge = getLocalizationUtils()
                 .formatPlaceholderString(contentRating.getRecommendedRating(),
                         Map.of("content_rating", getRecommendedContentRating(GERMANY, under18Age, AGE_VALUES_GERMANY)));
         LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
+        learnMoreContentRating.replace("{content_rating", recommendedContentRatingByAge);
+        LOGGER.info("LEARN MORE CONTENT RATING STRING AFTER REPLACE TEXT: {}", learnMoreContentRating);
         createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage(), DISNEY_PLUS_STANDARD_WITH_ADS_DE);
 
         setAppToHomeScreen(getUnifiedAccount());
