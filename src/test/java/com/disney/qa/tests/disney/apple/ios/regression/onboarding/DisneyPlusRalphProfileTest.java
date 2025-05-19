@@ -27,7 +27,6 @@ import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
@@ -170,7 +169,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 DictionaryKeys.RATING_SUBCOPY.getText());
         createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage(), DISNEY_PLUS_STANDARD_WITH_ADS_DE);
         String updatedString = learnMoreContentRating.replace("{content_rating}", defaultRating);
-        LOGGER.info("This is the new updated learnMoreContentRating: {}", updatedString);
 
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
