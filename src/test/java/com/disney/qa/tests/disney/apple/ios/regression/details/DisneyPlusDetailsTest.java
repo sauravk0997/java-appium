@@ -404,7 +404,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now Button not displayed");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Upgrade Now Button not displayed");
         Assert.assertTrue(detailsPage.getStaticTextByLabel(UNLOCK_HULU_ON_DISNEY).isPresent(),
                 UNLOCK_HULU_ON_DISNEY + " upsell message not displayed");
     }
