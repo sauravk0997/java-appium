@@ -290,11 +290,13 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public int getSearchResultRatingLength(String titleContainer, String titleName, String titleRating) {
-        String[] titleContainerParts = titleContainer.split(" ");
+        String[] titleContainerParts = titleContainer.split(",");
         List<String> titleParts = Arrays.asList(titleContainerParts);
-        List<Boolean> ratingOnly = new ArrayList<>();
-        IntStream.range(0, titleParts.size()).forEach(i -> ratingOnly.add(titleParts.get(i).equalsIgnoreCase(titleRating)));
-        return ratingOnly.get(0).toString().length();
+//        List<Boolean> ratingOnly = new ArrayList<>();
+//        IntStream.range(0, titleParts.size()).forEach(i -> ratingOnly.add(titleParts.get(i).equalsIgnoreCase(titleRating)));
+//        titleParts.removeIf(title -> title.contains(titleRating));
+        titleParts.stream().filter(title -> !title.contains(titleRating));
+        return titleParts.get(0).length();
 
 //                titleParts.get(i).contains("Rated"));
 //        String[] ratingLongTitle = titleContainerParts[2].split(" ");
