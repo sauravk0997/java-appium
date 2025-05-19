@@ -690,6 +690,21 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(collectionPage.isOpened(originalsPageTitle), ORIGINALS_PAGE_NOT_DISPLAYED);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67572"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkDisneyForeground() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        // Background Disney app
+        launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+        // Open any deeplink should bring back Disney app to the foreground
+        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink"));
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67576"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkOpenVsClosed() {
