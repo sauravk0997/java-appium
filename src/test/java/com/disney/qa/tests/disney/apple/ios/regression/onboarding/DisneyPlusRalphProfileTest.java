@@ -160,25 +160,18 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
     public void testLoginAdTierSecondaryProfileCollectDOB() {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        DisneyPlusContentRatingIOSPageBase contentRating = initPage(DisneyPlusContentRatingIOSPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollection = initPage(DisneyPlusDOBCollectionPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfile = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String defaultRating = "12";
         String learnMoreContentRating = getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.RATING_SUBCOPY.getText());
-        LOGGER.info("LEARN MORE CONTENT RATING STRING THAT IS FAILING: {}", learnMoreContentRating);
-
-        int under18Age = calculateAge(Person.AGE_17.getMonth(), Person.AGE_17);
-        String recommendedContentRatingByAge = getLocalizationUtils()
-                .formatPlaceholderString(contentRating.getRecommendedRating(),
-                        Map.of("content_rating", getRecommendedContentRating(GERMANY, under18Age, AGE_VALUES_GERMANY)));
-        LOGGER.info("Recommended Content Rating: {}", recommendedContentRatingByAge);
-        learnMoreContentRating.replace("{content_rating", recommendedContentRatingByAge);
-        LOGGER.info("LEARN MORE CONTENT RATING STRING AFTER REPLACE TEXT: {}", learnMoreContentRating);
         createAccountAndAddSecondaryProfile(GERMANY, getLocalizationUtils().getUserLanguage(), DISNEY_PLUS_STANDARD_WITH_ADS_DE);
-
+        learnMoreContentRating.replace("content_rating", defaultRating);
+        LOGGER.info("This is the new updated learnMoreContentRating: {}", learnMoreContentRating);
+        
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
         whoIsWatching.clickProfile(SECONDARY_PROFILE);
