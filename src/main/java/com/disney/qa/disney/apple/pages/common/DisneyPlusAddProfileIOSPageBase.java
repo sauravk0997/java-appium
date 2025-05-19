@@ -243,10 +243,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
                 maturityRatingInfo, Map.of("highest_rating_value_image", "TV-MA"))).isPresent();
     }
 
-    public boolean isMaturityRatingNotNowInfoDisplayed() {
+    public boolean isMaturityRatingNotNowInfoDisplayed(String rating) {
         String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
         return staticTextByLabel.format(getLocalizationUtils().formatPlaceholderString(
-                maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
+                maturityRatingInfo, Map.of("current_rating_value_text", rating))).isPresent();
     }
 
     public boolean isDuplicateProfileNameErrorPresent() {

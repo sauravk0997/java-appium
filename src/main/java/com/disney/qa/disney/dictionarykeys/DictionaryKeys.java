@@ -252,6 +252,8 @@ public enum DictionaryKeys {
     LOG_OUT_LABEL("log_out_label"),
     MATURITY_ANYTIME_REMINDER("update_maturity_anytime_reminder"),
     MATURITY_PASSWORD_TITLE("confirm_maturity_pass_title"),
+    MATURITY_RATING_BANNER_HEADER("maturity_rating_banner_header"),
+    MATURITY_RATING_BANNER_TEXT("maturity_rating_banner_subcopy"),
     MATURITY_RATING_DESCRIPTION_VALUE("profile_settings_maturity_rating_description_value"),
     MATURITY_RATING_NOT_NOW_INFO("update_maturity_rating_notnow_info"),
     MATURITY_RATING_SETTINGS_LABEL("maturity_rating_settings_label"),
