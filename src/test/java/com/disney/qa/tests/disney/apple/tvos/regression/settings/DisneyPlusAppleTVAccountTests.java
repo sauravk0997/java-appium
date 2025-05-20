@@ -521,6 +521,44 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116823"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyOOHHardBlockNavigation() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
+
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        homePage.clickBack();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickBack();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickBack();
+        sa.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
     private void loginWithAccountSharingUser(String email, String password) {
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
