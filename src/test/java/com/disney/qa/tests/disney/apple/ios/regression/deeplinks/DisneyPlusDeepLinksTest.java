@@ -910,4 +910,35 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                     String.format("Brand screen for '%s' is not displayed", brandString));
         }
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82851"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, EMEA_CA})
+    public void verifyDeepLinkToBrandsForEmeaAndCanada() {
+        List<Brand> brands = Arrays.asList(
+                Brand.DISNEY,
+                Brand.PIXAR,
+                Brand.MARVEL,
+                Brand.STAR_WARS,
+                Brand.NATIONAL_GEOGRAPHIC,
+                Brand.STAR
+        );
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
+        homePage.waitForHomePageToOpen();
+
+        for (Brand brand : brands) {
+            launchDeeplink(brandPage.getBrandDeepLink(brand));
+            String brandString = brandPage.getBrand(brand);
+            Assert.assertTrue(brandPage.isOpened(), "Brand page is not open");
+            Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
+                    String.format("Brand screen for '%s' is not displayed", brandString));
+        }
+    }
 }
