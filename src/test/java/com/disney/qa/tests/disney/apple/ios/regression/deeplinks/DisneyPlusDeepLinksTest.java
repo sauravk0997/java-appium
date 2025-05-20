@@ -876,6 +876,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         }
     }
 
+    //Below TC is failing due to bug https://jira.disney.com/browse/IOS-15919
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67557"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAccountDeeplink() {
