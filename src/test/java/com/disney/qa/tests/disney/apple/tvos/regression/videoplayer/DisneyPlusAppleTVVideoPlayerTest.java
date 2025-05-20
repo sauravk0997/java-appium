@@ -280,7 +280,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         videoPlayer.waitForVideoToStart();
         // Forward video and get remaining time
         commonPage.clickRight(6, 1, 1);
-        commonPage.clickDown(1);
+        commonPage.clickDown(2);
         int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTime {}", remainingTime);
         // Go back to details page and tap in Continue button
@@ -293,7 +293,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         detailsPage.getTypeButtonContainsLabel(continueButton).click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         // Get remaining time and validate if video restarted
-        commonPage.clickDown(1);
+        commonPage.clickDown(2);
         int remainingTimeAfterContinue = videoPlayer.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterContinue {}", remainingTimeAfterContinue);
 
