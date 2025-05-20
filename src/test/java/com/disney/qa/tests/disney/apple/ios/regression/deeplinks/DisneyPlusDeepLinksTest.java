@@ -787,7 +787,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         sa.assertTrue(legalPage.isOpened(), "Legal page did not open");
 
         // Validate each legal deeplink and sub header
-        for(int i = 0; i< legalHeaders.size(); i++) {
+        for (int i = 0; i < legalHeaders.size(); i++) {
             launchDeeplink(legalDeepLinks.get(i));
             sa.assertTrue(homePage.getTypeButtonContainsLabel(legalHeaders.get(i)).isPresent(THREE_SEC_TIMEOUT),
                     "Legal header expected " + legalHeaders.get(i) + "is not present");
