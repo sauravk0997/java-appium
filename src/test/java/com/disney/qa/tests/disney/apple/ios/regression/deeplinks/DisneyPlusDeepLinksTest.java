@@ -911,6 +911,27 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         }
     }
 
+    //Below TC is failing due to bug https://jira.disney.com/browse/IOS-15919
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67557"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAccountDeeplink() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_account_deeplink"));
+        accountPage.waitForAccountPageToOpen();
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
+        accountPage.clickNavBackBtn();
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_commerce_deeplink"));
+        accountPage.waitForAccountPageToOpen();
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82850"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, LATAM_ANZ})
     public void verifyDeepLinkToBrandsForLatamAndAnz() {
