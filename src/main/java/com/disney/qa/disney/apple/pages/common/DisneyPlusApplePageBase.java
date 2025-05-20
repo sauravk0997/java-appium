@@ -1641,9 +1641,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         clickSelect();
     }
 
-    public boolean isDismissCTAButtonPresent() {
+    public ExtendedWebElement getDismissCTAButtonPresent() {
         return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
-                DictionaryKeys.DISMISS_BTN.getText())).isPresent();
+                DictionaryKeys.DISMISS_BTN.getText()));
     }
 }
