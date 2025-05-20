@@ -735,4 +735,12 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
+
+    private String getLatamAnzCountryCode() {
+        List<String> countryCodeList = Arrays.asList(
+                ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
+                HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY, AU, NZ);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
 }
