@@ -233,9 +233,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                         DictionaryKeys.MATURITY_RATING_BANNER_HEADER.getText()),
-                Map.of("current_rating_value_text", rating))).isPresent()
-                &&
-                getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
-                        DictionaryKeys.MATURITY_RATING_BANNER_TEXT.getText())).isPresent();
+                Map.of("current_rating_value_text", rating))).isPresent();
     }
 }
