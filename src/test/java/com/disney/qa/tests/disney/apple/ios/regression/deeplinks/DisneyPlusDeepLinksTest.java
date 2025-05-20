@@ -897,18 +897,11 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 Brand.ESPN
         );
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
-        for (Brand brand : brands) {
-            launchDeeplink(brandPage.getBrandDeepLink(brand));
-            String brandString = brandPage.getBrand(brand);
-            Assert.assertTrue(brandPage.isOpened(), "Brand page is not open");
-            Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
-                    String.format("Brand screen for '%s' is not displayed", brandString));
-        }
+        validateBrandsDeepLinks(brands);
     }
 
     //Below TC is failing due to bug https://jira.disney.com/browse/IOS-15919
@@ -954,13 +947,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         handleOneTrustPopUp();
         homePage.waitForHomePageToOpen();
 
-        for (Brand brand : brands) {
-            launchDeeplink(brandPage.getBrandDeepLink(brand));
-            String brandString = brandPage.getBrand(brand);
-            Assert.assertTrue(brandPage.isOpened(), "Brand page is not open");
-            Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
-                    String.format("Brand screen for '%s' is not displayed", brandString));
-        }
+        validateBrandsDeepLinks(brands);
 
         // Separate validation for ESPN brand, since the page doesn't have the same elements as the rests of brands
         String firstEspnCollectionId;
@@ -973,5 +960,16 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(brandPage.getBrandDeepLink(Brand.ESPN));
         Assert.assertTrue(brandPage.getCollection(firstEspnCollectionId).isPresent(),
                 String.format("Brand screen for '%s' is not displayed", Brand.ESPN));
+    }
+
+    public void validateBrandsDeepLinks(List<Brand> brands) {
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+        for (Brand brand : brands) {
+            launchDeeplink(brandPage.getBrandDeepLink(brand));
+            String brandString = brandPage.getBrand(brand);
+            Assert.assertTrue(brandPage.isOpened(), "Brand page is not open");
+            Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
+                    String.format("Brand screen for '%s' is not displayed", brandString));
+        }
     }
 }
