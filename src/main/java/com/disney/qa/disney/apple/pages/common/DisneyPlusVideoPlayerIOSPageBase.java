@@ -877,13 +877,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isConcurrencyCTAButtonPresent() {
-        return getTypeButtonContainsLabel(getCtaButtonDismiss().getText()).isPresent();
-    }
-
-    public ExtendedWebElement getCtaButtonDismiss() {
-        return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
-                DictionaryKeys.DISMISS_BTN.getText()));
+        return getTypeButtonContainsLabel(getDismissCTAButtonPresent().getText()).isPresent();
     }
 
     public boolean waitForNetworkWatermarkLogoToDisappear(String network) {

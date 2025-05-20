@@ -22,12 +22,15 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
@@ -179,6 +182,20 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         homePage.getUnavailableOkButton().click();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67551"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToMissingContentCollectionn() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_missing_collection_deeplink"));
+        Assert.assertTrue(homePage.getUnavailableContentError().isPresent(), CONTENT_UNAVAILABLE_ERROR);
+        Assert.assertTrue(homePage.getUnavailableOkButton().isPresent(), CONTENT_UNAVAILABLE_OK_ERROR);
+        homePage.getUnavailableOkButton().click();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74590"})
@@ -358,7 +375,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_series_trailer_playback_dancing_with_the_stars_deeplink"));
         videoPlayer.waitForVideoToStart();
 
-        videoPlayer.scrubToPlaybackPercentage(90);
+        videoPlayer.waitForTrailerToEnd(60, 5);
         Assert.assertFalse(upNextPage.getUpNextImageView().isElementPresent(THREE_SEC_TIMEOUT),
                 "Up Next view was present");
 
@@ -632,12 +649,10 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67543"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67541"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyCollectionEditorialAndFranchiseDeepLinkPages() {
+    public void verifyDeepLinkToCollectionPages() {
         String waltDisneyCollectionPageTitle = "Walt Disney Animation Studios";
-        String toyStoryCollectionPageTitle = "Toy Story";
-        String theAvengersCollectionPageTitle = "Marvel's Avengers";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
 
@@ -649,6 +664,18 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(collectionPage.isOpened(waltDisneyCollectionPageTitle),
                 String.format("Expected editorial/franchise collection page '%s' did not open",
                         waltDisneyCollectionPageTitle));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67543"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToFranchisePages() {
+        String toyStoryCollectionPageTitle = "Toy Story";
+        String theAvengersCollectionPageTitle = "Marvel's Avengers";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_toy_story_collection"));
         collectionPage.waitForCollectionPageToOpen(toyStoryCollectionPageTitle);
@@ -690,6 +717,21 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(collectionPage.isOpened(originalsPageTitle), ORIGINALS_PAGE_NOT_DISPLAYED);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67572"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkDisneyForeground() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        // Background Disney app
+        launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
+        // Open any deeplink should bring back Disney app to the foreground
+        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink"));
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67576"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkOpenVsClosed() {
@@ -708,7 +750,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
 
         launchApp(IOSUtils.SystemBundles.SETTINGS.getBundleId());
-        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink_2"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink"));
         Assert.assertFalse(welcomePage.getAppLoadingView().isElementPresent(THREE_SEC_TIMEOUT),
                 "Screen splash was present");
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -769,6 +811,31 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(commonPage.isWebviewOpen(), WEBVIEW_DID_NOT_OPEN);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67570"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToKidsModeBlockedContent() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
+
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(homePage.getParentalControlMediaNotAllowedErrorPopUpMessage().isPresent(),
+                "Parental Control media not allowed error message not found");
+        Assert.assertTrue(homePage.getDismissCTAButtonPresent().isPresent(), "OK CTA is not present");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67531"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkToMoviePlayback() {
@@ -812,6 +879,19 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 "Video Player subtitle doesn't contains expected episode title");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67525"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToSearchPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_search_deeplink"));
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67535"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinksToMoviesAndSeriesLandingPages() {
@@ -832,5 +912,32 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 "Series landing page is not opened");
         Assert.assertEquals(mediaCollectionPage.getSelectedCategoryFilterName(), FEATURED_FILTER_LABEL,
                 String.format("Series filter was not set to '%s' by default", FEATURED_FILTER_LABEL));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67537"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToBrandsForUS() {
+        List<Brand> brands = Arrays.asList(
+                Brand.DISNEY,
+                Brand.PIXAR,
+                Brand.MARVEL,
+                Brand.STAR_WARS,
+                Brand.NATIONAL_GEOGRAPHIC,
+                Brand.HULU,
+                Brand.ESPN
+        );
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        for (Brand brand : brands) {
+            launchDeeplink(brandPage.getBrandDeepLink(brand));
+            String brandString = brandPage.getBrand(brand);
+            Assert.assertTrue(brandPage.isOpened(), "Brand page is not open");
+            Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
+                    String.format("Brand screen for '%s' is not displayed", brandString));
+        }
     }
 }
