@@ -990,6 +990,30 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 String.format("Brand screen for '%s' is not displayed", Brand.ESPN));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82851"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, EMEA_CA})
+    public void verifyDeepLinkToBrandsForEMEAAndCanada() {
+        List<Brand> brands = Arrays.asList(
+                Brand.DISNEY,
+                Brand.PIXAR,
+                Brand.MARVEL,
+                Brand.STAR_WARS,
+                Brand.NATIONAL_GEOGRAPHIC,
+                Brand.STAR
+        );
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
+        homePage.waitForHomePageToOpen();
+
+        validateBrandsDeepLinks(brands);
+    }
+
     public void validateBrandsDeepLinks(List<Brand> brands) {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         for (Brand brand : brands) {
