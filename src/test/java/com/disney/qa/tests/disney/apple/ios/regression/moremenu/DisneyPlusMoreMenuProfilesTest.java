@@ -64,6 +64,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String RIGHT = "RIGHT";
     private static final String LEFT = "LEFT";
     private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
+    private static final String SELECT_PROFILE_PAGE_NOT_DISPLAYED = "Select Profile page is not displayed";
 
 
     private void onboard() {
@@ -229,7 +230,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         //Verify rating is displayed in account's page
         moreMenu.clickEditProfilesBtn();
-        Assert.assertTrue(editProfile.isOpened(), "Select Profile page is not displayed");
+        Assert.assertTrue(editProfile.isOpened(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
@@ -237,34 +238,72 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74602"})
-    @Test(description = "Add Profile - (Secondary Profile) Age <18, default to TV-14 and trigger Welch Flow", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySecondaryProfileU18DefaultsToTV14() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
-        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        onboard();
-        moreMenu.clickAddProfile();
+        //Create account for Brazil country with language as English
+        setAccount(getUnifiedAccountApi()
+                .createAccount(getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_STANDARD,
+                        BR, ENGLISH_LANG)));
+        // Create secondary profile in order to get Who's watching screen
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .language(ENGLISH_LANG)
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), BR);
+
+        List<String> ratingSystemValues = getUnifiedAccount().getProfile(DEFAULT_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        String highestRating = ratingSystemValues.get(ratingSystemValues.size() - 1).replace("+", ", ");
+        String defaultRating = ratingSystemValues.get(ratingSystemValues.size() - 3).replace("+", ", ");
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoseWatching.clickAddProfile();
+
         //Choose avatar
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
+        Assert.assertTrue(addProfile.isOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+
         //Finish creating profile
         addProfile.enterProfileName(SECONDARY_PROFILE);
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
         addProfile.clickSaveBtn();
+
         //Verify Welch flow is triggered
-        sa.assertTrue(editProfile.isServiceEnrollmentAccessFullCatalogPagePresent(), "Welch flow wasn't displayed on screen after creating the U18 profile");
-        sa.assertTrue(addProfile.isMaturityRatingNotNowInfoDisplayed(), "Maturity rating not now info wasn't displayed");
-        sa.assertTrue(addProfile.isUpdateMaturityRatingActionDisplayed(), "Update your maturity rating info wasn't displayed");
-        sa.assertTrue(addProfile.verifyHeadlineHeaderText(), "Set your content rating to max rating text isn't displayed");
+        Assert.assertTrue(editProfile.isServiceEnrollmentAccessFullCatalogPagePresent(),
+                "Welch flow wasn't displayed on screen after creating the U18 profile");
+        sa.assertTrue(addProfile.isMaturityRatingNotNowInfoDisplayed(defaultRating),
+                "Maturity rating not now info wasn't displayed");
+        sa.assertTrue(addProfile.isUpdateMaturityRatingActionDisplayed(highestRating),
+                "Update your maturity rating info wasn't displayed");
+        sa.assertTrue(addProfile.verifyHeadlineHeaderText(),
+                "Set your content rating to max rating text isn't displayed");
         //select 'Not Now' button
         addProfile.clickSecondaryButtonByCoordinates();
-        //Verify TV-14 is displayed in account's page
+        whoseWatching.clickProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(homePage.isMaturityRatingBannerDisplayed(defaultRating));
+        homePage.clickPrimaryButton();
+
+        //Verify rating is displayed in account's page
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        pause(2);
+        Assert.assertTrue(editProfile.isOpened(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
-        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_TV14), "U18 profile rating is not as expected");
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(defaultRating),
+                "U18 profile rating is not as expected");
         sa.assertAll();
     }
 
@@ -326,7 +365,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
-        Assert.assertTrue(editProfile.isOpened(), "Select profile page is not displayed");
+        Assert.assertTrue(editProfile.isOpened(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
         sa.assertTrue(editProfile.getDoneButton().isPresent(), "Done button is not displayed");
