@@ -1,5 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite verbose="1" name="dmgzios_handset_reg_fc" annotations="JDK" configfailurepolicy="continue" thread-count="12" parallel="tests">
+<suite verbose="1" name="dmgzios_handset_reg_fc" annotations="JDK" configfailurepolicy="continue" thread-count="4" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
     <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.4.5-78544"/>
