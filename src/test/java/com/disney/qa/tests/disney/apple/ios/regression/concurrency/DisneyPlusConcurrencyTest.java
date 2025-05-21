@@ -41,7 +41,7 @@ public class DisneyPlusConcurrencyTest extends DisneyBaseTest {
                 "Expected concurrency error message is not present");
         sa.assertTrue(videoPlayer.isConcurrencyCTAButtonPresent(),
                 "Expected concurrency error message is not present");
-        videoPlayer.getCtaButtonDismiss().click();
+        videoPlayer.getDismissCTAButtonPresent().click();
         sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
         sa.assertAll();
     }

@@ -51,7 +51,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
         searchPage.typeInSearchField(series);
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(series).isPresent(), CONTENT_ERROR_MESSAGE);
-        searchPage.getSearchResults(series).get(0).click();
+        searchPage.clickSearchResult(series);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.moveDown(1, 1);
@@ -837,6 +837,41 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.clickDown();
         Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
                 "Playback is not initiated for expected episode");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67665"})
+    @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
+    public void verifySeriesNoAutoplayEndSeries() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String recommendationText = "You may also like";
+        String toggleValue = "Off";
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        toggleAutoPlay(toggleValue);
+
+        // Play last episode and verify the up next screen
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_last_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart();
+        int playerWidth = videoPlayer.getX();
+        videoPlayer.clickPlay();
+        commonPage.clickRightTillEndOfPlaybackIsReached(
+                videoPlayer.getSeekbar(), 40, 1, 1);
+        videoPlayer.clickPlay();
+        Assert.assertTrue(upNextPage.isOpened(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        int miniPlayerWidth = videoPlayer.getX();
+        sa.assertTrue(playerWidth > miniPlayerWidth, "Video Player did not condense to mini player");
+        sa.assertTrue(upNextPage.isUpNextHeaderPresent(), "Up next header is not present");
+        sa.assertTrue(upNextPage.getStaticTextByLabelContains(recommendationText).isPresent(),
+                "You may also like text is not present");
+        sa.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next Play button is not present");
+        sa.assertTrue(upNextPage.getSeeAllEpisodesButton().isPresent(), "See details button is not present");
+        sa.assertAll();
     }
 
     private void toggleAutoPlay(String toggleValue) {

@@ -37,6 +37,8 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusSearchTest extends DisneyBaseTest {
 
+    private static final String FILTER_VALUE_ANIMATION = "Animation";
+    private static final String FILTER_VALUE_COMEDY = "Comedy";
     private static final String BLUEY = "Bluey";
     private static final String MOVIES = "Movies";
     private static final String SERIES = "Series";
@@ -49,6 +51,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             "recent search results";
     private static final String CONTENT_FILTER_DROPDOWN_NOT_DISPLAYED = "Content Filter Dropdown not displayed";
     private static final String CONTENT_FILTER_HEADER_NOT_DISLAYED = "Content Page Filter Header not displayed";
+    private static final String DETAIL_PAGE_TITLE_NOT_EXPECTED ="Detail Page Title is not expected";
+    private static final String DISPLAYED_TILES_ARE_NOT_DIFFERENT = "Displayed titles are not different";
     private static final String PCON_HEADER_ERROR_NOT_FOUND = "PCON restricted title message was not present";
     private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
 
@@ -375,79 +379,25 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67950"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "collectionNames", enabled = false)
-    public void verifySwipeBehaviorForContentLandingPage(String collectionName) {
-        String comedyFilterValue = "Comedy";
-        String kidsFilterValue = "Kids";
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyContentTypeLandingPageElementsAndFiltering() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount());
 
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        searchPage.clickOriginalsTab();
-        sa.assertTrue(originalsPage.isOpened(), ORIGINALS_PAGE_NOT_DISPLAYED);
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        searchPage.getNavBackArrow().click();
+        searchPage.clickMoviesTab();
+        validateContentTypeLandingPageElements(sa, MOVIES, FILTER_VALUE_ANIMATION, FILTER_VALUE_COMEDY);
 
-        if (collectionName.equalsIgnoreCase("movies")) {
-            searchPage.clickMoviesTab();
-        } else {
-            searchPage.clickSeriesTab();
-        }
-        sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-        sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        searchPage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        List<ExtendedWebElement> featuredFilterResults = searchPage.getDisplayedTitles();
-        String tenthFeaturedResult = featuredFilterResults.get(10).getText();
-        scrollDown();
-
-        if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-
-            searchPage.swipeContentPageFilter(Direction.LEFT);
-            searchPage.getTypeButtonByLabel(kidsFilterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-
-            List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
-            String firstKidsResult = kidsResults.get(0).getText();
-
-            searchPage.swipeContentPageFilter(Direction.RIGHT);
-            searchPage.getTypeButtonByLabel(comedyFilterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-
-            List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
-            sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstKidsResult), "Displayed titles are not different.");
-            sa.assertFalse(comedyResults.get(20).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
-        } else {
-            sa.assertFalse(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-
-            searchPage.clickContentPageFilterDropDownAtMiddleTop();
-            searchPage.swipeItemPicker(Direction.UP);
-            searchPage.getStaticTextByLabel(kidsFilterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was not found");
-            sa.assertTrue(searchPage.getNavBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-
-            List<ExtendedWebElement> kidsResults = searchPage.getDisplayedTitles();
-            String firstComedyResult = kidsResults.get(0).getText();
-
-            scrollDown();
-            searchPage.clickContentPageFilterDropDownAtMiddleTop();
-            searchPage.swipeItemPicker(Direction.DOWN);
-            searchPage.getStaticTextByLabel(comedyFilterValue).click();
-            sa.assertTrue(searchPage.getStaticTextByLabel(collectionName).isPresent(), "Page header '" + collectionName + "' was  not found");
-
-            List<ExtendedWebElement> comedyResults = searchPage.getDisplayedTitles();
-            sa.assertFalse(comedyResults.get(0).getText().equalsIgnoreCase(firstComedyResult), "Displayed titles are not different.");
-            sa.assertFalse(comedyResults.get(10).getText().equalsIgnoreCase(tenthFeaturedResult), "Displayed titles are not different.");
-        }
+        searchPage.clickSeriesTab();
+        validateContentTypeLandingPageElements(sa, SERIES, FILTER_VALUE_ANIMATION, FILTER_VALUE_COMEDY);
         sa.assertAll();
     }
 
@@ -1202,5 +1152,62 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         }
 
+    }
+
+    private void validateContentTypeLandingPageElements(
+            SoftAssert sa,
+            String contentType,
+            String filterValue1,
+            String filterValue2
+    ) {
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        sa.assertTrue(searchPage.getStaticTextByLabel(contentType).isPresent(),
+                "Page header '" + contentType + "' was not found after opening the page");
+        sa.assertTrue(searchPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        List<ExtendedWebElement> featuredFilterResults = searchPage.getDisplayedTitles();
+        String firstDefaultResult = featuredFilterResults.get(0).getText();
+
+        if (R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            //Swipe and select a Filter Type
+            searchPage.swipeContentPageFilter(Direction.LEFT);
+            searchPage.getTypeButtonByLabel(filterValue1).click();
+            List<ExtendedWebElement> filterResults = searchPage.getDisplayedTitles();
+            String firstFilterResult = filterResults.get(0).getText();
+            //Select Second Filter Value
+            searchPage.swipeContentPageFilter(Direction.RIGHT);
+            searchPage.getTypeButtonByLabel(filterValue2).click();
+            List<ExtendedWebElement> filterResults2 = searchPage.getDisplayedTitles();
+            String secondFilterFirstResult = filterResults2.get(0).getText();
+            //Validate No Filter, First Filter and Second Filter are different
+            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_NOT_DIFFERENT);
+            sa.assertFalse(filterResults2.get(0).getText().equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_NOT_DIFFERENT);
+            //Select a Tile and Navigate to Detail Page
+            filterResults2.get(0).click();
+            detailsPage.waitForDetailsPageToOpen();
+            String detailPageTitle = detailsPage.getMediaTitle();
+            sa.assertTrue(secondFilterFirstResult.contains(detailPageTitle), DETAIL_PAGE_TITLE_NOT_EXPECTED);
+        } else {
+            //Select Filter Picker and Select Value and get First Tile
+            searchPage.clickContentPageFilterDropDown();
+            searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
+            searchPage.getStaticTextByLabel(filterValue1).click();
+            List<ExtendedWebElement> filterResults = searchPage.getDisplayedTitles();
+            String firstFilterResult = filterResults.get(0).getText();
+            //Select Second Filter Value
+            searchPage.clickContentPageFilterDropDown();
+            searchPage.waitForLoaderToDisappear(SHORT_TIMEOUT);
+            searchPage.getStaticTextByLabel(filterValue2).click();
+            List<ExtendedWebElement> filterResults2 = searchPage.getDisplayedTitles();
+            String secondFilterFirstResult = filterResults2.get(0).getText();
+            //Validate No Filter, First Filter and Second Filter are different
+            sa.assertFalse(secondFilterFirstResult.equalsIgnoreCase(firstFilterResult), DISPLAYED_TILES_ARE_NOT_DIFFERENT);
+            sa.assertFalse(secondFilterFirstResult.equalsIgnoreCase(firstDefaultResult), DISPLAYED_TILES_ARE_NOT_DIFFERENT);
+            //Select a Tile and Navigate to Detail Page
+            filterResults2.get(0).click();
+            detailsPage.waitForDetailsPageToOpen();
+            String detailPageTitle = detailsPage.getMediaTitle();
+            sa.assertTrue(secondFilterFirstResult.contains(detailPageTitle), DETAIL_PAGE_TITLE_NOT_EXPECTED);
+        }
     }
 }

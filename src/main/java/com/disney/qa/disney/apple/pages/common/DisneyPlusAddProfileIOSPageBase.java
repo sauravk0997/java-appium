@@ -49,6 +49,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "submitButtonCellIdentifier")
     private ExtendedWebElement saveButton;
 
+    @ExtendedFindBy(accessibilityId = "profileMaturityRatingImage")
+    private ExtendedWebElement profileRating;
+
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
     private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
@@ -282,5 +285,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
                     Assert.assertTrue(dynamicBtnFindByLabelContains.format(
                             editGenderIOSPageBase.selectGender(item)).isPresent(),
                             "Gender " + item + " is not present" ));
+    }
+
+    public String getProfileRating() {
+        return profileRating.getAttribute("label");
     }
 }
