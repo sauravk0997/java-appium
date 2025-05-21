@@ -181,5 +181,7 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         String lastGenderValue = editGenderPage.selectGender(genders[genders.length - 1]);
         Assert.assertEquals(editProfile.getGenderValue(), lastGenderValue,
                 "Profile gender didn't match selected gender");
+
+        sa.assertAll();
     }
 }
