@@ -600,6 +600,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+            detailsPage.waitForPresenceOfAnElement(detailsPage.getNetworkAttributionLogo());
             Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
                     "Network attribution logo was not found on " + i + " series details page");
         });
