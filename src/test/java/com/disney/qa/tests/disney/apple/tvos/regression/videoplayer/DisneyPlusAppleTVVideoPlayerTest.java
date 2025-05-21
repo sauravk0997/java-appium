@@ -253,7 +253,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
-        homePage.waitForHomePageToOpen();
+//        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_basketball_sport_deeplink"));
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
                 SPORT_PAGE_DID_NOT_OPEN);
@@ -277,10 +277,10 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         // Forward video and get remaining time
         commonPage.clickRight(6, 1, 1);
-        commonPage.clickDown(2);
+        commonPage.clickDown(1);
         int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTime {}", remainingTime);
         // Go back to details page and tap in Continue button
@@ -291,9 +291,10 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
                 "Continue button is not present");
         detailsPage.getTypeButtonContainsLabel(continueButton).click();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         // Get remaining time and validate if video restarted
-        commonPage.clickDown(2);
+        commonPage.clickDown(1);
         int remainingTimeAfterContinue = videoPlayer.getRemainingTimeThreeIntegers();
         LOGGER.info("remainingTimeAfterContinue {}", remainingTimeAfterContinue);
 
