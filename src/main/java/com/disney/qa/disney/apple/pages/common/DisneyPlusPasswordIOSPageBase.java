@@ -214,5 +214,9 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText()));
     }
+
+    public ExtendedWebElement getForgotPasswordLink() {
+        return forgotPasswordLink;
+    }
 }
 

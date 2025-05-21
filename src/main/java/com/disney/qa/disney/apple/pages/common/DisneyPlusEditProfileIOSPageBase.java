@@ -113,6 +113,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
 
+    @ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeOther[`name == \"toggleView\"`][2]/XCUIElementTypeOther[2]")
+    protected ExtendedWebElement sharePlayToggle;
 
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -606,4 +608,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                         APPLICATION, DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText()));
     }
 
+    public ExtendedWebElement getSharePlayToggleCell() {
+        return sharePlayToggle;
+    }
 }

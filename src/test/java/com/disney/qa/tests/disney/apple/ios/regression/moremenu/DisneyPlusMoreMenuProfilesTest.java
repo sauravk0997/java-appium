@@ -1685,24 +1685,42 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72166"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySharePlayPasswordReset() {
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusOneTimePasscodeIOSPageBase passcodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
-                .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
-                .dateOfBirth(null)
-                .language(getLocalizationUtils().getUserLanguage())
-                .avatarId(null)
-                .kidsModeEnabled(false)
-                .isStarOnboarded(true)
-                .build());
 
         setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+            swipeUp(400);
+        }
+
+        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
+        validateSharePlayDefaultOff();
+        Assert.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot Password link is not present");
+        passwordPage.clickForgotPasswordLink();
+        Assert.assertTrue(passcodePage.isOpened(), "OTP header is not present");
+        String otp = getOTPFromApi(getUnifiedAccount());
+        passcodePage.enterOtpValue(otp);
+        pause(10);
 
         sa.assertAll();
     }
+
+    public void validateSharePlayDefaultOff() {
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        editProfilePage.getSharePlayToggleCell().click();
+        Assert.assertTrue(passwordPage.isHeaderTextDisplayed(), "Share Play was not OFF by default");
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
