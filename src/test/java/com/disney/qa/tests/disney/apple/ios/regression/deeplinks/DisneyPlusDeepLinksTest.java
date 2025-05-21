@@ -975,7 +975,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82851"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, EMEA_CA})
-    public void verifyDeepLinkToBrandsForEmeaAndCanada() {
+    public void verifyDeepLinkToBrandsForEMEAAndCanada() {
         List<Brand> brands = Arrays.asList(
                 Brand.DISNEY,
                 Brand.PIXAR,
