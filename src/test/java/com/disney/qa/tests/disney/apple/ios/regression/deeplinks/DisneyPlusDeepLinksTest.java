@@ -22,8 +22,10 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
@@ -768,6 +770,32 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenuPage.isHelpWebviewOpen(), "Deeplink did not redirect to help webview");
     }
 
+    // There is a bug related IOS-15924
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67562"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDeepLinkToLegal() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        Set<String> legalItems = getLocalizationUtils().getLegalHeaders();
+        List<String> legalHeaders = new ArrayList<>(legalItems);
+        List<String> legalDeepLinks = getLegalDeepLinks();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_legal_deeplink"));
+        sa.assertTrue(legalPage.isOpened(), "Legal page did not open");
+
+        // Validate each legal deeplink and sub header
+        for (int i = 0; i < legalHeaders.size(); i++) {
+            launchDeeplink(legalDeepLinks.get(i));
+            sa.assertTrue(homePage.getTypeButtonContainsLabel(legalHeaders.get(i)).isPresent(THREE_SEC_TIMEOUT),
+                    "Legal header expected " + legalHeaders.get(i) + "is not present");
+        }
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67585"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDeepLinkToRestartSubscription() {
@@ -995,5 +1023,15 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
             Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
                     String.format("Brand screen for '%s' is not displayed", brandString));
         }
+    }
+
+    public List<String> getLegalDeepLinks() {
+        List<String> legalDeepLinks = new ArrayList<>();
+        legalDeepLinks.add(R.TESTDATA.get("disney_prod_terms_deeplink"));
+        legalDeepLinks.add(R.TESTDATA.get("disney_prod_subscriber_agreement_deeplink"));
+        legalDeepLinks.add(R.TESTDATA.get("disney_prod_privacy_deeplink"));
+        legalDeepLinks.add(R.TESTDATA.get("disney_prod_us_privacy_rights_deeplink"));
+        legalDeepLinks.add(R.TESTDATA.get("disney_prod_us_legal_dnsmi_deeplink"));
+        return legalDeepLinks;
     }
 }
