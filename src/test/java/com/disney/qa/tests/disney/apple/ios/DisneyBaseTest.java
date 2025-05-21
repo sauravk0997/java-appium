@@ -909,10 +909,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             // Update household values based on household request
             getHouseholdApi().updateHousehold(account.getAccountId(), getHouseholdRequest());
             getHouseholdApi().setOverrideStatusForceDetect(account.getAccountId());
-            //Time needed to propagate the changes to the account
+            //Time needed to propagate the changes to account
             pause(2);
         } catch (IOException | URISyntaxException | IllegalAccessException e) {
-            Assert.fail("Unable to create/ update the house hold for unified account");
+            throw new RuntimeException("Unable to create/ update the household for the account with error: " + e);
         }
 
         try {
@@ -920,14 +920,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     account.getAccountId(),
                     account.getDeviceId(),
                     experienceId);
-            //Time needed to propagate the changes to the account
+            //Time needed to propagate the changes to account
             pause(2);
             ExperienceResponse experienceResponse =
                     getHouseholdApi().getHouseholdExperienceOverrides(account.getAccountId());
             Assert.assertEquals(experienceResponse.eventData.responseOverrides.experienceId, experienceId.toString());
         } catch (IOException | URISyntaxException e) {
-            throw new RuntimeException("Failed to override the household experience for the unified " +
-                    "account" + e);
+            throw new RuntimeException("Failed to override the household experience for the account" + e);
         }
 
         return account;
