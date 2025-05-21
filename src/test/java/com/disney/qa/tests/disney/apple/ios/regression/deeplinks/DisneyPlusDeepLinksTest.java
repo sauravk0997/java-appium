@@ -897,11 +897,73 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 Brand.ESPN
         );
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
+        validateBrandsDeepLinks(brands);
+    }
+
+    //Below TC is failing due to bug https://jira.disney.com/browse/IOS-15919
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67557"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAccountDeeplink() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_account_deeplink"));
+        accountPage.waitForAccountPageToOpen();
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
+        accountPage.clickNavBackBtn();
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_commerce_deeplink"));
+        accountPage.waitForAccountPageToOpen();
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82850"})
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, LATAM_ANZ})
+    public void verifyDeepLinkToBrandsForLATAMAndANZ() {
+        List<Brand> brands = Arrays.asList(
+                Brand.DISNEY,
+                Brand.PIXAR,
+                Brand.MARVEL,
+                Brand.STAR_WARS,
+                Brand.NATIONAL_GEOGRAPHIC,
+                Brand.STAR
+        );
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
+        homePage.waitForHomePageToOpen();
+
+        validateBrandsDeepLinks(brands);
+
+        // Separate validation for ESPN brand, since the page doesn't have the same elements as the rests of brands
+        String firstEspnCollectionId;
+        try {
+            firstEspnCollectionId = getDisneyAPIPage(ESPN.getEntityId()).get(0).getId();
+        } catch (Exception e) {
+            throw new SkipException(
+                    "Skipping test, failed to get first ESPN collection ID from Explore API", e);
+        }
+        launchDeeplink(brandPage.getBrandDeepLink(Brand.ESPN));
+        Assert.assertTrue(brandPage.getCollection(firstEspnCollectionId).isPresent(),
+                String.format("Brand screen for '%s' is not displayed", Brand.ESPN));
+    }
+
+    public void validateBrandsDeepLinks(List<Brand> brands) {
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         for (Brand brand : brands) {
             launchDeeplink(brandPage.getBrandDeepLink(brand));
             String brandString = brandPage.getBrand(brand);

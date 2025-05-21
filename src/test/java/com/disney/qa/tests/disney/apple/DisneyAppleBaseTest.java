@@ -85,6 +85,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
     public static final String JP_ENG = "JP_ENG";
+    public static final String LATAM_ANZ = "LATAM_ANZ";
     public static final String EMEA_CA = "EMEA_CA";
     protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
     protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
@@ -347,6 +348,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(FRANCE)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), FRANCE, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
+        } else if (groups.contains(LATAM_ANZ)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMOrANZCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(EMEA_CA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEmeaOrCanadaCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
@@ -732,6 +736,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private String getMPAACountryCode() {
         List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, GUAM,
                 PUERTO_RICO, MARSHALL_ISLANDS);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getLATAMOrANZCountryCode() {
+        List<String> countryCodeList = Arrays.asList(
+                ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
+                HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY, AU, NZ);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
