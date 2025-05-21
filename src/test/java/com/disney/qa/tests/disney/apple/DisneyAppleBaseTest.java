@@ -348,7 +348,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), FRANCE, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
         } else if (groups.contains(LATAM_ANZ)) {
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLatamAnzCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMOrANZCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
@@ -736,7 +736,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
-    private String getLatamAnzCountryCode() {
+    private String getLATAMOrANZCountryCode() {
         List<String> countryCodeList = Arrays.asList(
                 ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
                 HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY, AU, NZ);
