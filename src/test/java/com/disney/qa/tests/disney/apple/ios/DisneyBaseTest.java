@@ -895,12 +895,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public UnifiedAccount setHouseholdExperience(ExperienceId experienceId, Boolean isOTPAccount) {
-         UnifiedAccount account = isOTPAccount ?
-                 getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
-                                            getLocalizationUtils().getLocale(),
-                                            getLocalizationUtils().getUserLanguage())) :
-                 getUnifiedAccount();
-
+        UnifiedAccount account = isOTPAccount ?
+                getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                        getLocalizationUtils().getLocale(),
+                        getLocalizationUtils().getUserLanguage())) :
+                getUnifiedAccount();
 
         try {
             LOGGER.info("Attempting to set force detect + account block {} for account {}", experienceId.toString(),
@@ -909,8 +908,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             // Update household values based on household request
             getHouseholdApi().updateHousehold(account.getAccountId(), getHouseholdRequest());
             getHouseholdApi().setOverrideStatusForceDetect(account.getAccountId());
-            //Time needed to propagate the changes to account
-            pause(2);
         } catch (IOException | URISyntaxException | IllegalAccessException e) {
             throw new RuntimeException("Unable to create/ update the household for the account with error: " + e);
         }
@@ -921,10 +918,11 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     account.getDeviceId(),
                     experienceId);
             //Time needed to propagate the changes to account
-            pause(2);
+            pause(8);
             ExperienceResponse experienceResponse =
                     getHouseholdApi().getHouseholdExperienceOverrides(account.getAccountId());
-            Assert.assertEquals(experienceResponse.eventData.responseOverrides.experienceId, experienceId.toString());
+            Assert.assertEquals(experienceResponse.eventData.responseOverrides.experienceId, experienceId.toString(),
+                    "Failed to override the household experience for the account");
         } catch (IOException | URISyntaxException e) {
             throw new RuntimeException("Failed to override the household experience for the account" + e);
         }
