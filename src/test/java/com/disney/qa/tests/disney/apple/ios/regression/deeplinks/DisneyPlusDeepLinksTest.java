@@ -962,17 +962,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 String.format("Brand screen for '%s' is not displayed", Brand.ESPN));
     }
 
-    public void validateBrandsDeepLinks(List<Brand> brands) {
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        for (Brand brand : brands) {
-            launchDeeplink(brandPage.getBrandDeepLink(brand));
-            String brandString = brandPage.getBrand(brand);
-            Assert.assertTrue(brandPage.isOpened(), "Brand page is not open");
-            Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandString),
-                    String.format("Brand screen for '%s' is not displayed", brandString));
-        }
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82851"})
     @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, EMEA_CA})
     public void verifyDeepLinkToBrandsForEMEAAndCanada() {
@@ -985,7 +974,6 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 Brand.STAR
         );
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
@@ -995,6 +983,11 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         handleOneTrustPopUp();
         homePage.waitForHomePageToOpen();
 
+        validateBrandsDeepLinks(brands);
+    }
+
+    public void validateBrandsDeepLinks(List<Brand> brands) {
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         for (Brand brand : brands) {
             launchDeeplink(brandPage.getBrandDeepLink(brand));
             String brandString = brandPage.getBrand(brand);
