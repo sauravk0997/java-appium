@@ -64,6 +64,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String RIGHT = "RIGHT";
     private static final String LEFT = "LEFT";
     private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
+    private static final String SELECT_PROFILE_PAGE_NOT_DISPLAYED = "Select Profile page is not displayed";
 
 
     private void onboard() {
@@ -229,7 +230,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         //Verify rating is displayed in account's page
         moreMenu.clickEditProfilesBtn();
-        Assert.assertTrue(editProfile.isOpened(), "Select Profile page is not displayed");
+        Assert.assertTrue(editProfile.isOpened(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(RATING_MATURE), "profile rating is not as expected");
@@ -239,11 +240,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74602"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySecondaryProfileU18DefaultsToTV14() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
-        DisneyPlusEditProfileIOSPageBase editProfile = new DisneyPlusEditProfileIOSPageBase(getDriver());
-        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
-        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
-        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         //Create account for Brazil country with language as English
@@ -298,7 +299,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //Verify rating is displayed in account's page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
-        Assert.assertTrue(editProfile.isOpened(), "Select Profile page is not displayed");
+        Assert.assertTrue(editProfile.isOpened(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertTrue(editProfile.verifyProfileSettingsMaturityRating(defaultRating),
@@ -364,7 +365,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
-        Assert.assertTrue(editProfile.isOpened(), "Select profile page is not displayed");
+        Assert.assertTrue(editProfile.isOpened(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile Title is not displayed");
         sa.assertTrue(editProfile.getDoneButton().isPresent(), "Done button is not displayed");
