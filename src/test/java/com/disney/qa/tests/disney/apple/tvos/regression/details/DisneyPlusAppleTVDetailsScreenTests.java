@@ -325,7 +325,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        String basketball = "Basketball";
+        String rugby = "Rugby";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
@@ -340,9 +340,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Navigate to Sports and basketball sport
         homePage.moveDownUntilCollectionContentIsFocused(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
-        homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
-        detailsPage.getTypeCellLabelContains(basketball).click();
-        Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
+        homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
+        detailsPage.getTypeCellLabelContains(rugby).click();
+        Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
                 "Sport page did not open");
 
         // Navigate to a Replay and validate the page
@@ -543,13 +543,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVLiveEventModalPage liveEventModalPage = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         ExtendedWebElement liveCell = homePage.getTypeCellLabelContains("live");
 
-        logIn(getUnifiedAccount());
+//        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         homePage.moveDownUntilCollectionContentIsFocused(
-                getCollectionName(CollectionConstant.Collection.NEWLY_ADDED), 10);
+                getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS), 10);
         String[] firstNewlyAddedLongTitle = homePage.getFirstCellTitleFromContainer(
-                CollectionConstant.Collection.NEWLY_ADDED).split(",");
+                CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS).split(",");
         String firstNewlyAddedTitleName = "";
         try {
             if (liveCell != null && homePage.isFocused(liveCell)) {

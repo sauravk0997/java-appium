@@ -113,7 +113,7 @@ public class CollectionConstant {
             case REPLAYS_COLLECTION:
                 return "971963b2-2bf5-4416-aa7d-41950d5760d7";
             case SPORT_REPLAYS:
-                return "b9fac575-876d-4a06-aafc-1ab8ab7a34b5";
+                return "cb338e1f-9162-47e1-b6ba-f3a9cf2f9815";
             case STUDIOS_AND_NETWORKS:
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
             case TREEHOUSE_OF_HORROR_I_TO_V:
