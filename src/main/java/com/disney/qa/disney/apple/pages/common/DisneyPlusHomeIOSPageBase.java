@@ -228,4 +228,11 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
                 cell -> brandListFromUI.add(cell.getText().replace(brandLabelSubString, "")));
         return brandListFromUI;
     }
+
+    public boolean isMaturityRatingBannerDisplayed(String rating) {
+        return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                        DictionaryKeys.MATURITY_RATING_BANNER_HEADER.getText()),
+                Map.of("current_rating_value_text", rating))).isPresent();
+    }
 }

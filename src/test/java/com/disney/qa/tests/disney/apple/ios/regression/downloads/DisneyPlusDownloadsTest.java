@@ -789,7 +789,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
         videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
+        videoPlayer.clickPlayButton();
         sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
         videoPlayer.clickBackButton();
@@ -804,7 +806,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
         videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
+        videoPlayer.clickPlayButton();
         sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
         sa.assertAll();
