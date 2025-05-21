@@ -250,11 +250,11 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         String replayTitle = "";
         int latency = 60;
 
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-//        logIn(getUnifiedAccount());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_basketball_sport_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_rugby_sport_deeplink"));
         Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
                 SPORT_PAGE_DID_NOT_OPEN);
 
