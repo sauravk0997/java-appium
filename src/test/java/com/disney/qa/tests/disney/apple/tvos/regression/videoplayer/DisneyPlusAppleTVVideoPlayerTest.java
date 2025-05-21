@@ -253,7 +253,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
-//        homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_basketball_sport_deeplink"));
         Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
                 SPORT_PAGE_DID_NOT_OPEN);
