@@ -208,10 +208,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         return isFocused(havingTroubleLogginInBtn);
     }
 
-    public boolean isCreateNewPasswordScreenOpen() {
-        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText())).isPresent();
-    }
-
     public boolean isStrengthBarPresent() {
         return passwordStrengthMeter.isElementPresent();
     }
