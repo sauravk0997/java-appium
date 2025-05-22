@@ -1,5 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios;
 
+import java.io.*;
 import java.lang.invoke.MethodHandles;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -16,6 +17,8 @@ import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.*;
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.household.pojos.*;
+import com.disney.qa.api.household.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -48,6 +51,7 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
 import static com.disney.qa.common.constant.IConstantHelper.CONTENT_ENTITLEMENT_DISNEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.getMaxMaturityRating;
@@ -888,5 +892,41 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                     visualsResponse.getMetastringParts().getReleaseYearRange().getStartYear());
         }
         return exploreAPIMetadata;
+    }
+
+    public UnifiedAccount setHouseholdExperience(ExperienceId experienceId, Boolean isOTPAccount) {
+        UnifiedAccount account = isOTPAccount ?
+                getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                        getLocalizationUtils().getLocale(),
+                        getLocalizationUtils().getUserLanguage())) :
+                getUnifiedAccount();
+
+        try {
+            LOGGER.info("Attempting to set force detect + account block {} for account {}", experienceId.toString(),
+                    account.getAccountId());
+            getHouseholdApi().createHousehold(account.getAccountId());
+            // Update household values based on household request
+            getHouseholdApi().updateHousehold(account.getAccountId(), getHouseholdRequest());
+            getHouseholdApi().setOverrideStatusForceDetect(account.getAccountId());
+        } catch (IOException | URISyntaxException | IllegalAccessException e) {
+            throw new RuntimeException("Unable to create/ update the household for the account with error: " + e);
+        }
+
+        try {
+            getHouseholdApi().createHouseholdExperienceOverrides(
+                    account.getAccountId(),
+                    account.getDeviceId(),
+                    experienceId);
+            //Time needed to propagate the changes to account
+            pause(8);
+            ExperienceResponse experienceResponse =
+                    getHouseholdApi().getHouseholdExperienceOverrides(account.getAccountId());
+            Assert.assertEquals(experienceResponse.eventData.responseOverrides.experienceId, experienceId.toString(),
+                    "Failed to override the household experience for the account");
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException("Failed to override the household experience for the account" + e);
+        }
+
+        return account;
     }
 }
