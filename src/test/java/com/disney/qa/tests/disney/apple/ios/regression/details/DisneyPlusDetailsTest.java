@@ -347,6 +347,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         String contentTitle = detailsPage.getContentTitle();
         swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getStaticTextByLabel(contentTitle));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(contentTitle).isPresent(),
                 "Content title is not found in navigation bar");
     }

@@ -277,7 +277,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         // Forward video and get remaining time
         commonPage.clickRight(6, 1, 1);
         commonPage.clickDown(1);
@@ -291,6 +291,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(detailsPage.getTypeButtonContainsLabel(continueButton).isPresent(),
                 "Continue button is not present");
         detailsPage.getTypeButtonContainsLabel(continueButton).click();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         // Get remaining time and validate if video restarted
         commonPage.clickDown(1);
