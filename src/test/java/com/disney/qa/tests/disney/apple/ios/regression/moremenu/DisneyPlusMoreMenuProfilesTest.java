@@ -1691,10 +1691,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase passcodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
-
+        /*
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
+
+         */
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
@@ -1719,7 +1720,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         editProfilePage.getSharePlayToggleCell().click();
         Assert.assertTrue(passwordPage.isHeaderTextDisplayed(), "Share Play was not OFF by default");
-        editProfilePage.getBackArrow().click();
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
