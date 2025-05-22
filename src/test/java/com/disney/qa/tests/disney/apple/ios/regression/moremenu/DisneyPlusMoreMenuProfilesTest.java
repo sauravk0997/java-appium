@@ -1690,6 +1690,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase passcodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String toggleOff = "Off";
+        String toggleOn = "On";
 
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
@@ -1700,14 +1702,14 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-            swipeUp(400);
-        }
+
+        swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
 
         Assert.assertTrue(editProfilePage.isFeatureSettingsSectionDisplayed(), "Share Play setting section is not present");
         Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
-        editProfilePage.getSharePlayToggleCell().click();
-        validateSharePlayDefaultOff();
+        editProfilePage.toggleSharePlayButton(toggleOff);
+        editProfilePage.toggleSharePlayButton(toggleOn);
+
         Assert.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot Password link is not present");
         passwordPage.clickForgotPasswordLink();
         Assert.assertTrue(passcodePage.isOpened(), "OTP header is not present");
@@ -1717,13 +1719,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(passwordPage.isPasswordTaglinePresent(), "Password tagline text was not present");
 
         sa.assertAll();
-    }
-
-    public void validateSharePlayDefaultOff() {
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        editProfilePage.getSharePlayToggleCell().click();
-        Assert.assertTrue(passwordPage.isHeaderTextDisplayed(), "Share Play toggle was ON");
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {

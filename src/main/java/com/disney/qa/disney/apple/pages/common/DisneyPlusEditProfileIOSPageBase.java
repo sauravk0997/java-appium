@@ -114,8 +114,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
 
-    @ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeOther[`name == \"toggleView\"`][3]/XCUIElementTypeOther[2]")
-    protected ExtendedWebElement sharePlayToggle;
+    @ExtendedFindBy(accessibilityId = "groupWatchTooggleCell")
+    protected ExtendedWebElement groupWatchToggleCell;
 
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -614,6 +614,14 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public ExtendedWebElement getSharePlayToggleCell() {
-        return sharePlayToggle;
+        return groupWatchToggleCell;
+    }
+
+    public void toggleSharePlayButton(String newState) {
+        String currentState = groupWatchToggleCell.getText();
+        LOGGER.info("Current state of share play: {}, requested state: {}", currentState, newState);
+        if (!currentState.equalsIgnoreCase(newState)) {
+            groupWatchToggleCell.getElement().findElement(By.name("toggleView")).click();
+        }
     }
 }
