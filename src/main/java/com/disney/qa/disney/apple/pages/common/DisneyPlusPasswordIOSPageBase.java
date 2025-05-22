@@ -6,6 +6,7 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import java.util.Map;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
@@ -228,7 +229,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isPasswordTaglinePresent() {
-        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()));
-        return passwordStrengthHeader.isElementPresent();
+        String taglineText = StringUtils.substringAfter(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()), ".");
+        return getStaticTextByLabelContains(taglineText).isPresent();
     }
 }
