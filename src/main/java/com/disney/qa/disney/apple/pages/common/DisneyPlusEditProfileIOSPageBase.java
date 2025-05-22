@@ -113,7 +113,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
 
-    @ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeOther[`name == \"toggleView\"`][2]/XCUIElementTypeOther[2]")
+    @ExtendedFindBy(iosClassChain =  "**/XCUIElementTypeOther[`name == \"toggleView\"`][3]/XCUIElementTypeOther[2]")
     protected ExtendedWebElement sharePlayToggle;
 
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getLocalizationUtils()
