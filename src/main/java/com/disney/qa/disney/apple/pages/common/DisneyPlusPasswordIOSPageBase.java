@@ -224,8 +224,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isPasswordStrengthHeaderPresent() {
-        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS.getText()));
-        return passwordStrengthHeader.isElementPresent();
+       return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS.getText())).isPresent();
     }
 
     public boolean isPasswordTaglinePresent() {
