@@ -225,13 +225,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isPasswordTaglinePresent() {
-        String taglineText = "This replaces the password you use to log into your accounts for all of the services of The Walt Disney Family of Companies, including Hulu and ESPN+.";
-        return getStaticTextViewValueContains(taglineText).isPresent();
-    }
-
-    public boolean isPasswordTaglinePresent2() {
         String taglineText = StringUtils.substringBefore(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()), ".");
-        System.out.println("taglineText**: " + taglineText);
         return getStaticTextViewValueContains(taglineText).isPresent();
     }
 }

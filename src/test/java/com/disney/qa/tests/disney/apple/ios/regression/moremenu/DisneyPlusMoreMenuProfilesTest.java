@@ -1695,11 +1695,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
         setAppToHomeScreen(getUnifiedAccount());
-
-      //  String otpInitial = getOTPFromApi(getUnifiedAccount());
-      //  passcodePage.enterOtpValue(otpInitial);
-
-      //  pause(10);
         homePage.waitForHomePageToOpen();
 
         moreMenu.clickMoreTab();
@@ -1718,13 +1713,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(passcodePage.isOpened(), "OTP header is not present");
         String otp = getOTPFromApi(getUnifiedAccount());
         passcodePage.enterOtpValueAndConfirm(otp);
-        sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Password page did not open");
-        LOGGER.info(getDriver().getPageSource());
-
+        sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create password page did not open");
         sa.assertTrue(passwordPage.isPasswordTaglinePresent(), "Password tagline text was not present");
-        sa.assertTrue(passwordPage.isPasswordTaglinePresent2(), "Password tagline text was not present2");
-
-        pause(10);
 
         sa.assertAll();
     }
