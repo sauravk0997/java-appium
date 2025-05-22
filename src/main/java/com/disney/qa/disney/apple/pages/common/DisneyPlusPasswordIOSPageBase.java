@@ -224,10 +224,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText())).isPresent();
     }
 
-    public boolean isPasswordStrengthHeaderPresent() {
-       return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS.getText())).isPresent();
-    }
-
     public boolean isPasswordTaglinePresent() {
         String taglineText = StringUtils.substringAfter(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()), ".");
         return getStaticTextByLabelContains(taglineText).isPresent();

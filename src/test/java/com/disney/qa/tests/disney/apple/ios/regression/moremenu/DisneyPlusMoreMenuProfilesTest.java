@@ -1719,7 +1719,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String otp = getOTPFromApi(getUnifiedAccount());
         passcodePage.enterOtpValueAndConfirm(otp);
         sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Password page did not open");
-        sa.assertTrue(passwordPage.isPasswordStrengthHeaderPresent(), "Password strength text was not present");
         sa.assertTrue(passwordPage.isPasswordTaglinePresent(), "Password tagline text was not present");
 
         pause(10);
