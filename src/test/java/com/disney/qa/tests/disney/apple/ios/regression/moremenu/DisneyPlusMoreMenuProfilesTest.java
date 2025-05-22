@@ -1691,11 +1691,10 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusOneTimePasscodeIOSPageBase passcodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        /*
+
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-
-         */
+        
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
