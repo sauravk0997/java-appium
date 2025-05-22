@@ -17,6 +17,8 @@ import com.disney.qa.api.client.responses.graphql.campaign.CampaignType;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import com.disney.qa.api.household.*;
+import com.disney.qa.api.household.request.*;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.search.DisneySearchApi;
@@ -151,6 +153,27 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .build();
         return new UnifiedAccountApi(apiConfiguration);
     });
+
+    private static final ThreadLocal<HouseholdApi> HOUSE_HOLD_API = ThreadLocal.withInitial(() -> {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(Configuration.getRequired(Configuration.Parameter.ENV))
+                .partner(Partner.DISNEY.toString())
+                .weaponXDisable(FALSE)
+                .build();
+        return new HouseholdApi(apiConfiguration);
+    });
+
+    private static final ThreadLocal<HouseholdRequest> HOUSEHOLD_REQUEST_THREAD_LOCAL = ThreadLocal.withInitial(() ->
+            HouseholdRequest.builder()
+                    .ipSubnets(List.of("139.104", "139.105"))
+                    .asns(List.of("12345"))
+                    .carriers(List.of("my carrier"))
+                    .cities(List.of("new york", "santa monica"))
+                    .countryCodes(List.of("us", "mx"))
+                    .postalCodes(List.of("10013", "90404"))
+                    .build()
+    );
 
     private static final ThreadLocal<UnifiedSubscriptionApi> UNIFIED_SUBSCRIPTION_API = ThreadLocal.withInitial(() -> {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
@@ -407,6 +430,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         UNIFIED_ACCOUNT_API.remove();
         UNIFIED_SUBSCRIPTION_API.remove();
         CREATE_UNIFIED_ACCOUNT_REQUEST.remove();
+        HOUSE_HOLD_API.remove();
+        HOUSEHOLD_REQUEST_THREAD_LOCAL.remove();
     }
 
     @AfterSuite(alwaysRun = true)
@@ -449,6 +474,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
+    }
+
+    public static HouseholdApi getHouseholdApi() {
+        return HOUSE_HOLD_API.get();
+    }
+
+    public static HouseholdRequest getHouseholdRequest() {
+        return HOUSEHOLD_REQUEST_THREAD_LOCAL.get();
     }
 
     public static UnifiedSubscriptionApi getUnifiedSubscriptionApi() {
