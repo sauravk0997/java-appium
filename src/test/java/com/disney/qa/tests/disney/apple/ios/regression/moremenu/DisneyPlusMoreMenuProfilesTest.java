@@ -1722,7 +1722,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         editProfilePage.getSharePlayToggleCell().click();
-        Assert.assertTrue(passwordPage.isHeaderTextDisplayed(), "Share Play was not OFF by default");
+        Assert.assertTrue(passwordPage.isHeaderTextDisplayed(), "Share Play was not set to OFF");
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
