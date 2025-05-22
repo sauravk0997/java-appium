@@ -347,6 +347,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         String contentTitle = detailsPage.getContentTitle();
         swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getStaticTextByLabel(contentTitle));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(contentTitle).isPresent(),
                 "Content title is not found in navigation bar");
     }
@@ -404,7 +405,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now Button not displayed");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
         Assert.assertTrue(detailsPage.getStaticTextByLabel(UNLOCK_HULU_ON_DISNEY).isPresent(),
                 UNLOCK_HULU_ON_DISNEY + " upsell message not displayed");
     }
@@ -600,6 +601,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
+            detailsPage.waitForPresenceOfAnElement(detailsPage.getNetworkAttributionLogo());
             Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
                     "Network attribution logo was not found on " + i + " series details page");
         });

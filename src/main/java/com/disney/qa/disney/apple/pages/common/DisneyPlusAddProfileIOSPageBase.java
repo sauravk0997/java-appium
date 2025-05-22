@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.disney.qa.common.constant.IConstantHelper.LABEL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -52,6 +53,14 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "profileMaturityRatingImage")
     private ExtendedWebElement profileRating;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'genderFormButtonCellIdentifier'`]/" +
+            "**/XCUIElementTypeButton")
+    private ExtendedWebElement genderDropdown;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'genderFormButtonCellIdentifier'`]/" +
+            "**/XCUIElementTypeButton/XCUIElementTypeStaticText")
+    private ExtendedWebElement dropdownSelectedGender;
+
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
     private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
@@ -69,6 +78,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getAddProfileAvatar() {
         return addProfileAvatar;
+    }
+
+    public ExtendedWebElement getGenderDropdown() {
+        return genderDropdown;
     }
 
     public void enterProfileNameOnLocalizedKeyboard(String name) {
@@ -240,16 +253,16 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return headlineHeader.getText().equalsIgnoreCase(accessFullCatalogText);
     }
 
-    public boolean isUpdateMaturityRatingActionDisplayed() {
+    public boolean isUpdateMaturityRatingActionDisplayed(String rating) {
         String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_SUBTITLE.getText());
         return staticTextByLabel.format(getLocalizationUtils().formatPlaceholderString(
-                maturityRatingInfo, Map.of("highest_rating_value_image", "TV-MA"))).isPresent();
+                maturityRatingInfo, Map.of("highest_rating_value_image", rating))).isPresent();
     }
 
-    public boolean isMaturityRatingNotNowInfoDisplayed() {
+    public boolean isMaturityRatingNotNowInfoDisplayed(String rating) {
         String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
         return staticTextByLabel.format(getLocalizationUtils().formatPlaceholderString(
-                maturityRatingInfo, Map.of("current_rating_value_text", "TV-14"))).isPresent();
+                maturityRatingInfo, Map.of("current_rating_value_text", rating))).isPresent();
     }
 
     public boolean isDuplicateProfileNameErrorPresent() {
@@ -289,5 +302,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public String getProfileRating() {
         return profileRating.getAttribute("label");
+    }
+
+    public String getDropdownSelectedGender() {
+        return dropdownSelectedGender.getAttribute(LABEL);
     }
 }
