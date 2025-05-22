@@ -136,79 +136,20 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66627"})
-    @Test(description = "Verify that the user can only stream on Wi-Fi when Wi-Fi Only is selected", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyWiFiOnlyVideoPlayback() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
         onboard();
-        NetworkHandler networkHandler = new NetworkHandler();
-        try {
-            networkHandler.toggleWifi(IOSUtils.ButtonStatus.ON);
-            relaunch();
+        moreMenu.toggleStreamOverWifiOnly(ButtonStatus.ON);
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_mulan_playback_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToOpen();
+        Assert.assertTrue(videoPlayer.isOpened, VIDEO_PLAYER_NOT_DISPLAYED);
 
-            disneyPlusMoreMenuIOSPageBase.toggleStreamOverWifiOnly(IOSUtils.ButtonStatus.ON);
-            disneyPlusMoreMenuIOSPageBase.getHomeNav().click();
-            disneyPlusHomeIOSPageBase.clickFirstCarouselPoster();
-            disneyPlusDetailsIOSPageBase.clickPlayButton();
-            Assert.assertTrue(new
-                            DisneyPlusVideoPlayerIOSPageBase(getDriver()).isOpened(),
-                    "XMOBQA-61211 - Video Player did not open");
-
-            //Giving video player time to register bookmark
-            pause(10);
-
-            terminateApp(buildType.getDisneyBundle());
-            networkHandler.toggleWifi(IOSUtils.ButtonStatus.OFF);
-            relaunch();
-            disneyPlusMoreMenuIOSPageBase.getHomeNav().click();
-            disneyPlusHomeIOSPageBase.clickFirstCarouselPoster();
-            disneyPlusDetailsIOSPageBase.clickPlayButton();
-
-            sa.assertTrue(disneyPlusDetailsIOSPageBase
-                            .getStaticTextByLabel(getLocalizationUtils()
-                                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_REQUIRED_TITLE.getText()))
-                            .isElementPresent(),
-                    "XMOBQA-61211 - 'WiFi Required' popup title was not displayed");
-
-            sa.assertTrue(disneyPlusDetailsIOSPageBase
-                            .getStaticTextByLabel(getLocalizationUtils()
-                                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.WIFI_STREAMING_ONLY_MESSAGE.getText()))
-                            .isElementPresent(),
-                    "XMOBQA-61211 - 'WiFi Required' descriptive text was not displayed");
-
-            sa.assertTrue(disneyPlusDetailsIOSPageBase
-                            .getDynamicAccessibilityId(getLocalizationUtils()
-                                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText()))
-                            .isElementPresent(),
-                    "XMOBQA-61211 - 'App Settings' button was not displayed");
-
-            sa.assertTrue(disneyPlusDetailsIOSPageBase.getDynamicAccessibilityId(getLocalizationUtils()
-                            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DISMISS_BTN.getText()))
-                            .isElementPresent(),
-                    "XMOBQA-61211 - 'Dismiss' button was not displayed");
-
-            disneyPlusHomeIOSPageBase.getDynamicAccessibilityId(getLocalizationUtils()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DISMISS_BTN.getText())).click();
-
-            sa.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(),
-                    "XMOBQA-61229/61231 - The user did not stay on the Media page after dismissing the modal");
-
-            disneyPlusDetailsIOSPageBase.clickPlayButton();
-            disneyPlusHomeIOSPageBase.getDynamicAccessibilityId(getLocalizationUtils()
-                    .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).click();
-
-            sa.assertTrue(disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils()
-                            .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).isElementPresent()
-                            && initPage(DisneyPlusEditProfileIOSPageBase.class).getBackArrow().isElementPresent(),
-                    "XMOBQA-61235 - User was not redirected to App Settings from Modal navigation");
-        } finally {
-            networkHandler.toggleWifi(IOSUtils.ButtonStatus.ON);
-
-            sa.assertAll();
-        }
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66641", "XMOBQA-66647"})
