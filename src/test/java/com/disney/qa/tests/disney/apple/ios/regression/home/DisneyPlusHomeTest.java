@@ -213,6 +213,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         swipeInContainer(homePage.getHeroCarouselContainer(heroCarouselId), Direction.LEFT, 500);
 
         currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
+        homePage.waitForPresenceOfAnElement(homePage.getHeroCarouselContainer(heroCarouselId));
         Assert.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed");
         sa.assertFalse(homePage.isHeroCarouselAutoRotating(currentHeroTitle, heroCarouselId),
                 "Hero Carousel auto rotate after 5 seconds");
