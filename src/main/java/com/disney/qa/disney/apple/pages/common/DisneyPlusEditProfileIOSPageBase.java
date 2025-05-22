@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.util.Map;
 
+import static com.disney.qa.common.constant.IConstantHelper.LABEL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -446,6 +447,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public boolean isGenderValuePresent(Profile profile) {
         String genderValue = getDynamicCellByName("Gender Selection").getText().split(",")[1].toLowerCase().replace(" ", "");
         return genderValue.equalsIgnoreCase(profile.getAttributes().getGender().toLowerCase());
+    }
+
+    public String getGenderValue() {
+        return getDynamicCellByName("Gender Selection").getAttribute(LABEL).split(",")[1].trim();
     }
 
     public boolean isEditTitleDisplayed() {
