@@ -1722,6 +1722,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         LOGGER.info(getDriver().getPageSource());
 
         sa.assertTrue(passwordPage.isPasswordTaglinePresent(), "Password tagline text was not present");
+        sa.assertTrue(passwordPage.isPasswordTaglinePresent2(), "Password tagline text was not present2");
 
         pause(10);
 
