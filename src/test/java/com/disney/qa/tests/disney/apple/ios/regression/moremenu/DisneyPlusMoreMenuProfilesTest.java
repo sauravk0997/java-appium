@@ -1694,7 +1694,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        
+
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
@@ -1702,7 +1702,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
             swipeUp(400);
         }
 
+        Assert.assertTrue(editProfilePage.isFeatureSettingsSectionDisplayed(), "Share Play setting section is not present");
         Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
+        editProfilePage.getSharePlayToggleCell().click();
         validateSharePlayDefaultOff();
         Assert.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot Password link is not present");
         passwordPage.clickForgotPasswordLink();
