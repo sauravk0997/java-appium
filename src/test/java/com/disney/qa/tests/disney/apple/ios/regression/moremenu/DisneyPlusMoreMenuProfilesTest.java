@@ -1696,8 +1696,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 getLocalizationUtils().getUserLanguage())));
         setAppToHomeScreen(getUnifiedAccount());
 
-        String otp = getOTPFromApi(getUnifiedAccount());
-        passcodePage.enterOtpValue(otp);
+        String otpInitial = getOTPFromApi(getUnifiedAccount());
+        passcodePage.enterOtpValue(otpInitial);
 
         pause(10);
       //  homePage.waitForHomePageToOpen();
