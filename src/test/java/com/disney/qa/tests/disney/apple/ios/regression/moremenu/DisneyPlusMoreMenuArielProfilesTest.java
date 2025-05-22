@@ -1006,6 +1006,28 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                         DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72437"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAddProfileMinorConsentUI() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        createKidsProfile();
+        Assert.assertTrue(parentalConsent.isConsentHeaderPresent(),
+                "Consent header is not present");
+        Assert.assertTrue(parentalConsent.validateConsentHeader(),
+                "Consent header text doesn't match the expected dictionary value");
+        Assert.assertTrue(parentalConsent.validateConsentText(),
+                "Scrollable content doesn't match with the expected dictionary values");
+        Assert.assertTrue(parentalConsent.isDeclineButtonPresent(),
+                "Decline button is not present");
+        Assert.assertTrue(parentalConsent.isAgreeButtonPresent(),
+                "Agree button is not present");
+    }
+
     private void setAppToAccountSettings() {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
