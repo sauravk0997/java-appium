@@ -543,7 +543,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVLiveEventModalPage liveEventModalPage = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         ExtendedWebElement liveCell = homePage.getTypeCellLabelContains("live");
 
-//        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         homePage.moveDownUntilCollectionContentIsFocused(
