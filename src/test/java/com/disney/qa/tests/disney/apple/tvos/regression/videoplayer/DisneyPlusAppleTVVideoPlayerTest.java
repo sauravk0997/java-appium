@@ -196,7 +196,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String basketball = "Basketball";
+        String rugby = "Rugby";
         String espn = "ESPN+";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -213,9 +213,9 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         // Navigate to Sports and basketball sport
         homePage.moveDownUntilCollectionContentIsFocused(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
-        homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(basketball), 30);
-        detailsPage.getTypeCellLabelContains(basketball).click();
-        Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
+        homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
+        detailsPage.getTypeCellLabelContains(rugby).click();
+        Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
@@ -245,7 +245,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String basketball = "Basketball";
+        String rugby = "Rugby";
         String continueButton = "CONTINUE";
         String replayTitle = "";
         int latency = 60;
@@ -254,8 +254,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_basketball_sport_deeplink"));
-        Assert.assertTrue(espnPage.isSportTitlePresent(basketball),
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_rugby_sport_deeplink"));
+        Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
