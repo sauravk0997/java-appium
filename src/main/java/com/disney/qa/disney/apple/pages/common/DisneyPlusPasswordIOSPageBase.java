@@ -107,7 +107,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void enterLogInPassword(String password) {
-      secureTextEntryField.type(password);
+        secureTextEntryField.type(password);
     }
 
     public ExtendedWebElement getLoginButton() {
@@ -140,7 +140,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return secureTextEntryField.getText();
     }
 
-    public String getShowPasswordText(){
+    public String getShowPasswordText() {
         return textEntryField.getText();
     }
 
@@ -218,5 +218,18 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getForgotPasswordLink() {
         return forgotPasswordLink;
     }
-}
 
+    public boolean isCreateNewPasswordScreenOpen() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText())).isPresent();
+    }
+
+    public boolean isPasswordStrengthHeaderPresent() {
+        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.PASSWORD_REQS.getText()));
+        return passwordStrengthHeader.isElementPresent();
+    }
+
+    public boolean isPasswordTaglinePresent() {
+        ExtendedWebElement passwordStrengthHeader = getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()));
+        return passwordStrengthHeader.isElementPresent();
+    }
+}

@@ -336,6 +336,7 @@ public enum DictionaryKeys {
     NAV_SETTINGS_TITLE("cdnav_settings"),
     NAV_WATCHLIST("nav_watchlist"),
     NAV_WATCHLIST_TITLE("nav_watchlist_title"),
+    NEW_PASSWORD_TAGLINE("new_password_tagline"),
     OK_BTN("btn_ok"),
     ONBOARDING_ENTER_EMAIL("onboardingemail_text_enteremail"),
     ONBOARDING_STEPPER("onboarding_stepper"),

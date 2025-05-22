@@ -1718,6 +1718,10 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(passcodePage.isOpened(), "OTP header is not present");
         String otp = getOTPFromApi(getUnifiedAccount());
         passcodePage.enterOtpValueAndConfirm(otp);
+        Assert.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Password page did not open");
+        Assert.assertTrue(passwordPage.isPasswordStrengthHeaderPresent(), "Password strength text was not present");
+        Assert.assertTrue(passwordPage.isPasswordTaglinePresent(), "Password tagline text was not present");
+
         pause(10);
 
         sa.assertAll();
