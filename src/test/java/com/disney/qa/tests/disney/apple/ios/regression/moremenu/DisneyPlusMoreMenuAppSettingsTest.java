@@ -147,8 +147,8 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_content_mulan_playback_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
-        videoPlayer.waitForVideoToOpen();
-        Assert.assertTrue(videoPlayer.isOpened, VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
     }
 
