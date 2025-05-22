@@ -1717,7 +1717,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         passwordPage.clickForgotPasswordLink();
         Assert.assertTrue(passcodePage.isOpened(), "OTP header is not present");
         String otp = getOTPFromApi(getUnifiedAccount());
-        passcodePage.enterOtpValueDismissKeys(otp);
+        passcodePage.enterOtpValueAndConfirm(otp);
         pause(10);
 
         sa.assertAll();
