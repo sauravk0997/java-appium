@@ -231,6 +231,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isPasswordTaglinePresent2() {
         String taglineText = StringUtils.substringAfter(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()), ".");
+        System.out.println("taglineText**: " + taglineText);
         return getStaticTextViewValueContains(taglineText).isPresent();
     }
 }
