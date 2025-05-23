@@ -337,13 +337,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
 
-        // Navigate to Sports and basketball sport
+        // Navigate to Sports and sport
         homePage.moveDownUntilCollectionContentIsFocused(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
         detailsPage.getTypeCellLabelContains(rugby).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
-                "Sport page did not open");
+                SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate the page
         CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
