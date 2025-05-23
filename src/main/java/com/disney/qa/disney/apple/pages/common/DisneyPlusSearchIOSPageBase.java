@@ -4,6 +4,7 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
@@ -47,7 +48,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement thirdCollectionTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s' AND label CONTAINS '%s'`]")
     private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
     private ExtendedWebElement firstUpcomingEventCell;
@@ -285,23 +286,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return searchResults.format(rating).isPresent();
     }
 
-    public ExtendedWebElement getTitleContainer(String titleName, String titleRating) {
-        return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating);
-    }
-
-    public int getSearchResultRatingLength(String titleContainer, String titleName, String titleRating) {
-        String[] titleContainerParts = titleContainer.split(",");
-        List<String> titleParts = Arrays.asList(titleContainerParts);
-//        List<Boolean> ratingOnly = new ArrayList<>();
-//        IntStream.range(0, titleParts.size()).forEach(i -> ratingOnly.add(titleParts.get(i).equalsIgnoreCase(titleRating)));
-//        titleParts.removeIf(title -> title.contains(titleRating));
-        titleParts.stream().filter(title -> !title.contains(titleRating));
-        return titleParts.get(0).length();
-
-//                titleParts.get(i).contains("Rated"));
-//        String[] ratingLongTitle = titleContainerParts[2].split(" ");
-//        String rating = "";
-//
-//        return ratingLongTitle[2].length();
+    public ExtendedWebElement getTitleContainer(String titleName, String titleRating, String year) {
+        return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating, year);
     }
 }
