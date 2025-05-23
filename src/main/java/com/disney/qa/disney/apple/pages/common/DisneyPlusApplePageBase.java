@@ -203,7 +203,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicOtherFindByNameContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`]")
     private ExtendedWebElement dynamicOtherFindByLabel;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
+//    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"tabBarView\"`]")
+//    private ExtendedWebElement globalNavBarView;
+    @ExtendedFindBy(accessibilityId = "tabBarView")
     private ExtendedWebElement globalNavBarView;
     @ExtendedFindBy(accessibilityId = "buttonBack")
     protected ExtendedWebElement backArrow;
@@ -983,11 +985,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isGlobalNavExpanded() {
-        if (globalNavBarView.isElementPresent(TEN_SEC_TIMEOUT)) {
+        if (globalNavBarView.isPresent(FIFTEEN_SEC_TIMEOUT)) {
             Dimension size = globalNavBarView.getSize();
             int x = size.getWidth();
             LOGGER.info("Detecting if global nav is expanded..");
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             return x > 200;
         }
         return false;

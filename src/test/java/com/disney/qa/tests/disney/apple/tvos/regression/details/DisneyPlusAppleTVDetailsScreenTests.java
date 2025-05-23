@@ -637,6 +637,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Validate details page and add item to the watchlist
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickWatchButton();
+        if (liveEventModal.isOpened()) {
+            liveEventModal.clickWatchLiveButton();
+        }
+        videoPlayerPage.waitForPresenceOfAnElement(videoPlayerPage.getPlayerView());
         Assert.assertTrue(videoPlayerPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(titleEvent.contains(videoPlayerPage.getTitleLabel()),
                 "Video title does not match with the expected");
