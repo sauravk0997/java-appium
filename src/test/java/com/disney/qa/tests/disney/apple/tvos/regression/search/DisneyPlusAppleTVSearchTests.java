@@ -8,6 +8,7 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -234,6 +235,27 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertNotEquals(nextRowFocussedCellTitle, nextFocussedCellTitle,
                 "Not able to traverse down in movies collection");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112649"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchQueryInputBehavior() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        searchPage.typeInSearchField("a");
+        List<ExtendedWebElement> firstQuerySearchResults = searchPage.getAllSearchResults();
+        searchPage.typeInSearchField("b");
+        List<ExtendedWebElement> secondQuerySearchResults = searchPage.getAllSearchResults();
+        Assert.assertNotEquals(firstQuerySearchResults, secondQuerySearchResults,
+                "Search results didn't changed after updating the search query");
     }
 
     private List<String> getMovieTabCollection() {
