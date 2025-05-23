@@ -70,12 +70,16 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
             "**/XCUIElementTypeButton/XCUIElementTypeStaticText")
     private ExtendedWebElement dropdownSelectedGender;
 
-    private ExtendedWebElement cancelBtn =
-            staticTextByName.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ADD_PROFILE_CANCEL.getText()));
-    private ExtendedWebElement addProfileDescription = textViewByName.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ADD_PROFILE_DESCRIPTION.getText()));
-    private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
-    private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
-    private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
+    private ExtendedWebElement cancelBtn = staticTextByName.format(getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ADD_PROFILE_CANCEL.getText()));
+    private ExtendedWebElement addProfileDescription = textViewByName.format(getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ADD_PROFILE_DESCRIPTION.getText()));
+    private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
+    private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
+    private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
     private static final String BIRTHDATE_TEXT_FIELD = "birthdateTextFieldIdentifier";
 
     //Functions
@@ -112,17 +116,20 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void clickKidsOnToggleBtn() {kidsOnToggleButton.click();}
 
     public boolean isAddProfilePageOpened() {
-        String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE_ADD_PROFILE.getText());
+        String addProfileHeader = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE_ADD_PROFILE.getText());
         return titleLabel.getText().equalsIgnoreCase(addProfileHeader);
     }
 
     public boolean isAddProfileHeaderPresent(){
-        String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE_ADD_PROFILE.getText());
+        String addProfileHeader = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE_ADD_PROFILE.getText());
         return staticTextByLabel.format(addProfileHeader).isPresent();
     }
 
     public boolean isWhoIsWatchingAddProfileHeaderPresent() {
-        String whoIsWatchingAddProfile = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WHOS_WATCHING_ADD_PROFILE.getText());
+        String whoIsWatchingAddProfile = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.WHOS_WATCHING_ADD_PROFILE.getText());
         return staticTextByLabel.format(whoIsWatchingAddProfile).isPresent();
     }
 
@@ -249,7 +256,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isKidProfileSubCopyPresent() {
-        String kidProfileSubCopy = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KIDS_PROFILE_SUBCOPY.getText());
+        String kidProfileSubCopy = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.KIDS_PROFILE_SUBCOPY.getText());
         return textViewByLabel.format(kidProfileSubCopy).isPresent();
     }
 
@@ -258,7 +266,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isInlineErrorForProfileFieldPresent() {
-        String inlineErrorForProfileField = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_NAME.getText());
+        String inlineErrorForProfileField = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_NAME.getText());
         return staticTextByLabel.format(inlineErrorForProfileField).isPresent();
     }
 
@@ -267,7 +276,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isInlineErrorForDOBFieldPresent() {
-        String inlineErrorForDOBField = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_DOB.getText());
+        String inlineErrorForDOBField = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_DOB.getText());
         return staticTextByLabel.format(inlineErrorForDOBField).isPresent();
     }
 
@@ -276,23 +286,27 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
      * @return true/false
      */
     public boolean isInlineErrorForGenderFieldPresent() {
-        String inlineErrorForGenderField = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_GENDER.getText());
+        String inlineErrorForGenderField = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FORM_ERROR_FOR_GENDER.getText());
         return staticTextByLabel.format(inlineErrorForGenderField).isPresent();
     }
 
     public boolean verifyHeadlineHeaderText() {
-        String accessFullCatalogText = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText());
+        String accessFullCatalogText = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText());
         return headlineHeader.getText().equalsIgnoreCase(accessFullCatalogText);
     }
 
     public boolean isUpdateMaturityRatingActionDisplayed(String rating) {
-        String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_SUBTITLE.getText());
+        String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_SUBTITLE.getText());
         return staticTextByLabel.format(getLocalizationUtils().formatPlaceholderString(
                 maturityRatingInfo, Map.of("highest_rating_value_image", rating))).isPresent();
     }
 
     public boolean isMaturityRatingNotNowInfoDisplayed(String rating) {
-        String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
+        String maturityRatingInfo = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.MATURITY_RATING_NOT_NOW_INFO.getText());
         return staticTextByLabel.format(getLocalizationUtils().formatPlaceholderString(
                 maturityRatingInfo, Map.of("current_rating_value_text", rating))).isPresent();
     }
