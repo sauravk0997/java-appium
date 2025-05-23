@@ -52,22 +52,18 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage());
 
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName,
-//                locale,
-//                getLocalizationUtils().getUserLanguage(),
-//                ageVerified)));
-//        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
-//
-//        setAccountRatingsMax(getUnifiedAccount());
-//        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planName,
+                locale,
+                getLocalizationUtils().getUserLanguage(),
+                ageVerified)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), locale);
+
+        setAccountRatingsMax(getUnifiedAccount());
+        getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
-//        setAppToHomeScreen(getUnifiedAccount());
-//        handleOneTrustPopUp();
-
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail("qaittestguid+17479369201688edd@gsuite.disneyplustesting.com");
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
+        setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
     }
 
     public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
