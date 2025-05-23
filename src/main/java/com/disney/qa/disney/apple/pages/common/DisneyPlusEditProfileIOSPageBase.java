@@ -631,11 +631,13 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isSharePlayEnabled() {
-        return groupWatchToggleCell.getAttribute(IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
+        return groupWatchToggleCell.getAttribute(
+                IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
     }
 
     public boolean isSharePlayU13TooltipPresent() {
-        return textViewByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return textViewByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).isPresent();
     }
 
