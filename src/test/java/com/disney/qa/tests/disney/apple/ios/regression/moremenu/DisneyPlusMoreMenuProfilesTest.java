@@ -1721,6 +1721,58 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72340"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDisableU13Profile() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusOneTimePasscodeIOSPageBase passcodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String toggleOff = "Off";
+        String toggleOn = "On";
+
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+
+        // Add a kid's profile
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        homePage.waitForHomePageToOpen();
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
+        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
+
+        // Validate if SharePlay option is enabled
+        Assert.assertFalse(editProfilePage.isSharePlayEnabled(), "SharePlay option is enabled");
+        editProfilePage.clickDoneBtn();
+        whoIsWatching.clickEditProfile();
+        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
+        swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
+        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
+
+        // Validate if SharePlay option is enabled
+        Assert.assertTrue(editProfilePage.isSharePlayEnabled(), "SharePlay option is enabled");
+
+        pause(5);
+        sa.assertAll();
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
@@ -1740,15 +1792,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } else {
             return avatarSets;
         }
-    }
-
-    private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        editProfile.clickMoreTab();
-        whoIsWatching.clickEditProfile();
-        editProfile.clickEditModeProfile(profile);
-        sa.assertTrue(editProfile.getAutoplayState().equals(autoPlayState), "autoplay state wasn't saved for profile" + profile + ":" + autoPlayState);
     }
 
     private void createKidsProfile() {
