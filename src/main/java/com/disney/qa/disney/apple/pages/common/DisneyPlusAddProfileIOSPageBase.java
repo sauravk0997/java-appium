@@ -72,8 +72,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     private ExtendedWebElement cancelBtn = staticTextByName.format(getLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ADD_PROFILE_CANCEL.getText()));
-    private ExtendedWebElement addProfileDescription = textViewByName.format(getLocalizationUtils().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ADD_PROFILE_DESCRIPTION.getText()));
     private ExtendedWebElement addProfileDescrNew = textViewByName.format(getLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ADD_PROFILE_DESCR_NEW.getText()));
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(
@@ -96,10 +94,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getAddProfileAvatar() {
         return addProfileAvatar;
-    }
-
-    public boolean isAddProfileDescriptionPresent() {
-        return addProfileDescription.isPresent();
     }
 
     public boolean isAddProfileDescrNewPresent() {
