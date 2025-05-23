@@ -32,8 +32,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -1680,6 +1679,46 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfilePage.isGenderButtonPresent(), "Gender button is not present");
         Assert.assertTrue(editProfilePage.getStaticTextByLabel(desiredGender).isElementPresent(),
                 "Gender is not updated");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72166"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifySharePlayForgotPasswordResetScreen() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusOneTimePasscodeIOSPageBase passcodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String toggleOff = "Off";
+        String toggleOn = "On";
+
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
+
+        swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
+
+        Assert.assertTrue(editProfilePage.isFeatureSettingsSectionDisplayed(), "Share Play setting section is not present");
+        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
+        editProfilePage.toggleSharePlayButton(toggleOff);
+        editProfilePage.toggleSharePlayButton(toggleOn);
+
+        Assert.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot Password link is not present");
+        passwordPage.clickForgotPasswordLink();
+        Assert.assertTrue(passcodePage.isOpened(), "OTP header is not present");
+        String otp = getOTPFromApi(getUnifiedAccount());
+        passcodePage.enterOtpValueAndConfirm(otp);
+        sa.assertTrue(passwordPage.isCreateNewPasswordScreenOpen(), "Create password page did not open");
+        sa.assertTrue(passwordPage.isPasswordTaglinePresent(), "Password tagline text was not present");
+
+        sa.assertAll();
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
