@@ -19,6 +19,7 @@ public enum DictionaryKeys {
     ADD_PROFILE_SUB("add_profile_subcopy"),
     ADD_PROFILE_DATE_OF_BIRTH_TITLE("add_profile_date_of_birth_title"),
     ADD_PROFILE_DESCRIPTION("add_profile_description"),
+    ADD_PROFILE_DESCR_NEW("add_profile_descr_new"),
     ADD_PROFILE_ENTER_PROFILE_NAME_TITLE("add_profile_enter_profile_name_title"),
     ADD_PROFILE_SELECT_GENDER_TITLE("add_profile_select_gender_title"),
     ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE("add_profile_update_maturity_rating_title"),

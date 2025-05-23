@@ -526,7 +526,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         hideKeyboard();
         sa.assertTrue(addProfile.getCancelBtn().isPresent(), "Cancel button is not displayed");
         sa.assertTrue(addProfile.isAddProfileHeaderPresent(), "Add Profile header was not found");
-        sa.assertTrue(addProfile.isAddProfileDescriptionPresent(), "Add Profile Description is not displayed");
+        sa.assertTrue(addProfile.isAddProfileDescrNewPresent(), "Add Profile Description is not displayed");
         sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "Pencil Icon is not displayed");
         sa.assertTrue(addProfile.isProfileNameFieldPresent(), "Profile Name field was not found");
         sa.assertTrue(addProfile.isDateOfBirthTitlePresent(), "DOB Title is not displayed");

@@ -74,6 +74,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
             DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ADD_PROFILE_CANCEL.getText()));
     private ExtendedWebElement addProfileDescription = textViewByName.format(getLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ADD_PROFILE_DESCRIPTION.getText()));
+    private ExtendedWebElement addProfileDescrNew = textViewByName.format(getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ADD_PROFILE_DESCR_NEW.getText()));
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
     private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(
@@ -98,6 +100,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAddProfileDescriptionPresent() {
         return addProfileDescription.isPresent();
+    }
+
+    public boolean isAddProfileDescrNewPresent() {
+        return addProfileDescrNew.isPresent();
     }
 
     public ExtendedWebElement getGenderDropdown() {
