@@ -236,8 +236,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         ExtendedWebElement titleContainer = searchPage.getTitleContainer(CONTENT_TITLE.get(), rating, YEAR.get());
-        sa.assertTrue(titleContainer.isPresent(), "Rating was not found in search results");
         titleContainer.click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
@@ -270,8 +270,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         SoftAssert sa = new SoftAssert();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
+        sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
         ExtendedWebElement titleContainer = searchPage.getTitleContainer(CONTENT_TITLE.get(), rating, YEAR.get());
-        sa.assertTrue(titleContainer.isPresent(), "Rating was not found in search results");
         titleContainer.click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
