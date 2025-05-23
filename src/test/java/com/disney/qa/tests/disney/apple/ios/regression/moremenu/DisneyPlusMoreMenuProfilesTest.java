@@ -1731,11 +1731,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         String yearForThirteen = String.valueOf(LocalDate.now().getYear() - 13);
-     /*   setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage())));
-
-      */
+        String toggleON = "On";
 
         // Add a kid's profile
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
@@ -1775,8 +1771,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
-
         Assert.assertTrue(editProfilePage.isSharePlayEnabled(), "SharePlay option is not enabled");
+        Assert.assertEquals(editProfilePage.getSharePlayToggleCell().getText(), toggleON,
+                "SharePlay is not toggled ON");
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
