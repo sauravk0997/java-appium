@@ -409,8 +409,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        SoftAssert sa = new SoftAssert();
+        String espn = "ESPN+";
+
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
@@ -418,6 +418,14 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         launchDeeplink(R.TESTDATA.get("espn_prod_survive_and_advance_documentary_playback"));
 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        sa.assertAll();
+        Assert.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
+                "service attribution wasn't visible when video started");
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
+                "Channel network attribution is not present");
+
+        // Validate right position of espn logo
+        validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(espn), RIGHT_POSITION);
+        // Validate bottom position of espn logo
+        validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(espn), BOTTOM);
     }
 }
