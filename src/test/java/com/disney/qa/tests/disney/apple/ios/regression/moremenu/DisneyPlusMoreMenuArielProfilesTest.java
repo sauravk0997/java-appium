@@ -41,6 +41,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String NEW_PROFILE_NAME = "New Name";
     private static final String OFF = "Off";
     private static final String ON = "On";
+    private static final String DOB_ERROR_NOT_DISPLAYED = "DOB Error is not displayed";
     private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE = "Kids profile autoplay was not turned off";
     private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE = "Kids profile autoplay was not turned on";
     private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
@@ -501,59 +502,70 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72162"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyAddProfilePageInlineError() {
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAddProfileDOBAndGender() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        DisneyPlusUpdateProfileIOSPageBase updateProfile = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+
         moreMenu.clickAddProfile();
+        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
+        Assert.assertTrue(addProfile.isOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
 
-        //Verify inline error for add profile page field if any field is empty
+        //Validate UI Elements
+        hideKeyboard();
+        sa.assertTrue(addProfile.getCancelBtn().isPresent(), "Cancel button is not displayed");
+        sa.assertTrue(addProfile.isAddProfileHeaderPresent(), "Add Profile header was not found");
+        sa.assertTrue(addProfile.isAddProfileDescriptionPresent(), "Add Profile Description is not displayed");
+        sa.assertTrue(editProfile.getBadgeIcon().isPresent(), "Pencil Icon is not displayed");
+        sa.assertTrue(addProfile.isProfileNameFieldPresent(), "Profile Name field was not found");
+        sa.assertTrue(addProfile.isDateOfBirthTitlePresent(), "DOB Title is not displayed");
+        sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), "Date Of Birth field is not displayed");
+        sa.assertTrue(addProfile.isGenderFieldTitlePresent(), "Gender Field Title is not present");
+        sa.assertTrue(addProfile.isGenderFieldPresent(), "Gender Field is not displayed");
+        sa.assertTrue(addProfile.isJuniorModeTextPresent(), JUNIOR_MODE_TEXT_ERROR_MESSAGE);
+        sa.assertTrue(addProfile.isKidsProfileToggleCellPresent(), " Kids profile toggle was not found");
+        sa.assertTrue(addProfile.getKidsProfileToggleCellValue().equalsIgnoreCase("Off"),
+                "Kid Profile Toggle is not OFF by default");
+        sa.assertTrue(addProfile.isJuniorModeDescriptionPresent(), "Junior Mode Description is not displayed");
+        sa.assertTrue(updateProfile.getLearnMoreLink().isPresent(), "Learn More Link is not displayed");
+
+        //Error on null input for Profile Name and DOB
         addProfile.clickSaveBtn();
-        sa.assertTrue(addProfile.isInlineErrorForProfileFieldPresent(), "Inline error for Profile field if profile field is empty is not present");
-        sa.assertTrue(addProfile.isInlineErrorForDOBFieldPresent(), "Inline error for DOB field if DOB field is empty is not present");
-
-        addProfile.enterProfileName(JUNIOR_PROFILE);
-
-        //Verify inline error if user add DOB that is older than 125 year old
-        addProfile.enterDOB(Person.OLDERTHAN125.getMonth(), Person.OLDERTHAN125.getDay(), Person.OLDERTHAN125.getYear());
-        addProfile.clickSaveBtn();
-        sa.assertTrue(addProfile.isInlineErrorForDOBFieldPresent(), "Inline error for DOB field if DOB is older than 125 year old is not present");
-
-        //Verify inline error for gender field if gender field is empty
+        sa.assertTrue(addProfile.isInlineErrorForDOBFieldPresent(), DOB_ERROR_NOT_DISPLAYED);
+        sa.assertTrue(addProfile.isInlineErrorForProfileFieldPresent(), "Profile Name Error is not displayed");
+        //Error on DOB 200+
+        addProfile.enterDOB(Person.OLDERTHAN200.getMonth(), Person.OLDERTHAN200.getDay(), Person.OLDERTHAN200.getYear());
+        sa.assertTrue(addProfile.isInlineErrorForDOBFieldPresent(), DOB_ERROR_NOT_DISPLAYED);
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        //Add profile name
+        addProfile.enterProfileName(JUNIOR_PROFILE);
+        //Error on empty Gender
         addProfile.clickSaveBtn();
-        sa.assertTrue(addProfile.isInlineErrorForGenderFieldPresent(), "Inline error for Gender field if Gender field is empty is not present");
-
-        // verify all gender option and user able to select gender value from dropdown
+        sa.assertTrue(addProfile.isInlineErrorForGenderFieldPresent(), "Gender Error is not displayed");
+        //Add Gender
         addProfile.clickGenderDropDown();
         for (DisneyPlusEditGenderIOSPageBase.GenderOption genderItem : DisneyPlusEditGenderIOSPageBase.GenderOption.values()) {
             sa.assertTrue(editGenderPage.getTypeButtonByLabel(editGenderPage.selectGender(genderItem)).isPresent(),
                     "Expected: " + genderItem + " option should be present");
         }
-
         editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_WOMEN);
-
+        //Submit all information to proceed to next page
         addProfile.clickSaveBtn();
+        pause(100);
+        sa.assertTrue(pinPage.isOpened(), "PIN Page is not displayed");
 
-        /*Removing Welch Fill catalog access step due to change in requirements
-            New additional 18+ profiles →  Default into TV-MA - else (<18), default to TV-14 and trigger Welch.
-            https://jira.disneystreaming.com/browse/IOS-8383
-            https://jira.disneystreaming.com/browse/PLTFRM-22119
-        */
-
-        sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was displayed after selecting full catalog");
-        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
-        passwordPage.clickSecondaryButtonByCoordinates();
-        sa.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
         sa.assertAll();
     }
 

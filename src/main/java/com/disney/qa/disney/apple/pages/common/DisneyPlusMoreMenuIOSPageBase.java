@@ -1,18 +1,14 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.COMMUNICATION_SETTINGS_LINK_1_TEXT;
-import static com.zebrunner.carina.utils.mobile.IMobileUtils.Direction.LEFT;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.common.constant.CollectionConstant;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.NoSuchElementException;
@@ -52,7 +48,7 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@FindBy(xpath = "//XCUIElementTypeCell[@name='accountTab']//XCUIElementTypeOther[2]/*/XCUIElementTypeImage")
 	private ExtendedWebElement accountUnverifiedBadge;
 
-	private ExtendedWebElement addProfileBtn = getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText()));
+	private ExtendedWebElement addProfileBtn = getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE_ADD_PROFILE.getText()));
 
 	@FindBy(xpath = "//*[@name='accountView']/XCUIElementTypeCollectionView/XCUIElementTypeCell[%s]")
 	private ExtendedWebElement moreMenuItemByIndex;

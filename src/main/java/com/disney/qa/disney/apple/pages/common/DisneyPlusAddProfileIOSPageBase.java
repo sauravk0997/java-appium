@@ -53,6 +53,15 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "profileMaturityRatingImage")
     private ExtendedWebElement profileRating;
 
+    @ExtendedFindBy(accessibilityId = "GENDER")
+    private ExtendedWebElement genderFieldTitle;
+
+    @ExtendedFindBy(accessibilityId = "BIRTHDATE")
+    private ExtendedWebElement birthdateFieldTitle;
+
+    @ExtendedFindBy(accessibilityId = "A profile with curated content and features, and a simplified user interface.")
+    private ExtendedWebElement juniorModeDescription;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'genderFormButtonCellIdentifier'`]/" +
             "**/XCUIElementTypeButton")
     private ExtendedWebElement genderDropdown;
@@ -61,6 +70,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
             "**/XCUIElementTypeButton/XCUIElementTypeStaticText")
     private ExtendedWebElement dropdownSelectedGender;
 
+    private ExtendedWebElement cancelBtn =
+            staticTextByName.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ADD_PROFILE_CANCEL.getText()));
+    private ExtendedWebElement addProfileDescription = textViewByName.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ADD_PROFILE_DESCRIPTION.getText()));
     private ExtendedWebElement kidsOnToggleButton = typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.TOGGLE_ON.getText()));
     private String genderPreferNotToSay = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PREFER_TO_NOT_SAY.getText());
     private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
@@ -80,8 +92,16 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return addProfileAvatar;
     }
 
+    public boolean isAddProfileDescriptionPresent() {
+        return addProfileDescription.isPresent();
+    }
+
     public ExtendedWebElement getGenderDropdown() {
         return genderDropdown;
+    }
+
+    public ExtendedWebElement getCancelBtn() {
+        return cancelBtn;
     }
 
     public void enterProfileNameOnLocalizedKeyboard(String name) {
@@ -92,12 +112,12 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public void clickKidsOnToggleBtn() {kidsOnToggleButton.click();}
 
     public boolean isAddProfilePageOpened() {
-        String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
+        String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE_ADD_PROFILE.getText());
         return titleLabel.getText().equalsIgnoreCase(addProfileHeader);
     }
 
     public boolean isAddProfileHeaderPresent(){
-        String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE.getText());
+        String addProfileHeader = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE_ADD_PROFILE.getText());
         return staticTextByLabel.format(addProfileHeader).isPresent();
     }
 
@@ -135,6 +155,10 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public void tapJuniorModeToggle() {
         juniorModeToggle.click();
+    }
+
+    public boolean isJuniorModeDescriptionPresent() {
+        return juniorModeDescription.isPresent();
     }
 
     public void tapSaveButton() {
@@ -175,8 +199,16 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         dismissPickerWheelKeyboard();
     }
 
+    public boolean isDateOfBirthTitlePresent() {
+        return birthdateFieldTitle.isPresent();
+    }
+
     public boolean isDateOfBirthFieldPresent(){
         return getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).isPresent();
+    }
+
+    public boolean isGenderFieldTitlePresent() {
+        return genderFieldTitle.isPresent();
     }
 
     public void chooseGender() {
