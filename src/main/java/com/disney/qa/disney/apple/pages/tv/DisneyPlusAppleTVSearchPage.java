@@ -25,6 +25,10 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
             "**/XCUIElementTypeOther[`name == 'searchResults'`]/**/XCUIElementTypeCell[`label CONTAINS '%s'`]")
     private ExtendedWebElement searchResultsContainers;
 
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeOther[`name == 'searchResults'`]/**/XCUIElementTypeCollectionView/XCUIElementTypeCell")
+    private ExtendedWebElement allSearchResultsContainers;
+
     public DisneyPlusAppleTVSearchPage(WebDriver driver) {
         super(driver);
     }
