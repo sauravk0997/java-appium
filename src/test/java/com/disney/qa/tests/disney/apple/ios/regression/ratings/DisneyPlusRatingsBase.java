@@ -240,7 +240,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         sa.assertTrue(titleContainer.isPresent(), "Rating was not found in search results");
         titleContainer.click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
-        videoPlayer.validateRatingsOnPlayer("TV-MA", sa, detailsPage);
+        videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
