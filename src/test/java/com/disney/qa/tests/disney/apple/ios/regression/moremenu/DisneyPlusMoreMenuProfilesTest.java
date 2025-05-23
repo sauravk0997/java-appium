@@ -26,6 +26,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -38,6 +39,7 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BA
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MICKEY_MOUSE;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
+import static com.disney.qa.tests.disney.apple.ios.DisneyBaseTest.Person.U13;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
@@ -1231,7 +1233,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
 
-        updateProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        updateProfilePage.enterDOB(U13.getMonth(), U13.getDay(), U13.getYear());
         updateProfilePage.tapSaveButton();
         sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
         sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(),
@@ -1728,15 +1730,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusOneTimePasscodeIOSPageBase passcodePage = initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-        String toggleOff = "Off";
-        String toggleOn = "On";
-
-        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+        String yearForThirteen = String.valueOf(LocalDate.now().getYear() - 13);
+     /*   setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
+
+      */
 
         // Add a kid's profile
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
@@ -1758,19 +1757,26 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
         Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
 
-        // Validate if SharePlay option is enabled
+        // Validate if SharePlay option is not enabled
         Assert.assertFalse(editProfilePage.isSharePlayEnabled(), "SharePlay option is enabled");
+        editProfilePage.getSharePlayLabel().click();
+        Assert.assertTrue(editProfilePage.isSharePlayU13TooltipPresent(), "U13 Share play tooltip is not present");
         editProfilePage.clickDoneBtn();
-        whoIsWatching.clickEditProfile();
-        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
+
+        // Validate if SharePlay option is enabled when U13 turns 13
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        getUnifiedAccountApi().patchProfileAge(getUnifiedAccount(),  yearForThirteen + "-01-01",
+                getUnifiedAccount().getProfileId(KIDS_PROFILE));
+
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
-        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
 
-        // Validate if SharePlay option is enabled
-        Assert.assertTrue(editProfilePage.isSharePlayEnabled(), "SharePlay option is enabled");
-
-        pause(5);
-        sa.assertAll();
+        Assert.assertTrue(editProfilePage.isSharePlayEnabled(), "SharePlay option is not enabled");
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {

@@ -119,6 +119,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(accessibilityId = "groupWatchTooggleCell")
     protected ExtendedWebElement groupWatchToggleCell;
 
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"SharePlay\"`]")
+    private ExtendedWebElement sharePlayLabel;
+
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                             DictionaryKeys.PROFILE_SETTINGS_ENTRY_PIN_LABEL.getText()),
@@ -630,4 +633,14 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public boolean isSharePlayEnabled() {
         return groupWatchToggleCell.getAttribute(IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
     }
+
+    public boolean isSharePlayU13TooltipPresent() {
+        return textViewByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getSharePlayLabel() {
+        return sharePlayLabel;
+    }
+
 }
