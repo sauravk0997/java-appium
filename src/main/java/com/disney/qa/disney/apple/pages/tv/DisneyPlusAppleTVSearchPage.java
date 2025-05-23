@@ -62,6 +62,13 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         }
     }
 
+    public List<ExtendedWebElement> getAllSearchResults() {
+        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                "No search results found")
+                .until(it -> !findExtendedWebElements(allSearchResultsContainers.getBy()).isEmpty());
+        return findExtendedWebElements(allSearchResultsContainers.getBy());
+    }
+
     public void clickLocalizedSearchResult(String assetName) {
         if (localizedKeyboard.getSize().getWidth() > 1000) {
             LOGGER.info("Detected horizontal keyboard, clicking down to search results..");
