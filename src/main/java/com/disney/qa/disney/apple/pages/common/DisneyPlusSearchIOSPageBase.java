@@ -57,6 +57,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentTypeMoviesCollapsedHeader;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"On the Series screen.\"`]")
     private ExtendedWebElement contentTypeSeriesCollapsedHeader;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label MATCHES 'No results found for \".*\"'`]")
+    private ExtendedWebElement noResultsFoundText;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_MOVIES_TITLE.getText()));
@@ -155,6 +157,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getContentTypeMoviesCollapsedHeader() { return contentTypeMoviesCollapsedHeader; }
 
     public ExtendedWebElement getContentTypeSeriesCollapsedHeader() { return contentTypeSeriesCollapsedHeader; }
+
+    public ExtendedWebElement getNoResultsFoundText() { return noResultsFoundText; }
 
     public void clearText() {
         LOGGER.info("Clearing text in search bar");
