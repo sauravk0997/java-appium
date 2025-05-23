@@ -508,7 +508,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusEditGenderIOSPageBase editGenderPage = initPage(DisneyPlusEditGenderIOSPageBase.class);
-        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfile = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -518,7 +517,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
 
         moreMenu.clickAddProfile();
-        Assert.assertTrue(chooseAvatar.isOpened(), "`Choose Avatar` screen was not opened.");
+        Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         Assert.assertTrue(addProfile.isOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
@@ -560,11 +559,11 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             sa.assertTrue(editGenderPage.getTypeButtonByLabel(editGenderPage.selectGender(genderItem)).isPresent(),
                     "Expected: " + genderItem + " option should be present");
         }
-        editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_WOMEN);
+        addProfile.chooseGender();
         //Submit all information to proceed to next page
         addProfile.clickSaveBtn();
-        pause(100);
-        sa.assertTrue(pinPage.isOpened(), "PIN Page is not displayed");
+        addProfile.waitForLoaderToDisappear(SHORT_TIMEOUT);
+        sa.assertTrue(editProfile.isServiceEnrollmentSetPINPresent(), "Set PIN Page is not displayed");
 
         sa.assertAll();
     }
