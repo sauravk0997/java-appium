@@ -34,6 +34,8 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private static final String HULU_CONTENT_ERROR_MESSAGE = "Hulu content is not present";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
+    private static final String A_CHARACTER = "a";
+    private static final String B_CHARACTER = "b";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67362"})
     @Test(groups = {TestGroup.SEARCH, US})
@@ -272,9 +274,9 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        searchPage.typeInSearchField("a");
+        searchPage.typeInSearchField(A_CHARACTER);
         List<ExtendedWebElement> firstQuerySearchResults = searchPage.getAllSearchResults();
-        searchPage.typeInSearchField("b");
+        searchPage.typeInSearchField(B_CHARACTER);
         List<ExtendedWebElement> secondQuerySearchResults = searchPage.getAllSearchResults();
         Assert.assertNotEquals(firstQuerySearchResults, secondQuerySearchResults,
                 "Search results didn't changed after updating the search query");
