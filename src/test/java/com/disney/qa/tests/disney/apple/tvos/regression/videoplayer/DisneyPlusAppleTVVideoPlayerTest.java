@@ -419,7 +419,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
-                "service attribution wasn't visible when video started");
+                "Service attribution was not visible when video started");
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
                 "Channel network attribution is not present");
 
