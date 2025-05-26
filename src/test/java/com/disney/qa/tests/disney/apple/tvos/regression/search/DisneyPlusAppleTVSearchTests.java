@@ -16,6 +16,8 @@ import org.testng.asserts.*;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING;
+import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
@@ -234,6 +236,51 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertNotEquals(nextRowFocussedCellTitle, nextFocussedCellTitle,
                 "Not able to traverse down in movies collection");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123196"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifySearchNavigationForUpComingContent() {
+        int maxQuantityOfExpectedChannels = 6;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        Item upcomingEvent = getUpcomingEventFromAPI(maxQuantityOfExpectedChannels);
+        String contentTitle = upcomingEvent.getVisuals().getTitle();
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(contentTitle);
+        searchPage.clickLocalizedSearchResult(contentTitle);
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickDetailsTab();
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(), contentTitle,
+                "Expected upcoming event detail page not displayed");
+    }
+
+    private Item getUpcomingEventFromAPI(int titlesLimit) {
+        List<Item> upcomingSetItemFromApi = getExploreAPIItemsFromSet(
+                getCollectionName(ESPN_PLUS_LIVE_AND_UPCOMING), titlesLimit);
+        Assert.assertNotNull(upcomingSetItemFromApi,
+                String.format("No items for '%s' collection were fetched from Explore API",
+                        ESPN_PLUS_LIVE_AND_UPCOMING));
+        if (upcomingSetItemFromApi.isEmpty()) {
+            throw new NoSuchElementException("Failed to fetch a upcoming content details from API");
+        }
+
+        for (Item upcomingEventFromApi : upcomingSetItemFromApi) {
+            if (upcomingEventFromApi.getVisuals().getPrompt().contains("AM") ||
+                    upcomingEventFromApi.getVisuals().getPrompt().contains("PM")) {
+                return upcomingEventFromApi;
+            }
+        }
+        throw new NoSuchElementException("Failed to fetch a upcoming content details from API");
     }
 
     private List<String> getMovieTabCollection() {
