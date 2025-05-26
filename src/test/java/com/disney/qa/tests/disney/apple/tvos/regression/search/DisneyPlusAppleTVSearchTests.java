@@ -236,6 +236,24 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112731"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchKeyboard() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        Assert.assertTrue(searchPage.getKeyboardByPredicate().isPresent(), "Keyboard is not present");
+        searchPage.clickSelect();
+        Assert.assertEquals(searchPage.getSearchBarText(), "a", "Current search query wasn't 'a'");
+    }
+
     private List<String> getMovieTabCollection() {
         List<Container> pageContainers = getDisneyAPIPage(DisneyEntityIds.MOVIES.getEntityId());
         List<String> tabNames = new ArrayList<>();
