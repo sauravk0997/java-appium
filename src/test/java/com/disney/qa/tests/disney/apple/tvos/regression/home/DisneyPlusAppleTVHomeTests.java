@@ -90,7 +90,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         //Validate in-eligible for upsell user still has some content to watch
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
-        brandPage.waitForPresenceOfAnElement(brandPage.getTypeCellLabelContains(titleAvailableToPlay));
+        homePage.moveDownUntilCollectionContentIsFocused(
+                getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU), 5);
+        homePage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains(titleAvailableToPlay), 5);
         Assert.assertTrue(brandPage.getTypeCellLabelContains(titleAvailableToPlay).isPresent(),
                 "In-Eligible user for upsell couldn't see any playable Hulu content");
         brandPage.clickDown();
