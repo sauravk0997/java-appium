@@ -322,7 +322,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void verifyESPNLeaguePage() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
-        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        DisneyPlusAppleTVCollectionPage collectionPage = new DisneyPlusAppleTVCollectionPage(getDriver());
         String leagueName = "National Hockey League";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -330,7 +330,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
-        Assert.assertTrue(espnPage.isLeagueTitlePresent(leagueName), "Expected League page did not open");
+        Assert.assertTrue(collectionPage.isOpened(leagueName), "Expected League page did not open");
         Assert.assertTrue(brandPage.getBrandLandingView().isPresent(), "A logo is not present in the league page");
         Assert.assertTrue(brandPage.getBrandFeaturedImage().isPresent(), "League artwork image is not present");
     }
