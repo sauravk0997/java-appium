@@ -8,6 +8,7 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.apache.commons.lang.RandomStringUtils;
 import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -16,6 +17,7 @@ import org.testng.asserts.*;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
@@ -234,6 +236,26 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertNotEquals(nextRowFocussedCellTitle, nextFocussedCellTitle,
                 "Not able to traverse down in movies collection");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112662"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchPageEmptyState() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        Assert.assertFalse(searchPage.getNoResultsFoundText().isPresent(FIVE_SEC_TIMEOUT),
+                "'No results found' message is displayed");
+        searchPage.typeInSearchField(RandomStringUtils.randomAlphabetic(61));
+        Assert.assertTrue(searchPage.getNoResultsFoundText().isPresent(),
+                "'No results found' message is not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112731"})
