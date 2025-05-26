@@ -142,7 +142,7 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         double percentageExpectedRemainingTime = (remainingTime * (playbackPercent / 100));
 
         do {
-            commonPage.clickRight(1, 1, 1);
+            commonPage.clickRight(1, 2, 1);
         } while (getRemainingTimeThreeIntegers() > percentageExpectedRemainingTime && maxTapCount-- > 0);
     }
 }
