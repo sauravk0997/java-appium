@@ -77,7 +77,7 @@ public class CollectionConstant {
             case ENJOY_THESE_MOVIES_FROM_HULU:
                 return "5c721a08-c7ed-4e57-86c4-d781d3727098";
             case ENJOY_THESE_SERIES_FROM_HULU:
-                return "311c4088-0a61-4055-9af0-aefa56fa1f00";
+                return "7c7c4aa2-5ba0-4090-92a0-37f4c0fd25e6";
             case ESPN_EXPLORE_MORE:
                 return "1877aec1-5ff9-447f-a779-534372c0af3c";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
