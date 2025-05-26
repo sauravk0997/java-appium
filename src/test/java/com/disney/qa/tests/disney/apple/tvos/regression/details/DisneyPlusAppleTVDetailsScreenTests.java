@@ -332,7 +332,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
         Assert.assertTrue(collectionPage.isOpened(leagueName), "Expected League page did not open");
         Assert.assertTrue(brandPage.getBrandLandingView().isPresent(), "A logo is not present in the league page");
-        Assert.assertTrue(brandPage.getBrandFeaturedImage().isPresent(), "League artwork image is not present");
+        Assert.assertTrue(brandPage.getBrandFeaturedImage().isPresent(), "Artwork background is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102800"})
