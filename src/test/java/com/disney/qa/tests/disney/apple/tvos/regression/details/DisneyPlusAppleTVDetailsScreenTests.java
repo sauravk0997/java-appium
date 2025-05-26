@@ -317,6 +317,24 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Play button was not focused after navigating up from details tab");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121917"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    public void verifyESPNLeaguePage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        String leagueName = "National Hockey League";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+        Assert.assertTrue(espnPage.isLeagueTitlePresent(leagueName), "Expected League page did not open");
+        Assert.assertTrue(brandPage.getBrandLandingView().isPresent(), "A logo is not present in the league page");
+        Assert.assertTrue(brandPage.getBrandFeaturedImage().isPresent(), "League artwork image is not present");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102800"})
     @Test(groups = {TestGroup.DETAILS_PAGE, US})
     public void verifyVODReplayAppearance() {

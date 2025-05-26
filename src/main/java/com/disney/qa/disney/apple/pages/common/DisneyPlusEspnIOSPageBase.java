@@ -33,4 +33,11 @@ public class DisneyPlusEspnIOSPageBase extends DisneyPlusApplePageBase {
                         .format("**/XCUIElementTypeStaticText[`label CONTAINS \"On the %s screen.\"`]",
                                 sport))).isPresent();
     }
+
+    public boolean isLeagueTitlePresent(String sport) {
+        return findExtendedWebElement(
+                AppiumBy.iOSClassChain(String
+                        .format("**/XCUIElementTypeCollectionView[`label CONTAINS \"On the %s screen.\"`]",
+                                sport))).isPresent();
+    }
 }
