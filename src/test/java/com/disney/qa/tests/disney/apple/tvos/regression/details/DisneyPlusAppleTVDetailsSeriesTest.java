@@ -913,14 +913,15 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifyEpisodeTabProgressBarUpdates() {
         int latency = 20;
+        int maxAttempts = 40;
         String episodeTitle;
+        int runTimeInSec;
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
 
-        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_entity"),
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         try {
             episodeTitle = seriesApiContent.getSeasons()
@@ -929,39 +930,33 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                     .get(0)
                     .getVisuals()
                     .getEpisodeTitle();
+            runTimeInSec = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals()
+                    .getMetastringParts().getRuntime().getRuntimeMs() / 1000;
         } catch (Exception e) {
             throw new SkipException("Skipping test, Episode title not found" + e.getMessage());
         }
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
-        videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_FIFTY);
-        //commonPage.clickRight(6, 2, 1);
-        //upNextPage.waitForUpNextUIToAppear();
-        //videoPlayer.moveRightUntilElementIsFocused(videoPlayer.getPlayerView(), 3);
-        //commonPage.clickRight(2,2,1);
-        //commonPage.clickSelect();
+        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_FIFTY, maxAttempts);
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
-        //videoPlayer.waitUntilRemainingTimeLessThan(TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT,(remainingTime / 2) - latency);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.getProgressContainer().isPresent(),
                 "Progress container view is not present");
         commonPage.clickDown();
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_FIFTY, latency);
-
+        commonPage.clickDown();
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
-        commonPage.clickRight(2, 2, 1);
+        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_SIXTY, maxAttempts);
         videoPlayer.clickBack();
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_SIXTY, latency);
-
         commonPage.clickSelect();
-        videoPlayer.waitForVideoToStart();
-        commonPage.clickRight(2, 2, 1);
-        videoPlayer.waitUntilRemainingTimeLessThan(TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, remainingTime - 10);
+        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_HUNDRED, maxAttempts);
         videoPlayer.clickBack();
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_HUNDRED, latency);
     }
