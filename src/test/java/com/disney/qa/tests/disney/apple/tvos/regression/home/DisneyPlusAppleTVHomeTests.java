@@ -101,11 +101,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), 15);
         detailsPage.clickSelect();
         Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), "Video player did not open");
-//        videoPlayer.clickBack();
-        homePage.clickMenuTimes(1, 1);
-        if (!detailsPage.isOpened()) {
-            homePage.clickMenuTimes(1, 1);
-        }
+        videoPlayer.clickBack();
 
         //Go back to the Hulu page
         detailsPage.waitForDetailsPageToOpen();
@@ -116,8 +112,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         brandPage.moveDownUntilCollectionContentIsFocused(lockedHuluContentCollectionName, 3);
         brandPage.clickSelect();
         detailsPage.waitUntilElementIsFocused(detailsPage.getUpgradeNowButton(), 15);
-        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(),
-                "Upgrade Now button was not present");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(),
+                "Unlock button was not present");
         detailsPage.clickSelect();
 
         //Verify that user is on the ineligible interstitial screen
