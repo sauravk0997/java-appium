@@ -6,6 +6,7 @@ import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import java.util.Map;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
@@ -107,7 +108,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void enterLogInPassword(String password) {
-      secureTextEntryField.type(password);
+        secureTextEntryField.type(password);
     }
 
     public ExtendedWebElement getLoginButton() {
@@ -140,7 +141,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return secureTextEntryField.getText();
     }
 
-    public String getShowPasswordText(){
+    public String getShowPasswordText() {
         return textEntryField.getText();
     }
 
@@ -214,5 +215,19 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_LEARN_MORE_BTN.getText()));
     }
-}
 
+    public ExtendedWebElement getForgotPasswordLink() {
+        return forgotPasswordLink;
+    }
+
+    public boolean isCreateNewPasswordScreenOpen() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, CREATE_NEW_PASSWORD.getText())).isPresent();
+    }
+
+    public boolean isPasswordTaglinePresent() {
+        String taglineText = StringUtils.substringBefore(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()), ".");
+        return getStaticTextViewValueContains(taglineText).isPresent();
+    }
+}

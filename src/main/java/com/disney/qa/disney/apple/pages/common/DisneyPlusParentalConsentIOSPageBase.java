@@ -43,6 +43,11 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
         super(driver);
     }
 
+    @Override
+    public boolean isOpened() {
+        return getStaticTextByLabel(consentHeaderText).isPresent();
+    }
+
     public boolean isConsentHeaderPresent() {
         return consentMinorHeader.isPresent(THREE_SEC_TIMEOUT);
     }

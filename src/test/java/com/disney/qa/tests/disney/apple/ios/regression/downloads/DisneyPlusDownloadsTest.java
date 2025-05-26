@@ -789,7 +789,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
         videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
+        videoPlayer.clickPlayButton();
         sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
         videoPlayer.clickBackButton();
@@ -804,7 +806,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), videoPlayerNotOpen);
         videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
         videoPlayer.scrubToPlaybackPercentage(percentageForNextTitle);
+        videoPlayer.clickPlayButton();
         sa.assertTrue(videoPlayer.waitForDeleteAndPlayButton(),
                 deleteButtonNotOpen);
         sa.assertAll();
@@ -979,6 +983,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Validate on lower maturity rating profile downloaded assets not visible
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         whoIsWatching.clickProfile(getUnifiedAccountApi().getDisneyProfiles(getUnifiedAccount()).get(1).getProfileName());
+        homePage.waitForHomePageToOpen();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         sa.assertTrue(downloadsPage.getDownloadAssetFromListView(ONLY_MURDERS_IN_THE_BUILDING).isElementNotPresent(SHORT_TIMEOUT),
                 ONLY_MURDERS_IN_THE_BUILDING +  " was found present on " + getUnifiedAccount().getProfiles().get(1) + " profile's Downloads screen.");

@@ -115,8 +115,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105988", "XCDQA-110055"})
-    @Test(description = "Verify Anthology Series - Details Tab", groups = {TestGroup.ANTHOLOGY, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105988"})
+    @Test(groups = {TestGroup.ANTHOLOGY, US})
     public void verifyAnthologyDetailsTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -124,8 +124,8 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         searchAndOpenDWTSDetails();
 
         String mediaTitle = details.getMediaTitle();
-        sa.assertTrue(details.isOpened(), "Details page did not open.");
-        sa.assertTrue(details.getDynamicRowButtonLabel("DETAILS", 1).isElementPresent(), "Details tab is not found.");
+        sa.assertTrue(details.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(details.getDynamicRowButtonLabel("DETAILS", 1).isElementPresent(), DETAILS_TAB_NOT_DISPLAYED);
 
         details.moveDown(1,1);
         details.moveRight(3,1);

@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.utils.IOSUtils;
@@ -393,8 +394,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72475"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyNoGenderForU13Profiles() {
+        String genderFieldEnabledMessage = "Gender field is enabled for U13 profile";
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -406,12 +408,12 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickAddProfile();
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
         // verify gender field is disabled when you select U13 DOB
-        sa.assertFalse(addProfile.isGenderFieldEnabled(),
-                "Gender field is enabled for U13 profile");
+        sa.assertFalse(addProfile.isGenderFieldEnabled(), genderFieldEnabledMessage);
 
         addProfile.tapCancelButton();
         avatars[0].click();
@@ -420,14 +422,15 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
 
         // verify gender field is disabled when you selected Gender first then choose the U13 DOB
-        sa.assertFalse(addProfile.isGenderFieldEnabled(),
-                "Gender field is enabled for U13 profile");
+        sa.assertFalse(addProfile.isGenderFieldEnabled(), genderFieldEnabledMessage);
 
         addProfile.clickSaveBtn();
+        Assert.assertTrue(parentalConsent.isOpened(), "Consent page is not displayed");
+
         //minor consent is shown
-        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            scrollDown();
+            parentalConsent.scrollConsentContent(2);
         }
 
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
@@ -439,48 +442,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         passwordPage.enterPassword(getUnifiedAccount());
         passwordPage.clickSecondaryButtonByCoordinates();
         Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyNoGenderForU18Profiles() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        setAppToHomeScreen(getUnifiedAccount());
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        addProfile.enterProfileName(JUNIOR_PROFILE);
-        addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
-
-        // verify gender field is disabled when you select U18 DOB
-        sa.assertFalse(addProfile.isGenderFieldEnabled(),
-                "Gender field is enabled for U18 profile");
-
-        addProfile.tapCancelButton();
-        avatars[0].click();
-        addProfile.enterProfileName(JUNIOR_PROFILE);
-        addProfile.chooseGender();
-        addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
-
-        // verify gender field is disabled when you selected Gender first then choose the U18 DOB
-        sa.assertFalse(addProfile.isGenderFieldEnabled(),
-                "Gender field is enabled for U18 profile");
-
-        addProfile.clickSaveBtn();
-
-        //Welch Full catalog access
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
-        sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was displayed after selecting full catalog");
-        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
-        passwordPage.clickSecondaryButtonByCoordinates();
-        sa.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
         sa.assertAll();
     }
 
@@ -791,8 +752,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66818"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileAppUILanguage() {
+        String appLanguagePageNotDisplayed = "App Language screen is not displayed";
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
@@ -801,22 +763,27 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(editProfile.isAppLanguageCellPresent(), "'App Language' option is not displayed");
         editProfile.clickAppLanguage();
 
-        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
+        Assert.assertTrue(appLanguage.isOpened(), appLanguagePageNotDisplayed);
         sa.assertTrue(appLanguage.isAppLanguageHeaderPresent(), "App Language header is not present");
-        sa.assertTrue(appLanguage.isAppLanguageCopyPresent(), "App Language copy is not present");
         sa.assertTrue(appLanguage.getBackButton().isElementPresent(), "Back button is not present");
         sa.assertTrue(appLanguage.isLanguageSelected(ENGLISH_US), "Language selected doesn't have the check mark");
         sa.assertTrue(appLanguage.isLanguageListShownInAlphabeticalOrder(), "Languages are not present in alphabetical order");
-        appLanguage.getBackArrow().click();
+        tap(appLanguage.getBackArrow());
 
-        sa.assertTrue(editProfile.isEditTitleDisplayed(), "Edit profile page is not opened");
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.clickAppLanguage();
-        sa.assertTrue(appLanguage.isOpened(), "App Language screen is not opened");
-
+        Assert.assertTrue(appLanguage.isOpened(), appLanguagePageNotDisplayed);
+        DisneyLocalizationUtils localizationUtils = getLocalizationUtils(getCountry(), ES_LANG);
+        String toastMessageInSpanish = localizationUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                DictionaryKeys.PROFILE_SETTINGS_GENERIC_TOAST.getText());
         appLanguage.selectLanguage(ESPAÑOL);
-        sa.assertTrue(editProfile.isUpdatedToastPresent(), "'Updated' toast was not found");
+
+        sa.assertTrue(editProfile.getStaticTextByLabel(toastMessageInSpanish).isPresent(),
+                UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE);
 
         editProfile.clickAppLanguage();
         sa.assertTrue(appLanguage.isLanguageSelected(ESPAÑOL), "Language was not changed to Spanish");
@@ -943,6 +910,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertEquals(editProfilePage.getAutoplayState(), OFF, "Kids profile autoplay is not turned off by default.");
 
         switchAndValidateAutoplay(ON, sa, KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE);
@@ -1038,6 +1006,28 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                         DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72437"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAddProfileMinorConsentUI() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        createKidsProfile();
+        Assert.assertTrue(parentalConsent.isConsentHeaderPresent(),
+                "Consent header is not present");
+        Assert.assertTrue(parentalConsent.validateConsentHeader(),
+                "Consent header text doesn't match the expected dictionary value");
+        Assert.assertTrue(parentalConsent.validateConsentText(),
+                "Scrollable content doesn't match with the expected dictionary values");
+        Assert.assertTrue(parentalConsent.isDeclineButtonPresent(),
+                "Decline button is not present");
+        Assert.assertTrue(parentalConsent.isAgreeButtonPresent(),
+                "Agree button is not present");
+    }
+
     private void setAppToAccountSettings() {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
@@ -1080,8 +1070,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
         editProfilePage.waitForUpdatedToastToDisappear();
         editProfilePage.getDoneButton().click();
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertEquals(editProfilePage.getAutoplayState(), state, errorMessage);
     }
 }

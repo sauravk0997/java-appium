@@ -16,14 +16,16 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.util.Map;
 
+import static com.disney.qa.common.constant.IConstantHelper.LABEL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPageBase {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+    protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     protected static final String USER_RATING_KEY = "profile_rating_restriction";
     protected static final String EMPTY_PROFILE_NAME_ERROR = "Enter profile name";
     private static final String R21 = "R21";
+    private static final String TOGGLE_VIEW = "toggleView";
 
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
@@ -50,7 +52,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                     DictionaryKeys.EDIT_PROFILE_TITLE.getText());
 
     @ExtendedFindBy(accessibilityId = "autoplayToggleCell")
-    private ExtendedWebElement autoplayToggleCell;
+    protected ExtendedWebElement autoplayToggleCell;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Add Profile\"`]")
     private ExtendedWebElement addProfileBtn;
@@ -113,6 +115,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
 
+    @ExtendedFindBy(accessibilityId = "groupWatchTooggleCell")
+    protected ExtendedWebElement groupWatchToggleCell;
 
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -325,7 +329,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         String currentState = autoplayToggleCell.getText();
         LOGGER.info("Current state of autoplay: {}, requested state: {}", currentState, newState);
         if (!currentState.equalsIgnoreCase(newState)) {
-            autoplayToggleCell.getElement().findElement(By.name("toggleView")).click();
+            autoplayToggleCell.getElement().findElement(By.name(TOGGLE_VIEW)).click();
         }
     }
 
@@ -347,12 +351,12 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void toggleKidsProofExit() {
-        kidProofExitToggleCell.getElement().findElement(By.name("toggleView")).click();
+        kidProofExitToggleCell.getElement().findElement(By.name(TOGGLE_VIEW)).click();
     }
 
     public void toggleJuniorMode() {
         LOGGER.info("tapping on junior mode toggle");
-        WebElement juniorModeToggle = juniorModeToggleCell.getElement().findElement(By.name("toggleView"));
+        WebElement juniorModeToggle = juniorModeToggleCell.getElement().findElement(By.name(TOGGLE_VIEW));
         juniorModeToggle.click();
     }
 
@@ -412,7 +416,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public void tapLiveAndUnratedToggle() {
-        getLiveAndUnratedToggleCell().getElement().findElement(By.name("toggleView")).click();
+        getLiveAndUnratedToggleCell().getElement().findElement(By.name(TOGGLE_VIEW)).click();
     }
 
     public ExtendedWebElement getPinSettingsCell() {
@@ -446,6 +450,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return genderValue.equalsIgnoreCase(profile.getAttributes().getGender().toLowerCase());
     }
 
+    public String getGenderValue() {
+        return getDynamicCellByName("Gender Selection").getAttribute(LABEL).split(",")[1].trim();
+    }
+
     public boolean isEditTitleDisplayed() {
         return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.EDIT_PROFILE_TITLE_2.getText())).isPresent();
@@ -458,11 +466,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isProfileIconDisplayed(String avatarID) {
         return dynamicCellByName.format(avatarID).isPresent();
-    }
-
-    public boolean isPersonalInformationSectionDisplayed() {
-        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                PROFILE_SETTINGS_PERSONAL_INFORMATION_HEADER.getText())).isPresent();
     }
 
     public boolean isPlayBackSettingsSectionDisplayed() {
@@ -611,4 +614,15 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                         APPLICATION, DictionaryKeys.GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER.getText()));
     }
 
+    public ExtendedWebElement getSharePlayToggleCell() {
+        return groupWatchToggleCell;
+    }
+
+    public void toggleSharePlayButton(String newState) {
+        String currentState = groupWatchToggleCell.getText();
+        LOGGER.info("Current state of share play: {}, requested state: {}", currentState, newState);
+        if (!currentState.equalsIgnoreCase(newState)) {
+            groupWatchToggleCell.getElement().findElement(By.name(TOGGLE_VIEW)).click();
+        }
+    }
 }

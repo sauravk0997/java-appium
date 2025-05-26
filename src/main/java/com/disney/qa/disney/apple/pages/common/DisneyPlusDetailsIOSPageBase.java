@@ -79,8 +79,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement movieDownloadCompletedButton;
     @ExtendedFindBy(accessibilityId = "VERSIONS")
     protected ExtendedWebElement versionsTab;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]/XCUIElementTypeImage[1]")
+    protected ExtendedWebElement firstVersionsImage;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeOther[`name == \"contentImageView\"`][2]/XCUIElementTypeImage[1]")
+    protected ExtendedWebElement secondVersionsImage;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][1]")
-    protected ExtendedWebElement iMaxEnhancedThumbnail;
+    protected ExtendedWebElement firstPlayIcon;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"playIcon\"`][2]")
+    protected ExtendedWebElement secondPlayIcon;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"contentImageView\"`][1]")
     protected ExtendedWebElement contentImageView;
     @ExtendedFindBy(accessibilityId = "contentImageView")
@@ -99,6 +107,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement tabBar;
     @FindBy(name = "titleLabel_0")
     private ExtendedWebElement firstTitleLabel;
+    @FindBy(name = "titleLabel_1")
+    private ExtendedWebElement secondTitleLabel;
     @ExtendedFindBy(accessibilityId = "titleLabel_%s")
     private ExtendedWebElement episodeTitleLabel;
     @ExtendedFindBy(accessibilityId = "infoInactive24")
@@ -115,16 +125,18 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement detailsTabTitle;
     @ExtendedFindBy(accessibilityId = "promoLabel")
     private ExtendedWebElement promoLabel;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeImage")
-    private ExtendedWebElement handsetNetworkAttributionImage;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Max Width View\"`]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[4]/XCUIElementTypeImage")
-    private ExtendedWebElement tabletNetworkAttributionImage;
+    @ExtendedFindBy(accessibilityId = "networkAttribution")
+    private ExtendedWebElement networkAttributionLogo;
     @ExtendedFindBy(accessibilityId = "descriptionLabel_0")
     private ExtendedWebElement firstDescriptionLabel;
+    @ExtendedFindBy(accessibilityId = "descriptionLabel_1")
+    private ExtendedWebElement secondDescriptionLabel;
     @ExtendedFindBy(accessibilityId = "descriptionLabel")
     private ExtendedWebElement descriptionLabel;
     @ExtendedFindBy(accessibilityId = "runtimeLabel_0")
     private ExtendedWebElement firstRunTimeLabel;
+    @ExtendedFindBy(accessibilityId = "runtimeLabel_1")
+    private ExtendedWebElement secondRunTimeLabel;
     @ExtendedFindBy(accessibilityId = "Stop the offline download for this title.")
     private ExtendedWebElement stopOfflineDownload;
     @ExtendedFindBy(accessibilityId = "titleLabel_9")
@@ -839,12 +851,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return firstTitleLabel;
     }
 
-    public ExtendedWebElement getHandsetNetworkAttributionImage() {
-        return handsetNetworkAttributionImage;
-    }
-
-    public ExtendedWebElement getTabletNetworkAttributionImage() {
-        return tabletNetworkAttributionImage;
+    public ExtendedWebElement getSecondTitleLabel() {
+        return secondTitleLabel;
     }
 
     public ExtendedWebElement getServiceAttribution() {
@@ -859,12 +867,28 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return firstDescriptionLabel;
     }
 
+    public ExtendedWebElement getSecondDescriptionLabel() {
+        return secondDescriptionLabel;
+    }
+
     public ExtendedWebElement getFirstDurationLabel() {
         return firstRunTimeLabel;
     }
 
+    public ExtendedWebElement getSecondDurationLabel() {
+        return secondRunTimeLabel;
+    }
+
     public ExtendedWebElement getShareBtn() {
         return shareBtn;
+    }
+
+    public ExtendedWebElement getNetworkAttributionLogo() {
+        return networkAttributionLogo;
+    }
+
+    public String getNetworkAttributionValue() {
+        return networkAttributionLogo.getAttribute(LABEL);
     }
 
     public ExtendedWebElement getShopOrPerksBtn() {
@@ -1013,25 +1037,23 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return versionsTab;
     }
 
-    public boolean isIMAXEnhancedTitlePresentInVersionTab() {
-        String[] iMaxEnhancedTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_TITLE.getText()).split("-");
-        swipePageTillElementTappable(firstTitleLabel, 1, contentDetailsPage, Direction.UP, 500);
-        return firstTitleLabel.getText().startsWith(iMaxEnhancedTitle[0]);
+    public boolean isFirstPlayIconPresentInVersionTabPresent() {
+        return firstPlayIcon.isPresent();
     }
 
-    public boolean isIMAXEnhancedDescriptionPresentInVersionTab() {
-        String iMaxEnhancedDescription = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_IMAX_ENHANCED_DESCRIPTION.getText());
-        return getStaticTextByLabel(iMaxEnhancedDescription).isPresent();
+    public boolean isSecondPlayIconPresentInVersionTabPresent() {
+        return secondPlayIcon.isPresent();
     }
 
-    public boolean isIMAXEnhancedThumbnailPresentInVersionTab() {
-        return iMaxEnhancedThumbnail.isPresent();
+    public boolean isFirstImageInVersionTabPresent() {
+        return firstVersionsImage.isPresent();
     }
 
-    public String getMovieNameAndDurationFromIMAXEnhancedHeader() {
-        String[] iMaxEnhancedTitle = firstTitleLabel.getText().split(" - ");
-        return iMaxEnhancedTitle[1];
+    public boolean isSecondImageInVersionTabPresent() {
+        return secondVersionsImage.isPresent();
     }
+
+
 
     public boolean isContentImageViewPresent() {
         return contentImageView.isPresent();

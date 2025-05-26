@@ -169,7 +169,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
-        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         verifyAgePage.clickIAm21PlusButton();
         Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
@@ -469,7 +469,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         ratingsSetupWithPINNew(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         navigateToHomePageForPinUser();
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_series_love_victor_deeplink"));
-        detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
 
         verifyAgePage.clickIAm21PlusButton();

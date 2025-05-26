@@ -87,7 +87,7 @@ public class CollectionConstant {
             case LIVE_AND_UPCOMING_FROM_ESPN:
                 return "3fd573af-c11c-4f29-a201-b543829aad21";
             case NEWLY_ADDED:
-                return "cbfd31d1-8647-46ff-829b-00c9692e7372";
+                return "b66f6fa4-4674-4340-8338-9d65f95767a1";
             case NEW_TO_DISNEY:
                 return "6b2c1a9b-261c-49f6-ab37-e2b95f2d9612";
             case ORIGINALS:
@@ -113,7 +113,7 @@ public class CollectionConstant {
             case REPLAYS_COLLECTION:
                 return "971963b2-2bf5-4416-aa7d-41950d5760d7";
             case SPORT_REPLAYS:
-                return "b9fac575-876d-4a06-aafc-1ab8ab7a34b5";
+                return "cb338e1f-9162-47e1-b6ba-f3a9cf2f9815";
             case STUDIOS_AND_NETWORKS:
                 return "775c549b-3308-4694-a0d6-986934b10f3a";
             case TREEHOUSE_OF_HORROR_I_TO_V:

@@ -17,6 +17,8 @@ import com.disney.qa.api.client.responses.graphql.campaign.CampaignType;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.explore.ExploreApi;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
+import com.disney.qa.api.household.*;
+import com.disney.qa.api.household.request.*;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.api.search.DisneySearchApi;
@@ -85,6 +87,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
     public static final String JP_ENG = "JP_ENG";
+    public static final String LATAM_ANZ = "LATAM_ANZ";
+    public static final String EMEA_CA = "EMEA_CA";
     protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
     protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
@@ -149,6 +153,27 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 .build();
         return new UnifiedAccountApi(apiConfiguration);
     });
+
+    private static final ThreadLocal<HouseholdApi> HOUSE_HOLD_API = ThreadLocal.withInitial(() -> {
+        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                .platform(APPLE)
+                .environment(Configuration.getRequired(Configuration.Parameter.ENV))
+                .partner(Partner.DISNEY.toString())
+                .weaponXDisable(FALSE)
+                .build();
+        return new HouseholdApi(apiConfiguration);
+    });
+
+    private static final ThreadLocal<HouseholdRequest> HOUSEHOLD_REQUEST_THREAD_LOCAL = ThreadLocal.withInitial(() ->
+            HouseholdRequest.builder()
+                    .ipSubnets(List.of("139.104", "139.105"))
+                    .asns(List.of("12345"))
+                    .carriers(List.of("my carrier"))
+                    .cities(List.of("new york", "santa monica"))
+                    .countryCodes(List.of("us", "mx"))
+                    .postalCodes(List.of("10013", "90404"))
+                    .build()
+    );
 
     private static final ThreadLocal<UnifiedSubscriptionApi> UNIFIED_SUBSCRIPTION_API = ThreadLocal.withInitial(() -> {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
@@ -346,6 +371,12 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(FRANCE)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), FRANCE, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
+        } else if (groups.contains(LATAM_ANZ)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMOrANZCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(EMEA_CA)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEAOrCanadaCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
         }
@@ -399,6 +430,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         UNIFIED_ACCOUNT_API.remove();
         UNIFIED_SUBSCRIPTION_API.remove();
         CREATE_UNIFIED_ACCOUNT_REQUEST.remove();
+        HOUSE_HOLD_API.remove();
+        HOUSEHOLD_REQUEST_THREAD_LOCAL.remove();
     }
 
     @AfterSuite(alwaysRun = true)
@@ -441,6 +474,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
+    }
+
+    public static HouseholdApi getHouseholdApi() {
+        return HOUSE_HOLD_API.get();
+    }
+
+    public static HouseholdRequest getHouseholdRequest() {
+        return HOUSEHOLD_REQUEST_THREAD_LOCAL.get();
     }
 
     public static UnifiedSubscriptionApi getUnifiedSubscriptionApi() {
@@ -728,6 +769,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private String getMPAACountryCode() {
         List<String> countryCodeList = Arrays.asList(CANADA, UNITED_STATES, GUAM,
                 PUERTO_RICO, MARSHALL_ISLANDS);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getLATAMOrANZCountryCode() {
+        List<String> countryCodeList = Arrays.asList(
+                ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
+                HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY, AU, NZ);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getEMEAOrCanadaCountryCode() {
+        List<String> countryCodeList = Arrays.asList(FRANCE, SPAIN, SWEDEN, CA);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }

@@ -4,10 +4,12 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.ContentAdvisory;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
+import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
@@ -28,7 +30,6 @@ import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
-import static com.disney.qa.api.disney.DisneyEntityIds.IMAX_ENHANCED_SET;
 import static com.disney.qa.common.constant.RatingConstant.Rating.TV_PG;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -50,6 +51,17 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String ESPN_CONTENT = "NFL 2025 Winter Classic";
     public static final String NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION = "This program is presented as originally " +
             "created and may contain stereotypes or negative depictions.";
+    private static final String RATING_RESTRICTION_DETAIL_MESSAGE_NOT_DISPLAYED = "Rating Restriction Detail Message " +
+            "is not displayed";
+    private static final String PARENTAL_CONTROL_ICON_NOT_DISPLAYED = "Parental Control icon is not displayed";
+    private static final String EXTRAS_TAB_DISPLAYED = "Extras tab is displayed";
+    private static final String SUGGESTED_TAB_DISPLAYED = "Suggested tab is displayed";
+    private static final String DETAILS_TAB_DISPLAYED = "Details tab is displayed";
+    private static final String EPISODES_TAB_DISPLAYED = "Episodes tab is displayed";
+    private static final String WATCHLIST_BUTTON_DISPLAYED = "Watchlist CTA is displayed";
+    private static final String TRAILER_BUTTON_DISPLAYED = "Trailer CTA displayed";
+    private static final String PLAY_BUTTON_DISPLAYED = "Play CTA found.";
+    private static final String METADATA_NOT_DISPLAYED = "Metadata label is not displayed";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -133,10 +145,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66841"})
-    @Test(description = "Maturity Rating Restriction on Detail Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMaturityRatingRestrictionOnDetailPage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -155,80 +168,91 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
 
         setAppToHomeScreen(getUnifiedAccount(), profile.getProfileName());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // Movies
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
 
-        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
-        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
-        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), "Details tab is found.");
-        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
-        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
-        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), EXTRAS_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), SUGGESTED_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), DETAILS_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), WATCHLIST_BUTTON_DISPLAYED);
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), TRAILER_BUTTON_DISPLAYED);
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), PLAY_BUTTON_DISPLAYED);
 
-        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(), "Rating Restriction Detail Message not found");
-        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Metadata label is displayed.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains("The Avengers"), "Media title not found.");
+        sa.assertTrue(detailsPage.getParentalControlIcon().isPresent(), PARENTAL_CONTROL_ICON_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
+                RATING_RESTRICTION_DETAIL_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), METADATA_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getMediaTitle().contains("The Avengers"), MEDIA_TITLE_NOT_DISPLAYED);
 
         // Series
         launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
 
-        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
-        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
-        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), "Details tab is found.");
-        sa.assertFalse(detailsPage.getEpisodesTab().isPresent(SHORT_TIMEOUT), "Episodes tab is found.");
-        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
-        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
-        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), EXTRAS_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), SUGGESTED_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), DETAILS_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getEpisodesTab().isPresent(SHORT_TIMEOUT), EPISODES_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), WATCHLIST_BUTTON_DISPLAYED);
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), TRAILER_BUTTON_DISPLAYED);
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), PLAY_BUTTON_DISPLAYED);
 
-        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(), "Rating Restriction Detail Message not found");
-        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Metadata label is displayed.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains("Dr. K's Exotic Animal ER"), "Media title not found.");
+        sa.assertTrue(detailsPage.getParentalControlIcon().isPresent(), PARENTAL_CONTROL_ICON_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
+                RATING_RESTRICTION_DETAIL_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), METADATA_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getMediaTitle().contains("Dr. K's Exotic Animal ER"), MEDIA_TITLE_NOT_DISPLAYED);
 
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71128"})
-    @Test(description = "Details Page - IMAX Enhanced - Versions Tab", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyIMAXEnhancedVersionTab() {
-        String filterValue = "IMAX Enhanced";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String widescreenDescription = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_DESCRIPTION_OV_WIDESCREEN.getText());
+        String imaxEnhancedDescription = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DETAILS_VERSIONS_DESCRIPTION_IMAX_ENHANCED.getText());
+
         setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_lightyear_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-        searchPage.clickMoviesTab();
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            searchPage.clickContentPageFilterDropDown();
-            swipe(searchPage.getStaticTextByLabel(filterValue));
-            searchPage.getStaticTextByLabel(filterValue).click();
-        } else {
-            searchPage.getTypeButtonByLabel(filterValue).click();
-        }
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        String title = results.get(0).getText();
-        results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), "Details page was not opened");
+        String title = detailsPage.getMediaTitle();
         detailsPage.clickVersionsTab();
-        sa.assertTrue(detailsPage.getVersionTab().isPresent(), "Versions was not found");
-        sa.assertTrue(detailsPage.isIMAXEnhancedTitlePresentInVersionTab(), "IMAX Enhanced Title was not found");
-        sa.assertTrue(detailsPage.isIMAXEnhancedThumbnailPresentInVersionTab(), "IMAX Enhanced Thumbnail was not found");
-        sa.assertTrue(detailsPage.isIMAXEnhancedDescriptionPresentInVersionTab(), "IMAX Enhanced Description was not found");
+        Assert.assertTrue(detailsPage.getVersionTab().isPresent(), "Versions Tab was not found");
 
-        //get Video duration from API and verify that its present at last in IMAX Enhance Header
-        String entityID = getFirstContentIDForSet(IMAX_ENHANCED_SET.getEntityId());
-        if (entityID != null) {
-            ExploreContent exploreMovieContent = getMovieApi(entityID, DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-            int duration = exploreMovieContent.getDurationMs();
-            LOGGER.info("Duration returned from api: {}", duration);
-            String durationTime = detailsPage.getHourMinFormatForDuration(duration);
-            sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().equals(title + " " + durationTime), "Content name and duration was not found in IMAX Enhanced Header");
-            sa.assertTrue(detailsPage.getMovieNameAndDurationFromIMAXEnhancedHeader().endsWith(durationTime), "Duration details not found at the end of IMAX Enhanced Header");
+        //Validate Both Titles
+        scrollDown();
+        sa.assertEquals(detailsPage.getFirstTitleLabel().getText(), title, "Widescreen Title is not displayed");
+        sa.assertEquals(detailsPage.getSecondTitleLabel().getText(), "IMAX Enhanced - " + title,
+                "IMAX Title is not displayed");
+        //Validate Both Images and Play Icon
+        sa.assertTrue(detailsPage.isFirstImageInVersionTabPresent(), "Widescreen Image is not displayed");
+        sa.assertTrue(detailsPage.isSecondImageInVersionTabPresent(), "IMAX Image is not displayed");
+        sa.assertTrue(detailsPage.isFirstPlayIconPresentInVersionTabPresent(), "Widescreen Play Icon is not displayed");
+        sa.assertTrue(detailsPage.isSecondPlayIconPresentInVersionTabPresent(), "IMAX Play Icon is not displayed");
+        //Validate Both Descriptions
+        sa.assertEquals(detailsPage.getFirstDescriptionLabel().getText(), widescreenDescription,
+                "Widescreen Description was not found");
+        sa.assertEquals(detailsPage.getSecondDescriptionLabel().getText(), imaxEnhancedDescription,
+                "IMAX Description was not found");
+        //Validate Video Duration from API
+        ExploreContent exploreMovieContent = getMovieApi(R.TESTDATA.get("disney_prod_lightyear_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        if (exploreMovieContent != null) {
+            int durationAPI = exploreMovieContent.getDurationMs();
+            String durationInHoursMinutes = detailsPage.getHourMinFormatForDuration(durationAPI);
+            sa.assertEquals(detailsPage.getFirstDurationLabel().getText(), durationInHoursMinutes,
+                    "Widescreen Duration is not as expected");
+            sa.assertEquals(detailsPage.getSecondDurationLabel().getText(), durationInHoursMinutes,
+                    "IMAX Duration is not as expected");
         } else {
-            sa.assertTrue(false, "Entity ID for IMAX Enhanced set came back empty from api, check the IMAX_ENHANCED_SET_ID value");
+            throw new SkipException("Not able to get the Movies collection data from the API");
         }
         sa.assertAll();
     }
@@ -340,6 +364,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         String contentTitle = detailsPage.getContentTitle();
         swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
+        detailsPage.waitForPresenceOfAnElement(detailsPage.getStaticTextByLabel(contentTitle));
         Assert.assertTrue(detailsPage.getStaticTextByLabel(contentTitle).isPresent(),
                 "Content title is not found in navigation bar");
     }
@@ -397,7 +422,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now Button not displayed");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
         Assert.assertTrue(detailsPage.getStaticTextByLabel(UNLOCK_HULU_ON_DISNEY).isPresent(),
                 UNLOCK_HULU_ON_DISNEY + " upsell message not displayed");
     }
@@ -593,11 +618,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
             List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
             results.get(0).click();
             sa.assertTrue(detailsPage.isOpened(), "Details page did not open");
-            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-                Assert.assertTrue(detailsPage.getHandsetNetworkAttributionImage().isPresent(), "Handset Network attribution image was not found on " + i + " series details page.");
-            } else {
-                Assert.assertTrue(detailsPage.getTabletNetworkAttributionImage().isPresent(), "Tablet Network attribution image was not found on " + i + " series details page.");
-            }
+            detailsPage.waitForPresenceOfAnElement(detailsPage.getNetworkAttributionLogo());
+            Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
+                    "Network attribution logo was not found on " + i + " series details page");
         });
         sa.assertAll();
     }
@@ -935,6 +958,25 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Inline generic error message was not present");
         Assert.assertFalse(detailsPage.getDetailsTab().isElementPresent(FIVE_SEC_TIMEOUT),
                 "Details tab was present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78420"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluNetworkAttributionInDetailsPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
+                "Network Attribution logo is not present");
+        String currentNetworkAttribution = detailsPage.getNetworkAttributionValue();
+        Assert.assertTrue(currentNetworkAttribution.contains(HULU),
+                String.format("Current network attribution '%s' didn't contain '%s'",
+                        currentNetworkAttribution, HULU));
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {

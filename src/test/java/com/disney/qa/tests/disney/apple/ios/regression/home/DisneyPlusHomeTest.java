@@ -100,7 +100,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecommendedForYouContainer() {
-        int limit = 30;
+        int limit = 20;
         int verticalSwipeCount = 5;
         int horizontalSwipeCount = 30;
         int swipeDuration = 100;
@@ -213,6 +213,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         swipeInContainer(homePage.getHeroCarouselContainer(heroCarouselId), Direction.LEFT, 500);
 
         currentHeroTitle = homePage.getCurrentHeroCarouselTitle(heroCarouselId);
+        homePage.waitForPresenceOfAnElement(homePage.getHeroCarouselContainer(heroCarouselId));
         Assert.assertTrue(homePage.isHeroCarouselDisplayed(heroCarouselId), "Hero Carousel is not displayed");
         sa.assertFalse(homePage.isHeroCarouselAutoRotating(currentHeroTitle, heroCarouselId),
                 "Hero Carousel auto rotate after 5 seconds");
@@ -664,7 +665,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyContinueWatchingWhenBookmarkLessThanOneMin() {
         int swipeCount = 5;
-        int scrubPercentage = 10;
+        int remainingTimeInSeconds = 59;
         String lessThanOneMinMessage = "Less than 1m remaining";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -682,9 +683,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         homePage.waitForHomePageToOpen();
-        addContentInContinueWatchingWithScrubPercentage(
+        addContentInContinueWatchingWithRemainingTime(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
-                scrubPercentage);
+                remainingTimeInSeconds);
         homePage.waitForHomePageToOpen();
         homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.CONTINUE_WATCHING, swipeCount);
         sa.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
@@ -698,10 +699,10 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
-        addContentInContinueWatchingWithScrubPercentage(
+        addContentInContinueWatchingWithRemainingTime(
                 R.TESTDATA.get("disney_prod_series_party_animals_first_episode_playback_deeplink"),
-                scrubPercentage);
-
+                remainingTimeInSeconds);
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickProfile(KIDS_PROFILE);
         homePage.waitForHomePageToOpen();
         homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.CONTINUE_WATCHING, swipeCount);
@@ -804,7 +805,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
-                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 30);
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.TRENDING), 20);
         if (trendingTitlesFromApi.isEmpty()) {
             throw new NoSuchElementException("Failed to get Trending collection titles from Explore API");
         }
@@ -898,12 +899,11 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         relaunch();
     }
 
-    private void addContentInContinueWatchingWithScrubPercentage(String url, int scrubPercentage) {
+    private void addContentInContinueWatchingWithRemainingTime(String url, int remainingTimeInSeconds) {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         launchDeeplink(url);
-        videoPlayer.waitForVideoToStart();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.scrubToPlaybackPercentage(scrubPercentage);
+        Assert.assertTrue(videoPlayer.isContentRatingOverlayPresent(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitUntilRemainingTimeLessThan(SIXTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, remainingTimeInSeconds);
         videoPlayer.clickBackButton();
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
