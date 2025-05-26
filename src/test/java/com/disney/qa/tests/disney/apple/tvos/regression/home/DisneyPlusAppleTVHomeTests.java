@@ -79,8 +79,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        String lockedHuluContentCollectionName =
-                getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
+//        String lockedHuluContentCollectionName =
+//                getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
 
         logIn(getUnifiedAccount());
 
@@ -109,6 +109,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         //Move to the "Unlock to Stream More Hulu" collection
         brandPage.waitForLoaderToDisappear(15);
+        detailsPage.clickBack();
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
         brandPage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), 5);
         brandPage.moveDownUntilElementIsFocused(brandPage.getTypeCellLabelContains(titleAvailableToPlay), 5);
