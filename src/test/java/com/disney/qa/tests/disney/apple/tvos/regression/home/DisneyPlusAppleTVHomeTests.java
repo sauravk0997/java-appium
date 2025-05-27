@@ -126,11 +126,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         //Move to the "Unlock to Stream More Hulu" collection
         brandPage.waitForLoaderToDisappear(15);
         brandPage.clickBack();
-        homePage.waitForHomePageToOpen();
-        homePage.waitUntilElementIsFocused(homePage.getBrandCell(brandPage.
-                getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)), 10);
-        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
-        brandPage.moveDownUntilCollectionContentIsFocused(
+        brandPage.moveDown(5, 1);
+        brandPage.moveUpUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), 5);
         brandPage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains
                 (titleAvailableToPlay), 5);
