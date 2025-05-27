@@ -1741,7 +1741,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .dateOfBirth(KIDS_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
-                .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
         setAppToHomeScreen(getUnifiedAccount());
@@ -1754,7 +1753,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
         Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), SHAREPLAY_TOGGLE_NOT_PRESENT);
 
-        // Validate if SharePlay option is not enabled
+        // Verify SharePlay option is disabled
         Assert.assertFalse(editProfilePage.isSharePlayEnabled(), "SharePlay option is enabled");
         editProfilePage.getSharePlayLabel().click();
         Assert.assertTrue(editProfilePage.isSharePlayU13TooltipPresent(), "U13 Share play tooltip is not present");
