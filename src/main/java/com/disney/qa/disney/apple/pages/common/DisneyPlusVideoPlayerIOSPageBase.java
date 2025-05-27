@@ -645,14 +645,14 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public int getCurrentTime() {
         String[] currentTime;
+        int currentTimeInSec = 0;
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE) || R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             displayVideoController();
             currentTime = currentTimeLabel.getText().split(":");
         } else {
-            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(1);
+            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(2);
             currentTime = seekTimeLabel.getText().split(":");
         }
-        int currentTimeInSec = 0;
         if (currentTime.length > 2) {
             currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) * 60
                     + Integer.parseInt(currentTime[1]) * 60
