@@ -636,7 +636,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     }
 
     public boolean isSharePlayU13TooltipPresent() {
-        return textViewByLabel.format(getLocalizationUtils().getDictionaryItem(
+        return staticTextLabelContains.format(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 GROUPWATCH_SHAREPLAY_SETTINGS_UNDER_13_TOOLTIP.getText())).isPresent();
     }
