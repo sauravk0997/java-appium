@@ -1758,8 +1758,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Validate if SharePlay option is not enabled
         Assert.assertFalse(editProfilePage.isSharePlayEnabled(), "SharePlay option is enabled");
         editProfilePage.getSharePlayLabel().click();
-        pause(1);
-        LOGGER.info(getDriver().getPageSource());
         Assert.assertTrue(editProfilePage.isSharePlayU13TooltipPresent(), "U13 Share play tooltip is not present");
         editProfilePage.clickDoneBtn();
 
