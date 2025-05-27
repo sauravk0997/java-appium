@@ -911,7 +911,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.getSkipIntroButton().clickIfPresent();
+        videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
+        videoPlayer.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_TWENTY, maxAttempts);
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
@@ -920,6 +921,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Progress container view is not present");
         commonPage.clickDown();
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_TWENTY, latency);
+
         commonPage.clickDown();
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
@@ -929,6 +931,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_FIFTY, latency);
+
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_HUNDRED, maxAttempts);
