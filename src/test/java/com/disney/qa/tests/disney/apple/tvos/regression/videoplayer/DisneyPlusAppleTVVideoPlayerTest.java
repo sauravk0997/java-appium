@@ -202,7 +202,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
-                .isPresent(), "ESPN brand tile was not present on home page screen");
+                .isPresent(), ESPN_BRAND_TILE_NOT_PRESENT);
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
 
