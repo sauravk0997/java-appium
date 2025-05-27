@@ -246,7 +246,6 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 
-        String espn = "ESPN+";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -255,11 +254,11 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
 
-        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(espn), "ESPN Network watermark is not present");
+        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(ESPN_PLUS), "ESPN Network watermark is not present");
         // Validate right position of espn logo
-        validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(espn), RIGHT_POSITION);
+        validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), RIGHT_POSITION);
         // Validate bottom position of espn logo
-        validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(espn), BOTTOM);
+        validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), BOTTOM);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77896"})

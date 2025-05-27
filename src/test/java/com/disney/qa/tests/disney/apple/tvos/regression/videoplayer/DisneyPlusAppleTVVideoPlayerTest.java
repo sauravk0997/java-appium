@@ -197,7 +197,6 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
         String rugby = "Rugby";
-        String espn = "ESPN+";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
@@ -232,7 +231,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
-        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(espn), "ESPN Network watermark is not present");
+        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(ESPN_PLUS), "ESPN Network watermark is not present");
         sa.assertAll();
     }
 
@@ -409,7 +408,6 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        String espn = "ESPN+";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -424,8 +422,8 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 "Channel network attribution is not present");
 
         // Validate right position of espn logo
-        validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(espn), RIGHT_POSITION);
+        validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), RIGHT_POSITION);
         // Validate bottom position of espn logo
-        validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(espn), BOTTOM);
+        validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), BOTTOM);
     }
 }
