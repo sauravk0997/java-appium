@@ -40,7 +40,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BA
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.MICKEY_MOUSE;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.INVALID_CREDENTIALS_ERROR;
-import static com.disney.qa.tests.disney.apple.ios.DisneyBaseTest.Person.U13;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
