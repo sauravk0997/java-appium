@@ -1235,7 +1235,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
 
-        updateProfilePage.enterDOB(U13.getMonth(), U13.getDay(), U13.getYear());
+        updateProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
         sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
         sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(),
