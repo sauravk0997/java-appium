@@ -911,10 +911,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.clickPlay();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_TWENTY, maxAttempts);
-        videoPlayer.clickPlay();
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.getProgressContainer().isPresent(),
@@ -924,19 +922,16 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickDown();
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.clickPlay();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_FIFTY, maxAttempts);
-        videoPlayer.clickPlay();
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_FIFTY, latency);
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
-        videoPlayer.clickPlay();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_HUNDRED, maxAttempts);
-        videoPlayer.waitForVideoToStart();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
