@@ -99,7 +99,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount());
+//        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
@@ -125,8 +125,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         //Move to the "Unlock to Stream More Hulu" collection
         brandPage.waitForLoaderToDisappear(15);
-        brandPage.moveDown(5, 1);
-        brandPage.moveUpUntilCollectionContentIsFocused(
+//        brandPage.moveDown(5, 1);
+        brandPage.moveLeftUntilFirstCellIsFocused(getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU), 15);
+        brandPage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), 5);
         brandPage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains
                 (titleAvailableToPlay), 5);
