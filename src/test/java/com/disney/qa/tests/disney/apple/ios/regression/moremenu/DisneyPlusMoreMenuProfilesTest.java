@@ -1761,8 +1761,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfilePage.isSharePlayU13TooltipPresent(), "U13 Share play tooltip is not present");
         editProfilePage.clickDoneBtn();
 
-        // Validate if SharePlay option is enabled for a 13 Profile
-
+        // Add a profile and validate if SharePlay option is enabled for a 13 Profile
         Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoIsWatching.clickAddProfile();
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
