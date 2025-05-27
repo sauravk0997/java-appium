@@ -261,6 +261,25 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 "'No results found' message is not displayed");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112731"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchKeyboard() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        Assert.assertTrue(searchPage.getKeyboardByPredicate().isPresent(), "Keyboard is not present");
+        searchPage.clickSelect();
+        Assert.assertEquals(searchPage.getSearchBarText(), A_CHARACTER,
+                String.format("Current search query wasn't '%s'", A_CHARACTER));
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112649"})
     @Test(groups = {TestGroup.SEARCH, US})
     public void verifySearchQueryInputBehavior() {
