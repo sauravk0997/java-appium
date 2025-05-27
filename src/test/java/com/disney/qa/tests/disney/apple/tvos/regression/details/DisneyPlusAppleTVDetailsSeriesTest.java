@@ -926,12 +926,14 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
+        detailsPage.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_FIFTY, latency);
         commonPage.clickSelect();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_HUNDRED, maxAttempts);
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
+        detailsPage.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_HUNDRED, latency);
     }
 
