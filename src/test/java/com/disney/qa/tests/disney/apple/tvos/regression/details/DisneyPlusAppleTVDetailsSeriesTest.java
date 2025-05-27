@@ -953,11 +953,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_SIXTY, maxAttempts);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_SIXTY, latency);
         commonPage.clickSelect();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_HUNDRED, maxAttempts);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_HUNDRED, latency);
