@@ -6,7 +6,6 @@ import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -99,7 +98,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-//        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
@@ -125,7 +124,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         //Move to the "Unlock to Stream More Hulu" collection
         brandPage.waitForLoaderToDisappear(15);
-//        brandPage.moveDown(5, 1);
         brandPage.moveLeftUntilFirstCellIsFocused(getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU), 15);
         brandPage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), 5);
