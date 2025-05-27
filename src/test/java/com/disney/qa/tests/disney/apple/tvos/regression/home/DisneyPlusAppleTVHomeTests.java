@@ -38,6 +38,21 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121758"})
+    @Test(groups = {TestGroup.HOME, TestGroup.ESPN, US})
+    public void verifyESPNTileUS() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
+                ESPN_BRAND_TILE_NOT_PRESENT);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121942"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyESPNBrandTiles() {
@@ -48,7 +63,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
-                "ESPN brand tile was not present on home page screen");
+                ESPN_BRAND_TILE_NOT_PRESENT);
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
@@ -71,7 +86,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).isPresent(),
                 "Hulu brand tile was not present on home page screen");
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
-                "ESPN brand tile was not present on home page screen");
+                ESPN_BRAND_TILE_NOT_PRESENT);
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
@@ -163,7 +178,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).isPresent(),
                 "Hulu brand tile was not present on home page screen");
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
-                "ESPN brand tile was not present on home page screen");
+                ESPN_BRAND_TILE_NOT_PRESENT);
 
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
         Assert.assertTrue(
