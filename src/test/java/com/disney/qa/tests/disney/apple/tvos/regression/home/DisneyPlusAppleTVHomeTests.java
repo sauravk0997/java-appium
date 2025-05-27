@@ -109,7 +109,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         brandPage.moveLeft(15,1);
         brandPage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), 5);
-        brandPage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains(titleAvailableToPlay), 5);
+        brandPage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains
+                ("Hulu Original Series, Available with Hulu Subscription"), 5);
         brandPage.clickSelect();
         detailsPage.waitUntilElementIsFocused(detailsPage.getUnlockButton(), 15);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(),
