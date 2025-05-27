@@ -106,7 +106,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
 
         //Validate in-eligible for upsell user still has some content to watch
-        String titleAvailableToPlay = "Hulu Original Series,";
+        String titleAvailableToPlay = "Hulu Original Series";
         homePage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU), 5);
         homePage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains(titleAvailableToPlay), 15);
@@ -125,7 +125,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         //Move to the "Unlock to Stream More Hulu" collection
         brandPage.waitForLoaderToDisappear(15);
-        brandPage.clickBack();
         brandPage.moveDown(5, 1);
         brandPage.moveUpUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), 5);
