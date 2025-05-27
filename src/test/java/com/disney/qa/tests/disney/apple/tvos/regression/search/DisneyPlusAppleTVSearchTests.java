@@ -33,6 +33,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private static final String HULU_CONTENT_ERROR_MESSAGE = "Hulu content is not present";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
+    private static final String A_CHARACTER = "a";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67362"})
     @Test(groups = {TestGroup.SEARCH, US})
@@ -273,7 +274,8 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
         Assert.assertTrue(searchPage.getKeyboardByPredicate().isPresent(), "Keyboard is not present");
         searchPage.clickSelect();
-        Assert.assertEquals(searchPage.getSearchBarText(), "a", "Current search query wasn't 'a'");
+        Assert.assertEquals(searchPage.getSearchBarText(), A_CHARACTER,
+                String.format("Current search query wasn't '%s'", A_CHARACTER));
     }
 
     private List<String> getMovieTabCollection() {
