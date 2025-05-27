@@ -650,7 +650,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             displayVideoController();
             currentTime = currentTimeLabel.getText().split(":");
         } else {
-            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(2);
+            clickDown();
             currentTime = seekTimeLabel.getText().split(":");
         }
         if (currentTime.length > 2) {
