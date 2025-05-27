@@ -33,6 +33,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private static final String HULU_CONTENT_ERROR_MESSAGE = "Hulu content is not present";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
+    private static final String A_CHARACTER = "a";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67362"})
     @Test(groups = {TestGroup.SEARCH, US})
@@ -256,6 +257,25 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         searchPage.typeInSearchField(RandomStringUtils.randomAlphabetic(61));
         Assert.assertTrue(searchPage.getNoResultsFoundText().isPresent(),
                 "'No results found' message is not displayed");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112731"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchKeyboard() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        Assert.assertTrue(searchPage.getKeyboardByPredicate().isPresent(), "Keyboard is not present");
+        searchPage.clickSelect();
+        Assert.assertEquals(searchPage.getSearchBarText(), A_CHARACTER,
+                String.format("Current search query wasn't '%s'", A_CHARACTER));
     }
 
     private List<String> getMovieTabCollection() {
