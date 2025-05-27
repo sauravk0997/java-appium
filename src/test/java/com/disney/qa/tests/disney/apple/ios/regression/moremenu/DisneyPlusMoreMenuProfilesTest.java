@@ -67,6 +67,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String LEFT = "LEFT";
     private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
     private static final String SELECT_PROFILE_PAGE_NOT_DISPLAYED = "Select Profile page is not displayed";
+    private static final String SHAREPLAY_TOGGLE_NOT_PRESENT = "SharePlay toggle was not present";
 
 
     private void onboard() {
@@ -1709,7 +1710,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
 
         Assert.assertTrue(editProfilePage.isFeatureSettingsSectionDisplayed(), "Share Play setting section is not present");
-        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
+        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), SHAREPLAY_TOGGLE_NOT_PRESENT);
         editProfilePage.toggleSharePlayButton(toggleOff);
         editProfilePage.toggleSharePlayButton(toggleOn);
 
@@ -1752,7 +1753,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
-        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
+        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), SHAREPLAY_TOGGLE_NOT_PRESENT);
 
         // Validate if SharePlay option is not enabled
         Assert.assertFalse(editProfilePage.isSharePlayEnabled(), "SharePlay option is enabled");
@@ -1760,7 +1761,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfilePage.isSharePlayU13TooltipPresent(), "U13 Share play tooltip is not present");
         editProfilePage.clickDoneBtn();
 
-        // Validate if SharePlay option is enabled when U13 turns 13
+        // Validate if SharePlay option is enabled for a 13 Profile
 
         Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoIsWatching.clickAddProfile();
