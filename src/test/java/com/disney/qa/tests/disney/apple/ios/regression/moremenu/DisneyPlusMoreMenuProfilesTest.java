@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.content.ContentSet;
@@ -1730,7 +1731,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        String yearForThirteen = String.valueOf(LocalDate.now().getYear() - 13);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         String toggleON = "On";
 
         // Add a kid's profile
@@ -1760,16 +1761,28 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfilePage.clickDoneBtn();
 
         // Validate if SharePlay option is enabled when U13 turns 13
+
         Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
-        getUnifiedAccountApi().patchProfileAge(getUnifiedAccount(),  yearForThirteen + "-01-01",
-                getUnifiedAccount().getProfileId(KIDS_PROFILE));
+        whoIsWatching.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
 
-        terminateApp(sessionBundles.get(DISNEY));
-        startApp(sessionBundles.get(DISNEY));
+        DateHelper.Month month = DateHelper.Month.valueOf(LocalDate.now().getMonth().name());
+        String day = String.valueOf(LocalDate.now().getDayOfMonth());
+        String year = String.valueOf(LocalDate.now().getYear() - 13);
 
+        addProfile.enterProfileName(JUNIOR_PROFILE);
+
+        addProfile.enterDOB(month, day, year);
+        addProfile.clickSaveProfileButton();
+        addProfile.clickSecondaryButton();
+
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        editProfilePage.clickEditModeProfile(JUNIOR_PROFILE);
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
         Assert.assertTrue(editProfilePage.isSharePlayEnabled(), "SharePlay option is not enabled");
         Assert.assertEquals(editProfilePage.getSharePlayToggleCell().getText(), toggleON,

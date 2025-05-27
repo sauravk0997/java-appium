@@ -44,7 +44,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement thirdCollectionTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS ', Rated %s'`]")
     private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
     private ExtendedWebElement firstUpcomingEventCell;
