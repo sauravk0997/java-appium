@@ -126,7 +126,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         brandPage.waitForLoaderToDisappear(15);
         brandPage.clickBack();
         homePage.waitForHomePageToOpen();
-        homePage.clickSelect();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
         brandPage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), 5);
         brandPage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains
