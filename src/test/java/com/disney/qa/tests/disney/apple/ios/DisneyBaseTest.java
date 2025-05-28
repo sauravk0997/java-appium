@@ -692,11 +692,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public String getExploreAPIResponseOrErrorMsg(ExploreSearchRequest exploreSearchRequest) {
+        ExplorePageResponse explorePageResponse = null;
         try {
-            ExplorePageResponse explorePageResponse = getExploreApi().getPage(exploreSearchRequest);
+            explorePageResponse = getExploreApi().getPage(exploreSearchRequest);
             return explorePageResponse.getData().toString().split("message=")[1].split(", iconType=")[0];
         } catch (Exception e) {
-            return e.getMessage().split("description=")[1].split("\\)")[0];
+            if (explorePageResponse == null)
+                Assert.fail("Expected response not received from API");
+            return explorePageResponse.getData().toString().split("description=")[1].split("\\)")[0];
         }
     }
 

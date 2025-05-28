@@ -51,6 +51,17 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String ESPN_CONTENT = "NFL 2025 Winter Classic";
     public static final String NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION = "This program is presented as originally " +
             "created and may contain stereotypes or negative depictions.";
+    private static final String RATING_RESTRICTION_DETAIL_MESSAGE_NOT_DISPLAYED = "Rating Restriction Detail Message " +
+            "is not displayed";
+    private static final String PARENTAL_CONTROL_ICON_NOT_DISPLAYED = "Parental Control icon is not displayed";
+    private static final String EXTRAS_TAB_DISPLAYED = "Extras tab is displayed";
+    private static final String SUGGESTED_TAB_DISPLAYED = "Suggested tab is displayed";
+    private static final String DETAILS_TAB_DISPLAYED = "Details tab is displayed";
+    private static final String EPISODES_TAB_DISPLAYED = "Episodes tab is displayed";
+    private static final String WATCHLIST_BUTTON_DISPLAYED = "Watchlist CTA is displayed";
+    private static final String TRAILER_BUTTON_DISPLAYED = "Trailer CTA displayed";
+    private static final String PLAY_BUTTON_DISPLAYED = "Play CTA found.";
+    private static final String METADATA_NOT_DISPLAYED = "Metadata label is not displayed";
 
     @DataProvider(name = "disneyPlanTypes")
     public Object[][] disneyWebPlanTypes() {
@@ -134,10 +145,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66841"})
-    @Test(description = "Maturity Rating Restriction on Detail Page", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyMaturityRatingRestrictionOnDetailPage() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -156,35 +168,40 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
 
         setAppToHomeScreen(getUnifiedAccount(), profile.getProfileName());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // Movies
         launchDeeplink(R.TESTDATA.get("disney_prod_the_avengers_deeplink"));
 
-        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
-        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
-        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), "Details tab is found.");
-        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
-        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
-        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), EXTRAS_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), SUGGESTED_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), DETAILS_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), WATCHLIST_BUTTON_DISPLAYED);
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), TRAILER_BUTTON_DISPLAYED);
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), PLAY_BUTTON_DISPLAYED);
 
-        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(), "Rating Restriction Detail Message not found");
-        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Metadata label is displayed.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains("The Avengers"), "Media title not found.");
+        sa.assertTrue(detailsPage.getParentalControlIcon().isPresent(), PARENTAL_CONTROL_ICON_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
+                RATING_RESTRICTION_DETAIL_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), METADATA_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getMediaTitle().contains("The Avengers"), MEDIA_TITLE_NOT_DISPLAYED);
 
         // Series
         launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
 
-        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
-        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
-        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), "Details tab is found.");
-        sa.assertFalse(detailsPage.getEpisodesTab().isPresent(SHORT_TIMEOUT), "Episodes tab is found.");
-        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
-        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
-        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
+        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), EXTRAS_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), SUGGESTED_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), DETAILS_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getEpisodesTab().isPresent(SHORT_TIMEOUT), EPISODES_TAB_DISPLAYED);
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), WATCHLIST_BUTTON_DISPLAYED);
+        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), TRAILER_BUTTON_DISPLAYED);
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), PLAY_BUTTON_DISPLAYED);
 
-        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(), "Rating Restriction Detail Message not found");
-        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Metadata label is displayed.");
-        sa.assertTrue(detailsPage.getMediaTitle().contains("Dr. K's Exotic Animal ER"), "Media title not found.");
+        sa.assertTrue(detailsPage.getParentalControlIcon().isPresent(), PARENTAL_CONTROL_ICON_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getRatingRestrictionDetailMessage().isPresent(),
+                RATING_RESTRICTION_DETAIL_MESSAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), METADATA_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getMediaTitle().contains("Dr. K's Exotic Animal ER"), MEDIA_TITLE_NOT_DISPLAYED);
 
         sa.assertAll();
     }
@@ -609,7 +626,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileNoHulu() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -629,23 +646,25 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .isStarOnboarded(true)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
+        Assert.assertTrue(homePage.isKidsHomePageOpen(), HOME_PAGE_NOT_DISPLAYED);
 
         //No upsell
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        sa.assertFalse(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
+        homePage.clickMoreTab();
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
                 "Account option was available to a child account, upsell option possible");
 
         //Home
         moreMenu.clickHomeIcon();
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(homePage.isKidsHomePageOpen(), HOME_PAGE_NOT_DISPLAYED);
         homePage.getKidsCarousels().forEach(element -> sa.assertFalse(element.getText().contains(HULU),
                 String.format("%s contains %s", element.getText(), HULU)));
-        sa.assertFalse(homePage.isHuluTileVisible(), "Hulu tile was found on Kids home.");
+        sa.assertFalse(homePage.getBrandCell(HULU).isPresent(ONE_SEC_TIMEOUT), "Hulu tile was found on Kids home.");
         sa.assertTrue(homePage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Home page");
 
         //Search
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Search page");
 
         //Hulu Original Movie
@@ -660,13 +679,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //Details
         searchPage.clearText();
         searchPage.searchForMedia(BLUEY);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(BLUEY).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Detail page");
 
         //Ad badge
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.displayVideoController();
         sa.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
                 "Ad badge found on Kids profile video content.");

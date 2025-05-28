@@ -33,7 +33,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest {
     protected static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String SPORT_PAGE_DID_NOT_OPEN = "Sport page did not open";
     private static final String NO_REPLAYS_FOUND = "No replay events found";
     private static final String PLAYER_CONTROLS_NOT_DISPLAYED =
             "Player controls were not displayed when playback activated";
@@ -197,20 +196,19 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
         String rugby = "Rugby";
-        String espn = "ESPN+";
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
-                .isPresent(), "ESPN brand tile was not present on home page screen");
+                .isPresent(), ESPN_BRAND_TILE_NOT_PRESENT);
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
 
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
 
-        // Navigate to Sports and basketball sport
+        // Navigate to Sports collection
         homePage.moveDownUntilCollectionContentIsFocused(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
@@ -232,7 +230,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         sa.assertTrue(replayTitle.contains(videoPlayer.getTitleLabel()),
                 "Video title does not match with the expected");
-        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(espn), "ESPN Network watermark is not present");
+        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(ESPN_PLUS), "ESPN Network watermark is not present");
         sa.assertAll();
     }
 
@@ -401,5 +399,30 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         // Fast-forward to the end of playback and validate Post Play UI is visible again after playback
         commonPage.clickRight(7, 1, 1);
         Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121948"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.ESPN, US})
+    public void verifyESPNNetworkAttributionOnPlayBack() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("espn_prod_survive_and_advance_documentary_playback"));
+
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
+                "Service attribution was not visible when video started");
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
+                "Channel network attribution is not present");
+
+        // Validate right position of espn logo
+        validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), RIGHT_POSITION);
+        // Validate bottom position of espn logo
+        validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), BOTTOM);
     }
 }
