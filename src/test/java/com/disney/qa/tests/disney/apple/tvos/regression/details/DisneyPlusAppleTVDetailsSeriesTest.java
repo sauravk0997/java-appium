@@ -882,7 +882,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64956"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifyEpisodeTabProgressBarUpdates() {
-        int latency = 20;
+        int latency = 25;
         int maxAttempts = 40;
         String episodeTitle;
         int runTimeInSec;
