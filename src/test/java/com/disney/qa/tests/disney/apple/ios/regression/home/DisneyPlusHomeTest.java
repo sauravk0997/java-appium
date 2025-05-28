@@ -835,7 +835,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
-    @Test(groups = {TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = true)
     public void verifyHuluCollectionPagesNetworkPageUI() {
         List<String> networkLogos = new ArrayList<String>(
                 Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
@@ -868,6 +868,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
             File srcFile = homePage.getNetworkLogoImage(item).getElement().getScreenshotAs(OutputType.FILE);
             ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), s3BucketPath);
             ImagesResponse360 imagesResponse360 = ALICE_API_MANAGER.compareImages360S3(imagesComparisonRequest);
+            System.out.println(imagesResponse360.toString());
             JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
             LOGGER.info("Raw JSON response: {}", jsonResponse);
             double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
