@@ -1754,10 +1754,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .build());
         setAppToHomeScreen(getUnifiedAccount());
 
-        whoIsWatching.clickProfile(DEFAULT_PROFILE);
-        homePage.waitForHomePageToOpen();
-        moreMenu.clickMoreTab();
-        moreMenu.clickEditProfilesBtn();
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        editProfilePage.getEditProfileTitle().click();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
         Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), SHAREPLAY_TOGGLE_NOT_PRESENT);
@@ -1771,8 +1769,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // Add a profile and validate if SharePlay option is enabled for a 13 Profile
         Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
 
-        moreMenu.tapBackButton();
-        moreMenu.clickEditProfilesBtn();
+        editProfilePage.getEditProfileTitle().click();
         editProfilePage.clickEditModeProfile(JUNIOR_PROFILE);
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
         Assert.assertTrue(editProfilePage.isSharePlayEnabled(), "SharePlay option is not enabled");

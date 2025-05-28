@@ -645,4 +645,7 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return sharePlayLabel;
     }
 
+    public ExtendedWebElement getEditProfileTitle() {
+        return getStaticTextByLabelContains(editProfileTitle);
+    }
 }
