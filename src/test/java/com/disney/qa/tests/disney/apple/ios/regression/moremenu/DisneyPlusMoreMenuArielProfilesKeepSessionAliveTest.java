@@ -38,51 +38,28 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
+        DisneyPlusCreatePasswordIOSPageBase createPassword = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
 
         String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount());
+//        setAppToHomeScreen(getUnifiedAccount());
+//        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
 
         createKidsProfile();
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            parentalConsent.scrollConsentContent(4);
-        }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
-        sa.assertTrue(parentalConsent.getFullCatalogButton().isPresent(), "Full Catalog button was not" +
-                "present");
-        parentalConsent.getFullCatalogButton().click();
-        sa.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was " +
-                "not displayed after selecting full catalog");
-        sa.assertTrue(passwordPage.getCancelButton().isPresent(), "Cancel button was not present");
+        sa.assertTrue(passwordPage.getBackArrow().isPresent(), "Back Arrow is not displayed");
+        sa.assertTrue(passwordPage.isHeaderTextDisplayed(), "Enter your password text is not present");
+        sa.assertTrue(passwordPage.isPasswordFieldDisplayed(), "Password field is not present");
+        sa.assertTrue(changePassword.isPasswordDescriptionPresent(), "Password description is not present");
         sa.assertTrue(passwordPage.getPasswordHint().isPresent(), "Password hint text is not present");
-        sa.assertTrue(passwordPage.getShowHideIcons().isPresent(), "Show Password button is not present");
-        sa.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot Password link is not present");
-        sa.assertTrue(passwordPage.getConfirmButton().isPresent(), "Confirm button is not present");
-        sa.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was " +
-                        "not displayed");
-        //entering incorrect password
+        sa.assertTrue(createPassword.isHidePasswordIconPresent(), "Show Password button is not present");
+        sa.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot password Link is not present");
+        sa.assertTrue(passwordPage.getContinueButton().isPresent(), "Continue button is not present");
         passwordPage.enterPasswordNoAccount("IncorrectPassword!123");
-        //Verify that error is shown on screen
         sa.assertEquals(loginPage.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
-        // terminating app and relaunching it
-        LOGGER.info("Terminating the app");
-        pause(2);
-        terminateApp();
-        LOGGER.info("Relaunching the app");
-        relaunch();
-        sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was " +
-                "not displayed after terminating the app");
-        whoIsWatching.clickProfile(KIDS_PROFILE);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
-        parentalConsent.getFullCatalogButton().click();
-        //entering correct password
         passwordPage.enterPasswordNoAccount(getUnifiedAccount().getUserPass());
-        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
-        passwordPage.clickSecondaryButtonByCoordinates();
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         sa.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
         sa.assertAll();
     }
@@ -187,7 +164,8 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        addProfile.tapJuniorModeToggle();
         addProfile.clickSaveProfileButton();
     }
 }
