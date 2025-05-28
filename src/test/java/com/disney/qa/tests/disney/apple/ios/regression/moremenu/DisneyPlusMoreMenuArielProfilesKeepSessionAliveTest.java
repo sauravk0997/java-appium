@@ -62,16 +62,21 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         sa.assertTrue(passwordPage.getShowHideIcons().isPresent(), "Show Password button is not present");
         sa.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot Password link is not present");
         sa.assertTrue(passwordPage.getConfirmButton().isPresent(), "Confirm button is not present");
+        sa.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was " +
+                        "not displayed");
         //entering incorrect password
         passwordPage.enterPasswordNoAccount("IncorrectPassword!123");
         //Verify that error is shown on screen
         sa.assertEquals(loginPage.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
         // terminating app and relaunching it
-//        terminateApp();
-//        relaunch();
-//        whoIsWatching.clickProfile(KIDS_PROFILE);
-//        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
-//        parentalConsent.getFullCatalogButton().click();
+        pause(2000);
+        terminateApp();
+        relaunch();
+        sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was " +
+                "not displayed after terminating the app");
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        parentalConsent.getFullCatalogButton().click();
         //entering correct password
         passwordPage.enterPasswordNoAccount(getUnifiedAccount().getUserPass());
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
