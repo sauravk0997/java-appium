@@ -39,4 +39,17 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
     public void clickDismissButton() {
         dismissButton.click();
     }
+
+    public boolean isBodyTextValid() {
+        String[] multilineStringParts = getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_BODY.getText())
+                .split("\n\n");
+        for (String multilineStringPart : multilineStringParts) {
+            if (!staticTextLabelContains.format(multilineStringPart.trim()).isPresent(FIVE_SEC_TIMEOUT)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
