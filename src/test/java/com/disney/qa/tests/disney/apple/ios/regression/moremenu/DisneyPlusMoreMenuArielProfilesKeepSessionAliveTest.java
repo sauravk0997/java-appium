@@ -69,8 +69,10 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         //Verify that error is shown on screen
         sa.assertEquals(loginPage.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
         // terminating app and relaunching it
-        pause(2000);
+        LOGGER.info("Terminating the app");
+        pause(2);
         terminateApp();
+        LOGGER.info("Relaunching the app");
         relaunch();
         sa.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was " +
                 "not displayed after terminating the app");
