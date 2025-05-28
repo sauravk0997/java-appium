@@ -324,7 +324,8 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         searchPage.clickLocalizedSearchResult(contentTitle);
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.clickDetailsTab();
+        detailsPage.moveDown(1,1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
         Assert.assertEquals(detailsPage.getDetailsTabTitle(), contentTitle,
                 "Expected upcoming event detail page not displayed");
     }
