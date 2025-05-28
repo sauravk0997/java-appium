@@ -1744,6 +1744,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
+        // Add a 13 profile
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(JUNIOR_PROFILE)
