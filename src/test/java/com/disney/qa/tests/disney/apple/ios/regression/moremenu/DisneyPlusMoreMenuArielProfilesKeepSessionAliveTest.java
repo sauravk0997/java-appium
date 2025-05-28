@@ -38,6 +38,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
@@ -52,7 +53,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         sa.assertTrue(parentalConsent.getFullCatalogButton().isPresent(), "Full Catalog button was not" +
-                "presnt");
+                "present");
         parentalConsent.getFullCatalogButton().click();
         sa.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was " +
                 "not displayed after selecting full catalog");
@@ -61,11 +62,21 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         sa.assertTrue(passwordPage.getShowHideIcons().isPresent(), "Show Password button is not present");
         sa.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot Password link is not present");
         sa.assertTrue(passwordPage.getConfirmButton().isPresent(), "Confirm button is not present");
+        //entering incorrect password
         passwordPage.enterPasswordNoAccount("IncorrectPassword!123");
         //Verify that error is shown on screen
         sa.assertEquals(loginPage.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
+        // terminating app and relaunching it
+        terminateApp();
+        relaunch();
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        parentalConsent.getFullCatalogButton().click();
+        //entering correct password
         passwordPage.enterPasswordNoAccount(getUnifiedAccount().getUserPass());
-        sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
+        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
+        passwordPage.clickSecondaryButtonByCoordinates();
+        sa.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
         sa.assertAll();
     }
 
@@ -170,7 +181,6 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-//        addProfile.tapJuniorModeToggle();
         addProfile.clickSaveProfileButton();
     }
 }
