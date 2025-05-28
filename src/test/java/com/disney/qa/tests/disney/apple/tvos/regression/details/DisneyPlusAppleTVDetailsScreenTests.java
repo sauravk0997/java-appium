@@ -62,7 +62,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66656"})
-    @Test(groups = {TestGroup.DETAILS_PAGE,TestGroup.MOVIES, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
     public void verifyMovieDetailsExtraTab() {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -355,13 +355,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
 
-        // Navigate to Sports and basketball sport
+        // Navigate to Sports collection
         homePage.moveDownUntilCollectionContentIsFocused(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
         detailsPage.getTypeCellLabelContains(rugby).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
-                "Sport page did not open");
+                SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate the page
         CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
@@ -901,5 +901,44 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Content Unavailable error message was not present");
         Assert.assertTrue(homePage.getOkButton().isElementPresent(),
                 "OK button text was not present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121918"})
+    @Test(groups = {TestGroup.ESPN, TestGroup.DETAILS_PAGE, US})
+    public void verifyESPNSportPage() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
+                .isPresent(), "ESPN brand tile was not present on home page screen");
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
+
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                ESPN_PAGE_DID_NOT_OPEN);
+
+        // Navigate to Sports collection and select the first Sport title
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 15);
+
+        String sportTitle = getContainerTitlesFromApi(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 5).get(0);
+        LOGGER.info("Navigating to sport {}", sportTitle);
+        if(!sportTitle.isEmpty()) {
+            homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(sportTitle), 20);
+        } else {
+            throw new SkipException("There are no sports available");
+        }
+
+        detailsPage.getTypeCellLabelContains(sportTitle).click();
+        Assert.assertTrue(espnPage.isSportTitlePresent(sportTitle),
+                SPORT_PAGE_DID_NOT_OPEN);
+        Assert.assertFalse(detailsPage.getBrandLandingView().isElementPresent(THREE_SEC_TIMEOUT),
+                "A logo image is present in sports screen");
     }
 }

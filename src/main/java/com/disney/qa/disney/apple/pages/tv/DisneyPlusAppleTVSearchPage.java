@@ -25,6 +25,10 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
             "**/XCUIElementTypeOther[`name == 'searchResults'`]/**/XCUIElementTypeCell[`label CONTAINS '%s'`]")
     private ExtendedWebElement searchResultsContainers;
 
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeOther[`name == 'searchResults'`]/**/XCUIElementTypeCollectionView/XCUIElementTypeCell")
+    private ExtendedWebElement allSearchResultsContainers;
+
     public DisneyPlusAppleTVSearchPage(WebDriver driver) {
         super(driver);
     }
@@ -56,6 +60,13 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         } else {
             throw new IllegalArgumentException("No search results found");
         }
+    }
+
+    public List<ExtendedWebElement> getAllSearchResults() {
+        fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
+                "No search results found")
+                .until(it -> !findExtendedWebElements(allSearchResultsContainers.getBy()).isEmpty());
+        return findExtendedWebElements(allSearchResultsContainers.getBy());
     }
 
     public void clickLocalizedSearchResult(String assetName) {
