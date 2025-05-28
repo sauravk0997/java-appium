@@ -44,8 +44,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement thirdCollectionTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s' AND label CONTAINS '%s'`]")
-    private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s' " +
+            "AND label CONTAINS '%s'`]")
+    private ExtendedWebElement searchResultCellWithTitleAndRatingValues;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
     private ExtendedWebElement firstUpcomingEventCell;
     @ExtendedFindBy(iosClassChain =
@@ -283,6 +284,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getTitleContainer(String titleName, String titleRating, String year) {
-        return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating, year);
+        return searchResultCellWithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating, year);
     }
 }
