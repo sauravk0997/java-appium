@@ -76,6 +76,7 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         } else {
             LOGGER.info("Detected vertical keyboard, clicking right to search results..");
             keyPressTimes(IRemoteControllerAppleTV::clickRight, 6, 1);
+            keyPressTimes(IRemoteControllerAppleTV::clickDown, 1, 1);
         }
         getTypeCellLabelContains(assetName).clickIfPresent();
     }
