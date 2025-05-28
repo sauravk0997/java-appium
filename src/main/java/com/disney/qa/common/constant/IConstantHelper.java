@@ -55,6 +55,9 @@ public interface IConstantHelper {
     String WHOS_WATCHING_NOT_DISPLAYED = "Who's Watching Page is not displayed";
     String UP_NEXT_PAGE_NOT_DISPLAYED = "Up Next page is not displayed";
     String EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED = "Edna DOB collection page is not displayed";
+    String SPORT_PAGE_DID_NOT_OPEN = "Sport page did not open";
+    String ESPN_SUBSCRIPTION_MESSAGE = "Included with your ESPN+ subscription";
+    String ESPN_BRAND_TILE_NOT_PRESENT = "ESPN brand tile was not present on home page screen";
 
     //Profile Names
     String PROFILE_NAME_SECONDARY = "Secondary";
