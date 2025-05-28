@@ -1377,7 +1377,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return (progressBarBookmark.getSize().getWidth() * 100) / progressBar.getSize().getWidth();
     }
 
-    public ExtendedWebElement getContentAdvisory() {
+    public ExtendedWebElement getContentAdvisoryText() {
         return contentAdvisoryText;
     }
 

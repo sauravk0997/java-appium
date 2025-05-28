@@ -707,9 +707,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seriesApiContent.getTitle()).isPresent(),
                 "Expected series title is not present");
-        Assert.assertTrue(detailsPage.getContentAdvisory().isPresent(),
+        Assert.assertTrue(detailsPage.getContentAdvisoryText().isPresent(),
                 "Content Advisory section is not present");
-        Assert.assertTrue(detailsPage.getContentAdvisory().getText().contains(
+        Assert.assertTrue(detailsPage.getContentAdvisoryText().getText().contains(
                 detailsPage.retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory text is not present as expected");
     }
