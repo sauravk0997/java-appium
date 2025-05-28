@@ -26,6 +26,12 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
 
     public ExtendedWebElement getDismissButton() { return dismissButton; }
 
+    public ExtendedWebElement getHeaderTextElement() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_HEADER.getText()));
+    }
+
     public void clickHelpCenterButton() {
         helpCenterButton.click();
     }
