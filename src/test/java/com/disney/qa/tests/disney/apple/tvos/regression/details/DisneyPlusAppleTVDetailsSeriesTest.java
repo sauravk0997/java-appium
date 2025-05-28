@@ -913,7 +913,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.waitForVideoToStart();
         videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
         videoPlayer.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
+        videoPlayer.clickPlay();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_TWENTY, maxAttempts);
+        videoPlayer.clickPlay();
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
@@ -925,7 +927,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickDown();
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPlay();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_FIFTY, maxAttempts);
+        videoPlayer.clickPlay();
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
@@ -934,7 +938,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         commonPage.clickSelect();
         videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPlay();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_HUNDRED, maxAttempts);
+        videoPlayer.clickPlay();
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         videoPlayer.clickBack();
         detailsPage.waitForDetailsPageToOpen();
