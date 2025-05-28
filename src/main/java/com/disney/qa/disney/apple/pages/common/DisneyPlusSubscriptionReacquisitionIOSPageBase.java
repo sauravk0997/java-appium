@@ -12,14 +12,6 @@ public class DisneyPlusSubscriptionReacquisitionIOSPageBase extends DisneyPlusAp
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'paywallLandingComplete'`][2]")
     private ExtendedWebElement disneyPlusLogo;
 
-    private ExtendedWebElement titleTextElement = staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE_ONBOARDING,
-            DictionaryKeys.CO_ACCOUNT_NO_ENTITLEMENT_HEADER.getText()));
-
-    private ExtendedWebElement descriptionTextElement = staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
-            DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE_ONBOARDING,
-            DictionaryKeys.CO_ACCOUNT_NO_ENTITLEMENT.getText()));
-
     public DisneyPlusSubscriptionReacquisitionIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -29,10 +21,14 @@ public class DisneyPlusSubscriptionReacquisitionIOSPageBase extends DisneyPlusAp
     }
 
     public ExtendedWebElement getTitleTextElement() {
-        return titleTextElement;
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE_ONBOARDING,
+                DictionaryKeys.CO_ACCOUNT_NO_ENTITLEMENT_HEADER.getText()));
     }
 
     public ExtendedWebElement getDescriptionTextElement() {
-        return descriptionTextElement;
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE_ONBOARDING,
+                DictionaryKeys.CO_ACCOUNT_NO_ENTITLEMENT.getText()));
     }
 }
