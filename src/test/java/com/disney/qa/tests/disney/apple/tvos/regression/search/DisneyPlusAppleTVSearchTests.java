@@ -314,8 +314,8 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        Item upcomingEvent = getUpcomingEventFromAPI(maxQuantityOfExpectedChannels);
-        String contentTitle = upcomingEvent.getVisuals().getTitle();
+        Item firstUpcomingEvent = getUpcomingEventFromAPI(maxQuantityOfExpectedChannels);
+        String contentTitle = firstUpcomingEvent.getVisuals().getTitle();
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
