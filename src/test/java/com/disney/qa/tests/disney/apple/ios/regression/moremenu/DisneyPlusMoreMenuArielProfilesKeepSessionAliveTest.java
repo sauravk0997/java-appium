@@ -33,23 +33,44 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     private static final String WRONG_PASSWORD = "local123b456@";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
-    @Test(description = "Add profile U13, minor authentication", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(description = "Add profile U13, minor authentication", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAddProfileU13AuthenticationIncorrectPassword() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
-        SoftAssert softAssert = new SoftAssert();
+        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
+
+        String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
+        SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
-        //wait for action grant to expire
-        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
+
         createKidsProfile();
-        passwordPage.submitPasswordWhileLoggedIn("IncorrectPassword!123");
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            sa.assertTrue(parentalConsent.validateScrollPopup(),
+                    "Alert verbiage doesn't match with the expected dict value");
+            parentalConsent.clickAlertConfirm();
+            parentalConsent.scrollConsentContent(4);
+        }
+
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+        sa.assertTrue(parentalConsent.getFullCatalogButton().isPresent(), "Full Catalog button was not" +
+                "presnt");
+        parentalConsent.getFullCatalogButton().click();
+        sa.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "Confirm with your password page was " +
+                "not displayed after selecting full catalog");
+        sa.assertTrue(passwordPage.getCancelButton().isPresent(), "Cancel button was not present");
+        sa.assertTrue(passwordPage.getPasswordHint().isPresent(), "Password hint text is not present");
+        sa.assertTrue(passwordPage.getShowHideIcons().isPresent(), "Show Password button is not present");
+        sa.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot Password link is not present");
+        sa.assertTrue(passwordPage.getConfirmButton().isPresent(), "Confirm button is not present");
+        passwordPage.enterPasswordNoAccount("IncorrectPassword!123");
         //Verify that error is shown on screen
-        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
-        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
-        softAssert.assertAll();
+        sa.assertEquals(loginPage.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
+        passwordPage.enterPasswordNoAccount(getUnifiedAccount().getUserPass());
+        sa.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
@@ -153,7 +174,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        addProfile.tapJuniorModeToggle();
+//        addProfile.tapJuniorModeToggle();
         addProfile.clickSaveProfileButton();
     }
 }

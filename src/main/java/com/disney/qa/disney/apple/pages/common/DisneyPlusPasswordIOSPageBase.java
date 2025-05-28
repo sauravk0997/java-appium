@@ -35,6 +35,15 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton/XCUIElementTypeOther/XCUIElementTypeOther")
     protected ExtendedWebElement loginLoader;
 
+    @ExtendedFindBy(accessibilityId = "primaryButton")
+    protected ExtendedWebElement primaryButton;
+
+    @ExtendedFindBy(accessibilityId = "buttonShowHidePassword")
+    protected ExtendedWebElement showHidePassword;
+
+    @ExtendedFindBy(accessibilityId = "passwordStrengthHeader")
+    protected ExtendedWebElement passwordHint;
+
     public DisneyPlusPasswordIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -229,5 +238,22 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         String taglineText = StringUtils.substringBefore(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()), ".");
         return getStaticTextViewValueContains(taglineText).isPresent();
+    }
+
+    public ExtendedWebElement getConfirmButton() {
+        return primaryButton;
+    }
+
+    public ExtendedWebElement getShowHideIcons() {
+        return showHidePassword;
+    }
+
+    public ExtendedWebElement getPasswordHint() {
+        return passwordHint;
+    }
+
+    public ExtendedWebElement getCancelButton() {
+        return dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.
+                        ResourceKeys.APPLICATION, CANCEL_BTN_CAPS.getText()));
     }
 }
