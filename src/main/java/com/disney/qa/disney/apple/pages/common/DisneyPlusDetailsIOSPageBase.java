@@ -155,7 +155,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
     private ExtendedWebElement durationTimeLabel;
     @ExtendedFindBy(accessibilityId = "contentAdvisory")
-    private ExtendedWebElement contentAdvisory;
+    private ExtendedWebElement contentAdvisoryText;
     @ExtendedFindBy(accessibilityId = "downloadButtonDownloading")
     private ExtendedWebElement downloadStartedButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"SHOP\" OR name == \"PERKS\"`]")
@@ -1378,7 +1378,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getContentAdvisory() {
-        return contentAdvisory;
+        return contentAdvisoryText;
     }
 
     public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
