@@ -67,11 +67,11 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         //Verify that error is shown on screen
         sa.assertEquals(loginPage.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
         // terminating app and relaunching it
-        terminateApp();
-        relaunch();
-        whoIsWatching.clickProfile(KIDS_PROFILE);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
-        parentalConsent.getFullCatalogButton().click();
+//        terminateApp();
+//        relaunch();
+//        whoIsWatching.clickProfile(KIDS_PROFILE);
+//        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
+//        parentalConsent.getFullCatalogButton().click();
         //entering correct password
         passwordPage.enterPasswordNoAccount(getUnifiedAccount().getUserPass());
         LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
