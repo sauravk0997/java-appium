@@ -525,4 +525,26 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 "Edit profile button is not in focus");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-111553"})
+    @Test(groups = {TestGroup.ONBOARDING, CA})
+    public void verifyOneTrustConsentBanner() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusAppleTVOneTrustConsentBannerIOSPage oneTrustConsentPage =
+                new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        sa.assertTrue(oneTrustConsentPage.isAllowAllButtonPresent(),
+                "Accept All button is not present");
+        sa.assertTrue(oneTrustConsentPage.isRejectAllButtonPresent(),
+                "Reject All button is not present");
+        sa.assertTrue(oneTrustConsentPage.isCustomizedChoicesButtonPresent(),
+                "Customize Choices button is not present");
+
+        oneTrustConsentPage.tapAcceptAllButton();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+    }
 }
