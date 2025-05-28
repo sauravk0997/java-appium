@@ -1743,6 +1743,15 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .avatarId(BABY_YODA)
                 .isStarOnboarded(true)
                 .build());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(P13_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .isStarOnboarded(true)
+                .build());
         setAppToHomeScreen(getUnifiedAccount());
 
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
@@ -1761,24 +1770,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         // Add a profile and validate if SharePlay option is enabled for a 13 Profile
         Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
-        whoIsWatching.clickAddProfile();
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
 
-        DateHelper.Month month = DateHelper.Month.valueOf(LocalDate.now().getMonth().name());
-        String day = String.valueOf(LocalDate.now().getDayOfMonth());
-        String year = String.valueOf(LocalDate.now().getYear() - 13);
-
-        addProfile.enterProfileName(JUNIOR_PROFILE);
-
-        addProfile.enterDOB(month, day, year);
-        addProfile.clickSaveProfileButton();
-        addProfile.clickSecondaryButton();
-
-        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
-        whoIsWatching.clickProfile(DEFAULT_PROFILE);
-        moreMenu.clickMoreTab();
+        moreMenu.tapBackButton();
         moreMenu.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(JUNIOR_PROFILE);
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
