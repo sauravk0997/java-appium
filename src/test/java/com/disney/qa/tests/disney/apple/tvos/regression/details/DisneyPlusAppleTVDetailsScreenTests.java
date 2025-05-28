@@ -694,7 +694,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
-        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_lion_king_timon_and_pumbaa_entity_id"),
+        ExploreContent seriesApiContent =
+                getSeriesApi(R.TESTDATA.get("disney_prod_lion_king_timon_and_pumbaa_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
 
         homePage.waitForHomePageToOpen();
@@ -704,9 +705,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         detailsPage.moveDown(1, 1);
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seriesApiContent.getTitle()).isPresent(),
+                "Expected series title is not present");
         Assert.assertTrue(detailsPage.getContentAdvisory().isPresent(),
                 "Content Advisory section is not present");
-        Assert.assertTrue(detailsPage.getContentAdvisory().getText().contains(detailsPage.retrieveContentAdvisory(seriesApiContent)),
+        Assert.assertTrue(detailsPage.getContentAdvisory().getText().contains(
+                detailsPage.retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory text is not present as expected");
     }
 
