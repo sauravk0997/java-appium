@@ -47,12 +47,8 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         createKidsProfile();
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            sa.assertTrue(parentalConsent.validateScrollPopup(),
-                    "Alert verbiage doesn't match with the expected dict value");
-            parentalConsent.clickAlertConfirm();
             parentalConsent.scrollConsentContent(4);
         }
-
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         sa.assertTrue(parentalConsent.getFullCatalogButton().isPresent(), "Full Catalog button was not" +
