@@ -126,7 +126,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Details tab was not found on details page");
         details.clickDetailsTab();
         String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
-        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+        sa.assertTrue(contentAdvisoryUI.contains(details.retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory Description not as expected");
 
         //movie
@@ -138,7 +138,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+        sa.assertTrue(contentAdvisoryUI.contains(details.retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory Description not as expected");
 
         sa.assertAll();
@@ -1016,18 +1016,5 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
-    }
-
-    public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
-        ContentAdvisory contentAdvisory = null;
-        try {
-            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
-        } catch (Exception e) {
-            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
-        }
-        if (contentAdvisory == null || contentAdvisory.getText().isEmpty()) {
-            throw new SkipException("Unable to get Content Advisory from API");
-        }
-        return contentAdvisory.getText();
     }
 }

@@ -2,6 +2,7 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -117,6 +118,9 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @ExtendedFindBy(accessibilityId = "groupWatchTooggleCell")
     protected ExtendedWebElement groupWatchToggleCell;
+
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"SharePlay\"`]")
+    private ExtendedWebElement sharePlayLabel;
 
     private final ExtendedWebElement pinSettingsCell = staticTextByLabelOrLabel.format(getLocalizationUtils()
                     .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
@@ -624,5 +628,24 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         if (!currentState.equalsIgnoreCase(newState)) {
             groupWatchToggleCell.getElement().findElement(By.name(TOGGLE_VIEW)).click();
         }
+    }
+
+    public boolean isSharePlayEnabled() {
+        return groupWatchToggleCell.getAttribute(
+                IOSUtils.Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
+    }
+
+    public boolean isSharePlayU13TooltipPresent() {
+        return staticTextLabelContains.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                GROUPWATCH_SHAREPLAY_SETTINGS_UNDER_13_TOOLTIP.getText())).isPresent();
+    }
+
+    public ExtendedWebElement getSharePlayLabel() {
+        return sharePlayLabel;
+    }
+
+    public ExtendedWebElement getEditProfileTitle() {
+        return getStaticTextByLabelContains(editProfileTitle);
     }
 }

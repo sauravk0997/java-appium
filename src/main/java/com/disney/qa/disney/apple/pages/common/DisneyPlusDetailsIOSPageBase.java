@@ -2,6 +2,8 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.explore.response.ContentAdvisory;
+import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
@@ -15,6 +17,7 @@ import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.SkipException;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
@@ -152,7 +155,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"runtime\"`]")
     private ExtendedWebElement durationTimeLabel;
     @ExtendedFindBy(accessibilityId = "contentAdvisory")
-    private ExtendedWebElement contentAdvisory;
+    private ExtendedWebElement contentAdvisoryText;
     @ExtendedFindBy(accessibilityId = "downloadButtonDownloading")
     private ExtendedWebElement downloadStartedButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"SHOP\" OR name == \"PERKS\"`]")
@@ -1372,5 +1375,22 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public int getProgressBarPercentage() {
         return (progressBarBookmark.getSize().getWidth() * 100) / progressBar.getSize().getWidth();
+    }
+
+    public ExtendedWebElement getContentAdvisoryText() {
+        return contentAdvisoryText;
+    }
+
+    public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
+        ContentAdvisory contentAdvisory = null;
+        try {
+            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
+        } catch (Exception e) {
+            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+        }
+        if (contentAdvisory == null || contentAdvisory.getText().isEmpty()) {
+            throw new SkipException("Unable to get Content Advisory from API");
+        }
+        return contentAdvisory.getText();
     }
  }
