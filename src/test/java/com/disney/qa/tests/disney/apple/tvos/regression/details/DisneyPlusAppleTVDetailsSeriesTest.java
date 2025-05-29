@@ -878,7 +878,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121768"})
     @Test(groups = {TestGroup.SERIES, US})
-    public void verifySeasonNameOnSeriesUpNext() {
+    public void verifyUniqueSeasonNameOnSeriesUpNext() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -909,8 +909,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.clickPlay();
         videoPlayer.waitForVideoToStart();
+        videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
+        videoPlayer.clickPlay();
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_EIGHTY, maxAttempts);
         videoPlayer.clickPlay();
         Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
