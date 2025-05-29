@@ -18,6 +18,11 @@ public class DisneyPlusCollectionIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == 'On the %s screen.'`]")
     private ExtendedWebElement collectionLogo;
 
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
+                    "**/XCUIElementTypeOther[`name == 'airingBadgeContainerView'`]")
+    private ExtendedWebElement firstCellElementFromCollectionAiringBadge;
+
     public DisneyPlusCollectionIOSPageBase(WebDriver driver) { super(driver); }
 
     public boolean isOpened(String collectionName) {
@@ -28,6 +33,10 @@ public class DisneyPlusCollectionIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Waiting for {} collection page to load", collectionName);
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Collection page is not opened")
                 .until(it -> isOpened(collectionName));
+    }
+
+    public ExtendedWebElement getAiringBadgeOfFirstCellElementFromCollection(String collectionName) {
+        return firstCellElementFromCollectionAiringBadge.format(collectionName);
     }
 
     public ExtendedWebElement getCollectionLogo(String collectionName) {

@@ -347,6 +347,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyPlaybackForEpisodesInSetsByTappingOnMetadata() {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
@@ -358,7 +359,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(collectionPage.isCollectionPresent(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V),
                 "Treehouse of Horror I-V container not found");
 
-        collectionPage.getFirstCellFromCollectionEpisodeMetadataElement(
+        homePage.getFirstCellFromCollectionEpisodeMetadataElement(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V))
                 .click();
 
