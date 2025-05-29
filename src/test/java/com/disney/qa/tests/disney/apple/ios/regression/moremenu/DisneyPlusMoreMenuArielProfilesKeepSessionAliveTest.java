@@ -68,8 +68,13 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         passwordPage.enterPasswordNoAccount("IncorrectPassword!123");
         sa.assertEquals(loginPage.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
         passwordPage.enterPasswordNoAccount(getUnifiedAccount().getUserPass());
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
+            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            //For iPhone 8 or some other small devices need to scroll more time to read full consent/terms
+            parentalConsent.scrollConsentContent(4);
+        }
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
-        sa.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+        sa.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed");
         sa.assertAll();
     }
 
