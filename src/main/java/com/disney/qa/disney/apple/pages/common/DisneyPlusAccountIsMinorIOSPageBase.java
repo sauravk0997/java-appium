@@ -5,8 +5,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Map;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 /**
  * Landing page when the user logs in with a minor account
@@ -26,7 +24,7 @@ public class DisneyPlusAccountIsMinorIOSPageBase extends DisneyPlusApplePageBase
 
     public ExtendedWebElement getDismissButton() { return dismissButton; }
 
-    public ExtendedWebElement getHeaderTextElement() {
+    public ExtendedWebElement getBlockAccountHeaderElement() {
         return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_ACCOUNT_BLOCK_HEADER.getText()));

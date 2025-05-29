@@ -14,6 +14,6 @@ public class DisneyPlusAppleTVAccountIsMinorPage extends DisneyPlusAccountIsMino
 
     @Override
     public boolean isOpened() {
-        return getHeaderTextElement().isPresent();
+        return getBlockAccountHeaderElement().isPresent();
     }
 }
