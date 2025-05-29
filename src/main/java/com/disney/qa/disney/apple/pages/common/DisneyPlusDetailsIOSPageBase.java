@@ -103,6 +103,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement shareBtn;
     @ExtendedFindBy(accessibilityId = "watchlistButton")
     private ExtendedWebElement watchlistButton;
+    @ExtendedFindBy(accessibilityId = "airingBadgeContainerView")
+    private ExtendedWebElement airingBadgeLabel;
     private final ExtendedWebElement episodesTab = dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EPISODES.getText()));
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SUGGESTED\"`][1]")
     private ExtendedWebElement suggestedTab;
@@ -331,6 +333,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getFocusedCellTitleLabel() {
         return focusedCellTitleLabel;
+    }
+
+    public ExtendedWebElement getAiringBadgeLabel() {
+        return airingBadgeLabel;
     }
 
     public void waitForSeriesDownloadToComplete(int timeOut, int polling) {
