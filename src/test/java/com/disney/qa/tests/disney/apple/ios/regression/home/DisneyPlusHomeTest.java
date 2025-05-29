@@ -867,7 +867,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         huluPage.getTypeCellLabelContains(contentTitle).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertEquals(detailsPage.getMediaTitle(), contentTitle, "Expected content details page not opened");
-        detailsPage.clickCloseButton();
+        tap(detailsPage.getBackButton());
         sa.assertTrue(homePage.getNetworkLogoImage(network).isPresent(THREE_SEC_TIMEOUT),
                 "Network image not displayed");
 
