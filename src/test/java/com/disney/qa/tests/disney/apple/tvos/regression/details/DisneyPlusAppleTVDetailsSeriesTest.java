@@ -880,13 +880,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @Test(groups = {TestGroup.SERIES, US})
     public void verifyUniqueSeasonNameOnSeriesUpNext() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         String nextEpisodeTitle = "";
         String seasonName = "";
-        int runTimeInSec;
-        int maxAttempts = 50;
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -895,26 +892,20 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         // Get second episode title
         try {
             ExploreContent seriesApiContent =
-                    getSeriesApi(R.TESTDATA.get("disney_prod_series_family_guy_entityId"),
+                    getSeriesApi(R.TESTDATA.get("disney_prod_series_dogs_playing_poker_entityId"),
                             DisneyPlusBrandIOSPageBase.Brand.HULU);
-            int size = seriesApiContent.getSeasons().size();
             nextEpisodeTitle =
-                    seriesApiContent.getSeasons().get(size - 1).getItems().get(1).getVisuals().getEpisodeTitle();
-            seasonName = seriesApiContent.getSeasons().get(size - 1).getVisuals().getName();
-            runTimeInSec = seriesApiContent.getSeasons().get(size - 1).getItems().get(0).getVisuals()
-                    .getMetastringParts().getRuntime().getRuntimeMs() / 1000;
+                    seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+            seasonName = seriesApiContent.getSeasons().get(0).getVisuals().getName();
         } catch (Exception e) {
             throw new SkipException("Skipping test, series title was not found" + e.getMessage());
         }
 
         // Play Exclusive episode
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_family_guy_exclusive_episode_playback_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dogs_playing_poker_extended_playback_deeplink"));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
-        videoPlayer.clickPlay();
-        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_EIGHTY, maxAttempts);
-        videoPlayer.clickPlay();
         Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
         LOGGER.info("Page Source:- " + getDriver().getPageSource());
     }
