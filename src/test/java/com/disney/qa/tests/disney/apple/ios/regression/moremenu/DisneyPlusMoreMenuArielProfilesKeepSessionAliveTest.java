@@ -179,7 +179,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
-//        addProfile.tapJuniorModeToggle();
+        addProfile.tapJuniorModeToggle();
         addProfile.clickSaveProfileButton();
     }
 }
