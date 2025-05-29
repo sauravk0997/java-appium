@@ -889,8 +889,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         int maxAttempts = 50;
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        //logIn(getUnifiedAccount());
-        //homePage.waitForHomePageToOpen();
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
 
         // Get second episode title
         try {
@@ -908,7 +908,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         }
 
         // Play Exclusive episode
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_family_guy_exclusive_episode_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_family_guy_exclusive_episode_playback_deeplink"));
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
