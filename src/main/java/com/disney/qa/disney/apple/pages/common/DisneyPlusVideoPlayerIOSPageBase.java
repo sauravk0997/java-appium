@@ -53,6 +53,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement titleLabel;
     @ExtendedFindBy(accessibilityId = "ucp.currentTimeLabel")
     private ExtendedWebElement currentTimeLabel;
+    @ExtendedFindBy(accessibilityId = "seekTimeLabel")
+    protected ExtendedWebElement seekTimeLabel;
     @ExtendedFindBy(accessibilityId = "ucp.fastRewind")
     private ExtendedWebElement rewindButton;
     @ExtendedFindBy(accessibilityId = "ucp.fastForward")
@@ -640,11 +642,19 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public int getCurrentTime() {
-        displayVideoController();
-        String[] currentTime = currentTimeLabel.getText().split(":");
+        String[] currentTime;
         int currentTimeInSec = 0;
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE) || R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            displayVideoController();
+            currentTime = currentTimeLabel.getText().split(":");
+        } else {
+            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(1);
+            currentTime = seekTimeLabel.getText().split(":");
+        }
         if (currentTime.length > 2) {
-            currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) * 60 + Integer.parseInt(currentTime[1]) * 60 + (Integer.parseInt(currentTime[2]));
+            currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) * 60
+                    + Integer.parseInt(currentTime[1]) * 60
+                    + (Integer.parseInt(currentTime[2]));
         } else {
             currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) + (Integer.parseInt(currentTime[1]));
         }
