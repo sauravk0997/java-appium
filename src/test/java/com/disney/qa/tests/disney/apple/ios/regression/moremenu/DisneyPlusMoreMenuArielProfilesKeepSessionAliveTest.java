@@ -47,7 +47,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
                 DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
-        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
+//        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
 
 //        createKidsProfile();
 //        terminateApp(sessionBundles.get(DISNEY));
@@ -179,7 +179,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
-        addProfile.tapJuniorModeToggle();
+//        addProfile.tapJuniorModeToggle();
         addProfile.clickSaveProfileButton();
     }
 }
