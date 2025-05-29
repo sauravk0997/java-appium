@@ -117,4 +117,15 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         LOGGER.info("Playback currently at '{}' seconds", currentTimeInSec);
         return currentTimeInSec;
     }
+
+    public void tapFwdToPlaybackPercentage(int remainingTime, double playbackPercent, int maxTapCount) {
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        LOGGER.info("Setting video playback to {}% started...", playbackPercent);
+        double percentageExpectedRemainingTime = (remainingTime * (playbackPercent / 100));
+
+        do {
+            commonPage.clickRight(1, 2, 1);
+        } while (getCurrentTime() < percentageExpectedRemainingTime && maxTapCount-- > 0);
+        LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
+    }
 }

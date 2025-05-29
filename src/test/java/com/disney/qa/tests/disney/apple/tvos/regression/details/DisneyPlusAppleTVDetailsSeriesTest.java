@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.details;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
@@ -36,6 +37,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final String EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE = "Episodes tab is not focused";
     private static final String SUGGESTED = "SUGGESTED";
     private static final String WATCHLIST_ICON_NOT_PRESENT = "Watchlist plus icon is not displayed";
+    private static final double SCRUB_PERCENTAGE_EIGHTY = 80;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -872,6 +874,47 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next Play button is not present");
         sa.assertTrue(upNextPage.getSeeAllEpisodesButton().isPresent(), "See details button is not present");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121768"})
+    @Test(groups = {TestGroup.SERIES, US})
+    public void verifySeasonNameOnSeriesUpNext() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        String nextEpisodeTitle = "";
+        String seasonName = "";
+        int runTimeInSec;
+        int maxAttempts = 50;
+
+        // Get second episode title
+        try {
+            ExploreContent seriesApiContent =
+                    getSeriesApi(DisneyEntityIds.SERIES.getEntityId(),
+                            DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+            nextEpisodeTitle =
+                    seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+            seasonName = seriesApiContent.getSeasons().get(0).getVisuals().getName();
+            runTimeInSec = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals()
+                    .getMetastringParts().getRuntime().getRuntimeMs() / 1000;
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, series title was not found" + e.getMessage());
+        }
+
+        // Play first episode
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.clickPlay();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_EIGHTY, maxAttempts);
+        videoPlayer.clickPlay();
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        LOGGER.info("Page Source:- " + getDriver().getPageSource());
     }
 
     private void toggleAutoPlay(String toggleValue) {
