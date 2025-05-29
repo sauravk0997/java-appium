@@ -101,24 +101,6 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         return  seekBarRightXCoordinate == thumbnailRightXCoordinate;
     }
 
-    public DisneyPlusVideoPlayerIOSPageBase scrubToPlaybackPercentage(double playbackPercent) {
-        LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
-        clickPlay();
-        int destinationX = seekBar.getLocation().getX() +
-                (int)(seekBar.getSize().getWidth() * Double.parseDouble("." + (int) Math.round(playbackPercent * 100)));
-        clickDown();
-        Point currentTimeMarkerLocation = seekTimeLabel.getLocation();
-        LOGGER.info("Scrubbing from X:{},Y:{} to X:{},Y:{}",
-                currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
-                destinationX, currentTimeMarkerLocation.getY());
-        clickRight();
-        swipeLeft(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
-                destinationX, currentTimeMarkerLocation.getY(), 500);
-        scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
-                destinationX, currentTimeMarkerLocation.getY());
-        return initPage(DisneyPlusAppleTVVideoPlayerPage.class);
-    }
-
     public void tapFwdToPlaybackPercentage(int remainingTime, double playbackPercent, int maxTapCount) {
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         LOGGER.info("Setting video playback to {}% started...", playbackPercent);
