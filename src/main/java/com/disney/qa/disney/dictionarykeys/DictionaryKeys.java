@@ -281,6 +281,8 @@ public enum DictionaryKeys {
     MONTH_NOVEMBER("month_november"),
     MONTH_OCTOBER("month_october"),
     MONTH_SEPTEMBER("month_september"),
+    MY_DISNEY_ACCOUNT_BLOCK_BODY("mydisney_account_block_body"),
+    MY_DISNEY_ACCOUNT_BLOCK_HEADER("mydisney_account_block_header"),
     MY_DISNEY_BACK_TO_SERVICE_BTN("mydisney_back_to_service_btn"),
     MY_DISNEY_CANCEL_BTN("mydisney_cancel_btn"),
     MY_DISNEY_CHANGE_EMAIL_BODY("mydisney_change_email_body"),

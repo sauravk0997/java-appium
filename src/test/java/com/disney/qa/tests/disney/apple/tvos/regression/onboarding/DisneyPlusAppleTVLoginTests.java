@@ -5,6 +5,7 @@ import com.disney.qa.api.client.requests.*;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.offer.pojos.Partner;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -523,6 +524,40 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         whoIsWatchingPage.moveDown(1, 1);
         sa.assertTrue(whoIsWatchingPage.isFocused(whoIsWatchingPage.getEditProfileButton()),
                 "Edit profile button is not in focus");
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106115"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
+    public void verifyContactCustomerServiceUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPageBase =
+                new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
+        DisneyPlusAppleTVAccountIsMinorPage accountIsMinorPage =
+                new DisneyPlusAppleTVAccountIsMinorPage(getDriver());
+
+        // Create Disney account without DOB and Gender
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setPartner(Partner.DISNEY)
+                .setLanguage(getLocalizationUtils().getUserLanguage())));
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        // Enter under 18 DOB. Forcing user to be blocked and redirected to contact customer service screen
+        Assert.assertTrue(ednaDOBCollectionPageBase.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
+        ednaDOBCollectionPageBase.enterDOB(
+                Person.AGE_17.getMonth(), Person.AGE_17.getDay(true), Person.AGE_17.getYear());
+        ednaDOBCollectionPageBase.getSaveAndContinueButton().click();
+
+        Assert.assertTrue(accountIsMinorPage.isOpened(), ACCOUNT_IS_MINOR_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(accountIsMinorPage.isBodyTextValid(),
+                "Body for account blocked screen is not displayed");
+        sa.assertTrue(accountIsMinorPage.getDismissButton().isPresent(),
+                "Dismiss button is not displayed");
+
         sa.assertAll();
     }
 
