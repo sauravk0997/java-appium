@@ -536,7 +536,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAccountIsMinorPage accountIsMinorPage =
                 new DisneyPlusAppleTVAccountIsMinorPage(getDriver());
 
-
         // Create Disney account without DOB and Gender
         setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
