@@ -41,6 +41,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
         DisneyPlusCreatePasswordIOSPageBase createPassword = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
@@ -49,10 +50,12 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
 
         createKidsProfile();
-        terminateApp(buildType.getDisneyBundle());
+        terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-        sa.assertFalse(whoIsWatching.isProfileIconPresent(KIDS_PROFILE), "Kids Profile is present");
-        whoIsWatching.clickProfile(DEFAULT_PROFILE);
+        moreMenu.clickMoreTab();
+        sa.assertFalse(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(), "Kids profile name is displayed");
+        sa.assertFalse(whoIsWatching.isProfileIconPresent(KIDS_PROFILE), "Kids profile icon is displayed");
+        moreMenu.clickHomeIcon();
         createKidsProfile();
         sa.assertTrue(passwordPage.getBackArrow().isPresent(), "Back Arrow is not displayed");
         sa.assertTrue(passwordPage.isHeaderTextDisplayed(), "Enter your password text is not present");
