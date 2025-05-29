@@ -116,7 +116,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-//        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
