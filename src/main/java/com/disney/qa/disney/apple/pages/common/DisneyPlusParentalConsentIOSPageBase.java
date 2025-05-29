@@ -111,9 +111,4 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
                 DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.BTN_CONSENT_DECLINE.getText())).isPresent();
     }
-
-    public ExtendedWebElement getFullCatalogButton(){
-        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText()));
-    }
 }

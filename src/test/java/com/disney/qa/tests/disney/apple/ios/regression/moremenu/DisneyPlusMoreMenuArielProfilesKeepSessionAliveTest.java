@@ -44,8 +44,8 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
         SoftAssert sa = new SoftAssert();
-//        setAppToHomeScreen(getUnifiedAccount());
-//        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
+        setAppToHomeScreen(getUnifiedAccount());
+        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
 
         createKidsProfile();
         sa.assertTrue(passwordPage.getBackArrow().isPresent(), "Back Arrow is not displayed");
