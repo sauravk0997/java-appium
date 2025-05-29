@@ -116,14 +116,15 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount());
+//        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
 
         //Validate in-eligible for upsell user still has some content to watch
-        String titleAvailableToPlay = "Hulu Original Series";
+        String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
+        String huluSubscriptionTitle = "Hulu Original Series,  Available with Hulu Subscription,";
         int swipeCount = FIFTEEN_SEC_TIMEOUT;
         homePage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU), swipeCount);
@@ -144,11 +145,11 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         //Move to the "Unlock to Stream More Hulu" collection
         brandPage.waitForLoaderToDisappear(FIFTEEN_SEC_TIMEOUT);
         brandPage.moveLeftUntilElementIsFocused(collectionPage.getFirstCellFromCollection(getCollectionName(
-                CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU)), 15);
+                CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU)), swipeCount);
         brandPage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), swipeCount);
         brandPage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains
-                (titleAvailableToPlay), 5);
+                (huluSubscriptionTitle), swipeCount);
         brandPage.clickSelect();
         detailsPage.waitUntilElementIsFocused(detailsPage.getUnlockButton(), FIFTEEN_SEC_TIMEOUT);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(),
