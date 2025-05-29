@@ -1583,20 +1583,22 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         throw new NoSuchElementException("Desired element was not focused after given retries");
     }
 
-    public void moveLeftUntilFirstCellIsFocused(String collectionName, int count) {
-        LOGGER.info("Moving left until the first cell of the collection is focused");
-        ExtendedWebElement firstCellFromCollection = getFirstCellFromCollection(collectionName);
+    public void moveLeftUntilElementIsFocused(ExtendedWebElement element, int count) {
+        LOGGER.info("Moving Left until desired element is focused");
+        if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
+            LOGGER.info(DESIRED_ELEMENT_FOCUSED);
+            return;
+        }
         while (count > 0) {
-            if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) &&
-                    isFocused(firstCellFromCollection)) {
-                LOGGER.info("Reached the first cell of the collection");
+            moveLeft(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT) &&
+                    isFocused(element)) {
+                LOGGER.info(DESIRED_ELEMENT_REACHED);
                 return;
             }
-
-            moveLeft(1, 1);
             count--;
         }
-        throw new NoSuchElementException("First cell of the collection was not focused after retries");
+        throw new NoSuchElementException("Desired element was not focused after given retries");
     }
 
     public void waitForLoaderToDisappear(int timeout) {
