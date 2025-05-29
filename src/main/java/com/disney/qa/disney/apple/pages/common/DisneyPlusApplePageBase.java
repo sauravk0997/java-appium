@@ -1583,6 +1583,22 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         throw new NoSuchElementException("Desired element was not focused after given retries");
     }
 
+    public void moveLeftUntilFirstCellIsFocused(String collectionName, int count) {
+        LOGGER.info("Moving left until the first cell of the collection is focused");
+        ExtendedWebElement firstCellFromCollection = getFirstCellFromCollection(collectionName);
+        while (count > 0) {
+            if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) &&
+                    isFocused(firstCellFromCollection)) {
+                LOGGER.info("Reached the first cell of the collection");
+                return;
+            }
+
+            moveLeft(1, 1);
+            count--;
+        }
+        throw new NoSuchElementException("First cell of the collection was not focused after retries");
+    }
+
     public void waitForLoaderToDisappear(int timeout) {
         LOGGER.info("Waiting for loader to disappear");
         fluentWait(getDriver(), timeout, THREE_SEC_TIMEOUT, "Loader was still visible")
@@ -1645,21 +1661,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.DISMISS_BTN.getText()));
-    }
-
-    public void moveLeftUntilFirstCellIsFocused(String collectionName, int count) {
-        LOGGER.info("Moving left until the first cell of the collection is focused");
-        ExtendedWebElement firstCellFromCollection = getFirstCellFromCollection(collectionName);
-        while (count > 0) {
-            if (firstCellFromCollection.isPresent(ONE_SEC_TIMEOUT) &&
-                    isFocused(firstCellFromCollection)) {
-                LOGGER.info("Reached the first cell of the collection");
-                return;
-            }
-
-            moveLeft(1, 1);
-            count--;
-        }
-        throw new NoSuchElementException("First cell of the collection was not focused after retries");
     }
 }

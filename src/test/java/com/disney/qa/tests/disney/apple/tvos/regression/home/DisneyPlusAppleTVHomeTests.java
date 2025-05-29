@@ -5,6 +5,7 @@ import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.explore.response.Visuals;
+import com.disney.qa.common.DisneyAbstractPage;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -28,6 +29,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
@@ -121,6 +123,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         //Validate in-eligible for upsell user still has some content to watch
         String titleAvailableToPlay = "Hulu Original Series";
+        int waitTimeout = 15;
         homePage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU), 5);
         homePage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains(titleAvailableToPlay), 15);
@@ -128,7 +131,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "In-Eligible user for upsell couldn't see any playable Hulu content");
         brandPage.clickSelect();
         detailsPage.waitForDetailsPageToOpen();
-        detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), 15);
+        detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), waitTimeout);
         detailsPage.clickSelect();
         Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), "Video player did not open");
         videoPlayer.clickBack();
@@ -138,14 +141,14 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         detailsPage.clickBack();
 
         //Move to the "Unlock to Stream More Hulu" collection
-        brandPage.waitForLoaderToDisappear(15);
+        brandPage.waitForLoaderToDisappear(FIFTEEN_SEC_TIMEOUT);
         brandPage.moveLeftUntilFirstCellIsFocused(getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU), 15);
         brandPage.moveDownUntilCollectionContentIsFocused(
                 getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), 5);
         brandPage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains
                 (titleAvailableToPlay), 5);
         brandPage.clickSelect();
-        detailsPage.waitUntilElementIsFocused(detailsPage.getUnlockButton(), 15);
+        detailsPage.waitUntilElementIsFocused(detailsPage.getUnlockButton(), waitTimeout);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(),
                 "Unlock button was not present");
         detailsPage.clickSelect();
