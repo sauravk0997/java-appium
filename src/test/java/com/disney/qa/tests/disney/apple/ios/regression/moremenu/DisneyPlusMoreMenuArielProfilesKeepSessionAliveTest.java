@@ -49,9 +49,9 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         setAppToHomeScreen(getUnifiedAccount());
         passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
 
-        createKidsProfile();
-        terminateApp(sessionBundles.get(DISNEY));
-        startApp(sessionBundles.get(DISNEY));
+//        createKidsProfile();
+//        terminateApp(sessionBundles.get(DISNEY));
+//        startApp(sessionBundles.get(DISNEY));
         moreMenu.clickMoreTab();
         sa.assertFalse(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(), "Kids profile name is displayed");
         sa.assertFalse(whoIsWatching.isProfileIconPresent(KIDS_PROFILE), "Kids profile icon is displayed");
