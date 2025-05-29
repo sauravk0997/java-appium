@@ -214,6 +214,7 @@ public enum DictionaryKeys {
     GROUPWATCH_FEATURE_SETTINGS("groupwatch_feature_settings"),
     GROUPWATCH_SHAREPLAY_SETTINGS_HEADER("groupwatch_shareplay_settings_header"),
     GROUPWATCH_SHAREPLAY_SETTINGS_SUBHEADER("groupwatch_shareplay_settings_subheader"),
+    GROUPWATCH_SHAREPLAY_SETTINGS_UNDER_13_TOOLTIP("groupwatch_shareplay_settings_under13_tooltip"),
     HIDDEN_PASSWORD("login_hide_password_asterisk"),
     INTERRUPT_SUBSCRIPTION("interrupt_subscription"),
     INTERRUPT_SUBSCRIPTION_TITLE("interrupt_subscription_title"),
