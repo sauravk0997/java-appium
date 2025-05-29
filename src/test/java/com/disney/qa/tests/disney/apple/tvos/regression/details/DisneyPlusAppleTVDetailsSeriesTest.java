@@ -888,10 +888,14 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         int runTimeInSec;
         int maxAttempts = 50;
 
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
         // Get second episode title
         try {
             ExploreContent seriesApiContent =
-                    getSeriesApi(DisneyEntityIds.SERIES.getEntityId(),
+                    getSeriesApi(R.TESTDATA.get("disney_prod_series_family_guy_entityId"),
                             DisneyPlusBrandIOSPageBase.Brand.DISNEY);
             nextEpisodeTitle =
                     seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
@@ -903,9 +907,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         }
 
         // Play first episode
-        logIn(getUnifiedAccount());
-        homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_family_guy_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
