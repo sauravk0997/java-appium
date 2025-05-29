@@ -21,10 +21,11 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -564,20 +565,51 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-111553"})
     @Test(groups = {TestGroup.ONBOARDING, CA})
     public void verifyOneTrustConsentBanner() {
-        SoftAssert sa = new SoftAssert();
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVOneTrustConsentBannerIOSPage oneTrustConsentPage =
                 new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         logInWithoutHomeCheck(getUnifiedAccount());
 
-        sa.assertTrue(oneTrustConsentPage.isAllowAllButtonPresent(),
+        // Validate One Trust consent page
+        Assert.assertTrue(oneTrustConsentPage.isAllowAllButtonPresent(),
                 "Accept All button is not present");
-        sa.assertTrue(oneTrustConsentPage.isRejectAllButtonPresent(),
+        Assert.assertTrue(oneTrustConsentPage.isRejectAllButtonPresent(),
                 "Reject All button is not present");
-        sa.assertTrue(oneTrustConsentPage.isCustomizedChoicesButtonPresent(),
+        Assert.assertTrue(oneTrustConsentPage.isCustomizedChoicesButtonPresent(),
                 "Customize Choices button is not present");
+
+        // Tap 'Accept All' button and validate banner is not present
+        oneTrustConsentPage.tapAcceptAllButton();
+        Assert.assertFalse(oneTrustConsentPage.getTvOsBannerAllowAllButton().isPresent(FIVE_SEC_TIMEOUT),
+                "One Trust consent banner is present");
+
+        // Log out to welcome screen
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
+        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
+        homePage.moveDownUntilElementIsFocused(settingsPage.getLogOutCell(), 8);
+        settingsPage.getLogOutCell().click();
+        Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+
+        // Create new account and login with it
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        // Select "Reject All". Validate One Trust consent doesn't shows anymore and user is redirected to homepage
+        Assert.assertTrue(oneTrustConsentPage.isRejectAllButtonPresent(),
+                "Reject All button is not present");
+        oneTrustConsentPage.tapRejectAllButton();
+        Assert.assertFalse(oneTrustConsentPage.getTvOsBannerAllowAllButton().isPresent(FIVE_SEC_TIMEOUT),
+                "One Trust consent banner is present");
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         oneTrustConsentPage.tapAcceptAllButton();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
