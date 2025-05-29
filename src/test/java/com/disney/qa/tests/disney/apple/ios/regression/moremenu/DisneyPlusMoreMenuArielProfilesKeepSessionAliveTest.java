@@ -51,7 +51,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
 
         createKidsProfile();
         terminateApp(sessionBundles.get(DISNEY));
-        relaunch();
+        startApp(sessionBundles.get(DISNEY));
         moreMenu.clickMoreTab();
         sa.assertFalse(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(), "Kids profile name is displayed");
         sa.assertFalse(whoIsWatching.isProfileIconPresent(KIDS_PROFILE), "Kids profile icon is displayed");
