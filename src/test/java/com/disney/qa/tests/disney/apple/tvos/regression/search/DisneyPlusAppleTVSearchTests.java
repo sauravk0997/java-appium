@@ -316,6 +316,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         homePage.waitForHomePageToOpen();
         Item firstUpcomingEvent = getUpcomingEventFromAPI(maxQuantityOfExpectedChannels);
         String contentTitle = firstUpcomingEvent.getVisuals().getTitle();
+        LOGGER.info("Upcoming event title:- " + contentTitle );
 
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -346,7 +347,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 return upcomingEventFromApi;
             }
         }
-        throw new NoSuchElementException("Failed to fetch a upcoming content details from API");
+        throw new NoSuchElementException("Failed to fetch an upcoming content details from API");
     }
 
     private List<String> getMovieTabCollection() {
