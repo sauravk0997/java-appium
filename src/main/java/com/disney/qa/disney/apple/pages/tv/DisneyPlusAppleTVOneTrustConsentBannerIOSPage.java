@@ -17,6 +17,10 @@ public class DisneyPlusAppleTVOneTrustConsentBannerIOSPage extends DisneyPlusOne
         super(driver);
     }
 
+    public ExtendedWebElement getTvOsBannerAllowAllButton() {
+        return tvOsBannerAllowAllButton;
+    }
+
     @Override
     public boolean isAllowAllButtonPresent() {
         return tvOsBannerAllowAllButton.isPresent();
