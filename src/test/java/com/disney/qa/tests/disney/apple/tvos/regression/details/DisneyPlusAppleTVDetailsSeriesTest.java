@@ -897,9 +897,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                             DisneyPlusBrandIOSPageBase.Brand.HULU);
             int size = seriesApiContent.getSeasons().size();
             nextEpisodeTitle =
-                    seriesApiContent.getSeasons().get(size-1).getItems().get(1).getVisuals().getEpisodeTitle();
-            seasonName = seriesApiContent.getSeasons().get(size-1).getVisuals().getName();
-            runTimeInSec = seriesApiContent.getSeasons().get(size-1).getItems().get(0).getVisuals()
+                    seriesApiContent.getSeasons().get(size - 1).getItems().get(1).getVisuals().getEpisodeTitle();
+            seasonName = seriesApiContent.getSeasons().get(size - 1).getVisuals().getName();
+            runTimeInSec = seriesApiContent.getSeasons().get(size - 1).getItems().get(0).getVisuals()
                     .getMetastringParts().getRuntime().getRuntimeMs() / 1000;
         } catch (Exception e) {
             throw new SkipException("Skipping test, series title was not found" + e.getMessage());
@@ -914,7 +914,12 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_EIGHTY, maxAttempts);
         videoPlayer.clickPlay();
         Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
-        LOGGER.info("Page Source:- " + getDriver().getPageSource());
+        Assert.assertTrue(upNextPage.getUpNextContentTitleLabel().getText().contains(seasonName),
+                "Unique season name not displayed on up next screen");
+        Assert.assertTrue(upNextPage.getUpNextContentTitleLabel().getText().contains(nextEpisodeTitle),
+                "Next episode title season name not displayed on up next screen");
+        Assert.assertFalse(upNextPage.getUpNextContentTitleLabel().getText().contains("Season"),
+                "Season text displayed on up next screen");
     }
 
     private void toggleAutoPlay(String toggleValue) {
