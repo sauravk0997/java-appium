@@ -10,6 +10,7 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.apache.commons.lang3.exception.*;
 import org.testng.*;
 import org.testng.asserts.SoftAssert;
@@ -29,6 +30,7 @@ import static com.disney.qa.common.constant.IConstantHelper.DETAILS_PAGE_NOT_DIS
  */
 public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper {
     public static ThreadLocal<String> CONTENT_TITLE = new ThreadLocal<>();
+    public static ThreadLocal<String> YEAR = new ThreadLocal<>();
     public static ThreadLocal<Boolean> IS_MOVIE = new ThreadLocal<>();
     public static ThreadLocal<String> EPISODIC_RATING = new ThreadLocal<>();
     static final String PAGE_IDENTIFIER = "page-";
@@ -186,6 +188,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
     private String getContentTitleFor(ArrayList<String> disneyCollectionsIDs, String rating, String locale, String language) throws URISyntaxException, JsonProcessingException, IndexOutOfBoundsException {
         LOGGER.info("Rating requested: " + rating);
         CONTENT_TITLE.remove();
+        YEAR.remove();
         String comingSoon = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.PROMO_COMING_LATER.getText());
         for (String disneyCollectionsID : disneyCollectionsIDs) {
@@ -197,6 +200,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
                             if (item.getVisuals().getMetastringParts().getRatingInfo().getRating().getText().equals(rating)) {
                                 LOGGER.info("Title returned: " + item.getVisuals().getTitle());
                                 CONTENT_TITLE.set(item.getVisuals().getTitle());
+                                YEAR.set(item.getVisuals().getMetastringParts().getReleaseYearRange().getStartYear());
                                 Container pageContainer = getDisneyAPIPage(ENTITY_IDENTIFIER + item.getId(), locale, language).get(0);
                                 if (pageContainer != null) {
                                     if (!pageContainer.getType().equals(EPISODES)) {
@@ -233,7 +237,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
+        ExtendedWebElement titleContainer = searchPage.getTitleContainer(CONTENT_TITLE.get(), rating, YEAR.get());
+        titleContainer.click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
         detailsPage.waitForRestartButtonToAppear();
@@ -266,7 +271,8 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         homePage.clickSearchIcon();
         searchPage.searchForMedia(CONTENT_TITLE.get());
         sa.assertTrue(searchPage.isRatingPresentInSearchResults(rating), "Rating was not found in search results");
-        searchPage.getTitleContainer(CONTENT_TITLE.get(), rating).click();
+        ExtendedWebElement titleContainer = searchPage.getTitleContainer(CONTENT_TITLE.get(), rating, YEAR.get());
+        titleContainer.click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
         //ratings are shown on downloaded content
