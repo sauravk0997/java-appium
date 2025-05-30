@@ -1,11 +1,9 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.api.explore.response.Flag;
-import com.disney.qa.api.explore.response.MetastringParts;
+import com.disney.qa.api.explore.response.*;
 import com.disney.qa.common.constant.CollectionConstant;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase;
-import com.disney.qa.disney.apple.pages.common.DisneyPlusEspnIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -26,9 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.BLUEY_MINISODES;
+import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
+import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.UPCOMING;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest {
@@ -424,5 +424,39 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), RIGHT_POSITION);
         // Validate bottom position of espn logo
         validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), BOTTOM);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106643"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyESPNLiveEvent() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = new DisneyPlusCollectionIOSPageBase(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        String errorMessage = "Skipping test, no live events are available";
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        String liveAndUpcomingEventsCollection =
+                getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING);
+
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 10);
+
+        // Verify airing badge to validate if there is a live event occurring
+        String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(
+                liveAndUpcomingEventsCollection).getText();
+        LOGGER.info("Airing badge: {}", airingBadge);
+        if (airingBadge.equals(UPCOMING)) {
+            throw new SkipException(errorMessage);
+        }
+
+        // Open live event
+        homePage.getFirstCellFromCollection(liveAndUpcomingEventsCollection).click();
+        Assert.assertTrue(liveEventModal.isOpened(), "Live modal did not open");
+        liveEventModal.getWatchLiveButton().click();
+        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
     }
 }

@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.api.client.requests.*;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.content.ContentSet;
@@ -26,6 +27,7 @@ import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -64,6 +66,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     private static final String LEFT = "LEFT";
     private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
     private static final String SELECT_PROFILE_PAGE_NOT_DISPLAYED = "Select Profile page is not displayed";
+    private static final String SHAREPLAY_TOGGLE_NOT_PRESENT = "SharePlay toggle was not present";
 
 
     private void onboard() {
@@ -1706,7 +1709,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
 
         Assert.assertTrue(editProfilePage.isFeatureSettingsSectionDisplayed(), "Share Play setting section is not present");
-        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), "SharePlay toggle was not present");
+        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), SHAREPLAY_TOGGLE_NOT_PRESENT);
         editProfilePage.toggleSharePlayButton(toggleOff);
         editProfilePage.toggleSharePlayButton(toggleOn);
 
@@ -1719,6 +1722,57 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertTrue(passwordPage.isPasswordTaglinePresent(), "Password tagline text was not present");
 
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72340"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDisableU13Profile() {
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        String toggleON = "On";
+
+        // Add a kid's profile
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .isStarOnboarded(true)
+                .build());
+
+        // Add a 13 profile
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(P13_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .isStarOnboarded(true)
+                .build());
+        setAppToHomeScreen(getUnifiedAccount());
+
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        editProfilePage.getEditProfileTitle().click();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
+        Assert.assertTrue(editProfilePage.getSharePlayToggleCell().isPresent(), SHAREPLAY_TOGGLE_NOT_PRESENT);
+
+        // Verify SharePlay option is disabled
+        Assert.assertFalse(editProfilePage.isSharePlayEnabled(), "SharePlay option is enabled");
+        editProfilePage.getSharePlayLabel().click();
+        Assert.assertTrue(editProfilePage.isSharePlayU13TooltipPresent(), "U13 Share play tooltip is not present");
+        editProfilePage.clickDoneBtn();
+
+        // Validate if share play option is enabled for a 13 Profile
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+
+        editProfilePage.getEditProfileTitle().click();
+        editProfilePage.clickEditModeProfile(JUNIOR_PROFILE);
+        swipe(editProfilePage.getSharePlayHyperLink(), Direction.UP, 2, 500);
+        Assert.assertTrue(editProfilePage.isSharePlayEnabled(), "SharePlay option is not enabled");
+        Assert.assertEquals(editProfilePage.getSharePlayToggleCell().getText(), toggleON,
+                "SharePlay is not toggled ON");
     }
 
     private List<ExtendedWebElement> addNavigationBarElements() {
@@ -1740,15 +1794,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } else {
             return avatarSets;
         }
-    }
-
-    private void verifyAutoPlayStateForProfile(String profile, String autoPlayState, SoftAssert sa) {
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        editProfile.clickMoreTab();
-        whoIsWatching.clickEditProfile();
-        editProfile.clickEditModeProfile(profile);
-        sa.assertTrue(editProfile.getAutoplayState().equals(autoPlayState), "autoplay state wasn't saved for profile" + profile + ":" + autoPlayState);
     }
 
     private void createKidsProfile() {
