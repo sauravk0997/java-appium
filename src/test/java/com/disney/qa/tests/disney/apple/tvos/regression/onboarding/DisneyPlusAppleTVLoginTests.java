@@ -14,6 +14,7 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -39,6 +40,15 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     private static final String LOGIN_SCREEN_NOT_LAUNCH_AFTER_PRESS_MENU_ERROR_MESSAGE =
             "Log In password screen did not launch after pressing menu from on screen keyboards screen";
     private static final String PASSWORD_NOT_ENCRYPTED_ERROR_MESSAGE = "Password was not encrypted";
+    private static final String ACCEPT_ALL = "Accept All";
+    private static final String REJECT_ALL = "Reject All";
+
+    @DataProvider(name = "buttonsToValidate")
+    public Object[][] buttonsToValidate() {
+        return new Object[][]{
+                {ACCEPT_ALL}, {REJECT_ALL}
+        };
+    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66483"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
@@ -563,13 +573,10 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-111553"})
-    @Test(groups = {TestGroup.ONBOARDING, CA})
-    public void verifyOneTrustConsentBanner() {
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+    @Test(groups = {TestGroup.ONBOARDING, EMEA}, dataProvider = "buttonsToValidate")
+    public void verifyOneTrustConsentBanner(String buttonToValidate) {
         DisneyPlusAppleTVOneTrustConsentBannerIOSPage oneTrustConsentPage =
                 new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         logInWithoutHomeCheck(getUnifiedAccount());
@@ -582,33 +589,16 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(oneTrustConsentPage.isCustomizedChoicesButtonPresent(),
                 "Customize Choices button is not present");
 
-        // Tap 'Accept All' button and validate banner is not present
-        oneTrustConsentPage.tapAcceptAllButton();
+        // Tap the button constant received from the data provider and validate banner is not present afterward
+        if (buttonToValidate.equals(ACCEPT_ALL)) {
+            oneTrustConsentPage.tapAcceptAllButton();
+        } else if (buttonToValidate.equals(REJECT_ALL)) {
+            oneTrustConsentPage.tapRejectAllButton();
+        } else {
+            throw new IllegalArgumentException("Unknown button received from DataProvider: " + buttonToValidate);
+        }
+
         Assert.assertFalse(oneTrustConsentPage.getTvOsBannerAllowAllButton().isPresent(FIVE_SEC_TIMEOUT),
                 "One Trust consent banner is present");
-
-        // Log out to welcome screen
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
-        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
-        homePage.moveDownUntilElementIsFocused(settingsPage.getLogOutCell(), 8);
-        settingsPage.getLogOutCell().click();
-        Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
-
-        // Create new account and login with it
-        setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
-                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        logInWithoutHomeCheck(getUnifiedAccount());
-
-        // Select "Reject All". Validate One Trust consent doesn't shows anymore and user is redirected to homepage
-        Assert.assertTrue(oneTrustConsentPage.isRejectAllButtonPresent(),
-                "Reject All button is not present");
-        oneTrustConsentPage.tapRejectAllButton();
-        Assert.assertFalse(oneTrustConsentPage.getTvOsBannerAllowAllButton().isPresent(FIVE_SEC_TIMEOUT),
-                "One Trust consent banner is present");
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 }
