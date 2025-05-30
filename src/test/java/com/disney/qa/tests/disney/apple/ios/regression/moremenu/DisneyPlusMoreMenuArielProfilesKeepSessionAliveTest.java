@@ -28,7 +28,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
-    private static final String TWENTY_EIGHTEEN = "2018";
+    private static final String TWENTY_EIGHTEEN = "2020";
 
     private static final String WRONG_PASSWORD = "local123b456@";
 
@@ -178,8 +178,8 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
-        addProfile.tapJuniorModeToggle();
+        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+//        addProfile.tapJuniorModeToggle();
         addProfile.clickSaveProfileButton();
     }
 }
