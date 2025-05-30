@@ -983,7 +983,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isGlobalNavExpanded() {
-        if (globalNavBarView.isPresent(TWENTY_FIVE_SEC_TIMEOUT)) {
+        if (homeTab.isPresent(FIFTEEN_SEC_TIMEOUT)) {
             Dimension size = globalNavBarView.getSize();
             int x = size.getWidth();
             LOGGER.info("Detecting if global nav is expanded..");
