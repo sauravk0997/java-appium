@@ -14,7 +14,6 @@ import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -40,15 +39,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     private static final String LOGIN_SCREEN_NOT_LAUNCH_AFTER_PRESS_MENU_ERROR_MESSAGE =
             "Log In password screen did not launch after pressing menu from on screen keyboards screen";
     private static final String PASSWORD_NOT_ENCRYPTED_ERROR_MESSAGE = "Password was not encrypted";
-    private static final String ACCEPT_ALL = "Accept All";
-    private static final String REJECT_ALL = "Reject All";
-
-    @DataProvider(name = "buttonsToValidate")
-    public Object[][] buttonsToValidate() {
-        return new Object[][]{
-                {ACCEPT_ALL}, {REJECT_ALL}
-        };
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66483"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.SMOKE, US})
@@ -573,8 +563,9 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-111553"})
-    @Test(groups = {TestGroup.ONBOARDING, EMEA}, dataProvider = "buttonsToValidate")
-    public void verifyOneTrustConsentBanner(String buttonToValidate) {
+    @Test(groups = {TestGroup.ONBOARDING, EMEA})
+    public void verifyAcceptanceOfOneTrustConsentOnLogin() {
+        SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVOneTrustConsentBannerIOSPage oneTrustConsentPage =
                 new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
 
@@ -582,23 +573,17 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getUnifiedAccount());
 
         // Validate One Trust consent page
-        Assert.assertTrue(oneTrustConsentPage.isAllowAllButtonPresent(),
+        sa.assertTrue(oneTrustConsentPage.isAllowAllButtonPresent(),
                 "Accept All button is not present");
-        Assert.assertTrue(oneTrustConsentPage.isRejectAllButtonPresent(),
+        sa.assertTrue(oneTrustConsentPage.isRejectAllButtonPresent(),
                 "Reject All button is not present");
-        Assert.assertTrue(oneTrustConsentPage.isCustomizedChoicesButtonPresent(),
+        sa.assertTrue(oneTrustConsentPage.isCustomizedChoicesButtonPresent(),
                 "Customize Choices button is not present");
 
-        // Tap the button constant received from the data provider and validate banner is not present afterward
-        if (buttonToValidate.equals(ACCEPT_ALL)) {
-            oneTrustConsentPage.tapAcceptAllButton();
-        } else if (buttonToValidate.equals(REJECT_ALL)) {
-            oneTrustConsentPage.tapRejectAllButton();
-        } else {
-            throw new IllegalArgumentException("Unknown button received from DataProvider: " + buttonToValidate);
-        }
-
+        // Tap 'Accept All' and validate banner is not present afterward
+        oneTrustConsentPage.tapAcceptAllButton();
         Assert.assertFalse(oneTrustConsentPage.getTvOsBannerAllowAllButton().isPresent(FIVE_SEC_TIMEOUT),
                 "One Trust consent banner is present");
+        sa.assertAll();
     }
 }
