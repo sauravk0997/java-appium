@@ -1032,7 +1032,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     private void onboard() {
-        setAppToHomeScreen(getUnifiedAccount());
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(KIDS_PROFILE)
@@ -1042,6 +1041,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .isStarOnboarded(true)
                 .build());
+        setAppToHomeScreen(getUnifiedAccount());
         pause(3);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
