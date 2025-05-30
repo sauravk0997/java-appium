@@ -158,7 +158,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(false)
-                .isStarOnboarded(false)
+                .isStarOnboarded(true)
                 .build());
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
