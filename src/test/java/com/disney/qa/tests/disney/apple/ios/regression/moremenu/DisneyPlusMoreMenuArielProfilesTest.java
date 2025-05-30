@@ -150,18 +150,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
 
-        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
-                .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
-                .dateOfBirth(null)
-                .language(getLocalizationUtils().getUserLanguage())
-                .avatarId(BABY_YODA)
-                .kidsModeEnabled(false)
-                .build());
-
-        setAppToHomeScreen(getUnifiedAccount());
-        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoIsWatching.clickProfile(KIDS_PROFILE);
+        onboard();
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        moreMenu.getProfileAvatar(KIDS_PROFILE).click();
         Assert.assertTrue(updateProfilePage.isOpened(),
                 "Update your profile page is not shown after selecting kids profile");
         editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
