@@ -148,11 +148,21 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
 
-        onboard();
-        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
-        moreMenu.getProfileAvatar(KIDS_PROFILE).click();
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(null)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(false)
+                .build());
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatching.clickProfile(KIDS_PROFILE);
         Assert.assertTrue(updateProfilePage.isOpened(),
                 "Update your profile page is not shown after selecting kids profile");
         editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
@@ -174,9 +184,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             //Accept parental consent
             clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         }
-        softAssert.assertTrue(moreMenu.isExitKidsProfileButtonPresent(), "'Exit Kid's Profile' button not enabled.");
-        moreMenu.clickHomeIcon();
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isElementPresent(), "Kids Home page is not open after login");
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         softAssert.assertAll();
     }
 
@@ -1032,6 +1041,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     private void onboard() {
+        setAppToHomeScreen(getUnifiedAccount());
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(KIDS_PROFILE)
@@ -1041,7 +1051,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .isStarOnboarded(true)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         pause(3);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
