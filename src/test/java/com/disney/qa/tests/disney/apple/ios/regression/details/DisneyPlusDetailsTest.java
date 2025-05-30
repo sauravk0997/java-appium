@@ -801,7 +801,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        int swipeCount = 5;
+        int swipeCount = TEN_SEC_TIMEOUT;
 
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -809,6 +809,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         //Verify user can play some Hulu content
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
+        swipeInContainerTillElementIsPresent(brandPage.getCollection(CollectionConstant.Collection.
+                ENJOY_THESE_SERIES_FROM_HULU), homePage.getTypeCellLabelContains(titleAvailableToPlay), swipeCount, Direction.LEFT);
         homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayOrContinue();
@@ -826,9 +828,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 Direction.UP,
                 swipeCount);
 
+        swipeInContainerTillElementIsPresent(brandPage.getCollection(CollectionConstant.Collection.
+                ENJOY_THESE_SERIES_FROM_HULU), homePage.getTypeCellLabelContains(titleAvailableToPlay), swipeCount, Direction.LEFT);
         homePage.getTypeCellLabelContains(AVAILABLE_WITH_HULU).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.getUpgradeNowButton().click();
+        detailsPage.getUnlockButton().click();
 
         //Verify that user is on the ineligible interstitial screen
         sa.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Ineligible Screen Header is not present");
