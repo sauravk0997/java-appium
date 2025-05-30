@@ -1337,10 +1337,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void isProgressBarIndicatingCorrectPositionOnEpisodeTab(String episodeTitle,
-                                                                      long scrubPercentage,
-                                                                      int latency) {
+                                                                   long scrubPercentage,
+                                                                   int latency) {
         long bookmarkWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth();
-        long expectedWidth = progressBarOnEpisodeTab.format(episodeTitle).getSize().getWidth() / (100 / scrubPercentage);
+        long expectedWidth = progressBarOnEpisodeTab.format(episodeTitle).getSize().getWidth()
+                / (100 / scrubPercentage);
         ValueRange range = ValueRange.of(-latency, latency);
         Assert.assertTrue(range.isValidIntValue(Math.abs(expectedWidth - bookmarkWidth)),
                 String.format("Actual Progress bar indicator (%d) and " +
