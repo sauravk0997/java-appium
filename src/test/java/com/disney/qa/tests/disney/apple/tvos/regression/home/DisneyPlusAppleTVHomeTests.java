@@ -6,6 +6,7 @@ import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.common.constant.CollectionConstant;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -28,6 +29,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
+import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
@@ -111,10 +113,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-
-        String lockedHuluContentCollectionName =
-                getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU);
 
         logIn(getUnifiedAccount());
 
@@ -124,12 +124,16 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         //Validate in-eligible for upsell user still has some content to watch
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
+        String huluSubscriptionTitle = "Hulu Original Series,  Available with Hulu Subscription,";
+        int swipeCount = FIFTEEN_SEC_TIMEOUT;
+        homePage.moveDownUntilCollectionContentIsFocused(
+                getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU), swipeCount);
+        homePage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains(titleAvailableToPlay), swipeCount);
         Assert.assertTrue(brandPage.getTypeCellLabelContains(titleAvailableToPlay).isPresent(),
                 "In-Eligible user for upsell couldn't see any playable Hulu content");
-        brandPage.clickDown();
         brandPage.clickSelect();
         detailsPage.waitForDetailsPageToOpen();
-        detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), 15);
+        detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), FIFTEEN_SEC_TIMEOUT);
         detailsPage.clickSelect();
         Assert.assertTrue(videoPlayer.waitForVideoToStart().isOpened(), "Video player did not open");
         videoPlayer.clickBack();
@@ -139,12 +143,17 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         detailsPage.clickBack();
 
         //Move to the "Unlock to Stream More Hulu" collection
-        brandPage.waitForLoaderToDisappear(15);
-        brandPage.moveDownUntilCollectionContentIsFocused(lockedHuluContentCollectionName, 3);
+        brandPage.waitForLoaderToDisappear(FIFTEEN_SEC_TIMEOUT);
+        brandPage.moveLeftUntilElementIsFocused(collectionPage.getFirstCellFromCollection(getCollectionName(
+                CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU)), swipeCount);
+        brandPage.moveDownUntilCollectionContentIsFocused(
+                getCollectionName(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU), swipeCount);
+        brandPage.moveRightUntilElementIsFocused(brandPage.getTypeCellLabelContains
+                (huluSubscriptionTitle), swipeCount);
         brandPage.clickSelect();
-        detailsPage.waitUntilElementIsFocused(detailsPage.getUpgradeNowButton(), 15);
-        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(),
-                "Upgrade Now button was not present");
+        detailsPage.waitUntilElementIsFocused(detailsPage.getUnlockButton(), FIFTEEN_SEC_TIMEOUT);
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(),
+                "Unlock button was not present");
         detailsPage.clickSelect();
 
         //Verify that user is on the ineligible interstitial screen
