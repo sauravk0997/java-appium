@@ -385,6 +385,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         // Search a title that is above kids content rating. Expect to see 'content hidden' kids message and no results
+        searchPage.typeInSearchField(ONLY_MURDERS_IN_THE_BUILDING);
         Assert.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(),
                 "PCON restricted title message was not as expected for kids profile");
         Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING),
