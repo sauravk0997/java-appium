@@ -1,6 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.search;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.disney.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -23,6 +24,8 @@ import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_P
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -329,6 +332,62 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
         Assert.assertEquals(detailsPage.getDetailsTabTitle(), contentTitle,
                 "Expected upcoming event detail page not displayed");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112624"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
+    public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
+        // Update main profile to have TV_14 content rating
+        getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
+                getLocalizationUtils().getRatingSystem(),
+                RATING_TV14);
+
+        // Add secondary profile with kid DOB
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        // Access main profile
+        logInWithoutHomeCheck(getUnifiedAccount());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.clickProfile(DEFAULT_PROFILE);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        // Go to search page
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        // Search a title that is above current content rating. Expect to see 'content hidden' message and no results
+        searchPage.typeInSearchField(ONLY_MURDERS_IN_THE_BUILDING);
+        Assert.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
+                "PCON restricted title message was not as expected");
+        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING),
+                "No results found message was not as expected for TV-14 profile");
+
+        // Switch to kids secondary profile and go to search page
+        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.clickProfile(KIDS_PROFILE);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        // Search a title that is above kids content rating. Expect to see 'content hidden' kids message and no results
+        Assert.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(),
+                "PCON restricted title message was not as expected for kids profile");
+        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING),
+                "No results found message was not as expected for kids profile");
     }
 
     private Item getUpcomingEventFromAPI(int titlesLimit) {
