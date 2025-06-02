@@ -1375,10 +1375,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String titleLabel_0 = getFirstTitleLabel().getText();
         String titleLabel_1 = getSecondTitleLabel().getText();
 
-        int episode0 = extractLeadingNumber(titleLabel_0);
-        int episode1 = extractLeadingNumber(titleLabel_1);
+        int episode1 = extractLeadingNumber(titleLabel_0);
+        int episode2 = extractLeadingNumber(titleLabel_1);
 
-        return episode0 < episode1;
+        return episode1 > episode2;
     }
 
     private int extractLeadingNumber(String title) {
