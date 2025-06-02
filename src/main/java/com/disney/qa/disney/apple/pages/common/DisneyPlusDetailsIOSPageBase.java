@@ -1378,11 +1378,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         int episode0 = extractLeadingNumber(titleLabel_0);
         int episode1 = extractLeadingNumber(titleLabel_1);
 
-        if (episode0 <= episode1) {
-            LOGGER.info("Episodes are not in reverse chronological order: " + episode0 + " <= " + episode1);
-            return false;
-        }
-        return true;
+        return episode0 < episode1;
     }
 
     private int extractLeadingNumber(String title) {
