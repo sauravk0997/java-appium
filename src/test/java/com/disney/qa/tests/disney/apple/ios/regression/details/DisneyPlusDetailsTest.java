@@ -801,7 +801,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        int swipeCount = TEN_SEC_TIMEOUT;
+        int swipeCount = 10;
 
         setAppToHomeScreen(getUnifiedAccount());
 
