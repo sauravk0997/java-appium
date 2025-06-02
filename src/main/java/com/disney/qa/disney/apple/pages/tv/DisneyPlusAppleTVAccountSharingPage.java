@@ -149,7 +149,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
        String subTextEmailLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                        CHECK_EMAIL_COPY.getText()),
-                Map.of("user_email", email)).replace("'", "’");
+                Map.of("user_email", email));
         return getTextViewByLabelContains(subTextEmailLabel).isPresent();
     }
 
