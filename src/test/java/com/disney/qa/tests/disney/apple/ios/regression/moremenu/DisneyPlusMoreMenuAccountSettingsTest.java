@@ -24,11 +24,14 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     private static final String MONTHLY = "Monthly";
     private static final String YEARLY = "Yearly";
     private static final String DISNEYPLUS_WEB_URL_TEXT = "disneyplus.com";
-    private static final String AMAZON_URL = "amazon.com";
     private static final String ONE_TIME_PASSCODE_SCREEN_IS_NOT_DISPLAYED = "One time passcode screen is not displayed";
     private static final String CHANGE_EMAIL_SCREEN_DID_NOT_OPEN = "'Change Email' screen did not open";
     private static final String MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN =
             "Manage your MyDisney account overlay didn't open";
+    private static final String SUBSCRIPTION_TITLE_NOT_DISPLAYED = "Subscription title was not displayed";
+    private static final String SUBSCRIPTION_MESSAGE_NOT_DISPLAYED = "Subscription message was not displayed";
+    private static final String WEBVIEW_NOT_DISPLAYED = "Browser webview did not open";
+    private static final String EXPECTED_URL_NOT_OPENED = "Webview did not open to the expected url";
 
     @BeforeMethod
     public void handleAlert() {
@@ -127,35 +130,34 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         setAppToAccountSettings();
         sa.assertTrue(accountPage.isPremiumSubscriptionTitlePresent(),
-                "Subscription title was not displayed");
+                SUBSCRIPTION_TITLE_NOT_DISPLAYED);
         Assert.assertTrue(accountPage.isSubscriptionMessageDisplayed(),
-                "Subscription message was not displayed");
+                SUBSCRIPTION_MESSAGE_NOT_DISPLAYED);
 
-        accountPage.openRokuWebview();
-        Assert.assertTrue(accountPage.isWebviewOpen(), "Browser webview did not open");
-        sa.assertTrue(accountPage.getWebviewUrl().contains(DISNEYPLUS_WEB_URL_TEXT), "Webview did not open to the expected url");
+        accountPage.clickSubscriptionCell();
+        handleAppStorePopup();
+        Assert.assertTrue(accountPage.isWebviewOpen(), WEBVIEW_NOT_DISPLAYED);
+        sa.assertTrue(accountPage.getWebviewUrl().contains(DISNEYPLUS_WEB_URL_TEXT), EXPECTED_URL_NOT_OPENED);
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75403"})
-    @Test(description = "Verify that the correct description for Amazon displayed", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifySubscriptionDetails_Amazon() {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_AMAZON)));
         setAppToAccountSettings();
-        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = new DisneyPlusAccountIOSPageBase(getDriver());
+        DisneyPlusAccountIOSPageBase disneyPlusAccountIOSPageBase = initPage(DisneyPlusAccountIOSPageBase.class);
 
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isAmazonSubscriptionTitlePresent(),
-                "Amazon Subscription title was not displayed");
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isAmazonSubscriptionMessagePresent(),
-                "Amazon Subscription message was not displayed");
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isPremiumSubscriptionTitlePresent(),
+                SUBSCRIPTION_TITLE_NOT_DISPLAYED);
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isSubscriptionMessageDisplayed(),
+                SUBSCRIPTION_MESSAGE_NOT_DISPLAYED);
 
-        disneyPlusAccountIOSPageBase.openAmazonWebview();
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(),
-                "Browser webview did not open");
-
-        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(AMAZON_URL),
-                "Webview did not open to the expected url");
+        disneyPlusAccountIOSPageBase.clickSubscriptionCell();
+        handleAppStorePopup();
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.isWebviewOpen(), WEBVIEW_NOT_DISPLAYED);
+        Assert.assertTrue(disneyPlusAccountIOSPageBase.getWebviewUrl().contains(DISNEYPLUS_WEB_URL_TEXT),
+                EXPECTED_URL_NOT_OPENED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67144", "XMOBQA-67150", "XMOBQA-75512"})
@@ -664,5 +666,12 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAppToHomeScreen(account);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
+    }
+
+    private void handleAppStorePopup() {
+        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        if (accountPage.getPopupContinueButton().isPresent(SHORT_TIMEOUT)) {
+            accountPage.getPopupContinueButton().click();
+        }
     }
 }

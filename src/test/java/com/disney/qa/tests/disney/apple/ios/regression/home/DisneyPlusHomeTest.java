@@ -1,10 +1,6 @@
 package com.disney.qa.tests.disney.apple.ios.regression.home;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.hatter.api.alice.AliceApiManager;
-import com.disney.hatter.api.alice.model.ImagesRequestS3;
-import com.disney.hatter.api.alice.model.ImagesResponse360;
-import com.disney.hatter.core.utils.FileUtil;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
@@ -17,8 +13,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import org.json.JSONObject;
-import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -26,7 +20,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.IntStream;
@@ -45,8 +38,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private static final String HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE = "Hulu tile is not visible on home page";
     private static final String BACK_BUTTON_NOT_PRESENT = "Back button is not present";
     private static final String HULU_BRAND_LOGO_NOT_EXPANDED = "Hulu brand logo is not expanded";
-
-    private static final AliceApiManager ALICE_API_MANAGER = new AliceApiManager(MULTIVERSE_STAGING_ENDPOINT);
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67371"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
@@ -347,6 +338,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyPlaybackForEpisodesInSetsByTappingOnMetadata() {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
@@ -358,7 +350,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         Assert.assertTrue(collectionPage.isCollectionPresent(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V),
                 "Treehouse of Horror I-V container not found");
 
-        collectionPage.getFirstCellFromCollectionEpisodeMetadataElement(
+        homePage.getFirstCellFromCollectionEpisodeMetadataElement(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V))
                 .click();
 
@@ -835,51 +827,50 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74637"})
-    @Test(groups = {TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyHuluCollectionPagesNetworkPageUI() {
-        List<String> networkLogos = new ArrayList<String>(
-                Arrays.asList("A&E", "ABC", "ABC News", "Adult Swim", "Andscape", "Aniplex", "BBC Studios",
-                        "Cartoon Network", "CBS", "Discovery", "Disney XD", "FOX", "Freeform", "FX", "FYI", "HGTV",
-                        "Hulu Original Series", "Lifetime", "Lionsgate", "LMN", "Magnolia", "Moonbug Entertainment ",
-                        "MTV", "National Geographic", "Nickelodeon", "Saban Films", "Samuel Goldwyn Films",
-                        "Searchlight Pictures", "Paramount+", "Sony Pictures Television", "The HISTORY Channel",
-                        "TLC", "TV Land", "Twentieth Century Studios", "Vertical Entertainment", "Warner Bros"));
-        double imageSimilarityPercentageThreshold = 90.0;
-
+    @Test(groups = {TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluCollectionPagesNetworkPageUI() throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
         homePage.tapHuluBrandTile();
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
-        sa.assertTrue(huluPage.isBackButtonPresent(), "Back button is not present");
+        sa.assertTrue(huluPage.getBackButton().isPresent(), "Back button is not present");
         sa.assertTrue(huluPage.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
 
-        networkLogos.forEach(item -> {
-            sa.assertTrue(huluPage.isNetworkLogoPresent(item), String.format("%s Network logo is not present", item));
-            huluPage.clickOnNetworkLogo(item);
-            sa.assertTrue(homePage.isNetworkLogoImageVisible(item), "Network logo page are not present");
-            pause(3);
-            String s3BucketPath = buildS3BucketPath(String.format("%s.png", item.replace(' ', '_')), "hulu-network-logos");
-            File srcFile = homePage.getNetworkLogoImage(item).getElement().getScreenshotAs(OutputType.FILE);
-            ImagesRequestS3 imagesComparisonRequest = new ImagesRequestS3(srcFile.getName(), FileUtil.encodeBase64File(srcFile), s3BucketPath);
-            ImagesResponse360 imagesResponse360 = ALICE_API_MANAGER.compareImages360S3(imagesComparisonRequest);
-            JSONObject jsonResponse = new JSONObject(imagesResponse360.getData().toString());
-            LOGGER.info("Raw JSON response: {}", jsonResponse);
-            double imageSimilarityPercentage = imagesResponse360.getSummary().getImageSimilarityPercentage();
+        List<Item> logoCollection = getNetworkLogoCollection();
 
-            LOGGER.info("Similarity Percentage is: {}", imageSimilarityPercentage);
+        Item networkResponse = logoCollection.get(0);
+        String network = networkResponse.getVisuals().getTitle();
+        huluPage.clickOnNetworkLogo(network);
+        huluPage.waitForLoaderToDisappear(TEN_SEC_TIMEOUT);
+        sa.assertTrue(homePage.isNetworkLogoImageVisible(network), "Network logo not displayed");
+        sa.assertTrue(huluPage.getBackgroundImage().isPresent(), "Background image not displayed");
+        sa.assertTrue(huluPage.getBackButton().isPresent(), BACK_BUTTON_NOT_PRESENT);
 
-            sa.assertTrue(
-                    imageSimilarityPercentage >= imageSimilarityPercentageThreshold,
-                    String.format("Similarity Percentage score was %,.2f or lower in %s Network logo {%,.2f}.", imageSimilarityPercentageThreshold, item, imageSimilarityPercentage));
-            huluPage.clickOnNetworkBackButton();
-            sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
-        });
+        swipeUp(1,1000);
+        sa.assertFalse(homePage.getNetworkLogoImage(network).isPresent(THREE_SEC_TIMEOUT),
+                "Network image not collapsed");
+        sa.assertTrue(huluPage.isCollapsedImageDisplayed(), "Collapsed image logo not displayed");
+
+        swipeDown(1,1000);
+        sa.assertTrue(homePage.getNetworkLogoImage(network).isPresent(THREE_SEC_TIMEOUT),
+                "Network image not displayed");
+        sa.assertFalse(huluPage.isCollapsedImageDisplayed(), "Collapsed image logo displayed");
+
+        ArrayList<Container> networkPage = getHuluAPIPage("entity-" + networkResponse.getId());
+        String contentTitle = getExploreAPIItemsFromSet(networkPage.get(0).getId(), 10).get(0).getVisuals().getTitle();
+        huluPage.getTypeCellLabelContains(contentTitle).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertEquals(detailsPage.getMediaTitle(), contentTitle, "Expected content details page not opened");
+        tap(detailsPage.getBackButton());
+        sa.assertTrue(homePage.getNetworkLogoImage(network).isPresent(THREE_SEC_TIMEOUT),
+                "Network image not displayed");
 
         sa.assertAll();
     }
@@ -930,12 +921,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
     private void verifyNetworkLogoValues(SoftAssert sa, DisneyPlusHuluIOSPageBase huluPage) {
         try {
-            String collection = CollectionConstant.getCollectionTitle(STUDIOS_AND_NETWORKS);
-            ArrayList<Item> logoCollection = getHuluAPIPage(HULU_PAGE.getEntityId()).stream()
-                    .filter(container -> container.getVisuals().getName().equals(collection))
-                    .findFirst()
-                    .orElseThrow(() -> new RuntimeException(collection + "container not present in API response"))
-                    .getItems();
+            List<Item> logoCollection = getNetworkLogoCollection();
             for (Item item : logoCollection) {
                 String logoTitle = item.getVisuals().getTitle();
                 sa.assertTrue(huluPage.isNetworkLogoPresent(logoTitle),
@@ -969,5 +955,14 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                     Direction.LEFT);
             contentTitleElement.click();
         }
+    }
+
+    private List<Item> getNetworkLogoCollection() throws URISyntaxException, JsonProcessingException {
+        String collection = CollectionConstant.getCollectionTitle(STUDIOS_AND_NETWORKS);
+        return getHuluAPIPage(HULU_PAGE.getEntityId()).stream()
+                .filter(container -> container.getVisuals().getName().equals(collection))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException(collection + "container not present in API response"))
+                .getItems();
     }
 }

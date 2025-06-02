@@ -44,8 +44,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement thirdCollectionTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s'`]")
-    private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s' " +
+            "AND label CONTAINS '%s'`]")
+    private ExtendedWebElement searchResultCellWithTitleAndRatingValues;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
     private ExtendedWebElement firstUpcomingEventCell;
     @ExtendedFindBy(iosClassChain =
@@ -57,6 +58,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentTypeMoviesCollapsedHeader;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"On the Series screen.\"`]")
     private ExtendedWebElement contentTypeSeriesCollapsedHeader;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label MATCHES 'No results found for \".*\"'`]")
+    private ExtendedWebElement noResultsFoundText;
     private ExtendedWebElement moviesTile = staticCellByLabel.format(getLocalizationUtils()
             .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                     DictionaryKeys.NAV_MOVIES_TITLE.getText()));
@@ -152,9 +155,17 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return resultCell.findExtendedWebElement(unlockBadge.getBy());
     }
 
-    public ExtendedWebElement getContentTypeMoviesCollapsedHeader() { return contentTypeMoviesCollapsedHeader; }
+    public ExtendedWebElement getContentTypeMoviesCollapsedHeader() {
+        return contentTypeMoviesCollapsedHeader;
+    }
 
-    public ExtendedWebElement getContentTypeSeriesCollapsedHeader() { return contentTypeSeriesCollapsedHeader; }
+    public ExtendedWebElement getContentTypeSeriesCollapsedHeader() {
+        return contentTypeSeriesCollapsedHeader;
+    }
+
+    public ExtendedWebElement getNoResultsFoundText() {
+        return noResultsFoundText;
+    }
 
     public void clearText() {
         LOGGER.info("Clearing text in search bar");
@@ -278,7 +289,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return searchResults.format(rating).isPresent();
     }
 
-    public ExtendedWebElement getTitleContainer(String titleName, String titleRating) {
-        return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating);
+    public ExtendedWebElement getTitleContainer(String titleName, String titleRating, String year) {
+        return searchResultCellWithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating, year);
     }
 }

@@ -77,6 +77,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             Person.U18.getYear() + "-" + Person.U18.getMonth().getNum() + "-" + Person.U18.getDay(true);
     public static final String ADULT_DOB =
             Person.ADULT.getYear() + "-" + Person.ADULT.getMonth().getNum() + "-" + Person.ADULT.getDay(true);
+    public static final String P13_DOB =
+            Person.PERSON13.getYear() + "-" + Person.PERSON13.getMonth().getNum() + "-" + Person.PERSON13.getDay(true);
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
@@ -151,7 +153,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16)),
         AGE_17(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 17)),
         OLDERTHAN125(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 130)),
-        OLDERTHAN200(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 205));
+        OLDERTHAN200(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 205)),
+        PERSON13(DateHelper.Month.valueOf(LocalDate.now().getMonth().name()),
+                String.valueOf(LocalDate.now().getDayOfMonth()),
+                String.valueOf(LocalDate.now().getYear() - 13));
 
         private final DateHelper.Month month;
         private final String day;
@@ -692,11 +697,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public String getExploreAPIResponseOrErrorMsg(ExploreSearchRequest exploreSearchRequest) {
+        ExplorePageResponse explorePageResponse = null;
         try {
-            ExplorePageResponse explorePageResponse = getExploreApi().getPage(exploreSearchRequest);
+            explorePageResponse = getExploreApi().getPage(exploreSearchRequest);
             return explorePageResponse.getData().toString().split("message=")[1].split(", iconType=")[0];
         } catch (Exception e) {
-            return e.getMessage().split("description=")[1].split("\\)")[0];
+            if (explorePageResponse == null)
+                Assert.fail("Expected response not received from API");
+            return explorePageResponse.getData().toString().split("description=")[1].split("\\)")[0];
         }
     }
 

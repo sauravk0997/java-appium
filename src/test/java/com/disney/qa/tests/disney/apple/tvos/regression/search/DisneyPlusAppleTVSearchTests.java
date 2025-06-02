@@ -8,6 +8,8 @@ import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import org.apache.commons.lang.RandomStringUtils;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -16,6 +18,9 @@ import org.testng.asserts.*;
 import java.util.*;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING;
+import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
@@ -31,6 +36,8 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private static final String HULU_CONTENT_ERROR_MESSAGE = "Hulu content is not present";
     private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
+    private static final String A_CHARACTER = "a";
+    private static final String B_CHARACTER = "b";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67362"})
     @Test(groups = {TestGroup.SEARCH, US})
@@ -234,6 +241,113 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertNotEquals(nextRowFocussedCellTitle, nextFocussedCellTitle,
                 "Not able to traverse down in movies collection");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112662"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchPageEmptyState() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        Assert.assertFalse(searchPage.getNoResultsFoundText().isPresent(FIVE_SEC_TIMEOUT),
+                "'No results found' message is displayed");
+        searchPage.typeInSearchField(RandomStringUtils.randomAlphabetic(61));
+        Assert.assertTrue(searchPage.getNoResultsFoundText().isPresent(),
+                "'No results found' message is not displayed");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112731"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchKeyboard() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        Assert.assertTrue(searchPage.getKeyboardByPredicate().isPresent(), "Keyboard is not present");
+        searchPage.clickSelect();
+        Assert.assertEquals(searchPage.getSearchBarText(), A_CHARACTER,
+                String.format("Current search query wasn't '%s'", A_CHARACTER));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112649"})
+    @Test(groups = {TestGroup.SEARCH, US})
+    public void verifySearchQueryInputBehavior() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        searchPage.typeInSearchField(A_CHARACTER);
+        List<ExtendedWebElement> firstQuerySearchResults = searchPage.getAllSearchResults();
+        searchPage.typeInSearchField(B_CHARACTER);
+        List<ExtendedWebElement> secondQuerySearchResults = searchPage.getAllSearchResults();
+        Assert.assertNotEquals(firstQuerySearchResults, secondQuerySearchResults,
+                "Search results didn't changed after updating the search query");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123196"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifySearchNavigationForUpComingContent() {
+        int maxQuantityOfExpectedChannels = 6;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        Item firstUpcomingEvent = getUpcomingEventFromAPI(maxQuantityOfExpectedChannels);
+        String contentTitle = firstUpcomingEvent.getVisuals().getTitle();
+        LOGGER.info("Upcoming event title:- " + contentTitle );
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        searchPage.typeInSearchField(contentTitle);
+        searchPage.clickSearchResult(contentTitle);
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1,1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(), contentTitle,
+                "Expected upcoming event detail page not displayed");
+    }
+
+    private Item getUpcomingEventFromAPI(int titlesLimit) {
+        List<Item> upcomingSetItemFromApi = getExploreAPIItemsFromSet(
+                getCollectionName(ESPN_PLUS_LIVE_AND_UPCOMING), titlesLimit);
+        Assert.assertNotNull(upcomingSetItemFromApi,
+                String.format("No items for '%s' collection were fetched from Explore API",
+                        ESPN_PLUS_LIVE_AND_UPCOMING));
+        if (upcomingSetItemFromApi.isEmpty()) {
+            throw new NoSuchElementException("Failed to fetch a upcoming content details from API");
+        }
+
+        for (Item upcomingEventFromApi : upcomingSetItemFromApi) {
+            if (upcomingEventFromApi.getVisuals().getPrompt().contains("AM") ||
+                    upcomingEventFromApi.getVisuals().getPrompt().contains("PM")) {
+                return upcomingEventFromApi;
+            }
+        }
+        throw new NoSuchElementException("Failed to fetch an upcoming content details from API");
     }
 
     private List<String> getMovieTabCollection() {

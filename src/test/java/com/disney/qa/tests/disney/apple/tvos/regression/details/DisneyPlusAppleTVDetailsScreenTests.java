@@ -62,7 +62,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66656"})
-    @Test(groups = {TestGroup.DETAILS_PAGE,TestGroup.MOVIES, US})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
     public void verifyMovieDetailsExtraTab() {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
@@ -317,6 +317,24 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Play button was not focused after navigating up from details tab");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121917"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    public void verifyESPNLeaguePage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusAppleTVCollectionPage collectionPage = new DisneyPlusAppleTVCollectionPage(getDriver());
+        String leagueName = "National Hockey League";
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_league_deeplink"));
+        Assert.assertTrue(collectionPage.isOpened(leagueName), "Expected League page did not open");
+        Assert.assertTrue(brandPage.getBrandLandingView().isPresent(), "A logo is not present on the league page");
+        Assert.assertTrue(brandPage.getBrandFeaturedImage().isPresent(), "Artwork background is not present");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-102800"})
     @Test(groups = {TestGroup.DETAILS_PAGE, US})
     public void verifyVODReplayAppearance() {
@@ -331,19 +349,19 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
-                        .isPresent(), "ESPN brand tile was not present on home page screen");
+                        .isPresent(), ESPN_BRAND_TILE_NOT_PRESENT);
         homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
 
-        // Navigate to Sports and basketball sport
+        // Navigate to Sports collection
         homePage.moveDownUntilCollectionContentIsFocused(
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
         detailsPage.getTypeCellLabelContains(rugby).click();
         Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
-                "Sport page did not open");
+                SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate the page
         CollectionConstant.Collection replaysCollection = CollectionConstant.Collection.SPORT_REPLAYS;
@@ -373,7 +391,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-        String errorMessage = "Skipping test, no events are available";
+        String errorMessage = "Skipping test, no live events are available";
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -423,7 +441,6 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void verifyUpcomingEventAppearance() {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        String channelAttribution = "Included with your ESPN+ subscription";
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
@@ -455,7 +472,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.getDetailsTitleLabel().isPresent(), TITLE_NOT_PRESENT);
         if (eventDescription && networkAttribution) {
             sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
-            sa.assertTrue(detailsPage.getStaticTextByLabelContains(channelAttribution).isPresent(),
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
                     "Channel network attribution is not present");
         }
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
@@ -637,6 +654,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Validate details page and add item to the watchlist
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickWatchButton();
+        if (liveEventModal.isOpened()) {
+            liveEventModal.clickWatchLiveButton();
+        }
+        videoPlayerPage.waitForPresenceOfAnElement(videoPlayerPage.getPlayerView());
         Assert.assertTrue(videoPlayerPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(titleEvent.contains(videoPlayerPage.getTitleLabel()),
                 "Video title does not match with the expected");
@@ -667,6 +688,34 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertEquals(detailsPage.getQuantityOfActors(), 6, "Expected quantity of actors is incorrect");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-114007"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, US})
+    public void verifyHuluStereotypeAdvisoryDetailsTab() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        ExploreContent seriesApiContent =
+                getSeriesApi(R.TESTDATA.get("disney_prod_lion_king_timon_and_pumbaa_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_content_timon_and_pumbaa_deeplink"));
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(seriesApiContent.getTitle()).isPresent(),
+                "Expected series title is not present");
+        Assert.assertTrue(detailsPage.getContentAdvisoryText().isPresent(),
+                "Content Advisory section is not present");
+        Assert.assertTrue(detailsPage.getContentAdvisoryText().getText().contains(
+                detailsPage.retrieveContentAdvisory(seriesApiContent)),
+                "Content Advisory text is not present as expected");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64730"})
@@ -884,5 +933,44 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Content Unavailable error message was not present");
         Assert.assertTrue(homePage.getOkButton().isElementPresent(),
                 "OK button text was not present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121918"})
+    @Test(groups = {TestGroup.ESPN, TestGroup.DETAILS_PAGE, US})
+    public void verifyESPNSportPage() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
+                .isPresent(), "ESPN brand tile was not present on home page screen");
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
+
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                ESPN_PAGE_DID_NOT_OPEN);
+
+        // Navigate to Sports collection and select the first Sport title
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 15);
+
+        String sportTitle = getContainerTitlesFromApi(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 5).get(0);
+        LOGGER.info("Navigating to sport {}", sportTitle);
+        if(!sportTitle.isEmpty()) {
+            homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(sportTitle), 20);
+        } else {
+            throw new SkipException("There are no sports available");
+        }
+
+        detailsPage.getTypeCellLabelContains(sportTitle).click();
+        Assert.assertTrue(espnPage.isSportTitlePresent(sportTitle),
+                SPORT_PAGE_DID_NOT_OPEN);
+        Assert.assertFalse(detailsPage.getBrandLandingView().isElementPresent(THREE_SEC_TIMEOUT),
+                "A logo image is present in sports screen");
     }
 }
