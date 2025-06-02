@@ -306,7 +306,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        UnifiedAccount account = setHouseholdExperience(ExperienceId.SOFT, false);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.SOFT_NO_CYOS, false);
         logInWithoutHomeCheck(account);
         // Verify Soft Block screen and click in continue
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
@@ -388,7 +388,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_MAX_TRAVEL, false);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, true);
         logInWithoutHomeCheck(account);
 
         // Validate hard block screen
@@ -436,7 +436,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
 
         SoftAssert sa = new SoftAssert();
-        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, false);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, true);
         logInWithoutHomeCheck(account);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -486,7 +486,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        UnifiedAccount account = setHouseholdExperience(ExperienceId.SOFT, false);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.SOFT, true);
         logInWithoutHomeCheck(account);
 
         // Steps to verify the No thanks option
