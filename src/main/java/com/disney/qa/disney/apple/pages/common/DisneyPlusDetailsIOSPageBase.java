@@ -23,7 +23,10 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.time.temporal.ValueRange;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import static com.disney.qa.common.constant.IConstantHelper.LABEL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
@@ -1061,8 +1064,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return secondVersionsImage.isPresent();
     }
 
-
-
     public boolean isContentImageViewPresent() {
         return contentImageView.isPresent();
     }
@@ -1351,6 +1352,54 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         int xPoint = firstItemPickerCell.getLocation().getX();
         int yPoint = firstItemPickerCell.getLocation().getY();
         tapAtCoordinateNoOfTimes(xPoint, yPoint - 10, 1);
+    }
+
+    public boolean isSeasonPickerListInReverseChronologicalOrder() {
+
+        List<ExtendedWebElement> selectableTitleList = findExtendedWebElements(seasonItemPicker.getBy());
+
+        List<String> seasonTexts = new ArrayList<>();
+        for (ExtendedWebElement element : selectableTitleList) {
+            seasonTexts.add(element.getText());
+        }
+
+        List<Integer> seasonNumbers = seasonTexts.stream()
+                .map(text -> Integer.parseInt(text.replace("Season ", "").trim()))
+                .collect(Collectors.toList());
+
+        List<Integer> sortedDescending = new ArrayList<>(seasonNumbers);
+        sortedDescending.sort((a, b) -> b - a); // Sort in descending order
+
+        if (!seasonNumbers.equals(sortedDescending)) {
+            LOGGER.info("Seasons are not in reverse chronological order: {}" + seasonNumbers);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean isEpisodeInReverseChronologicalOrder() {
+        String titleLabel_0 = getFirstTitleLabel().getText();
+        String titleLabel_1 = getSecondTitleLabel().getText();
+
+        int episode0 = extractLeadingNumber(titleLabel_0);
+        int episode1 = extractLeadingNumber(titleLabel_1);
+
+        if (episode0 <= episode1) {
+            LOGGER.info("Episodes are not in reverse chronological order: " + episode0 + " <= " + episode1);
+            return false;
+        }
+        return true;
+    }
+
+    private int extractLeadingNumber(String title) {
+        Pattern pattern = Pattern.compile("^(\\d+)\\.");
+        Matcher matcher = pattern.matcher(title);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
+        } else {
+            throw new IllegalArgumentException("Title format is invalid: " + title);
+        }
     }
 
     public boolean isOnlyAvailableWithESPNHeaderPresent() {
