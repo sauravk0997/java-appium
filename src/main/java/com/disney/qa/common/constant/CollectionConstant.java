@@ -20,6 +20,7 @@ public class CollectionConstant {
         ENJOY_THESE_MOVIES_FROM_HULU,
         ENJOY_THESE_SERIES_FROM_HULU,
         ESPN_EXPLORE_MORE, // collection with locked live and upcoming events for non ESPN entitled user
+        ESPN_SERIES,
         ESPN_PLUS_LIVE_AND_UPCOMING,// live collection for bundle user
         ESPN_SPORTS,
         HULU_FEATURED,
@@ -80,6 +81,8 @@ public class CollectionConstant {
                 return "7c7c4aa2-5ba0-4090-92a0-37f4c0fd25e6";
             case ESPN_EXPLORE_MORE:
                 return "1877aec1-5ff9-447f-a779-534372c0af3c";
+            case ESPN_SERIES:
+                return "4f6ba6c5-57b3-456a-9faa-11a02c48727d";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "21a6e9fa-2a5c-4f77-b1b1-ec956f3038c7";
             case ESPN_SPORTS:
