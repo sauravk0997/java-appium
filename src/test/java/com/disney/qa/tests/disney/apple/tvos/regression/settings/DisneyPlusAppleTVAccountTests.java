@@ -262,10 +262,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyAccountSharingErrorHandling() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         String invalidCode = "111111";
-        String errorMessage = "Sorry, we could not connect you to Disney+ using the passcode you provided. " +
-                "Please re-enter your passcode and try again. " +
-                "If the problem persists, visit the Disney+ Help Centre (error code 21).";
         SoftAssert sa = new SoftAssert();
         UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, false);
         logInWithoutHomeCheck(account);
@@ -287,8 +285,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OTP_PAGE_DID_NOT_OPEN);
         // Enter invalid OTP code and validate error in screen
         accountSharingPage.enterOtpOnModal(invalidCode);
-        sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(errorMessage).isPresent(),
-                "Error message is not present");
+        sa.assertTrue(forgotPasswordPage.isOTPErrorMessagePresent(), "Error message is not present");
         homePage.clickDown();
         accountSharingPage.getResendEmailCopy().click();
         sa.assertTrue(accountSharingPage.getOOHErrorPageHeadline().isPresent(), "Error page headline is not present");
