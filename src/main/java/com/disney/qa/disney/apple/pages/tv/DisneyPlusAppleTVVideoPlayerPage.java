@@ -117,4 +117,11 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         LOGGER.info("Playback currently at '{}' seconds", currentTimeInSec);
         return currentTimeInSec;
     }
+
+    @Override
+    public boolean isServiceAttributionLabelVisibleWithControls() {
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        commonPage.clickDown(1);
+        return getServiceAttributionLabel().isPresent();
+    }
 }

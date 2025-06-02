@@ -126,7 +126,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Details tab was not found on details page");
         details.clickDetailsTab();
         String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
-        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+        sa.assertTrue(contentAdvisoryUI.contains(details.retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory Description not as expected");
 
         //movie
@@ -138,7 +138,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+        sa.assertTrue(contentAdvisoryUI.contains(details.retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory Description not as expected");
 
         sa.assertAll();
@@ -626,7 +626,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75083"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyJuniorProfileNoHulu() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
@@ -646,23 +646,25 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .isStarOnboarded(true)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount(), JUNIOR_PROFILE);
+        setAppToHomeScreen(getUnifiedAccount(), KIDS_PROFILE);
+        Assert.assertTrue(homePage.isKidsHomePageOpen(), HOME_PAGE_NOT_DISPLAYED);
 
         //No upsell
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        sa.assertFalse(moreMenu.isMenuOptionPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
+        homePage.clickMoreTab();
+        sa.assertTrue(moreMenu.isMenuOptionNotPresent(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT),
                 "Account option was available to a child account, upsell option possible");
 
         //Home
         moreMenu.clickHomeIcon();
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(homePage.isKidsHomePageOpen(), HOME_PAGE_NOT_DISPLAYED);
         homePage.getKidsCarousels().forEach(element -> sa.assertFalse(element.getText().contains(HULU),
                 String.format("%s contains %s", element.getText(), HULU)));
-        sa.assertFalse(homePage.isHuluTileVisible(), "Hulu tile was found on Kids home.");
+        sa.assertFalse(homePage.getBrandCell(HULU).isPresent(ONE_SEC_TIMEOUT), "Hulu tile was found on Kids home.");
         sa.assertTrue(homePage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Home page");
 
         //Search
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         sa.assertTrue(searchPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Search page");
 
         //Hulu Original Movie
@@ -677,13 +679,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //Details
         searchPage.clearText();
         searchPage.searchForMedia(BLUEY);
-        searchPage.getDisplayedTitles().get(0).click();
+        searchPage.getDynamicAccessibilityId(BLUEY).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getStaticTextByLabelContains(HULU).isElementNotPresent(SHORT_TIMEOUT), "Hulu branding was found on Kids' Detail page");
 
         //Ad badge
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.displayVideoController();
         sa.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
                 "Ad badge found on Kids profile video content.");
@@ -1013,18 +1016,5 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
-    }
-
-    public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
-        ContentAdvisory contentAdvisory = null;
-        try {
-            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
-        } catch (Exception e) {
-            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
-        }
-        if (contentAdvisory == null || contentAdvisory.getText().isEmpty()) {
-            throw new SkipException("Unable to get Content Advisory from API");
-        }
-        return contentAdvisory.getText();
     }
 }

@@ -266,9 +266,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "buttonForgotPassword")
     protected ExtendedWebElement forgotPasswordBtn;
 
-    @ExtendedFindBy(accessibilityId = "airingBadgeLabel")
-    private ExtendedWebElement airingBadgeLabel;
-
     @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
     protected ExtendedWebElement headerViewTitleLabel;
 
@@ -329,14 +326,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
                     "**/XCUIElementTypeStaticText[`value CONTAINS '%s'`]")
     private ExtendedWebElement firstCellElementFromCollectionDynamicStaticText;
-    @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeCollectionView[`name == '43a35f2b-3788-4449-a54d-cd37263f0940'`]/" +
-                    "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+:E.+'`]")
-    private ExtendedWebElement firstCellElementFromCollectionEpisodeMetadata;
-    @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
-                    "**/XCUIElementTypeStaticText[`name == 'airingBadgeLabel'`]")
-    private ExtendedWebElement firstCellElementFromCollectionAiringBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label " +
             "CONTAINS \"%s,\"$]")
     private ExtendedWebElement cellElementFromCollection;
@@ -983,11 +972,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isGlobalNavExpanded() {
-        if (globalNavBarView.isElementPresent(TEN_SEC_TIMEOUT)) {
+        if (homeTab.isPresent(FIFTEEN_SEC_TIMEOUT)) {
             Dimension size = globalNavBarView.getSize();
             int x = size.getWidth();
             LOGGER.info("Detecting if global nav is expanded..");
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             return x > 200;
         }
         return false;
@@ -1016,10 +1004,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             Assert.assertTrue(element.isPresent(),
                     String.format("Element was not present after %d seconds elapsed.", count.get()));
         });
-    }
-
-    public ExtendedWebElement getAiringBadgeLabel() {
-        return airingBadgeLabel;
     }
 
     public ExtendedWebElement getProgressBar() {
@@ -1469,14 +1453,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                 .isPresent();
     }
 
-    public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
-        return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
-    }
-
-    public ExtendedWebElement getAiringBadgeOfFirstCellElementFromCollection(String collectionName) {
-        return firstCellElementFromCollectionAiringBadge.format(collectionName);
-    }
-
     public ExtendedWebElement getFirstCellFromCollection(String collectionName) {
         return firstCellElementFromCollection.format(collectionName);
     }
@@ -1573,6 +1549,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
         while (count > 0) {
             moveRight(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT) &&
+                    isFocused(element)) {
+                LOGGER.info(DESIRED_ELEMENT_REACHED);
+                return;
+            }
+            count--;
+        }
+        throw new NoSuchElementException("Desired element was not focused after given retries");
+    }
+
+    public void moveLeftUntilElementIsFocused(ExtendedWebElement element, int count) {
+        LOGGER.info("Moving Left until desired element is focused");
+        if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
+            LOGGER.info(DESIRED_ELEMENT_FOCUSED);
+            return;
+        }
+        while (count > 0) {
+            moveLeft(1, 1);
             if (element.isPresent(ONE_SEC_TIMEOUT) &&
                     isFocused(element)) {
                 LOGGER.info(DESIRED_ELEMENT_REACHED);

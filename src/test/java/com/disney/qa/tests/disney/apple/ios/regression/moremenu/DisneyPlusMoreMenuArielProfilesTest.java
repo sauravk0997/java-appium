@@ -47,6 +47,17 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
     private static final String JUNIOR_MODE_TEXT_ERROR_MESSAGE = "Junior mode text was not present on edit profile page";
     private static final String TURN_OFF_KIDS_PASSWORD_ERROR_MESSAGE = "Turn off kids profile password body is not displayed";
+    private static final String CONSENT_HEADER_NOT_PRESENT = "Consent header was not present after minor auth";
+    private static final String CONSENT_HEADER_MISMATCH = "Consent header text doesn't match with the expected dict " +
+            "values";
+    private static final String PRIVACY_POLICY_LINK_NOT_PRESENT = "Privacy Policy Link is not present on Consent " +
+            "screen";
+    private static final String CHILDREN_PRIVACY_POLICY_LINK_NOT_PRESENT = "Children's Privacy Policy Link is not " +
+            "present on Consent screen";
+    private static final String CONSENT_TEXT_MISMATCH = "Consent text doesn't match with the expected dict values";
+    private static final String SCROLLING_CONSENT_SCREEN = "Scrolling down to view all of 'Information and choices " +
+            "about your profile'";
+    private static final String ALERT_CONTENT_MISMATCH = "Alert verbiage doesn't match with the expected dict value";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72172"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
@@ -131,7 +142,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         //User shouldn't see password screen, instead they should directly go to consent screen.
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            LOGGER.info(SCROLLING_CONSENT_SCREEN);
             //For iPhone 8 or some other small devices need to scroll more time to read full consent/terms
             parentalConsent.scrollConsentContent(4);
         }
@@ -142,44 +153,50 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75277"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileU13MinorConsentAgree() {
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusUpdateProfileIOSPageBase updateProfilePage = initPage(DisneyPlusUpdateProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert softAssert = new SoftAssert();
 
-        onboard();
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(null)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        //TODO:Bug: IOS-5032 DOB enter screen should be populated here.
-        //Once bug is resolved, remove line 177
-        moreMenu.clickMoreTab();
-        softAssert.assertTrue(updateProfilePage.isOpened(), "Update your profile page is not shown after selecting kids profile");
-        editProfilePage.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        Assert.assertTrue(updateProfilePage.isOpened(),
+                "Update your profile page is not shown after selecting kids profile");
+        editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
 
         //Consent screen validation
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
-        softAssert.assertTrue(parentalConsent.validateConsentHeader(), "Consent header text doesn't match with the expected dict values");
-        softAssert.assertTrue(parentalConsent.validateConsentText(), "Consent text doesn't match with the expected dict values");
-        softAssert.assertTrue(parentalConsent.verifyPrivacyPolicyLink(), "Privacy Policy Link is not present on Consent screen");
-        softAssert.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(), "Children's Privacy Policy Link is not present on Consent screen");
+        Assert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
+        softAssert.assertTrue(parentalConsent.validateConsentHeader(), CONSENT_HEADER_MISMATCH);
+        softAssert.assertTrue(parentalConsent.verifyPrivacyPolicyLink(), PRIVACY_POLICY_LINK_NOT_PRESENT);
+        softAssert.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(), CHILDREN_PRIVACY_POLICY_LINK_NOT_PRESENT);
+        softAssert.assertTrue(parentalConsent.validateConsentText(), CONSENT_TEXT_MISMATCH);
 
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            softAssert.assertTrue(parentalConsent.validateScrollPopup(), "Alert verbiage doesn't match with the expected dict value");
+            LOGGER.info(SCROLLING_CONSENT_SCREEN);
+            softAssert.assertTrue(parentalConsent.validateScrollPopup(), ALERT_CONTENT_MISMATCH);
             parentalConsent.clickAlertConfirm();
-            scrollDown();
+            parentalConsent.scrollConsentContent(2);
             //Accept parental consent
             clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         }
-        softAssert.assertTrue(moreMenu.isExitKidsProfileButtonPresent(), "'Exit Kid's Profile' button not enabled.");
-        moreMenu.clickHomeIcon();
-        softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isElementPresent(), "Kids Home page is not open after login");
+        whoIsWatching.clickProfile(KIDS_PROFILE);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         softAssert.assertAll();
     }
 
@@ -201,7 +218,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
         //Consent screen validation
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
+        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
         softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
@@ -222,13 +239,13 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickMoreTab();
         editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
+        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
         //Abandon the flow
         terminateApp(buildType.getDisneyBundle());
         relaunch();
         //Select KIDS profile
         whoIsWatching.clickProfile(KIDS_PROFILE);
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
+        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
         softAssert.assertAll();
     }
 
@@ -320,7 +337,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.clickSaveProfileButton();
         //Consent authentication
         if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            LOGGER.info(SCROLLING_CONSENT_SCREEN);
             scrollDown();
         }
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
@@ -430,7 +447,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         //minor consent is shown
         if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            LOGGER.info(SCROLLING_CONSENT_SCREEN);
             parentalConsent.scrollConsentContent(2);
         }
 
@@ -476,7 +493,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         moreMenu.clickSaveProfileButton();
         //minor consent is shown
         if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
+            LOGGER.info(SCROLLING_CONSENT_SCREEN);
             scrollDown();
         }
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
@@ -974,21 +991,15 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         createKidsProfile();
         //Consent screen validation
-        sa.assertTrue(parentalConsent.isConsentHeaderPresent(),
-                "Consent header was not present after minor auth");
-        sa.assertTrue(parentalConsent.validateConsentHeader(),
-                "Consent header text doesn't match with the expected dict values");
-        sa.assertTrue(parentalConsent.validateConsentText(),
-                "Consent text doesn't match with the expected dict values");
-        sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(),
-                "Privacy Policy Link is not present on Consent screen");
-        sa.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(),
-                "Children's Privacy Policy Link is not present on Consent screen");
+        sa.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
+        sa.assertTrue(parentalConsent.validateConsentHeader(), CONSENT_HEADER_MISMATCH);
+        sa.assertTrue(parentalConsent.validateConsentText(), CONSENT_TEXT_MISMATCH);
+        sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(), PRIVACY_POLICY_LINK_NOT_PRESENT);
+        sa.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(), CHILDREN_PRIVACY_POLICY_LINK_NOT_PRESENT);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            sa.assertTrue(parentalConsent.validateScrollPopup(),
-                    "Alert verbiage doesn't match with the expected dict value");
+            LOGGER.info(SCROLLING_CONSENT_SCREEN);
+            sa.assertTrue(parentalConsent.validateScrollPopup(), ALERT_CONTENT_MISMATCH);
             parentalConsent.clickAlertConfirm();
             parentalConsent.scrollConsentContent(4);
             //Accept parental consent
@@ -1007,8 +1018,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
         createKidsProfile();
-        Assert.assertTrue(parentalConsent.isConsentHeaderPresent(),
-                "Consent header was not present after minor auth");
+        Assert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
         //Decline consent
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
@@ -1027,12 +1037,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         createKidsProfile();
-        Assert.assertTrue(parentalConsent.isConsentHeaderPresent(),
-                "Consent header is not present");
-        Assert.assertTrue(parentalConsent.validateConsentHeader(),
-                "Consent header text doesn't match the expected dictionary value");
-        Assert.assertTrue(parentalConsent.validateConsentText(),
-                "Scrollable content doesn't match with the expected dictionary values");
+        Assert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
+        Assert.assertTrue(parentalConsent.validateConsentHeader(), CONSENT_HEADER_MISMATCH);
+        Assert.assertTrue(parentalConsent.validateConsentText(), CONSENT_TEXT_MISMATCH);
         Assert.assertTrue(parentalConsent.isDeclineButtonPresent(),
                 "Decline button is not present");
         Assert.assertTrue(parentalConsent.isAgreeButtonPresent(),

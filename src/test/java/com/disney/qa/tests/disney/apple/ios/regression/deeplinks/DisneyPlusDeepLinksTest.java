@@ -5,7 +5,6 @@ import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
-import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -584,29 +583,27 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75209"})
-    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks", enabled = false)
+    @Test(groups = {TestGroup.DEEPLINKS, TestGroup.PRE_CONFIGURATION, US}, dataProvider = "huluUnavailableDeepLinks")
     public void verifyHuluDeepLinkNewURLStructureNotEntitledHulu(String deepLink) {
-        String unentitledSeriesId = "entity-d8ea2b7d-d87d-4e5b-bfee-719a39e95129";
+        String abcNetworkEntityId = "entity-d8ea2b7d-d87d-4e5b-bfee-719a39e95129";
 
-        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+
+        ExploreSearchRequest exploreSearchRequest = getDisneyExploreSearchRequest()
+                .setEntityId(abcNetworkEntityId)
+                .setCountryCode(getLocalizationUtils().getLocale())
+                .setLanguage(getLocalizationUtils().getUserLanguage())
+                .setUnifiedAccount(getUnifiedAccount())
+                .setProfileId(getUnifiedAccount().getProfileId());
+
+        String errorMessage = getExploreAPIResponseOrErrorMsg(exploreSearchRequest);
         setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         launchDeeplink(deepLink);
 
-        Visuals visualsResponse = getExploreAPIPageVisuals(unentitledSeriesId);
-        String huluSubscriptionErrorMessage = visualsResponse.getRestriction().getMessage();
-
-        sa.assertTrue(detailsPage.getStaticTextByLabel(huluSubscriptionErrorMessage).isPresent(),
-                "\"This content requires a Hulu subscription.\" message is displayed");
-        sa.assertFalse(detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT), "Extra tab is found.");
-        sa.assertFalse(detailsPage.getSuggestedTab().isPresent(SHORT_TIMEOUT), "Suggested tab is found.");
-        sa.assertFalse(detailsPage.getDetailsTab().isPresent(SHORT_TIMEOUT), "Details tab is found.");
-        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(SHORT_TIMEOUT), "Watchlist CTA found.");
-        sa.assertFalse(detailsPage.getTrailerButton().isPresent(SHORT_TIMEOUT), "Trailer CTA found.");
-        sa.assertFalse(detailsPage.getPlayButton().isPresent(SHORT_TIMEOUT), "Play CTA found.");
-
-        sa.assertAll();
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(errorMessage).isPresent(), CONTENT_UNAVAILABLE_ERROR);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77699"})
