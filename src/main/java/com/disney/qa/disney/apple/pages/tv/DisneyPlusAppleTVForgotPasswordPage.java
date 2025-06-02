@@ -107,8 +107,10 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
         return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EMAIL_RESEND_TITLE.getText());
     }
 
-    public String getOTPErrorMessage() {
-        return getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_PASSCODE.getText());
+    public boolean isOTPErrorMessagePresent() {
+        return getStaticTextByLabelContains(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
+                        DictionaryKeys.INVALID_PASSCODE.getText())).isPresent();
     }
 
     public void clickContinueBtnOnOTPPage() {
