@@ -490,7 +490,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(addProfile.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
         moreMenu.goBackToDisneyAppFromSafari();
         moreMenu.dismissNotificationsPopUp();
-        Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not returned to the add profile page after navigating back from safari");
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
         moreMenu.clickSaveProfileButton();
         //minor consent is shown
         if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
@@ -720,7 +720,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar Page is not opened");
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
-        sa.assertTrue(addProfile.isAddProfilePageOpened(), "Add Profile Page is not opened");
+        sa.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
