@@ -489,7 +489,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         String editProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, BTN_EDIT_PROFILE.getText());
         String addProfileButtonLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
-                APPLICATION, CREATE_PROFILE.getText());
+                APPLICATION, CREATE_PROFILE_ADD_PROFILE.getText());
 
         logInWithoutHomeCheck(getUnifiedAccount());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
