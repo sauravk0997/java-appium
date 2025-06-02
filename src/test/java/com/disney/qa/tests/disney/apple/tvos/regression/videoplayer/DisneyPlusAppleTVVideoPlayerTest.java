@@ -213,7 +213,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
         detailsPage.getTypeCellLabelContains(rugby).click();
-        Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
+        Assert.assertTrue(espnPage.isPageTitlePresent(rugby),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
@@ -253,7 +253,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_rugby_sport_deeplink"));
-        Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
+        Assert.assertTrue(espnPage.isPageTitlePresent(rugby),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback

@@ -14,6 +14,12 @@ public class DisneyPlusEspnIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Replay\"`][1]")
     private ExtendedWebElement replayLabel;
 
+    @ExtendedFindBy(accessibilityId = "logoImage")
+    protected ExtendedWebElement logoImage;
+
+    @ExtendedFindBy(accessibilityId = "heroImage")
+    protected ExtendedWebElement heroImage;
+
     public DisneyPlusEspnIOSPageBase(WebDriver driver) {
         super(driver);
     }
@@ -27,7 +33,15 @@ public class DisneyPlusEspnIOSPageBase extends DisneyPlusApplePageBase {
         return replayLabel;
     }
 
-    public boolean isSportTitlePresent(String sport) {
+    public ExtendedWebElement getLogoImage() {
+        return logoImage;
+    }
+
+    public ExtendedWebElement getHeroImage() {
+        return heroImage;
+    }
+
+    public boolean isPageTitlePresent(String sport) {
         return findExtendedWebElement(
                 AppiumBy.iOSClassChain(String
                         .format("**/XCUIElementTypeStaticText[`label CONTAINS \"On the %s screen.\"`]",
