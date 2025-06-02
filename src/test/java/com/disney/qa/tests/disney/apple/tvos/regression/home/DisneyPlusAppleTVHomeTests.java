@@ -429,9 +429,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         });
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122533"})
-    @Test(groups = {TestGroup.HOME, TestGroup.HULU, US})
-    public void verifyContinueWatchingSection() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-115140"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyContinueWatchingContainer() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
@@ -489,7 +489,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String firstAPICollectionItemEpisodeTitle = firstAPICollectionItem.getVisuals().getEpisodeTitle();
         if (firstAPICollectionItemSeasonNumber == null ||
                 firstAPICollectionItemEpisodeNumber == null ||
-                firstAPICollectionItemEpisodeTitle == null ) {
+                firstAPICollectionItemEpisodeTitle == null) {
             throw new SkipException("First API Collection item did not have all episode metadata to validate");
         }
         sa.assertTrue(
@@ -499,9 +499,21 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                         firstAPICollectionItemEpisodeTitle),
                 "First element under 'Continue Watching' did not have Episode metadata");
 
+        String firstAPICollectionItemPrompt = firstAPICollectionItem.getVisuals().getPrompt();
+        if (firstAPICollectionItemPrompt == null) {
+            throw new SkipException("First API Collection item did not have a prompt to validate");
+        }
+        sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
+                        continueWatchingCollectionId, firstAPICollectionItemPrompt),
+                "First element under 'Continue Watching' did not have Remaining time text");
+
         homePage.clickSelect();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(), firstAPICollectionItemTitle,
+                "Detail page not displayed for expected continue watching content");
+        sa.assertAll();
     }
 
         private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
