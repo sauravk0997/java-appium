@@ -14,9 +14,6 @@ public class DisneyPlusEspnIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Replay\"`][1]")
     private ExtendedWebElement replayLabel;
 
-    @ExtendedFindBy(accessibilityId = "logoImage")
-    protected ExtendedWebElement logoImage;
-
     @ExtendedFindBy(accessibilityId = "heroImage")
     protected ExtendedWebElement heroImage;
 
@@ -31,10 +28,6 @@ public class DisneyPlusEspnIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getReplayLabel() {
         return replayLabel;
-    }
-
-    public ExtendedWebElement getLogoImage() {
-        return logoImage;
     }
 
     public ExtendedWebElement getHeroImage() {
