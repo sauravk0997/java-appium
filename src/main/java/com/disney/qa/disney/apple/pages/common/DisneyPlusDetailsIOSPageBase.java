@@ -1355,9 +1355,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isSeasonPickerListInReverseChronologicalOrder() {
-
         List<ExtendedWebElement> selectableTitleList = findExtendedWebElements(seasonItemPicker.getBy());
-
         List<String> seasonTexts = new ArrayList<>();
         for (ExtendedWebElement element : selectableTitleList) {
             seasonTexts.add(element.getText());
@@ -1370,12 +1368,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         List<Integer> sortedDescending = new ArrayList<>(seasonNumbers);
         sortedDescending.sort((a, b) -> b - a); // Sort in descending order
 
-        if (!seasonNumbers.equals(sortedDescending)) {
-            LOGGER.info("Seasons are not in reverse chronological order: {}" + seasonNumbers);
-            return false;
-        } else {
-            return true;
-        }
+        return seasonNumbers.equals(sortedDescending);
     }
 
     public boolean isEpisodeInReverseChronologicalOrder() {
