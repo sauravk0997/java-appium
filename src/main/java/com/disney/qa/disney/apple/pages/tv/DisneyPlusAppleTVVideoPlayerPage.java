@@ -110,4 +110,11 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         } while (getCurrentTime() < percentageExpectedRemainingTime && maxTapCount-- > 0);
         LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
     }
+
+    @Override
+    public boolean isServiceAttributionLabelVisibleWithControls() {
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        commonPage.clickDown(1);
+        return getServiceAttributionLabel().isPresent();
+    }
 }
