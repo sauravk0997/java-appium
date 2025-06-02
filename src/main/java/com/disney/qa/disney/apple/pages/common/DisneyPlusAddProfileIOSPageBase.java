@@ -59,9 +59,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "BIRTHDATE")
     private ExtendedWebElement birthdateFieldTitle;
 
-    @ExtendedFindBy(accessibilityId = "A profile with curated content and features, and a simplified user interface.")
-    private ExtendedWebElement juniorModeDescription;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'genderFormButtonCellIdentifier'`]/" +
             "**/XCUIElementTypeButton")
     private ExtendedWebElement genderDropdown;
@@ -162,10 +159,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public void tapJuniorModeToggle() {
         juniorModeToggle.click();
-    }
-
-    public boolean isJuniorModeDescriptionPresent() {
-        return juniorModeDescription.isPresent();
     }
 
     public void tapSaveButton() {

@@ -42,6 +42,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String OFF = "Off";
     private static final String ON = "On";
     private static final String DOB_ERROR_NOT_DISPLAYED = "DOB Error is not displayed";
+    private static final String KID_PROFILE_SUBCOPY_NOT_DISPLAYED = "Kid Profile sub copy was not present";
     private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_OFF_ERROR_MESSAGE = "Kids profile autoplay was not turned off";
     private static final String KIDS_PROFILE_AUTOPLAY_NOT_TURNED_ON_ERROR_MESSAGE = "Kids profile autoplay was not turned on";
     private static final String UPDATED_TOAST_NOT_FOUND_ERROR_MESSAGE = "Updated toast was not found";
@@ -482,7 +483,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         //verify Learn More hyperlink on add profile page
-        sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), "Kid Profile sub copy was not present");
+        sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), KID_PROFILE_SUBCOPY_NOT_DISPLAYED);
         editProfilePage.clickJuniorModeLearnMoreLink();
         sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
         pause(3);
@@ -554,7 +555,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(addProfile.isKidsProfileToggleCellPresent(), " Kids profile toggle was not found");
         sa.assertTrue(addProfile.getKidsProfileToggleCellValue().equalsIgnoreCase("Off"),
                 "Kid Profile Toggle is not OFF by default");
-        sa.assertTrue(addProfile.isJuniorModeDescriptionPresent(), "Junior Mode Description is not displayed");
+        sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), KID_PROFILE_SUBCOPY_NOT_DISPLAYED);
         sa.assertTrue(updateProfile.getLearnMoreLink().isPresent(), "Learn More Link is not displayed");
 
         //Error on null input for Profile Name and DOB
