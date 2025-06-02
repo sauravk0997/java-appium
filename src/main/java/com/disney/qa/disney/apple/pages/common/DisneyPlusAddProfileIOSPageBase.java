@@ -286,7 +286,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean verifyHeadlineHeaderText() {
         String accessFullCatalogText = getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText());
+                DisneyDictionaryApi.ResourceKeys.WELCH, 
+                DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText());
         return headlineHeader.getText().equalsIgnoreCase(accessFullCatalogText);
     }
 
