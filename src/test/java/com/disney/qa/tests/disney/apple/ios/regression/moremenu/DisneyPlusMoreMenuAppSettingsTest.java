@@ -169,7 +169,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 "High Quality Title was not present");
         sa.assertTrue(settingPage.getHighQualitySubCopy().isElementPresent(),
                 "High Quality sub-copy was not present");
-        sa.assertTrue(settingPage.getStandardQualityTitle().isElementPresent(),
+        sa.assertTrue(settingPage.getMediumQualityTitle().isElementPresent(),
                 "Medium Quality Title was not present");
         sa.assertTrue(settingPage.getMediumQualitySubCopy().isElementPresent(),
                 "Medium Quality sub-copy was not present");

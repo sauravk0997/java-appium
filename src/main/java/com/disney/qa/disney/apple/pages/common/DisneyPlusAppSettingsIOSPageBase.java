@@ -62,7 +62,7 @@ public class DisneyPlusAppSettingsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getHighQualitySubCopy() {
-        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_HIGH_COPY.getText()));
     }
 
@@ -72,7 +72,7 @@ public class DisneyPlusAppSettingsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getMediumQualitySubCopy() {
-        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_MEDIUM_COPY.getText()));
     }
 
@@ -82,7 +82,7 @@ public class DisneyPlusAppSettingsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getStandardQualitySubCopy() {
-        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+        return getStaticTextByLabelContains(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_STANDARD_COPY.getText()));
     }
 }
