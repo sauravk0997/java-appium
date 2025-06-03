@@ -155,9 +155,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        UnifiedAccount disneyUser = getUnifiedAccountApi().createAccountForOTP(CreateUnifiedAccountRequest.builder()
-                .country("US")
-                .language("en").build());
+        UnifiedAccount disneyUser = getUnifiedAccountApi()
+                .createAccountForOTP(
+                        CreateUnifiedAccountRequest.builder()
+                                .country("US")
+                                .language("en")
+                                .build()
+                );
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
@@ -189,9 +193,13 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        UnifiedAccount disneyUser = getUnifiedAccountApi().createAccountForOTP(CreateUnifiedAccountRequest.builder()
-                .country("US")
-                .language("en").build());
+        UnifiedAccount disneyUser = getUnifiedAccountApi()
+                .createAccountForOTP(
+                        CreateUnifiedAccountRequest.builder()
+                                .country("US")
+                                .language("en")
+                                .build()
+                );
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
