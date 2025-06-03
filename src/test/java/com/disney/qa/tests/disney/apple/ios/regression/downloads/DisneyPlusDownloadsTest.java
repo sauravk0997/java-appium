@@ -60,7 +60,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() {
         int latency = 20;
-        int pollingInSeconds = 5;
+        int pollingInSeconds = 3;
         int timeoutInSeconds = 300;
         String zero = "0";
         String one = "1";
