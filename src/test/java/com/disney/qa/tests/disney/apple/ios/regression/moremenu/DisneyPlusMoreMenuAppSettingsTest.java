@@ -3,7 +3,6 @@ package com.disney.qa.tests.disney.apple.ios.regression.moremenu;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.ios_settings.NetworkHandler;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -188,7 +187,7 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66647"})
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyChangeDownloadQualitySetting() {
+    public void verifyChangeDownloadQualitySettings() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppSettingsIOSPageBase settingPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
