@@ -511,7 +511,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        setAccount(getUnifiedAccount());
+
         getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
@@ -519,6 +519,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 .setCountry(getLocalizationUtils().getLocale())
                 .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
 /*
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
