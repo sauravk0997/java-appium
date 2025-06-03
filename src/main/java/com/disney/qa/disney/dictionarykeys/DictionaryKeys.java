@@ -323,6 +323,7 @@ public enum DictionaryKeys {
     MY_DISNEY_MISSING_INFO_BIRTHDATE_FORMAT_ERROR("mydisney_missing_info_birthdate_format_error"),
     MY_DISNEY_MISSING_INFO_BIRTHDATE_HEADER("mydisney_missing_info_birthdate_header"),
     MY_DISNEY_MISSING_INFO_BODY("mydisney_missing_info_body"),
+    MY_DISNEY_MISSING_INFO_BODY_LINK_1_TEXT("mydisney_missing_info_body_link_1_text"),
     MY_DISNEY_MISSING_INFO_HEADER("mydisney_missing_info_header"),
     MY_DISNEY_OTP_BODY("mydisney_OTP_body"),
     MY_DISNEY_OTP_HEADER("mydisney_OTP_header"),
