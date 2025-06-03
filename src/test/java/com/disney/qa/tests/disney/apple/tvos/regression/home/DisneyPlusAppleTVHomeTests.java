@@ -39,6 +39,9 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
+    private static final String WATCH_LIVE_BUTTON_NOT_DISPLAYED = "Watch Live CTA is not present";
+    private static final String DETAILS_BUTTON_NOT_DISPLAYED = "Details CTA is not present";
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121758"})
     @Test(groups = {TestGroup.HOME, TestGroup.ESPN, US})
     public void verifyESPNTileUS() {
@@ -237,6 +240,21 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "Hulu title cell was not present under Trending collection UI");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-119342"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyLiveModalLinearChannelTile() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        String streamsCollectionName = getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
+        logIn(getUnifiedAccount());
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
+        homePage.clickSelect();
+        Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
+        Assert.assertTrue(liveEventModal.getDetailsSection().isElementPresent(), "Details section is not present");
+        Assert.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), WATCH_LIVE_BUTTON_NOT_DISPLAYED);
+        Assert.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), DETAILS_BUTTON_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118739"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyLiveModalEpisodicInfo() {
@@ -251,6 +269,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
+        homePage.clickSelect();
 
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
         homePage.moveRightUntilElementIsFocused(
@@ -272,8 +291,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
 
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
-        Assert.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), "Watch Live CTA is not present");
-        Assert.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), "Details CTA is not present");
+        Assert.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), WATCH_LIVE_BUTTON_NOT_DISPLAYED);
+        Assert.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), DETAILS_BUTTON_NOT_DISPLAYED);
         Assert.assertEquals(liveEventModal.getSubtitleLabel().getAttribute(LABEL),
                 String.format(episodicInfoLabelFormat, seasonNumber, episodeNumber, episodeTitle),
                 "Episodic Info label doesn't match expected format or element has more than just episodic info");
@@ -302,8 +321,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
 
-        sa.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), "Watch Live CTA is not present");
-        sa.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), "Details CTA is not present");
+        sa.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), WATCH_LIVE_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), DETAILS_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(liveEventModal.getThumbnailView().isElementPresent(), "Episodic artwork is not present");
         sa.assertEquals(liveEventModal.getThumbnailAspectRatio(), 1.78,
                 "Thumbnail aspect ratio wasn't the standard (1.78)");
