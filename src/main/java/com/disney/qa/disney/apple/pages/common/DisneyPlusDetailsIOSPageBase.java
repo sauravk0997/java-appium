@@ -179,21 +179,22 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name='titleLabel_0'$]/**/XCUIElementTypeButton[`name " +
             "CONTAINS 'Offline'`]")
     protected ExtendedWebElement firstEpisodeDownloadComplete;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'progressBar'`]/XCUIElementTypeOther")
     private ExtendedWebElement progressBarBookmark;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]/**/XCUIElementTypeOther[`name == " +
+            "'progressBar'`]")
+    private ExtendedWebElement progressBarOnEpisodeTab;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]/**/XCUIElementTypeOther[`name == " +
+            "'progressBar'`]/XCUIElementTypeOther")
+    private ExtendedWebElement progressBarBookmarkOnEpisodeTab;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeStaticText[`label =[c] 'Included with your ESPN+ subscription'`]")
     private ExtendedWebElement espnPlusEntitlementAttributionText;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == 'itemPickerView'`]" +
             "/XCUIElementTypeCell[1]")
     private ExtendedWebElement firstItemPickerCell;
-
     @ExtendedFindBy(accessibilityId = "detailsRestrictedIcon")
     private ExtendedWebElement parentalControlIcon;
-
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
     private ExtendedWebElement espnPlusGenericErrorText;
@@ -1334,6 +1335,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         double expectedWidth = progressBar.getSize().getWidth() / (100 / scrubPercentage);
         ValueRange range = ValueRange.of(-latency, latency);
         return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
+    }
+
+    public void isProgressBarIndicatingCorrectPositionOnEpisodeTab(String episodeTitle,
+                                                                   long scrubPercentage,
+                                                                   int latency) {
+        long bookmarkWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth();
+        long expectedWidth = progressBarOnEpisodeTab.format(episodeTitle).getSize().getWidth()
+                / (100 / scrubPercentage);
+        ValueRange range = ValueRange.of(-latency, latency);
+        Assert.assertTrue(range.isValidIntValue(Math.abs(expectedWidth - bookmarkWidth)),
+                String.format("Actual Progress bar indicator (%d) and " +
+                                "Expected Progress bar indicator (%d) " +
+                                "is not between the expected range (%d-%d seconds)",
+                        bookmarkWidth, expectedWidth,
+                        range.getMinimum(), range.getMaximum()));
     }
 
     public ExtendedWebElement getTabBar() {
