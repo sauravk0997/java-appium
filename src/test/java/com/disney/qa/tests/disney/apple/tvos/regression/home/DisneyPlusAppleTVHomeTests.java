@@ -254,7 +254,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
         Assert.assertTrue(liveEventModal.getDetailsSection().isElementPresent(), "Details section is not present");
         Assert.assertEquals(liveEventModal.getProgramTitle(), firstProgramTitle,
-                "Title mismatch. Correct modal is not opened");
+                "Live modal is not displayed for expected content");
         Assert.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), WATCH_LIVE_BUTTON_NOT_DISPLAYED);
         Assert.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), DETAILS_BUTTON_NOT_DISPLAYED);
     }
