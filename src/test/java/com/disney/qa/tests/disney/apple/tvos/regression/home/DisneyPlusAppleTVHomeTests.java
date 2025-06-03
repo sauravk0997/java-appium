@@ -269,7 +269,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
-        homePage.clickSelect();
 
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
         homePage.moveRightUntilElementIsFocused(
