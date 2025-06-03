@@ -18,6 +18,7 @@ import org.testng.asserts.*;
 
 import java.util.*;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
 import static com.disney.qa.api.disney.DisneyEntityIds.END_GAME;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING;
@@ -335,7 +336,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112624"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.HULU, US})
+    @Test(groups = {TestGroup.SEARCH, US})
     public void verifySearchEmptyPageHideRestrictedTitleForTV14AndKids() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
@@ -369,10 +370,10 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         // Search a title that is above current content rating. Expect to see 'content hidden' message and no results
-        searchPage.typeInSearchField(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.typeInSearchField(DAREDEVIL_BORN_AGAIN.getTitle());
         Assert.assertTrue(searchPage.isPCONRestrictedErrorMessagePresent(),
                 "PCON restricted title message was not as expected");
-        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING),
+        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(DAREDEVIL_BORN_AGAIN.getTitle()),
                 "No results found message was not as expected for TV-14 profile");
 
         // Switch to kids secondary profile and go to search page
@@ -385,10 +386,10 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         // Search a title that is above kids content rating. Expect to see 'content hidden' kids message and no results
-        searchPage.typeInSearchField(ONLY_MURDERS_IN_THE_BUILDING);
+        searchPage.typeInSearchField(DAREDEVIL_BORN_AGAIN.getTitle());
         Assert.assertTrue(searchPage.isKIDSPCONRestrictedTitlePresent(),
                 "PCON restricted title message was not as expected for kids profile");
-        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(ONLY_MURDERS_IN_THE_BUILDING),
+        Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(DAREDEVIL_BORN_AGAIN.getTitle()),
                 "No results found message was not as expected for kids profile");
     }
 
