@@ -373,7 +373,6 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpNextLiteAutoPlayOFFAppInBG() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
