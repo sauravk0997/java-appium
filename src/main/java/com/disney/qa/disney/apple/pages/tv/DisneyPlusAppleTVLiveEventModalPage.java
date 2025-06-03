@@ -16,6 +16,9 @@ public class DisneyPlusAppleTVLiveEventModalPage extends DisneyPlusLiveEventModa
     @ExtendedFindBy(accessibilityId = "subheadlineLabel")
     private ExtendedWebElement subheadLineLabel;
 
+    @ExtendedFindBy(accessibilityId = "detailsArea")
+    private ExtendedWebElement detailsSection;
+
     public DisneyPlusAppleTVLiveEventModalPage(WebDriver driver) {
         super(driver);
     }
@@ -32,4 +35,8 @@ public class DisneyPlusAppleTVLiveEventModalPage extends DisneyPlusLiveEventModa
     }
 
     public boolean isSubheadLineLabelPresent() { return subheadLineLabel.isPresent(); }
+
+    public ExtendedWebElement getDetailsSection() {
+        return detailsSection;
+    }
 }
