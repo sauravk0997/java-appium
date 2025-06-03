@@ -893,7 +893,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.waitForVideoToStart();
         videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
-        commonPage.clickRight(3,1,1);
+        commonPage.clickRight(3, 1, 1);
         Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(upNextPage.getUpNextContentTitleLabel().getText().contains(seasonName),
                 "Unique season name not displayed on up next screen");
