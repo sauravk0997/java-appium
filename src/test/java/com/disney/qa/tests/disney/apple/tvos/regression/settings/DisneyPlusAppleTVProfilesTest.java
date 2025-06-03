@@ -18,6 +18,7 @@ import org.testng.asserts.SoftAssert;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
@@ -512,7 +513,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
 
 
-        getDefaultCreateUnifiedAccountRequest()
+      /*  getDefaultCreateUnifiedAccountRequest()
                 .setDateOfBirth(null)
                 .setGender(null)
                 .setPartner(Partner.DISNEY)
@@ -520,6 +521,13 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 .setAddDefaultEntitlement(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
         setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
+
+       */
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).setDateOfBirth(null)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 /*
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -538,4 +546,26 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105691"})
+    @Test(groups = {TestGroup.PROFILES, KR_ENG})
+    public void testingKRAccount() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVOneTimePasscodePage passcodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage(),
+                true).setProfileRestricted(true)));
+        getUnifiedAccountApi().resetUserPassword(getUnifiedAccount(), "test");
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+
+    }
+
+
 }
