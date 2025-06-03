@@ -500,20 +500,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
-    /**
-     * Get account<br>
-     * <b>Unique for each test method</b>
-     *
-     * @return {@link DisneyAccount}
-     */
-    public DisneyAccount getAccount() {
-        return DISNEY_ACCOUNT.get();
-    }
-
-    public void setAccount(DisneyAccount account) {
-        DISNEY_ACCOUNT.set(account);
-    }
-
     public UnifiedAccount getUnifiedAccount() {
         return Objects.requireNonNull(UNIFIED_ACCOUNT.get());
     }

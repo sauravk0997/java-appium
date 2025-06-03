@@ -895,10 +895,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeButtons.getBy();
     }
 
-    public void enterPassword(DisneyAccount account) {
-        passwordEntryField.type(account.getUserPass());
-        clickPrimaryButton();
-    }
 
     public void enterPassword(UnifiedAccount account) {
         passwordEntryField.type(account.getUserPass());

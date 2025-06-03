@@ -4,18 +4,20 @@ import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 
 import java.util.List;
 
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountRequest;
+import com.disney.qa.api.client.requests.offer.UnifiedOfferRequest;
 import com.disney.qa.api.client.responses.profile.Profile;
+import com.disney.qa.api.pojos.UnifiedAccount;
+import com.disney.qa.api.pojos.UnifiedEntitlement;
+import com.disney.qa.api.pojos.UnifiedOffer;
 import com.disney.util.TestGroup;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
 import com.disney.qa.api.client.requests.content.CollectionRequest;
 import com.disney.qa.api.client.responses.content.ContentCollection;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.pojos.DisneyEntitlement;
-import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.api.search.assets.DisneyStandardCollection;
 import com.disney.qa.api.search.sets.DisneyCollectionSet;
 import com.disney.qa.common.utils.IOSUtils;
@@ -82,14 +84,15 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             localeForTravelling = "GB";
         }
 
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(localeForTravelling)
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder().country(localeForTravelling)
                 .language(getLocalizationUtils().getUserLanguage()).build();
-        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), "Yearly");
-        DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V1").build();
+        UnifiedOffer offer = getUnifiedSubscriptionApi().lookupUnifiedOffer(UnifiedOfferRequest.builder()
+                .searchText("Yearly").build());
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, "V1");
         request.addEntitlement(entitlement);
-        DisneyAccount testAccount = getAccountApi().createAccount(request);
+        UnifiedAccount testAccount = getUnifiedAccountApi().createAccount(request);
 
-        getAccountApi().addFlex(testAccount);
+        getUnifiedSubscriptionApi().addFlex(testAccount);
         setAccount(testAccount);
 
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -110,7 +113,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         getScreenshots("LoginPageBadEmail");
         handleSystemAlert(IOSUtils.AlertButtonCommand.ACCEPT, 10);
         pause(3);
-        loginPage.submitEmail(getAccount().getEmail());
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
         pause(3);
         getScreenshots("LoginPageEnterYourPassword");
         loginPage.clickPrimaryButton();
@@ -132,7 +135,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         passwordPage.submitPasswordForLogin("badpassword");
         pause(3);
         getScreenshots("PasswordPageBadPassword");
-        setAppToHomeScreen(getAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         pause(3);
         getScreenshots("TravellingMessage");
     }
@@ -147,7 +150,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyAccount testAccount = getAccount();
+        UnifiedAccount testAccount = getUnifiedAccount();
 
         String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.CELLULAR_DATA_USAGE.getText());
@@ -156,7 +159,12 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         String videoQuality = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
 
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccount).profileName("SecondaryTestProfile").language(getAccount().getProfileLang()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
+        getUnifiedAccountApi().addProfile
+                (CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(testAccount).profileName("SecondaryTestProfile")
+                        .language(getUnifiedAccount().getProfileLang())
+                        .avatarId(null).kidsModeEnabled(false)
+                        .dateOfBirth(null).build());
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
@@ -206,7 +214,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
-        DisneyAccount testAccount = getAccount();
+        UnifiedAccount testAccount = getUnifiedAccount();
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
@@ -252,7 +260,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase avatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyAccount testAccount = getAccount();
+        UnifiedAccount testAccount = getUnifiedAccount();
 
         welcomePage.clickLogInButton();
         loginPage.fillOutEmailField(testAccount.getEmail());
@@ -322,7 +330,10 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
 
         for (int i = 0; i < 4; i++) {
-            getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccount).profileName("Test_" + i).language(getLanguage()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
+            getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder().unifiedAccount(testAccount)
+                    .profileName("Test_" + i).language(getLanguage())
+                    .avatarId(null).kidsModeEnabled(false)
+                    .dateOfBirth(null).build());
         }
         restart();
 
@@ -394,21 +405,25 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusWhoseWatchingIOSPageBase whoPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyAccount testAccount = getAccount();
-        Profile profile = getAccount().getProfile(DEFAULT_PROFILE);
+        UnifiedAccount testAccount = getUnifiedAccount();
+        Profile profile = getUnifiedAccount().getProfile(DEFAULT_PROFILE);
         String ratingSystem = profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem();
 
         //create a second account for a later step
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(getLocalizationUtils().getLocale())
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder().country(getLocalizationUtils().getLocale())
                 .language(getLocalizationUtils().getUserLanguage()).build();
-        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(getLocalizationUtils().getLocale(), "Yearly");
-        DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
+        UnifiedAccount testAccountTwoProfiles = getUnifiedAccountApi().createAccount(request);
+        UnifiedOffer offer = getUnifiedSubscriptionApi().lookupUnifiedOffer(UnifiedOfferRequest.builder()
+                .searchText("Yearly").build());
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, "V2");
         request.addEntitlement(entitlement);
-        DisneyAccount testAccountTwoProfiles = getAccountApi().createAccount(request);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(testAccountTwoProfiles).profileName(SECONDARY_PROFILE).dateOfBirth("2018-01-01").language(getLocalizationUtils().getUserLanguage()).avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder().unifiedAccount(testAccountTwoProfiles)
+                .profileName(SECONDARY_PROFILE).dateOfBirth("2018-01-01")
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
         //set account to the lowest rating for a step later on
-        getAccountApi().editContentRatingProfileSetting(testAccount,
-                getAccountApi().getProfiles(testAccountTwoProfiles).get(1).getProfileId(),
+        getUnifiedAccountApi().editContentRatingProfileSetting(testAccount,
+                testAccountTwoProfiles.getProfiles().get(1).getProfileId(),
                 ratingSystem,
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(0));
 
@@ -616,7 +631,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
         DisneyPlusMediaCollectionIOSPageBase mediaCollectionPage = initPage(DisneyPlusMediaCollectionIOSPageBase.class);
-        DisneyAccount testAccount = getAccount();
+        UnifiedAccount testAccount = getUnifiedAccount();
 
         loginDismiss(testAccount);
 
@@ -647,7 +662,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                 .language(getLocalizationUtils().getUserLanguage())
                 .slug(DisneyStandardCollection.ORIGINALS.getSlug())
                 .contentClass(DisneyStandardCollection.ORIGINALS.getContentClass())
-                .account(testAccount)
+                .unifiedAccount(testAccount)
                 .build();
 
         ContentCollection contentCollection = getSearchApi().getCollection(collectionRequest);
@@ -677,7 +692,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                 .language(getLocalizationUtils().getUserLanguage())
                 .slug(DisneyStandardCollection.MOVIES.getSlug())
                 .contentClass(DisneyStandardCollection.MOVIES.getContentClass())
-                .account(testAccount)
+                .unifiedAccount(testAccount)
                 .build();
 
         contentCollection = getSearchApi().getCollection(collectionRequest);
@@ -712,7 +727,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
                 .language(getLocalizationUtils().getUserLanguage())
                 .slug(DisneyStandardCollection.SERIES.getSlug())
                 .contentClass(DisneyStandardCollection.SERIES.getContentClass())
-                .account(testAccount)
+                .unifiedAccount(testAccount)
                 .build();
 
         contentCollection = getSearchApi().getCollection(collectionRequest);
@@ -741,13 +756,14 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         setup();
         setZipTestName("SubscriberUI_10_welch");
         String locale = getLocalizationUtils().getLocale();
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage())
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage())
                 .isStarOnboarded(false).build();
-        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Yearly");
-        DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V1").build();
+        UnifiedOffer offer = getUnifiedSubscriptionApi().lookupUnifiedOffer(UnifiedOfferRequest.builder()
+                .searchText("Yearly").build());
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, "V1");
         request.addEntitlement(entitlement);
-        DisneyAccount testAccount = getAccountApi().createAccount(request);
-        getAccountApi().addFlex(testAccount);
+        UnifiedAccount testAccount = getUnifiedAccountApi().createAccount(request);
+        getUnifiedSubscriptionApi().addFlex(testAccount);
         setAccount(testAccount);
 
         DisneyPlusWhoseWatchingIOSPageBase whoPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
@@ -817,7 +833,7 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayerPage = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        DisneyAccount testAccount = getAccount();
+        UnifiedAccount testAccount = getUnifiedAccount();
         loginDismiss(testAccount);
 
         //setup the continue watching collection since this is a fresh account
