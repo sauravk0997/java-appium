@@ -27,6 +27,7 @@ public class CollectionConstant {
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
+        KIDS_CAROUSEL_TV,
         KIDS_MICKEY_AND_FRIENDS,
         KIDS_PRINCESSES_AND_FAIRY_TALES,
         LIVE_AND_UPCOMING_FROM_ESPN, //live collection for D+ premium user
@@ -112,6 +113,8 @@ public class CollectionConstant {
                 return "d0c4d6a0-3e18-43e4-9db0-9e94ce587273";
             case KIDS_CAROUSEL:
                 return "aae103b8-26d4-4150-b83c-2069dc1cc441";
+            case KIDS_CAROUSEL_TV:
+                return "9ae4a140-a05e-4099-bcd9-d5c7389bc973";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
                 return "a7b1bd9d-59ef-4345-b1a6-19c208b5357e";
             case KIDS_MICKEY_AND_FRIENDS:
