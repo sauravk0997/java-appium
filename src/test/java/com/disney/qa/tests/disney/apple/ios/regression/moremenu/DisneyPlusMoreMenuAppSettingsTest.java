@@ -152,20 +152,49 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
 
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66641", "XMOBQA-66647"})
-    @Test(description = "Download Quality Settings UI Elements and Navigation test", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66641"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadQualitySettingsUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppSettingsIOSPageBase settingPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
         onboard();
 
-        String cellOption = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
-        moreMenu.getStaticTextByLabel(cellOption).click();
-        sa.assertTrue(moreMenu.getStaticTextByLabel(cellOption).isElementPresent(),
-                "XMOBQA-61217 - 'Video Quality' header was not present");
-        sa.assertTrue(moreMenu.getBackArrow().isElementPresent(),
-                "XMOBQA-61217 - Back Arrow was not present");
+        settingPage.getVideoQualityLabel().click();
+        sa.assertTrue(settingPage.getVideoQualityLabel().isElementPresent(),
+                "Video Quality' header was not present");
+        sa.assertTrue(settingPage.getBackArrow().isElementPresent(),
+                "Back Arrow was not present");
+        sa.assertTrue(settingPage.getHighQualityTitle().isElementPresent(),
+                "High Quality Title was not present");
+        sa.assertTrue(settingPage.getHighQualitySubCopy().isElementPresent(),
+                "High Quality sub-copy was not present");
+        sa.assertTrue(settingPage.getStandardQualityTitle().isElementPresent(),
+                "Medium Quality Title was not present");
+        sa.assertTrue(settingPage.getMediumQualitySubCopy().isElementPresent(),
+                "Medium Quality sub-copy was not present");
+        sa.assertTrue(settingPage.getStandardQualityTitle().isElementPresent(),
+                "Standard Quality Title was not present");
+        sa.assertTrue(settingPage.getStandardQualitySubCopy().isElementPresent(),
+                "Standard Quality sub-copy was not present");
+        Assert.assertTrue(settingPage.getTypeCellLabelContains("Standard, Fastest download and requires the least storage.")
+                .getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(CHECKED), "Checkmark is not defaulted to Standard");
+        moreMenu.getBackArrow().click();
+        sa.assertTrue(moreMenu.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.
+                        ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).isElementPresent(),
+                "User was not returned to the More Menu after closing Video Quality submenu");
+        sa.assertAll();
+    }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66647"})
+    @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyChangeDownloadQualitySetting() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAppSettingsIOSPageBase settingPage = initPage(DisneyPlusAppSettingsIOSPageBase.class);
+        onboard();
+
+        settingPage.getVideoQualityLabel().click();
         String highQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(0).getText(),
                 moreMenu.findSubtitleLabel(0).getText());
         String mediumQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(1).getText(),
@@ -173,8 +202,6 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
         String lowQuality = String.format(customAppSettingLabel, moreMenu.findTitleLabel(2).getText(),
                 moreMenu.findSubtitleLabel(2).getText());
         List<String> options = Arrays.asList(highQuality, mediumQuality, lowQuality);
-        options.forEach(option -> sa.assertTrue(moreMenu.getStaticCellByLabel(option).isElementPresent(),
-                String.format("XMOBQA-61219 - '%s' option was not present", option)));
 
         options.forEach(optionEnabled -> {
             try {
@@ -194,11 +221,6 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 LOGGER.debug("An expected option was not present. Continuing with other options");
             }
         });
-
-        moreMenu.getBackArrow().click();
-        sa.assertTrue(moreMenu.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.APP_SETTINGS_TITLE.getText())).isElementPresent(),
-                "User was not returned to the More Menu after closing Video Quality submenu");
-        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})

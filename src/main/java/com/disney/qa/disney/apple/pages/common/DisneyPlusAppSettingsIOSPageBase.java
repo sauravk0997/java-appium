@@ -55,4 +55,34 @@ public class DisneyPlusAppSettingsIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_DELETE_ALL_DOWNLOADS.getText()));
     }
+
+    public ExtendedWebElement getHighQualityTitle() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                        APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_HIGH_TITLE.getText()));
+    }
+
+    public ExtendedWebElement getHighQualitySubCopy() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_HIGH_COPY.getText()));
+    }
+
+    public ExtendedWebElement getMediumQualityTitle() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_MEDIUM_TITLE.getText()));
+    }
+
+    public ExtendedWebElement getMediumQualitySubCopy() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_MEDIUM_COPY.getText()));
+    }
+
+    public ExtendedWebElement getStandardQualityTitle() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_STANDARD_TITLE.getText()));
+    }
+
+    public ExtendedWebElement getStandardQualitySubCopy() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_STANDARD_COPY.getText()));
+    }
 }
