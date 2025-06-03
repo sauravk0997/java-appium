@@ -36,6 +36,7 @@ public interface IConstantHelper {
     String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
     String ENTER_PASSWORD_PAGE_NOT_DISPLAYED = "Enter Password page is not displayed";
     String EPISODE_TAB_NOT_DISPLAYED = "Episode Tab is not displayed";
+    String ESPN_PAGE_IS_NOT_DISPLAYED = "ESPN Brand page is not displayed";
     String EXTRAS_TAB_NOT_DISPLAYED = "Extras Tab is not displayed";
     String MEDIA_TITLE_NOT_DISPLAYED = "Media Title is not displayed";
     String HOME_PAGE_NOT_DISPLAYED = "Home Page is not displayed";
