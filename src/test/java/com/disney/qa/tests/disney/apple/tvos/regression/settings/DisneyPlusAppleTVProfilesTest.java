@@ -503,4 +503,38 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 , ONLY_MURDERS_IN_THE_BUILDING + " 'no results found' message not found");
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120608"})
+    @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
+    public void verifyLATAMANZMandatoryDOB() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+
+        setAccount(getUnifiedAccount());
+        getDefaultCreateUnifiedAccountRequest()
+                .setDateOfBirth(null)
+                .setGender(null)
+                .setPartner(Partner.DISNEY)
+                .setCountry(getLocalizationUtils().getLocale())
+                .setAddDefaultEntitlement(true)
+                .setLanguage(getLocalizationUtils().getUserLanguage());
+/*
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(null)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+ */
+
+        logInWithoutHomeCheck(getUnifiedAccount());
+        pause(10);
+
+        sa.assertAll();
+    }
 }
