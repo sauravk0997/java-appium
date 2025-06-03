@@ -422,9 +422,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return dynamicCellByName.format(name);
     }
 
-    public ExtendedWebElement getDynamicXpath(String path) {
-        return dynamicXpath.format(path);
-    }
 
     public ExtendedWebElement getDynamicXpathContainsName(String name) {
         return dynamicXpathContainsName.format(name);
@@ -528,6 +525,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public String getErrorMessageString() {
         return labelError.getText();
+    }
+
+    public  ExtendedWebElement getLogoImage(){
+        return logoImage;
     }
 
     public String getHourMinFormatForDuration(int duration) {
