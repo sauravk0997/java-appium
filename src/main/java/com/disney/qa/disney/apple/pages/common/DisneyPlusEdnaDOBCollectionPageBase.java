@@ -18,6 +18,10 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
 
     @Override
     public boolean isOpened() {
+        return isEdnaDateOfBirthHeaderPresent();
+    }
+
+    public boolean isEdnaDateOfBirthHeaderPresent() {
         String ednaDateOfBirthPageTitle = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_MISSING_INFO_HEADER.getText());
         return staticTextByLabel.format(ednaDateOfBirthPageTitle).isPresent();
