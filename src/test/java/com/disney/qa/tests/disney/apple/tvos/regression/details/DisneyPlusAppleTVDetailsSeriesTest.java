@@ -36,7 +36,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final String EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE = "Episodes tab is not focused";
     private static final String SUGGESTED = "SUGGESTED";
     private static final String WATCHLIST_ICON_NOT_PRESENT = "Watchlist plus icon is not displayed";
-    private static final long SCRUB_PERCENTAGE_EIGHTY = 80;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -896,7 +895,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
         commonPage.clickRight(3,1,1);
         Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
-        LOGGER.info("Page Source :- " + getDriver().getPageSource());
         Assert.assertTrue(upNextPage.getUpNextContentTitleLabel().getText().contains(seasonName),
                 "Unique season name not displayed on up next screen");
         Assert.assertTrue(upNextPage.getUpNextContentTitleLabel().getText().contains(nextEpisodeTitle),
