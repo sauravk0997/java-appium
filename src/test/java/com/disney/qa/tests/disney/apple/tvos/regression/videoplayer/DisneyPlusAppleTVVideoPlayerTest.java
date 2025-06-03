@@ -1,7 +1,10 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
+import com.disney.qa.api.disney.*;
 import com.disney.qa.api.explore.response.*;
+import com.disney.qa.api.pojos.explore.*;
+import com.disney.qa.common.*;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -499,5 +502,32 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().contains(seriesTitle),
                 "Playback is not initiated for the espn series");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110162"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyRemainingTimeVODDetailsPage() {
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        home.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_loki_first_episode_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+
+        // Forward video and get remaining time
+        commonPage.clickRight(6, 1, 1);
+        commonPage.clickDown(1);
+        String remainingTime = videoPlayer.getRemainingTimeInDetailsFormatString();
+        LOGGER.info("remainingTime {}", remainingTime);
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.clickMenuTimes(1, 2);
+        detailsPage.waitForDetailsPageToOpen();
+        LOGGER.info("details page remainingTime {}", detailsPage.getRemainingTimeLabel());
+        Assert.assertTrue(detailsPage.getRemainingTimeLabel().contains(remainingTime),
+                "Remaining time did not match with the video player values for the series");
     }
 }
