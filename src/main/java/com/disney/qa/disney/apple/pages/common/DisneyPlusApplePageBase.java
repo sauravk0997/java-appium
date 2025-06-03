@@ -422,9 +422,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return dynamicCellByName.format(name);
     }
 
-    public ExtendedWebElement getDynamicXpath(String path) {
-        return dynamicXpath.format(path);
-    }
 
     public ExtendedWebElement getDynamicXpathContainsName(String name) {
         return dynamicXpathContainsName.format(name);
@@ -528,6 +525,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public String getErrorMessageString() {
         return labelError.getText();
+    }
+
+    public  ExtendedWebElement getLogoImage(){
+        return logoImage;
     }
 
     public String getHourMinFormatForDuration(int duration) {
@@ -972,11 +973,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     }
 
     public boolean isGlobalNavExpanded() {
-        if (globalNavBarView.isElementPresent(TEN_SEC_TIMEOUT)) {
+        if (homeTab.isPresent(FIFTEEN_SEC_TIMEOUT)) {
             Dimension size = globalNavBarView.getSize();
             int x = size.getWidth();
             LOGGER.info("Detecting if global nav is expanded..");
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             return x > 200;
         }
         return false;

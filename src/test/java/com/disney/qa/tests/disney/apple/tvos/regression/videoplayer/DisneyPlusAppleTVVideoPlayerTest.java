@@ -60,13 +60,13 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(),
                 "service attribution wasn't visible along with controls");
-        commonPage.clickDown(2);
+        commonPage.clickDown(1);
         sa.assertTrue(videoPlayer.isTitleLabelDisplayed(),
                 "Video player title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSubTitleLabelDisplayed(),
                 "Video player meta data title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSeekbarVisible(), PLAYER_CONTROLS_NOT_DISPLAYED);
-        commonPage.clickDown(2);
+        commonPage.clickDown(1);
         sa.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE),
                 "Expected Hulu Service Attribution not displayed");
         sa.assertAll();
@@ -108,13 +108,13 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         sa.assertTrue(videoPlayer.isServiceAttributionLabelVisibleWithControls(),
                 "service attribution wasn't visible along with controls");
-        commonPage.clickDown(2);
+        commonPage.clickDown(1);
         sa.assertTrue(videoPlayer.isTitleLabelDisplayed(),
                 "Video player title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSubTitleLabelDisplayed(),
                 "Video player meta data title wasn't visible along with controls");
         sa.assertTrue(videoPlayer.isSeekbarVisible(), PLAYER_CONTROLS_NOT_DISPLAYED);
-        commonPage.clickDown(2);
+        commonPage.clickDown(1);
         sa.assertTrue(videoPlayer.getServiceAttributionLabel().getText().equals(HULU_SERVICE_ATTRIBUTION_MESSAGE),
                 "Expected Hulu Service Attribution not displayed");
         sa.assertAll();
@@ -213,7 +213,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
         detailsPage.getTypeCellLabelContains(rugby).click();
-        Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
+        Assert.assertTrue(espnPage.isPageTitlePresent(rugby),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
@@ -253,7 +253,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_rugby_sport_deeplink"));
-        Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
+        Assert.assertTrue(espnPage.isPageTitlePresent(rugby),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate playback
@@ -458,5 +458,46 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         liveEventModal.getWatchLiveButton().click();
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121061"})
+    @Test(groups = {TestGroup.ESPN, TestGroup.VIDEO_PLAYER, US})
+    public void verifyESPNVODPlayback() {
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
+
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
+                ESPN_PAGE_DID_NOT_OPEN);
+
+        // Navigate to series collection and select the first series title
+        homePage.moveDownUntilCollectionContentIsFocused(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SERIES), 15);
+
+        String seriesTitle = getContainerTitlesFromApi(
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SERIES), 5).get(0);
+
+        LOGGER.info("Navigating to series collection {}", seriesTitle);
+        if (!seriesTitle.isEmpty()) {
+            homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(seriesTitle), 20);
+        } else {
+            throw new SkipException("There are no seriesTitle available");
+        }
+
+        detailsPage.getTypeCellLabelContains(seriesTitle).click();
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickSelect();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.getTitleLabel().contains(seriesTitle),
+                "Playback is not initiated for the espn series");
     }
 }

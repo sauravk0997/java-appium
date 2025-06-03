@@ -489,7 +489,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         String editProfileBtn = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
                 APPLICATION, BTN_EDIT_PROFILE.getText());
         String addProfileButtonLabel = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
-                APPLICATION, CREATE_PROFILE.getText());
+                APPLICATION, CREATE_PROFILE_ADD_PROFILE.getText());
 
         logInWithoutHomeCheck(getUnifiedAccount());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
@@ -557,6 +557,31 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 "Body for account blocked screen is not displayed");
         sa.assertTrue(accountIsMinorPage.getDismissButton().isPresent(),
                 "Dismiss button is not displayed");
+
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-124984"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
+    public void verifySubscriptionReacquisitionUI() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusAppleTVSubscriptionReacquisitionPage subscriptionReacquisitionPage =
+                new DisneyPlusAppleTVSubscriptionReacquisitionPage(getDriver());
+
+        getUnifiedSubscriptionApi().revokeSubscription(getUnifiedAccount(),
+                getUnifiedAccount().getAgreement(0).getAgreementId());
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        sa.assertTrue(subscriptionReacquisitionPage.getDisneyPlusLogo().isPresent(),
+                "Disney+ logo is not visible");
+        sa.assertTrue(subscriptionReacquisitionPage.getTitleTextElement().isPresent(),
+                "Subscription reacquisition page header is not visible");
+        sa.assertTrue(subscriptionReacquisitionPage.getDescriptionTextElement().isPresent(),
+                "Subscription reacquisition page description is not visible");
+        sa.assertTrue(subscriptionReacquisitionPage.getJoinNowButton().isPresent(),
+                "'JOIN NOW' button is not visible");
+        sa.assertTrue(subscriptionReacquisitionPage.getLogOutButton().isPresent(),
+                "'LOG OUT' button is not visible");
 
         sa.assertAll();
     }

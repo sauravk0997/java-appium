@@ -360,7 +360,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS), 10);
         homePage.moveRightUntilElementIsFocused(detailsPage.getTypeCellLabelContains(rugby), 30);
         detailsPage.getTypeCellLabelContains(rugby).click();
-        Assert.assertTrue(espnPage.isSportTitlePresent(rugby),
+        Assert.assertTrue(espnPage.isPageTitlePresent(rugby),
                 SPORT_PAGE_DID_NOT_OPEN);
 
         // Navigate to a Replay and validate the page
@@ -654,6 +654,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         // Validate details page and add item to the watchlist
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickWatchButton();
+        if (liveEventModal.isOpened()) {
+            liveEventModal.clickWatchLiveButton();
+        }
+        videoPlayerPage.waitForPresenceOfAnElement(videoPlayerPage.getPlayerView());
         Assert.assertTrue(videoPlayerPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(titleEvent.contains(videoPlayerPage.getTitleLabel()),
                 "Video title does not match with the expected");
@@ -964,7 +968,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         }
 
         detailsPage.getTypeCellLabelContains(sportTitle).click();
-        Assert.assertTrue(espnPage.isSportTitlePresent(sportTitle),
+        Assert.assertTrue(espnPage.isPageTitlePresent(sportTitle),
                 SPORT_PAGE_DID_NOT_OPEN);
         Assert.assertFalse(detailsPage.getBrandLandingView().isElementPresent(THREE_SEC_TIMEOUT),
                 "A logo image is present in sports screen");
