@@ -464,7 +464,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-120608"})
-    @Test(groups = {TestGroup.PROFILES, US})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.HULU, US})
     public void verifyJuniorModeNoHuluContent() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
