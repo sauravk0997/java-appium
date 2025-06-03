@@ -372,7 +372,6 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75101"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpNextLiteAutoPlayOFFAppInBG() {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
@@ -380,7 +379,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         //Turn OFF autoplay
         toggleAutoPlay("OFF");
         //Bring up upNext UI
-        initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
+        initiatePlaybackAndScrubOnPlayer(SERIES_LOKI, 95);
         upNext.waitForUpNextUIToAppear();
         Assert.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
 
@@ -388,7 +387,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         runAppInBackground(10);
 
         //After backgrounding the app, video player should exit
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(upNext.isUpNextViewPresent(), UP_NEXT_UI_WAS_NOT_PRESENT);
         sa.assertAll();
     }
 
