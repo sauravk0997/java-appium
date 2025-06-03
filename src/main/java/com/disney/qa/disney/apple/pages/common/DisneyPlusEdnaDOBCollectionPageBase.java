@@ -6,8 +6,13 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
+import java.util.Map;
+
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase {
+
+    private static final String LINK_1 = "link_1";
+    private static final String LINK_2 = "link_2";
 
     //LOCATORS
 
@@ -19,6 +24,17 @@ public class DisneyPlusEdnaDOBCollectionPageBase extends DisneyPlusApplePageBase
     @Override
     public boolean isOpened() {
         return isEdnaDateOfBirthHeaderPresent();
+    }
+
+    public ExtendedWebElement getEdnaDateOfBirthDescriptionForRalph() {
+        String link1text = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY_LINK_1_TEXT.getText());
+        String ednaDateOfBirthPageDescription = getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY.getText()),
+                Map.of(LINK_1, link1text, LINK_2, ""));
+
+        return staticTextLabelContains.format(ednaDateOfBirthPageDescription);
     }
 
     public boolean isEdnaDateOfBirthHeaderPresent() {
