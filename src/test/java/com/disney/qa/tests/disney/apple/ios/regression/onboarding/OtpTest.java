@@ -1,11 +1,12 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.account.DisneyAccountApi;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.account.UnifiedAccountApi;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountRequest;
 import com.disney.qa.api.email.EmailApi;
 import com.disney.qa.api.pojos.ApiConfiguration;
-import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.zebrunner.carina.utils.config.Configuration;
 import org.testng.annotations.Test;
@@ -17,7 +18,7 @@ import java.util.Date;
 public class OtpTest {
 
     @Test
-    public void testOTP() throws IOException, GMailUtilsException {
+    public void testOTP() throws IOException, GMailUtilsException, URISyntaxException {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
                 .platform("apple")
                 .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
@@ -25,9 +26,11 @@ public class OtpTest {
                 .useMultiverse(true)
                 .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
                 .build();
-        DisneyAccountApi api = new DisneyAccountApi(apiConfiguration);
+        UnifiedAccountApi api = new UnifiedAccountApi(apiConfiguration);
+        UnifiedAccount account = api.createAccountForOTP(CreateUnifiedAccountRequest.builder()
+                .country("US")
+                .language("en").build());
 
-        DisneyAccount account = api.createAccountForOTP("US", "en");
         EmailApi emailApi = new EmailApi(apiConfiguration);
         api.requestOtp(account);
 

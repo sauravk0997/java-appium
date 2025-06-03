@@ -3,7 +3,8 @@ package com.disney.qa.tests.disney.apple.tvos.regression.onboarding;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
-import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountRequest;
+import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -154,7 +155,9 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
+        UnifiedAccount disneyUser = getUnifiedAccountApi().createAccountForOTP(CreateUnifiedAccountRequest.builder()
+                .country("US")
+                .language("en").build());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
@@ -186,7 +189,9 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        DisneyAccount disneyUser = getAccountApi().createAccountForOTP(getCountry(), getLanguage());
+        UnifiedAccount disneyUser = getUnifiedAccountApi().createAccountForOTP(CreateUnifiedAccountRequest.builder()
+                .country("US")
+                .language("en").build());
 
         selectAppleUpdateLaterAndDismissAppTracking();
         sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
