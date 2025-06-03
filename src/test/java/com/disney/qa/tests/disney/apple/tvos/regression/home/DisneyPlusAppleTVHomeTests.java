@@ -248,9 +248,12 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String streamsCollectionName = getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
         logIn(getUnifiedAccount());
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
+        String firstProgramTitle = homePage.getFirstCellTitleFromContainer(STREAMS_NON_STOP_PLAYLISTS);
         homePage.clickSelect();
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
         Assert.assertTrue(liveEventModal.getDetailsSection().isElementPresent(), "Details section is not present");
+        Assert.assertEquals(liveEventModal.getProgramTitle(), firstProgramTitle,
+                "Title mismatch. Correct modal is not opened");
         Assert.assertTrue(liveEventModal.getWatchLiveButton().isElementPresent(), WATCH_LIVE_BUTTON_NOT_DISPLAYED);
         Assert.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), DETAILS_BUTTON_NOT_DISPLAYED);
     }
