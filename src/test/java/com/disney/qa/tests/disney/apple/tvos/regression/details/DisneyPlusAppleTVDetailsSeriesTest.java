@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
+import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
@@ -36,6 +37,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final String EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE = "Episodes tab is not focused";
     private static final String SUGGESTED = "SUGGESTED";
     private static final String WATCHLIST_ICON_NOT_PRESENT = "Watchlist plus icon is not displayed";
+    private static final long SCRUB_PERCENTAGE_TWENTY = 20;
+    private static final long SCRUB_PERCENTAGE_FIFTY = 50;
+    private static final long SCRUB_PERCENTAGE_HUNDRED = 100;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -872,6 +876,77 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(upNextPage.getUpNextPlayButton().isPresent(), "Up Next Play button is not present");
         sa.assertTrue(upNextPage.getSeeAllEpisodesButton().isPresent(), "See details button is not present");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64956"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifyEpisodeTabProgressBarUpdates() {
+        int latency = 25;
+        int maxAttempts = 40;
+        String episodeTitle;
+        int runTimeInSec;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_series_bluey_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            episodeTitle = seriesApiContent.getSeasons()
+                    .get(0)
+                    .getItems()
+                    .get(0)
+                    .getVisuals()
+                    .getEpisodeTitle();
+            runTimeInSec = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals()
+                    .getMetastringParts().getRuntime().getRuntimeMs() / 1000;
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Episode title not found" + e.getMessage());
+        }
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
+        videoPlayer.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
+        videoPlayer.clickPlay();
+        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_TWENTY, maxAttempts);
+        videoPlayer.clickPlay();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
+        videoPlayer.clickBack();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getProgressContainer().isPresent(),
+                "Progress container view is not present");
+        commonPage.clickDown();
+        detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_TWENTY, latency);
+
+        commonPage.clickDown();
+        commonPage.clickSelect();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPlay();
+        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_FIFTY, maxAttempts);
+        videoPlayer.clickPlay();
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
+        videoPlayer.clickBack();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
+        detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_FIFTY, latency);
+
+        commonPage.clickSelect();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPlay();
+        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, SCRUB_PERCENTAGE_HUNDRED, maxAttempts);
+        videoPlayer.clickPlay();
+        upNextPage.getUpNextPlayButton().click();
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickBack();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
+        detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_HUNDRED, latency);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121768"})
