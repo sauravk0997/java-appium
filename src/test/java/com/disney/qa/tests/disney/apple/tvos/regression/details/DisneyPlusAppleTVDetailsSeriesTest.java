@@ -1006,7 +1006,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         }
         // Play first episode and verify next episode starts
         launchDeeplink(R.TESTDATA.get("disney_prod_series_hulu_i_am_groot_mini_episodes_playback_deeplink"));
-        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, 50, 10);
+        videoPlayer.waitForVideoToStart(10, 1);
+        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, 45, 10);
         upNextPage.waitForUpNextUIToAppear();
         upNextPage.getUpNextPlayButton().click();
         Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
