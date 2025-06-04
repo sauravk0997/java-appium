@@ -354,6 +354,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement genericProfileCell;
     @ExtendedFindBy(accessibilityId = "textFieldInputCode")
     protected ExtendedWebElement otpField;
+    @ExtendedFindBy(iosPredicate = "label == \"%s\"")
+    protected ExtendedWebElement dynamicFindByLabel;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1641,4 +1643,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                 DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.DISMISS_BTN.getText()));
     }
+
+    public ExtendedWebElement getElementByLabel(String label) {
+        return dynamicFindByLabel.format(label);
+    }
+
 }
