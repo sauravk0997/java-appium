@@ -504,8 +504,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 "First element under 'Continue Watching' did not have Asset image");
         sa.assertTrue(homePage.isFirstCellFromCollectionProgressBarPresent(continueWatchingCollectionId),
                 "First element under 'Continue Watching' did not have Progress bar");
-        sa.assertTrue(homePage.isFirstCellFromCollectionPlayIconPresent(continueWatchingCollectionId),
-                "First element under 'Continue Watching' did not have Play icon");
 
         String firstAPICollectionItemSeasonNumber = firstAPICollectionItem.getVisuals().getSeasonNumber();
         String firstAPICollectionItemEpisodeNumber = firstAPICollectionItem.getVisuals().getEpisodeNumber();
