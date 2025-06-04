@@ -27,4 +27,8 @@ public class DisneyPlusAppleTVUpdateProfilePage extends DisneyPlusUpdateProfileI
         genderBtn.click();
     }
 
+    public ExtendedWebElement getSaveProfileBtn() {
+        return saveProfileBtn;
+    }
+
 }

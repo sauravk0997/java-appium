@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.offer.pojos.Partner;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileBannerIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -510,62 +511,71 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     public void verifyLATAMANZMandatoryDOB() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVUpdateProfilePage updateProfilePage = new DisneyPlusAppleTVUpdateProfilePage(getDriver());
+        DisneyPlusAppleTVChangePasswordPage changePasswordPage = new DisneyPlusAppleTVChangePasswordPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = new DisneyPlusAddProfileBannerIOSPageBase(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
+                new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
         SoftAssert sa = new SoftAssert();
-
-
-      /*  getDefaultCreateUnifiedAccountRequest()
-                .setDateOfBirth(null)
-                .setGender(null)
-                .setPartner(Partner.DISNEY)
-                .setCountry(getLocalizationUtils().getLocale())
-                .setAddDefaultEntitlement(true)
-                .setLanguage(getLocalizationUtils().getUserLanguage());
-        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
-
-       */
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
-                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage()).setDateOfBirth(null)));
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
+                        .setDateOfBirth(null).setGender(null)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-/*
-        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
-                .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
-                .dateOfBirth(null)
-                .language(getLocalizationUtils().getUserLanguage())
-                .avatarId(BABY_YODA)
-                .kidsModeEnabled(true)
-                .isStarOnboarded(true)
-                .build());
-
- */
 
         logInWithoutHomeCheck(getUnifiedAccount());
-        pause(10);
+
+        //Go through birthdate input
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
+        ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        ednaDOBCollectionPage.getSaveAndContinueButton().click();
+
+        //Go through update profile screen
+        Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(updateProfilePage.getUpdateProfileTitle().isPresent(), "DOB Collection Title is not displayed");
+        commonPage.moveDown(2, 1);
+        commonPage.clickSelect();
+        Assert.assertTrue(updateProfilePage.getStaticTextByLabelContains(updateProfilePage.getGenderPlaceholder()).isPresent(),
+                "Gender placeholder is not present");
+        commonPage.clickSelect();
+        commonPage.moveRight(1, 1);
+        updateProfilePage.getSaveProfileBtn().click();
+        Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
+        commonPage.moveDown(1, 1);
+        commonPage.clickSelect();
+        // Avatar selection
+
+        Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), "Choose avatar screen was not present");
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isPresent(), "Enter profile name is not present");
+        commonPage.clickSelect();
+
+        updateProfilePage.enterProfileName(JUNIOR_PROFILE);
+        commonPage.moveDown(3, 1);
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isPresent(), "Enter profile name is not present");
+        commonPage.moveDown(1, 1);
+        commonPage.clickSelect();
+
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(), "Enter your birthdate is not present");
+        addProfilePage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(true), Person.U18.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+
+        Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a Junior Profile");
+
 
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105691"})
-    @Test(groups = {TestGroup.PROFILES, KR_ENG})
-    public void testingKRAccount() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVOneTimePasscodePage passcodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
-
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage(),
-                true).setProfileRestricted(true)));
-        getUnifiedAccountApi().resetUserPassword(getUnifiedAccount(), "test");
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-
-        logInWithoutHomeCheck(getUnifiedAccount());
-
-
+    public boolean isGenderOptionDisabled() {
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        addProfilePage.moveDown(3, 1);
+        return addProfilePage.isFocused(addProfilePage.getKidsProfileToggleCell());
     }
-
-
 }

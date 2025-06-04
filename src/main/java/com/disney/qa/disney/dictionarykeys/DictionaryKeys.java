@@ -54,6 +54,7 @@ public enum DictionaryKeys {
     BROWSE_CONTENT_HIDDEN_BODY_KIDS("browse_content_hidden_body_kids"),
     BROWSE_CONTENT_HIDDEN_HEADER("browse_content_hidden_header"),
     BTN_ACCOUNT_HOLD_UPDATE_PAYMENT("btn_account_hold_update_payment"),
+    BTN_ADD_PROFILE("btn_add_profile"),
     BTN_ADD_PROFILE_CANCEL("btn_add_profile_cancel"),
     BTN_ADD_PROFILE_DATE_OF_BIRTH_CONTINUE("btn_add_profile_date_of_birth_continue"),
     BTN_ADD_PROFILE_ENTER_NAME_CONTINUE("btn_add_profile_enter_name_continue"),
