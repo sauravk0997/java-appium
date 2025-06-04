@@ -1,7 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.eds;
 
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -26,7 +26,7 @@ public class DisneyPlusAppleTVHoraSmokeTest extends DisneyPlusAppleTVBaseTest {
     public void horaSmokeTvos(ITestContext context) {
         SoftAssert sa = new SoftAssert();
 
-        DisneyAccount account = loginAndStartPlayback();
+        UnifiedAccount account = loginAndStartPlayback();
         exitAndLogout();
 
         if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
@@ -37,13 +37,13 @@ public class DisneyPlusAppleTVHoraSmokeTest extends DisneyPlusAppleTVBaseTest {
     }
 
     // Performs login, entitlement, and starts playback
-    private DisneyAccount loginAndStartPlayback() {
+    private UnifiedAccount loginAndStartPlayback() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandsPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
 
-        DisneyAccount account = getAccount();
+        UnifiedAccount account = getUnifiedAccount();
         addHoraValidationSku(account);
 
         selectAppleUpdateLaterAndDismissAppTracking();

@@ -4,6 +4,11 @@ import java.lang.invoke.MethodHandles;
 import java.util.TreeMap;
 
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountRequest;
+import com.disney.qa.api.client.requests.offer.UnifiedOfferRequest;
+import com.disney.qa.api.pojos.UnifiedAccount;
+import com.disney.qa.api.pojos.UnifiedEntitlement;
+import com.disney.qa.api.pojos.UnifiedOffer;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.webdriver.Screenshot;
 import com.zebrunner.carina.webdriver.ScreenshotType;
@@ -14,10 +19,6 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
-import com.disney.qa.api.client.requests.CreateDisneyAccountRequest;
-import com.disney.qa.api.pojos.DisneyAccount;
-import com.disney.qa.api.pojos.DisneyEntitlement;
-import com.disney.qa.api.pojos.DisneyOffer;
 import com.disney.qa.common.utils.UniversalUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusPasswordIOSPageBase;
@@ -38,13 +39,21 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     protected void setup() {
         String locale = getLocalizationUtils().getLocale();
 
-        CreateDisneyAccountRequest request = CreateDisneyAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage()).build();
-        DisneyOffer disneyOffer = getAccountApi().lookupOfferToUse(locale, "Yearly");
-        DisneyEntitlement entitlement = DisneyEntitlement.builder().offer(disneyOffer).subVersion("V2").build();
-        request.addEntitlement(entitlement);
-        DisneyAccount testAccount = getAccountApi().createAccount(request);
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(locale)
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
 
-        getAccountApi().addFlex(testAccount);
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText("Yearly")
+                                .build()
+                );
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, "V2");
+        request.addEntitlement(entitlement);
+        UnifiedAccount testAccount = getUnifiedAccountApi().createAccount(request);
+        getUnifiedSubscriptionApi().addFlex(testAccount);
         setAccount(testAccount);
         BASE_DIRECTORY.set(String.format("Screenshots/%s/%s/", getLocalizationUtils().getCountryName(), getLocalizationUtils().getUserLanguage()));
         setJarvisOverrides();
@@ -62,7 +71,7 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
         ZIP_TEST_NAME.set(testName);
     }
 
-    protected void loginDismiss(DisneyAccount testAccount) {
+    protected void loginDismiss(UnifiedAccount testAccount) {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
