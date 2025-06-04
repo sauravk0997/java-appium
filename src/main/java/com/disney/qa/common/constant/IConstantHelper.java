@@ -61,6 +61,8 @@ public interface IConstantHelper {
     String ESPN_BRAND_TILE_NOT_PRESENT = "ESPN brand tile was not present on home page screen";
     String ACCOUNT_IS_MINOR_PAGE_NOT_DISPLAYED = "Blocked minor account page is not displayed";
     String UPDATE_PROFILE_PAGE_NOT_DISPLAYED = "Update Profile page is not displayed";
+    String SETTINGS_PAGE_NOT_DISPLAYED = "Settings page is not displayed";
+    String ADD_PROFILE_BANNER_NOT_DISPLAYED = "Add Profile banner is not displayed";
 
     //Profile Names
     String PROFILE_NAME_SECONDARY = "Secondary";
