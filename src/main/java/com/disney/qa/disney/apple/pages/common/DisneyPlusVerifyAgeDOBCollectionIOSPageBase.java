@@ -33,7 +33,7 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     }
 
     public void clickVerifyAgeButton() {
-        verifyAgeButton.click();
+        getVerifyAgeButton().click();
     }
 
     public boolean isR21VerifyYourAgeModalDisplayed() {
@@ -50,5 +50,9 @@ public class DisneyPlusVerifyAgeDOBCollectionIOSPageBase extends DisneyPlusApple
     public void clickBrowseOtherTitlesButton() {
         getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.R21_VERIFY_AGE_MODEL_BUTTON.getText())).click();
+    }
+
+    public ExtendedWebElement getVerifyAgeButton() {
+        return verifyAgeButton;
     }
 }
