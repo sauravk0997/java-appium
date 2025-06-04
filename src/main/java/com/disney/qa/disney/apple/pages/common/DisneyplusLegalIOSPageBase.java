@@ -46,7 +46,7 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isLegalHeadersPresent(String header) {
-        return dynamicBtnFindByLabel.format(header).isElementPresent();
+        return getLegalHeader(header).isElementPresent();
     }
 
     public String getLegalText() {
@@ -72,12 +72,18 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Validating functions for: {}", legalSection);
         String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];
         expandedHeader = expandedHeader.trim();
-        getTypeButtonByLabel(legalSection).click();
+        getLegalHeader(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is not visible");
-        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED), legalSection + " was not expanded");
+        sa.assertTrue(getLegalHeader(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute())
+                        .equals(EXPANDED), legalSection + " was not expanded");
 
-        getTypeButtonByLabel(legalSection).click();
+        getLegalHeader(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is visible");
-        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED), legalSection + " was not collapsed");
+        sa.assertTrue(getLegalHeader(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute())
+                        .equals(COLLAPSED), legalSection + " was not collapsed");
+    }
+
+    public ExtendedWebElement getLegalHeader(String header) {
+        return getElementByLabel(header);
     }
 }
