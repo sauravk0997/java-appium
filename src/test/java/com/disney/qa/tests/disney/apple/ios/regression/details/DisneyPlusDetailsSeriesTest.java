@@ -963,7 +963,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         }
         sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season selector button not found on Episodes tab");
         sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Series download icon was not found");
-        sa.assertTrue(detailsPage.getEpisodeTitleFromEpisodsTab("1", firstEpisodeTitle).isPresent(),
+        sa.assertTrue(detailsPage.getEpisodeTitleFromEpisodesTab("1", firstEpisodeTitle).isPresent(),
                 "Episode Number and Name was not found");
         sa.assertTrue(detailsPage.isContentImageViewPresent(), "Content Image View not found on Episode container");
         sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Play Icon not found on Episodes container");
