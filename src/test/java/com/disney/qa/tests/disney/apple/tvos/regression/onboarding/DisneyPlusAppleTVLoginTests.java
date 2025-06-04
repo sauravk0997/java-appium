@@ -599,6 +599,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 new DisneyPlusAppleTVAddProfileBannerPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
+        DisneyPlusAppleTVOneTrustConsentBannerIOSPage oneTrustConsentPage =
+                new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
         // Create Disney account without DOB
@@ -645,6 +647,8 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         settingsPage.getLogOutCell().click();
 
         // Validate logging back in doesn't show DOB screen
+        Assert.assertTrue(oneTrustConsentPage.isOpened(), ONE_TRUST_CONSENT_BANNER_NOT_DISPLAYED);
+        oneTrustConsentPage.tapAcceptAllButton();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         logInWithoutHomeCheck(getUnifiedAccount());
         Assert.assertFalse(ednaDOBCollectionPage.getEdnaDateOfBirthDescriptionForRalph().isPresent(TEN_SEC_TIMEOUT),
