@@ -949,6 +949,35 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_HUNDRED, latency);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121768"})
+    @Test(groups = {TestGroup.SERIES, US})
+    public void verifyUniqueSeasonNameOnSeriesUpNext() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        String nextEpisodeTitle = "DOGS PLAYING POKER | Part 2";
+        String seasonName = "Extended Version";
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play Exclusive episode
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dogs_playing_poker_extended_episode_playback_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.getSkipIntroButton().clickIfPresent(FIVE_SEC_TIMEOUT);
+        commonPage.clickRight(3, 1, 1);
+        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(upNextPage.getUpNextContentTitleLabel().getText().contains(seasonName),
+                "Unique season name not displayed on up next screen");
+        Assert.assertTrue(upNextPage.getUpNextContentTitleLabel().getText().contains(nextEpisodeTitle),
+                "Next episode title season name not displayed on up next screen");
+        Assert.assertFalse(upNextPage.getUpNextContentTitleLabel().getText().contains("Season"),
+                "Season text displayed on up next screen");
+    }
+
     private void toggleAutoPlay(String toggleValue) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
