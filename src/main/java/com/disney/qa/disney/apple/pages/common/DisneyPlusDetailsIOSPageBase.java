@@ -148,6 +148,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement tenthTitleLabel;
     @ExtendedFindBy(accessibilityId = "progressContainerView")
     private ExtendedWebElement progressContainerView;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'progressContainerView'`]" +
+            "/XCUIElementTypeStaticText")
+    private ExtendedWebElement progressContainerViewText;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`label == \"copy\"`]")
     private ExtendedWebElement copyShareLink;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[$type='XCUIElementTypeStaticText' AND label CONTAINS 'IMAX Enhanced'$]")
@@ -176,21 +179,22 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name='titleLabel_0'$]/**/XCUIElementTypeButton[`name " +
             "CONTAINS 'Offline'`]")
     protected ExtendedWebElement firstEpisodeDownloadComplete;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == 'progressBar'`]/XCUIElementTypeOther")
     private ExtendedWebElement progressBarBookmark;
-
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]/**/XCUIElementTypeOther[`name == " +
+            "'progressBar'`]")
+    private ExtendedWebElement progressBarOnEpisodeTab;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]/**/XCUIElementTypeOther[`name == " +
+            "'progressBar'`]/XCUIElementTypeOther")
+    private ExtendedWebElement progressBarBookmarkOnEpisodeTab;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeStaticText[`label =[c] 'Included with your ESPN+ subscription'`]")
     private ExtendedWebElement espnPlusEntitlementAttributionText;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == 'itemPickerView'`]" +
             "/XCUIElementTypeCell[1]")
     private ExtendedWebElement firstItemPickerCell;
-
     @ExtendedFindBy(accessibilityId = "detailsRestrictedIcon")
     private ExtendedWebElement parentalControlIcon;
-
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
     private ExtendedWebElement espnPlusGenericErrorText;
@@ -255,6 +259,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                     return getPlayButton().isElementNotPresent(THREE_SEC_TIMEOUT);
                 });
     }
+
     public DisneyPlusVideoPlayerIOSPageBase clickWatchButton() {
         getTypeButtonByName(LOWER_CASE_WATCH).click();
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -268,8 +273,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getDownloadButton() {
         return dynamicBtnFindByLabelContains.format("downloadEpisodeList");
     }
+
     public ExtendedWebElement getProgressContainer() {
         return progressContainerView;
+    }
+
+    public String getRemainingTimeLabel() {
+        return progressContainerViewText.getText();
     }
 
     public ExtendedWebElement getDownloadCompleteButton() {
@@ -408,7 +418,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void downloadAllOfSeason() {
-        if(swipe(downloadSeasonButton)){
+        if (swipe(downloadSeasonButton)) {
             downloadSeasonButton.click();
         } else {
             throw new NoSuchElementException("Download all season button was not found");
@@ -672,11 +682,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return logoImage.getText();
     }
 
-
     public boolean isExtrasTabTitleDescriptionPresent() {
         return descriptionLabel.isPresent();
     }
-
 
     public void swipeTillActorsElementPresent() {
         ExtendedWebElement element = getActors().isPresent(THREE_SEC_TIMEOUT) ? getActors() :
@@ -720,7 +728,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                         DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_PLAY.getText()),
                 getLocalizationUtils().getDictionaryItem(
                         DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_CONTINUE.getText())
-                );
+        );
     }
 
     public ExtendedWebElement getSeasonSelectorButton() {
@@ -1020,7 +1028,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         getCopyShareLink().click();
     }
 
-
     public boolean isImaxEnhancedPresentInMediaFeaturesRow() {
         return imaxEnhancedMediaFeaturesRow.getText().contains(IMAX_ENHANCED);
     }
@@ -1060,8 +1067,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isSecondImageInVersionTabPresent() {
         return secondVersionsImage.isPresent();
     }
-
-
 
     public boolean isContentImageViewPresent() {
         return contentImageView.isPresent();
@@ -1169,6 +1174,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(getSeasonSelector())));
     }
+
     public boolean isSeasonRatingPresent() {
         String[] seasonRatingSplit = getSeasonRating().split(" ");
         String expectedLastWord = convertToTitleCase(seasonRatingSplit[2], " ");
@@ -1251,7 +1257,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return removeDownloadButton.isPresent();
     }
 
-    public ExtendedWebElement getEpisodeTitleFromEpisodsTab(String season, String episodeTitle) {
+    public ExtendedWebElement getEpisodeTitleFromEpisodesTab(String season, String episodeTitle) {
         return getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 SERIES_EPISODE_TITLE.getText()),
@@ -1306,7 +1312,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getUHDBadge() {
         return getTypeOtherContainsLabel(getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.APPLICATION,MEDIA_FORMAT_UHD.getText()));
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, MEDIA_FORMAT_UHD.getText()));
     }
 
     public ExtendedWebElement getHDRBadge() {
@@ -1333,6 +1339,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         double expectedWidth = progressBar.getSize().getWidth() / (100 / scrubPercentage);
         ValueRange range = ValueRange.of(-latency, latency);
         return range.isValidIntValue((long) (expectedWidth - bookmarkWidth));
+    }
+
+    public void isProgressBarIndicatingCorrectPositionOnEpisodeTab(String episodeTitle,
+                                                                   long scrubPercentage,
+                                                                   int latency) {
+        long bookmarkWidth = progressBarBookmarkOnEpisodeTab.format(episodeTitle).getSize().getWidth();
+        long expectedWidth = progressBarOnEpisodeTab.format(episodeTitle).getSize().getWidth()
+                / (100 / scrubPercentage);
+        ValueRange range = ValueRange.of(-latency, latency);
+        Assert.assertTrue(range.isValidIntValue(Math.abs(expectedWidth - bookmarkWidth)),
+                String.format("Actual Progress bar indicator (%d) and " +
+                                "Expected Progress bar indicator (%d) " +
+                                "is not between the expected range (%d-%d seconds)",
+                        bookmarkWidth, expectedWidth,
+                        range.getMinimum(), range.getMaximum()));
     }
 
     public ExtendedWebElement getTabBar() {
@@ -1371,7 +1392,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
                 Map.of("S", 1, "E", 1, "TITLE", episodeTitle));
     }
 
-    public List<String> getAudioVideoFormatValue(){
+    public List<String> getAudioVideoFormatValue() {
         List<String> ratingAudioVideoFormat = List.of(ratingAudioVideoFormatLabel.getText().split(","));
         List<String> audioVideoFormatLabel = new ArrayList<>();
         IntStream.range(1, ratingAudioVideoFormat.size())
@@ -1399,4 +1420,4 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         }
         return contentAdvisory.getText();
     }
- }
+}
