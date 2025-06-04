@@ -23,6 +23,16 @@ public class DisneyPlusAppleTVOneTrustConsentBannerIOSPage extends DisneyPlusOne
     }
 
     @Override
+    public ExtendedWebElement getAcceptAllButton() {
+        return tvOsBannerAllowAllButton;
+    }
+
+    @Override
+    public boolean isAllowAllButtonPresent() {
+        return tvOsBannerAllowAllButton.isPresent();
+    }
+
+    @Override
     public void tapAcceptAllButton() {
         tvOsBannerAllowAllButton.click();
     }
