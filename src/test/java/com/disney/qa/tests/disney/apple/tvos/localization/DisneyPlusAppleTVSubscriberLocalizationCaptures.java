@@ -153,10 +153,17 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVSearchPage disneyPlusAppleTVSearchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
 
-        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder().country(getLocalizationUtils().getLocale())
-                .language(getLocalizationUtils().getUserLanguage()).build();
-        UnifiedOffer offer = getUnifiedSubscriptionApi().lookupUnifiedOffer(UnifiedOfferRequest.builder()
-                .searchText(ENTITLEMENT_LOOKUP).build());
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText(ENTITLEMENT_LOOKUP)
+                                .build()
+                );
         UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, SUB_VERSION);
         request.addEntitlement(entitlement);
         UnifiedAccount user = getUnifiedAccountApi().createAccount(request);
