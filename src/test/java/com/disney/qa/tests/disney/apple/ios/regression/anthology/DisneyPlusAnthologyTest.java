@@ -426,7 +426,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         detailsPage.swipePageTillElementPresent(episodeToDownload, 10,
                 detailsPage.getContentDetailsPage(), Direction.UP, 1500);
         episodeToDownload.click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT);
         String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber);
         detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
 
