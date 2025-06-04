@@ -745,6 +745,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.waitForVerifyAgeDOBCollectionPageToOpen();
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         hideKeyboard();
+        verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getVerifyAgeButton());
         verifyAgeDOBPage.clickVerifyAgeButton();
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);

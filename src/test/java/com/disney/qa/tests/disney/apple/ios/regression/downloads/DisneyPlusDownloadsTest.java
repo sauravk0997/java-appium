@@ -666,7 +666,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String seriesName = detailsPage.getMediaTitle();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {

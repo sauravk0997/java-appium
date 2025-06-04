@@ -46,6 +46,10 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
         return bannerDPDDescriptions.isPresent();
     }
 
+    public ExtendedWebElement getAcceptAllButton() {
+        return bannerAllowAllButton;
+    }
+
     public boolean isBannerTitlePresent() {
         return bannerTitle.isPresent();
     }
