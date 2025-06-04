@@ -517,6 +517,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
         String addProfile = "ADD PROFILE";
+
+        // Create account with no DOB and GI
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
