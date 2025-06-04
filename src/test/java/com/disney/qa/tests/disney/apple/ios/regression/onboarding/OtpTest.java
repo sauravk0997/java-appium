@@ -27,9 +27,12 @@ public class OtpTest {
                 .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
                 .build();
         UnifiedAccountApi api = new UnifiedAccountApi(apiConfiguration);
-        UnifiedAccount account = api.createAccountForOTP(CreateUnifiedAccountRequest.builder()
-                .country("US")
-                .language("en").build());
+        UnifiedAccount account = api.createAccountForOTP(
+                CreateUnifiedAccountRequest.builder()
+                        .country("US")
+                        .language("en")
+                        .build()
+        );
 
         EmailApi emailApi = new EmailApi(apiConfiguration);
         api.requestOtp(account);

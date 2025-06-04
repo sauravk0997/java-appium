@@ -39,9 +39,17 @@ public class DisneyPlusAppleLocalizationBaseTest extends DisneyBaseTest {
     protected void setup() {
         String locale = getLocalizationUtils().getLocale();
 
-        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage()).build();
-        UnifiedOffer offer = getUnifiedSubscriptionApi().lookupUnifiedOffer(UnifiedOfferRequest.builder()
-                .searchText("Yearly").build());
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(locale)
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText("Yearly")
+                                .build()
+                );
         UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, "V2");
         request.addEntitlement(entitlement);
         UnifiedAccount testAccount = getUnifiedAccountApi().createAccount(request);

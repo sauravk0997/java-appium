@@ -84,10 +84,17 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
             localeForTravelling = "GB";
         }
 
-        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder().country(localeForTravelling)
-                .language(getLocalizationUtils().getUserLanguage()).build();
-        UnifiedOffer offer = getUnifiedSubscriptionApi().lookupUnifiedOffer(UnifiedOfferRequest.builder()
-                .searchText("Yearly").build());
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(localeForTravelling)
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText("Yearly")
+                                .build()
+                );
         UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, "V1");
         request.addEntitlement(entitlement);
         UnifiedAccount testAccount = getUnifiedAccountApi().createAccount(request);
@@ -159,12 +166,16 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         String videoQuality = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.VIDEO_QUALITY_TITLE.getText());
 
-        getUnifiedAccountApi().addProfile
-                (CreateUnifiedAccountProfileRequest.builder()
-                        .unifiedAccount(testAccount).profileName("SecondaryTestProfile")
+        getUnifiedAccountApi().addProfile(
+                CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(testAccount)
+                        .profileName("SecondaryTestProfile")
                         .language(getUnifiedAccount().getProfileLang())
-                        .avatarId(null).kidsModeEnabled(false)
-                        .dateOfBirth(null).build());
+                        .avatarId(null)
+                        .kidsModeEnabled(false)
+                        .dateOfBirth(null)
+                        .build()
+        );
 
         welcomePage.clickLogInButton();
         loginPage.submitEmail(testAccount.getEmail());
@@ -330,10 +341,16 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         moreMenuPage.clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.LOG_OUT);
 
         for (int i = 0; i < 4; i++) {
-            getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder().unifiedAccount(testAccount)
-                    .profileName("Test_" + i).language(getLanguage())
-                    .avatarId(null).kidsModeEnabled(false)
-                    .dateOfBirth(null).build());
+            getUnifiedAccountApi().addProfile(
+                    CreateUnifiedAccountProfileRequest.builder()
+                            .unifiedAccount(testAccount)
+                            .profileName("Test_" + i)
+                            .language(getLanguage())
+                            .avatarId(null)
+                            .kidsModeEnabled(false)
+                            .dateOfBirth(null)
+                            .build()
+            );
         }
         restart();
 
@@ -410,22 +427,44 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         String ratingSystem = profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem();
 
         //create a second account for a later step
-        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder().country(getLocalizationUtils().getLocale())
-                .language(getLocalizationUtils().getUserLanguage()).build();
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
         UnifiedAccount testAccountTwoProfiles = getUnifiedAccountApi().createAccount(request);
-        UnifiedOffer offer = getUnifiedSubscriptionApi().lookupUnifiedOffer(UnifiedOfferRequest.builder()
-                .searchText("Yearly").build());
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText("Yearly")
+                                .build()
+                );
         UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, "V2");
         request.addEntitlement(entitlement);
-        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder().unifiedAccount(testAccountTwoProfiles)
-                .profileName(SECONDARY_PROFILE).dateOfBirth("2018-01-01")
-                .language(getLocalizationUtils().getUserLanguage())
-                .avatarId(null).kidsModeEnabled(false).isStarOnboarded(true).build());
-        //set account to the lowest rating for a step later on
-        getUnifiedAccountApi().editContentRatingProfileSetting(testAccount,
+        getUnifiedAccountApi().addProfile(
+                CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(testAccountTwoProfiles)
+                        .profileName(SECONDARY_PROFILE)
+                        .dateOfBirth("2018-01-01")
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId(null)
+                        .kidsModeEnabled(false)
+                        .isStarOnboarded(true)
+                        .build()
+        );
+
+        // Set account to the lowest rating for a step later on
+        getUnifiedAccountApi().editContentRatingProfileSetting(
+                testAccount,
                 testAccountTwoProfiles.getProfiles().get(1).getProfileId(),
                 ratingSystem,
-                profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(0));
+                profile.getAttributes()
+                        .getParentalControls()
+                        .getMaturityRating()
+                        .getRatingSystemValues()
+                        .get(0)
+        );
 
         loginDismiss(testAccount);
 
@@ -756,10 +795,18 @@ public class DisneyPlusAppleLocalizationSubscriberCaptures extends DisneyPlusApp
         setup();
         setZipTestName("SubscriberUI_10_welch");
         String locale = getLocalizationUtils().getLocale();
-        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder().country(locale).language(getLocalizationUtils().getUserLanguage())
-                .isStarOnboarded(false).build();
-        UnifiedOffer offer = getUnifiedSubscriptionApi().lookupUnifiedOffer(UnifiedOfferRequest.builder()
-                .searchText("Yearly").build());
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(locale)
+                .language(getLocalizationUtils().getUserLanguage())
+                .isStarOnboarded(false)
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText("Yearly")
+                                .build()
+                );
         UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, "V1");
         request.addEntitlement(entitlement);
         UnifiedAccount testAccount = getUnifiedAccountApi().createAccount(request);
