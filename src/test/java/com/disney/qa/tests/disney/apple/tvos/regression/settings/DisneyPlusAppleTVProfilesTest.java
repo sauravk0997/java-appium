@@ -532,7 +532,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         //Go through update profile screen
         Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(updateProfilePage.getUpdateProfileTitle().isPresent(), "DOB Collection Title is not displayed");
+        Assert.assertTrue(updateProfilePage.getUpdateProfileTitle().isPresent(), "Update Profile Title is not displayed");
         commonPage.moveDown(2, 1);
         commonPage.clickSelect();
         Assert.assertTrue(updateProfilePage.getStaticTextByLabelContains(updateProfilePage.getGenderPlaceholder()).isPresent(),
