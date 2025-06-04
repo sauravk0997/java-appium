@@ -22,10 +22,12 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -593,6 +595,11 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
         DisneyPlusAppleTVUpdateProfilePage updateProfilePage = new DisneyPlusAppleTVUpdateProfilePage(getDriver());
+        DisneyPlusAppleTVAddProfileBannerPage addProfileBannerPage =
+                new DisneyPlusAppleTVAddProfileBannerPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
         // Create Disney account without DOB
         setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()
@@ -625,5 +632,22 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
         ednaDOBCollectionPage.getSaveAndContinueButton().click();
         Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
+
+        // Continue to home page and logout
+        updateProfilePage.clickSaveBtn();
+        Assert.assertTrue(addProfileBannerPage.isOpened(), ADD_PROFILE_BANNER_NOT_DISPLAYED);
+        addProfileBannerPage.clickSecondaryButton();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
+        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
+        settingsPage.moveDownUntilElementIsFocused(settingsPage.getLogOutCell(), 8);
+        settingsPage.getLogOutCell().click();
+
+        // Validate logging back in doesn't show DOB screen
+        Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        logInWithoutHomeCheck(getUnifiedAccount());
+        Assert.assertFalse(ednaDOBCollectionPage.getEdnaDateOfBirthDescriptionForRalph().isPresent(TEN_SEC_TIMEOUT),
+                "Edna DOB page is still being displayed");
     }
 }
