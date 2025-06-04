@@ -131,6 +131,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
 
         // Click fast-forward on the remote and get the thumbnail position in time
         commonPage.clickRight(3, 1, 1);
+        videoPlayerTVPage.waitForPresenceOfAnElement(videoPlayerTVPage.getThumbnailView());
         Assert.assertTrue(videoPlayerTVPage.getThumbnailView().isPresent(), "Thumbnail preview did not appear");
         int thumbnailTimeline = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("thumbnailTimeline {}", thumbnailTimeline);

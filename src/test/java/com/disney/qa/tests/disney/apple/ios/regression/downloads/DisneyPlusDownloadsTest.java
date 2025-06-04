@@ -60,7 +60,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadsProgressBarDisplayedOnContentContainsBookmark() {
         int latency = 20;
-        int pollingInSeconds = 5;
+        int pollingInSeconds = 3;
         int timeoutInSeconds = 300;
         String zero = "0";
         String one = "1";
@@ -666,7 +666,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_the_simpsons_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         String seriesName = detailsPage.getMediaTitle();
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
