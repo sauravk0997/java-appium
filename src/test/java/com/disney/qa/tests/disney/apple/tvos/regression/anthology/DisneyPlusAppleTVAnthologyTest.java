@@ -106,7 +106,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         details.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), "Video player did not open after clicking play button.");
-        videoPlayer.clickMenuTimes(1,1);
+        videoPlayer.clickBack();
         sa.assertTrue(details.isOpened(), "Details page did not open.");
         details.waitForPresenceOfAnElement(details.getContinueButton());
         details.clickContinueButton();
