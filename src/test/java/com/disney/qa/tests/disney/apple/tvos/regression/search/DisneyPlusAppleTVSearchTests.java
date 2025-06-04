@@ -42,6 +42,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
     private static final String A_CHARACTER = "a";
     private static final String B_CHARACTER = "b";
+    private static final String ESPN_LEAGUE = "Spanish LALIGA";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67362"})
     @Test(groups = {TestGroup.SEARCH, US})
