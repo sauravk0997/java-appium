@@ -21,10 +21,11 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -583,6 +584,31 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(subscriptionReacquisitionPage.getLogOutButton().isPresent(),
                 "'LOG OUT' button is not visible");
 
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-111553"})
+    @Test(groups = {TestGroup.ONBOARDING, EMEA})
+    public void verifyAcceptanceOfOneTrustConsentOnLogin() {
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusAppleTVOneTrustConsentBannerIOSPage oneTrustConsentPage =
+                new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        // Validate One Trust consent page
+        sa.assertTrue(oneTrustConsentPage.isAllowAllButtonPresent(),
+                "Accept All button is not present");
+        sa.assertTrue(oneTrustConsentPage.isRejectAllButtonPresent(),
+                "Reject All button is not present");
+        sa.assertTrue(oneTrustConsentPage.isCustomizedChoicesButtonPresent(),
+                "Customize Choices button is not present");
+
+        // Tap 'Accept All' and validate banner is not present afterward
+        oneTrustConsentPage.tapAcceptAllButton();
+        Assert.assertFalse(oneTrustConsentPage.getAcceptAllButton().isPresent(FIVE_SEC_TIMEOUT),
+                "One Trust consent banner is present");
         sa.assertAll();
     }
 }
