@@ -186,7 +186,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                     String.format("Header '%s' was not displayed", header));
         });
 
-        legalPage.getTypeButtonByLabel(imprintHeader).click();
+        legalPage.getLegalHeader(imprintHeader).click();
         String apiResponse = cleanDocument(disneyLocalizationUtils.getLegalDocumentBody(imprintHeader));
         String appDisplay = cleanDocument(legalPage.getLegalText());
         Assert.assertEquals(appDisplay, apiResponse,
