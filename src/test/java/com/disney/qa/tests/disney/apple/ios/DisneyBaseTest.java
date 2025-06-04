@@ -413,6 +413,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             return getExploreApi().getSeries(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e);
