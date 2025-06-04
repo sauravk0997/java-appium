@@ -13,6 +13,11 @@ public class DisneyPlusAddProfileBannerIOSPageBase extends DisneyPlusApplePageBa
         super(driver);
     }
 
+    @Override
+    public boolean isOpened() {
+        return isProfileHeaderPresent();
+    }
+
     public boolean isProfileHeaderPresent() {
         return staticTextByLabel.format(getLocalizationUtils()
                         .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.ADD_PROFILE_HEADER.getText()))
