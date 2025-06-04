@@ -525,7 +525,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         logInWithoutHomeCheck(getUnifiedAccount());
 
-        //Go through birthdate input
+        //Go through birthdate screen
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
         ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
         ednaDOBCollectionPage.getSaveAndContinueButton().click();
@@ -541,6 +541,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.moveRight(1, 1);
         updateProfilePage.getSaveProfileBtn().click();
 
+        // Go through add profile
         Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
         addProfileBanner.getTypeButtonByLabel(addProfile).click();
         // Avatar selection
@@ -560,6 +561,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.getEnterDateOfBirthContinueButton().click();
         Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a Junior Profile");
+        // Enable Junior Mode and validate DOB was not enabled
+        addProfilePage.getKidsProfileToggleCell().click();
+        commonPage.moveUp(1, 1);
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getChangeAvatarSelectorCell()),
+                "DOB was enabled after Junior Mode selection");
     }
 
     public boolean isGenderOptionDisabled() {
