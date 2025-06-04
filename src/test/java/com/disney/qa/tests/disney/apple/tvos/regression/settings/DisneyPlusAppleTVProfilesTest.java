@@ -516,8 +516,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
-        SoftAssert sa = new SoftAssert();
-
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
@@ -561,13 +559,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(), "Enter your birthdate is not present");
         addProfilePage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(true), Person.U18.getYear());
         addProfilePage.getEnterDateOfBirthContinueButton().click();
-
         Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
-
         Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a Junior Profile");
-
-
-        sa.assertAll();
     }
 
     public boolean isGenderOptionDisabled() {
