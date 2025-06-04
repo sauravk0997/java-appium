@@ -508,7 +508,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123034"})
     @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
-    public void verifyMandatoryDOB() {
+    public void verifyDOBCollectionForLatamOrANZ() {
         DisneyPlusAppleTVUpdateProfilePage updateProfilePage = new DisneyPlusAppleTVUpdateProfilePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = new DisneyPlusAddProfileBannerIOSPageBase(getDriver());
@@ -557,7 +557,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.clickSelect();
         addProfilePage.getEnterProfileNameContinueButton().click();
         // Add U18 DOB
-        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(), "Enter your birthdate is not present");
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                "Enter your birthdate title is not present for u18 profile");
         addProfilePage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(true), Person.U18.getYear());
         addProfilePage.getEnterDateOfBirthContinueButton().click();
         Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
