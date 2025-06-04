@@ -41,7 +41,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
     private static final String A_CHARACTER = "a";
     private static final String B_CHARACTER = "b";
-    private static final String ESPN_LEAGUE = "Spanish LALIGA";
+    private static final String ESPN_SPORT = "Soccer";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67362"})
     @Test(groups = {TestGroup.SEARCH, US})
@@ -408,11 +408,11 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        searchPage.typeInSearchField(ESPN_LEAGUE);
+        searchPage.typeInSearchField(ESPN_SPORT);
         Assert.assertTrue(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(),
                 "An ESPN+ title was not found when searching for Sports content");
-        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ESPN_LEAGUE).isElementPresent(),
-                "Search did not show titles related to the given ESPN League search");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(ESPN_SPORT).isElementPresent(),
+                "Search did not show titles related to the given ESPN sport search");
     }
 
     private Item getUpcomingEventFromAPI(int titlesLimit) {
