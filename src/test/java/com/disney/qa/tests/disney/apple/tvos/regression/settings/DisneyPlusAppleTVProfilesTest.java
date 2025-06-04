@@ -542,21 +542,18 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         updateProfilePage.getSaveProfileBtn().click();
 
         Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
-      //  commonPage.moveDown(1, 1);
-       // commonPage.clickSelect();
         addProfileBanner.getTypeButtonByLabel(addProfile).click();
         // Avatar selection
         Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), "Choose avatar screen was not present");
         commonPage.clickSelect();
-        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isPresent(), "Enter profile name is not present");
-        commonPage.clickSelect();
 
-        updateProfilePage.enterProfileName(JUNIOR_PROFILE);
-        commonPage.moveDown(3, 1);
-        commonPage.clickSelect();
-        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isPresent(), "Enter profile name is not present");
-        commonPage.moveDown(1, 1);
-        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
+                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+        addProfilePage.enterProfileName(JUNIOR_PROFILE);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
 
         Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(), "Enter your birthdate is not present");
         addProfilePage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(true), Person.U18.getYear());
