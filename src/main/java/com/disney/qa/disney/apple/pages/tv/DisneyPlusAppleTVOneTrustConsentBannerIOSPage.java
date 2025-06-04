@@ -16,4 +16,9 @@ public class DisneyPlusAppleTVOneTrustConsentBannerIOSPage extends DisneyPlusOne
     public DisneyPlusAppleTVOneTrustConsentBannerIOSPage (WebDriver driver) {
         super(driver);
     }
+
+    @Override
+    public void tapAcceptAllButton() {
+        tvOsBannerAllowAllButton.click();
+    }
 }
