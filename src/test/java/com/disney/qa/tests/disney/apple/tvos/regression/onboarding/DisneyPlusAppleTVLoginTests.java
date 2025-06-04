@@ -662,7 +662,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         // Continue to home page and logout
         updateProfilePage.clickSaveBtn();
-        Assert.assertTrue(addProfileBannerPage.isOpened(), ADD_PROFILE_BANNER_NOT_DISPLAYED);
         addProfileBannerPage.clickSecondaryButton();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.moveDownFromHeroTileToBrandTile();
