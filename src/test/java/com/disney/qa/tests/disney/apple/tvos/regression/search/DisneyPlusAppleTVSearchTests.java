@@ -152,7 +152,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 "Unlock 'upsell message' not found in search result");
         searchPage.clickSearchResult(UNENTITLED_HULU_CONTENT);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
-        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now button is not present");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock button is not present");
         detailsPage.getUpgradeNowButton().click();
         Assert.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Hulu ineligible screen header is not present");
         Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Hulu ineligible screen description is not present");
