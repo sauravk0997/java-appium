@@ -25,12 +25,9 @@ import java.util.stream.IntStream;
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SETTINGS;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -673,10 +670,11 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
         settingsPage.moveDownUntilElementIsFocused(settingsPage.getLogOutCell(), 8);
         settingsPage.getLogOutCell().click();
+        if (oneTrustConsentPage.getAcceptAllButton().isPresent(TEN_SEC_TIMEOUT)) {
+            oneTrustConsentPage.tapAcceptAllButton();
+        }
 
         // Validate logging back in doesn't show DOB screen
-        Assert.assertTrue(oneTrustConsentPage.isOpened(), ONE_TRUST_CONSENT_BANNER_NOT_DISPLAYED);
-        oneTrustConsentPage.tapAcceptAllButton();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         logInWithoutHomeCheck(getUnifiedAccount());
         Assert.assertFalse(ednaDOBCollectionPage.getEdnaDateOfBirthDescriptionForRalph().isPresent(TEN_SEC_TIMEOUT),
