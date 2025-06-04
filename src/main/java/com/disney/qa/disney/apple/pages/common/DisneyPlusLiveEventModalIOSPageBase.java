@@ -56,4 +56,8 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
                 thumbnailView.getSize().getWidth() / thumbnailView.getSize().getHeight());
         return BigDecimal.valueOf(rawAspectRatio).setScale(2, RoundingMode.HALF_UP).doubleValue();
     }
+
+    public String getProgramTitle() {
+        return titleLabel.getText();
+    }
 }
