@@ -14,8 +14,7 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 
-import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.ONE_HUNDRED_TWENTY_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 
@@ -40,7 +39,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         detailsPage.waitForDetailsPageToOpen();
         swipe(detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber), Direction.UP, 1, 900);
         detailsPage.getEpisodeToDownload(seasonNumber, episodeNumber).click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT);
         String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber);
         detailsPage.getFirstEpisodeDownloadCompleteButton().click();
         detailsPage.getDownloadModalPlayButton().click();

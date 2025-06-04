@@ -67,4 +67,8 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
                 "upNext UI didn't appear on video player")
                 .until(it -> upNextPlayButton.isElementPresent(THREE_HUNDRED_SEC_TIMEOUT)));
     }
+
+    public ExtendedWebElement getUpNextContentTitleLabel() {
+        return upNextContentTitleLabel;
+    }
 }

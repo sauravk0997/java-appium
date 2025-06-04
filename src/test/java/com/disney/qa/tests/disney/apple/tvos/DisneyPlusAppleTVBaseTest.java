@@ -86,10 +86,10 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         }
     }
 
-    public void addHoraValidationSku(DisneyAccount accountToEntitle) {
+    public void addHoraValidationSku(UnifiedAccount accountToEntitle) {
         if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
             try {
-                getSubscriptionApi().addEntitlementBySku(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V2");
+                getUnifiedSubscriptionApi().addEntitlementBySku(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V2");
             } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -98,19 +98,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
 
     public void installJarvis() {
         super.installJarvis();
-    }
-
-    public void logInWithoutHomeCheck(DisneyAccount user) {
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
-        selectAppleUpdateLaterAndDismissAppTracking();
-        Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
-        disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPassword();
-        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
     }
 
     public void logInWithoutHomeCheck(UnifiedAccount user) {
@@ -125,18 +112,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(user.getEmail());
         disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPassword();
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
-    }
-
-    public void logIn(DisneyAccount user) {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        logInWithoutHomeCheck(user);
-
-        //Wait to handle the expanded validation
-        pause(5);
-        collapseGlobalNav();
-
-        Assert.assertTrue(homePage.isOpened(),
-                "Home page did not launch for single profile user after logging in");
     }
 
     public void logIn(UnifiedAccount user, String... profileName) {
