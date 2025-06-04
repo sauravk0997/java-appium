@@ -607,7 +607,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         // Tap 'Accept All' and validate banner is not present afterward
         oneTrustConsentPage.tapAcceptAllButton();
-        Assert.assertFalse(oneTrustConsentPage.getTvOsBannerAllowAllButton().isPresent(FIVE_SEC_TIMEOUT),
+        Assert.assertFalse(oneTrustConsentPage.getAcceptAllButton().isPresent(FIVE_SEC_TIMEOUT),
                 "One Trust consent banner is present");
         sa.assertAll();
     }
