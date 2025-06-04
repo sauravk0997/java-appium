@@ -487,7 +487,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         ValueRange playbackStartRange = ValueRange.of(0, 30);
         Assert.assertTrue(playbackStartRange.isValidIntValue(elapsedPlaybackTime),
                 String.format("Current elapsed time (%d seconds) is not between the expected range (%d-%d seconds)" +
-                        "of the beginning of the playback", elapsedPlaybackTime,
+                                "of the beginning of the playback", elapsedPlaybackTime,
                         playbackStartRange.getMinimum(), playbackStartRange.getMaximum()));
     }
 
@@ -708,7 +708,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickRight(5, 2, 1);
         videoPlayer.clickPlay();
         int estimatedWatchedMinutes = firstSeasonFirstEpisodeDurationInMinutes -
-                (int)TimeUnit.SECONDS.toMinutes(videoPlayer.getRemainingTimeThreeIntegers());
+                (int) TimeUnit.SECONDS.toMinutes(videoPlayer.getRemainingTimeThreeIntegers());
         LOGGER.info("estimatedWatchedMinutes: '{}' minutes", estimatedWatchedMinutes);
         videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), TEN_SEC_TIMEOUT);
 
@@ -732,7 +732,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         // Validate actual progress bar fill percentage approximates to the corresponding actual watched time
         int estimatedWatchedPercentage = (estimatedWatchedMinutes * 100) / firstSeasonFirstEpisodeDurationInMinutes;
         ValueRange acceptedPercentageRange = ValueRange.of(
-                estimatedWatchedPercentage - percentageOffset , estimatedWatchedPercentage + percentageOffset);
+                estimatedWatchedPercentage - percentageOffset, estimatedWatchedPercentage + percentageOffset);
         int currentProgressBarPercentage = detailsPage.getProgressBarPercentage();
         Assert.assertTrue(acceptedPercentageRange.isValidIntValue(currentProgressBarPercentage),
                 String.format("Progress bar fill percentage '%s' isn't between acceptable estimated " +
@@ -976,6 +976,44 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Next episode title season name not displayed on up next screen");
         Assert.assertFalse(upNextPage.getUpNextContentTitleLabel().getText().contains("Season"),
                 "Season text displayed on up next screen");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112891"})
+    @Test(groups = {TestGroup.UP_NEXT, TestGroup.VIDEO_PLAYER, US})
+    public void verifySeriesNextEpisodeButton() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        int UI_LATENCY_IN_SEC = 30;
+        String nextEpisodeTitle;
+
+        logIn(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        // Get second episode title
+        try {
+            ExploreContent seriesApiContent =
+                    getSeriesApi(R.TESTDATA.get("disney_prod_series_hulu_i_am_groot_mini_episodes_entity"),
+                            DisneyPlusBrandIOSPageBase.Brand.HULU);
+            nextEpisodeTitle =
+                    seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+            LOGGER.info("Next episode title from api: {}", nextEpisodeTitle);
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, next series title was not found " + e.getMessage());
+        }
+        // Play first episode and verify next episode starts
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_hulu_i_am_groot_mini_episodes_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(10, 1);
+        commonPage.clickRight(12, 2, 1);
+        upNextPage.waitForUpNextUIToAppear();
+        upNextPage.getUpNextPlayButton().click();
+        videoPlayer.waitForVideoToStart(10, 1);
+        Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
+                "Playback is not initiated for next episode");
+        int startTimestamp = videoPlayer.getCurrentTime();
+        ValueRange range = ValueRange.of(0, UI_LATENCY_IN_SEC);
+        Assert.assertTrue(range.isValidIntValue(startTimestamp),"video didn't start from the beginning");
     }
 
     private void toggleAutoPlay(String toggleValue) {
