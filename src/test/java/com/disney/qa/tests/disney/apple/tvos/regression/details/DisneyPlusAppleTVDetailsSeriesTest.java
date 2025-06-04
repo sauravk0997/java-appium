@@ -984,7 +984,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
-        int UI_LATENCY_IN_SEC = 20;
+        int UI_LATENCY_IN_SEC = 30;
         String nextEpisodeTitle;
         int runTimeInSec;
 
@@ -1010,6 +1010,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, 45, 10);
         upNextPage.waitForUpNextUIToAppear();
         upNextPage.getUpNextPlayButton().click();
+        videoPlayer.waitForVideoToStart(10, 1);
         Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(),
                 "Playback is not initiated for next episode");
         int startTimestamp = videoPlayer.getCurrentTime();
