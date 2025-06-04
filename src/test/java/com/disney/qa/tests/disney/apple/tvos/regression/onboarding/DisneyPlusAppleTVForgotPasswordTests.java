@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountRequest;
+import com.disney.qa.api.offer.pojos.Partner;
 import com.disney.qa.api.pojos.UnifiedAccount;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -159,6 +160,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
                 .createAccountForOTP(
                         CreateUnifiedAccountRequest.builder()
                                 .country("US")
+                                .partner(Partner.DISNEY)
                                 .language("en")
                                 .build()
                 );
@@ -197,6 +199,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
                 .createAccountForOTP(
                         CreateUnifiedAccountRequest.builder()
                                 .country("US")
+                                .partner(Partner.DISNEY)
                                 .language("en")
                                 .build()
                 );
