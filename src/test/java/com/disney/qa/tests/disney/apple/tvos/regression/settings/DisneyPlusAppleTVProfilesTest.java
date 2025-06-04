@@ -516,6 +516,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
+        String addProfile = "ADD PROFILE";
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
@@ -539,11 +540,12 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.clickSelect();
         commonPage.moveRight(1, 1);
         updateProfilePage.getSaveProfileBtn().click();
-        Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
-        commonPage.moveDown(1, 1);
-        commonPage.clickSelect();
-        // Avatar selection
 
+        Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
+      //  commonPage.moveDown(1, 1);
+       // commonPage.clickSelect();
+        addProfileBanner.getTypeButtonByLabel(addProfile).click();
+        // Avatar selection
         Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), "Choose avatar screen was not present");
         commonPage.clickSelect();
         Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isPresent(), "Enter profile name is not present");
