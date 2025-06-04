@@ -984,9 +984,9 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         int UI_LATENCY_IN_SEC = 30;
         String nextEpisodeTitle;
-        int runTimeInSec;
 
         logIn(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
@@ -999,15 +999,13 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
             nextEpisodeTitle =
                     seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
             LOGGER.info("Next episode title from api: {}", nextEpisodeTitle);
-            runTimeInSec = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals()
-                    .getMetastringParts().getRuntime().getRuntimeMs() / 1000;
         } catch (Exception e) {
             throw new SkipException("Skipping test, next series title was not found " + e.getMessage());
         }
         // Play first episode and verify next episode starts
         launchDeeplink(R.TESTDATA.get("disney_prod_series_hulu_i_am_groot_mini_episodes_playback_deeplink"));
         videoPlayer.waitForVideoToStart(10, 1);
-        videoPlayer.tapFwdToPlaybackPercentage(runTimeInSec, 45, 10);
+        commonPage.clickRight(12, 2, 1);
         upNextPage.waitForUpNextUIToAppear();
         upNextPage.getUpNextPlayButton().click();
         videoPlayer.waitForVideoToStart(10, 1);
