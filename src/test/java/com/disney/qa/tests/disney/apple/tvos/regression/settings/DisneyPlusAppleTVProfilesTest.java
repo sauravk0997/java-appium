@@ -541,13 +541,12 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.moveRight(1, 1);
         updateProfilePage.getSaveProfileBtn().click();
 
-        // Go through add profile
+        //Go through add profile for U18 profile
         Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
         addProfileBanner.getTypeButtonByLabel(addProfile).click();
-        // Avatar selection
+        // Avatar selection and complete U18 profile validations
         Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), "Choose avatar screen was not present");
         commonPage.clickSelect();
-
         Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
                 ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
         addProfilePage.clickSelect();
@@ -555,7 +554,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         addProfilePage.clickSelect();
         addProfilePage.getEnterProfileNameContinueButton().click();
-
+        // Add U18 DOB
         Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(), "Enter your birthdate is not present");
         addProfilePage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(true), Person.U18.getYear());
         addProfilePage.getEnterDateOfBirthContinueButton().click();
