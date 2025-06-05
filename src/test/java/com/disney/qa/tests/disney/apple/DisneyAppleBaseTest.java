@@ -109,39 +109,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     };
 
-    private static final LazyInitializer<DisneySubscriptionApi> SUBSCRIPTION_API = new LazyInitializer<>() {
-        @Override
-        protected DisneySubscriptionApi initialize() {
-            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                    .platform(APPLE)
-                    .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                    .partner(DisneyConfiguration.getPartner())
-                    .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
-                    .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
-                    .build();
-            return new DisneySubscriptionApi(apiConfiguration);
-        }
-    };
-
-    private final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
-    });
-
     private final ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = ThreadLocal.withInitial(() ->
             getUnifiedAccountApi().createAccount(
                     getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
-
-    private static final ThreadLocal<DisneyAccountApi> ACCOUNT_API = ThreadLocal.withInitial(() -> {
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                .platform(APPLE)
-                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                .partner(DisneyConfiguration.getPartner())
-                .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
-                .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
-                .build();
-        return new DisneyAccountApi(apiConfiguration);
-    });
 
     private static final ThreadLocal<UnifiedAccountApi> UNIFIED_ACCOUNT_API = ThreadLocal.withInitial(() -> {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
@@ -422,8 +392,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     @AfterMethod(alwaysRun = true)
     public void clearDisneyAppleBaseTest() {
         EMAIL_API.remove();
-        ACCOUNT_API.remove();
-        DISNEY_ACCOUNT.remove();
         LOCALIZATION_UTILS.clear();
         APPLE_TV_LOCALIZATION_UTILS.clear();
         UNIFIED_ACCOUNT.remove();
@@ -460,20 +428,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
-    public static DisneyAccountApi getAccountApi() {
-        return ACCOUNT_API.get();
-    }
-
     public static UnifiedAccountApi getUnifiedAccountApi() {
         return UNIFIED_ACCOUNT_API.get();
-    }
-
-    public static DisneySubscriptionApi getSubscriptionApi() {
-        try {
-            return SUBSCRIPTION_API.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
     }
 
     public static HouseholdApi getHouseholdApi() {
@@ -498,20 +454,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
-    }
-
-    /**
-     * Get account<br>
-     * <b>Unique for each test method</b>
-     *
-     * @return {@link DisneyAccount}
-     */
-    public DisneyAccount getAccount() {
-        return DISNEY_ACCOUNT.get();
-    }
-
-    public void setAccount(DisneyAccount account) {
-        DISNEY_ACCOUNT.set(account);
     }
 
     public UnifiedAccount getUnifiedAccount() {
