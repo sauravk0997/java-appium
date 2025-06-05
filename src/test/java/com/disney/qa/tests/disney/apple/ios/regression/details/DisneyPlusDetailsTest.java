@@ -12,8 +12,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
@@ -855,10 +853,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU,
                 Direction.UP,
                 swipeCount);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         homePage.getTypeCellLabelContains(AVAILABLE_WITH_HULU).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         detailsPage.getUnlockButton().click();
 
         //Verify that user is on the ineligible interstitial screen
