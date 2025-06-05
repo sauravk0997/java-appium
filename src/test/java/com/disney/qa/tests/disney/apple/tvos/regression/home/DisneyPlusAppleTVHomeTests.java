@@ -7,11 +7,13 @@ import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusCollectionIOSPageBase;
+import com.disney.qa.common.constant.DisneyUnifiedOfferPlan;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
+import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -449,7 +451,92 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         });
     }
 
-    private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-115140"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyContinueWatchingContainer() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        CollectionConstant.Collection continueWatchingCollection = CollectionConstant.Collection.CONTINUE_WATCHING;
+        String continueWatchingCollectionId =
+                CollectionConstant.getCollectionName(continueWatchingCollection);
+        int maxCount = 20;
+        int titlesLimit = 4;
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickRight(5, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickDown();
+        videoPlayer.clickBack();
+
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
+        homePage.moveDownUntilCollectionContentIsFocused(continueWatchingCollectionId, maxCount);
+        Assert.assertTrue(homePage.isCollectionPresent(CollectionConstant.Collection.CONTINUE_WATCHING),
+                "Continue Watching Container not found");
+
+        List<Item> continueWatchingTitlesFromApi = getExploreAPIItemsFromSet
+                (CollectionConstant.getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING), titlesLimit);
+        Assert.assertFalse(continueWatchingTitlesFromApi == null,
+                "No items for 'Continue Watching' collection were fetched from Explore API");
+
+        Item firstAPICollectionItem = continueWatchingTitlesFromApi.get(0);
+        String firstAPICollectionItemTitle = firstAPICollectionItem.getVisuals().getTitle();
+        if (firstAPICollectionItemTitle == null) {
+            throw new SkipException("First API Collection item did not have a title");
+        }
+        String firstCellTitle = homePage.getFirstCellTitleFromContainer(continueWatchingCollection).split(",")[0];
+
+        sa.assertEquals(firstCellTitle, firstAPICollectionItemTitle,
+                "First element under 'Continue Watching' did not have same Title from the API");
+        sa.assertTrue(homePage.isFirstCellFromCollectionAssetImagePresent(continueWatchingCollectionId),
+                "First element under 'Continue Watching' did not have Asset image");
+        sa.assertTrue(homePage.isFirstCellFromCollectionProgressBarPresent(continueWatchingCollectionId),
+                "First element under 'Continue Watching' did not have Progress bar");
+
+        String firstAPICollectionItemSeasonNumber = firstAPICollectionItem.getVisuals().getSeasonNumber();
+        String firstAPICollectionItemEpisodeNumber = firstAPICollectionItem.getVisuals().getEpisodeNumber();
+        String firstAPICollectionItemEpisodeTitle = firstAPICollectionItem.getVisuals().getEpisodeTitle();
+        if (firstAPICollectionItemSeasonNumber == null ||
+                firstAPICollectionItemEpisodeNumber == null ||
+                firstAPICollectionItemEpisodeTitle == null) {
+            throw new SkipException("First API Collection item did not have all episode metadata to validate");
+        }
+        sa.assertTrue(
+                homePage.isFirstCellFromCollectionEpisodeMetadataPresent(continueWatchingCollectionId,
+                        firstAPICollectionItemSeasonNumber,
+                        firstAPICollectionItemEpisodeNumber,
+                        firstAPICollectionItemEpisodeTitle),
+                "First element under 'Continue Watching' did not have Episode metadata");
+
+        String firstAPICollectionItemPrompt = firstAPICollectionItem.getVisuals().getPrompt();
+        if (firstAPICollectionItemPrompt == null) {
+            throw new SkipException("First API Collection item did not have a prompt to validate");
+        }
+        sa.assertTrue(homePage.isFirstCellFromCollectionStaticTextPresent(
+                        continueWatchingCollectionId, firstAPICollectionItemPrompt),
+                "First element under 'Continue Watching' did not have Remaining time text");
+
+        homePage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.moveDown(1, 1);
+        detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
+        Assert.assertEquals(detailsPage.getDetailsTabTitle(), firstAPICollectionItemTitle,
+                "Detail page not displayed for expected continue watching content");
+        sa.assertAll();
+    }
+
+        private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
         List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
                 getCollectionName(STREAMS_NON_STOP_PLAYLISTS), titlesLimit);
         Assert.assertNotNull(liveChannelsFromApi,

@@ -18,7 +18,6 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.alice.AliceDriver;
 import com.disney.qa.api.account.AccountBlockReasons;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.pojos.DisneyAccount;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
