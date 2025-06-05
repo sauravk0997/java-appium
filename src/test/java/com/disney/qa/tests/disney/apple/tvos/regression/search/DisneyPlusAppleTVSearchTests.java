@@ -26,7 +26,6 @@ import static com.disney.qa.common.constant.CollectionConstant.getCollectionName
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.ONLY_MURDERS_IN_THE_BUILDING;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -391,6 +390,29 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 "PCON restricted title message was not as expected for kids profile");
         Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(DAREDEVIL_BORN_AGAIN.getTitle()),
                 "No results found message was not as expected for kids profile");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121201"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ESPN, US})
+    public void verifySportsSearchForEligibleCountry() {
+        String sport = "Soccer";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        searchPage.typeInSearchField(sport);
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(ESPN_PLUS).isElementPresent(),
+                "An ESPN+ title was not found when searching for Sports content");
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(sport).isElementPresent(),
+                "Search did not show titles related to the given ESPN sport search");
     }
 
     private Item getUpcomingEventFromAPI(int titlesLimit) {
