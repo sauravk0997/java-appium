@@ -314,9 +314,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
                     "**/XCUIElementTypeOther[`name == 'progressBar'`]")
     private ExtendedWebElement firstCellElementFromCollectionProgressBar;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
-            "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/" +
-            "XCUIElementTypeOther[1]/XCUIElementTypeImage[1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == " +
+            "'%s'`]/XCUIElementTypeCell[1]/**XCUIElementTypeOther[3]/**XCUIElementTypeImage[1]")
     private ExtendedWebElement firstCellElementFromCollectionAssetImage;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
