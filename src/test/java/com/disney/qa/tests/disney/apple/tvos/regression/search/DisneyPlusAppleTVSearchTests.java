@@ -153,7 +153,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         searchPage.clickSearchResult(UNENTITLED_HULU_CONTENT);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock button is not present");
-        detailsPage.getUpgradeNowButton().click();
+        detailsPage.getUnlockButton().click();
         Assert.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Hulu ineligible screen header is not present");
         Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Hulu ineligible screen description is not present");
         Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible CTA button is not present");
