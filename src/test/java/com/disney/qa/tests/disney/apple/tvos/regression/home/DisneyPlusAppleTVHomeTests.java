@@ -497,7 +497,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         }
         String firstCellTitle = homePage.getFirstCellTitleFromContainer(continueWatchingCollection).split(",")[0];
 
-        LOGGER.info("Page Source:- " + getDriver().getPageSource());
         sa.assertEquals(firstCellTitle, firstAPICollectionItemTitle,
                 "First element under 'Continue Watching' did not have same Title from the API");
         sa.assertTrue(homePage.isFirstCellFromCollectionAssetImagePresent(continueWatchingCollectionId),
