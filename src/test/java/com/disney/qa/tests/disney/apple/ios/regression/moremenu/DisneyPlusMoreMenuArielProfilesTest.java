@@ -111,48 +111,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyAddProfileU13RestrictionONAuthentication() {
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
-        SoftAssert softAssert = new SoftAssert();
-
-        setAppToHomeScreen(getUnifiedAccount());
-        moreMenu.clickMoreTab();
-        moreMenu.tapAccountTab();
-        //Restrict Profile Creation toggle ON
-        moreMenu.clickToggleView();
-        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
-        accountPage.isOpened();
-        moreMenu.tapBackButton();
-        pause(2);
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
-
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        addProfile.tapJuniorModeToggle();
-        addProfile.clickSaveBtn();
-        //User shouldn't see password screen, instead they should directly go to consent screen.
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present");
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info(SCROLLING_CONSENT_SCREEN);
-            //For iPhone 8 or some other small devices need to scroll more time to read full consent/terms
-            parentalConsent.scrollConsentContent(4);
-        }
-        //Accept parental consent
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
-        softAssert.assertTrue(addProfile.isProfilePresent(KIDS_PROFILE), "Newly created profile is not seen on screen");
-        softAssert.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75277"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileU13MinorConsentAgree() {
@@ -686,7 +644,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67085"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAddProfilePageAfterClickingAddProfileButtonOnAddProfileBanner() {
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
@@ -727,7 +684,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74482"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAddProfileBannerIsNotDisplayedForTheMaxAmountOfProfiles() {
-        CreateDisneyAccountRequest createDisneyAccountRequest = new CreateDisneyAccountRequest();
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);

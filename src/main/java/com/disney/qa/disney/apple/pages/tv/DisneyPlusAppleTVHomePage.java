@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -370,5 +371,9 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
             }
             count --;
         }
+    }
+
+    public List<ExtendedWebElement> getKidsCarouselsTV() {
+        return getAllCollectionCells(CollectionConstant.Collection.KIDS_CAROUSEL_TV);
     }
 }

@@ -84,19 +84,41 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72247" })
-    @Test(description = "Verify Anthology Series - Ended, Compare episode number", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyAnthologyEnded() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72247"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
+    public void testAnthologyEpisodesTab() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String currentSeason = "Season 31";
+        String downloadAll = "Download All";
 
         setAppToHomeScreen(getUnifiedAccount());
-        try {
-            fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isWatchButtonPresent());
-        } catch (Exception e) {
-            throw new SkipException("Skipping test, Watch button not found, no live content playing." + e);
-        }
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
 
-        Assert.assertFalse(detailsPage.compareEpisodeNum(), "Expected: Current episode number does not match new episode number.");
+        detailsPage.swipePageTillElementTappable(detailsPage.getFirstDescriptionLabel(), 1, null, Direction.UP, 1);
+        sa.assertTrue(detailsPage.getEpisodesTab().isEnabled(), "Episodes tab is not focused");
+        sa.assertTrue(detailsPage.getSeasonSelectorButton().isPresent(), "Season Selector is not displayed");
+        LOGGER.info("This is the Expected Season: {}", detailsPage.getSeasonSelectorButton().getAttribute("label").toString());
+        sa.assertTrue(detailsPage.getSeasonSelectorButton().getAttribute("label").equals(currentSeason),
+                "Expected Season not displayed");
+        detailsPage.getSeasonSelectorButton().click();
+        sa.assertTrue(detailsPage.isSeasonPickerListInReverseChronologicalOrder(),
+                "Season Picker is not in Chronological order");
+        detailsPage.getItemPickerClose().click();
+        sa.assertTrue(detailsPage.getDownloadAllSeasonButton().isPresent(), "Download Down Arrow button not displayed");
+        sa.assertTrue(detailsPage.getDownloadAllSeasonButton().getAttribute("label").equals(downloadAll),
+                "Download All text is not displayed");
+        sa.assertTrue(detailsPage.isEpisodeInReverseChronologicalOrder(), "Episodes are not in Chronological Order");
+        sa.assertTrue(detailsPage.isContentImageViewPresent(), "Content Image View not found on Episode container");
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(), "Play Icon not found on Episodes container");
+        sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title was not found");
+        sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "Episode description was not found");
+        sa.assertTrue(detailsPage.isDurationTimeLabelPresent(), "Episode duration was not found");
+        sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("31", "11"),
+                "Series Download Button is not displayed");
+
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73780" })
@@ -404,7 +426,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         detailsPage.swipePageTillElementPresent(episodeToDownload, 10,
                 detailsPage.getContentDetailsPage(), Direction.UP, 1500);
         episodeToDownload.click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT);
         String episodeTitle = detailsPage.getEpisodeCellTitle(seasonNumber, episodeNumber);
         detailsPage.getEpisodeCell(seasonNumber, episodeNumber).click();
 

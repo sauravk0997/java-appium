@@ -354,6 +354,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement genericProfileCell;
     @ExtendedFindBy(accessibilityId = "textFieldInputCode")
     protected ExtendedWebElement otpField;
+    @ExtendedFindBy(iosPredicate = "label == \"%s\"")
+    protected ExtendedWebElement dynamicFindByLabel;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -422,9 +424,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return dynamicCellByName.format(name);
     }
 
-    public ExtendedWebElement getDynamicXpath(String path) {
-        return dynamicXpath.format(path);
-    }
 
     public ExtendedWebElement getDynamicXpathContainsName(String name) {
         return dynamicXpathContainsName.format(name);
@@ -528,6 +527,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public String getErrorMessageString() {
         return labelError.getText();
+    }
+
+    public  ExtendedWebElement getLogoImage(){
+        return logoImage;
     }
 
     public String getHourMinFormatForDuration(int duration) {
@@ -894,10 +897,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeButtons.getBy();
     }
 
-    public void enterPassword(DisneyAccount account) {
-        passwordEntryField.type(account.getUserPass());
-        clickPrimaryButton();
-    }
 
     public void enterPassword(UnifiedAccount account) {
         passwordEntryField.type(account.getUserPass());
@@ -1640,4 +1639,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                 DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.DISMISS_BTN.getText()));
     }
+
+    public ExtendedWebElement getElementByLabel(String label) {
+        return dynamicFindByLabel.format(label);
+    }
+
 }

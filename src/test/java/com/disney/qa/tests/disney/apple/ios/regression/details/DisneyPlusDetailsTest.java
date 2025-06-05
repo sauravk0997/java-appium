@@ -5,7 +5,6 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.explore.response.ContentAdvisory;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -24,9 +23,11 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.*;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_LEAGUES;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
@@ -440,7 +441,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.clickEspnTile();
-        Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
+        Assert.assertTrue(espnPage.isOpened(), ESPN_PAGE_IS_NOT_DISPLAYED);
 
         String espnSportCollectionId = CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS);
         ExtendedWebElement sportsContainer = homePage.getCollection(espnSportCollectionId);
@@ -452,7 +453,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String sportTitle = getContainerTitlesFromApi(espnSportCollectionId, 5).get(0);
         if(!sportTitle.isEmpty()) {
             espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle).click();
-            sa.assertTrue(espnPage.isSportTitlePresent(sportTitle), "Sport title was not found");
+            sa.assertTrue(espnPage.isPageTitlePresent(sportTitle), "Sport title was not found");
             sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
             sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
         } else {
@@ -460,6 +461,50 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         }
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77989"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEspnHubLeaguePage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        homePage.clickEspnTile();
+        Assert.assertTrue(espnPage.isOpened(), ESPN_PAGE_IS_NOT_DISPLAYED);
+
+        String espnLeagueTitle = CollectionConstant.getCollectionTitle(ESPN_LEAGUES);
+
+        swipePageTillElementPresent(homePage.getStaticTextByLabel(espnLeagueTitle), 5,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
+        Assert.assertTrue(homePage.getStaticTextByLabel(espnLeagueTitle).isPresent(),
+                "ESPN League title is not present");
+
+        ExtendedWebElement leagueContainer =
+                homePage.getCollection(CollectionConstant.getCollectionName(ESPN_LEAGUES));
+        swipePageTillElementPresent(leagueContainer, 2,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
+
+        // Get first league and validate page
+        String leagueName = getContainerTitlesFromApi(CollectionConstant.getCollectionName(ESPN_LEAGUES), 5).get(0);
+        LOGGER.info("leagueName:{}", leagueName);
+        if(!leagueName.isEmpty()) {
+            espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_LEAGUES, leagueName).click();
+            sa.assertTrue(espnPage.getHeroImage().isPresent(), "Hero Image is not found");
+            sa.assertTrue(espnPage.getLogoImage().isPresent(), "Logo Image is not found");
+            sa.assertTrue(espnPage.getLogoImage().getText().equals(leagueName),
+                    "Logo Image label is not as expected");
+            LOGGER.info("league text:{}", espnPage.getLogoImage().getText());
+            sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
+        } else {
+            throw new SkipException("No containers titles found for league");
+        }
+        sa.assertAll();
+    }
+
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
@@ -801,7 +846,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        int swipeCount = 5;
+        int swipeCount = 10;
 
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -809,6 +854,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         //Verify user can play some Hulu content
         String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
+        swipeInContainerTillElementIsPresent(brandPage.getCollection(CollectionConstant.Collection.
+                ENJOY_THESE_SERIES_FROM_HULU), homePage.getTypeCellLabelContains(titleAvailableToPlay), swipeCount, Direction.LEFT);
         homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayOrContinue();
@@ -826,9 +873,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 Direction.UP,
                 swipeCount);
 
+        swipeInContainerTillElementIsPresent(brandPage.getCollection(CollectionConstant.Collection.
+                ENJOY_THESE_SERIES_FROM_HULU), homePage.getTypeCellLabelContains(titleAvailableToPlay), swipeCount, Direction.LEFT);
         homePage.getTypeCellLabelContains(AVAILABLE_WITH_HULU).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.getUpgradeNowButton().click();
+        detailsPage.getUnlockButton().click();
 
         //Verify that user is on the ineligible interstitial screen
         sa.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Ineligible Screen Header is not present");
@@ -884,7 +933,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         homePage.clickEspnTile();
 
-        Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
+        Assert.assertTrue(espnPage.isOpened(), ESPN_PAGE_IS_NOT_DISPLAYED);
         collectionPage.swipeTillCollectionTappable(espnLiveAndUpcomingCollection,
                 Direction.UP, swipeCount);
         Assert.assertTrue(collectionPage.isCollectionPresent(espnLiveAndUpcomingCollection),
