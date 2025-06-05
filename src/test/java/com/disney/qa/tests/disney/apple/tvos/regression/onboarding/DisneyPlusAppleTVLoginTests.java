@@ -6,6 +6,7 @@ import com.disney.alice.AliceDriver;
 import com.disney.alice.labels.AliceLabels;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.offer.pojos.Partner;
+import com.disney.qa.api.pojos.UnifiedEntitlement;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -23,6 +24,7 @@ import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
+import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
@@ -610,5 +612,71 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertFalse(oneTrustConsentPage.getAcceptAllButton().isPresent(FIVE_SEC_TIMEOUT),
                 "One Trust consent banner is present");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112560"})
+    @Test(groups = {TestGroup.ONBOARDING, CA})
+    public void verifyRalphLoginDOBCollectionScreenWithAdultDOB() {
+        DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
+                new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
+        DisneyPlusAppleTVUpdateProfilePage updateProfilePage = new DisneyPlusAppleTVUpdateProfilePage(getDriver());
+        DisneyPlusAppleTVAddProfileBannerPage addProfileBannerPage =
+                new DisneyPlusAppleTVAddProfileBannerPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
+        DisneyPlusAppleTVOneTrustConsentBannerIOSPage oneTrustConsentPage =
+                new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+
+        // Create Disney account without DOB
+        setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()
+                .setDateOfBirth(null)
+                .setCountry(getLocalizationUtils().getLocale())
+                .addEntitlement(UnifiedEntitlement.builder()
+                        .unifiedOffer(getUnifiedOffer(
+                                DISNEY_PLUS_STANDARD_WITH_ADS_CA, getLocalizationUtils().getLocale()))
+                        .subVersion(UNIFIED_ORDER).build())
+                .setPartner(Partner.DISNEY)
+                .setLanguage(getLocalizationUtils().getUserLanguage())));
+
+        logInWithoutHomeCheck(getUnifiedAccount());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        // Validate Edna DOB collection page elements
+        Assert.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthHeaderPresent(),
+                "Edna DOB page header is not present");
+        Assert.assertTrue(ednaDOBCollectionPage.getEdnaDateOfBirthDescriptionForRalph().isPresent(),
+                "Edna DOB page description is not present");
+        Assert.assertTrue(ednaDOBCollectionPage.getTextEntryField().isPresent(),
+                "Edna DOB page text entry field is not present");
+        Assert.assertTrue(ednaDOBCollectionPage.getSaveAndContinueButton().isPresent(),
+                "Edna DOB page 'Save & Continue' button is not present");
+        Assert.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(),
+                "Edna DOB page 'Log Out' button is not present");
+
+        // Validate entering an adult DOB redirects to the "Let's update your profile" page
+        ednaDOBCollectionPage.enterDOB(
+                Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        ednaDOBCollectionPage.getSaveAndContinueButton().click();
+        Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
+
+        // Continue to home page and logout
+        updateProfilePage.clickSaveBtn();
+        addProfileBannerPage.clickSecondaryButton();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
+        Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
+        settingsPage.moveDownUntilElementIsFocused(settingsPage.getLogOutCell(), 8);
+        settingsPage.getLogOutCell().click();
+        if (oneTrustConsentPage.getAcceptAllButton().isPresent(TEN_SEC_TIMEOUT)) {
+            oneTrustConsentPage.tapAcceptAllButton();
+        }
+
+        // Validate logging back in doesn't show DOB screen
+        Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        logInWithoutHomeCheck(getUnifiedAccount());
+        Assert.assertFalse(ednaDOBCollectionPage.getEdnaDateOfBirthDescriptionForRalph().isPresent(TEN_SEC_TIMEOUT),
+                "Edna DOB page is still being displayed");
     }
 }
