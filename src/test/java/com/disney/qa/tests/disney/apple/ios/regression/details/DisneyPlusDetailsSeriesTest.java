@@ -839,7 +839,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.SMOKE, TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyTapPlayRemoveDismissOnDownloadsScreen() {
         String episodeOneTitle = "Check Mate";
-        int pollingInSeconds = 5;
+        int pollingInSeconds = 3;
         int timeoutInSeconds = 90;
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -1081,7 +1081,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         if (episodeTitle == null) {
             throw new SkipException("No episode title found for the desired series episode in Explore API");
         }
-        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.waitForOneEpisodeDownloadToComplete(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT);
         detailsPage.getHuluSeriesDownloadCompleteButton().click();
         detailsPage.getDownloadModalPlayButton().click();
 

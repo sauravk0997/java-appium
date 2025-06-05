@@ -23,7 +23,10 @@ import org.testng.asserts.SoftAssert;
 import java.lang.invoke.MethodHandles;
 import java.time.temporal.ValueRange;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import static com.disney.qa.common.constant.IConstantHelper.LABEL;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
@@ -1372,6 +1375,43 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         int xPoint = firstItemPickerCell.getLocation().getX();
         int yPoint = firstItemPickerCell.getLocation().getY();
         tapAtCoordinateNoOfTimes(xPoint, yPoint - 10, 1);
+    }
+
+    public boolean isSeasonPickerListInReverseChronologicalOrder() {
+        List<ExtendedWebElement> selectableTitleList = findExtendedWebElements(seasonItemPicker.getBy());
+        List<String> seasonTexts = new ArrayList<>();
+        for (ExtendedWebElement element : selectableTitleList) {
+            seasonTexts.add(element.getText());
+        }
+
+        List<Integer> seasonNumbers = seasonTexts.stream()
+                .map(text -> Integer.parseInt(text.replace("Season ", "").trim()))
+                .collect(Collectors.toList());
+
+        List<Integer> sortedDescending = new ArrayList<>(seasonNumbers);
+        sortedDescending.sort((a, b) -> b - a); // Sort in descending order
+
+        return seasonNumbers.equals(sortedDescending);
+    }
+
+    public boolean isEpisodeInReverseChronologicalOrder() {
+        String titleLabel0 = getFirstTitleLabel().getText();
+        String titleLabel1 = getSecondTitleLabel().getText();
+
+        int episode1 = extractLeadingNumber(titleLabel0);
+        int episode2 = extractLeadingNumber(titleLabel1);
+
+        return episode1 > episode2;
+    }
+
+    private int extractLeadingNumber(String title) {
+        Pattern pattern = Pattern.compile("^(\\d+)\\.");
+        Matcher matcher = pattern.matcher(title);
+        if (matcher.find()) {
+            return Integer.parseInt(matcher.group(1));
+        } else {
+            throw new IllegalArgumentException("Title format is invalid: " + title);
+        }
     }
 
     public boolean isOnlyAvailableWithESPNHeaderPresent() {
