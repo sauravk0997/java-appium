@@ -81,7 +81,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
                 moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(watchlistPage.isWatchlistTitlePresent(mediaTitle),
-                "Media title was not added to the watchlist");
+                "Media title was not added to the Watchlist");
 
         //Remove from Watchlist
         watchlistPage.tapWatchlistContent(mediaTitle);
