@@ -20,6 +20,9 @@ public class DisneyPlusAppleTVAddProfilePage extends DisneyPlusAddProfileIOSPage
     @ExtendedFindBy(accessibilityId = "skipAvatarSelectionBarButton")
     private ExtendedWebElement skipAvatarSelectionBtn;
 
+    @ExtendedFindBy(accessibilityId = "changeAvatarSelectorCell")
+    private ExtendedWebElement changeAvatarSelectorCell;
+
     ExtendedWebElement enterProfileNameTitle = getStaticTextByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, ADD_PROFILE_ENTER_PROFILE_NAME_TITLE.getText()));
     ExtendedWebElement enterProfileNameContinueButton = getTypeButtonByLabel(
@@ -70,5 +73,9 @@ public class DisneyPlusAppleTVAddProfilePage extends DisneyPlusAddProfileIOSPage
         for (char number : fullDate.toCharArray()) {
             dynamicBtnFindByLabel.format(number).click();
         }
+    }
+
+    public ExtendedWebElement getChangeAvatarSelectorCell() {
+        return changeAvatarSelectorCell;
     }
 }

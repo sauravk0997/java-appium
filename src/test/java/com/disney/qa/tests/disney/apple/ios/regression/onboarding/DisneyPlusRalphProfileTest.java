@@ -41,7 +41,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
     public static final String JUNIOR_MODE_NOT_TOGGLED_OFF = "Junior Mode is not toggled OFF";
     public static final String LEARN_MORE_LINK_NOT_DISPLAYED = "Learn More Link Text is not displayed";
-    public static final String UPDATE_PROFILE_PAGE_NOT_DISPLAYED = "Update Profile page is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
