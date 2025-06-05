@@ -199,33 +199,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     /**
      * Logs into the app by entering the provided account's credentials and username
      *
-     * @param account - DisneyAccount generated for the test run
-     */
-    public void login(DisneyAccount account) {
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(account.getEmail());
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(account.getUserPass());
-    }
-
-    /**
-     * Logs into the app by entering the provided account's credentials and username
-     *
-     * @param entitledUser - DisneyAccount generated for the test run
-     * @param profileName  - Profile name to select after login,this is an optional param,
-     *                     if you don't need to select a profile in your test, leave this param blank
-     */
-    public void loginToHome(DisneyAccount entitledUser, String... profileName) {
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        login(entitledUser);
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
-        if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
-            initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
-        }
-    }
-
-    /**
-     * Logs into the app by entering the provided account's credentials and username
-     *
      * @param entitledUser - Unified Account generated for the test run
      */
     public void loginToHome(UnifiedAccount entitledUser) {
@@ -255,34 +228,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void login(UnifiedAccount account) {
         initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(account.getEmail());
         initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(account.getUserPass());
-    }
-
-    /**
-     * Setup method intended to be used either in a @BeforeMethod annotation or manually
-     * called in a test to set the device back to the HOME/Discover page for navigation purposes.
-     * <p>
-     * IF app is on Welcome, proceed through onboarding.
-     * ELSE IF nav bar is not visible, restart driver and proceed through onboarding
-     * ELSE tap on HOME to return to Home/Discover.
-     *
-     * @param account     DisneyAccount created for the test run
-     * @param profileName Profile name to select after login,this is an optional param,
-     *                    if you don't need to select a profile in your test, leave this param blank
-     *                    call your method with just DisneyAccount param
-     */
-    public void setAppToHomeScreen(DisneyAccount account, String... profileName) {
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        if (disneyPlusWelcomeScreenIOSPageBase.isOpened()) {
-            loginToHome(account, profileName);
-        } else if (!homePage.isOpened()) {
-            restart();
-            handleAlert();
-            loginToHome(account, profileName);
-        } else {
-            disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
-        }
-        pause(3);
     }
 
     public void setAppToHomeScreen(UnifiedAccount account, String... profileName) {
@@ -434,16 +379,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public void addHoraValidationSku(DisneyAccount accountToEntitle) {
-        if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
-            try {
-                getSubscriptionApi().addEntitlementBySku(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V2");
-            } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
         if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
             HoraValidator hv = new HoraValidator(accountId);
@@ -478,6 +413,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             return getExploreApi().getSeries(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e);
