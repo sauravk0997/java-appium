@@ -208,18 +208,19 @@ public class DisneyPlusMoreMenuAppSettingsTest extends DisneyBaseTest {
                 LOGGER.info("Enabling: '{}'", enabledShorthand);
                 moreMenu.getStaticCellByLabel(optionEnabled).click();
                 sa.assertTrue(moreMenu.getStaticCellByLabel(optionEnabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(CHECKED),
-                        String.format("XMOBQA-61221 - '%s' was not enabled after selection", optionEnabled));
+                        String.format("'%s' was not enabled after selection", optionEnabled));
                 options.forEach(optionDisabled -> {
                     String disabledShorthand = StringUtils.substringBefore(optionDisabled, ",");
                     if (!disabledShorthand.equals(enabledShorthand)) {
                         sa.assertTrue(moreMenu.getStaticCellByLabel(optionDisabled).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(UNCHECKED),
-                                String.format("XMOBQA-61221 - '%s' was not disabled after selection of '%s'", disabledShorthand, enabledShorthand));
+                                String.format("'%s' was not disabled after selection of '%s'", disabledShorthand, enabledShorthand));
                     }
                 });
             } catch (NoSuchElementException e) {
                 LOGGER.debug("An expected option was not present. Continuing with other options");
             }
         });
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67284"})
