@@ -3,15 +3,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.anthology;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
-import static com.disney.qa.common.constant.IConstantHelper.DETAILS_TAB_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.EPISODE_TAB_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.EXTRAS_TAB_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.MEDIA_TITLE_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.SHARE_BTN_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.SUGGESTED_TAB_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.TRAILER_BTN_NOT_DISPLAYED;
-import static com.disney.qa.common.constant.IConstantHelper.US;
-import static com.disney.qa.common.constant.IConstantHelper.WATCHLIST_BTN_NOT_DISPLAYED;
+import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
@@ -64,23 +56,48 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72728" })
-    @Test(description = "Verify Anthology Series - Watchlist", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyAnthologyWatchlist() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72728"})
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
+    public void testAnthologyAddRemoveFromWatchlist() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
-        searchAndOpenDWTSDetails();
+        homePage.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        //Add to Watchlist
         String mediaTitle = detailsPage.getMediaTitle();
         detailsPage.addToWatchlist();
+        sa.assertTrue(detailsPage.getRemoveFromWatchListButton().isPresent(),
+                "Remove From Watchlist button is not displayed");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenu.getDynamicCellByLabel(moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
-        sa.assertTrue(watchlistPage.areWatchlistTitlesDisplayed(mediaTitle), "Media title was not added.");
-        moreMenu.getDynamicCellByLabel(mediaTitle).click();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        moreMenu.getDynamicCellByLabel(
+                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
+        Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(watchlistPage.isWatchlistTitlePresent(mediaTitle),
+                "Media title was not added to the watchlist");
+
+        //Remove from Watchlist
+        watchlistPage.tapWatchlistContent(mediaTitle);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickRemoveFromWatchlistButton();
+        detailsPage.waitForWatchlistButtonToAppear();
+        sa.assertEquals(detailsPage.getWatchlistButtonText(),
+                "Add the current title to your Watchlist", "Add To Watchlist Text is not displayed");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        moreMenu.getDynamicCellByLabel(
+                moreMenu.selectMoreMenu(DisneyPlusMoreMenuIOSPageBase.MoreMenu.WATCHLIST)).click();
+        Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
+                "Empty Watchlist is not displayed");
+
         sa.assertAll();
     }
 

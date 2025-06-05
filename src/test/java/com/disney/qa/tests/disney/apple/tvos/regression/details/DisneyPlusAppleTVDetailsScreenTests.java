@@ -153,7 +153,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         disneyPlusAppleTVDetailsPage.clickWatchlistButton();
 
-        sa.assertEquals(disneyPlusAppleTVDetailsPage.getWatchlistButtonText(), "Add the current title to your Watchlist");
+        sa.assertEquals(disneyPlusAppleTVDetailsPage.getWatchlistButtonText(),
+                "Add the current title to your Watchlist", "Add To Watchlist Text is not displayed");
 
         disneyPlusAppleTVDetailsPage.clickMenuTimes(1, 1);
         collapseGlobalNav();
