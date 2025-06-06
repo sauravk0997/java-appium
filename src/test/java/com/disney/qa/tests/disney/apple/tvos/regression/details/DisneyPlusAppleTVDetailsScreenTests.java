@@ -910,7 +910,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121702"})
     @Test(groups = {TestGroup.ESPN, TestGroup.UPSELL, US})
-    public void verifyUpsellDetailsPageForLiveUpcomingEvent() {
+    public void verifyUpsellScreenForLiveUpcomingEvent() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
