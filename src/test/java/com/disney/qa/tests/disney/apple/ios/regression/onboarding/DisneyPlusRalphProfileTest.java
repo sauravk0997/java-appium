@@ -129,7 +129,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73921"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
     public void testSuppressGenderOnEditProfileForSingleProfile() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
@@ -139,9 +139,13 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
                 initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String stepperDict = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        String stepper = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.ONBOARDING_STEPPER.getText());
-        LOGGER.info("this is the stepper dictionary text im checking for {}", stepperDict);
+        String description = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY.getText());
+        String updatedDescription = description
+                .replace("{link_1}", "Privacy Policy")
+                .replace("{link_2}", "Learn more");
 
         setupForRalph();
         if (oneTrustPage.isAllowAllButtonPresent()) {
@@ -151,23 +155,20 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         welcomePage.clickLogInButton();
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        if (oneTrustPage.isAllowAllButtonPresent()) {
-            oneTrustPage.tapAcceptAllButton();
-        }
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
 
         sa.assertTrue(loginPage.isDisneyLogoDisplayed(), "Disney Plus Logo is not displayed");
         sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), "My Disney Logo is not displayed");
         sa.assertTrue(loginPage.getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
-                        stepperDict, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
+                        stepper, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
                 "Stepper text is not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthHeaderPresent(), "Header is not displayed");
-        sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "Description is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.getStaticTextByNameContains(updatedDescription).isPresent(),
+                "Description is not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label is not displayed");
         sa.assertTrue(ednaDOBCollectionPage.getSaveAndContinueButton().isPresent(),
                 "Save & Continue button is not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), "Log Out button is not displayed");
-
         //Validate Gender Field is not displayed
         sa.assertFalse(addProfilePage.isGenderFieldTitlePresent(), "Gender Field Title is present");
         sa.assertFalse(addProfilePage.isGenderFieldPresent(), "Gender Field is displayed");
