@@ -952,7 +952,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110601"})
     @Test(groups = {TestGroup.SERIES, US})
-    public void verifySkipIntroSkipRecapUpNextOnNextEpisode() {
+    public void verifySkipIntroSkipRecapOnNextEpisode() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         String nextEpisodeTitle = "Fallen Jedi";
