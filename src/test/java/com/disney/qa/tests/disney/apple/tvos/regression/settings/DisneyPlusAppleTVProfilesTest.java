@@ -17,6 +17,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,6 +30,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
+import static org.codehaus.groovy.runtime.DefaultGroovyMethods.collect;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
@@ -629,12 +632,25 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
                 "Profile Gender screen is not present");
-        Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList())
-                .forEach(item ->
+        List<DisneyPlusEditGenderIOSPageBase.GenderOption> genderList =
+                Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList());
+
+    /*    genderList.forEach(item ->
                         Assert.assertTrue(addProfilePage.getStaticTextByLabelContains(
                                         editGenderIOSPageBase.selectGender(item)).isPresent(),
                                 "Gender " + item + " is not present" ));
-        
+
+
+     */
+        for (DisneyPlusEditGenderIOSPageBase.GenderOption genderOption : genderList) {
+            Assert.assertTrue(addProfilePage.getStaticTextByLabelContains(
+                            editGenderIOSPageBase.selectGender(genderOption)).isPresent(),
+                    "Gender " + genderOption + " is not present" );
+            addProfilePage.isFocused(
+                    addProfilePage.getStaticTextByLabelContains(editGenderIOSPageBase.selectGender(genderOption))
+            );
+            commonPage.moveDown(1, 1);
+        }
 
     }
 
