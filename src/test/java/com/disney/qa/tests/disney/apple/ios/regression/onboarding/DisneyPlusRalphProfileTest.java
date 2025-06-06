@@ -163,7 +163,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 "Stepper text is not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthHeaderPresent(), "Header is not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthDescriptionPresent(), "Description is not displayed");
-        sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Header is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label is not displayed");
         sa.assertTrue(ednaDOBCollectionPage.getSaveAndContinueButton().isPresent(),
                 "Save & Continue button is not displayed");
         sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), "Log Out button is not displayed");
