@@ -937,8 +937,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
             liveEventModal.getDetailsButton().click();
         }
 
-        LOGGER.info("Page Source:- " + getDriver().getPageSource());
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock button not displayed");
         detailsPage.clickSelect();
         Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
