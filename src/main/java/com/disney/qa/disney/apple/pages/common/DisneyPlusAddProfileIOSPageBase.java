@@ -348,4 +348,12 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public String getDropdownSelectedGender() {
         return dropdownSelectedGender.getAttribute(LABEL);
     }
+
+    public String getGenderPlaceholder() {
+        return genderPlaceholder;
+    }
+
+    public ExtendedWebElement getKidsProfileToggleCell() {
+        return kidsProfileToggleCell;
+    }
 }

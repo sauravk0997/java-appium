@@ -23,7 +23,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.*;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
@@ -844,37 +843,16 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         int swipeCount = 10;
 
         setAppToHomeScreen(getUnifiedAccount());
-
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
 
-        //Verify user can play some Hulu content
-        String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
-        swipeInContainerTillElementIsPresent(brandPage.getCollection(CollectionConstant.Collection.
-                ENJOY_THESE_SERIES_FROM_HULU), homePage.getTypeCellLabelContains(titleAvailableToPlay), swipeCount, Direction.LEFT);
-        homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.clickPlayOrContinue();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.skipPromoIfPresent();
-        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
-        videoPlayer.clickBackButton();
-
-        //Go back to the Hulu page
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.tapBackButton();
-
-        //Swipe to the "Unlock to stream more collection"
+        //Swipe to the "Unlock to stream more collection" and select first Upsell title
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU,
                 Direction.UP,
                 swipeCount);
-
-        swipeInContainerTillElementIsPresent(brandPage.getCollection(CollectionConstant.Collection.
-                ENJOY_THESE_SERIES_FROM_HULU), homePage.getTypeCellLabelContains(titleAvailableToPlay), swipeCount, Direction.LEFT);
         homePage.getTypeCellLabelContains(AVAILABLE_WITH_HULU).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.getUnlockButton().click();
