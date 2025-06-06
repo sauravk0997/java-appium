@@ -64,6 +64,7 @@ public enum DictionaryKeys {
     BTN_CONSENT_DECLINE("btn_consent_decline"),
     BTN_CONTINUE("btn_continue"),
     BTN_CONTINUE_DETAILS("btn_continue_details"),
+    BTN_DATE_OF_BIRTH_CONTINUE("btn_date_of_birth_continue"),
     BTN_DATE_OF_BIRTH_LOG_OUT("btn_date_of_birth_log_out"),
     BTN_DELETE("btn_delete"),
     BTN_DELETE_ALL_DOWNLOADS("btn_delete_all_downloads"),

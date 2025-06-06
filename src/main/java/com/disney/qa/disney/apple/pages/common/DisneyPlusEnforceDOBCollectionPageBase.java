@@ -3,6 +3,7 @@ package com.disney.qa.disney.apple.pages.common;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -28,8 +29,16 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
      * @return - true/false, to verify Enforce DOB Description is displayed or not
      */
     public boolean isDateOfBirthDescriptionPresent() {
-        String enforceDateOfBirthPageDescription = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
+        String enforceDateOfBirthPageDescription =
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
         return staticTextByLabel.format(enforceDateOfBirthPageDescription).isPresent();
+    }
+
+    public ExtendedWebElement getBtnDateContinue() {
+        return dynamicBtnFindByLabelContains.format(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.BTN_DATE_OF_BIRTH_CONTINUE.getText()));
     }
 
     /**

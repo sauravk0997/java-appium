@@ -4,6 +4,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.offer.pojos.Partner;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileBannerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEnforceDOBCollectionPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -15,6 +16,8 @@ import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.Arrays;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
@@ -516,6 +519,78 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
+        DisneyPlusEnforceDOBCollectionPageBase dobCollectionPageBase =
+                initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+
+        String addProfile = "ADD PROFILE";
+       // validateDOBForAnz();
+        // Create account with no DOB and GI
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
+                        .setDateOfBirth(null).setGender(null)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        //Go through birthdate screen
+        if (!Arrays.asList(AU, "AN").contains(getLocalizationUtils().getLocale())) {
+            Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
+            ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+            ednaDOBCollectionPage.getSaveAndContinueButton().click();
+        } else {
+            ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+            dobCollectionPageBase.getBtnDateContinue().click();
+        }
+
+        //Go through update profile screen
+        Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(updateProfilePage.getUpdateProfileTitle().isPresent(), "Update Profile Title is not displayed");
+        commonPage.moveDown(2, 1);
+        commonPage.clickSelect();
+        Assert.assertTrue(updateProfilePage.getStaticTextByLabelContains(updateProfilePage.getGenderPlaceholder()).isPresent(),
+                "Gender placeholder is not present");
+        commonPage.clickSelect();
+        commonPage.moveRight(1, 1);
+        updateProfilePage.getSaveProfileBtn().click();
+
+        //Go through add profile for U18 profile
+        Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
+        addProfileBanner.getTypeButtonByLabel(addProfile).click();
+        // Avatar selection and complete U18 profile validations
+        Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), "Choose avatar screen was not present");
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
+                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+        addProfilePage.enterProfileName(JUNIOR_PROFILE);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+        // Add U18 DOB
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                "Enter your birthdate title is not present for u18 profile");
+        addProfilePage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(true), Person.U18.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a Junior Profile");
+        // Enable Junior Mode and validate DOB was not enabled
+        addProfilePage.getKidsProfileToggleCell().click();
+        commonPage.moveUp(1, 1);
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getChangeAvatarSelectorCell()),
+                "DOB was enabled after Junior Mode selection");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123033"})
+    @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
+    public void verifyGICollectionForLatamOrANZ() {
+        DisneyPlusAppleTVUpdateProfilePage updateProfilePage = new DisneyPlusAppleTVUpdateProfilePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = new DisneyPlusAddProfileBannerIOSPageBase(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
+                new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
         String addProfile = "ADD PROFILE";
 
         // Create account with no DOB and GI
@@ -570,6 +645,13 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "DOB was enabled after Junior Mode selection");
     }
 
+    public void validateDOBForAnz() {
+        DisneyPlusEnforceDOBCollectionPageBase dobCollectionPageBase = initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
+     //   Assert.assertTrue(dobCollectionPageBase.isDateOfBirthDescriptionPresent(),
+       //         "DOB header is not present for ANZ");
+        dobCollectionPageBase.getBtnDateContinue().isPresent(2);
+
+    }
     public boolean isGenderOptionDisabled() {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         addProfilePage.moveDown(3, 1);
