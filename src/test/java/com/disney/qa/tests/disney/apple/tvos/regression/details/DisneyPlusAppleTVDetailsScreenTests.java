@@ -915,19 +915,19 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTileToBrandTile();
-        String liveAndUpcomingEventsCollection =
-                getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING);
+
+        String liveAndUpcomingEventsCollection = getCollectionName(CollectionConstant.Collection.ESPN_EXPLORE_MORE);
         // Navigate to a live or upcoming event
-        Set espnLiveEvent = getExploreAPISet(liveAndUpcomingEventsCollection, 5);
-        if (espnLiveEvent == null) {
+        Set espnEvent = getExploreAPISet(liveAndUpcomingEventsCollection, 5);
+        if (espnEvent == null) {
             throw new SkipException("Skipping test, no live events are available");
         }
         try {
-            String titleEvent = espnLiveEvent.getItems().get(0).getVisuals().getTitle();
+            String titleEvent = espnEvent.getItems().get(0).getVisuals().getTitle();
             LOGGER.info("Event title: {}", titleEvent);
             homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 10);
             homePage.getTypeCellLabelContains(titleEvent).click();
@@ -939,7 +939,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         }
 
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUpgradeNowButton().isPresent(), "Upgrade Now button not displayed");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock button not displayed");
         detailsPage.clickSelect();
         Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
                 "Upsell roadblock screen header is not present");
