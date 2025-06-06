@@ -34,30 +34,31 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = new DisneyPlusVideoPlayerIOSPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        String appPreviousFCVersion =  R.TESTDATA.get("disney_app_previous_fc_version");
+        String appLatestRCAppStoreVersion =  R.TESTDATA.get("disney_app_latest_rc_app_store_version");
 
-        // Install previous FC Version and log in
+        // Install latest RC build used on App Store and log in
         installPreviousVersionTestFairyApp();
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         moreMenu.clickMoreTab();
-        // Assert that version installed it is the previous FC Version
+        // Assert that version installed it is the latest RC build used on App Store
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version was not displayed");
-        Assert.assertEquals(moreMenu.getAppVersion(), appPreviousFCVersion, "Version is not the previous expected");
+        Assert.assertEquals(moreMenu.getAppVersion(), appLatestRCAppStoreVersion,
+                "Current displayed version doesn't match with latest RC App Store version");
 
-        // Terminate app and upgrade application to current version
+        // Terminate app and upgrade application to latest unreleased build
         terminateApp(sessionBundles.get(DISNEY));
         installApp(sessionBundles.get(APP));
         startApp(sessionBundles.get(DISNEY));
         //Handle ATT Modal
         handleGenericPopup(5,1);
         moreMenu.clickMoreTab();
-        // Verify version is current FC Version
+        // Verify version corresponds to current latest unreleased build
         Assert.assertTrue(moreMenu.isAppVersionDisplayed(), "App Version was not displayed");
         Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(IAPIHelper.TEST_FAIRY_APP_VERSION),
-                "Version is not the current expected");
+                "Current displayed version doesn't match with latest unreleased build version");
         // Verify edit profile option of user
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
@@ -144,9 +145,9 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     }
 
     private void installPreviousVersionTestFairyApp() {
-        String appPreviousFCVersionUrl =  R.CONFIG.get("test_fairy_previous_fc_url");
+        String appPreviousFCVersionUrl =  R.CONFIG.get("test_fairy_latest_app_store_rc_url");
         if (appPreviousFCVersionUrl.isEmpty()) {
-            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_previous_fc_url IS MISSING!");
+            throw new RuntimeException("TEST FAIRY CONFIG test_fairy_latest_app_store_rc_url IS MISSING!");
         }
         installApp(appPreviousFCVersionUrl);
     }
