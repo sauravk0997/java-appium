@@ -929,10 +929,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         try {
             String titleEvent = espnEvent.getItems().get(0).getVisuals().getTitle();
             LOGGER.info("Event title: {}", titleEvent);
-            homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 10);
+            homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 20);
             homePage.getTypeCellLabelContains(titleEvent).click();
         } catch (Exception e) {
-            Assert.fail("No events are available" + e.getMessage());
+            Assert.fail("No events are available " + e.getMessage());
         }
         if (liveEventModal.isOpened()) {
             liveEventModal.getDetailsButton().click();
