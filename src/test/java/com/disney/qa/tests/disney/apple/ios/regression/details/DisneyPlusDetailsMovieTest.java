@@ -438,9 +438,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 "Description didn't match with api description value");
 
         //Audio/Video/Format Quality
-        ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
-                sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
-                        String.format("Audio video badge %s is not present on details page", badge)));
+        sa.assertTrue(((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE))
+                .containsAll(detailsPage.getAudioVideoFormatValue()), "Expected Audio and video badge not displayed");
 
         //Featured Metadata
         String metadataString = detailsPage.getMetaDataLabel().getText();
