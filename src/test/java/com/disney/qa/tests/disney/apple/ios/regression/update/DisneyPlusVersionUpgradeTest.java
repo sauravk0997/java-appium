@@ -144,6 +144,19 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 FORCE_UPDATE_ERROR + " Title not found");
     }
 
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72536"})
+    @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.UPGRADE, US})
+    public void verifySoftUpdate() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+
+        enableJarvisSoftUpdate();
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(), "Soft update device banner is not present");
+        Assert.assertTrue(welcomePage.isForceAppUpdateButtonPresent(), "Update button is not present");
+        Assert.assertTrue(welcomePage.isBtnNotNowPresent(), "Not now button is not present");
+    }
+
     private void installPreviousVersionTestFairyApp() {
         String appPreviousFCVersionUrl =  R.CONFIG.get("test_fairy_latest_app_store_rc_url");
         if (appPreviousFCVersionUrl.isEmpty()) {
@@ -161,6 +174,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     public void removeJarvisApp(){
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
         if(isInstalled){
+            LOGGER.info("Executing");
             removeJarvis();
         }
     }
