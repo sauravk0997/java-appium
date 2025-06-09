@@ -43,29 +43,51 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     public static final String LEARN_MORE_LINK_NOT_DISPLAYED = "Learn More Link Text is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73921"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void testSuppressGenderOnEditProfileForSingleProfile() {
-        setupForRalph();
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
+    public void testSuppressGenderOnDOBCollection() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
+                initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String stepper = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ONBOARDING_STEPPER.getText());
+        String description = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY.getText());
+        String updatedDescription = description
+                .replace("{link_1}", "Privacy Policy")
+                .replace("{link_2}", "Learn more");
 
-        oneTrustPage.tapRejectAllButton();
-        loginPage.dismissAppTrackingPopUp();
-
+        setupForRalph();
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        handleGenericPopup(3, 1);
         welcomePage.clickLogInButton();
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        passwordPage.clickPrimaryButton();
-        pause(5);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
-        // verify that Gender field is not present
-        Assert.assertFalse(editProfilePage.isGenderButtonPresent(), "Gender Field is shown on edit profile page");
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+
+        sa.assertTrue(loginPage.isDisneyLogoDisplayed(), "Disney Plus Logo is not displayed");
+        sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), "My Disney Logo is not displayed");
+        sa.assertTrue(loginPage.getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+                        stepper, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
+                "Stepper text is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthHeaderPresent(), "Header is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.getStaticTextByNameContains(updatedDescription).isPresent(),
+                "Description is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.getSaveAndContinueButton().isPresent(),
+                "Save & Continue button is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), "Log Out button is not displayed");
+        //Validate Gender Field is not displayed
+        sa.assertFalse(addProfilePage.isGenderFieldTitlePresent(), "Gender Field Title is present");
+        sa.assertFalse(addProfilePage.isGenderFieldPresent(), "Gender Field is displayed");
+
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74084"})
