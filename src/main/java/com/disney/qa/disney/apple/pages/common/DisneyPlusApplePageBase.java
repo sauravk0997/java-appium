@@ -1642,4 +1642,5 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getElementByLabel(String label) {
         return dynamicFindByLabel.format(label);
     }
+
 }

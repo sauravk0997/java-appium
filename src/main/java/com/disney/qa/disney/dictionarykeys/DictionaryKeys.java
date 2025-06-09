@@ -164,7 +164,6 @@ public enum DictionaryKeys {
     DETAILS_WATCHLIST_REMOVE_BTN("details_watchlist_remove"),
     DEVICE_BTN_JOIN_NOW("device_btn_join_now"),
     DEVICE_BTN_LOG_OUT("device_btn_log_out"),
-    DEVICE_LIFECYCLE_SOFT_UPDATE_TITLE("device_lifecycle_soft_update_title"),
     DEVICE_MANAGEMENT_BUTTON_LABEL("device_management_button_label"),
     DEVICE_STORAGE("app_settings_storagelocation_label"),
     DEVICE_STORAGE_APP("device_storage_app"),
