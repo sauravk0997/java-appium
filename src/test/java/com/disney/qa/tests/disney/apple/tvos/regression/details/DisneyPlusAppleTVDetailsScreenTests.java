@@ -40,6 +40,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
+import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.LIVE;
 import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.UPCOMING;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -914,10 +915,12 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     public void verifyUpsellDetailsPageForLiveUpcomingEvent() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         SoftAssert sa = new SoftAssert();
         String titleEvent = null;
         String titleDescription = null;
+        String airingBadge = null;
         List<String> audioVideoApiBadge = new ArrayList<>();
 
         logIn(getUnifiedAccount());
@@ -942,6 +945,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
             LOGGER.info("Event title: {}", titleEvent);
             homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 20);
+            airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(
+                    liveAndUpcomingEventsCollection).getText();
             homePage.getTypeCellLabelContains(titleEvent).click();
         } catch (Exception e) {
             Assert.fail("No events are available " + e.getMessage());
@@ -965,8 +970,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                     sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
                             String.format("Audio video badge %s is not present on details page featured area", badge)));
         }
-
-        sa.assertTrue(detailsPage.isProgressBarPresent(), PROGRESS_BAR_NOT_DISPLAYED);
+        if (airingBadge.equals(LIVE)) {
+            sa.assertTrue(detailsPage.isProgressBarPresent(), PROGRESS_BAR_NOT_DISPLAYED);
+        }
+        sa.assertAll();
     }
 
     private String navigateToLiveEvent() {
@@ -1000,13 +1007,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Item upcomingEvent = new Item();
         String eventTitle = "";
         for (int i = 0; i < event.getItems().size(); i++) {
-            if(!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
+            if (!event.getItems().get(i).getVisuals().getPrompt().contains("Started")) {
                 upcomingEvent = event.getItems().get(i);
                 break;
             }
         }
         eventTitle = upcomingEvent.getVisuals().getTitle();
-        if(Stream.of(
+        if (Stream.of(
                 upcomingEvent.getVisuals().getDescription().getMedium(),
                 upcomingEvent.getVisuals().getNetworkAttribution()).noneMatch(Objects::isNull)) {
             eventDescription = true;
