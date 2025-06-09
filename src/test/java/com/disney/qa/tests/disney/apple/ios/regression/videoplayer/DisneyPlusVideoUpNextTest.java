@@ -54,27 +54,13 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     public void verifyPlayIconOnUpNextUI() {
         DisneyPlusUpNextIOSPageBase upNextIOSPage = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         //Login
         setAppToHomeScreen(getUnifiedAccount());
-        //Turn off autoplay
+        //Check and Turn ON autoplay
         toggleAutoPlay("ON");
         //Search and forward the content
-        homePage.waitForHomePageToOpen();
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        homePage.getSearchNav().click();
-        searchPage.searchForMedia(SERIES_BLUEY);
-        searchPage.getDynamicAccessibilityId(SERIES_BLUEY).click();
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.clickPlayButton();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.clickPauseButton();
-        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
         upNextIOSPage.waitForUpNextUIToAppear();
         String nextEpisodesTitle = upNextIOSPage.getNextEpisodeInfo();
         upNextIOSPage.tapPlayIconOnUpNext();
