@@ -18,8 +18,6 @@ public interface IConstantHelper {
     String JARVIS_NO_OVERRIDE_IN_USE = "Override in use! Set to: false";
     String JARVIS_OVERRIDE_IN_USE = "Override in use! Set to: true";
     String JARVIS_NO_OVERRIDE_IN_USE_TEXT = "NO override in use!";
-    String JARVIS_NO_OVERRIDE_SET_TEXT = "No override set.";
-
 
     String SUBSCRIPTION_ID_KEY = "id";
     String SUBSCRIPTION_PRODUCT_KEY = "product";

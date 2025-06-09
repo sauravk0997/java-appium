@@ -355,8 +355,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement otpField;
     @ExtendedFindBy(iosPredicate = "label == \"%s\"")
     protected ExtendedWebElement dynamicFindByLabel;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeNavigationBar[`name == \"updateNudgeConfig\"`]")
-    private ExtendedWebElement jarvisBackBtn;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -1644,9 +1642,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getElementByLabel(String label) {
         return dynamicFindByLabel.format(label);
     }
-
-    public ExtendedWebElement getJarvisBackBtn() {
-        return jarvisBackBtn;
-    }
-
 }
