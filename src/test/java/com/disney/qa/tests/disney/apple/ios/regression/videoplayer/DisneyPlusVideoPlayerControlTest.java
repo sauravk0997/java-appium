@@ -221,7 +221,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
     public void verifyVideoPlayerBehaviourAfterBackgroundingApp() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
 //        setToNewOrientation(DeviceType.Type.IOS_PHONE, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
-        rotateScreen(ScreenOrientation.LANDSCAPE);
+        rotateScreen(ScreenOrientation.PORTRAIT);
         setPictureInPictureConfig(DISABLED);
         loginAndStartPlayback(THE_MARVELS);
         videoPlayer.scrubToPlaybackPercentage(SCRUB_PERCENTAGE_TEN);
