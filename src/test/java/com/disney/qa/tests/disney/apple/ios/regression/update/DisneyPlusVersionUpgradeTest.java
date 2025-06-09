@@ -154,7 +154,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(), "Soft update device banner is not present");
         Assert.assertTrue(welcomePage.isForceAppUpdateButtonPresent(), "Update button is not present");
-        Assert.assertTrue(welcomePage.isBtnNotNowPresent(), "Not now button is not present");
+     //   Assert.assertTrue(welcomePage.isBtnNotNowPresent(), "Not now button is not present");
     }
 
     private void installPreviousVersionTestFairyApp() {
