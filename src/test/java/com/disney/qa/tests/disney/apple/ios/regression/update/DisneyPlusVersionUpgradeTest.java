@@ -149,12 +149,12 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PRE_CONFIGURATION, TestGroup.UPGRADE, US})
     public void verifySoftUpdate() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-
+        String notNow = "NOT NOW";
         enableJarvisSoftUpdate();
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(), "Soft update device banner is not present");
         Assert.assertTrue(welcomePage.isForceAppUpdateButtonPresent(), "Update button is not present");
-     //   Assert.assertTrue(welcomePage.isBtnNotNowPresent(), "Not now button is not present");
+        Assert.assertTrue(welcomePage.getTypeButtonContainsLabel(notNow).isPresent(), "Not now button is not present");
     }
 
     private void installPreviousVersionTestFairyApp() {

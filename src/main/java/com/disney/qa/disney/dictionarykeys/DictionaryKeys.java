@@ -80,7 +80,6 @@ public enum DictionaryKeys {
     BTN_LOGIN_HELP("btn_login_help"),
     BTN_LOGOUT("btn_logout"),
     BTN_NEXT_EPISODE("btn_next_episode"),
-    BTN_NOT_NOW("btn_not_now"),
     BTN_PAUSE_DOWNLOAD("btn_pause_download"),
     BTN_PLAY("btn_play"),
     BTN_PLAYBACK_MODAL_BEGINNING("btn_playback_modal_beginning"),

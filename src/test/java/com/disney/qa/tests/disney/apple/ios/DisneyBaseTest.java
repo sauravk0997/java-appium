@@ -732,14 +732,47 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public void enableJarvisSoftUpdate() {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
         JarvisAppleBase jarvis = getJarvisPageFactory();
+
+        String forceAfterMaxNumberOfTimesPerDevice =  "forceAfterMaxNumberOfTimesPerDevice";
         String updateNudgeConfig = "updateNudgeConfig";
         String updateAlertIsEnabled = "updateAlertIsEnabled";
+        String hoursToReeligibility = "hoursToReeligibility";
+        String maxNumberOfTimesPerDevice = "maxNumberOfTimesPerDevice";
+        String hours = "24";
+        String numberOfTimes = "3";
+
         launchJarvis(true);
         jarvis.scrollToItem(JARVIS_APP_CONFIG).click();
         jarvis.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
         jarvis.scrollToItem(updateNudgeConfig).click();
-        jarvis.scrollToItem(updateAlertIsEnabled).click();
 
+        jarvis.scrollToItem(forceAfterMaxNumberOfTimesPerDevice).click();
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("forceAfterMaxNumberOfTimesPerDevice is already enabled");
+        } else {
+            LOGGER.info("Enabling forceAfterMaxNumberOfTimesPerDevice");
+            applePageBase.clickToggleView();
+        }
+        // applePageBase.getJarvisBackBtn().click();
+        jarvis.clickBackButton();
+
+        jarvis.scrollToItem(hoursToReeligibility).click();
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_SET_TEXT).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("hoursToReeligibility is already set");
+        } else {
+            LOGGER.info("Setting hoursToReeligibility");
+            applePageBase.saveDomainIdentifier(hours);
+        }
+        applePageBase.getJarvisBackBtn().click();
+        jarvis.scrollToItem(maxNumberOfTimesPerDevice).click();
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_SET_TEXT).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("maxNumberOfTimesPerDevice is already set");
+        } else {
+            LOGGER.info("Setting maxNumberOfTimesPerDevice");
+            applePageBase.saveDomainIdentifier(numberOfTimes);
+        }
+        applePageBase.getJarvisBackBtn().click();
+        jarvis.scrollToItem(updateAlertIsEnabled).click();
         if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
             LOGGER.info("Enabling updateNudgeConfig");
             applePageBase.clickToggleView();
