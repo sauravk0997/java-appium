@@ -50,24 +50,36 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67648"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayIconOnUpNextUI() {
-        DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
+        DisneyPlusUpNextIOSPageBase upNextIOSPage = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
         //Login
         setAppToHomeScreen(getUnifiedAccount());
         //Turn off autoplay
-        toggleAutoPlay("OFF");
+        toggleAutoPlay("ON");
         //Search and forward the content
-        initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_UP_NEXT);
-        disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
-        String nextEpisodesTitle = disneyPlusUpNextIOSPageBase.getNextEpisodeInfo();
-        disneyPlusUpNextIOSPageBase.tapPlayIconOnUpNext();
+        homePage.waitForHomePageToOpen();
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        homePage.getSearchNav().click();
+        searchPage.searchForMedia(SERIES_BLUEY);
+        searchPage.getDynamicAccessibilityId(SERIES_BLUEY).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoToStart();
+        videoPlayer.clickPauseButton();
+        videoPlayer.scrubToPlaybackPercentage(PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        upNextIOSPage.waitForUpNextUIToAppear();
+        String nextEpisodesTitle = upNextIOSPage.getNextEpisodeInfo();
+        upNextIOSPage.tapPlayIconOnUpNext();
         //Verify that the next episode has started playing
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.doesTitleExists(nextEpisodesTitle),"Next episode didn't play");
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isElementPresent(PlayerControl.PAUSE),"Pause button is not visible on player view");
-        sa.assertAll();
+        Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(nextEpisodesTitle), "Next episode didn't play");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67652"})
