@@ -785,6 +785,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         ratingsSetupWithPINNew(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+
         rotateScreen(ScreenOrientation.PORTRAIT);
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(newPauseTimeOutInSeconds);
