@@ -202,8 +202,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
     private ExtendedWebElement espnPlusGenericErrorText;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name BEGINSWITH 'content'`]" +
-            "/**/XCUIElementTypeStaticText[1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name BEGINSWITH " +
+            "'content'`]/**/XCUIElementTypeStaticText[`name != 'promoLabel'`][1]")
     protected ExtendedWebElement ratingAudioVideoFormatLabel;
 
     @ExtendedFindBy(accessibilityId = "bookmarkedInfoPanelView")
