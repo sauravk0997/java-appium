@@ -7,10 +7,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.disney.DisneyEntityIds;
-import com.disney.qa.api.explore.response.Genres;
 import com.disney.qa.api.explore.response.Visuals;
-import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -61,7 +58,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         searchPage.searchForMedia(DANCING_WITH_THE_STARS);
         sa.assertTrue(searchPage.getStaticTextByLabel(DANCING_WITH_THE_STARS).isPresent(),
                 "Anthology Search Result Title is not displayed");
-
         if (Stream.of(year, rating, genre).noneMatch(Objects::isNull)) {
             sa.assertTrue(searchPage.getTypeCellNameContains(year).isPresent(),
                     "Anthology Search Result Year is not displayed");
