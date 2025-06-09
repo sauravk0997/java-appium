@@ -19,6 +19,8 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import com.zebrunner.carina.utils.factory.DeviceType;
+import org.openqa.selenium.ScreenOrientation;
 
 import java.util.stream.IntStream;
 
@@ -784,7 +786,8 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         ratingsSetupWithPINNew(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-
+//        setToNewOrientation(DeviceType.Type.IOS_PHONE, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
+        rotateScreen(ScreenOrientation.LANDSCAPE);
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(newPauseTimeOutInSeconds);
         launchR21ContentFromContinueWatching();
@@ -820,6 +823,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         ratingsSetupWithPINNew(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        setToNewOrientation(DeviceType.Type.IOS_PHONE, ScreenOrientation.LANDSCAPE, ScreenOrientation.PORTRAIT);
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(pauseTimeoutInSeconds);
         setPictureInPictureConfig(DISABLED);
