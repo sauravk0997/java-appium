@@ -30,6 +30,8 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
@@ -49,7 +51,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
         String year = exploreAPIData.get(RELEASE_YEAR_DETAILS).toString();
         String rating = exploreAPIData.get(RATING).toString();
-        String genre = "Dance";
+        String genre = visualsResponse.getMetastringParts().getGenres().getValues().get(0);
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
@@ -59,12 +61,17 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         searchPage.searchForMedia(DANCING_WITH_THE_STARS);
         sa.assertTrue(searchPage.getStaticTextByLabel(DANCING_WITH_THE_STARS).isPresent(),
                 "Anthology Search Result Title is not displayed");
-        sa.assertTrue(searchPage.getTypeCellNameContains(year).isPresent(),
-                "Anthology Search Result Year is not displayed");
-        sa.assertTrue(searchPage.getTypeCellNameContains(genre).isPresent(),
-                "Anthology Search Result Genre is not displayed");
-        sa.assertTrue(searchPage.getTypeCellNameContains(rating).isPresent(),
-                "Anthology Search Result Rating is not displayed");
+
+        if (Stream.of(year, rating, genre).noneMatch(Objects::isNull)) {
+            sa.assertTrue(searchPage.getTypeCellNameContains(year).isPresent(),
+                    "Anthology Search Result Year is not displayed");
+            sa.assertTrue(searchPage.getTypeCellNameContains(genre).isPresent(),
+                    "Anthology Search Result Genre is not displayed");
+            sa.assertTrue(searchPage.getTypeCellNameContains(rating).isPresent(),
+                    "Anthology Search Result Rating is not displayed");
+        } else {
+            throw new SkipException("Series Episodes Metadata is not available from api");
+        }
 
         sa.assertAll();
     }
