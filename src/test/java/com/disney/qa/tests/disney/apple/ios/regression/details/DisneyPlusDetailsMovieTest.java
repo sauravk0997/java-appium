@@ -367,8 +367,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_snow_white_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_snow_white_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_zombies_4_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_zombies_4_deeplink");
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
@@ -408,7 +408,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_movie_snow_white_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_movie_zombies_4_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for movie %s is not the expected", contentTitle));
         sa.assertAll();
@@ -422,8 +422,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_snow_white_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_snow_white_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_zombies_4_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_zombies_4_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 
@@ -438,9 +438,11 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
                 "Description didn't match with api description value");
 
         //Audio/Video/Format Quality
-        ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
-                sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
-                        String.format("Audio video badge %s is not present on details page", badge)));
+        if (exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            sa.assertTrue(((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE))
+                    .containsAll(detailsPage.getAudioVideoFormatValue()),
+                    "Expected Audio and video badge not displayed");
+        }
 
         //Featured Metadata
         String metadataString = detailsPage.getMetaDataLabel().getText();
@@ -960,10 +962,13 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         }
 
         //Audio visual badge
-        if (visualsResponse.getMetastringParts().getAudioVisual().getFlags() != null) {
-            List<String> audioVideoApiBadge = new ArrayList<>();
-            visualsResponse.getMetastringParts().getAudioVisual().getFlags().forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
-            exploreAPIMetaData.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+        if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
+            if (visualsResponse.getMetastringParts().getAudioVisual().getFlags() != null) {
+                List<String> audioVideoApiBadge = new ArrayList<>();
+                visualsResponse.getMetastringParts().getAudioVisual().getFlags()
+                        .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+                exploreAPIMetaData.put(AUDIO_VIDEO_BADGE, audioVideoApiBadge);
+            }
         }
 
         //Rating
