@@ -669,7 +669,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNextEpisodeButton() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_NEXT_EPISODE.getText()));
     }
 
