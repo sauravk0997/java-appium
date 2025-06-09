@@ -174,7 +174,6 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
     public void removeJarvisApp(){
         boolean isInstalled = isAppInstalled(sessionBundles.get(JarvisAppleBase.JARVIS));
         if(isInstalled){
-            LOGGER.info("Executing");
             removeJarvis();
         }
     }
