@@ -328,6 +328,7 @@ public enum DictionaryKeys {
     MY_DISNEY_LOGIN_BTN("mydisney_login_btn"),
     MY_DISNEY_LOGOUT_ALL_CHECKBOX("mydisney_logoutall_checkbox"),
     MY_DISNEY_LOGOUT_BTN("mydisney_logout_btn"),
+    MY_DISNEY_LOGOUT_MODAL_HEADER("mydisney_logout_modal_header"),
     MY_DISNEY_MISSING_INFO_BIRTHDATE_FORMAT_ERROR("mydisney_missing_info_birthdate_format_error"),
     MY_DISNEY_MISSING_INFO_BIRTHDATE_HEADER("mydisney_missing_info_birthdate_header"),
     MY_DISNEY_MISSING_INFO_BODY("mydisney_missing_info_body"),

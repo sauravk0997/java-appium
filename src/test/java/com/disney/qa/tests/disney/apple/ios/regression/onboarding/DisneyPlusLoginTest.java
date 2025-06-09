@@ -1,10 +1,7 @@
 package com.disney.qa.tests.disney.apple.ios.regression.onboarding;
 
 import com.disney.qa.api.client.requests.*;
-import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.offer.pojos.*;
-import com.disney.qa.api.pojos.DisneyOrder;
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
 import org.slf4j.Logger;
@@ -15,7 +12,6 @@ import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.alice.AliceDriver;
 import com.disney.qa.api.account.AccountBlockReasons;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -23,13 +19,9 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
-import static com.disney.qa.common.DisneyAbstractPage.FORTY_FIVE_SEC_TIMEOUT;
-import static com.disney.qa.common.DisneyAbstractPage.TEN_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
@@ -406,5 +398,37 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         sa.assertFalse(passwordIOSPageBase.getStaticTextByLabel(learnMoreHeader).isPresent(TEN_SEC_TIMEOUT),
                 "Learn more modal did not close");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75996"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyLogOutModalForDOBCollection() {
+        DisneyPlusWelcomeScreenIOSPageBase welcomeScreenPage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
+        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
+        DisneyPlusEdnaDOBCollectionPageBase ednaDobCollectionPage = initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
+
+        // Create Disney account without DOB and Gender
+        setAccount(getUnifiedAccountApi().createAccount(
+                getDefaultCreateUnifiedAccountRequest()
+                        .setDateOfBirth(null)
+                        .setGender(null)
+                        .setPartner(Partner.DISNEY)
+                        .setCountry(getLocalizationUtils().getLocale())
+                        .setAddDefaultEntitlement(true)
+                        .setLanguage(getLocalizationUtils().getUserLanguage())));
+
+        welcomeScreenPage.clickLogInButton();
+        loginPage.submitEmail(getUnifiedAccount().getEmail());
+        passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
+
+        Assert.assertTrue(ednaDobCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
+        ednaDobCollectionPage.tapLogOutButton();
+        Assert.assertTrue(ednaDobCollectionPage.getLogoutModalHeader().isPresent(), LOGOUT_MODAL_NOT_DISPLAYED);
+
+        ednaDobCollectionPage.getCancelButton().click();
+        Assert.assertTrue(ednaDobCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
+        Assert.assertFalse(ednaDobCollectionPage.getLogoutModalHeader().isPresent(FIVE_SEC_TIMEOUT),
+                "Logout modal is still displayed");
     }
 }
