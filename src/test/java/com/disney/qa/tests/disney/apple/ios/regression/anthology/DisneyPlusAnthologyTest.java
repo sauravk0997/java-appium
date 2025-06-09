@@ -27,32 +27,48 @@ import com.zebrunner.agent.core.annotation.TestLabel;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
-    //Test constants
     private static final String DANCING_WITH_THE_STARS = "Dancing with the Stars";
     private static final String PLAY = "PLAY";
-    private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page did not open";
-    private static final String VIDEO_PLAYER_DID_NOT_OPEN = "Video player did not open";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72640"})
-    @Test(description = "Verify Anthology Series - Search", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologySearch() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
+        String entityID = R.TESTDATA.get("disney_prod_series_dwts_entity_id");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
+        String year = exploreAPIData.get(RELEASE_YEAR_DETAILS).toString();
+        String rating = exploreAPIData.get(RATING).toString();
+        String genre = visualsResponse.getMetastringParts().getGenres().getValues().get(0);
+
         setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
         searchPage.searchForMedia(DANCING_WITH_THE_STARS);
-        String[] firstDisplayTitle = searchPage.getDisplayedTitles().get(0).getText().split(",");
-        searchPage.getDisplayedTitles().get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), DANCING_WITH_THE_STARS + " "+DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(firstDisplayTitle[0].equalsIgnoreCase(detailsPage.getMediaTitle()),
-                "Search result title does not match Details page media title.");
+        sa.assertTrue(searchPage.getStaticTextByLabel(DANCING_WITH_THE_STARS).isPresent(),
+                "Anthology Search Result Title is not displayed");
+        if (Stream.of(year, rating, genre).noneMatch(Objects::isNull)) {
+            sa.assertTrue(searchPage.getTypeCellNameContains(year).isPresent(),
+                    "Anthology Search Result Year is not displayed");
+            sa.assertTrue(searchPage.getTypeCellNameContains(genre).isPresent(),
+                    "Anthology Search Result Genre is not displayed");
+            sa.assertTrue(searchPage.getTypeCellNameContains(rating).isPresent(),
+                    "Anthology Search Result Rating is not displayed");
+        } else {
+            throw new SkipException("Series Episodes Metadata is not available from api");
+        }
+
         sa.assertAll();
     }
 
@@ -97,7 +113,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         Assert.assertTrue(watchlistPage.isWatchlistScreenDisplayed(), WATCHLIST_PAGE_NOT_DISPLAYED);
         sa.assertTrue(watchlistPage.isWatchlistEmptyBackgroundDisplayed(),
                 "Empty Watchlist is not displayed");
-
+      
         sa.assertAll();
     }
 
@@ -111,7 +127,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.swipePageTillElementTappable(detailsPage.getFirstDescriptionLabel(), 1, null, Direction.UP, 1);
         sa.assertTrue(detailsPage.getEpisodesTab().isEnabled(), "Episodes tab is not focused");
@@ -220,7 +236,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         downloads.getDynamicIosClassChainElementTypeImage(DANCING_WITH_THE_STARS).click();
         downloads.getTypeButtonContainsLabel("Play").click();
         videoPlayer.waitForVideoToStart();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         videoPlayer.clickBackButton();
         sa.assertTrue(downloads.getProgressBar().isPresent(), "Progress bar not found.");
@@ -252,7 +268,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         }
 
         details.clickPlayButton();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.scrubToPlaybackPercentage(20);
         videoPlayer.waitForVideoToStart();
 
@@ -382,7 +398,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
 
         details.getTrailerButton().click();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         videoPlayer.waitForTrailerToEnd(75, 5);
         sa.assertTrue(details.isOpened(), "After trailer ended, not returned to Details page.");
@@ -397,12 +413,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
-        Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(details.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(details.getMediaTitle().equals(DANCING_WITH_THE_STARS),
                 "Media title of detail page does not match " + DANCING_WITH_THE_STARS);
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_playback_deeplink"));
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_DID_NOT_OPEN);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().equals(DANCING_WITH_THE_STARS),
                 "Content title doesn't match with the anthology title");
     }
@@ -416,7 +432,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
-        Assert.assertTrue(details.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
+        Assert.assertTrue(details.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         swipe(details.getSeasonSelectorButton());
         Assert.assertFalse(details.getDownloadAllSeasonButton().isPresent(),
