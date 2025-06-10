@@ -623,7 +623,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.clickSelect();
         addProfilePage.getEnterProfileNameContinueButton().click();
         Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
-                "Enter your birthdate title is not present for u18 profile");
+                "Enter your birthdate title is not present");
         addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
         addProfilePage.getEnterDateOfBirthContinueButton().click();
         Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
