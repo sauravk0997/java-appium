@@ -583,8 +583,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = new DisneyPlusAddProfileBannerIOSPageBase(getDriver());
         DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
-        DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
-                new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
 
         // Create account with GI
         logInWithoutHomeCheck(getUnifiedAccount());
