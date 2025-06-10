@@ -538,7 +538,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getUnifiedAccount());
 
         //Go through birthdate screen
-        if (!Arrays.asList(AU, "NZ").contains(getLocalizationUtils().getLocale())) {
+        if (AU.equals(getLocalizationUtils().getLocale())) {
             Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
             ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
             ednaDOBCollectionPage.getSaveAndContinueButton().click();
