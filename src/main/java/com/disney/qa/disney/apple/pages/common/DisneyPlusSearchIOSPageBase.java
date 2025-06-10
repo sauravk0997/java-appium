@@ -50,9 +50,9 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
     private ExtendedWebElement firstUpcomingEventCell;
     @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeStaticText[`name == 'airingBadgeLabel' AND label =[c] 'Upcoming'`]")
+            "**/XCUIElementTypeOther[`name == 'airingBadgeContainerView' AND label =[c] 'Upcoming'`]")
     private ExtendedWebElement upcomingBadge;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == 'Unlock'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'Unlock'`]")
     private ExtendedWebElement unlockBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"On the Movies screen.\"`]")
     private ExtendedWebElement contentTypeMoviesCollapsedHeader;
