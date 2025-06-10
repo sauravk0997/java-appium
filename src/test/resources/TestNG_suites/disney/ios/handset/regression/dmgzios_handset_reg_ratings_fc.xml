@@ -2,7 +2,7 @@
 <suite verbose="1" name="dmgzios_handset_reg_ratings_fc" annotations="JDK" configfailurepolicy="continue" thread-count="4" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
-    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.6.0-79380"/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.6.0-79441"/>
     <parameter name="stringParam::test_fairy_latest_app_store_rc_url::Enter TestFairy latest App Store RC download URL" value=""/>
     <parameter name="stringParam::test_fairy_jarvis_url::Enter TestFairy Jarvis download URL" value=""/>
     <parameter name="reporting.project-key" value="DIS"/>
@@ -13,7 +13,7 @@
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47975"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="XMOBQA"/>
-    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-83155"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-83186"/>
     <parameter name="jenkinsJobType" value="ios"/>
     <parameter name="jenkinsJobName" value="dmgzios_handset_reg_ratings_fc"/>
     <parameter name="jenkinsEmail" value="eric.liao@disney.com,vaibhavi.zaveri@disney.com"/>

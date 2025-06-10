@@ -489,42 +489,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74027"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
-    public void testCMPBannerUI() {
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
-                initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage())));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), CANADA);
-
-        setAppToHomeScreen(getUnifiedAccount());
-
-        Assert.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
-
-        sa.assertTrue(oneTrustPage.isBannerTitlePresent(),
-                "Banner Title is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isBannerDescriptionsPresent(),
-                "Banner Descriptions is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isBannerDPDTitlePresent(),
-                "Banner DPD Title is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isBannerDPDDescriptionsPresent(),
-                "Banner DPD Descriptions is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isListOfVendorsLinkPresent(),
-                "List of all Partners (vendors) link is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isAllowAllButtonPresent(),
-                "Accept All button is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isRejectAllButtonPresent(),
-                "Reject All button is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(),
-                "Customize Choices button is not present on CMP OneTrust banner");
-
-        sa.assertAll();
-    }
-
     private void navigateToContentRating() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);

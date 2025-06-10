@@ -2,7 +2,7 @@
 <suite verbose="1" name="dmgzios_handset_branch" annotations="JDK" configfailurepolicy="continue" thread-count="4" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
-    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.6.0-79380"/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.6.0-79441"/>
     <parameter name="stringParam::test_fairy_latest_app_store_rc_url::Enter TestFairy latest App Store RC download URL" value=""/>
     <parameter name="stringParam::test_fairy_jarvis_url::Enter TestFairy Jarvis download URL" value=""/>
     <parameter name="reporting.project-key" value="DIS"/>

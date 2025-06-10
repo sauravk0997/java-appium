@@ -10,6 +10,7 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.utils.appletv.*;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -947,6 +948,35 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
         detailsPage.isProgressBarIndicatingCorrectPositionOnEpisodeTab(episodeTitle, SCRUB_PERCENTAGE_HUNDRED, latency);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-110601"})
+    @Test(groups = {TestGroup.SERIES, TestGroup.VIDEO_PLAYER, US})
+    public void verifySkipIntroSkipRecapOnNextEpisode() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        String nextEpisodeTitle = "Fallen Jedi";
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan
+         .DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        // Play Exclusive episode
+        launchDeeplink(R.TESTDATA.get("disney_prod_disney_series_ahsoka_episode_three_play_deeplink"));
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+
+        videoPlayer.waitForSkipRecapToAppear();
+        videoPlayer.getSkipRecapButton().click();
+        Assert.assertFalse(videoPlayer.getSkipRecapButton().isPresent(THREE_SEC_TIMEOUT),
+                "skip recap button did not disappear after clicking it");
+
+        videoPlayer.waitForSkipIntroToAppear();
+        videoPlayer.getSkipIntroButton().click();
+        Assert.assertFalse(videoPlayer.getSkipIntroButton().isPresent(THREE_SEC_TIMEOUT),
+                "skip intro button did not disappear after clicking it");
+        Assert.assertTrue(videoPlayer.getStaticTextByLabelContains(nextEpisodeTitle).isPresent(TEN_SEC_TIMEOUT),
+                "Playback is not initiated for next episode");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121768"})
