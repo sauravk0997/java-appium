@@ -155,7 +155,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         disneyPlusAppleTVDetailsPage.clickWatchlistButton();
 
-        sa.assertEquals(disneyPlusAppleTVDetailsPage.getWatchlistButtonText(), "Add the current title to your Watchlist");
+        sa.assertEquals(disneyPlusAppleTVDetailsPage.getWatchlistButtonText(),
+                "Add the current title to your Watchlist", "Add To Watchlist Text is not displayed");
 
         disneyPlusAppleTVDetailsPage.clickMenuTimes(1, 1);
         collapseGlobalNav();
@@ -908,6 +909,46 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 SPORT_PAGE_DID_NOT_OPEN);
         Assert.assertFalse(detailsPage.getBrandLandingView().isElementPresent(THREE_SEC_TIMEOUT),
                 "A logo image is present in sports screen");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121702"})
+    @Test(groups = {TestGroup.ESPN, TestGroup.UPSELL, US})
+    public void verifyUpsellScreenForLiveUpcomingEvent() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+
+        String liveAndUpcomingEventsCollection = getCollectionName(CollectionConstant.Collection.ESPN_EXPLORE_MORE);
+        // Navigate to a live or upcoming event
+        Set espnEvent = getExploreAPISet(liveAndUpcomingEventsCollection, 5);
+        if (espnEvent == null) {
+            throw new SkipException("Skipping test, no live events are available");
+        }
+        try {
+            String titleEvent = espnEvent.getItems().get(0).getVisuals().getTitle();
+            LOGGER.info("Event title: {}", titleEvent);
+            homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 20);
+            homePage.getTypeCellLabelContains(titleEvent).click();
+        } catch (Exception e) {
+            Assert.fail("No events are available " + e.getMessage());
+        }
+        if (liveEventModal.isOpened()) {
+            liveEventModal.getDetailsButton().click();
+        }
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock button not displayed");
+        detailsPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
+                "Upsell roadblock screen header is not present");
+        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(),
+                "Upsell roadblock screen body is not present");
+        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
+                "Upsell roadblock screen cta is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121520"})

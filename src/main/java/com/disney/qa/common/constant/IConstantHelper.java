@@ -64,6 +64,7 @@ public interface IConstantHelper {
     String SETTINGS_PAGE_NOT_DISPLAYED = "Settings page is not displayed";
     String ADD_PROFILE_BANNER_NOT_DISPLAYED = "Add Profile banner is not displayed";
     String ONE_TRUST_CONSENT_BANNER_NOT_DISPLAYED = "One Trust consent banner is not displayed";
+    String LOGOUT_MODAL_NOT_DISPLAYED = "Logout modal is not displayed";
 
     //Profile Names
     String PROFILE_NAME_SECONDARY = "Secondary";
