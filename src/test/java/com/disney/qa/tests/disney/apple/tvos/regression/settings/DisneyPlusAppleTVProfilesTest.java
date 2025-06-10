@@ -538,16 +538,9 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getUnifiedAccount());
 
         //Go through birthdate screen
-        if (!AU.equals(getLocalizationUtils().getLocale())) {
-            LOGGER.info("Validating LATAM or NZ");
-            Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
-            ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-            ednaDOBCollectionPage.getSaveAndContinueButton().click();
-        } else {
-            LOGGER.info("Validating AU");
-            ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-            dobCollectionPageBase.getBtnDateContinue().click();
-        }
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
+        ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        ednaDOBCollectionPage.getSaveAndContinueButton().click();
 
         //Go through update profile screen
         Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
@@ -662,7 +655,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
 
         Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a Junior Profile");
-
     }
 
     public void validateGenderOptions() {
