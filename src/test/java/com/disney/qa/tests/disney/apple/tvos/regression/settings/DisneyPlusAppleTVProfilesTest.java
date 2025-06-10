@@ -585,7 +585,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
 
         // Create account with GI
-        logInWithoutHomeCheck(getUnifiedAccount());
         DisneyUnifiedOfferPlan offerPlan;
 
         if (getLocalizationUtils().getLocale().equals(AU)) {
@@ -602,6 +601,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
                         .setDateOfBirth(ADULT_DOB).setGender(null)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logInWithoutHomeCheck(getUnifiedAccount());
 
         //Go through update profile screen
         Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
