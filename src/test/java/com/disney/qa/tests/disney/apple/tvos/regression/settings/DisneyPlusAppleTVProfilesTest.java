@@ -538,11 +538,13 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getUnifiedAccount());
 
         //Go through birthdate screen
-        if (AU.equals(getLocalizationUtils().getLocale())) {
+        if (!AU.equals(getLocalizationUtils().getLocale())) {
+            LOGGER.info("Validating LATAM or NZ");
             Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
             ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
             ednaDOBCollectionPage.getSaveAndContinueButton().click();
         } else {
+            LOGGER.info("Validating AU");
             ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
             dobCollectionPageBase.getBtnDateContinue().click();
         }
