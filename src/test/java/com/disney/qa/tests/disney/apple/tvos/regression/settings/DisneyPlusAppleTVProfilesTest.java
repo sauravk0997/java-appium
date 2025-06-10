@@ -577,6 +577,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "DOB was enabled after Junior Mode selection");
     }
 
+    // Bug related to AU country TVOS-7014
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123033"})
     @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
     public void verifyGICollectionForLatamOrANZ() {
