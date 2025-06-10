@@ -26,6 +26,14 @@ public class DisneyPlusEnforceDOBCollectionPageBase extends DisneyPlusApplePageB
     }
 
     /**
+     * @return - true/false, to verify Enforce DOB Description is displayed or not
+     */
+    public boolean isDateOfBirthDescriptionPresent() {
+        String enforceDateOfBirthPageDescription = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.EXISTING_SUBS_DATE_OF_BIRTH_TITLE.getText());
+        return staticTextByLabel.format(enforceDateOfBirthPageDescription).isPresent();
+    }
+
+    /**
      * Click Log Out button
      */
     public void tapLogOutButton() {
