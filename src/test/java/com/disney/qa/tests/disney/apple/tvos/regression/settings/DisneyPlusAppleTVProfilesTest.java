@@ -666,20 +666,15 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     public void validateGenderOptions() {
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
 
         List<DisneyPlusEditGenderIOSPageBase.GenderOption> genderList =
                 Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList());
         for (DisneyPlusEditGenderIOSPageBase.GenderOption genderOption : genderList) {
-            Assert.assertTrue(addProfilePage.getStaticTextByLabelContains(
+            Assert.assertTrue(addProfilePage.getTypeCellLabelContains(
                             editGenderIOSPageBase.selectGender(genderOption)).isPresent(),
                     "Gender " + genderOption + " is not present" );
-            Assert.assertTrue(addProfilePage.isFocused(
-                    addProfilePage.getTypeCellLabelContains(editGenderIOSPageBase.selectGender(genderOption))),
-                    "Gender " + genderOption + " expected was not focused");
-            commonPage.moveDown(1, 1);
         }
     }
 

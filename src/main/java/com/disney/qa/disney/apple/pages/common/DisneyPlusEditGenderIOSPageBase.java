@@ -27,8 +27,8 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      * For gender option validation
      */
     public enum GenderOption {
-        GENDER_MEN,
         GENDER_WOMEN,
+        GENDER_MEN,
         GENDER_NOBINARY,
         GENDER_PREFERNOTTOSAY
     }
