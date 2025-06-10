@@ -18,6 +18,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -524,8 +526,10 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
 
         // Create account with no DOB and GI
+        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
+
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
+                getCreateUnifiedAccountRequest(offerPlan,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
                         .setDateOfBirth(null).setGender(null)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
@@ -584,17 +588,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
 
-        // Create account with GI
-        DisneyUnifiedOfferPlan offerPlan;
-
-        if (getLocalizationUtils().getLocale().equals(AU)) {
-            LOGGER.info("country AU*");
-            offerPlan = DISNEY_PLUS_STANDARD_WITH_ADS_AU;
-        } else {
-            LOGGER.info("country LATAM*");
-
-            offerPlan = DISNEY_PLUS_PREMIUM_MONTHLY;
-        }
+        // Create account with no GI
+        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(offerPlan,
@@ -666,6 +661,13 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                             editGenderIOSPageBase.selectGender(genderOption)).isPresent(),
                     "Gender " + genderOption + " is not present" );
         }
+    }
+
+    public DisneyUnifiedOfferPlan setOfferPlanForLatamAnz() {
+        if (!Arrays.asList(AU, NZ).contains(getLocalizationUtils().getLocale())) {
+            return DISNEY_PLUS_STANDARD_WITH_ADS_ANZ;
+        }
+        return DISNEY_PLUS_PREMIUM_MONTHLY;
     }
 
     public boolean isGenderOptionDisabled() {
