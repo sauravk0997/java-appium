@@ -589,8 +589,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyUnifiedOfferPlan offerPlan;
 
         if (getLocalizationUtils().getLocale().equals(AU)) {
+            LOGGER.info("country AU*");
             offerPlan = DISNEY_PLUS_STANDARD_WITH_ADS_AU;
         } else {
+            LOGGER.info("country LATAM*");
+
             offerPlan = DISNEY_PLUS_PREMIUM_MONTHLY;
         }
 
