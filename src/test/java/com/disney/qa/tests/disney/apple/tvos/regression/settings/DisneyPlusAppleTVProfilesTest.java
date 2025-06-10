@@ -613,7 +613,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
         ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
         ednaDOBCollectionPage.getSaveAndContinueButton().click();
-        
+
         //Go through update profile screen
         Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(updateProfilePage.getUpdateProfileTitle().isPresent(), "Update Profile Title is not displayed");
@@ -625,8 +625,9 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.moveRight(1, 1);
         updateProfilePage.getSaveProfileBtn().click();
 
-        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoseWatchingPage.clickAddProfile();
+        //Go through add profile for U18 profile
+        Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
+        addProfileBanner.getTypeButtonByLabel(addProfile).click();
 
         Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
         commonPage.clickSelect();
