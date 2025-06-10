@@ -72,8 +72,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement iconPinUnlocked;
     @ExtendedFindBy(accessibilityId = "unlockPlayerControlsButton")
     private ExtendedWebElement iconPinLocked;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
-    private ExtendedWebElement currentlyPlayingTitle;
     @ExtendedFindBy(accessibilityId = "brandImageView")
     private ExtendedWebElement brandImageView;
     @ExtendedFindBy(accessibilityId = "skipIntroButton")
@@ -406,18 +404,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
                 destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    /**
-     * Verifies if the given episode title is playing
-     *
-     * @param episodeName
-     */
-
-    public boolean doesTitleExists(String episodeName) {
-        waitForVideoToStart();
-        displayVideoController();
-        return currentlyPlayingTitle.format(episodeName).isPresent();
     }
 
     public int getCurrentPositionOnPlayer() {
