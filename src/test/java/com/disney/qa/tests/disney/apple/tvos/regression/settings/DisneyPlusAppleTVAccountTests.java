@@ -32,8 +32,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
     private static final String LOG_OUT_CONFIRMATION_NOT_DISPLAYED = "Log out confirmation page did not open";
     private static final String OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED = "Travel mode 'Confirm you are away from home' screen not displayed";
-    private static final String UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT = "Update Household button not displayed";
+    private static final String UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT = "Update Household button is not displayed";
+    private static final String UPDATE_HOUSEHOLD_BUTTON_IS_NOT_FOCUSSED= "Update Household button is not focussed";
     private static final String UPDATE_HOUSE_SCREEN_NOT_DISPLAYED = "'Update your Disney+ Household' screen not displayed";
+    private  static final String HOUSEHOLD_CREATE_ACCOUNT_HEADLINE = "HH create account headline is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -335,7 +337,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         homePage.moveDown(1, 1);
         sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldCTA()),
-                "Update Household button not focused");
+                UPDATE_HOUSEHOLD_BUTTON_IS_NOT_FOCUSSED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
                 UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
@@ -564,4 +566,56 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116818"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyMaxedHHUpdates() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+
+        SoftAssert sa = new SoftAssert();
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_MAX_HH, false);
+        logInWithoutHomeCheck(account);
+
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockCreateAccLabelPresent(),
+                HOUSEHOLD_CREATE_ACCOUNT_HEADLINE);
+
+        sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopyPresent(),
+                "OOH hard block subcopy was not present");
+        sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopy2Present(),
+                "OOH hard block subcopy 2 was not present");
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
+                UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT);
+        homePage.moveDown(1, 1);
+        Assert.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldCTA()),
+                UPDATE_HOUSEHOLD_BUTTON_IS_NOT_FOCUSSED);
+        homePage.clickSelect();
+
+        //Verify copies and CTA informing user they can no longer update their household
+        sa.assertTrue(accountSharingPage.isOOHUpdateHHMaxedHeadlinePresent(),
+                "OOH maxed headline is not displayed");
+        sa.assertTrue(accountSharingPage.isOOHUpdateHHMaxedSubcopyPresent(),
+                "OOH update maxed subcopy is not displayed");
+
+        //User selects OK CTA
+        Assert.assertTrue(accountSharingPage.isOOHUpdateHHMaxedButtonPresent(),
+                "OOH update maxed button is not displayed");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockCreateAccLabelPresent(),
+                HOUSEHOLD_CREATE_ACCOUNT_HEADLINE);
+
+        //verify Logout CTA
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHUpdateHHMaxedHeadlinePresent(),
+                "OOH maxed headline is not displayed");
+        Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                "OOH Logout button is not present");
+        accountSharingPage.getOOHLogOutButton().click();
+        sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
+                LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
+        homePage.clickSelect();
+        Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        sa.assertAll();
+    }
 }
