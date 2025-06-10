@@ -663,10 +663,10 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
     public DisneyUnifiedOfferPlan setOfferPlanForLatamAnz() {
         if (AU.equals(getLocalizationUtils().getLocale())) {
-            LOGGER.info("au***");
+            LOGGER.info("Offer plan for AU");
             return DISNEY_PLUS_STANDARD_WITH_ADS_AU;
         }
-        LOGGER.info("latam***");
+        LOGGER.info("Offer plan for LATAM and ANZ");
         return DISNEY_PLUS_STANDARD;
     }
 
