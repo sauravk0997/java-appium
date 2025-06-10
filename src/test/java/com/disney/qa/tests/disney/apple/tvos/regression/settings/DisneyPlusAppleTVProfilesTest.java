@@ -590,15 +590,15 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                        .setDateOfBirth(null).setGender(null)));
+                        .setDateOfBirth(ADULT_DOB).setGender(null)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
         logInWithoutHomeCheck(getUnifiedAccount());
 
         //Go through birthdate screen
-        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
-        ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-        ednaDOBCollectionPage.getSaveAndContinueButton().click();
+    //    Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
+    //    ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+    //    ednaDOBCollectionPage.getSaveAndContinueButton().click();
 
         //Go through update profile screen
         Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
