@@ -589,13 +589,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123033"})
     @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
     public void verifyGICollectionForLatamOrANZ() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVUpdateProfilePage updateProfilePage = new DisneyPlusAppleTVUpdateProfilePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAddProfileBannerIOSPageBase addProfileBanner = new DisneyPlusAddProfileBannerIOSPageBase(getDriver());
         DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
         String addProfile = "ADD PROFILE";
@@ -634,7 +632,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
                 ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
         addProfilePage.clickSelect();
-        // U18 step
+        // Adult person step
         addProfilePage.enterProfileName(JUNIOR_PROFILE);
         addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         addProfilePage.clickSelect();
@@ -648,8 +646,23 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
                 "Profile Gender screen is not present");
-
         validateGenderOptions();
+        // Go back to validate a U18 by navigating back and editing DOB
+        commonPage.clickBack();
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        commonPage.clickBack();
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                "Enter your birthdate title is not present for u18 profile");
+        commonPage.clickBack();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                "Enter your birthdate title is not present for u18 profile");
+        addProfilePage.enterDOB(Person.U18.getMonth(), Person.U18.getDay(true), Person.U18.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+
+        Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a Junior Profile");
+
     }
 
     public void validateGenderOptions() {
@@ -664,11 +677,12 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                             editGenderIOSPageBase.selectGender(genderOption)).isPresent(),
                     "Gender " + genderOption + " is not present" );
             Assert.assertTrue(addProfilePage.isFocused(
-                    addProfilePage.getStaticTextByLabelContains(editGenderIOSPageBase.selectGender(genderOption))
-            ), "Gender "+ genderOption + " expected was not focused");
+                    addProfilePage.getTypeCellLabelContains(editGenderIOSPageBase.selectGender(genderOption))),
+                    "Gender " + genderOption + " expected was not focused");
             commonPage.moveDown(1, 1);
         }
     }
+
     public boolean isGenderOptionDisabled() {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         addProfilePage.moveDown(3, 1);

@@ -262,7 +262,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             Xray.setExecutionKey(key);
         });
     }
-
+/*
     @BeforeSuite(alwaysRun = true)
     public final void cleanAppInstall() {
         R.CONFIG.put("capabilities.fullReset", "true");
@@ -284,6 +284,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         TEST_FAIRY_APP_VERSION.set(appVersion);
     }
 
+
+ */
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
         List<String> groups = Arrays.asList(result.getMethod().getGroups());
@@ -679,20 +681,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     private void removeEnterpriseApps() {
         LOGGER.info("Removing Enterprise apps");
-        removeApp(BuildType.ENTERPRISE.getDisneyBundle());
-        removeApp(BuildType.ENTERPRISE.getJarvisBundle());
+     //   removeApp(BuildType.ENTERPRISE.getDisneyBundle());
+    //    removeApp(BuildType.ENTERPRISE.getJarvisBundle());
     }
 
     private void removeAdHocApps() {
         LOGGER.info("Removing AdHoc apps");
-        removeApp(BuildType.AD_HOC.getDisneyBundle());
-        removeApp(BuildType.AD_HOC.getJarvisBundle());
+     //   removeApp(BuildType.AD_HOC.getDisneyBundle());
+      //  removeApp(BuildType.AD_HOC.getJarvisBundle());
     }
 
     private void removePurchaseApps() {
         LOGGER.info("Removing Purchase apps");
-        removeApp(BuildType.IAP.getDisneyBundle());
-        removeApp(BuildType.IAP.getJarvisBundle());
+      //  removeApp(BuildType.IAP.getDisneyBundle());
+      //  removeApp(BuildType.IAP.getJarvisBundle());
     }
 
     private String getLATAMCountryCode() {
