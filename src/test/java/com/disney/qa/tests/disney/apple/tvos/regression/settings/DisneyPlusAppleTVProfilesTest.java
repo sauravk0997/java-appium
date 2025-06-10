@@ -664,12 +664,12 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     public DisneyUnifiedOfferPlan setOfferPlanForLatamAnz() {
-        if (Arrays.asList(AU, NZ).contains(getLocalizationUtils().getLocale())) {
-            LOGGER.info("AU**");
-            return DISNEY_PLUS_STANDARD_WITH_ADS_ANZ;
+        if (AU.equals(getLocalizationUtils().getLocale())) {
+            LOGGER.info("au***");
+            return DISNEY_PLUS_STANDARD_WITH_ADS_AU;
         }
-        LOGGER.info("LATAM**");
-        return DISNEY_PLUS_PREMIUM_MONTHLY;
+        LOGGER.info("latam***");
+        return DISNEY_PLUS_STANDARD;
     }
 
     public boolean isGenderOptionDisabled() {
