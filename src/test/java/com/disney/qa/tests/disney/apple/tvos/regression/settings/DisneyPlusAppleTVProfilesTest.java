@@ -45,6 +45,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     private static final String PROFILE_ICON_CELL_NOT_DISPLAYED = "Profile icon cell wasn't displayed for";
     private static final String ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED =
             "'Want to add a Profile PIN?' screen is not visible";
+    private static final String ADD_PROFILE_LABEL = "ADD PROFILE";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90920"})
     @Test(description = "Profiles - Exit from Who's Watching view", groups = {TestGroup.PROFILES, TestGroup.SMOKE, US})
@@ -527,8 +528,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusEnforceDOBCollectionPageBase dobCollectionPageBase =
                 initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
 
-        String addProfile = "ADD PROFILE";
-       // validateDOBForAnz();
         // Create account with no DOB and GI
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM_MONTHLY,
@@ -539,7 +538,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getUnifiedAccount());
 
         //Go through birthdate screen
-        if (!Arrays.asList(AU, "AN").contains(getLocalizationUtils().getLocale())) {
+        if (!Arrays.asList(AU, "NZ").contains(getLocalizationUtils().getLocale())) {
             Assert.assertTrue(ednaDOBCollectionPage.isOpened(), EDNA_DOB_COLLECTION_PAGE_NOT_DISPLAYED);
             ednaDOBCollectionPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
             ednaDOBCollectionPage.getSaveAndContinueButton().click();
@@ -561,7 +560,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         //Go through add profile for U18 profile
         Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
-        addProfileBanner.getTypeButtonByLabel(addProfile).click();
+        addProfileBanner.getTypeButtonByLabel(ADD_PROFILE_LABEL).click();
         // Avatar selection and complete U18 profile validations
         Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), "Choose avatar screen was not present");
         commonPage.clickSelect();
@@ -596,7 +595,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         DisneyPlusAppleTVEdnaDOBCollectionPage ednaDOBCollectionPage =
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
-        String addProfile = "ADD PROFILE";
 
         // Create account with no DOB and GI
         setAccount(getUnifiedAccountApi().createAccount(
@@ -625,7 +623,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         //Go through add profile for U18 profile
         Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
-        addProfileBanner.getTypeButtonByLabel(addProfile).click();
+        addProfileBanner.getTypeButtonByLabel(ADD_PROFILE_LABEL).click();
 
         Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
         commonPage.clickSelect();
