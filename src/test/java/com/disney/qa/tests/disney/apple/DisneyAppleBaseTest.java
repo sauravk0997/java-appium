@@ -691,8 +691,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     private void removePurchaseApps() {
         LOGGER.info("Removing Purchase apps");
-      //  removeApp(BuildType.IAP.getDisneyBundle());
-      //  removeApp(BuildType.IAP.getJarvisBundle());
+        removeApp(BuildType.IAP.getDisneyBundle());
+        removeApp(BuildType.IAP.getJarvisBundle());
     }
 
     private String getLATAMCountryCode() {
