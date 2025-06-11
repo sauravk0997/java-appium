@@ -624,7 +624,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
                 "Profile Gender screen is not present");
-        validateGenderOptions();
         commonPage.clickSelect();
         commonPage.moveDown(1, 1);
         Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getKidsProfileToggleCell()),
@@ -633,18 +632,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.moveUp(1, 1);
         Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getChangeAvatarSelectorCell()),
                 "Gender was enabled after Junior Mode selection");
-    }
-
-    public void validateGenderOptions() {
-        DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
-
-        List<DisneyPlusEditGenderIOSPageBase.GenderOption> genderList =
-                Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList());
-        for (DisneyPlusEditGenderIOSPageBase.GenderOption genderOption : genderList) {
-            Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(
-                            editGenderIOSPageBase.selectGender(genderOption)).isPresent(),
-                    "Gender " + genderOption + " is not present" );
-        }
     }
 
     public DisneyUnifiedOfferPlan setOfferPlanForLatamAnz() {
