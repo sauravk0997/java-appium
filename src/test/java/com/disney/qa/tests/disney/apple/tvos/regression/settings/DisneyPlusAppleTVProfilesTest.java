@@ -512,62 +512,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116697"})
-    @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
-    public void verifyGenderFieldForLatamOrANZJuniorMode() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
-        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-
-        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
-
-        setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(offerPlan,
-                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        logInWithoutHomeCheck(getUnifiedAccount());
-        homePage.waitForHomePageToOpen();
-
-        //Go through add profile screen
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavWithClickingMenu();
-        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
-        homePage.clickSelect();
-
-        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoseWatchingPage.clickAddProfile();
-
-        Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
-        commonPage.clickSelect();
-        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
-                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
-        addProfilePage.clickSelect();
-
-        addProfilePage.enterProfileName(JUNIOR_PROFILE);
-        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        addProfilePage.clickSelect();
-        addProfilePage.getEnterProfileNameContinueButton().click();
-        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
-                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
-        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-        addProfilePage.getEnterDateOfBirthContinueButton().click();
-        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
-        commonPage.moveDown(3, 1);
-        commonPage.clickSelect();
-        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
-                SELECT_GENDER_TITLE_NOT_DISPLAYED);
-        commonPage.clickSelect();
-        commonPage.moveDown(1, 1);
-        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getKidsProfileToggleCell()),
-                "Junior mode is not focused");
-        commonPage.clickSelect();
-        commonPage.moveUp(1, 1);
-        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getChangeAvatarSelectorCell()),
-                "Gender was enabled after Junior Mode selection");
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123034"})
     @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
     public void verifyDOBCollectionForLatamOrANZ() {
@@ -633,6 +577,62 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "DOB was enabled after Junior Mode selection");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116697"})
+    @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
+    public void verifyGenderFieldForLatamOrANZJuniorMode() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
+        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(offerPlan,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logInWithoutHomeCheck(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        //Go through add profile screen
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
+        homePage.clickSelect();
+
+        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoseWatchingPage.clickAddProfile();
+
+        Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
+                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+
+        addProfilePage.enterProfileName(JUNIOR_PROFILE);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
+        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        commonPage.moveDown(3, 1);
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
+                SELECT_GENDER_TITLE_NOT_DISPLAYED);
+        commonPage.clickSelect();
+        commonPage.moveDown(1, 1);
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getKidsProfileToggleCell()),
+                "Junior mode is not focused");
+        commonPage.clickSelect();
+        commonPage.moveUp(1, 1);
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getChangeAvatarSelectorCell()),
+                "Gender was enabled after Junior Mode selection");
+    }
+
     // Bug related to AU country TVOS-7014
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123033"})
     @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
@@ -644,7 +644,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
 
         // Create account with no GI
-        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(offerPlan,
