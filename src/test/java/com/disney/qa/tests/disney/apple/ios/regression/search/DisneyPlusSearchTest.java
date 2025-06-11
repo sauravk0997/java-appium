@@ -22,9 +22,8 @@ import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
@@ -458,7 +457,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(searchPage.isCollectionTitleDisplayed(), "Collection title is not displayed");
-        Assert.assertTrue(searchPage.getExploreCollections().size() == 4, "Explore Collections total does not equal 4.");
+        Assert.assertTrue(getAllExploreCollections().equals(4), "Explore Collections total does not equal 4.");
         searchPage.clickThirdCollection();
         String header = brandPage.getHeaderViewTitleLabel().getText().split(":")[0];
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
@@ -1213,6 +1212,30 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             detailsPage.waitForDetailsPageToOpen();
             String detailPageTitle = detailsPage.getMediaTitle();
             sa.assertTrue(secondFilterFirstResult.contains(detailPageTitle), DETAIL_PAGE_TITLE_NOT_EXPECTED);
+        }
+    }
+
+    public Integer getAllExploreCollections() {
+        Map<List<String>, List<String>> params = new HashMap<>();
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        String SET = "set";
+        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+            int count = 2;
+            while (count > 0) {
+                params.put(Collections.singletonList(SET + count), searchPage.getExploreCollections());
+                swipeUp(600);
+                count--;
+            }
+            List<String> allExploreCollections = new ArrayList<>();
+            allExploreCollections.addAll(params.get(Collections.singletonList(SET + "1")));
+            allExploreCollections.addAll(params.get(Collections.singletonList(SET + "2")));
+            List<String> allExploreCollectionsNoDuplicates = allExploreCollections.stream().distinct().collect(Collectors.toList());
+            return allExploreCollectionsNoDuplicates.size();
+        } else {
+            params.put(Collections.singletonList(SET + 1), searchPage.getExploreCollections());
+            List<String> allExploreCollections = new ArrayList<>();
+            allExploreCollections.addAll(params.get(Collections.singletonList(SET + "1")));
+            return allExploreCollections.size();
         }
     }
 }
