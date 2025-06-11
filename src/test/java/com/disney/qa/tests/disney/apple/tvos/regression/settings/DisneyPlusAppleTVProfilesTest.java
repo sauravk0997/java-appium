@@ -632,7 +632,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.clickSelect();
         commonPage.moveUp(1, 1);
         Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getChangeAvatarSelectorCell()),
-                "DOB ang gender were enabled after Junior Mode selection");
+                "Gender was enabled after Junior Mode selection");
     }
 
     public void validateGenderOptions() {
