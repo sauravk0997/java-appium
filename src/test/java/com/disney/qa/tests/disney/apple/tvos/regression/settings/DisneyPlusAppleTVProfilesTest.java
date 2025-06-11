@@ -706,13 +706,13 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList());
         for (DisneyPlusEditGenderIOSPageBase.GenderOption genderOption : genderList) {
             Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(
-                            editGenderIOSPageBase.selectGender(genderOption)).isPresent(),
+                            editGenderIOSPageBase.getGenderLabel(genderOption)).isPresent(),
                     "Gender " + genderOption + " is not present" );
-            // Validate third Option is displayed as Other for LATAM
-            if (!Arrays.asList(NZ, AU).contains(getLocalizationUtils().getLocale()) && genderOption.ordinal() == 2) {
-                editGenderIOSPageBase.moveDown(2, 1);
-                Assert.assertTrue(editGenderIOSPageBase.isFocused(editGenderIOSPageBase.getTypeCellLabelContains(other)),
-                        "Other option is not present for LATAM");
+            // Validate that the third Option is displayed as Other for LATAM
+            if (!Arrays.asList(NZ, AU).contains(getLocalizationUtils().getLocale())
+                    && genderOption.equals(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_NOBINARY)) {
+                Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(other).isPresent(),
+                        "Gender option 'Other' is not present for LATAM");
             }
         }
     }

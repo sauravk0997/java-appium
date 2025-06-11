@@ -1653,7 +1653,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         //Update profile's gender and save all changes
         editProfilePage.clickGenderButton();
         editGenderPage.clickGenderDropDown();
-        String desiredGender = editGenderPage.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN);
+        String desiredGender = editGenderPage.getGenderLabel(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_MEN);
         editGenderPage.getTypeButtonByLabel(desiredGender).click();
         editGenderPage.tapSaveButton();
         editProfilePage.getDoneButton().click();
