@@ -524,10 +524,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 new DisneyPlusAppleTVEdnaDOBCollectionPage(getDriver());
 
         // Create account with no DOB and GI
-        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
-
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(offerPlan,
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
                         .setDateOfBirth(null).setGender(null)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
@@ -586,10 +584,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
-        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
-
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(offerPlan,
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         logInWithoutHomeCheck(getUnifiedAccount());
