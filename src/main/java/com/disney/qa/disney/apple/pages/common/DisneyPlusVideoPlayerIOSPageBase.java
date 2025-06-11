@@ -218,6 +218,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         }
     }
 
+    public boolean waitForSkipRecapToAppear() {
+        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
+                "skip recap button didn't appear on video player")
+                .until(it -> getSkipRecapButton().isPresent(THREE_HUNDRED_SEC_TIMEOUT)));
+    }
+
+    public boolean waitForSkipIntroToAppear() {
+        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
+                "skip intro button didn't appear on video player")
+                .until(it -> getSkipIntroButton().isElementPresent(THREE_HUNDRED_SEC_TIMEOUT)));
+    }
+
     public boolean isServiceAttributionLabelVisibleWithControls() {
         displayVideoController();
         return getServiceAttributionLabel().isPresent();
@@ -657,7 +669,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNextEpisodeButton() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_NEXT_EPISODE.getText()));
     }
 
