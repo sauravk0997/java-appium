@@ -13,6 +13,7 @@ import org.testng.SkipException;
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Map;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
@@ -277,12 +278,24 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
-    public void clickThirdCollection() {
-        thirdCollectionTitle.format(
-                getLocalizationUtils().getDictionaryItem(
-                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
+    public List<ExtendedWebElement> getExploreCollections() {
+        List<ExtendedWebElement> exploreCollections = findExtendedWebElements(getHeaderViewTitleLabel().getBy());
+        LOGGER.info("Explore collections: {}", exploreCollections);
+        return exploreCollections;
     }
+
+    public void clickThirdCollection() {
+        getAllCollectionContentTitles().get(10).click();
+    }
+
+    public List<ExtendedWebElement> getAllCollectionContentTitles() {
+        String dictValue = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CONTENT_TILE_INTERACT.getText());
+        List<ExtendedWebElement> collectionTitles = findExtendedWebElements(typeCellLabelContains.format(dictValue).getBy());
+        LOGGER.info("collection titles: {}", collectionTitles);
+        return collectionTitles;
+    }
+
 
     public boolean isRatingPresentInSearchResults(String rating) {
         LOGGER.info("Verifying Ratings in search results");

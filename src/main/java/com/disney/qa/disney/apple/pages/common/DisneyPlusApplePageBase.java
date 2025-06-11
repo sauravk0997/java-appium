@@ -299,7 +299,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     @ExtendedFindBy(accessibilityId = "highEmphasisView")
     protected ExtendedWebElement brandLandingView;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeImage[1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/" +
+            "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement artworkBackground;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`label == 'Address'`]")
     protected ExtendedWebElement phoneWebviewAddressBar;
@@ -1653,4 +1654,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return dynamicFindByLabel.format(label);
     }
 
+    public ExtendedWebElement getHeaderViewTitleLabel() {
+        return headerViewTitleLabel;
+    }
 }

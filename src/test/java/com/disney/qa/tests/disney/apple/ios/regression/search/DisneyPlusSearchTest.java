@@ -451,38 +451,44 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
-
+        Assert.assertTrue(searchPage.isCollectionTitleDisplayed(), "Collection title is not displayed");
+        Assert.assertTrue(searchPage.getExploreCollections().size() == 4, "Explore Collections total does not equal 4.");
         searchPage.clickThirdCollection();
-        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+        String header = brandPage.getHeaderViewTitleLabel().getText().split(":")[0];
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
 
-        sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        sa.assertTrue(brandPage.getExpandedBrandImage(header).isPresent(), collectionLogoNotExpanded);
         sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(brandPage.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(brandPage.isCollectionTitleDisplayed(), "Collection title not displayed");
-        sa.assertTrue(brandPage.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt),
+        sa.assertTrue(brandPage.isCollectionImageCollapsedFromSwipe(header, Direction.UP, swipeAttempt),
                 "Image not collapsed after swipe");
-        sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+         sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Device is Handset. Skipping Collapsed Scrolling Assert on iPad");
-            sa.assertTrue(brandPage.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
+            sa.assertTrue(brandPage.isCollectionBrandImageCollapsed(header), "Collection brand logo is not collapsed");
         }
 
-        brandPage.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
-        sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        brandPage.swipeInCollectionTillImageExpand(header, Direction.DOWN, swipeAttempt);
+        sa.assertTrue(brandPage.getExpandedBrandImage(header).isPresent(), collectionLogoNotExpanded);
         brandPage.getBackArrow().click();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         searchPage.clickThirdCollection();
-        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
 
         //Click First Content Tile on Collection Page
         homePage.clickDynamicCollectionOrContent(2, 1);
+
+        if (liveEventModal.isOpened()) {
+            liveEventModal.getDetailsButton().click();
+        }
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
 
@@ -493,7 +499,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
 
         clickElementAtLocation(detailsPage.getBackArrow(), 50, 50);
-        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
 
         sa.assertAll();
     }

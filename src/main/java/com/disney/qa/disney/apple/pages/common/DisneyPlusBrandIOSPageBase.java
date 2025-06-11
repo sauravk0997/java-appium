@@ -56,17 +56,17 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         return collectionBrandImageExpanded.isPresent();
     }
 
-    public boolean isCollectionBrandImageCollapsed() {
-        return collectionBrandImageCollapsed.isPresent() && !collectionBrandImageExpanded.isPresent(SHORT_TIMEOUT);
+    public boolean isCollectionBrandImageCollapsed(String header) {
+        return !getExpandedBrandImage(header).isPresent(SHORT_TIMEOUT);
     }
 
-    public void swipeInCollectionTillImageExpand(Direction direction, int swipeAttempt) {
-        swipeInContainerTillElementIsPresent(brandLandingView, collectionBrandImageExpanded, swipeAttempt, direction);
+    public void swipeInCollectionTillImageExpand(String header, Direction direction, int swipeAttempt) {
+        swipeInContainerTillElementIsPresent(null, getExpandedBrandImage(header), swipeAttempt, direction);
     }
 
-    public boolean isCollectionImageCollapsedFromSwipe(Direction direction, int swipeAttempt) {
-        while (collectionBrandImageExpanded.isPresent(FIVE_SEC_TIMEOUT) && swipeAttempt > 0) {
-            swipeInContainer(brandLandingView, direction, 1, 900);
+    public boolean isCollectionImageCollapsedFromSwipe(String header, Direction direction, int swipeAttempt) {
+        while (getExpandedBrandImage(header).isPresent(FIVE_SEC_TIMEOUT) && swipeAttempt > 0) {
+            swipeInContainer(null, direction, 1, 900);
             swipeAttempt--;
         }
         return collectionBrandImageCollapsed.isPresent(FIVE_SEC_TIMEOUT);
@@ -144,5 +144,11 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         BufferedImage closeToEndOfCollection = getElementImage(getCollection(collection));
         swipeRightInCollectionNumOfTimes(5, collection);
         sa.assertTrue(areImagesDifferent(beginningOfCollection, closeToEndOfCollection), IMAGES_ARE_THE_SAME_ERROR_MESSAGE);
+    }
+
+    public ExtendedWebElement getExpandedBrandImage(String header) {
+        return imageLabelContains.format(getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+                        false), Map.of(BRAND_NAME, header)));
     }
 }
