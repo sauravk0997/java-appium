@@ -677,7 +677,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         validateGenderOptions();
         commonPage.moveDown(3, 1);
         Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getTypeCellLabelContains(
-                        editGenderIOSPageBase.selectGender(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_PREFERNOTTOSAY))),
+                        editGenderIOSPageBase.getGenderLabel(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_PREFERNOTTOSAY))),
                 "Expected gender was not selected");
 
         commonPage.clickSelect();
@@ -694,7 +694,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList());
         for (DisneyPlusEditGenderIOSPageBase.GenderOption genderOption : genderList) {
             Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(
-                            editGenderIOSPageBase.selectGender(genderOption)).isPresent(),
+                            editGenderIOSPageBase.getGenderLabel(genderOption)).isPresent(),
                     "Gender " + genderOption + " is not present" );
             // Validate Other Option is displayed as Other for LATAM
             if (!Arrays.asList(NZ, AU).contains(getLocalizationUtils().getLocale())
