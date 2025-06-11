@@ -646,7 +646,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         // Create account with no GI
 
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(offerPlan,
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
                         .setDateOfBirth(ADULT_DOB).setGender(null)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
