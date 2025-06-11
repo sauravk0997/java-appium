@@ -712,15 +712,6 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         }
     }
 
-    public DisneyUnifiedOfferPlan setOfferPlanForLatamAnz() {
-        if (AU.equals(getLocalizationUtils().getLocale())) {
-            LOGGER.info("Offer plan for AU");
-            return DISNEY_PLUS_STANDARD_WITH_ADS_AU;
-        }
-        LOGGER.info("Offer plan for LATAM and NZ");
-        return DISNEY_PLUS_STANDARD;
-    }
-
     public boolean isGenderOptionDisabled() {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         addProfilePage.moveDown(3, 1);
