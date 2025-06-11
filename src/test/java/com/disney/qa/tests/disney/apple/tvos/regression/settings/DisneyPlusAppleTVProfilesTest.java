@@ -18,6 +18,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -640,6 +641,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
 
         // Create account with no GI
+        validateGenderOptions();
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
@@ -702,13 +704,19 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
     public void validateGenderOptions() {
         DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
-
+        String other = "Other";
         List<DisneyPlusEditGenderIOSPageBase.GenderOption> genderList =
                 Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList());
         for (DisneyPlusEditGenderIOSPageBase.GenderOption genderOption : genderList) {
             Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(
                             editGenderIOSPageBase.selectGender(genderOption)).isPresent(),
                     "Gender " + genderOption + " is not present" );
+            // Validate third Option is displayed as Other for LATAM
+            if (!Arrays.asList(NZ, AU).contains(getLocalizationUtils().getLocale()) && genderOption.ordinal() == 2) {
+                editGenderIOSPageBase.moveDown(2, 1);
+                Assert.assertTrue(editGenderIOSPageBase.isFocused(editGenderIOSPageBase.getTypeCellLabelContains(other)),
+                        "Other option is not present for LATAM");
+            }
         }
     }
 
