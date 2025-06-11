@@ -608,7 +608,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.moveRight(1, 1);
         updateProfilePage.getSaveProfileBtn().click();
 
-        //Go through add profile for U18 profile
+        //Go through add profile
         Assert.assertTrue(addProfileBanner.isProfileHeaderPresent(), "Profile header is not present");
         addProfileBanner.getTypeButtonByLabel(ADD_PROFILE_LABEL).click();
 
