@@ -583,8 +583,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(offerPlan,
-                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                        .setDateOfBirth(ADULT_DOB)));
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         logInWithoutHomeCheck(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
