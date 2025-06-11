@@ -616,7 +616,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.moveDown(3, 1);
         commonPage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
-                "Profile Gender screen is not present");
+                SELECT_GENDER_TITLE_NOT_DISPLAYED);
         commonPage.clickSelect();
         commonPage.moveDown(1, 1);
         Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getKidsProfileToggleCell()),
