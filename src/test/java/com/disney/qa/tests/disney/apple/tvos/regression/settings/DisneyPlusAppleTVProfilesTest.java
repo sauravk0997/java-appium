@@ -700,7 +700,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
             if (!Arrays.asList(NZ, AU).contains(getLocalizationUtils().getLocale())
                     && genderOption.equals(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_NOBINARY)) {
                 Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(other).isPresent(),
-                        "The 'Other' option is not present for LATAM");
+                        "Gender option 'Other' is not present for LATAM");
             }
         }
     }
