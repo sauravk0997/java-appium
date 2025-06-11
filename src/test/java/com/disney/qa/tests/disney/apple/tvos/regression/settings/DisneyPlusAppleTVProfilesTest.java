@@ -632,7 +632,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
             LOGGER.info("Offer plan for AU");
             return DISNEY_PLUS_STANDARD_WITH_ADS_AU;
         }
-        LOGGER.info("Offer plan for LATAM and ANZ");
+        LOGGER.info("Offer plan for LATAM and NZ");
         return DISNEY_PLUS_STANDARD;
     }
 
