@@ -630,7 +630,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.moveDown(3, 1);
         commonPage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
-                "Profile Gender screen is not present");
+                SELECT_GENDER_TITLE_NOT_DISPLAYED);
         validateGenderOptions();
         // Go back to validate a U18 by navigating back and editing DOB
         commonPage.clickBack();
