@@ -524,6 +524,16 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getStaticTextByLabelContains(CONTENT_UNAVAILABLE);
     }
 
+    public ExtendedWebElement getLogoutButton() {
+        return dynamicBtnFindByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_LOGOUT_BTN.getText()));
+    }
+
+    public ExtendedWebElement getLogoutModalHeader() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_LOGOUT_MODAL_HEADER.getText()));
+    }
+
     public String getErrorMessageString() {
         return labelError.getText();
     }

@@ -35,6 +35,7 @@ public final class TestGroup {
     public static final String SUB_UI = "SubUI";
     public static final String UP_NEXT = "UpNext";
     public static final String UPGRADE = "Upgrade";
+    public static final String UPSELL = "Upsell";
     public static final String VIDEO_PLAYER = "VideoPlayer";
     public static final String VIDEO_PLAYER_ADS = "VideoPlayerAds";
     public static final String WATCHLIST = "Watchlist";
