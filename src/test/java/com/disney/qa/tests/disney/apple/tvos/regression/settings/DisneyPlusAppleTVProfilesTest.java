@@ -696,7 +696,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
             Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(
                             editGenderIOSPageBase.getGenderLabel(genderOption)).isPresent(),
                     "Gender " + genderOption + " is not present" );
-            // Validate Other Option is displayed as Other for LATAM
+            // Validate that the third Option is displayed as Other for LATAM
             if (!Arrays.asList(NZ, AU).contains(getLocalizationUtils().getLocale())
                     && genderOption.equals(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_NOBINARY)) {
                 Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(other).isPresent(),
