@@ -572,7 +572,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116697"})
     @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
-    public void verifyGenderJuniorModeForLatamOrANZ() {
+    public void verifyGenderFieldForLatamOrANZJuniorMode() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
