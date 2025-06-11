@@ -729,6 +729,30 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public void enableJarvisSoftUpdate() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+
+        String updateNudgeConfig = "updateNudgeConfig";
+        String updateAlertIsEnabled = "updateAlertIsEnabled";
+
+        launchJarvis(true);
+        jarvis.scrollToItem(JARVIS_APP_CONFIG).click();
+        jarvis.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
+        jarvis.scrollToItem(updateNudgeConfig).click();
+        jarvis.scrollToItem(updateAlertIsEnabled).click();
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("Enabling updateNudgeConfig");
+            applePageBase.clickToggleView();
+        } else {
+            LOGGER.info("updateNudgeConfig is already enabled");
+        }
+
+        //Relaunch Disney app
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+    }
+
     public void jarvisEnableOfflineExpiredLicenseOverride() {
         JarvisAppleBase jarvis = getJarvisPageFactory();
 
