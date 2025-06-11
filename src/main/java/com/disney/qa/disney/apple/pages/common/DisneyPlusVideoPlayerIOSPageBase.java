@@ -72,8 +72,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement iconPinUnlocked;
     @ExtendedFindBy(accessibilityId = "unlockPlayerControlsButton")
     private ExtendedWebElement iconPinLocked;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
-    private ExtendedWebElement currentlyPlayingTitle;
     @ExtendedFindBy(accessibilityId = "brandImageView")
     private ExtendedWebElement brandImageView;
     @ExtendedFindBy(accessibilityId = "skipIntroButton")
@@ -218,6 +216,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             LOGGER.info(String.format("Service Attribution Label not found - %s", e.getMessage()));
             return false;
         }
+    }
+
+    public boolean waitForSkipRecapToAppear() {
+        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
+                "skip recap button didn't appear on video player")
+                .until(it -> getSkipRecapButton().isPresent(THREE_HUNDRED_SEC_TIMEOUT)));
+    }
+
+    public boolean waitForSkipIntroToAppear() {
+        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
+                "skip intro button didn't appear on video player")
+                .until(it -> getSkipIntroButton().isElementPresent(THREE_HUNDRED_SEC_TIMEOUT)));
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {
@@ -406,18 +416,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
                 destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    /**
-     * Verifies if the given episode title is playing
-     *
-     * @param episodeName
-     */
-
-    public boolean doesTitleExists(String episodeName) {
-        waitForVideoToStart();
-        displayVideoController();
-        return currentlyPlayingTitle.format(episodeName).isPresent();
     }
 
     public int getCurrentPositionOnPlayer() {
@@ -671,7 +669,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNextEpisodeButton() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_NEXT_EPISODE.getText()));
     }
 
