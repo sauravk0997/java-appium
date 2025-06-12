@@ -754,7 +754,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.getEnterDateOfBirthContinueButton().click();
         Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
 
-        Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a Junior Profile");
+        Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a U18 Profile");
     }
 
     public void validateGenderOptions() {
