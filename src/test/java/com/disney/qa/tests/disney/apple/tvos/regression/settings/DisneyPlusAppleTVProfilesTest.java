@@ -6,7 +6,6 @@ import com.disney.qa.api.offer.pojos.Partner;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileBannerIOSPageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusEditGenderIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
-import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -165,39 +164,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAddNewProfileFromHomepageMoreMenu() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
-        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoIsWatchingPage.waitUntilElementIsFocused(whoIsWatchingPage.getUnlockedProfileCell(), FIVE_SEC_TIMEOUT);
-        whoIsWatchingPage.clickAddProfile();
-
-        //Go through Choose Avatar screen
-        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
-        chooseAvatarPage.moveUp(1, 1);
-        chooseAvatarPage.clickSelect();
-
-        //Go through profile name input
-        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
-                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
-        addProfilePage.clickSelect();
-        addProfilePage.enterProfileName(SECONDARY_PROFILE);
-        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        addProfilePage.clickSelect();
-        addProfilePage.getEnterProfileNameContinueButton().click();
-
-        //Go through birthdate input
-        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isElementPresent(),
-                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
-        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-        addProfilePage.getEnterDateOfBirthContinueButton().click();
-
-        //Go through Add Profile page
-        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.ADULT);
         addProfilePage.moveDown(3, 1);
         addProfilePage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isElementPresent(),
@@ -581,9 +552,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     public void verifyGenderFieldForLatamOrANZJuniorMode() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
@@ -591,31 +560,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         logInWithoutHomeCheck(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-
-        //Go through add profile screen
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavWithClickingMenu();
-        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
-        homePage.clickSelect();
-
-        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoseWatchingPage.clickAddProfile();
-
-        Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
-        commonPage.clickSelect();
-        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
-                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
-        addProfilePage.clickSelect();
-
-        addProfilePage.enterProfileName(JUNIOR_PROFILE);
-        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        addProfilePage.clickSelect();
-        addProfilePage.getEnterProfileNameContinueButton().click();
-        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
-                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
-        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-        addProfilePage.getEnterDateOfBirthContinueButton().click();
-        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        navigateToAddProfileReviewPageFromHomePage(JUNIOR_PROFILE, Person.ADULT);
         commonPage.moveDown(3, 1);
         commonPage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
@@ -635,9 +580,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     public void verifyGenderFieldForLatamOrANZAddProfileFlow() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(
@@ -647,30 +590,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.ADULT);
         //Go through add profile screen
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavWithClickingMenu();
-        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
-        homePage.clickSelect();
-
-        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoseWatchingPage.clickAddProfile();
-
-        Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
-        commonPage.clickSelect();
-        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
-                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
-        addProfilePage.clickSelect();
-
-        addProfilePage.enterProfileName(JUNIOR_PROFILE);
-        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        addProfilePage.clickSelect();
-        addProfilePage.getEnterProfileNameContinueButton().click();
-        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
-                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
-        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-        addProfilePage.getEnterDateOfBirthContinueButton().click();
-        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
         commonPage.moveDown(3, 1);
         commonPage.clickSelect();
         Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
@@ -693,10 +614,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     public void verifyDOBFieldForLatamOrANZAddProfileFlow() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
-        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
-        DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
@@ -705,32 +623,17 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
-        //Go through add profile screen
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.openGlobalNavWithClickingMenu();
-        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
-        homePage.clickSelect();
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.ADULT);
 
-        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoseWatchingPage.clickAddProfile();
-
-        Assert.assertTrue(chooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
-        commonPage.clickSelect();
-        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
-                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
-        addProfilePage.clickSelect();
-        addProfilePage.enterProfileName(JUNIOR_PROFILE);
-        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
-        addProfilePage.clickSelect();
-        addProfilePage.getEnterProfileNameContinueButton().click();
-        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
-                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
-        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
-        addProfilePage.getEnterDateOfBirthContinueButton().click();
-        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        // We dont have any identifier currently for DOB field hence verifying with generic locator and below logic
+        //if DOB and Gender field is present on page then after moving down 4 time Kids profile toggle cell should be
+        // focused
         commonPage.moveDown(2, 1);
-        LOGGER.info("Page Source:- " + getDriver().getPageSource());
-
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getBirthdateSelectorCell()),
+                "Date of birth field is not present on Add profile review screen");
+        commonPage.moveDown(2, 1);
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getKidsProfileToggleCell()),
+                "Kids Profile toggle cell not focused");
     }
 
     public void validateGenderOptions() {
@@ -755,5 +658,36 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         addProfilePage.moveDown(3, 1);
         return addProfilePage.isFocused(addProfilePage.getKidsProfileToggleCell());
+    }
+
+    private void navigateToAddProfileReviewPageFromHomePage(String profileName, Person dob){
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
+        homePage.clickSelect();
+
+        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoseWatchingPage.clickAddProfile();
+
+        Assert.assertTrue(chooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
+                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+        addProfilePage.enterProfileName(profileName);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
+        addProfilePage.enterDOB(dob.getMonth(), dob.getDay(true), dob.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
     }
 }
