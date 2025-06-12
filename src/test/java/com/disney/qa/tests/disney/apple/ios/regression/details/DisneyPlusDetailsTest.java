@@ -1012,6 +1012,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77675"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEpisodesAndSuggestedTabForESPNContent() {
+        String seasonNumber = "1";
+        String episodeNumber = "1";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -1023,12 +1025,10 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_man_in_the_arena_deeplink"));
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
 
-        if (getDevice().isPhone()) {
-            swipeUp(1500);
-        }
-
+        ExtendedWebElement firstEpisode = detailsPage.getEpisodeCell(seasonNumber, episodeNumber);
+        detailsPage.swipePageTillElementPresent(firstEpisode, 1, null, Direction.UP, 1500);
         Assert.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.isUpsellBadgeDisplayedForEpisode("1", "1"),
+        Assert.assertTrue(detailsPage.isUpsellBadgeDisplayedForEpisode(seasonNumber, episodeNumber),
                 "Upsell badge is not displayed for episode");
         Assert.assertTrue(detailsPage.getSuggestedTab().isPresent(), SUGGESTED_TAB_NOT_DISPLAYED);
         detailsPage.clickSuggestedTab();
