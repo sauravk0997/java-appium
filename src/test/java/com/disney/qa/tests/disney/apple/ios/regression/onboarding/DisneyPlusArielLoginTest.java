@@ -159,7 +159,7 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         GenderOption[] genders = GenderOption.values();
         for (GenderOption gender : genders) {
             addProfilePage.getGenderDropdown().click();
-            String currentGenderValue = editGenderPage.selectGender(gender);
+            String currentGenderValue = editGenderPage.getGenderLabel(gender);
             ExtendedWebElement genderButton = editGenderPage.getTypeButtonByLabel(currentGenderValue);
             sa.assertTrue(genderButton.isPresent(),
                     String.format("Expected '%s' gender option is not present", gender));
@@ -178,7 +178,7 @@ public class DisneyPlusArielLoginTest extends DisneyBaseTest {
         homePage.clickMoreTab();
         moreMenuPage.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
-        String lastGenderValue = editGenderPage.selectGender(genders[genders.length - 1]);
+        String lastGenderValue = editGenderPage.getGenderLabel(genders[genders.length - 1]);
         Assert.assertEquals(editProfile.getGenderValue(), lastGenderValue,
                 "Profile gender didn't match selected gender");
 
