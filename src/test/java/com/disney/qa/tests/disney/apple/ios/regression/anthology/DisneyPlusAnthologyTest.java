@@ -122,7 +122,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     public void testAnthologyEpisodesTab() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String currentSeason = "Season 31";
+        String currentSeason = "Season 33";
         String downloadAll = "Download All";
 
         setAppToHomeScreen(getUnifiedAccount());
@@ -148,7 +148,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "Episode description was not found");
         sa.assertTrue(detailsPage.isDurationTimeLabelPresent(), "Episode duration was not found");
-        sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("31", "11"),
+        sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("33", "10"),
                 "Series Download Button is not displayed");
 
         sa.assertAll();
