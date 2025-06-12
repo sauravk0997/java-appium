@@ -687,6 +687,49 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116696"})
+    @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
+    public void verifyGenderJuniorModeForLatamOrANZEditProfileFlow() {
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVEditProfilePage editProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        // Add multiple profiles and include one with junior mode enabled
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .language(getLocalizationUtils().getUserLanguage())
+                .isStarOnboarded(true)
+                .build());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        logInWithoutHomeCheck(getUnifiedAccount());
+
+        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoseWatchingPage.clickEditProfile();
+
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        commonPage.moveRightUntilElementIsFocused(editProfilePage.getTypeCellLabelContains(KIDS_PROFILE), 3);
+        commonPage.clickSelect();
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertFalse(editProfilePage.getGenderLabel().isPresent(THREE_SEC_TIMEOUT),
+                "Gender field was present in Edit screen for a Junior Mode Profile");
+    }
+
     public void validateGenderOptions() {
         DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
         String other = "Other";
