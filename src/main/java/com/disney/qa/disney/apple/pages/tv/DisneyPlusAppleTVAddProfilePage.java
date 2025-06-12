@@ -10,6 +10,8 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebDriver;
 
+import java.util.List;
+
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 
@@ -77,5 +79,10 @@ public class DisneyPlusAppleTVAddProfilePage extends DisneyPlusAddProfileIOSPage
 
     public ExtendedWebElement getChangeAvatarSelectorCell() {
         return changeAvatarSelectorCell;
+    }
+
+    public ExtendedWebElement getBirthdateSelectorCell() {
+        List<ExtendedWebElement> addProfilePageCell = findExtendedWebElements(getTypeButtonBy());
+        return addProfilePageCell.get(1);
     }
 }
