@@ -12,8 +12,10 @@ import org.testng.SkipException;
 
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
@@ -278,10 +280,11 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
-    public List<ExtendedWebElement> getExploreCollections() {
+    public List<String> getExploreCollections() {
         List<ExtendedWebElement> exploreCollections = findExtendedWebElements(getHeaderViewTitleLabel().getBy());
-        LOGGER.info("Explore collections: {}", exploreCollections);
-        return exploreCollections;
+        List<String> collectionTitles = new ArrayList<>();
+        IntStream.range(0, exploreCollections.size()).forEach(i -> collectionTitles.add(exploreCollections.get(i).getText()));
+        return collectionTitles;
     }
 
     public void clickThirdCollection() {
