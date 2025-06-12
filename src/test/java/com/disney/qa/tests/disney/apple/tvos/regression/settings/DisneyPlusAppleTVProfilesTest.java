@@ -3,8 +3,8 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.offer.pojos.Partner;
-import com.disney.qa.common.constant.DisneyUnifiedOfferPlan;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileBannerIOSPageBase;
+import com.disney.qa.disney.apple.pages.common.DisneyPlusEditGenderIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
@@ -16,6 +16,11 @@ import org.testng.*;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
@@ -579,10 +584,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
-        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
-
         setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequest(offerPlan,
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         logInWithoutHomeCheck(getUnifiedAccount());
@@ -626,13 +629,80 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "Gender was enabled after Junior Mode selection");
     }
 
-    public DisneyUnifiedOfferPlan setOfferPlanForLatamAnz() {
-        if (AU.equals(getLocalizationUtils().getLocale())) {
-            LOGGER.info("Offer plan for AU");
-            return DISNEY_PLUS_STANDARD_WITH_ADS_AU;
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116695"})
+    @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
+    public void verifyGenderFieldForLatamOrANZAddProfileFlow() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logInWithoutHomeCheck(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        //Go through add profile screen
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
+        homePage.clickSelect();
+
+        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoseWatchingPage.clickAddProfile();
+
+        Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
+                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+
+        addProfilePage.enterProfileName(JUNIOR_PROFILE);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
+        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        commonPage.moveDown(3, 1);
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
+                SELECT_GENDER_TITLE_NOT_DISPLAYED);
+        validateGenderOptions();
+        commonPage.moveDown(3, 1);
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getTypeCellLabelContains(
+                        editGenderIOSPageBase.getGenderLabel(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_PREFERNOTTOSAY))),
+                "Expected gender was not selected");
+
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfilePage.clickSaveProfileButton();
+        Assert.assertTrue(addProfilePage.getSecondaryButton().isElementPresent(),
+                ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED);
+    }
+
+    public void validateGenderOptions() {
+        DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
+        String other = "Other";
+        List<DisneyPlusEditGenderIOSPageBase.GenderOption> genderList =
+                Stream.of(DisneyPlusEditGenderIOSPageBase.GenderOption.values()).collect(Collectors.toList());
+        for (DisneyPlusEditGenderIOSPageBase.GenderOption genderOption : genderList) {
+            Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(
+                            editGenderIOSPageBase.getGenderLabel(genderOption)).isPresent(),
+                    "Gender " + genderOption + " is not present" );
+            // Validate that the third Option is displayed as Other for LATAM
+            if (!Arrays.asList(NZ, AU).contains(getLocalizationUtils().getLocale())
+                    && genderOption.equals(DisneyPlusEditGenderIOSPageBase.GenderOption.GENDER_NOBINARY)) {
+                Assert.assertTrue(editGenderIOSPageBase.getTypeCellLabelContains(other).isPresent(),
+                        "Gender option 'Other' is not present for LATAM");
+            }
         }
-        LOGGER.info("Offer plan for LATAM and NZ");
-        return DISNEY_PLUS_STANDARD;
     }
 
     public boolean isGenderOptionDisabled() {
