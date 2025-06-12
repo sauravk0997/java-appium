@@ -410,9 +410,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
-//        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
@@ -428,8 +429,9 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.chooseGender();
         addProfile.tapJuniorModeToggle();
         moreMenu.clickSaveProfileButton();
-        //need to add step after confirmation from the functional team
-        //https://teams.microsoft.com/l/message/19:f2b1bdbc0c0947af839cfec0b98913f3@thread.v2/1749723782894?context=%7B%22contextType%22%3A%22chat%22%7D
+        sa.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        sa.assertTrue(moreMenu.getProfileAvatar(KIDS_PROFILE).isPresent(),
+                "Kids Profile is not present");
         sa.assertAll();
     }
 
@@ -901,7 +903,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     public void  verifyAddProfileU13MinorConsentAgree() {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-//        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         createKidsProfile();
         //Consent screen validation
         sa.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
@@ -918,7 +920,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             //Accept parental consent
             clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         }
-//        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                         DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
@@ -929,7 +930,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAddProfileU13MinorConsentDecline() {
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-//        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount());
         createKidsProfile();
         Assert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
         //Decline consent
