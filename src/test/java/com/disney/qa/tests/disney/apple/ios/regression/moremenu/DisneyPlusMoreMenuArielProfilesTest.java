@@ -410,7 +410,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
@@ -428,10 +427,10 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, NIGHTEEN_NINTY_FIVE);
         addProfile.chooseGender();
         addProfile.tapJuniorModeToggle();
+        sa.assertEquals(editProfilePage.getJuniorModeToggleValue(), "On", "Junior Mode toggle is not ON");
         moreMenu.clickSaveProfileButton();
         sa.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
-        sa.assertTrue(moreMenu.getProfileAvatar(KIDS_PROFILE).isPresent(),
-                "Kids Profile is not present");
+        sa.assertTrue(moreMenu.getProfileAvatar(KIDS_PROFILE).isPresent(), "Kids Profile is not present");
         sa.assertAll();
     }
 
