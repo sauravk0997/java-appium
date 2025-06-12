@@ -1009,6 +1009,41 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                         currentNetworkAttribution, HULU));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77675"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEpisodesAndSuggestedTabForESPNContent() {
+        String seasonNumber = "1";
+        String episodeNumber = "1";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        //Go to details page for ESPN series with upsell badge and suggested content present
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_man_in_the_arena_deeplink"));
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        ExtendedWebElement firstEpisode = detailsPage.getEpisodeCell(seasonNumber, episodeNumber);
+        detailsPage.swipePageTillElementPresent(firstEpisode, 1, null, Direction.UP, 1500);
+        Assert.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isUpsellBadgeDisplayedForEpisode(seasonNumber, episodeNumber),
+                "Upsell badge is not displayed for episode");
+        Assert.assertTrue(detailsPage.getSuggestedTab().isPresent(), SUGGESTED_TAB_NOT_DISPLAYED);
+        detailsPage.clickSuggestedTab();
+        detailsPage.getFirstSuggestedContent().click();
+        detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+
+        //Go to details page for ESPN series for which there is no suggested content
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_the_last_dance_deeplink"));
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
+        Assert.assertFalse(detailsPage.getSuggestedTab().isPresent(ONE_SEC_TIMEOUT),
+                "Suggested tab is displayed even if there is no suggested content");
+    }
+
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
