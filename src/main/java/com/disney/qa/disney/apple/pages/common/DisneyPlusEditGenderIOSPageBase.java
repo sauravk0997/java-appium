@@ -33,7 +33,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
         GENDER_PREFERNOTTOSAY
     }
 
-    public String selectGender(GenderOption option) {
+    public String getGenderLabel(GenderOption option) {
         String selection;
         switch (option) {
             case GENDER_WOMEN:
@@ -58,7 +58,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      * @return - true/false
      */
     public boolean isGenderOptionPresent(GenderOption option) {
-        return genderOptionValue.format(selectGender(option)).isElementPresent();
+        return genderOptionValue.format(getGenderLabel(option)).isElementPresent();
     }
 
     /**
@@ -73,7 +73,7 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
      * click on gender dropdown to select gender value
      */
     public void clickGenderDropDown() {
-        dynamicBtnFindByLabel.format(selectGender(GenderOption.GENDER_PREFERNOTTOSAY)).click();
+        dynamicBtnFindByLabel.format(getGenderLabel(GenderOption.GENDER_PREFERNOTTOSAY)).click();
     }
 
     /**

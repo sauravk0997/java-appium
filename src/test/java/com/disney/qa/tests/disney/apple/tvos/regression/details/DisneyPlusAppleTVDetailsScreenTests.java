@@ -8,6 +8,7 @@ import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Container;
 import com.disney.qa.api.explore.response.Item;
 import com.disney.qa.api.explore.response.Set;
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -39,6 +40,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.WATCHLIST;
+import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.LIVE;
 import static com.disney.qa.tests.disney.apple.ios.regression.details.DisneyPlusDetailsTest.UPCOMING;
 
 @Listeners(JocastaCarinaAdapter.class)
@@ -947,6 +949,72 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 "Upsell roadblock screen body is not present");
         Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(),
                 "Upsell roadblock screen cta is not present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121520"})
+    @Test(groups = {TestGroup.ESPN, TestGroup.UPSELL, US})
+    public void verifyUpsellDetailsPageForLiveUpcomingEvent() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String titleEvent = null;
+        String titleDescription = null;
+        String airingBadge = null;
+        List<String> audioVideoApiBadge = new ArrayList<>();
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        homePage.moveDownFromHeroTileToBrandTile();
+
+        String liveAndUpcomingEventsCollection = getCollectionName(CollectionConstant.Collection.ESPN_EXPLORE_MORE);
+        // Navigate to a live or upcoming event
+        Set espnEvent = getExploreAPISet(liveAndUpcomingEventsCollection, 5);
+        if (espnEvent == null) {
+            throw new SkipException("Skipping test, no live events are available");
+        }
+        try {
+            Visuals visualsResponse = espnEvent.getItems().get(0).getVisuals();
+            titleEvent = visualsResponse.getTitle();
+            titleDescription = visualsResponse.getDescription().getBrief();
+
+            if (visualsResponse.getMetastringParts().getAudioVisual() != null) {
+                visualsResponse.getMetastringParts().getAudioVisual().getFlags()
+                        .forEach(flag -> audioVideoApiBadge.add(flag.getTts()));
+            }
+
+            LOGGER.info("Event title: {}", titleEvent);
+            homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 20);
+            airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(
+                    liveAndUpcomingEventsCollection).getText();
+            homePage.getTypeCellLabelContains(titleEvent).click();
+        } catch (Exception e) {
+            Assert.fail("No events are available " + e.getMessage());
+        }
+
+        if (liveEventModal.isOpened()) {
+            liveEventModal.getDetailsButton().click();
+        }
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock button not displayed");
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(THREE_SEC_TIMEOUT), "Play button is displayed");
+        sa.assertFalse(detailsPage.isWatchButtonPresent(), "Watch button is displayed");
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(THREE_SEC_TIMEOUT), "Watchlist button is displayed");
+
+        sa.assertTrue(detailsPage.getStaticTextByLabel(titleEvent).isPresent(), "Content title is not displayed");
+        sa.assertTrue(detailsPage.getStaticTextByLabel(titleDescription).isPresent(),
+                "Content title description is not displayed");
+        if (audioVideoApiBadge.size() > 0) {
+            (audioVideoApiBadge).forEach(badge ->
+                    sa.assertTrue(detailsPage.getStaticTextByLabelContains(badge).isPresent(),
+                            String.format("Audio video badge %s is not present on details page featured area", badge)));
+        }
+        if (airingBadge.equals(LIVE)) {
+            sa.assertTrue(detailsPage.isProgressBarPresent(), PROGRESS_BAR_NOT_DISPLAYED);
+        }
+        sa.assertAll();
     }
 
     private String navigateToLiveEvent() {
