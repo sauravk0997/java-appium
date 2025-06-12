@@ -1,6 +1,7 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -288,15 +289,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickThirdCollection() {
-        getAllCollectionContentTitles().get(10).click();
-    }
-
-    public List<ExtendedWebElement> getAllCollectionContentTitles() {
-        String dictValue = getLocalizationUtils().getDictionaryItem(
-                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.CONTENT_TILE_INTERACT.getText());
-        List<ExtendedWebElement> collectionTitles = findExtendedWebElements(typeCellLabelContains.format(dictValue).getBy());
-        LOGGER.info("collection titles: {}", collectionTitles);
-        return collectionTitles;
+        swipeTillCollectionTappable(CollectionConstant.Collection.SEARCH_FEATURED, Direction.UP, 2);
+        getAllCollectionCells(CollectionConstant.Collection.SEARCH_FEATURED).get(0).click();
     }
 
 

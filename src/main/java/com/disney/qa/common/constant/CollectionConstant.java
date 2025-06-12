@@ -37,6 +37,7 @@ public class CollectionConstant {
         ORIGINALS_DISNEY_CAROUSEL,
         RECOMMENDED_FOR_YOU,
         REPLAYS_COLLECTION,
+        SEARCH_FEATURED,
         SPORT_REPLAYS,
         STREAMS_NON_STOP_PLAYLISTS,
         STUDIOS_AND_NETWORKS,
@@ -121,6 +122,8 @@ public class CollectionConstant {
                 return "65236ebc-b453-4a7b-9a26-7e1388f909b4";
             case REPLAYS_COLLECTION:
                 return "971963b2-2bf5-4416-aa7d-41950d5760d7";
+            case SEARCH_FEATURED:
+                return "f7b1df6e-9a99-499d-9ddb-ca1d12d36965";
             case SPORT_REPLAYS:
                 return "cb338e1f-9162-47e1-b6ba-f3a9cf2f9815";
             case STUDIOS_AND_NETWORKS:

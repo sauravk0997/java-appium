@@ -1230,6 +1230,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             allExploreCollections.addAll(params.get(Collections.singletonList(SET + "1")));
             allExploreCollections.addAll(params.get(Collections.singletonList(SET + "2")));
             List<String> allExploreCollectionsNoDuplicates = allExploreCollections.stream().distinct().collect(Collectors.toList());
+            swipeDown(2, 600);
             return allExploreCollectionsNoDuplicates.size();
         } else {
             params.put(Collections.singletonList(SET + 1), searchPage.getExploreCollections());
