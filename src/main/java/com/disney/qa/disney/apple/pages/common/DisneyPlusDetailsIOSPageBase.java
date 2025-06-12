@@ -212,6 +212,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`focused==1`]" +
             "/**/XCUIElementTypeStaticText[`name=='titleLabel'`]")
     protected ExtendedWebElement focusedCellTitleLabel;
+    @ExtendedFindBy(iosPredicate = "name == 'upsellLabel'")
+    protected ExtendedWebElement upsellBadge;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS ', Select for details on this title.'`]")
+    protected List<ExtendedWebElement> suggestedContents;
 
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -1459,5 +1463,13 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             throw new SkipException("Unable to get Content Advisory from API");
         }
         return contentAdvisory.getText();
+    }
+
+    public boolean isUpsellBadgeDisplayedForEpisode(String season, String episode) {
+        return getEpisodeCell(season, episode).findExtendedWebElement(upsellBadge.getBy()).isPresent();
+    }
+
+    public ExtendedWebElement getFirstSuggestedContent() {
+        return suggestedContents.get(0);
     }
 }
