@@ -148,7 +148,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getFirstTitleLabel().isPresent(), "Episode title was not found");
         sa.assertTrue(detailsPage.getFirstDescriptionLabel().isPresent(), "Episode description was not found");
         sa.assertTrue(detailsPage.isDurationTimeLabelPresent(), "Episode duration was not found");
-        sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("31", "11"),
+        sa.assertTrue(detailsPage.isSeriesDownloadButtonPresent("33", "10"),
                 "Series Download Button is not displayed");
 
         sa.assertAll();
