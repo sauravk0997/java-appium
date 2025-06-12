@@ -3,6 +3,7 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.offer.pojos.Partner;
+import com.disney.qa.common.constant.DisneyUnifiedOfferPlan;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusAddProfileBannerIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
@@ -18,8 +19,7 @@ import org.testng.asserts.SoftAssert;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM_MONTHLY;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
@@ -568,6 +568,71 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         commonPage.moveUp(1, 1);
         Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getChangeAvatarSelectorCell()),
                 "DOB was enabled after Junior Mode selection");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116697"})
+    @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
+    public void verifyGenderFieldForLatamOrANZJuniorMode() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage appleTVChooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+
+        DisneyUnifiedOfferPlan offerPlan = setOfferPlanForLatamAnz();
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(offerPlan,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        logInWithoutHomeCheck(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        //Go through add profile screen
+        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
+        homePage.clickSelect();
+
+        Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoseWatchingPage.clickAddProfile();
+
+        Assert.assertTrue(appleTVChooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getEnterProfileNameTitle().isElementPresent(),
+                ENTER_PROFILE_NAME_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+
+        addProfilePage.enterProfileName(JUNIOR_PROFILE);
+        addProfilePage.keyPressTimes(addProfilePage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
+        addProfilePage.clickSelect();
+        addProfilePage.getEnterProfileNameContinueButton().click();
+        Assert.assertTrue(addProfilePage.getEnterYourBirthdateTitle().isPresent(),
+                ENTER_YOUR_BIRTHDATE_TITLE_NOT_DISPLAYED);
+        addProfilePage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(true), Person.ADULT.getYear());
+        addProfilePage.getEnterDateOfBirthContinueButton().click();
+        Assert.assertTrue(addProfilePage.isAddProfileHeaderPresent(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        commonPage.moveDown(3, 1);
+        commonPage.clickSelect();
+        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(),
+                SELECT_GENDER_TITLE_NOT_DISPLAYED);
+        commonPage.clickSelect();
+        commonPage.moveDown(1, 1);
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getKidsProfileToggleCell()),
+                "Junior mode is not focused");
+        commonPage.clickSelect();
+        commonPage.moveUp(1, 1);
+        Assert.assertTrue(addProfilePage.isFocused(addProfilePage.getChangeAvatarSelectorCell()),
+                "Gender was enabled after Junior Mode selection");
+    }
+
+    public DisneyUnifiedOfferPlan setOfferPlanForLatamAnz() {
+        if (AU.equals(getLocalizationUtils().getLocale())) {
+            LOGGER.info("Offer plan for AU");
+            return DISNEY_PLUS_STANDARD_WITH_ADS_AU;
+        }
+        LOGGER.info("Offer plan for LATAM and NZ");
+        return DISNEY_PLUS_STANDARD;
     }
 
     public boolean isGenderOptionDisabled() {
