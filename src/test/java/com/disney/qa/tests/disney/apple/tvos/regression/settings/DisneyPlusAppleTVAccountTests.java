@@ -662,6 +662,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickBack();
         Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+
         LOGGER.info("Verifying Logout button 'cancel' flow");
         homePage.moveDown(1, 1);
         homePage.moveRight(1, 1);
@@ -672,6 +673,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        
         LOGGER.info("Verifying Logout button 'logout' flow");
         homePage.clickSelect();
         Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(SHORT_TIMEOUT),
