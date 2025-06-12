@@ -382,10 +382,10 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public void configureTVOSDeviceNameForJarvis(ITestContext context) {
         String xmlTVOSDeviceName = "tvOSDeviceName";
         String tvOSDeviceName = context.getCurrentXmlTest().getParameter(xmlTVOSDeviceName);
-
         if (tvOSDeviceName != null && !tvOSDeviceName.isEmpty()) {
             LOGGER.info("Disabling Jarvis Companion Config");
             R.CONFIG.put(CAPABILITIES_DEVICE_NAME, tvOSDeviceName);
+            LOGGER.info("Device in testing:{}", R.CONFIG.get(CAPABILITIES_DEVICE_NAME));
         }
     }
 
