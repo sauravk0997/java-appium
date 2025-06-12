@@ -122,7 +122,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     public void testAnthologyEpisodesTab() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        String currentSeason = "Season 31";
+        String currentSeason = "Season 33";
         String downloadAll = "Download All";
 
         setAppToHomeScreen(getUnifiedAccount());
