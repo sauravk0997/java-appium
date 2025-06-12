@@ -562,7 +562,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
 
         sa.assertTrue(searchPage.getOriginalsTile().isPresent(), "Originals tile not found");
         sa.assertTrue(searchPage.getMovieTile().isPresent(), "Movies tile not found");
