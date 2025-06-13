@@ -22,8 +22,8 @@ import org.testng.annotations.Test;
 import java.time.temporal.ValueRange;
 import java.lang.invoke.MethodHandles;
 
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
@@ -41,8 +41,9 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         logIn(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
-        Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayerTVPage.waitForVideoToStart();
+        Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayerTVPage.skipPromoIfPresent(FIVE_SEC_TIMEOUT);
 
         // Pause video with remote button
         home.clickPlay();
@@ -77,14 +78,15 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
 
         logIn(getUnifiedAccount());
-        homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
         videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.skipPromoIfPresent(FIVE_SEC_TIMEOUT);
 
-        commonPage.clickDown(1);
         int remainingTimeBeforeForward = videoPlayer.getRemainingTimeThreeIntegers();
         commonPage.clickRight(actionTimes, 1, 1);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         commonPage.clickDown(1);
         int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
         Assert.assertTrue((remainingTimeBeforeForward - remainingTimeAfterForward) > expectedSkippedSeconds,

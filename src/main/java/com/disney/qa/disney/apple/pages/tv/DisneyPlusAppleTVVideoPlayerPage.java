@@ -126,4 +126,13 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         commonPage.clickDown(1);
         return getServiceAttributionLabel().isPresent();
     }
+
+    @Override
+    public DisneyPlusVideoPlayerIOSPageBase waitForVideoToStart() {
+        LOGGER.info("Waiting for video buffering to complete...");
+        waitForLoaderToDisappear(THREE_SEC_TIMEOUT);
+        waitForLoaderToDisappear(FIFTEEN_SEC_TIMEOUT);
+        LOGGER.info("Buffering completed.");
+        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+    }
 }
