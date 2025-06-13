@@ -289,7 +289,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void clickThirdCollection() {
-        swipeTillCollectionTappable(CollectionConstant.Collection.SEARCH_FEATURED, Direction.UP, 2);
         getAllCollectionCells(CollectionConstant.Collection.SEARCH_FEATURED).get(0).click();
     }
 

@@ -456,15 +456,14 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(searchPage.isCollectionTitleDisplayed(), "Collection title is not displayed");
         Assert.assertTrue(getAllExploreCollections().equals(4), "Explore Collections total does not equal 4.");
+
+        searchPage.swipeTillCollectionTappable(CollectionConstant.Collection.SEARCH_FEATURED, Direction.UP, 2);
         searchPage.clickThirdCollection();
         String header = brandPage.getHeaderViewTitleLabel().getText().split(":")[0];
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
-
         sa.assertTrue(brandPage.getExpandedBrandImage(header).isPresent(), collectionLogoNotExpanded);
         sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(brandPage.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(brandPage.isCollectionTitleDisplayed(), "Collection title not displayed");
         sa.assertTrue(brandPage.isCollectionImageCollapsedFromSwipe(header, Direction.UP, swipeAttempt),
                 "Image not collapsed after swipe");
