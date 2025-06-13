@@ -261,7 +261,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyShopPromoLabelInFeatureAreaOfDetailPage() {
         SoftAssert sa = new SoftAssert();
-//        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Verify Shop Promo for Series
         launchDeeplink(R.TESTDATA.get("disney_prod_series_win_or_lose_deeplink"));
