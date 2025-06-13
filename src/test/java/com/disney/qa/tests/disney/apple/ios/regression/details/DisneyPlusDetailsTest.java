@@ -279,8 +279,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
+        //verify Shop Tab button for movies
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_moana_2_deeplink"));
-        //verify Shop Tab button is present and after clicking it focused or not
         validateShopTabButton(sa);
 
         //Verify Shop tab button for series
