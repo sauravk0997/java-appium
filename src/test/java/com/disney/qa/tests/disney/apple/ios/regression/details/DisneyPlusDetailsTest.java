@@ -40,7 +40,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "Spider-Man™ 3";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 40;
-    private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
     private static final String AVAILABLE_WITH_HULU = "Available with Hulu Subscription";
@@ -282,10 +281,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //verify Shop Tab button for movies
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_moana_2_deeplink"));
         validateShopTabButton(sa);
+        validateShopTabContainer(sa);
 
         //Verify Shop tab button for series
         launchDeeplink(R.TESTDATA.get("disney_prod_series_win_or_lose_deeplink"));
         validateShopTabButton(sa);
+        validateShopTabContainer(sa);
         sa.assertAll();
     }
 
@@ -1058,5 +1059,13 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String shopOrPerksText = detailsPage.getShopOrPerksBtn().getAttribute(Attributes.NAME.getAttribute());
         sa.assertTrue(detailsPage.isTabSelected(shopOrPerksText),
                 String.format("%s Tab was not found", shopOrPerksText));
+    }
+
+    private void validateShopTabContainer(SoftAssert sa){
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        sa.assertTrue(detailsPage.isShopTabBackgroundImagePresent(), "Shop tab background image is not present");
+        sa.assertTrue(detailsPage.getShopTabHeadingText().isPresent(), "Shop Tab heading is not present");
+        sa.assertTrue(detailsPage.getShopTabSubHeadingText().isPresent(), "Shop Tab sub-heading is not present");
+        sa.assertTrue(detailsPage.getShopTabLink().isPresent(), "Shop Tab link is not present");
     }
 }
