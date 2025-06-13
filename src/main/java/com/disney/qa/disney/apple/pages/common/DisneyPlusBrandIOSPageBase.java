@@ -52,10 +52,6 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
         pause(5);
     }
 
-    public boolean isCollectionBrandImageExpanded() {
-        return collectionBrandImageExpanded.isPresent();
-    }
-
     public boolean isCollectionBrandImageCollapsed(String header) {
         return !getExpandedBrandImage(header).isPresent(SHORT_TIMEOUT);
     }

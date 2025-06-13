@@ -470,7 +470,8 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
          sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Device is Handset. Skipping Collapsed Scrolling Assert on iPad");
-            sa.assertTrue(brandPage.isCollectionBrandImageCollapsed(header), "Collection brand logo is not collapsed");
+            sa.assertTrue(brandPage.getExpandedBrandImage(header).isElementNotPresent(SHORT_TIMEOUT),
+                    "Collection brand logo is not collapsed");
         }
 
         brandPage.swipeInCollectionTillImageExpand(header, Direction.DOWN, swipeAttempt);
