@@ -376,8 +376,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         String genderFieldEnabledMessage = "Gender field is enabled for U13 profile";
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
@@ -400,80 +398,36 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
 
         // verify gender field is disabled when you selected Gender first then choose the U13 DOB
         sa.assertFalse(addProfile.isGenderFieldEnabled(), genderFieldEnabledMessage);
-
-        addProfile.clickSaveBtn();
-        Assert.assertTrue(parentalConsent.isOpened(), "Consent page is not displayed");
-
-        //minor consent is shown
-        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            LOGGER.info(SCROLLING_CONSENT_SCREEN);
-            parentalConsent.scrollConsentContent(2);
-        }
-
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
-        //Welch Full catalog access
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
-        //minor authentication is prompted
-        Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
-        passwordPage.enterPassword(getUnifiedAccount());
-        passwordPage.clickSecondaryButtonByCoordinates();
-        Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72682"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyArielAddProfileJuniorModeUI() {
-        setAppToHomeScreen(getUnifiedAccount());
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+
+        setAppToHomeScreen(getUnifiedAccount());
 
         moreMenu.clickMoreTab();
         moreMenu.clickAddProfile();
         addProfile.waitForLoaderToDisappear(TEN_SEC_TIMEOUT);
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
-        //verify Learn More hyperlink on add profile page
+        sa.assertTrue(addProfile.isJuniorModeTextPresent(), JUNIOR_MODE_TEXT_ERROR_MESSAGE);
+        sa.assertTrue(addProfile.isKidsProfileToggleCellPresent(), " Kids profile toggle was not found");
         sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), KID_PROFILE_SUBCOPY_NOT_DISPLAYED);
-        editProfilePage.clickJuniorModeLearnMoreLink();
-        sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
-        pause(3);
-        Assert.assertTrue(addProfile.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
-        moreMenu.goBackToDisneyAppFromSafari();
-        moreMenu.dismissNotificationsPopUp();
-        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(editProfilePage.getLearnMoreLink().isPresent(), "Learn More Link is not displayed");
+        addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.chooseGender();
+        addProfile.tapJuniorModeToggle();
+        sa.assertEquals(editProfilePage.getJuniorModeToggleValue(), "On", "Junior Mode toggle is not ON");
         moreMenu.clickSaveProfileButton();
-        //minor consent is shown
-        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            LOGGER.info(SCROLLING_CONSENT_SCREEN);
-            scrollDown();
-        }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
-        //Welch Full catalog access
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
-        //minor authentication is prompted
-        Assert.assertTrue(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
-        passwordPage.enterPassword(getUnifiedAccount());
-        passwordPage.clickSecondaryButtonByCoordinates();
-        Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
-
-        //verify learn more hyperlink on edit profile page
-        moreMenu.clickMoreTab();
-        moreMenu.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
-        editProfilePage.clickJuniorModeLearnMoreLink();
-        sa.assertTrue(moreMenu.isHelpWebviewOpen(), "'Help' web view was not opened");
-        Assert.assertTrue(editProfilePage.verifyTextOnWebView(JUNIOR_MODE_HELP_CENTER), "User was not navigated to Junior mode help center");
-        moreMenu.goBackToDisneyAppFromSafari();
-        moreMenu.dismissNotificationsPopUp();
+        sa.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        sa.assertTrue(moreMenu.getProfileAvatar(KIDS_PROFILE).isPresent(), "Kids Profile is not present");
         sa.assertAll();
     }
 
@@ -962,7 +916,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             //Accept parental consent
             clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
         }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                         DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
@@ -978,7 +931,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
         //Decline consent
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
         Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                         DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
