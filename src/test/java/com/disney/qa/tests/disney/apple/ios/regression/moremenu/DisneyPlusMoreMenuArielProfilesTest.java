@@ -36,7 +36,6 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String KIDS_DOB = "2018-01-01";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
-    private static final String NIGHTEEN_NINTY_FIVE = "1995";
     private static final String ESPAÑOL = "Español";
     private static final String ENGLISH_US = "English (US)";
     private static final String NEW_PROFILE_NAME = "New Name";
@@ -422,7 +421,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), KID_PROFILE_SUBCOPY_NOT_DISPLAYED);
         sa.assertTrue(editProfilePage.getLearnMoreLink().isPresent(), "Learn More Link is not displayed");
         addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, NIGHTEEN_NINTY_FIVE);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         addProfile.chooseGender();
         addProfile.tapJuniorModeToggle();
         sa.assertEquals(editProfilePage.getJuniorModeToggleValue(), "On", "Junior Mode toggle is not ON");
