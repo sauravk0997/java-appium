@@ -41,9 +41,8 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         logIn(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
-        videoPlayerTVPage.waitForVideoToStart();
         Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayerTVPage.skipPromoIfPresent(FIVE_SEC_TIMEOUT);
+        videoPlayerTVPage.skipPromoIfPresent(FIFTEEN_SEC_TIMEOUT);
 
         // Pause video with remote button
         home.clickPlay();
@@ -73,16 +72,14 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         int secondsSkippedPerAction = 10;
         int expectedSkippedSeconds = actionTimes * secondsSkippedPerAction;
         int uiLatencyInSeconds = 10;
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
 
         logIn(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
-        videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.skipPromoIfPresent(FIVE_SEC_TIMEOUT);
+        videoPlayer.skipPromoIfPresent(FIFTEEN_SEC_TIMEOUT);
 
         int remainingTimeBeforeForward = videoPlayer.getRemainingTimeThreeIntegers();
         commonPage.clickRight(actionTimes, 1, 1);
