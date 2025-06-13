@@ -1038,13 +1038,17 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        String titleName = detailsPage.getLogoImage().getText();
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isShopPromoLabelHeaderPresent());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, Shop Promo Label header was not found");
+            throw new SkipException(String.format(
+                    "Skipping test, Shop Promo Label header was not found for: %s", titleName) + e);
         }
-        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(),"Shop Promo Label Sub-header was not found");
-        sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(THREE_SEC_TIMEOUT),"Shop or Perks Tab was not found");
+        sa.assertTrue(detailsPage.isShopPromoLabelSubHeaderPresent(),
+                String.format("Shop Promo Label Sub-header was not found for: %s", titleName));
+        sa.assertTrue(detailsPage.getShopOrPerksBtn().isPresent(THREE_SEC_TIMEOUT),
+                String.format("Shop or Perks Tab was not found for: %s", titleName));
     }
 
     private void validateShopTabButton(SoftAssert sa){
