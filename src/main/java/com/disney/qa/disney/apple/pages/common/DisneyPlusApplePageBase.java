@@ -1513,6 +1513,20 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         throw new NoSuchElementException("Desired collection was not focused");
     }
 
+    public boolean moveDownUntilCollectionIsPresent(String collectionId, int count) {
+        LOGGER.info("Moving down until desired collection is present");
+        ExtendedWebElement desiredCollection = getCollection(collectionId);
+        while (count > 0) {
+            if (desiredCollection.isPresent(ONE_SEC_TIMEOUT)) {
+                LOGGER.info("Desired collection is present");
+                return true;
+            }
+            moveDown(1, 1);
+            count--;
+        }
+        throw new NoSuchElementException("Desired collection is not present");
+    }
+
     public void moveDownUntilElementIsFocused(ExtendedWebElement element, int count) {
         LOGGER.info("Moving down until desired element is focused");
         if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
@@ -1652,5 +1666,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getElementByLabel(String label) {
         return dynamicFindByLabel.format(label);
     }
-
 }
