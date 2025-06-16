@@ -1451,7 +1451,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isFirstCellFromCollectionEpisodeMetadataPresent(
             String collectionName, String seasonNumber, String episodeNumber, String episodeTitle) {
-        String episodeMetadata = String.format("Season %s, Episode %s", seasonNumber, episodeNumber, episodeTitle);
+        String episodeMetadata = String.format("S%s:E%s %s", seasonNumber, episodeNumber, episodeTitle);
         return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
     }
 
@@ -1651,6 +1651,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getElementByLabel(String label) {
         return dynamicFindByLabel.format(label);
+    }
+
+    public boolean isFirstCellFromCollectionEpisodeMetadataPresent(
+            String collectionName, String seasonNumber, String episodeNumber) {
+        String episodeMetadata = String.format("Season %s, Episode %s", seasonNumber, episodeNumber);
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
     }
 
 }
