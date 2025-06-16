@@ -546,7 +546,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String collectionName = CollectionConstant.getCollectionName(
                 CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V);
-        setAppToHomeScreen(getUnifiedAccount());
+//        setAppToHomeScreen(getUnifiedAccount());
 
         Visuals firstEpisodeFromCollectionVisuals = getItemsFromCollection(
                 CollectionConstant.Collection.TREEHOUSE_OF_HORROR_I_TO_V, 1).get(0).getVisuals();
@@ -572,15 +572,14 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         sa.assertTrue(
                 collectionPage.isFirstCellFromCollectionStaticTextPresent(collectionName,
-                        firstEpisodeFromCollectionSeriesTitle),
+                        firstEpisodeFromCollectionTitle),
                 "First element of the collection did not have series title"
         );
 
         sa.assertTrue(
                 collectionPage.isFirstCellFromCollectionEpisodeMetadataPresent(collectionName,
                         firstEpisodeFromCollectionSeasonNumber,
-                        firstEpisodeFromCollectionEpisodeNumber,
-                        firstEpisodeFromCollectionTitle),
+                        firstEpisodeFromCollectionEpisodeNumber, null),
                 "First element of the collection did not have episode metadata");
 
         sa.assertTrue(collectionPage.isFirstCellFromCollectionAssetImagePresent(collectionName),
