@@ -1658,5 +1658,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         String episodeMetadata = String.format("Season %s, Episode %s", seasonNumber, episodeNumber);
         return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
     }
-
 }
