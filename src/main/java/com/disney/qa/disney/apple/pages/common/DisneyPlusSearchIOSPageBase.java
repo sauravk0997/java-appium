@@ -292,7 +292,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         collectionCellNoRow.format(collectionId).click();
     }
 
-
     public boolean isRatingPresentInSearchResults(String rating) {
         LOGGER.info("Verifying Ratings in search results");
         return searchResults.format(rating).isPresent();
