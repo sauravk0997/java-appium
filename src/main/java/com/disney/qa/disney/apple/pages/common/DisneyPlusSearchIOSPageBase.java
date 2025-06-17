@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -13,10 +12,7 @@ import org.testng.SkipException;
 
 import java.lang.invoke.MethodHandles;
 import java.security.SecureRandom;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.IntStream;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
@@ -279,13 +275,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId((getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                         DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
-    }
-
-    public List<String> getExploreCollections() {
-        List<ExtendedWebElement> exploreCollections = findExtendedWebElements(getHeaderViewTitleLabel().getBy());
-        List<String> collectionTitles = new ArrayList<>();
-        IntStream.range(0, exploreCollections.size()).forEach(i -> collectionTitles.add(exploreCollections.get(i).getText()));
-        return collectionTitles;
     }
 
     public void clickThirdCollection(String collectionId) {
