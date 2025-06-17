@@ -441,8 +441,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .getContainers();
     }
 
-//    public ExploreContent getSearchApi(String pageID)
-
     public Visuals getExploreAPIPageVisuals(String entityID) {
         ExplorePageResponse pageResponse;
         try {
