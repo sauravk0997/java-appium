@@ -24,12 +24,6 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "pinInputTitle")
     private ExtendedWebElement pinInputTitle;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"Pin input field is empty\"`][%s]")
-    private ExtendedWebElement pinInputNumber;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`label == \"%s\"`][%s]")
-    private ExtendedWebElement pinInputNumberWithKey;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"profilePin\"`]/XCUIElementTypeOther[2]")
     private ExtendedWebElement pinInputField;
 
@@ -140,9 +134,5 @@ public class DisneyPlusPinIOSPageBase extends DisneyPlusApplePageBase {
     public boolean isNotNowButtonOnCancelModalDisplayed() {
         return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.R21_MUST_CREATE_PIN_MODAL_NOT_NOW_BUTTON.getText())).isPresent();
-    }
-
-    public boolean isPinInputFieldDisplayed() {
-        return pinInputField.isPresent();
     }
 }

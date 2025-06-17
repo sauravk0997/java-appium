@@ -319,10 +319,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 		return downloadOverWifiOnly.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.DOWNLOAD_WIFI_ONLY.getText())).getAttribute(Attributes.ENABLED.getAttribute()).equalsIgnoreCase(Boolean.TRUE.toString());
 	}
 
-	public boolean isAccountUnverifiedBadgeDisplayed() {
-		return accountUnverifiedBadge.isPresent();
-	}
-
 	public boolean isAddProfileButtonPresent() {
 		return addProfileBtn.isElementPresent();
 	}

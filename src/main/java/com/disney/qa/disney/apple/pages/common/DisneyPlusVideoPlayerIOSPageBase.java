@@ -92,13 +92,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             "'%s'$]/**/XCUIElementTypeButton")
     private ExtendedWebElement feedOptionCheckmark;
 
-
-    public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
-          "depictions and/or mistreatment of people or cultures. These stereotypes were wrong then and are wrong now. Rather than remove this content, we want to acknowledge its harmful impact, learn from it and spark conversation to create a more inclusive future together.";
-    public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2 = "Disney is committed to creating " +
-            "stories with inspirational and aspirational themes that reflect the rich diversity of the human experience around the globe.";
-    private static final String NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE = "YOUR VIDEO WILL START IN";
-
     //FUNCTIONS
 
     public DisneyPlusVideoPlayerIOSPageBase(WebDriver driver) {
@@ -388,12 +381,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusDetailsIOSPageBase tapTitleOnPlayer() {
         displayVideoController();
         titleLabel.click();
-        return initPage(DisneyPlusDetailsIOSPageBase.class);
-    }
-
-    public DisneyPlusDetailsIOSPageBase tapSubtitleOnPlayer() {
-        displayVideoController();
-        subtitleLabel.click();
         return initPage(DisneyPlusDetailsIOSPageBase.class);
     }
 

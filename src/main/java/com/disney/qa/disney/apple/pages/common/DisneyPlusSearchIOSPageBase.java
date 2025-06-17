@@ -34,8 +34,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement cancelButtonRecentSearch;
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'iconNavBack24LightActive'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
-    private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
     @ExtendedFindBy(accessibilityId = "segmentedControl")
     private ExtendedWebElement contentPageFilterHeader;
     @ExtendedFindBy(accessibilityId = "itemPickerView")
@@ -222,10 +220,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         contentPageFilterDropDown.click();
     }
 
-    public void clickContentPageFilterDropDownAtMiddleTop() {
-        contentPageFilterDropDownAtMiddleTop.click();
-    }
-
     public boolean isContentPageFilterHeaderPresent() {
         return contentPageFilterHeader.isPresent();
     }
@@ -233,10 +227,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public void swipeContentPageFilter(Direction direction) {
         //To be used with tablet only
         swipeInContainer(contentPageFilterHeader, direction, 500);
-    }
-
-    public boolean isContentPageFilterDropDownAtMiddleTopPresent() {
-        return contentPageFilterDropDownAtMiddleTop.isPresent();
     }
 
     public void swipeItemPicker(Direction direction) {

@@ -1,10 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.api.disney.*;
 import com.disney.qa.api.explore.response.*;
-import com.disney.qa.api.pojos.explore.*;
-import com.disney.qa.common.*;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.*;

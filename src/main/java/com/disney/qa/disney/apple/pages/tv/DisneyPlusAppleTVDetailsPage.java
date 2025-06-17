@@ -62,10 +62,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return briefDesc.isElementPresent() && briefDesc.getText().chars().count() <= 120;
     }
 
-    public boolean isAnthologyTitlePresent() {
-        return getStaticTextByLabel("Dancing with the Stars").isElementPresent();
-    }
-
     @Override
     public  ExtendedWebElement getPlayButton() {
         return getTypeButtonByName(getLocalizationUtils().getDictionaryItem(
@@ -120,7 +116,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     @Override
-    public boolean isHeroImagePresent() {return heroImage.isPresent(); }
+    public boolean isHeroImagePresent() {
+        return heroImage.isPresent();
+    }
 
     public ExtendedWebElement getMetadataLabel() {
         return getStaticTextLabelName("metaDataLabel");

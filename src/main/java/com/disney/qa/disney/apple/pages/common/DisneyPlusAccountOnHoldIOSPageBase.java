@@ -14,18 +14,4 @@ public class DisneyPlusAccountOnHoldIOSPageBase extends DisneyPlusApplePageBase 
         super(driver);
     }
 
-    private ExtendedWebElement accountHoldTitle = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.ACCOUNT_HOLD_TITLE);
-    private ExtendedWebElement accountHoldSubText = findByAccessibilityId(DisneyDictionaryApi.ResourceKeys.SUBSCRIPTIONS, DictionaryKeys.ACCOUNT_HOLD_BAMTECH_DISNEY);
-    private ExtendedWebElement updatePaymentButton = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_ACCOUNT_HOLD_UPDATE_PAYMENT.getText()));
-    private ExtendedWebElement refreshButton = getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_REFRESH.getText()));
-
-    public ExtendedWebElement getLogoutButton() { return dismissBtn; }
-
-    public ExtendedWebElement getAccountHoldTitle() { return accountHoldTitle; }
-
-    public ExtendedWebElement getAccountHoldSubText() { return accountHoldSubText; }
-
-    public ExtendedWebElement getUpdatePaymentButton() { return updatePaymentButton; }
-
-    public ExtendedWebElement getRefreshButton() {return refreshButton; }
 }
