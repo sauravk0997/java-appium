@@ -72,8 +72,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement iconPinUnlocked;
     @ExtendedFindBy(accessibilityId = "unlockPlayerControlsButton")
     private ExtendedWebElement iconPinLocked;
-    @ExtendedFindBy(accessibilityId = "brandImageView")
-    private ExtendedWebElement brandImageView;
     @ExtendedFindBy(accessibilityId = "skipIntroButton")
     private ExtendedWebElement skipIntroButton;
     @FindBy(name = "subtitleLabel")
@@ -529,18 +527,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     /**
-     * Waits for content to end in player until getRemainingTime isn't greater than 0 and polling
-     * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
-     *
-     * @param timeout
-     * @param polling
-     */
-    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Content did not end after " + timeout).until(it -> getRemainingTime() == 0);
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    /**
      * Waits for trailer to end in player until video player is not open.
      * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
      *
@@ -955,12 +941,5 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getTitleVideoLabel() {
         return titleLabel;
-    }
-
-    public void clickUnlockButton() {
-        if (getElementFor(PlayerControl.UNLOCK_ICON).isElementNotPresent(ONE_SEC_TIMEOUT)) {
-            clickElementAtLocation(getPlayerView(), 10, 50);
-        }
-        longTap(iconPinLocked);
     }
 }
