@@ -18,9 +18,9 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
-    private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block screen not displayed";
-    private static final String OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Hard Block screen not displayed";
-    private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen not displayed";
+    private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block screen is not displayed";
+    private static final String OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Hard Block screen is not displayed";
+    private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen is not displayed";
     private static final String OTP_PAGE_DID_NOT_OPEN = "User not navigated to OTP page";
     private static final String OTP_SUCCESS_MESSAGE_NOT_DISPLAYED =
             "Confirmation page not displayed after entering OTP";
@@ -616,6 +616,70 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
         homePage.clickSelect();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-117641"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingHardNoCyosOverride() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_NO_CYOS, false);
+        logInWithoutHomeCheck(account);
+
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        Assert.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        Assert.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
+                UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT);
+        Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+
+        LOGGER.info("verifying I'm away from home flow");
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        Assert.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickBack();
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+
+        LOGGER.info("verifying update household flow");
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickBack();
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+
+        LOGGER.info("Verifying Logout button 'cancel' flow");
+        homePage.moveDown(1, 1);
+        homePage.moveRight(1, 1);
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
+                LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        
+        LOGGER.info("Verifying Logout button 'logout' flow");
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(SHORT_TIMEOUT),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickSelect();
+        sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         sa.assertAll();
     }
 }

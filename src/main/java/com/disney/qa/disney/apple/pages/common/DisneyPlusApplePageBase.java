@@ -1455,6 +1455,12 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
     }
 
+    public boolean isFirstCellFromCollectionEpisodeMetadataPresent(
+            String collectionName, String seasonNumber, String episodeNumber) {
+        String episodeMetadata = String.format("Season %s, Episode %s", seasonNumber, episodeNumber);
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
+    }
+
     public boolean isFirstCellFromCollectionStaticTextPresent(
             String collectionName, String expectedContainedText) {
         return firstCellElementFromCollectionDynamicStaticText.format(collectionName, expectedContainedText)
@@ -1511,6 +1517,20 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             count--;
         }
         throw new NoSuchElementException("Desired collection was not focused");
+    }
+
+    public boolean moveDownUntilCollectionIsPresent(String collectionId, int count) {
+        LOGGER.info("Moving down until desired collection is present");
+        ExtendedWebElement desiredCollection = getCollection(collectionId);
+        while (count > 0) {
+            if (desiredCollection.isPresent(ONE_SEC_TIMEOUT)) {
+                LOGGER.info("Desired collection is present");
+                return true;
+            }
+            moveDown(1, 1);
+            count--;
+        }
+        throw new NoSuchElementException("Desired collection is not present");
     }
 
     public void moveDownUntilElementIsFocused(ExtendedWebElement element, int count) {
@@ -1652,5 +1672,4 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getElementByLabel(String label) {
         return dynamicFindByLabel.format(label);
     }
-
 }
