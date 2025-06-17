@@ -288,8 +288,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return collectionTitles;
     }
 
-    public void clickThirdCollection() {
-        getAllCollectionCells(CollectionConstant.Collection.SEARCH_FEATURED).get(0).click();
+    public void clickThirdCollection(String collectionId) {
+        collectionCellNoRow.format(collectionId).click();
     }
 
 

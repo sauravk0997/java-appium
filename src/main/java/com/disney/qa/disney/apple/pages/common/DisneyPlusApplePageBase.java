@@ -1676,4 +1676,9 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public ExtendedWebElement getHeaderViewTitleLabel() {
         return headerViewTitleLabel;
     }
+
+    public void swipeTillContainerTappable(String containerId, Direction direction, int count) {
+        ExtendedWebElement element = collectionCell.format(containerId);
+        swipePageTillElementTappable(element, count, null, direction, 900);
+    }
 }
