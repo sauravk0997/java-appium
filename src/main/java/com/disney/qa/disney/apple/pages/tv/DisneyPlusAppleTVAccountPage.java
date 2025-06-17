@@ -26,8 +26,12 @@ public class DisneyPlusAppleTVAccountPage extends DisneyPlusApplePageBase {
         return isPresent;
     }
 
-    public void clickChangeEmailBtn() { changeEmailBtn.click(); }
+    public void clickChangeEmailBtn() {
+        changeEmailBtn.click();
+    }
 
-    public void clickChangePasswordBtn() { changePasswordBtn.click(); }
+    public void clickChangePasswordBtn() {
+        changePasswordBtn.click();
+    }
 
 }

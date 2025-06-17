@@ -716,7 +716,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         getScreenshots("4-SettingsLegal", baseDirectory);
 
         disneyPlusAppleTVLegalPage.isOpened();
-        disneyPlusAppleTVLegalPage.getAllLegalSectionsScreenshot("5_Settings_Legal_", baseDirectory);
+        disneyPlusAppleTVLegalPage.getAllLegalSectionsScreenshot("5_Settings_Legal_");
 
         ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory,
                 String.format("%s_%s_%s_%s.zip", "Sub_UI_Settings", getLanguage().toUpperCase(), getCountry(), getDate()));

@@ -119,8 +119,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement secondTitleLabel;
     @ExtendedFindBy(accessibilityId = "titleLabel_%s")
     private ExtendedWebElement episodeTitleLabel;
-    @ExtendedFindBy(accessibilityId = "infoInactive24")
-    private ExtendedWebElement infoView;
     @FindBy(id = "itemPickerClose")
     private ExtendedWebElement itemPickerClose;
     @FindBy(id = "seasonSelectorButton")
@@ -436,14 +434,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return downloadSeasonButton;
     }
 
-    public void clickSeasonsButton(String season) {
-        if (!isSeasonButtonDisplayed(season)) {
-            scrollDown();
-        }
-        String seasonsButton = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
-        getDynamicAccessibilityId(seasonsButton).click();
-    }
-
     public void clickExtrasTab() {
         if (!extrasTab.isPresent()) {
             swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, Direction.UP, 900);
@@ -653,26 +643,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return detailsTabParts[detailsTabPart].contains(params.get("metadataLabelPart").trim());
     }
 
-    public boolean compareEpisodeNum() {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.UP, 2000);
-        LOGGER.info("Retrieving current episode number..");
-        String currentEpisodeNum = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
-        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.DOWN, 2000);
-        clickWatchButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.waitForContentToEnd(450, 15);
-        if (videoPlayer.isOpened()) {
-            videoPlayer.clickBackButton();
-        }
-        isOpened();
-        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.UP, 2000);
-        LOGGER.info("Retrieving recently played episode number..");
-        String recentlyPlayedEpisode = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
-        LOGGER.info("Comparing current episode number with recently played episode number..");
-        return currentEpisodeNum.contains(recentlyPlayedEpisode);
-    }
-
     public boolean isWatchButtonPresent() {
         return watchButton.isElementPresent();
     }
@@ -850,20 +820,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     public String getSeasonSelector() {
         String[] seasonSelector = seasonSelectorButton.getText().split(" ");
         return seasonSelector[1];
-    }
-
-    /**
-     * Below are QA env specific methods for DWTS Anthology.
-     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
-     */
-
-    public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {
-        if (getTypeButtonByName(WATCH).isPresent()) {
-            getTypeButtonByName(WATCH).click();
-        } else {
-            getTypeButtonByName(LOWER_CASE_WATCH).click();
-        }
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     public boolean isContentDetailsPagePresent() {
