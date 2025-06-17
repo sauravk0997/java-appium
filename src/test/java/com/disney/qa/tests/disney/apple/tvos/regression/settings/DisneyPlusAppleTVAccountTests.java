@@ -362,12 +362,13 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         // Following steps will validate navigation between OOH screens
+        homePage.moveDown(1, 1);
         homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
         homePage.clickBack();
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
-                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
         // Click in logout button and verify logout confirmation page
         homePage.moveDown(1, 1);
         homePage.moveRight(1, 1);
