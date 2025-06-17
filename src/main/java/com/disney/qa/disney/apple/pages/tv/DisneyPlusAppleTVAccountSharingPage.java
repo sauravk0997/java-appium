@@ -100,7 +100,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     public boolean isOOHHardBlockScreenHeadlinePresent() {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                        DictionaryKeys.OOH_HARD_BLOCK_HEADLINE.getText())).isPresent();
+                        DictionaryKeys.OOH_HARD_BLOCK_HEADLINE.getText())).isPresent(FIVE_SEC_TIMEOUT);
     }
 
     public boolean isOOHHardBlockCreateAccLabelPresent() {
@@ -234,6 +234,6 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     public boolean isLogoutConfirmationTitlePresent() {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.LOG_OUT_CONFIRMATION_TITLE.getText())).isPresent();
+                        DictionaryKeys.LOG_OUT_CONFIRMATION_TITLE.getText())).isPresent(FIVE_SEC_TIMEOUT);
     }
 }
