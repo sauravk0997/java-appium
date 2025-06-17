@@ -123,7 +123,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
             Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
             whoIsWatchingPage.clickProfile(String.valueOf(profileName[0]), true);
         }
-        collapseGlobalNav();
         Assert.assertTrue(homePage.isOpened(),
                 "Home page did not launch for single profile user after logging in");
     }
