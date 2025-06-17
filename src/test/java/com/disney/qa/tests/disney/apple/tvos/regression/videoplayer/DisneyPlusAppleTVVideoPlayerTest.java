@@ -569,10 +569,10 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                     "Up Next movie title is not present");
         }
         // Only if metastring includes release year, the UI should display the release year
-        String releaseYear = upNextItemVisuals.getMetastringParts().getReleaseYearRange().getStartYear();
-        if (releaseYear != null) {
-            Assert.assertTrue(upNextPage.getStaticTextByLabelContains(releaseYear).isPresent(),
-                    "Up Next movie release year is not present");
+        if (upNextItemVisuals.getMetastringParts().getReleaseYearRange() != null) {
+            Assert.assertTrue(upNextPage.getStaticTextByLabelContains(
+                    upNextItemVisuals.getMetastringParts().getReleaseYearRange().getStartYear()).isPresent(),
+                    "Up Next release year is not present");
         }
         Assert.assertTrue(upNextPage.getUpNextContentFooterLabel().isPresent(),
                 "Up Next badging area is not present");
