@@ -728,4 +728,11 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
+
+    public ExploreSearchRequest getUpNextRequest(String contentId) {
+        return ExploreSearchRequest.builder()
+                .contentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                .profileId(getUnifiedAccount().getProfileId())
+                .contentId(contentId).build();
+    }
 }
