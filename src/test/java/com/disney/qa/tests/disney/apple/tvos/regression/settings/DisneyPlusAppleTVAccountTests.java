@@ -378,7 +378,6 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
         homePage.moveDown(1, 1);
         homePage.clickSelect();
-        homePage.clickBack();
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         homePage.clickBack();
