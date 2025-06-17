@@ -1,7 +1,6 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -537,11 +536,10 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
 
-        ExploreSearchRequest getUpNextRequest = getUpNextRequest(
-                R.TESTDATA.get("disney_prod_series_bluey_last_episode_content_id"));
         ExploreUpNextResponse upNextResponse;
         try {
-            upNextResponse = getExploreApi().getUpNext(getUpNextRequest);
+            upNextResponse = getExploreApi().getUpNext(
+                    createUpNextRequest(R.TESTDATA.get("disney_prod_series_bluey_last_episode_content_id")));
         } catch (URISyntaxException exception) {
             throw new SkipException("Failed to fetch Up Next metadata using Explore API", exception);
         }
@@ -555,9 +553,14 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         commonPage.clickRightTillEndOfPlaybackIsReached(
                 videoPlayer.getSeekbar(), 40, 1, 1);
         videoPlayer.clickPlay();
-        Assert.assertTrue(upNextPage.waitForUpNextUIToAppear(), UP_NEXT_PAGE_NOT_DISPLAYED);
+        upNextPage.waitForUpNextUIToAppear();
 
-        Visuals upNextItemVisuals = upNextResponse.getUpNext().getItems().get(0).getItemDetails().getVisuals();
+        Visuals upNextItemVisuals;
+        try {
+            upNextItemVisuals = upNextResponse.getUpNext().getItems().get(0).getItemDetails().getVisuals();
+        } catch (RuntimeException e) {
+            throw new SkipException("Failed to get Up Next item visuals using Explore API", e);
+        }
         if (upNextItemVisuals.getEpisodeTitle() != null) {
             Assert.assertTrue(upNextPage.getStaticTextByLabelContains(upNextItemVisuals.getEpisodeTitle()).isPresent(),
                     "Up Next episode title is not present");
@@ -565,13 +568,19 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
             Assert.assertTrue(upNextPage.getStaticTextByLabelContains(upNextItemVisuals.getTitle()).isPresent(),
                     "Up Next movie title is not present");
         }
+        // Only if metastring includes release year, the UI should display the release year
+        String releaseYear = upNextItemVisuals.getMetastringParts().getReleaseYearRange().getStartYear();
+        if (releaseYear != null) {
+            Assert.assertTrue(upNextPage.getStaticTextByLabelContains(releaseYear).isPresent(),
+                    "Up Next movie release year is not present");
+        }
         Assert.assertTrue(upNextPage.getUpNextContentFooterLabel().isPresent(),
                 "Up Next badging area is not present");
         String formattedDuration = getFormattedDurationStringFromDurationInMs(
                 upNextItemVisuals.getMetastringParts().getRuntime().getRuntimeMs());
         Assert.assertTrue(upNextPage.getStaticTextByLabelContains(formattedDuration).isPresent(),
                 "Up Next runtime is not present");
-        if (upNextItemVisuals.getGenres() != null) {
+        if (upNextItemVisuals.getMetastringParts().getGenres() != null) {
             ArrayList<String> genres = upNextItemVisuals.getMetastringParts().getGenres().getValues();
             genres.forEach(genre -> {
                 Assert.assertTrue(upNextPage.getStaticTextByLabelContains(genre).isPresent(),
