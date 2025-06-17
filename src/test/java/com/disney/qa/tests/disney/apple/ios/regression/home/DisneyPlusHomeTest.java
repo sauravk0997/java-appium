@@ -44,47 +44,43 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyHomeUIElements() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
         setAppToHomeScreen(getUnifiedAccount());
+        ArrayList<Container> collections;
+        try {
+            collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get collection details from the api " + e.getMessage());
+        }
 
-        //Validate top of home
-        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "`Disney Plus` image was not found");
-        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.NEWLY_ADDED, 5);
-        sa.assertTrue(homePage.getTypeOtherContainsName(CollectionConstant.getCollectionTitle
-                        (CollectionConstant.Collection.NEWLY_ADDED)).isPresent(),
-                "'Newly Added' collection was not found");
-        homePage.swipeLeftInCollectionNumOfTimes(5, CollectionConstant.Collection.NEWLY_ADDED);
-        BufferedImage collectionLastTileInView = getElementImage(
-                homePage.getCollection(CollectionConstant.Collection.NEWLY_ADDED));
-        homePage.swipeRightInCollectionNumOfTimes(5, CollectionConstant.Collection.NEWLY_ADDED);
-        BufferedImage collectionFirstTileInView = getElementImage(
-                homePage.getCollection(CollectionConstant.Collection.NEWLY_ADDED));
-        sa.assertTrue(areImagesDifferent(
-                        collectionFirstTileInView,
-                        collectionLastTileInView),
-                "Collection first tile in view and last tile in view images are the same");
+        Container topContainer = collections.get(2);
+        sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(), "'Disney Plus' logo was not found");
+        ExtendedWebElement collection = homePage.getCollection(topContainer.getId());
+        homePage.swipePageTillElementTappable(collection, 2, null, Direction.UP, 1000);
+        sa.assertTrue(collection.isPresent(),
+                String.format("%s collection is not present", topContainer.getVisuals().getName()));
+        swipeInContainer(collection, Direction.LEFT, 5, 500);
+        BufferedImage collectionLastTileInView = getElementImage(collection);
+        swipeInContainer(collection, Direction.RIGHT, 5, 500);
+        BufferedImage collectionFirstTileInView = getElementImage(collection);
+        sa.assertTrue(areImagesDifferent(collectionFirstTileInView, collectionLastTileInView),
+                "Horizontal swipe didn't work properly in collection");
 
-        BufferedImage topOfHome = getCurrentScreenView();
+        //Capture current view of home screen
+        BufferedImage currentViewOfHome = getCurrentScreenView();
 
-        //Capture bottom of home
+        //Capture view of home screen after swiping
         swipeInContainer(null, Direction.UP, 5, 500);
-        BufferedImage closeToBottomOfHome = getCurrentScreenView();
+        BufferedImage closeToBottomViewOfHome = getCurrentScreenView();
 
         //Validate back at top of home
-        swipePageTillElementPresent(homePage.getImageLabelContains(DISNEY_PLUS),
-                10,
-                null,
-                Direction.DOWN,
-                300);
+        swipePageTillElementPresent(homePage.getImageLabelContains(DISNEY_PLUS), 10, null, Direction.DOWN, 300);
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(),
                 "`Disney Plus` image was not found after return to top of home");
-        homePage.swipeUpTillCollectionCompletelyVisible(CollectionConstant.Collection.NEWLY_ADDED, 5);
-        sa.assertTrue(homePage.getTypeOtherContainsName(CollectionConstant.getCollectionTitle
-                        (CollectionConstant.Collection.NEWLY_ADDED)).isPresent(),
-                "'Newly Added' collection was not found");
 
         //Validate images are different
-        sa.assertTrue(areImagesDifferent(topOfHome, closeToBottomOfHome),
-                "Top of home image is the same as bottom of home image");
+        sa.assertTrue(areImagesDifferent(currentViewOfHome, closeToBottomViewOfHome),
+                "Vertical swipe didn't work properly");
         sa.assertAll();
     }
 
@@ -572,15 +568,14 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         sa.assertTrue(
                 collectionPage.isFirstCellFromCollectionStaticTextPresent(collectionName,
-                        firstEpisodeFromCollectionSeriesTitle),
+                        firstEpisodeFromCollectionTitle),
                 "First element of the collection did not have series title"
         );
 
         sa.assertTrue(
                 collectionPage.isFirstCellFromCollectionEpisodeMetadataPresent(collectionName,
                         firstEpisodeFromCollectionSeasonNumber,
-                        firstEpisodeFromCollectionEpisodeNumber,
-                        firstEpisodeFromCollectionTitle),
+                        firstEpisodeFromCollectionEpisodeNumber),
                 "First element of the collection did not have episode metadata");
 
         sa.assertTrue(collectionPage.isFirstCellFromCollectionAssetImagePresent(collectionName),
