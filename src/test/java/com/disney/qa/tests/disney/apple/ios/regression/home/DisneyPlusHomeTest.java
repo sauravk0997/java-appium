@@ -572,15 +572,14 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         sa.assertTrue(
                 collectionPage.isFirstCellFromCollectionStaticTextPresent(collectionName,
-                        firstEpisodeFromCollectionSeriesTitle),
+                        firstEpisodeFromCollectionTitle),
                 "First element of the collection did not have series title"
         );
 
         sa.assertTrue(
                 collectionPage.isFirstCellFromCollectionEpisodeMetadataPresent(collectionName,
                         firstEpisodeFromCollectionSeasonNumber,
-                        firstEpisodeFromCollectionEpisodeNumber,
-                        firstEpisodeFromCollectionTitle),
+                        firstEpisodeFromCollectionEpisodeNumber),
                 "First element of the collection did not have episode metadata");
 
         sa.assertTrue(collectionPage.isFirstCellFromCollectionAssetImagePresent(collectionName),
