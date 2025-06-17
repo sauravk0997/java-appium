@@ -441,6 +441,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
                 .getContainers();
     }
 
+//    public ExploreContent getSearchApi(String pageID)
+
     public Visuals getExploreAPIPageVisuals(String entityID) {
         ExplorePageResponse pageResponse;
         try {
@@ -896,5 +898,16 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         return account;
+    }
+
+    public String getSearchExploreContainerId(int containerNum) {
+        String containerId = null;
+        try {
+            containerId = getExploreApi().search(getDisneyExploreSearchRequest().setUnifiedAccount(getUnifiedAccount()).
+                    setQueryString("")).getData().getPage().getContainers().get(containerNum).getId();
+        } catch (Exception e) {
+            Assert.fail("Expected response not received from API, Log:\n{}", e);
+        }
+        return  containerId;
     }
 }
