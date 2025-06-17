@@ -74,7 +74,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         BufferedImage closeToBottomViewOfHome = getCurrentScreenView();
 
         //Validate back at top of home
-        swipePageTillElementPresent(homePage.getImageLabelContains(DISNEY_PLUS),10,null, Direction.DOWN, 300);
+        swipePageTillElementPresent(homePage.getImageLabelContains(DISNEY_PLUS), 10, null, Direction.DOWN, 300);
         sa.assertTrue(homePage.getImageLabelContains(DISNEY_PLUS).isPresent(),
                 "`Disney Plus` image was not found after return to top of home");
 
