@@ -576,9 +576,9 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         }
         Assert.assertTrue(upNextPage.getUpNextContentFooterLabel().isPresent(),
                 "Up Next badging area is not present");
-        String formattedDuration = getFormattedDurationStringFromDurationInMs(
+        String formattedRuntime = getFormattedDurationStringFromDurationInMs(
                 upNextItemVisuals.getMetastringParts().getRuntime().getRuntimeMs());
-        Assert.assertTrue(upNextPage.getStaticTextByLabelContains(formattedDuration).isPresent(),
+        Assert.assertTrue(upNextPage.getStaticTextByLabelContains(formattedRuntime).isPresent(),
                 "Up Next runtime is not present");
         if (upNextItemVisuals.getMetastringParts().getGenres() != null) {
             ArrayList<String> genres = upNextItemVisuals.getMetastringParts().getGenres().getValues();
