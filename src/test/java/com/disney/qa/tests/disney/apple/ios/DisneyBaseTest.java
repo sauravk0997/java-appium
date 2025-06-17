@@ -904,7 +904,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             containerId = getExploreApi().search(getDisneyExploreSearchRequest().setUnifiedAccount(getUnifiedAccount()).
                     setQueryString("")).getData().getPage().getContainers().get(containerNum).getId();
         } catch (Exception e) {
-            Assert.fail("Expected response not received from API, Log:\n{}", e);
+            Assert.fail("Expected container ID not received from API, Log:\n{}", e);
         }
         return  containerId;
     }
