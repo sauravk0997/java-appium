@@ -1,10 +1,7 @@
 package com.disney.qa.tests.disney.apple.tvos.regression.videoplayer;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
-import com.disney.qa.api.disney.*;
 import com.disney.qa.api.explore.response.*;
-import com.disney.qa.api.pojos.explore.*;
-import com.disney.qa.common.*;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -22,6 +19,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.net.URISyntaxException;
 import java.time.temporal.ValueRange;
 import java.util.ArrayList;
 import java.util.List;
@@ -529,5 +527,65 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         LOGGER.info("details page remainingTime {}", detailsPage.getRemainingTimeLabel());
         Assert.assertTrue(detailsPage.getRemainingTimeLabel().contains(remainingTime),
                 "Remaining time did not match with the video player values for the series");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-124647"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
+    public void verifyUpNextPostPlayMetastring() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
+
+        ExploreUpNextResponse upNextResponse;
+        try {
+            upNextResponse = getExploreApi().getUpNext(
+                    createUpNextRequest(R.TESTDATA.get("disney_prod_series_bluey_last_episode_content_id")));
+        } catch (URISyntaxException exception) {
+            throw new SkipException("Failed to fetch Up Next metadata using Explore API", exception);
+        }
+
+        logIn(getUnifiedAccount());
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_bluey_last_episode_playback_deeplink"));
+        videoPlayer.waitForVideoToStart(TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT);
+
+        // Fast-forward to the end of playback and validate Post Play UI info
+        videoPlayer.clickPlay();
+        commonPage.clickRightTillEndOfPlaybackIsReached(
+                videoPlayer.getSeekbar(), 40, 1, 1);
+        videoPlayer.clickPlay();
+        upNextPage.waitForUpNextUIToAppear();
+
+        Visuals upNextItemVisuals;
+        try {
+            upNextItemVisuals = upNextResponse.getUpNext().getItems().get(0).getItemDetails().getVisuals();
+        } catch (RuntimeException e) {
+            throw new SkipException("Failed to get Up Next item visuals using Explore API", e);
+        }
+        if (upNextItemVisuals.getEpisodeTitle() != null) {
+            Assert.assertTrue(upNextPage.getStaticTextByLabelContains(upNextItemVisuals.getEpisodeTitle()).isPresent(),
+                    "Up Next episode title is not present");
+        } else {
+            Assert.assertTrue(upNextPage.getStaticTextByLabelContains(upNextItemVisuals.getTitle()).isPresent(),
+                    "Up Next movie title is not present");
+        }
+        // Only if metastring includes release year, the UI should display the release year
+        if (upNextItemVisuals.getMetastringParts().getReleaseYearRange() != null) {
+            Assert.assertTrue(upNextPage.getStaticTextByLabelContains(
+                    upNextItemVisuals.getMetastringParts().getReleaseYearRange().getStartYear()).isPresent(),
+                    "Up Next release year is not present");
+        }
+        Assert.assertTrue(upNextPage.getUpNextContentFooterLabel().isPresent(),
+                "Up Next badging area is not present");
+        String formattedRuntime = getFormattedDurationStringFromDurationInMs(
+                upNextItemVisuals.getMetastringParts().getRuntime().getRuntimeMs());
+        Assert.assertTrue(upNextPage.getStaticTextByLabelContains(formattedRuntime).isPresent(),
+                "Up Next runtime is not present");
+        if (upNextItemVisuals.getMetastringParts().getGenres() != null) {
+            ArrayList<String> genres = upNextItemVisuals.getMetastringParts().getGenres().getValues();
+            genres.forEach(genre -> {
+                Assert.assertTrue(upNextPage.getStaticTextByLabelContains(genre).isPresent(),
+                        String.format("'%s' genre is not present", genre));
+            });
+        }
     }
 }
