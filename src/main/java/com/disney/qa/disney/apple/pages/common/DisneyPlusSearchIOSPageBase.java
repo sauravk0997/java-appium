@@ -267,11 +267,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
-    public void clickThirdCollection() {
-        thirdCollectionTitle.format(
-                getLocalizationUtils().getDictionaryItem(
-                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
+    public void clickCollection(String collectionId) {
+        collectionCellNoRow.format(collectionId).click();
     }
 
     public boolean isRatingPresentInSearchResults(String rating) {

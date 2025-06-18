@@ -352,7 +352,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyOOHHardNoCyosHousehold() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
         SoftAssert sa = new SoftAssert();
         UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_NO_CYOS, false);
@@ -362,13 +362,14 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         // Following steps will validate navigation between OOH screens
+        homePage.moveDown(1, 1);
         homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
         homePage.clickBack();
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
-                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
-        // Click in logout button and confirm logout in confirmation page
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        // Click in logout button and verify logout confirmation page
         homePage.moveDown(1, 1);
         homePage.moveRight(1, 1);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
@@ -376,8 +377,13 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
                 LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
         homePage.clickSelect();
-        sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickBack();
+        sa.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+
         sa.assertAll();
     }
 

@@ -41,12 +41,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String SUGGESTED_CELL_TITLE = "suggestedCellTitle";
     private static final String IMAX_ENHANCED = "IMAX Enhanced";
     private static final String DOLBY_VISION = "Dolby Vision";
-    private static final String SHOP_PROMO_LABEL_HEADER = "Discover Exclusive Disney+ Subscriber Perks";
-    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Visit the PERKS tab to learn more.";
+    private static final String SHOP_PROMO_LABEL_HEADER = "Discover More with Your Disney+ Subscription";
+    private static final String SHOP_PROMO_LABEL_SUBHEADER = "Learn more in the PERKS tab below";
     private static final String DETAILS_DURATION_SUFFIX = "remaining";
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK = "UNLOCK";
     private static final String STARRING = "Starring";
+    private static final String SHOP_TAB_HEADING = "Discover Disney+ Perks";
+    private static final String SHOP_TAB_SUB_HEADING = "Your Disney+ subscription grants access to everyday savings, " +
+            "chances to win, and more.";
+    private static final String SHOP_TAB_LINK = "Go to Disney store.com";
 
     //LOCATORS
     @ExtendedFindBy(accessibilityId = "contentDetailsPage")
@@ -214,6 +218,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement upsellBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS ', Select for details on this title.'`]")
     protected List<ExtendedWebElement> suggestedContents;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$label=='Content background'$]/**/XCUIElementTypeImage[4]")
+    protected  ExtendedWebElement shopTabBackgroundImage;
 
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -1427,5 +1433,21 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getFirstSuggestedContent() {
         return suggestedContents.get(0);
+    }
+
+    public boolean isShopTabBackgroundImagePresent() {
+        return shopTabBackgroundImage.isPresent();
+    }
+
+    public ExtendedWebElement getShopTabHeadingText() {
+        return getStaticTextByLabel(SHOP_TAB_HEADING);
+    }
+
+    public ExtendedWebElement getShopTabSubHeadingText() {
+        return getStaticTextByLabel(SHOP_TAB_SUB_HEADING);
+    }
+
+    public ExtendedWebElement getShopTabLink() {
+        return getTypeOtherByLabel(SHOP_TAB_LINK);
     }
 }
