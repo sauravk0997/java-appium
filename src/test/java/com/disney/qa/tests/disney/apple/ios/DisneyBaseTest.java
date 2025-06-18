@@ -774,12 +774,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public String getFormattedDurationStringFromDurationInMs(int durationInMs) {
-        // Convert to minutes using floating point for rounding
-        long roundedMinutes = Math.round(durationInMs / 60000.0);
+        // Convert to minutes using floor rounding via integer division
+        long totalMinutes = durationInMs / 60000;
 
         // Derive hours and minutes using TimeUnit
-        long hours = TimeUnit.MINUTES.toHours(roundedMinutes);
-        long minutes = roundedMinutes - TimeUnit.HOURS.toMinutes(hours);
+        long hours = TimeUnit.MINUTES.toHours(totalMinutes);
+        long minutes = totalMinutes - TimeUnit.HOURS.toMinutes(hours);
 
         StringBuilder result = new StringBuilder();
         if (hours > 0) {
