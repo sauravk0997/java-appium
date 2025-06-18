@@ -22,6 +22,7 @@ import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -456,7 +457,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        String containerId = getSearchExploreQuery("").getPage().getContainers().get(2).getId();
+        String containerId = getContainerId();
         searchPage.swipeTillContainerTappable(containerId, Direction.UP, 2);
         searchPage.clickCollection(containerId);
         String header = brandPage.getHeaderViewTitleLabel().getText().split(":")[0];
@@ -1212,5 +1213,15 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String detailPageTitle = detailsPage.getMediaTitle();
             sa.assertTrue(secondFilterFirstResult.contains(detailPageTitle), DETAIL_PAGE_TITLE_NOT_EXPECTED);
         }
+    }
+
+    private String getContainerId() {
+        String containerId = null;
+        try {
+            containerId = getSearchExploreQuery("").getPage().getContainers().get(2).getId();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(e.getMessage());
+        }
+        return containerId;
     }
 }
