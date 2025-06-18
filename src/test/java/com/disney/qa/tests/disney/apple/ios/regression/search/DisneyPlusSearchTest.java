@@ -458,7 +458,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         String containerId = getSearchExploreQuery("").getPage().getContainers().get(2).getId();
         searchPage.swipeTillContainerTappable(containerId, Direction.UP, 2);
-        searchPage.clickThirdCollection(containerId);
+        searchPage.clickCollection(containerId);
         String header = brandPage.getHeaderViewTitleLabel().getText().split(":")[0];
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
         sa.assertTrue(brandPage.getExpandedBrandImage(header).isPresent(), collectionLogoNotExpanded);
@@ -478,7 +478,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         brandPage.getBackArrow().click();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        searchPage.clickThirdCollection(containerId);
+        searchPage.clickCollection(containerId);
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
 
         //Click First Content Tile on Collection Page

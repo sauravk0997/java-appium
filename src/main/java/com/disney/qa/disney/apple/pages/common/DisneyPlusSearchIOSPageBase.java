@@ -277,7 +277,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
-    public void clickThirdCollection(String collectionId) {
+    public void clickCollection(String collectionId) {
         collectionCellNoRow.format(collectionId).click();
     }
 
