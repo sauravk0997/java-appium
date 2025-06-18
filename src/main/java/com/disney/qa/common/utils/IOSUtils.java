@@ -10,7 +10,6 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.SupportsLegacyAppManagement;
 import lombok.Getter;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.*;
@@ -379,17 +378,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         int x = (int) Math.round(dimension.getWidth() * timesW);
         int y = dimension.getHeight() - subHeight;
         tap(location.getX() + x, location.getY() + y, 0);
-    }
-
-    /**
-     * Restarts currently running app
-     *
-     * @param appName
-     */
-    default void appRestart(String appName) {
-        IOS_UTILS_LOGGER.info("Restarting {} app", appName);
-        closeApp();
-        ((SupportsLegacyAppManagement)getDriver()).launchApp();
     }
 
     /**
