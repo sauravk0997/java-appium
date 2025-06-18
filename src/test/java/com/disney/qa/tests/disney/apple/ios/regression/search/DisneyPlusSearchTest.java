@@ -22,7 +22,6 @@ import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
-import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.IntStream;
 
