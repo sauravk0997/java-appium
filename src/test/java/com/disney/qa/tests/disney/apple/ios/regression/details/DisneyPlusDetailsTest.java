@@ -62,13 +62,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String PLAY_BUTTON_DISPLAYED = "Play CTA found.";
     private static final String METADATA_NOT_DISPLAYED = "Metadata label is not displayed";
 
-    @DataProvider(name = "disneyPlanTypes")
-    public Object[][] disneyWebPlanTypes() {
-        return new Object[][]{{DISNEY_BUNDLE_TRIO_BASIC},
-                {DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY}
-        };
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71130"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyIMAXEnhancedBadges() {
@@ -1035,7 +1028,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     }
 
     private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa) {
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         String titleName = detailsPage.getLogoImage().getText();
@@ -1053,7 +1045,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     private void validateShopTabButton(SoftAssert sa){
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        Assert.assertTrue(detailsPage.isOpened(), "DETAILS_PAGE_NOT_DISPLAYED");
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.getShopOrPerksBtn().isPresent());
         } catch (Exception e) {
