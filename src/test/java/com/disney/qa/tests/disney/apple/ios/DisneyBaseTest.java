@@ -897,4 +897,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
 
         return account;
     }
+
+    public Data getSearchExploreQuery(String query) {
+        ExploreSearchResponse response;
+        try {
+            response = getExploreApi().search(getDisneyExploreSearchRequest().
+                    setUnifiedAccount(getUnifiedAccount()).setQueryString(query));
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred...{}", e);
+        }
+        return response.getData();
+    }
 }
