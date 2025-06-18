@@ -1216,9 +1216,10 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     private String getContainerId() {
+        String queryString = "";
         String containerId = null;
         try {
-            containerId = getSearchExploreQuery("").getPage().getContainers().get(2).getId();
+            containerId = getSearchExploreQuery(queryString).getPage().getContainers().get(2).getId();
         } catch (IndexOutOfBoundsException e) {
             Assert.fail(e.getMessage());
         }
