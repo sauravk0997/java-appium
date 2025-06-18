@@ -4,8 +4,6 @@ import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.util.TestGroup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
@@ -18,7 +16,6 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
-import java.lang.invoke.MethodHandles;
 import java.util.Map;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
@@ -28,7 +25,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RA
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusLoginTest extends DisneyBaseTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     public static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     public static final String COMPLETE_PROFILE_PAGE_NOT_DISPLAYED = "Complete Profile Page is not displayed";
     public static final String HOME_PAGE_NOT_DISPLAYED = "Home page is not displayed";

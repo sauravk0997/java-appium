@@ -33,7 +33,6 @@ public interface IConstantHelper {
     String DETAILS_EPISODE_TITLE_NOT_DISPLAYED = "Details Episode Title is not displayed";
     String DETAILS_PAGE_NOT_DISPLAYED = "Details Page is not displayed";
     String DETAILS_TAB_NOT_DISPLAYED = "Details Tab is not displayed";
-    String DOWNLOADS_PAGE_NOT_DISPLAYED = "Downloads Page is not displayed";
     String ENTER_PASSWORD_PAGE_NOT_DISPLAYED = "Enter Password page is not displayed";
     String EPISODE_TAB_NOT_DISPLAYED = "Episode Tab is not displayed";
     String ESPN_PAGE_IS_NOT_DISPLAYED = "ESPN Brand page is not displayed";
@@ -62,8 +61,6 @@ public interface IConstantHelper {
     String ACCOUNT_IS_MINOR_PAGE_NOT_DISPLAYED = "Blocked minor account page is not displayed";
     String UPDATE_PROFILE_PAGE_NOT_DISPLAYED = "Update Profile page is not displayed";
     String SETTINGS_PAGE_NOT_DISPLAYED = "Settings page is not displayed";
-    String ADD_PROFILE_BANNER_NOT_DISPLAYED = "Add Profile banner is not displayed";
-    String ONE_TRUST_CONSENT_BANNER_NOT_DISPLAYED = "One Trust consent banner is not displayed";
     String LOGOUT_MODAL_NOT_DISPLAYED = "Logout modal is not displayed";
 
     //Profile Names
