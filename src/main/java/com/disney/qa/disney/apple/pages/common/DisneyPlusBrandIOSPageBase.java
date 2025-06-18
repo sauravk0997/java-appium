@@ -144,7 +144,8 @@ public class DisneyPlusBrandIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getExpandedBrandImage(String header) {
         return imageLabelContains.format(getLocalizationUtils().formatPlaceholderString(
-                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                        DictionaryKeys.BRAND_LANDING_PAGE_LOAD.getText(),
                         false), Map.of(BRAND_NAME, header)));
     }
 }
