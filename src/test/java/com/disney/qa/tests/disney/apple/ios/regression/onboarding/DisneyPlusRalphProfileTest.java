@@ -509,7 +509,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         homePage.clickMoreTab();
         moreMenu.clickAddProfile();
-        Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar screen was not opened");
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
         chooseAvatarPage.clickSkipButton();
         addProfilePage.enterProfileName(SECONDARY_PROFILE);
 
