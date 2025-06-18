@@ -403,9 +403,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             }
 
             LOGGER.info("Container Name returned: {} ", containerName);
-            homePage.moveDownUntilCollectionContentIsFocused(containerId, 5);
-            sa.assertTrue(homePage.isFocused(homePage.getFirstCellFromCollection(containerId)),
-                    "User is not able to swipe to container " + containerName);
+            sa.assertTrue(homePage.moveDownUntilCollectionIsPresent(containerId, 5),
+                    String.format("%s collection is not present", containerName));
         }
 
         String topContainerID = collections.get(2).getId();
