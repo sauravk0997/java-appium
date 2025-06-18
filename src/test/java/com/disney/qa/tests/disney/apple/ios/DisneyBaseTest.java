@@ -901,8 +901,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public Data getSearchExploreQuery(String query) {
         ExploreSearchResponse response;
         try {
-            response = getExploreApi().search(getDisneyExploreSearchRequest().setUnifiedAccount(
-                    getUnifiedAccount()).setQueryString(query));
+            response = getExploreApi().search(getDisneyExploreSearchRequest().
+                    setUnifiedAccount(getUnifiedAccount()).setQueryString(query));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException("Exception occurred...{}", e);
         }
