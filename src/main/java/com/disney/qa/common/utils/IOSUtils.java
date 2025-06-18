@@ -236,28 +236,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     /**
      * Press screen using coordinates
      *
-     * @param x x-coordinate
-     * @param y y-coordinate
-     */
-    default void press(int x, int y) {
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
-        touchAction.press(new PointOption<>().withCoordinates(x, y)).release().perform();
-    }
-
-    /**
-     * Long Press screen using coordinates
-     *
-     * @param x x-coordinate
-     * @param y y-coordinate
-     */
-    default void longPress(int x, int y) {
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
-        touchAction.longPress(new PointOption<>().withCoordinates(x, y)).release().perform();
-    }
-
-    /**
-     * Press screen using coordinates
-     *
      * @param x (distance (in integer) from left of screen to element)
      * @param y (distance (in integer) from top of screen to element)
      */
@@ -266,44 +244,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         int a = scrSize.width / x;
         int b = scrSize.height / y;
         tap(a, b, 2);
-    }
-
-    /**
-     * Press screen using coordinates
-     *
-     * @param x (distance (in double) from left of screen to element)
-     * @param y (distance (in double) from top of screen to element)
-     */
-    default void screenPress(Double x, Double y) {
-        Dimension scrSize = getDriver().manage().window().getSize();
-        int a = (int) (scrSize.width / x);
-        int b = (int) (scrSize.height / y);
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
-        IOS_UTILS_LOGGER.info("Tapping on co-ordinates: [{}, {}]", a, b);
-        touchAction.press(new PointOption<>().withCoordinates(a, b)).release().perform();
-    }
-
-    /**
-     * Long press and hold on element for the given seconds
-     *
-     * @param element long press will be performed on this element
-     * @param seconds long press will happen for this time duration (in double)
-     */
-
-    default boolean longPressAndHoldElement(ExtendedWebElement element, long seconds) {
-        try {
-            var dimension = element.getSize();
-            Point location = element.getLocation();
-            int x = (int) Math.round(dimension.getWidth() * Double.parseDouble("." + 50));
-            int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + 50));
-            TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
-            touchActions.longPress(PointOption.point(location.getX() + x, location.getY() + y)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(seconds)));
-            touchActions.perform();
-            return true;
-        } catch (Exception e) {
-            IOS_UTILS_LOGGER.error("Error occurred during longPress and hold", e);
-            return false;
-        }
     }
 
     /**
@@ -396,19 +336,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
-     * Scroll down looking for iOSNsPredicateString locator
-     *
-     * @param predicateLocator
-     */
-    default void scrollUsingPredicate(String predicateLocator) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        HashMap<String, String> scrollObject = new HashMap<>();
-        IOS_UTILS_LOGGER.info("Scrolling down to predicate string: {}", predicateLocator);
-        scrollObject.put("predicateString", predicateLocator);
-        js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
-    }
-
-    /**
      * A generic scroll down once/twice
      */
     default void scrollDown() {
@@ -428,77 +355,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         IOS_UTILS_LOGGER.info("Scrolling up..");
         scrollObject.put(DIRECTION, Direction2.UP.getDirection());
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
-    }
-
-    /**
-     * A generic scroll down to element
-     * Parent Container must be scrollable!
-     */
-    default void scrollTo(ExtendedWebElement element) {
-        if (element.isVisible()) {
-            IOS_UTILS_LOGGER.info("Element already visible before swiping");
-        } else {
-            JavascriptExecutor js = (JavascriptExecutor) getDriver();
-            HashMap<String, Object> swipeObject = new java.util.HashMap<>();
-            IOS_UTILS_LOGGER.info("Starting to fetch ID");
-            swipeObject.put(ELEMENT, ((RemoteWebElement) getDriver().findElement(element.getBy())).getId());
-            swipeObject.put("toVisible", "scrolling till visible");
-            IOS_UTILS_LOGGER.info("Scrolling to {}, found {}", element, element.getBy());
-            js.executeScript(Gestures.SCROLL.getGesture(), swipeObject);
-            IOS_UTILS_LOGGER.info("Scroll complete");
-        }
-    }
-
-    /**
-     * Scroll for pickerwheel using predicate
-     * <p>
-     * Usage Note:
-     * order should be "next" or "previous"
-     * offset should be 0.1 or 0.15 so you don't scroll more than one item at a time
-     */
-    default void scrollPickerWheelUsingPredicate(String order, String predicateString, double offset) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        Map<String, Object> params = new HashMap<>();
-        params.put("order", order);
-        params.put("offset", offset);
-        params.put(ELEMENT, ((RemoteWebElement) getDriver().findElement(AppiumBy.iOSNsPredicateString(predicateString))).getId());
-        try {
-            js.executeScript(Gestures.SELECT_PICKER_WHEEL_VALUE.getGesture(), params);
-        } catch (WebDriverException wde) {
-            IOS_UTILS_LOGGER.error(wde.getMessage());
-        }
-    }
-
-    /**
-     * Swipe left using co-ordinates
-     */
-    default void swipeLeft(double startx, double starty, double endx, double endy, int duration) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        HashMap<String, Object> swipeObject = new java.util.HashMap<>();
-        IOS_UTILS_LOGGER.info("Swiping from ({},{}) to ({},{})", startx, starty, endx, endy);
-        swipeObject.put("startX", startx);
-        swipeObject.put("startY", starty);
-        swipeObject.put("endX", endx);
-        swipeObject.put("endY", endy);
-        swipeObject.put(DIRECTION, Direction2.LEFT.getDirection());
-        swipeObject.put(DURATION, duration);
-        js.executeScript(Gestures.SWIPE.getGesture(), swipeObject);
-    }
-
-    /**
-     * Swipe using element
-     *
-     * @param direction
-     * @param duration
-     */
-    default void swipe(Direction2 direction, int duration, WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        HashMap<String, Object> swipeObject = new HashMap<>();
-        IOS_UTILS_LOGGER.info("Scrolling {}...", direction);
-        swipeObject.put(DIRECTION, direction.getDirection());
-        swipeObject.put(DURATION, duration);
-        swipeObject.put(ELEMENT, element);
-        js.executeScript(Gestures.SWIPE.getGesture(), swipeObject);
     }
 
     /**
