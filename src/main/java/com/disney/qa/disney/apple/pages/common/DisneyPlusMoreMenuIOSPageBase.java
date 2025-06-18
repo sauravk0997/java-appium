@@ -45,9 +45,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Version\"`]")
 	private ExtendedWebElement appVersion;
 
-	@FindBy(xpath = "//XCUIElementTypeCell[@name='accountTab']//XCUIElementTypeOther[2]/*/XCUIElementTypeImage")
-	private ExtendedWebElement accountUnverifiedBadge;
-
 	private ExtendedWebElement addProfileBtn = getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(
 			DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.CREATE_PROFILE_ADD_PROFILE.getText()));
 
@@ -55,11 +52,6 @@ public class DisneyPlusMoreMenuIOSPageBase extends DisneyPlusApplePageBase {
 	private ExtendedWebElement moreMenuItemByIndex;
 
 	//HELP WEBVIEW
-	@ExtendedFindBy(accessibilityId = "TopBrowserBar")
-	private ExtendedWebElement webviewBrowserBar;
-
-	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"Done\"`]")
-	protected ExtendedWebElement webviewDoneBtn;
 
 	@ExtendedFindBy(accessibilityId = "exitKidsProfileButton")
 	private ExtendedWebElement exitKidsProfileButton;

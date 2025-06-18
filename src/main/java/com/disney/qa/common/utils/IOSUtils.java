@@ -10,16 +10,10 @@ import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.SupportsLegacyAppManagement;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
 import lombok.Getter;
 import org.openqa.selenium.*;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.*;
-import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -45,8 +39,6 @@ import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageActionsHelper {
     Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String DIRECTION = "direction";
-    String ELEMENT = "element";
-    String DURATION = "duration";
     String BUNDLE_ID = "bundleId";
     String ACTION = "action";
     String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
@@ -550,135 +542,12 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
-     * Checks for pre-existing app/system alerts and takes values - 'dismiss', 'accept', 'buttonLabel'
-     *
-     * @param alertButtonCommand
-     * @deprecated - Deprecated as of Jun 17 2022. Change to handleSystemAlert.
-     */
-    @Deprecated(forRemoval = true)
-    default void handleAlert(AlertButtonCommand alertButtonCommand) {
-        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5)).ignoring(WebDriverException.class).ignoring(NoSuchSessionException.class)
-                .ignoring(TimeoutException.class);
-        try {
-            do {
-                if (wait.until(ExpectedConditions.visibilityOfElementLocated
-                        (AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed()) {
-                    JavascriptExecutor js = (JavascriptExecutor) getDriver();
-                    HashMap<String, String> buttonMap = new HashMap<>();
-                    buttonMap.put(ACTION, "getButtons");
-                    List<String> buttons = (List<String>) js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    IOS_UTILS_LOGGER.info("Buttons Present: {}", buttons);
-                    buttonMap.put(ACTION, alertButtonCommand.getCommand());
-                    if (AlertButtonCommand.ACCEPT.getCommand().equalsIgnoreCase(alertButtonCommand.getCommand())) {
-                        IOS_UTILS_LOGGER.info("Clicking '{}'", buttons.get(1));
-                    } else if (AlertButtonCommand.DISMISS.getCommand().equalsIgnoreCase(alertButtonCommand.getCommand())) {
-                        IOS_UTILS_LOGGER.info("Clicking '{}'", buttons.get(0));
-                    }
-                    js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                }
-            }
-            while (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed());
-        } catch (TimeoutException | NoAlertPresentException | NoSuchElementException e) {
-            IOS_UTILS_LOGGER.info("No pre-existing Alert present");
-            IOS_UTILS_LOGGER.debug(e.getMessage());
-        }
-    }
-
-    /**
-     * handle Alerts depending on type
-     *
-     * @param systemAlertCommand
-     * @param
-     * @param timeOutInSeconds
-     * @param maxAttempts
-     * @deprecated - Deprecated as of Jun 17 2022. Change to handleSystemAlert.
-     */
-    @Deprecated(forRemoval = true)
-    default void handleAlert(AlertButtonCommand systemAlertCommand, AlertButtonCommand locationAlertCommand, AlertButtonCommand networkAlert, int timeOutInSeconds, int maxAttempts) {
-
-        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds))
-                .ignoring(WebDriverException.class)
-                .ignoring(NoSuchSessionException.class)
-                .ignoring(TimeoutException.class);
-        try {
-            do {
-                if (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed()) {
-                    JavascriptExecutor js = (JavascriptExecutor) getDriver();
-                    HashMap<String, String> buttonMap = new HashMap<>();
-                    buttonMap.put(ACTION, "getButtons");
-                    List<String> buttons = (List<String>) js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    IOS_UTILS_LOGGER.info("Buttons Present: {}", buttons);
-                    interactWithButton(buttons, buttonMap, systemAlertCommand, locationAlertCommand, networkAlert, maxAttempts);
-                }
-            }
-            while (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed() && maxAttempts > 0);
-        } catch (TimeoutException | NoAlertPresentException | NoSuchElementException e) {
-            IOS_UTILS_LOGGER.debug("No pre-existing Alert present", e);
-        }
-    }
-
-    /**
-     * @deprecated - Deprecated as of Jun 17 2022. Change to handleSystemAlert.
-     */
-    @Deprecated(forRemoval = true)
-    private void interactWithButton(List<String> buttonList, Map<String, String> buttonMap, AlertButtonCommand systemAlertCommand, AlertButtonCommand locationAlertCommand, AlertButtonCommand networkAlertCommand, int maxAttempts) {
-        String buttonLabel;
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        if (buttonList.size() == 1) {
-            buttonMap.put(ACTION, AlertButtonCommand.ACCEPT.getCommand());
-            buttonMap.put("buttonLabel", buttonList.get(0));
-            js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-            return;
-        }
-        for (String button : buttonList) {
-            if (AlertButtonCommand.DISMISS.getCommand().equalsIgnoreCase(systemAlertCommand.getCommand())
-                    || AlertButtonCommand.DISMISS.getCommand().equalsIgnoreCase(networkAlertCommand.getCommand())) {
-                if (button.contains(AlertButton.LATER.getAlertbtn())
-                        || button.contains(AlertButton.REMIND_ME_LATER.getAlertbtn())
-                        || button.contains(AlertButton.NOT_NOW.getAlertbtn())
-                        || button.contains(AlertButton.CLOSE.getAlertbtn())
-                        || button.contains(AlertButton.OK.getAlertbtn())
-                        || button.contains(AlertButton.DONT_ALLOW.getAlertbtn())) {
-                    IOS_UTILS_LOGGER.info("System Alert found! Clicking '{}'", button);
-                    buttonLabel = button;
-                    buttonMap.put(ACTION, AlertButtonCommand.ACCEPT.getCommand());
-                    buttonMap.put("buttonLabel", buttonLabel);
-                    js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    break;
-                } else if (button.contains("Allow")) {
-                    IOS_UTILS_LOGGER.info("Location Alert found! Clicking '{}'", button);
-                    buttonMap.put(ACTION, locationAlertCommand.getCommand());
-                    js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    break;
-                }
-                maxAttempts--;
-            }
-        }
-    }
-
-    /**
      * Launches deeplink using driver.get()
      *
      * @param url
      */
     default void launchDeeplink(String url) {
         launchWithDeeplinkAddress(url);
-    }
-
-    class JavascriptExecutorService implements IOSUtils {
-        @SuppressWarnings("squid:S3077")
-        private static volatile JavascriptExecutor js;
-
-        public JavascriptExecutor getJavascriptExecutorInstance() {
-            if (js == null) {
-                synchronized (JavascriptExecutor.class) {
-                    if (js == null) {
-                        js = (JavascriptExecutor) getDriver();
-                    }
-                }
-            }
-            return js;
-        }
     }
 
     /**
@@ -742,10 +611,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
 
     default boolean detectDevice(DeviceType.Type device) {
         return IDriverPool.currentDevice.get().getDeviceType().equals(device);
-    }
-
-    default boolean detectOrientation(ScreenOrientation orientation) {
-        return getOrientation().equals(orientation);
     }
 
     default void dismissKeyboardByClicking(int x, int y) {
