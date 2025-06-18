@@ -898,14 +898,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return account;
     }
 
-    public String getSearchExploreContainerId(int containerNum) {
-        String containerId = null;
+    public Data getSearchExploreQuery(String query) {
+        ExploreSearchResponse response;
         try {
-            containerId = getExploreApi().search(getDisneyExploreSearchRequest().setUnifiedAccount(getUnifiedAccount()).
-                    setQueryString("")).getData().getPage().getContainers().get(containerNum).getId();
-        } catch (Exception e) {
-            Assert.fail("Expected container ID not received from API, Log:\n{}", e);
+            response = getExploreApi().search(getDisneyExploreSearchRequest().setUnifiedAccount(
+                    getUnifiedAccount()).setQueryString(query));
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred...{}", e);
         }
-        return  containerId;
+        return response.getData();
     }
 }

@@ -456,7 +456,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        String containerId = getSearchExploreContainerId(2);
+        String containerId = getSearchExploreQuery("").getPage().getContainers().get(2).getId();
         searchPage.swipeTillContainerTappable(containerId, Direction.UP, 2);
         searchPage.clickThirdCollection(containerId);
         String header = brandPage.getHeaderViewTitleLabel().getText().split(":")[0];
