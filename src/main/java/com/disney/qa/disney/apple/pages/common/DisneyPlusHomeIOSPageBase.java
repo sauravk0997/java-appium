@@ -44,7 +44,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement continueWatchingDetailsBtn;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCollectionView[`name == '43a35f2b-3788-4449-a54d-cd37263f0940'`]/" +
-                    "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+:E.+'`]")
+                    "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+, E.+'`]")
     private ExtendedWebElement firstCellElementFromCollectionEpisodeMetadata;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
