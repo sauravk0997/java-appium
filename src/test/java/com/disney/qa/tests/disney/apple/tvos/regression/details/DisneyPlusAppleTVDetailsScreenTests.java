@@ -1037,7 +1037,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
                 CHANNEL_ATTRIBUTION_IS_NOT_PRESENT);
 
         if (detailsPage.isWatchButtonPresent()) {
-            LOGGER.info("Verifying a live event");
+            LOGGER.info("Verifying a live show");
             detailsPage.clickWatchButton();
             if (liveEventModal.isOpened()) {
                 liveEventModal.clickWatchLiveButton();
