@@ -648,4 +648,34 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     public ExtendedWebElement getEditProfileTitle() {
         return getStaticTextByLabelContains(editProfileTitle);
     }
+
+    public ExtendedWebElement getPrivacyAndDataTitleLabel() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, SUB_SECTION_PRIVACY_AND_DATA.getText()));
+    }
+
+    public ExtendedWebElement getDemographicTargetingToggleCell() {
+        return typeCellLabelContains.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, TOGGLE_DEMO_TARGETING_TITLE.getText()));
+    }
+
+    public ExtendedWebElement getDemographicTargetingToggleTitle() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, TOGGLE_DEMO_TARGETING_TITLE.getText()));
+    }
+
+    public ExtendedWebElement getDemographicTargetingToggleSubCopy() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, TOGGLE_DEMO_TARGETING_DESC.getText()));
+    }
+
+    public boolean isDemographicTargetingToggleOn() {
+        return getDemographicTargetingToggleCell().getText().equals(
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()));
+    }
+
+    public void tapDemographicTargetingToggle() {
+        getDemographicTargetingToggleCell().findElement(By.name(TOGGLE_VIEW)).click();
+    }
 }
