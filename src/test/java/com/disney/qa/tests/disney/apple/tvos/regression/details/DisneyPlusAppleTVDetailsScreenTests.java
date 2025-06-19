@@ -1036,6 +1036,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
                 CHANNEL_ATTRIBUTION_IS_NOT_PRESENT);
 
+        // Validating if it is live because the Pat McAfee show could be playing live
         if (detailsPage.isWatchButtonPresent()) {
             LOGGER.info("Verifying a live show");
             detailsPage.clickWatchButton();
