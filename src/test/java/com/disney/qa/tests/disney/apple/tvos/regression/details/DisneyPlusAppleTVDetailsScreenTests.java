@@ -1029,7 +1029,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
-        // Open entitlement-gated ESPN+ content
+        // Open an entitlement-gated ESPN+ content
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_pat_mcafee_deeplink"));
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
