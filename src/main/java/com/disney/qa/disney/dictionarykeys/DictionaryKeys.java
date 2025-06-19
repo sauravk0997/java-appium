@@ -520,6 +520,8 @@ public enum DictionaryKeys {
     SWITCH_ANNUAL_FLASH_MESSAGE("switch_annual_flash_message"),
     TEXT_OFF("text_off"),
     TEXT_ON("text_on"),
+    TOGGLE_DEMO_TARGETING_DESC("toggle_demo_targeting_desc"),
+    TOGGLE_DEMO_TARGETING_TITLE("toggle_demo_targeting_title"),
     TOGGLE_ON("toggle_on"),
     TRAVEL_MESSAGE_BODY("travel_message_body"),
     TRAVEL_MESSAGE_TITLE("travel_message_title"),
