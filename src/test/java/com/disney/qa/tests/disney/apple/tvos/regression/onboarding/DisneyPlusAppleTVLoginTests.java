@@ -693,9 +693,6 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         String step1Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem
                         (DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()),
                 Map.of("current_step", "1"));
-        String step2Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem
-                        (DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()),
-                Map.of("current_step", "2"));
 
         selectAppleUpdateLaterAndDismissAppTracking();
         Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
@@ -706,12 +703,12 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         loginPage.proceedToPasswordScreen(getUnifiedAccount().getEmail());
         Assert.assertTrue(oneTimePasscodePage.isOpened(), "Log In password screen did not launch");
-        Assert.assertFalse(loginPage.getStaticTextByLabel(step2Label).isPresent(),
+        Assert.assertFalse(passwordPage.isStep2LabelDisplayed(),
                 "Step 2 is displayed on on OTP page");
 
         oneTimePasscodePage.clickLoginWithPassword();
         Assert.assertTrue(passwordPage.isOpened(), "Enter password page did not open");
-        Assert.assertTrue(loginPage.getStaticTextByLabel(step2Label).isPresent(),
+        Assert.assertTrue(passwordPage.isStep2LabelDisplayed(),
                 "Step 2 is not displayed on enter password screen");
     }
 }
