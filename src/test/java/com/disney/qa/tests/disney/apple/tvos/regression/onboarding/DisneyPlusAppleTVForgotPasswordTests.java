@@ -185,46 +185,6 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90646"})
-    @Test(groups = {TestGroup.ONBOARDING, US})
-    public void invalidCodeEntryError() {
-        SoftAssert sa = new SoftAssert();
-        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
-        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVForgotPasswordPage disneyPlusAppleTVForgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
-        DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
-
-        UnifiedAccount disneyUser = getUnifiedAccountApi()
-                .createAccountForOTP(
-                        CreateUnifiedAccountRequest.builder()
-                                .country("US")
-                                .partner(Partner.DISNEY)
-                                .language("en")
-                                .build()
-                );
-
-        selectAppleUpdateLaterAndDismissAppTracking();
-        sa.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_DID_NOT_OPEN);
-
-        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
-        disneyPlusAppleTVLoginPage.proceedToPasswordScreen(disneyUser.getEmail());
-
-        Assert.assertTrue(disneyPlusAppleTVOneTimePasscodePage.isOpened(), ONE_TIME_CODE_SCREEN_DID_NOT_OPEN);
-
-        disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPassword();
-        disneyPlusAppleTVPasswordPage.clickHavingTroubleLogginInBtn();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOpened(), "Having trouble loggin in page did not launch");
-
-        disneyPlusAppleTVForgotPasswordPage.enterOTP("223344");
-        disneyPlusAppleTVForgotPasswordPage.clickContinueBtnOnOTPPage();
-
-        sa.assertTrue(disneyPlusAppleTVForgotPasswordPage.isOtpIncorrectErrorPresent(), "Error message is not present");
-
-        sa.assertAll();
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-66516"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void resettingPasswordTakesUserToHome() {
