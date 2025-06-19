@@ -509,6 +509,7 @@ public enum DictionaryKeys {
     SUBSCRIPTIONS_TITLE_VERIZON("account_subscription_title_verizon"),
     SUBSCRIPTIONS_TITLE_VERIZON_BUNDLE("account_subscription_title_verizon_bundle"),
     SUBSCRIPTION_MONTHLY("subscription_monthly"),
+    SUB_SECTION_PRIVACY_AND_DATA("sub_section_privacy_and_data"),
     SUB_SELECTOR_CANCEL_ANYTIME_DISCLAIMER("sub_selector_cancel_anytime_disclaimer"),
     SUB_SELECTOR_STANDALONE_ADS_CARD_TITLE("sub_selector_standalone_ads_card_title"),
     SUB_SELECTOR_STANDALONE_NO_ADS_CARD_TITLE("sub_selector_standalone_noads_card_title"),
