@@ -1768,6 +1768,32 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "SharePlay is not toggled ON");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81856"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyWhosWatchingForOnlineProfileWithNoPin() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(getUnifiedAccount())
+                        .profileName(SECONDARY_PROFILE)
+                        .dateOfBirth(ADULT_DOB)
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId(RAYA)
+                        .kidsModeEnabled(false)
+                        .isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoseWatching.clickProfile(DEFAULT_PROFILE);
+        homePage.waitForHomePageToOpen();
+        //terminateApp(sessionBundles.get(DISNEY));
+        //relaunch();
+        terminateApp("com.disney.disneyplus.enterprise");
+        launchApp("com.disney.disneyplus.enterprise");
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
