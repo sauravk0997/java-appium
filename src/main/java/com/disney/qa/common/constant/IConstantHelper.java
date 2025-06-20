@@ -62,6 +62,7 @@ public interface IConstantHelper {
     String UPDATE_PROFILE_PAGE_NOT_DISPLAYED = "Update Profile page is not displayed";
     String SETTINGS_PAGE_NOT_DISPLAYED = "Settings page is not displayed";
     String LOGOUT_MODAL_NOT_DISPLAYED = "Logout modal is not displayed";
+    String ENTITLEMENT_ATTRIBUTION_IS_NOT_PRESENT = "Entitlement Attribution is not present";
 
     //Profile Names
     String PROFILE_NAME_SECONDARY = "Secondary";
