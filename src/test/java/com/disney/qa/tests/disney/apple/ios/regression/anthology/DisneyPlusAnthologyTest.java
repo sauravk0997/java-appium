@@ -210,19 +210,19 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73789" })
     @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologyEpisodeDownload() {
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
-        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
-        String mediaTitle = detailsPage.getMediaTitle();
-        String seasonString = detailsPage.getSeasonSelectorButton().getText();
+        Assert.assertTrue(details.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        String mediaTitle = details.getMediaTitle();
+        String seasonString = details.getSeasonSelectorButton().getText();
         String seasonNumber = seasonString.split(" ")[1];
-        detailsPage.getEpisodeToDownload(seasonNumber, "1").click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(270, THREE_SEC_TIMEOUT);
+        details.getEpisodeToDownload(seasonNumber, "1").click();
+        details.waitForOneEpisodeDownloadToComplete(180, 3);
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
