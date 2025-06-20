@@ -1008,7 +1008,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
-                "Element attribution is not present on details page");
+                ENTITLEMENT_ATTRIBUTION_IS_NOT_PRESENT);
 
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
