@@ -476,7 +476,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         if (eventDescription && networkAttribution) {
             sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DESCRIPTION_NOT_PRESENT);
             sa.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
-                    CHANNEL_ATTRIBUTION_IS_NOT_PRESENT);
+                    ENTITLEMENT_ATTRIBUTION_IS_NOT_PRESENT);
         }
         sa.assertTrue(detailsPage.getWatchlistButton().isPresent(), WATCHLIST_NOT_PRESENT);
         sa.assertTrue(detailsPage.getBackgroundImage().isPresent(), BACKGROUND_IMAGE_NOT_PRESENT);
@@ -1018,38 +1018,27 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121165"})
-    @Test(groups = {TestGroup.ESPN, US})
+    @Test(groups = {TestGroup.ESPN, TestGroup.DETAILS_PAGE, US})
     public void verifyESPNEntitlementAttributionSupport() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         // Open an entitlement-gated ESPN+ content
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_pat_mcafee_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_documentary_american_son_deeplink"));
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
-                CHANNEL_ATTRIBUTION_IS_NOT_PRESENT);
+                ENTITLEMENT_ATTRIBUTION_IS_NOT_PRESENT);
 
-        // Validating if it is live because the Pat McAfee show could be playing live
-        if (detailsPage.isWatchButtonPresent()) {
-            LOGGER.info("Verifying a live show");
-            detailsPage.clickWatchButton();
-            if (liveEventModal.isOpened()) {
-                liveEventModal.clickWatchLiveButton();
-            }
-        } else {
-            detailsPage.clickPlayButton();
-        }
-
+        detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
-                CHANNEL_ATTRIBUTION_IS_NOT_PRESENT);
+                ENTITLEMENT_ATTRIBUTION_IS_NOT_PRESENT);
     }
 
     private String navigateToLiveEvent() {
