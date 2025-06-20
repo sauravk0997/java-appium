@@ -489,6 +489,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAddProfileWelchDefaultsTV14() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        String defaultRatingExpected = "TV-14";
+        String highestRatingExpected = "TV-MA";
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
@@ -497,15 +499,12 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         addProfilePage.clickSaveProfileButton();
 
-        List<String> ratingSystemValues = getUnifiedAccount().getProfile(SECONDARY_PROFILE).getAttributes()
-                .getParentalControls().getMaturityRating().getRatingSystemValues();
-        String highestRating = ratingSystemValues.get(ratingSystemValues.size() - 1).replace("+", ", ");
-        String defaultRating = ratingSystemValues.get(ratingSystemValues.size() - 3).replace("+", ", ");
-        LOGGER.info("defaultRating: {}, highestRating: {}", defaultRating, highestRating);
-        Assert.assertTrue(addProfilePage.isMaturityRatingNotNowInfoDisplayed(defaultRating),
-                "Maturity rating not now info wasn't displayed");
-        Assert.assertTrue(addProfilePage.isUpdateMaturityRatingActionDisplayed(highestRating),
-                "Update your maturity rating info wasn't displayed");
+        Assert.assertTrue(addProfilePage.verifyHeadlineHeaderText(),
+                "Access to full catalog screen was not present");
+        Assert.assertTrue(addProfilePage.isMaturityRatingNotNowInfoDisplayed(defaultRatingExpected),
+                "The content rating was not TV-14 by default");
+        Assert.assertTrue(addProfilePage.isUpdateMaturityRatingActionDisplayed(highestRatingExpected),
+                "Prompt to set content rating was not TV-MA");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123034"})
