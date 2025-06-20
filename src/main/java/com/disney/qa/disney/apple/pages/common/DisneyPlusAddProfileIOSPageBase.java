@@ -193,9 +193,13 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         clickElementAtLocation(saveBtn, 50, 50);
     }
 
+    public ExtendedWebElement getDateOfBirthField() {
+        return getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD);
+    }
+
     //format: Month, day, year
     public void enterDOB(DateHelper.Month month, String day, String year) {
-        getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).click();
+        getDateOfBirthField().click();
         setBirthDate(DateHelper.localizeMonth(month, getLocalizationUtils()), day, year);
         dismissPickerWheelKeyboard();
     }
@@ -204,8 +208,16 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return birthdateFieldTitle.isPresent();
     }
 
-    public boolean isDateOfBirthFieldPresent(){
-        return getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).isPresent();
+    public boolean isDateOfBirthFieldPresent() {
+        return getDateOfBirthField().isPresent();
+    }
+
+    public String getValueFromDOB() {
+        return getDateOfBirthField().getAttribute(VALUE);
+    }
+
+    public boolean isDOBFieldEnabled() {
+        return getDateOfBirthField().getAttribute(Attributes.ENABLED.getAttribute()).equals("true");
     }
 
     public boolean isGenderFieldTitlePresent() {
@@ -317,14 +329,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getChooseContentRating() {
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.CHOOSE_CONTENT_RATING.getText()));
-    }
-
-    public String getBirthdateTextField(){
-        return BIRTHDATE_TEXT_FIELD;
-    }
-
-    public String getValueFromDOB() {
-        return getDynamicTextEntryFieldByName(BIRTHDATE_TEXT_FIELD).getAttribute(VALUE);
     }
 
     public boolean isContentRatingDropdownEnabled(String value) {

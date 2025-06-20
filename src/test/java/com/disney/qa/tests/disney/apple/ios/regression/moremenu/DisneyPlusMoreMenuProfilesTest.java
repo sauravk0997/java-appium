@@ -1768,6 +1768,34 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "SharePlay is not toggled ON");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78361"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, ANZ})
+    public void verifyGenderAndDOBFieldForANZWhenJuniorModeOn() {
+        DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        onboard();
+        moreMenu.clickAddProfile();
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.chooseGender();
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.tapJuniorModeToggle();
+        Assert.assertFalse(addProfile.isGenderFieldEnabled(),
+                "Gender field is not disabled after switching Junior mode toogle ON");
+        Assert.assertFalse(addProfile.isDOBFieldEnabled(),
+                "DOB field is not disabled after switching Junior mode toogle ON");
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
