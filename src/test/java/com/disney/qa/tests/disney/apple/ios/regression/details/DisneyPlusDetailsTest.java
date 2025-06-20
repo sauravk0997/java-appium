@@ -1013,7 +1013,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
-                " Element attribution is not present on video player");
+                "Element attribution is not present on video player");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77675"})
