@@ -484,6 +484,26 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112716"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.SMOKE, US})
+    public void verifyAddProfileWelchDefaultsTV14() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
+
+        logIn(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        //Go through add profile screen
+
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.MINOR);
+
+        addProfilePage.clickSaveProfileButton();
+        Assert.assertTrue(addProfilePage.getSecondaryButton().isElementPresent(),
+                ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123034"})
     @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
     public void verifyDOBCollectionForLatamOrANZ() {
