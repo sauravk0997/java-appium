@@ -215,6 +215,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         String Play = "Play";
+        String one = "1";
 
         setAppToHomeScreen(getUnifiedAccount());
 
@@ -224,7 +225,9 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         String mediaTitle = details.getMediaTitle();
         String seasonString = details.getSeasonSelectorButton().getText();
         String seasonNumber = seasonString.split(" ")[1];
-        details.getEpisodeToDownload(seasonNumber, "1").click();
+        swipePageTillElementPresent(details.getEpisodeToDownload(seasonNumber, one), 2,
+                details.getContentDetailsPage(), Direction.UP, 1200);
+        details.getEpisodeToDownload(seasonNumber, one).click();
         details.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
