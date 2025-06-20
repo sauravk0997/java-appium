@@ -490,10 +490,10 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         String defaultRatingExpected = "TV-14";
-        String highestRatingExpected = "TV-MA";
+        String ratingExpected = "TV-MA";
 
         logIn(getUnifiedAccount());
-        homePage.waitForHomePageToOpen();
+
         //Go through add profile screen
         navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.U18);
 
@@ -503,7 +503,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "Access to full catalog screen was not present");
         Assert.assertTrue(addProfilePage.isMaturityRatingNotNowInfoDisplayed(defaultRatingExpected),
                 "The content rating was not TV-14 by default");
-        Assert.assertTrue(addProfilePage.isUpdateMaturityRatingActionDisplayed(highestRatingExpected),
+        Assert.assertTrue(addProfilePage.isUpdateMaturityRatingActionDisplayed(ratingExpected),
                 "Prompt to set content rating was not TV-MA");
     }
 
