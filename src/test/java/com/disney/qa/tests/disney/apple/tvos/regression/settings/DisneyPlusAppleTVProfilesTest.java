@@ -497,7 +497,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         homePage.waitForHomePageToOpen();
         //Go through add profile screen
 
-        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.MINOR);
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.U18);
 
         addProfilePage.clickSaveProfileButton();
         pause(5);
