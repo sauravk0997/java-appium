@@ -488,25 +488,24 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.SMOKE, US})
     public void verifyAddProfileWelchDefaultsTV14() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
-        DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         //Go through add profile screen
-
         navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.U18);
 
         addProfilePage.clickSaveProfileButton();
-        pause(5);
-        commonPage.moveDown(1, 1);
-        commonPage.moveRight(1, 1);
-        commonPage.clickSelect();
-        pause(10);
-//        Assert.assertTrue(addProfilePage.getSecondaryButton().isElementPresent(),
-  //              ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED);
+
+        List<String> ratingSystemValues = getUnifiedAccount().getProfile(SECONDARY_PROFILE).getAttributes()
+                .getParentalControls().getMaturityRating().getRatingSystemValues();
+        String highestRating = ratingSystemValues.get(ratingSystemValues.size() - 1).replace("+", ", ");
+        String defaultRating = ratingSystemValues.get(ratingSystemValues.size() - 3).replace("+", ", ");
+        LOGGER.info("defaultRating: {}, highestRating: {}", defaultRating, highestRating);
+        Assert.assertTrue(addProfilePage.isMaturityRatingNotNowInfoDisplayed(defaultRating),
+                "Maturity rating not now info wasn't displayed");
+        Assert.assertTrue(addProfilePage.isUpdateMaturityRatingActionDisplayed(highestRating),
+                "Update your maturity rating info wasn't displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123034"})
