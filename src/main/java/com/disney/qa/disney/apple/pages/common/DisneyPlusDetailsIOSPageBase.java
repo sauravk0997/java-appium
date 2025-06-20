@@ -222,8 +222,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     protected List<ExtendedWebElement> suggestedContents;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$label=='Content background'$]/**/XCUIElementTypeImage[4]")
     protected  ExtendedWebElement shopTabBackgroundImage;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"Offline Download Options.\"`]")
-    protected  ExtendedWebElement downloadComplete;
 
     private final ExtendedWebElement pauseDownloadButton = getTypeButtonByLabel(getLocalizationUtils().
             getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
@@ -373,7 +371,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public void waitForSeriesDownloadToCompleted(int timeOut, int polling) {
         LOGGER.info("Waiting for series download to complete");
-        fluentWait(getDriver(), timeOut, polling, "Download complete text is not present")
+        fluentWait(getDriver(), timeOut, polling, "Download Options button is not completed")
                 .until(it -> getDownloadComplete().isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
@@ -1504,7 +1502,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return getTypeOtherByLabel(SHOP_TAB_LINK);
     }
 
-    public ExtendedWebElement getDownloadComplete(){
-        return downloadComplete;
+    public ExtendedWebElement getDownloadComplete() {
+        return dynamicBtnFindByLabelContains.format("Offline Download Options.");
     }
 }

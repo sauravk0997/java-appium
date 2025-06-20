@@ -224,7 +224,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         String seasonString = details.getSeasonSelectorButton().getText();
         String seasonNumber = seasonString.split(" ")[1];
         details.getEpisodeToDownload(seasonNumber, "1").click();
-        details.waitForSeriesDownloadToCompleted(180, 9);
+        details.waitForSeriesDownloadToComplete(180, 9);
         //Navigate to Download page
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
