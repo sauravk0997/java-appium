@@ -369,13 +369,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
-    public void waitForSeriesDownloadToCompleted(int timeOut, int polling) {
-        LOGGER.info("Waiting for series download to complete");
-        fluentWait(getDriver(), timeOut, polling, "Download Options button is not completed")
-                .until(it -> getDownloadComplete().isPresent());
-        LOGGER.info(DOWNLOAD_COMPLETED);
-    }
-
     public void waitForMovieDownloadComplete(int timeOut, int polling) {
         LOGGER.info("Waiting for movie download to complete");
         fluentWait(getDriver(), timeOut, polling, "Downloaded button is not present")
@@ -1500,9 +1493,5 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getShopTabLink() {
         return getTypeOtherByLabel(SHOP_TAB_LINK);
-    }
-
-    public ExtendedWebElement getDownloadComplete() {
-        return dynamicBtnFindByLabelContains.format("Offline Download Options.");
     }
 }
