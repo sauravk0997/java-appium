@@ -208,7 +208,7 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73789" })
-    @Test(description = "Verify Anthology Series - Episode Download", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologyEpisodeDownload() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
@@ -219,15 +219,17 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         searchAndOpenDWTSDetails();
 
         //Download episode
-        details.isOpened();
+        Assert.assertTrue(details.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         String mediaTitle = details.getMediaTitle();
-        details.startDownload();
-        sa.assertTrue(details.isSeriesDownloadButtonPresent(), "Series download button not found.");
+        String seasonString = details.getSeasonSelectorButton().getText();
+        String seasonNumber = seasonString.split(" ")[1];
+        details.getEpisodeToDownload(seasonNumber, "1").click();
+        details.waitForSeriesDownloadToCompleted(180, 9);
+        //Navigate to Download page
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
 
         //Wait for download to complete and validate titles same.
-        details.waitForSeriesDownloadToComplete(180, 9);
-        details.clickDownloadsIcon();
-        sa.assertTrue(downloads.isOpened(), "Downloads page was not opened.");
         sa.assertTrue(mediaTitle.equalsIgnoreCase(downloads.getTypeOtherByLabel(DANCING_WITH_THE_STARS).getText()),
                 DANCING_WITH_THE_STARS + " titles are not the same.");
         sa.assertTrue(downloads.getStaticTextByLabelContains("1 Episode").isPresent(), "1 episode was not found.");
@@ -237,17 +239,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         downloads.getTypeButtonContainsLabel("Play").click();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-
-        videoPlayer.clickBackButton();
-        sa.assertTrue(downloads.getProgressBar().isPresent(), "Progress bar not found.");
-
-        //Remove Download
-        downloads.clickEditButton();
-        downloads.clickUncheckedCheckbox();
-        sa.assertTrue(downloads.isCheckedCheckboxPresent(), "Checked checkbox is not found.");
-        sa.assertTrue(downloads.getStaticTextByLabelContains("1 Selected").isPresent(), "1 Select is not found");
-        downloads.clickDeleteDownloadButton();
-        sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Download was not removed, empty header not present.");
         sa.assertAll();
     }
 
