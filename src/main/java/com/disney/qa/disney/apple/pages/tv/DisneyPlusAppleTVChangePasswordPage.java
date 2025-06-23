@@ -23,7 +23,9 @@ public class DisneyPlusAppleTVChangePasswordPage extends DisneyPlusChangePasswor
         return isPresent;
     }
 
-    public void clickPasswordField() { passwordTextField.click(); }
+    public void clickPasswordField() {
+        passwordTextField.click();
+    }
 
     public void enterPassword(String password) {
         passwordTextField.type(password);

@@ -10,7 +10,6 @@ import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.*;
 import com.zebrunner.agent.core.annotation.*;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.appletv.*;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

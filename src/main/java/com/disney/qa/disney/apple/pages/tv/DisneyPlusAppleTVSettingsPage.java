@@ -15,16 +15,18 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.EM_SUBSCRIPTION
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusHomeIOSPageBase.class)
 public class DisneyPlusAppleTVSettingsPage extends DisneyPlusMoreMenuIOSPageBase {
-    public DisneyPlusAppleTVSettingsPage(WebDriver driver) {super(driver);}
+    public DisneyPlusAppleTVSettingsPage(WebDriver driver) {
+        super(driver);
+    }
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'accountTab'`]")
     private ExtendedWebElement accountBtn;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'logOutAllDevicesCell'`]")
-    private ExtendedWebElement  logOutAllDevicesBtn;
+    private ExtendedWebElement logOutAllDevicesBtn;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label='%s'$]")
-    private ExtendedWebElement  settingsCellItem;
+    private ExtendedWebElement settingsCellItem;
 
     @ExtendedFindBy(accessibilityId = "accountView")
     ExtendedWebElement accountView;
@@ -33,11 +35,17 @@ public class DisneyPlusAppleTVSettingsPage extends DisneyPlusMoreMenuIOSPageBase
     ExtendedWebElement logOutCell;
 
     @Override
-    public boolean isOpened() { return accountView.isElementPresent(); }
+    public boolean isOpened() {
+        return accountView.isElementPresent();
+    }
 
-    public void clickAccountBtn() { accountBtn.click(); }
+    public void clickAccountBtn() {
+        accountBtn.click();
+    }
 
-    public void clickLogOutAllDevicesBtn() { logOutAllDevicesBtn.click(); }
+    public void clickLogOutAllDevicesBtn() {
+        logOutAllDevicesBtn.click();
+    }
 
     public void clickSubscriptionsCell() {
         String cellName = getLocalizationUtils().getDictionaryItem(

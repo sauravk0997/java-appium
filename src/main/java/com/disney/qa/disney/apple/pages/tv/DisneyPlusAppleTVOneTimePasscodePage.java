@@ -22,8 +22,6 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
         return getOneTimePasscode().isPresent();
     }
 
-    //TODO: QAA-16993 - Move OneTimePasscode identifiers and elements from ForgotPasswordPage
-
     public void enterOTPCode(String otp) {
         char[] otpArray = otp.toCharArray();
         for (char otpChar : otpArray) {
