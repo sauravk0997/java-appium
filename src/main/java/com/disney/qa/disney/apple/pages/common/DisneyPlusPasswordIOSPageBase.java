@@ -179,6 +179,13 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(stepLabel).isPresent();
     }
 
+    public boolean isAnyStepLabelDisplayed() {
+        String stepLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", ""));
+        return getStaticTextByLabelContains(stepLabel).isPresent();
+    }
+
     public boolean isEnterYourPasswordBodyPresent(String accountEmail) {
         String enterYourPasswordBody = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
