@@ -994,7 +994,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77679"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyESPNEntitlementUpsellDetailsPage() {
+    public void verifyESPNUpsellDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -1006,7 +1006,14 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        pause(20);
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        Assert.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
+        Assert.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
+
+        detailsPage.getUnlockButton().click();
+        Assert.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Ineligible Screen Header is not present");
+        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
+        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82729"})
