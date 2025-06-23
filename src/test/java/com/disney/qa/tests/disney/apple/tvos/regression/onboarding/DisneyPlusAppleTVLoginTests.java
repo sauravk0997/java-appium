@@ -703,7 +703,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 "Step 2 is displayed on on OTP page");
 
         oneTimePasscodePage.clickLoginWithPassword();
-        Assert.assertTrue(passwordPage.isOpened(), "Enter password page did not open");
+        Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(passwordPage.isStepLabelDisplayed(two),
                 "Step 2 is not displayed on enter password screen");
     }
