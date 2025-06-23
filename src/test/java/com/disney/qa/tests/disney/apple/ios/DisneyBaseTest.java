@@ -30,7 +30,6 @@ import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
@@ -39,7 +38,6 @@ import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
-import org.testng.asserts.SoftAssert;
 
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
@@ -248,7 +246,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert(IOSUtils.AlertButtonCommand.DISMISS);
     }
 
-    @Override
     public void handleAlert(IOSUtils.AlertButtonCommand command) {
         LOGGER.info("Checking for system alert to {}...", command);
         handleSystemAlert(command, 10);
