@@ -32,7 +32,7 @@ public interface IAPIHelper {
             String platform = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ? "tvos" : "ios";
             I_API_HELPER_LOGGER.info("App version: {}", TEST_FAIRY_APP_VERSION);
             return new DisneyMobileConfigApi(platform, Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
-                    TEST_FAIRY_APP_VERSION);
+                    TEST_FAIRY_APP_VERSION.split("-")[0]);
         }
     };
 
