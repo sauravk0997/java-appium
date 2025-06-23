@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
+import static com.disney.qa.common.utils.IOSUtils.LOGGER;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEVICE_TYPE;
 
 public interface IAPIHelper {
@@ -32,7 +33,7 @@ public interface IAPIHelper {
             String platform = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ? "tvos" : "ios";
             I_API_HELPER_LOGGER.info("App version: {}", TEST_FAIRY_APP_VERSION);
             return new DisneyMobileConfigApi(platform, Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
-                    TEST_FAIRY_APP_VERSION);
+                    TEST_FAIRY_APP_VERSION.split("-")[0]);
         }
     };
 
@@ -47,6 +48,7 @@ public interface IAPIHelper {
             DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(), "iOS",
                     Configuration.getRequired(Configuration.Parameter.ENV),
                     DisneyConfiguration.getPartner());
+            LOGGER.info("Dict version:{}", getMobileConfigApi().getDictionaryVersions());
             localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
             localizationUtils.setLegalDocuments();
             return localizationUtils;
@@ -65,6 +67,7 @@ public interface IAPIHelper {
                     "iOS",
                     Configuration.getRequired(Configuration.Parameter.ENV),
                     DisneyConfiguration.getPartner());
+            LOGGER.info("Dict version:{}", getMobileConfigApi().getDictionaryVersions());
             localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
             localizationUtils.setLegalDocuments();
             return localizationUtils;
