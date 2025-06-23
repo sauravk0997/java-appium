@@ -8,7 +8,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.offer.pojos.Partner;
 import com.disney.qa.api.pojos.UnifiedEntitlement;
 import com.disney.qa.disney.apple.pages.tv.*;
-import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -21,7 +20,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.util.Map;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
@@ -685,30 +683,28 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118435"})
     @Test(groups = {TestGroup.ONBOARDING, US})
     public void verifyStepperInfoOnUserNameAndPasswordScreen() {
+        String one = "1";
+        String two = "2";
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        String step1Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem
-                        (DisneyDictionaryApi.ResourceKeys.IDENTITY, DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()),
-                Map.of("current_step", "1"));
-
         selectAppleUpdateLaterAndDismissAppTracking();
         Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
         welcomeScreenPage.clickLogInButton();
-        Assert.assertTrue(loginPage.isOpened(), "Email input screen did not launch");
-        Assert.assertTrue(loginPage.getStaticTextByLabel(step1Label).isPresent(),
+        Assert.assertTrue(loginPage.isOpened(), EMAIL_INPUT_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
+        Assert.assertTrue(passwordPage.isStepLabelDisplayed(one),
                 "Step 1 is not displayed on email input screen");
 
         loginPage.proceedToPasswordScreen(getUnifiedAccount().getEmail());
-        Assert.assertTrue(oneTimePasscodePage.isOpened(), "Log In password screen did not launch");
-        Assert.assertFalse(passwordPage.isStep2LabelDisplayed(),
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), LOG_IN_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
+        Assert.assertFalse(passwordPage.isStepLabelDisplayed(two),
                 "Step 2 is displayed on on OTP page");
 
         oneTimePasscodePage.clickLoginWithPassword();
         Assert.assertTrue(passwordPage.isOpened(), "Enter password page did not open");
-        Assert.assertTrue(passwordPage.isStep2LabelDisplayed(),
+        Assert.assertTrue(passwordPage.isStepLabelDisplayed(two),
                 "Step 2 is not displayed on enter password screen");
     }
 }
