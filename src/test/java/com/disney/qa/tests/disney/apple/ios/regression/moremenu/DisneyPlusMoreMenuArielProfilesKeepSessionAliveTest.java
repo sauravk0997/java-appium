@@ -181,7 +181,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         avatars[0].click();
         addProfile.enterProfileName(KIDS_PROFILE);
         addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-//        addProfile.tapJuniorModeToggle();
+        addProfile.tapJuniorModeToggle();
         addProfile.clickSaveProfileButton();
     }
 }
