@@ -59,6 +59,9 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "BIRTHDATE")
     private ExtendedWebElement birthdateFieldTitle;
 
+    @ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeDatePicker'")
+    private ExtendedWebElement birthdateDatePicker;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'genderFormButtonCellIdentifier'`]/" +
             "**/XCUIElementTypeButton")
     private ExtendedWebElement genderDropdown;
@@ -217,7 +220,8 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isDOBFieldEnabled() {
-        return getDateOfBirthField().getAttribute(Attributes.ENABLED.getAttribute()).equals("true");
+        getDateOfBirthField().click();
+        return birthdateDatePicker.isPresent(THREE_SEC_TIMEOUT);
     }
 
     public boolean isGenderFieldTitlePresent() {
