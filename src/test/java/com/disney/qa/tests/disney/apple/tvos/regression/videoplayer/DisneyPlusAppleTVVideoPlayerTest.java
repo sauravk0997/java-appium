@@ -419,7 +419,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isServiceAttributionLabelVisible(),
                 "Service attribution was not visible when video started");
         Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
-                "Channel network attribution is not present");
+                ENTITLEMENT_ATTRIBUTION_IS_NOT_PRESENT);
 
         // Validate right position of espn logo
         validateElementPositionAlignment(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), RIGHT_POSITION);
