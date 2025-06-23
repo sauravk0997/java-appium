@@ -48,6 +48,7 @@ public interface IAPIHelper {
             DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(), "iOS",
                     Configuration.getRequired(Configuration.Parameter.ENV),
                     DisneyConfiguration.getPartner());
+            LOGGER.info("Dict version:{}", getMobileConfigApi().getDictionaryVersions());
             localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
             localizationUtils.setLegalDocuments();
             return localizationUtils;
