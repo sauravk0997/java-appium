@@ -790,11 +790,11 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String allCharacters = "\ud83d\ude3b!@\u24E912\uD83D\uDC9A3WA\ud83d\ude06"; //u codes left to right: cat heart emoji, z circle symbol, green heart emoji, laughing emoji
         editProfile.enterProfileName(allCharacters);
         editProfile.clickDoneBtn();
-        Assert.assertTrue(homePage.isOpened(), "After clicking 'Done' to save new profile name, not returned to Home.");
+        Assert.assertTrue(homePage.isOpened(), "After clicking 'Done' to save new profile name, not returned to Home");
 
         homePage.clickMoreTab();
         Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(allCharacters), allCharacters + " profile name was not found.");
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(allCharacters), allCharacters + " profile name was not found");
         sa.assertAll();
     }
 
