@@ -248,6 +248,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         handleAlert(IOSUtils.AlertButtonCommand.DISMISS);
     }
 
+    @Override
     public void handleAlert(IOSUtils.AlertButtonCommand command) {
         LOGGER.info("Checking for system alert to {}...", command);
         handleSystemAlert(command, 10);
