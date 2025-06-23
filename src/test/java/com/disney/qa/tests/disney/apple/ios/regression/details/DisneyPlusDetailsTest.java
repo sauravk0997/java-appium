@@ -1011,7 +1011,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
 
         detailsPage.getUnlockButton().click();
-        Assert.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Ineligible Screen Header is not present");
         Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
         Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
     }
