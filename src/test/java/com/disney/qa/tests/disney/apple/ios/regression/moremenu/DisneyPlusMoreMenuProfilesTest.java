@@ -776,7 +776,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         launchApp(sessionBundles.get(DISNEY));
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         editProfile.clickMoreTab();
-        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE));
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), "Existing profile name is not displayed");
         sa.assertAll();
     }
 
