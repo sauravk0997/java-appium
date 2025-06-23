@@ -852,10 +852,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return progressBar.isPresent(TEN_SEC_TIMEOUT);
     }
 
-    public boolean progressBarIsNotPresent() {
-        return progressBar.isElementNotPresent(TEN_SEC_TIMEOUT);
-    }
-
     public String getDetailsTabSeasonRating() {
         String[] seasonNumberRating = getTypeOtherContainsLabel("Season").getText().split(":");
         String[] seasonNumber = seasonNumberRating[0].split(" ");
@@ -1029,9 +1025,8 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info(DOWNLOAD_COMPLETED);
     }
 
-    public boolean waitForStopOfflineDownload() {
-        waitForPresenceOfAnElement(stopOfflineDownload);
-        return true;
+    public boolean isStopOfflineDownloadPresent() {
+        return stopOfflineDownload.isPresent();
     }
 
     /**

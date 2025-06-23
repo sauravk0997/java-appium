@@ -880,10 +880,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return systemAlertDismissBtn.isElementPresent();
     }
 
-    public boolean alertDismissBtnNotPresent() {
-        return systemAlertDismissBtn.isElementNotPresent(TEN_SEC_TIMEOUT);
-    }
-
     public void clickAlertDismissBtn() {
         systemAlertDismissBtn.click();
     }
