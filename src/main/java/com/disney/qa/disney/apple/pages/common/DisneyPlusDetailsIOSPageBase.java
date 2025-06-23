@@ -206,6 +206,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
     private ExtendedWebElement espnPlusGenericErrorText;
 
+    @ExtendedFindBy(accessibilityId = "badgeTextCircle")
+    private ExtendedWebElement badgeTextCircle;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name BEGINSWITH " +
             "'content'`]/**/XCUIElementTypeStaticText[`name != 'promoLabel'`][1]")
     protected ExtendedWebElement ratingAudioVideoFormatLabel;
@@ -313,6 +316,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isContinueButtonPresent() {
         return getContinueButton().isPresent();
+    }
+
+    public boolean isBadgeTextCirclePresent() {
+        return badgeTextCircle.isPresent();
     }
 
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
@@ -845,6 +852,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return progressBar.isPresent(TEN_SEC_TIMEOUT);
     }
 
+    public boolean progressBarIsNotPresent() {
+        return progressBar.isElementNotPresent(TEN_SEC_TIMEOUT);
+    }
+
     public String getDetailsTabSeasonRating() {
         String[] seasonNumberRating = getTypeOtherContainsLabel("Season").getText().split(":");
         String[] seasonNumber = seasonNumberRating[0].split(" ");
@@ -1016,6 +1027,11 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
                 .until(it -> !stopOfflineDownload.isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+
+    public boolean waitForStopOfflineDownload() {
+        returnAnyPresentElement(stopOfflineDownload);
+        return true;
     }
 
     /**

@@ -36,7 +36,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
     private static final int SCRUB_PERCENTAGE_FIFTY = 50;
-    private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
+    private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Bluey";
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
     String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
@@ -63,8 +63,19 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isAlertTitleDisplayed(), "Download alert title not found");
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isTwentyDownloadsTextDisplayed(), "Download alert text not found.");
-        sa.assertTrue(disneyPlusApplePageBase.isAlertDefaultBtnPresent(), "Download All Of Season One button not found");
+        sa.assertTrue(disneyPlusApplePageBase.isAlertDefaultBtnPresent(), "Download All Of Season One " +
+                "button not found");
         sa.assertTrue(disneyPlusApplePageBase.isAlertDismissBtnPresent(), "Dismiss button not found");
+
+        disneyPlusDetailsIOSPageBase.clickAlertDismissBtn();
+        sa.assertTrue(disneyPlusApplePageBase.alertDismissBtnNotPresent(), "Dismiss button was found");
+        disneyPlusDetailsIOSPageBase.downloadAllOfSeason();
+        disneyPlusDetailsIOSPageBase.clickAlertConfirm();
+        swipeUp(1,2000);
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.waitForStopOfflineDownload(),"No download progress is" +
+               "displayed next to the content on the Episodes tab");
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isBadgeTextCirclePresent(), "No badge is displayed on the" +
+                " Downloads tab");
         sa.assertAll();
     }
 
