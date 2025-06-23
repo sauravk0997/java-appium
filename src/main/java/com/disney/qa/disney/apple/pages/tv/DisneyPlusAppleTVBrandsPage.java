@@ -10,17 +10,11 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusBrandIOSPageBase.class)
 public class DisneyPlusAppleTVBrandsPage extends DisneyPlusBrandIOSPageBase {
 
-    @ExtendedFindBy(iosPredicate = "name == \"headerViewTitleLabel\" AND label == '%s'")
-    protected ExtendedWebElement brandShelf;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name == \"highEmphasisView\"`]/XCUIElementTypeImage")
     private ExtendedWebElement brandLogoImage;
 
     public DisneyPlusAppleTVBrandsPage(WebDriver driver) {
         super(driver);
-    }
-
-    public ExtendedWebElement getBrandShelf(String element) {
-        return brandShelf.format(element);
     }
 
     @Override

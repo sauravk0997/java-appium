@@ -24,10 +24,4 @@ public class DisneyPlusAppleTVCompleteSubscriptionPage extends DisneyPlusComplet
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
-
-    public boolean isCompleteSubBtnFocused() {
-        boolean isFocused = isFocused(completeSubscriptionBtn);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isFocused;
-    }
 }

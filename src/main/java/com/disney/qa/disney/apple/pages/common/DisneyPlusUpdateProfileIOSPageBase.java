@@ -18,9 +18,6 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
     @ExtendedFindBy(accessibilityId = "submitButtonCellIdentifier")
     private ExtendedWebElement saveButton;
 
-    @ExtendedFindBy(accessibilityId = "genderFormButtonCellIdentifier")
-    private ExtendedWebElement genderFormButtonCellIdentifier;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='%s'$]/XCUIElementTypeCollectionView")
     private ExtendedWebElement contentRatingContainer;
 
@@ -34,9 +31,6 @@ public class DisneyPlusUpdateProfileIOSPageBase extends DisneyPlusEditProfileIOS
 
     @Override
     public boolean isOpened() {return doesUpdateProfileTitleExist(); }
-
-    public boolean isEditProfilePresent() { return editProfile.isElementPresent(); }
-
 
     public boolean doesUpdateProfileTitleExist() {
         return getUpdateProfileTitle().isPresent(FIVE_SEC_TIMEOUT);

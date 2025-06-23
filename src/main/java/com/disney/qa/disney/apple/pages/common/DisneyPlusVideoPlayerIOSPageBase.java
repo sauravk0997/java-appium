@@ -72,8 +72,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement iconPinUnlocked;
     @ExtendedFindBy(accessibilityId = "unlockPlayerControlsButton")
     private ExtendedWebElement iconPinLocked;
-    @ExtendedFindBy(accessibilityId = "brandImageView")
-    private ExtendedWebElement brandImageView;
     @ExtendedFindBy(accessibilityId = "skipIntroButton")
     private ExtendedWebElement skipIntroButton;
     @FindBy(name = "subtitleLabel")
@@ -91,13 +89,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label CONTAINS " +
             "'%s'$]/**/XCUIElementTypeButton")
     private ExtendedWebElement feedOptionCheckmark;
-
-
-    public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
-          "depictions and/or mistreatment of people or cultures. These stereotypes were wrong then and are wrong now. Rather than remove this content, we want to acknowledge its harmful impact, learn from it and spark conversation to create a more inclusive future together.";
-    public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2 = "Disney is committed to creating " +
-            "stories with inspirational and aspirational themes that reflect the rich diversity of the human experience around the globe.";
-    private static final String NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE = "YOUR VIDEO WILL START IN";
 
     //FUNCTIONS
 
@@ -391,12 +382,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusDetailsIOSPageBase.class);
     }
 
-    public DisneyPlusDetailsIOSPageBase tapSubtitleOnPlayer() {
-        displayVideoController();
-        subtitleLabel.click();
-        return initPage(DisneyPlusDetailsIOSPageBase.class);
-    }
-
     /**
      * Scrubs on the seek bar to the given percentage. Returns the object of
      * DisneyPlusVideoPlayerIOSPageBase.
@@ -539,18 +524,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSkipIntroButtonPresent() {
         return skipIntroButton.isElementPresent();
-    }
-
-    /**
-     * Waits for content to end in player until getRemainingTime isn't greater than 0 and polling
-     * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
-     *
-     * @param timeout
-     * @param polling
-     */
-    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Content did not end after " + timeout).until(it -> getRemainingTime() == 0);
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     /**
@@ -968,12 +941,5 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getTitleVideoLabel() {
         return titleLabel;
-    }
-
-    public void clickUnlockButton() {
-        if (getElementFor(PlayerControl.UNLOCK_ICON).isElementNotPresent(ONE_SEC_TIMEOUT)) {
-            clickElementAtLocation(getPlayerView(), 10, 50);
-        }
-        longTap(iconPinLocked);
     }
 }

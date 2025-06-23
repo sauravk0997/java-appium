@@ -46,9 +46,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
     private final ExtendedWebElement accessAndSecurityText =
             getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                     DictionaryKeys.ACCESS_SECURITY_HEADER.getText()));
-    private final ExtendedWebElement manageDevicesText =
-            getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                    DictionaryKeys.DEVICE_MANAGEMENT_BUTTON_LABEL.getText()));
 
     public ExtendedWebElement getSubscriptionMessage() {
         return subscriptionMessage;
