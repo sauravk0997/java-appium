@@ -42,6 +42,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         DisneyPlusCreatePasswordIOSPageBase createPassword = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
 
         String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                 DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
@@ -49,14 +50,15 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         setAppToHomeScreen(getUnifiedAccount());
 //        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
 
-//        createKidsProfile();
-//        terminateApp(sessionBundles.get(DISNEY));
-//        startApp(sessionBundles.get(DISNEY));
         moreMenu.clickMoreTab();
-        sa.assertFalse(moreMenu.getStaticTextByLabel(KIDS_PROFILE).isPresent(), "Kids profile name is displayed");
-        sa.assertFalse(whoIsWatching.isProfileIconPresent(KIDS_PROFILE), "Kids profile icon is displayed");
-        moreMenu.clickHomeIcon();
-        createKidsProfile();
+        moreMenu.clickAddProfile();
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
+        addProfile.clickSaveProfileButton();
+        terminateApp(sessionBundles.get(DISNEY));
+        startApp(sessionBundles.get(DISNEY));
         sa.assertTrue(passwordPage.getBackArrow().isPresent(), "Back Arrow is not displayed");
         sa.assertTrue(passwordPage.isHeaderTextDisplayed(), "Enter your password text is not present");
         sa.assertTrue(passwordPage.isPasswordFieldDisplayed(), "Password field is not present");
