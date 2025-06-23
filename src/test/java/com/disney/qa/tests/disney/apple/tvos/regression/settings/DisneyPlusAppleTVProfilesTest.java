@@ -484,6 +484,28 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112716"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyAddProfileU18DefaultsToTV14() {
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        String defaultRatingExpected = "TV-14";
+        String ratingExpected = "TV-MA";
+
+        logIn(getUnifiedAccount());
+
+        //Go through add profile screen
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.U18);
+
+        addProfilePage.clickSaveProfileButton();
+
+        Assert.assertTrue(addProfilePage.verifyHeadlineHeaderText(),
+                "Access to full catalog screen was not present");
+        Assert.assertTrue(addProfilePage.isMaturityRatingNotNowInfoDisplayed(defaultRatingExpected),
+                "The content rating was not TV-14 by default");
+        Assert.assertTrue(addProfilePage.isUpdateMaturityRatingActionDisplayed(ratingExpected),
+                "Prompt to set content rating was not TV-MA");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123034"})
     @Test(groups = {TestGroup.PROFILES, LATAM_ANZ})
     public void verifyDOBCollectionForLatamOrANZ() {
