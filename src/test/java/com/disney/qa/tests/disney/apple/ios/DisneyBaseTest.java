@@ -243,12 +243,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * Dismisses system alert popups
      */
     public void handleAlert() {
-        handleAlert(IOSUtils.AlertButtonCommand.DISMISS);
-    }
-
-    public void handleAlert(IOSUtils.AlertButtonCommand command) {
-        LOGGER.info("Checking for system alert to {}...", command);
-        handleSystemAlert(command, 10);
+        handleSystemAlert(IOSUtils.AlertButtonCommand.DISMISS, 10);
     }
 
     public void initialSetup() {
