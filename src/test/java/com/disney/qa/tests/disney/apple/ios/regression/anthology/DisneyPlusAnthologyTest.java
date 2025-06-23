@@ -208,36 +208,40 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-73789" })
-    @Test(description = "Verify Anthology Series - Episode Download", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologyEpisodeDownload() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
+        String Play = "Play";
+        String one = "1";
 
         setAppToHomeScreen(getUnifiedAccount());
-        searchAndOpenDWTSDetails();
 
-        //Download episode
-        details.isOpened();
+        //validate DWTS Episode Download
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertTrue(details.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         String mediaTitle = details.getMediaTitle();
-        details.startDownload();
-        sa.assertTrue(details.isSeriesDownloadButtonPresent(), "Series download button not found.");
+        String seasonString = details.getSeasonSelectorButton().getText();
+        String seasonNumber = seasonString.split(" ")[1];
+        swipePageTillElementPresent(details.getEpisodeToDownload(seasonNumber, one), 2,
+                null, Direction.UP, 1200);
+        details.getEpisodeToDownload(seasonNumber, one).click();
+        details.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        //Navigate to Download page
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
 
-        //Wait for download to complete and validate titles same.
-        details.waitForSeriesDownloadToComplete(180, 9);
-        details.clickDownloadsIcon();
-        sa.assertTrue(downloads.isOpened(), "Downloads page was not opened.");
         sa.assertTrue(mediaTitle.equalsIgnoreCase(downloads.getTypeOtherByLabel(DANCING_WITH_THE_STARS).getText()),
                 DANCING_WITH_THE_STARS + " titles are not the same.");
         sa.assertTrue(downloads.getStaticTextByLabelContains("1 Episode").isPresent(), "1 episode was not found.");
 
         //Play downloaded episode
         downloads.getDynamicIosClassChainElementTypeImage(DANCING_WITH_THE_STARS).click();
-        downloads.getTypeButtonContainsLabel("Play").click();
+        downloads.getTypeButtonContainsLabel(Play).click();
         videoPlayer.waitForVideoToStart();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-
         videoPlayer.clickBackButton();
         sa.assertTrue(downloads.getProgressBar().isPresent(), "Progress bar not found.");
 
@@ -248,6 +252,25 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getStaticTextByLabelContains("1 Selected").isPresent(), "1 Select is not found");
         downloads.clickDeleteDownloadButton();
         sa.assertTrue(downloads.isDownloadsEmptyHeaderPresent(), "Download was not removed, empty header not present.");
+
+        //validate DWTS Season Download
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
+        Assert.assertTrue(details.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        String mediaTitleDWTS = details.getMediaTitle();
+        details.downloadAllOfSeason();
+        details.clickAlertConfirm();
+        details.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(mediaTitleDWTS.equalsIgnoreCase(downloads.getTypeOtherByLabel(DANCING_WITH_THE_STARS).getText()),
+                DANCING_WITH_THE_STARS + " titles are not the same.");
+
+        //Play downloaded episode
+        downloads.getDynamicIosClassChainElementTypeImage(DANCING_WITH_THE_STARS).click();
+        downloads.getTypeButtonContainsLabel(Play).click();
+        videoPlayer.waitForVideoToStart();
+        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+
         sa.assertAll();
     }
 
