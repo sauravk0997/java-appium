@@ -1030,7 +1030,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean waitForStopOfflineDownload() {
-        returnAnyPresentElement(stopOfflineDownload);
+        waitForPresenceOfAnElement(stopOfflineDownload);
         return true;
     }
 
