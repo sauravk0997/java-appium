@@ -485,7 +485,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112716"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.SMOKE, US})
+    @Test(groups = {TestGroup.PROFILES, US})
     public void verifyAddProfileU18DefaultsToTV14() {
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         String defaultRatingExpected = "TV-14";
