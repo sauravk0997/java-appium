@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
+import static com.disney.qa.common.utils.IOSUtils.LOGGER;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEVICE_TYPE;
 
 public interface IAPIHelper {
@@ -65,6 +66,7 @@ public interface IAPIHelper {
                     "iOS",
                     Configuration.getRequired(Configuration.Parameter.ENV),
                     DisneyConfiguration.getPartner());
+            LOGGER.info("Dict version:{}", getMobileConfigApi().getDictionaryVersions());
             localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
             localizationUtils.setLegalDocuments();
             return localizationUtils;
