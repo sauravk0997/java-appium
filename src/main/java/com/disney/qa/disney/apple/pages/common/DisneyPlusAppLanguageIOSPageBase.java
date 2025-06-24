@@ -25,10 +25,14 @@ public class DisneyPlusAppLanguageIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]/**/XCUIElementTypeImage")
     ExtendedWebElement languageSelectedCheckMark;
 
-    public DisneyPlusAppLanguageIOSPageBase(WebDriver driver) { super(driver); }
+    public DisneyPlusAppLanguageIOSPageBase(WebDriver driver) {
+        super(driver);
+    }
 
     @Override
-    public boolean isOpened() { return appLanguageView.isElementPresent(); }
+    public boolean isOpened() {
+        return appLanguageView.isElementPresent();
+    }
 
     public boolean isAppLanguageHeaderPresent() {
         return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,

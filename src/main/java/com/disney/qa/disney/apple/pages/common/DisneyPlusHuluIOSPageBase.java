@@ -75,10 +75,6 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
         getNetworkLogo(network).click();
     }
 
-    public void clickOnNetworkBackButton(){
-        networkBackButton.click();
-    }
-
     public boolean isCollapsedImageDisplayed() {
         return huluBrandImageCollapsed.isPresent(THREE_SEC_TIMEOUT);
     }
