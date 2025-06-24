@@ -56,6 +56,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final String CHILDREN_PRIVACY_POLICY_LINK_NOT_PRESENT = "Children's Privacy Policy Link is not " +
             "present on Consent screen";
     private static final String CONSENT_TEXT_MISMATCH = "Consent text doesn't match with the expected dict values";
+    private static final String MINOR_CONSENT_AGREE = "AGREE";
     private static final String MINOR_CONSENT_DECLINE = "DECLINE";
     private static final String SCROLLING_CONSENT_SCREEN = "Scrolling down to view all of 'Information and choices " +
             "about your profile'";
@@ -146,14 +147,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         softAssert.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(), CHILDREN_PRIVACY_POLICY_LINK_NOT_PRESENT);
         softAssert.assertTrue(parentalConsent.validateConsentText(), CONSENT_TEXT_MISMATCH);
 
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_AGREE), 50, 50);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info(SCROLLING_CONSENT_SCREEN);
             softAssert.assertTrue(parentalConsent.validateScrollPopup(), ALERT_CONTENT_MISMATCH);
             parentalConsent.clickAlertConfirm();
             parentalConsent.scrollConsentContent(2);
             //Accept parental consent
-            clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+            clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_AGREE), 50, 50);
         }
         whoIsWatching.clickProfile(KIDS_PROFILE);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
@@ -917,14 +918,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(parentalConsent.validateConsentText(), CONSENT_TEXT_MISMATCH);
         sa.assertTrue(parentalConsent.verifyPrivacyPolicyLink(), PRIVACY_POLICY_LINK_NOT_PRESENT);
         sa.assertTrue(parentalConsent.verifyChildrenPrivacyPolicyLink(), CHILDREN_PRIVACY_POLICY_LINK_NOT_PRESENT);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_AGREE), 50, 50);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info(SCROLLING_CONSENT_SCREEN);
             sa.assertTrue(parentalConsent.validateScrollPopup(), ALERT_CONTENT_MISMATCH);
             parentalConsent.clickAlertConfirm();
             parentalConsent.scrollConsentContent(4);
             //Accept parental consent
-            clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
+            clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_AGREE), 50, 50);
         }
         Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
