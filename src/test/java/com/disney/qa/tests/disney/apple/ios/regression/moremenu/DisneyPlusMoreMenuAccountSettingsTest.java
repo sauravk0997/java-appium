@@ -10,7 +10,6 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -36,13 +35,6 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @BeforeMethod
     public void handleAlert() {
         super.handleAlert();
-    }
-
-    @DataProvider(name = "disneyPlanTypes")
-    public Object[][] disneyPlanTypes() {
-        return new Object[][]{
-                {MONTHLY}, {YEARLY}
-        };
     }
 
     public void setAppToAccountSettings() {

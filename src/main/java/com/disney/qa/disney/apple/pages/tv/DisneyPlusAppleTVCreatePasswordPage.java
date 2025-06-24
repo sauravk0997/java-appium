@@ -8,9 +8,6 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusCreatePasswordIOSPageBase.class)
 public class DisneyPlusAppleTVCreatePasswordPage extends DisneyPlusCreatePasswordIOSPageBase {
 
-    //LOCATORS
-
-    //FUNCTIONS
     public DisneyPlusAppleTVCreatePasswordPage(WebDriver driver) {
         super(driver);
     }

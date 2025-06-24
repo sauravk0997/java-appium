@@ -84,7 +84,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM, getLocalizationUtils().getLocale(), lang)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", lang, MobilePlatform.IOS,
@@ -122,7 +122,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", "en", MobilePlatform.IOS,
@@ -252,7 +252,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
@@ -320,7 +320,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();

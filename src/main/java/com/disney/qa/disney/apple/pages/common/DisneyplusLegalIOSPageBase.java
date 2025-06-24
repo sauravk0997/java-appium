@@ -53,21 +53,6 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
         return cell.getText();
     }
 
-    public boolean isHyperlinkPresent() {
-        return hyperlink.isPresent();
-    }
-
-    public void clickHyperlink() {
-        int containerDepth = cell.getLocation().getY() + cell.getSize().getHeight();
-        var maxSwipes = 20;
-        while(hyperlink.getLocation().getY() > containerDepth && maxSwipes > 0) {
-            LOGGER.info("Hyperlink is not within visible range. Swiping container up. Attempts remaining {}/20", maxSwipes);
-            swipeInContainer(cell, Direction.UP, 1, 500);
-            maxSwipes--;
-        }
-        hyperlink.click();
-    }
-
     public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection, DisneyLocalizationUtils localizationObj) {
         LOGGER.info("Validating functions for: {}", legalSection);
         String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];

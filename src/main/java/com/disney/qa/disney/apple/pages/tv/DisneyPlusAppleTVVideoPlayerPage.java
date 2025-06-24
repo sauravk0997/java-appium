@@ -43,17 +43,6 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     }
 
     /**
-     * Waits for content to end in player until Up Next End Card present.
-     * Returns the object of DisneyPlusAppleTVVideoPlayerPage.
-     * @param timeout
-     * @param polling
-     */
-    public DisneyPlusAppleTVVideoPlayerPage waitForTvosContentToEnd(long timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Up Next End Card did not load after " + timeout).until(it -> isUpNextHeaderPresent());
-        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-    }
-
-    /**
      * Waits for trailer to end in player until video player is not open.
      * Returns the object of DisneyPlusAppleTVVideoPlayerPage.
      * @param timeout
