@@ -31,7 +31,7 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     private static final String TWENTY_EIGHTEEN = "2018";
     private static final String WRONG_PASSWORD = "local123b456@";
 
-        @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyU13PasswordGrantForWelch() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
