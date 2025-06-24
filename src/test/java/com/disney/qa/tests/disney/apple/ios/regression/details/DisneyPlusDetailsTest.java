@@ -5,6 +5,7 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -997,16 +998,30 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyESPNUpsellDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+     //   getSeriesApi2("entity-4a004490-8d31-4c46-9ab2-5b68b1820a41");
+        getExploreAPIPageVisuals("entity-b3563311-3e65-42d5-921c-9c9c3a43cb0f");
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         //Open an ESPN+ content title
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
-
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        // This step to validating ESPN documentaries
+        try {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+            Visuals visualsResponse = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_espn_long_gone_entity_id"));
+            String genre = visualsResponse.getMetastringParts().getGenres().getValues().get(0);
+            // Validate metadata
+            Assert.assertTrue(detailsPage.getStaticTextByLabelContains(genre).isPresent(), "Genre is not present");
+            Assert.assertTrue(detailsPage.getStaticTextByLabelContains(
+                    visualsResponse.getDescription().getBrief()).isPresent(), "Description is not present");
+            Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
+            Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        } catch (Exception e) {
+            throw new SkipException("Unable to get documentaries information from Explore API", e);
+        }
         Assert.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
         Assert.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
 
