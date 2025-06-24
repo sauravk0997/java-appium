@@ -430,6 +430,7 @@ public enum DictionaryKeys {
     STREAMCONCURRENCY("streamconcurrency"),
     STREAMCONCURRENCY_TITLE("streamconcurrency_title"),
     SUBSCRIPTIONS_TITLE("account_subscription_title"),
+    SUB_SECTION_PRIVACY_AND_DATA("sub_section_privacy_and_data"),
     TEXT_OFF("text_off"),
     TEXT_ON("text_on"),
     TOGGLE_DEMO_TARGETING_DESC("toggle_demo_targeting_desc"),
