@@ -31,9 +31,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     //TODO Refactor english hardcoded values to reference dictionary keys
     //LOCATORS
 
-    @ExtendedFindBy(accessibilityId = "editProfile")
-    protected ExtendedWebElement editProfileView;
-
     @ExtendedFindBy(accessibilityId = "badgeIcon")
     protected ExtendedWebElement badgeIcon;
 
@@ -67,16 +64,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"kidsProfileToggleCell\"`]/**/XCUIElementTypeOther[`name == \"toggleView\"`]")
     private ExtendedWebElement kidProofExitToggleSwitch;
 
-    //Visibility set to false
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Add Profile\"`]")
-    private ExtendedWebElement addProfileBtnTitle;
-
-    @ExtendedFindBy(accessibilityId = "Skip")
-    private ExtendedWebElement skipBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextField[`value == \"Profile Name\"`]")
-    private ExtendedWebElement profileNameTextField;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]/XCUIElementTypeLink")
     protected ExtendedWebElement sharePlayHyperLink;
 
@@ -106,12 +93,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     @ExtendedFindBy(accessibilityId = "alertAction:destructiveButton")
     private ExtendedWebElement confirmProfileDeleteButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Content Rating\"`]")
-    private ExtendedWebElement contentRatingTitle;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"subtitleLabel\"`]")
-    private ExtendedWebElement subtitleLabel;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == \"unlockedProfileCell\"`]/**/XCUIElementTypeImage[1]")
     private ExtendedWebElement editProfileImage;
@@ -178,10 +159,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
 
     public boolean isEditProfilesTitlePresent() {
         return collectionHeadlineTitle.getText().equals(editProfileTitle);
-    }
-
-    public boolean isBackBtnPresent() {
-        return getBackArrow().isElementPresent();
     }
 
     public boolean isEditModeProfileIconPresent(String username) {

@@ -23,10 +23,8 @@ public class DisneyPlusAppleTVChangeEmailPage extends DisneyPlusChangeEmailIOSPa
         return isPresent;
     }
 
-    public void clickEmailField() { emailTextField.click(); }
-
-    public void enterEmail(String email) {
-        emailTextField.type(email);
+    public void clickEmailField() {
+        emailTextField.click();
     }
 
     public void clickSave() {

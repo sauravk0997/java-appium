@@ -1,7 +1,5 @@
 package com.disney.qa.tests.disney.apple.ios.localization;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
-
 import java.util.List;
 
 import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
