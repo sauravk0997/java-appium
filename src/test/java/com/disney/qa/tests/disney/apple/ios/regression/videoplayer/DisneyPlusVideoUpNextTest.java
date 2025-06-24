@@ -21,7 +21,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.*;
 import org.testng.annotations.Listeners;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -42,12 +41,6 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     private static final double PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES = 80;
     private static final String UP_NEXT_UI_WAS_NOT_PRESENT = "Up Next UI was not displayed";
     private static final String UP_NEXT_UI_WAS_PRESENT = "Up Next UI was displayed";
-
-
-    @DataProvider(name = "autoplay-state")
-    public Object[][] autoplayState(){
-        return new Object[][] {{"ON"}, {"OFF"}};
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67648"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})

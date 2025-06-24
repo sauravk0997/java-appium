@@ -17,7 +17,6 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
@@ -53,13 +52,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String DISPLAYED_TILES_ARE_NOT_DIFFERENT = "Displayed titles are not different";
     private static final String PCON_HEADER_ERROR_NOT_FOUND = "PCON restricted title message was not present";
     private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
-
-    @DataProvider(name = "collectionNames")
-    public Object[][] collections() {
-        return new Object[][]{
-                {MOVIES}, {SERIES}
-        };
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68278"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})

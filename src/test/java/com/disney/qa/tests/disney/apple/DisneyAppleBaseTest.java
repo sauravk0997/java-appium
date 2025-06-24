@@ -99,7 +99,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String testFairyAppVersion = TEST_FAIRY_APP_VERSION.get();
+            String testFairyAppVersion = R.CONFIG.get("test_fairy_app_version");
             LOGGER.info("version: {}", testFairyAppVersion);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), testFairyAppVersion);

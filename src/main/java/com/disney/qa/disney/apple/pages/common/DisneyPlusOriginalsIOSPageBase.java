@@ -12,10 +12,6 @@ import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.NAV_ORIGINALS_T
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 public class DisneyPlusOriginalsIOSPageBase extends DisneyPlusApplePageBase {
 
-    //LOCATORS
-
-    //FUNCTIONS
-
     public DisneyPlusOriginalsIOSPageBase(WebDriver driver) {
         super(driver);
     }

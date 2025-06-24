@@ -25,10 +25,6 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement playButton;
     @ExtendedFindBy(accessibilityId = "seeAllEpisodeButton")
     private ExtendedWebElement seeAllEpisodeButton;
-    @ExtendedFindBy(accessibilityId = "restartButton")
-    private ExtendedWebElement restartButton;
-    @ExtendedFindBy(accessibilityId = "ucp.fastForward")
-    private ExtendedWebElement fastForward;
 
     //FUNCTIONS
     public DisneyPlusUpNextIOSPageBase(WebDriver driver) {

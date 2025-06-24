@@ -48,6 +48,4 @@ public class DisneyPlusAppleTVSubscriptionReacquisitionPage extends DisneyPlusAp
                         DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE_ONBOARDING,
                         DictionaryKeys.DEVICE_BTN_LOG_OUT.getText()));
     }
-
-
 }
