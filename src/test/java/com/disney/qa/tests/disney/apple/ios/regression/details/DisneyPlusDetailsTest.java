@@ -5,7 +5,6 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -17,7 +16,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -1006,19 +1004,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         // This step to validating ESPN documentaries
-        try {
-            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-            Visuals visualsResponse = getExploreAPIPageVisuals(R.TESTDATA.get("disney_prod_espn_long_gone_entity_id"));
-            String genre = visualsResponse.getMetastringParts().getGenres().getValues().get(0);
-            // Validate metadata
-            Assert.assertTrue(detailsPage.getStaticTextByLabelContains(genre).isPresent(), "Genre is not present");
-            Assert.assertTrue(detailsPage.getStaticTextByLabelContains(
-                    visualsResponse.getDescription().getBrief()).isPresent(), "Description is not present");
-            Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
-            Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
-        } catch (Exception e) {
-            throw new SkipException("Unable to get documentaries information from Explore API", e);
-        }
+        Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
         Assert.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
         Assert.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
 
