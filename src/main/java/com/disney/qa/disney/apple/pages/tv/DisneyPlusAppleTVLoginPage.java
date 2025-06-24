@@ -1,7 +1,6 @@
 package com.disney.qa.disney.apple.pages.tv;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
@@ -11,7 +10,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -23,15 +21,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Enter New…\"`]")
     private ExtendedWebElement enterNewBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
-    private ExtendedWebElement continueAfterEnteringNewEmailBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Continue. Confirm your password and login.'`]")
-    private ExtendedWebElement confirmLoginButton;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"SIGN UP\"`]")
-    private ExtendedWebElement unknownScreenSignUpBtn;
 
     public DisneyPlusAppleTVLoginPage(WebDriver driver) {
         super(driver);
@@ -64,27 +53,9 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         }
     }
 
-    public boolean isEnterNewEmailBtnPresent() {
-        boolean isPresent = enterNewBtn.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
-    }
-
-    public void selectPreviouslyUsedEmails() {
-        if (enterNewBtn.isElementPresent()) {
-            fluentWait(getDriver(), SIXTY_SEC_TIMEOUT,ONE_SEC_TIMEOUT,"The first previously used email is not focused")
-                    .until(it -> isFocused(typeCell));
-            clickSelect();
-        }
-    }
-
     public void clickEmailField() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         textEntryField.click();
-    }
-
-    public void clickConfirmLoginButton() {
-        confirmLoginButton.click();
     }
 
     // To enter a temp string "bcd" into the email field
@@ -116,13 +87,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         return isPresent;
     }
 
-    public void selectEnterNewEnterEmailSelectDoneBtn(String email) {
-        clickEmailAndPressEnterNew();
-        enterEmail(email);
-        moveToContinueOrDoneBtnKeyboardEntry();
-        clickSelect();
-    }
-
     public boolean isContinueButtonDisplayed() {
         return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent();
     }
@@ -145,18 +109,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     public void clickContinueBtn() {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         continueButton.click();
-    }
-
-    public static List<String> getUnknownEmailScreenTexts(DisneyLocalizationUtils disneyLanguageUtils) {
-        var list = new ArrayList<String>();
-        getEnumValues(LOGIN_NO_ACCOUNT, LOGIN_NO_ACCOUNT_SUB_TEXT, TRY_AGAIN_BTN, BTN_SIGN_UP).forEach(
-                item -> list.add(disneyLanguageUtils.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, item)));
-        return list;
-    }
-
-    public void clickSignUpButtonUnknownEmailScreen() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        unknownScreenSignUpBtn.click();
     }
 
     public void proceedToPasswordScreen(String email) {
@@ -182,11 +134,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
         clickSelect();
         clickContinueBtn();
-    }
-
-    public void clickEmailAndPressEnterNew() {
-        clickEmailField();
-        clickEnterNewBtn();
     }
 
     public void pressMenuBackIfPreviouslyUsedEmailScreen() {

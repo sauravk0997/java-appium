@@ -29,12 +29,6 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     @ExtendedFindBy(accessibilityId = "titleLabel")
     protected ExtendedWebElement consentMinorHeader;
 
-    @ExtendedFindBy(accessibilityId = "declineButton")
-    protected ExtendedWebElement declineButton;
-
-    @ExtendedFindBy(accessibilityId = "agreeButton")
-    protected ExtendedWebElement agreeButton;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView")
     private ExtendedWebElement consentScrollView;
 
@@ -50,14 +44,6 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
 
     public boolean isConsentHeaderPresent() {
         return consentMinorHeader.isPresent(THREE_SEC_TIMEOUT);
-    }
-
-    public void tapDeclineButton() {
-        declineButton.click();
-    }
-
-    public void tapAgreeButton() {
-        agreeButton.click();
     }
 
     /**

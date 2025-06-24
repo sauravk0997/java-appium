@@ -8,9 +8,6 @@ import org.openqa.selenium.WebDriver;
 @DeviceType(pageType = DeviceType.Type.APPLE_TV, parentClass = DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class)
 public class DisneyPlusAppleTVVerifyAgeDOBCollectionPage extends DisneyPlusVerifyAgeDOBCollectionIOSPageBase {
 
-    //LOCATORS
-
-    //FUNCTIONS
     public DisneyPlusAppleTVVerifyAgeDOBCollectionPage(WebDriver driver) {
         super(driver);
     }
