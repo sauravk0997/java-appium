@@ -11,9 +11,6 @@ public class DisneyPlusEspnIOSPageBase extends DisneyPlusApplePageBase {
             "[`name == \"highEmphasisView\"`]/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeImage")
     protected ExtendedWebElement espnBrandPage;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Replay\"`][1]")
-    private ExtendedWebElement replayLabel;
-
     @ExtendedFindBy(accessibilityId = "heroImage")
     protected ExtendedWebElement heroImage;
 
@@ -24,10 +21,6 @@ public class DisneyPlusEspnIOSPageBase extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         return espnBrandPage.isPresent();
-    }
-
-    public ExtendedWebElement getReplayLabel() {
-        return replayLabel;
     }
 
     public ExtendedWebElement getHeroImage() {

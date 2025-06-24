@@ -751,47 +751,59 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66809"})
-    @Test(description = "Profiles - Edit Profile - Saving an empty Name Error", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileSavingEmptyNameError() {
+        String emptyProfileNameError = "Empty profile name error is not displayed";
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getFirstName());
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         editProfile.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.enterProfileName("");
         editProfile.clickDoneBtn();
-        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), "Empty profile name error is not displayed");
-        //Keys.SPACE is not working as expected
+        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), emptyProfileNameError);
         editProfile.enterProfileName("     ");
         editProfile.clickDoneBtn();
-        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), "Empty profile name error is not displayed");
+        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), emptyProfileNameError);
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        editProfile.clickMoreTab();
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), "Existing profile name is not displayed");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66780"})
-    @Test(description = "Edit Profile - All Characters allowed for Profile name", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileAllCharacters() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
         setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.clickMoreTab();
-        whoIsWatching.clickEditProfile();
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         String allCharacters = "\ud83d\ude3b!@\u24E912\uD83D\uDC9A3WA\ud83d\ude06"; //u codes left to right: cat heart emoji, z circle symbol, green heart emoji, laughing emoji
         editProfile.enterProfileName(allCharacters);
         editProfile.clickDoneBtn();
-        sa.assertTrue(homePage.isOpened(), "After clicking 'Done' to save new profile name, not returned to Home.");
+        Assert.assertTrue(homePage.isOpened(), "After clicking 'Done' to save new profile name, not returned to Home");
 
         homePage.clickMoreTab();
-        moreMenu.isOpened();
-        sa.assertTrue(moreMenu.getProfileCell(allCharacters, false).isPresent(), allCharacters + " profile name was not found.");
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(allCharacters), allCharacters + " profile name was not found");
         sa.assertAll();
     }
 

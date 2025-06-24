@@ -2,8 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
-import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebDriver;
 
@@ -12,10 +10,10 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
 
     //LOCATORS
 
-    private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
-    private String saveButton = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SETTINGS_GENDER_SAVE.getText());
-    @ExtendedFindBy(iosPredicate = "label == '%s' AND name == 'alertAction:defaultButton'")
-    private ExtendedWebElement genderOptionValue;
+    private String genderPlaceholder = getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.GENDER_PLACEHOLDER.getText());
+    private String saveButton = getLocalizationUtils().getDictionaryItem(
+            DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SETTINGS_GENDER_SAVE.getText());
 
     //FUNCTIONS
 
@@ -52,13 +50,6 @@ public class DisneyPlusEditGenderIOSPageBase extends DisneyPlusApplePageBase {
                 throw new InvalidArgumentException("Invalid selection made");
         }
         return selection;
-    }
-    /**
-     * @param option - gender value Men, Woman, NoBinary, preferNotToSay
-     * @return - true/false
-     */
-    public boolean isGenderOptionPresent(GenderOption option) {
-        return genderOptionValue.format(getGenderLabel(option)).isElementPresent();
     }
 
     /**

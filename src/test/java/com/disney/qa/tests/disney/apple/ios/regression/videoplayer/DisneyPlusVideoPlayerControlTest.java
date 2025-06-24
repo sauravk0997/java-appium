@@ -14,7 +14,6 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.openqa.selenium.ScreenOrientation;
 import org.testng.Assert;
 import org.testng.annotations.Listeners;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -31,16 +30,6 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
 
     protected static final String THE_MARVELS = "The Marvels";
     private static final double SCRUB_PERCENTAGE_TEN = 10;
-
-    @DataProvider(name = "contentType")
-    public Object[][] contentType() {
-        return new Object[][]{
-                {DisneyPlusApplePageBase.contentType.MOVIE.toString(),
-                        R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink")},
-                {DisneyPlusApplePageBase.contentType.SERIES.toString(),
-                        R.TESTDATA.get("disney_prod_series_detail_deeplink")}
-        };
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66515"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.PRE_CONFIGURATION, US})
