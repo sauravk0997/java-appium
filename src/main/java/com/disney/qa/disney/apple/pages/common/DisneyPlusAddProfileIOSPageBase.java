@@ -106,6 +106,18 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return cancelBtn;
     }
 
+    public ExtendedWebElement getAddProfilePINHeader() {
+        return staticTextByLabel.format(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                        DictionaryKeys.SECURE_PROFILE_PIN_ACTION.getText()));
+    }
+
+    public ExtendedWebElement getAddProfilePINDescription() {
+        return staticTextByLabel.format(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                        DictionaryKeys.SECURE_PROFILE_PIN_DESCRIPTION.getText()));
+    }
+
     public void enterProfileNameOnLocalizedKeyboard(String name) {
         enterText(name);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
