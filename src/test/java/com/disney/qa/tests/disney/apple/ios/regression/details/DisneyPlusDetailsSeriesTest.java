@@ -5,7 +5,6 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
-import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
@@ -26,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
-import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_LEAGUES;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BABY_YODA;
@@ -60,7 +58,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         disneyPlusSearchIOSPageBase.searchForMedia(SERIES_BLUEY);
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
-        pause(5);
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isDetailPageOpened(FIVE_SEC_TIMEOUT),DETAILS_PAGE_NOT_DISPLAYED);
         disneyPlusDetailsIOSPageBase.downloadAllOfSeason();
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isAlertTitleDisplayed(), "Download alert title not found");
