@@ -699,7 +699,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
 
         loginPage.proceedToPasswordScreen(getUnifiedAccount().getEmail());
         Assert.assertTrue(oneTimePasscodePage.isOpened(), LOG_IN_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
-        Assert.assertFalse(passwordPage.isAnyStepLabelDisplayed(),
+        Assert.assertFalse(passwordPage.isStepLabelDisplayed(),
                 "Step 2 is displayed on on OTP page");
 
         oneTimePasscodePage.clickLoginWithPassword();

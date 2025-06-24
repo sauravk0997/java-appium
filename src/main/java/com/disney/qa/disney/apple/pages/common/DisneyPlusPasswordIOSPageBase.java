@@ -179,7 +179,7 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return getStaticTextByLabel(stepLabel).isPresent();
     }
 
-    public boolean isAnyStepLabelDisplayed() {
+    public boolean isStepLabelDisplayed() {
         String stepLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
                         DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", ""));
