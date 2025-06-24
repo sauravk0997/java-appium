@@ -34,7 +34,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.BA
 public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String KIDS_DOB = "2018-01-01";
-    private static final String U13_DOB = "2020-01-01";
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
     private static final String ESPAÑOL = "Español";
