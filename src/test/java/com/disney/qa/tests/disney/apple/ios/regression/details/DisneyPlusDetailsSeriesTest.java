@@ -23,8 +23,7 @@ import java.net.URISyntaxException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.DAREDEVIL_BORN_AGAIN;
-import static com.disney.qa.api.disney.DisneyEntityIds.SERIES_EXTRA;
+import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
@@ -36,7 +35,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
 
     //Test constants
     private static final int SCRUB_PERCENTAGE_FIFTY = 50;
-    private static final String MORE_THAN_TWENTY_EPISODES_SERIES = "Phineas and Ferb";
     private static final String SECRET_INVASION = "Secret Invasion";
     private static final String FOUR_EVER = "4Ever";
     String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
@@ -47,6 +45,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadMessageForSeasonMoreThanTwentyEpisodes() {
+        String seasonNumber = "1";
+        String episodeNumber = "1";
         DisneyPlusHomeIOSPageBase disneyPlusHomeIOSPageBase = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusSearchIOSPageBase disneyPlusSearchIOSPageBase = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -55,16 +55,29 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         disneyPlusHomeIOSPageBase.clickSearchIcon();
-        disneyPlusSearchIOSPageBase.searchForMedia(MORE_THAN_TWENTY_EPISODES_SERIES);
+        disneyPlusSearchIOSPageBase.searchForMedia(SERIES_BLUEY);
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
-        pause(5);
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isDetailPageOpened(FIVE_SEC_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
         disneyPlusDetailsIOSPageBase.downloadAllOfSeason();
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isAlertTitleDisplayed(), "Download alert title not found");
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isTwentyDownloadsTextDisplayed(), "Download alert text not found.");
-        sa.assertTrue(disneyPlusApplePageBase.isAlertDefaultBtnPresent(), "Download All Of Season One button not found");
+        sa.assertTrue(disneyPlusApplePageBase.isAlertDefaultBtnPresent(),
+                "Download All Of Season One button not found");
         sa.assertTrue(disneyPlusApplePageBase.isAlertDismissBtnPresent(), "Dismiss button not found");
+        disneyPlusDetailsIOSPageBase.clickAlertDismissBtn();
+        sa.assertFalse(disneyPlusApplePageBase.isAlertDismissBtnPresent(), "Dismiss button was found");
+        disneyPlusDetailsIOSPageBase.downloadAllOfSeason();
+        disneyPlusDetailsIOSPageBase.clickAlertConfirm();
+        disneyPlusDetailsIOSPageBase.getDownloadAllSeasonButton();
+        ExtendedWebElement firstEpisode = disneyPlusDetailsIOSPageBase.getEpisodeCell(seasonNumber, episodeNumber);
+        disneyPlusDetailsIOSPageBase.swipePageTillElementPresent(firstEpisode, 1, null, Direction.UP, 1500);
+        disneyPlusDetailsIOSPageBase.waitForPresenceOfAnElement(disneyPlusDetailsIOSPageBase.getEpisodeCell(seasonNumber, episodeNumber));
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isStopOfflineDownloadPresent(),
+                "No download progress is displayed next to the content on the Episodes tab");
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isBadgeTextCirclePresent(),
+                "No badge is displayed on the Downloads tab");
         sa.assertAll();
     }
 
