@@ -1000,7 +1000,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
      //   getSeriesApi2("entity-4a004490-8d31-4c46-9ab2-5b68b1820a41");
+<<<<<<< Updated upstream
         getExploreAPIPageVisuals("entity-b3563311-3e65-42d5-921c-9c9c3a43cb0f");
+=======
+     //   getExploreAPIPageVisuals("entity-b3563311-3e65-42d5-921c-9c9c3a43cb0f");
+>>>>>>> Stashed changes
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
