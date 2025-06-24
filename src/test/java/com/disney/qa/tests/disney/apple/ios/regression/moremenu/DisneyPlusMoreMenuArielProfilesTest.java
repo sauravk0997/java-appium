@@ -178,16 +178,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
-        pause(3);
 
         setAppToHomeScreen(getUnifiedAccount());
         whoIsWatching.clickProfile(U13_PROFILE);
-
         Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
+
         editProfilePage.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
         updateProfilePage.tapSaveButton();
-
-        //Consent screen validation
+        //Decline Consent
         Assert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
