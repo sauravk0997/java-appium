@@ -64,6 +64,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
+    public static final String U13_PROFILE = "U13";
     public static final String SECONDARY_PROFILE = "Secondary";
     public static final String TERTIARY_PROFILE = "Tertiary";
     public static final String EXTRA_MEMBER_PROFILE = "EM";
