@@ -23,29 +23,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
-    private static final String FIRST = "01";
-    private static final String TWENTY_EIGHTEEN = "2018";
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
-    @Test(description = "Add profile U13, minor authentication", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION}, enabled = false)
-    public void verifyAddProfileU13AuthenticationIncorrectPassword() {
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase disneyPlusLoginIOSPageBase = new DisneyPlusLoginIOSPageBase(getDriver());
-        String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.INVALID_CREDENTIALS_ERROR.getText());
-        SoftAssert softAssert = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount());
-        //wait for action grant to expire
-        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
-        createKidsProfile();
-        passwordPage.submitPasswordWhileLoggedIn("IncorrectPassword!123");
-        //Verify that error is shown on screen
-        softAssert.assertEquals(disneyPlusLoginIOSPageBase.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
-        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
-        softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), "Consent header was not present after minor auth");
-        softAssert.assertAll();
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
@@ -78,18 +55,5 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         passwordPage.clickSecondaryButtonByCoordinates();
         softAssert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
         softAssert.assertAll();
-    }
-
-    private void createKidsProfile() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        addProfile.tapJuniorModeToggle();
-        addProfile.clickSaveProfileButton();
     }
 }
