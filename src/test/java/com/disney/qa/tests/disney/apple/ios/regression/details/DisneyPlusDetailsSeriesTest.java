@@ -58,7 +58,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         disneyPlusSearchIOSPageBase.searchForMedia(SERIES_BLUEY);
         List<ExtendedWebElement> results = disneyPlusSearchIOSPageBase.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isDetailPageOpened(FIVE_SEC_TIMEOUT),DETAILS_PAGE_NOT_DISPLAYED);
+        sa.assertTrue(disneyPlusDetailsIOSPageBase.isDetailPageOpened(FIVE_SEC_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
         disneyPlusDetailsIOSPageBase.downloadAllOfSeason();
 
         sa.assertTrue(disneyPlusDetailsIOSPageBase.isAlertTitleDisplayed(), "Download alert title not found");
