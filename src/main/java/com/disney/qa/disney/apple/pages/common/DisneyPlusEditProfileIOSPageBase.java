@@ -646,10 +646,8 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
                 DisneyDictionaryApi.ResourceKeys.IDENTITY, TOGGLE_DEMO_TARGETING_DESC.getText()));
     }
 
-    public boolean isDemographicTargetingToggleOn() {
-        return getDemographicTargetingToggleCell().getText().equals(
-                getLocalizationUtils().getDictionaryItem(
-                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()));
+    public String getDemographicTargetingToggleValue() {
+        return getDemographicTargetingToggleCell().getText();
     }
 
     public void tapDemographicTargetingToggle() {

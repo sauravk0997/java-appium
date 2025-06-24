@@ -1809,15 +1809,21 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Demographic Targeting toggle sub copy is not present");
 
         // Validate Demographic Targeting toggle is Opted In by default
-        Assert.assertTrue(editProfilePage.isDemographicTargetingToggleOn(),
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()),
                 "Demographic Targeting toggle is not 'ON' by default");
 
         // Validate user can Opt Out and Opt In again to Demographic Targeting
         editProfilePage.tapDemographicTargetingToggle();
-        Assert.assertFalse(editProfilePage.isDemographicTargetingToggleOn(),
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_OFF.getText()),
                 "Demographic Targeting toggle is not set to 'OFF'");
         editProfilePage.tapDemographicTargetingToggle();
-        Assert.assertTrue(editProfilePage.isDemographicTargetingToggleOn(),
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()),
                 "Demographic Targeting toggle is not set to 'ON'");
     }
 
