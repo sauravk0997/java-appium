@@ -279,6 +279,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         setAppToAccountSettings();
         Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
         accountPage.toggleRestrictProfileCreation();
@@ -314,6 +315,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
         //Select NOT NOW on Optional PIN Creation
         passwordPage.clickSecondaryButtonByCoordinates();
+        homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
