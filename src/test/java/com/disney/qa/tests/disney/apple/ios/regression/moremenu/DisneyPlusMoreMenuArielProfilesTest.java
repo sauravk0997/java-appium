@@ -56,6 +56,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             "present on Consent screen";
     private static final String CONSENT_TEXT_MISMATCH = "Consent text doesn't match with the expected dict values";
     private static final String MINOR_CONSENT_AGREE = "AGREE";
+    private static final String MINOR_CONSENT_DECLINE = "DECLINE";
     private static final String SCROLLING_CONSENT_SCREEN = "Scrolling down to view all of 'Information and choices " +
             "about your profile'";
     private static final String ALERT_CONTENT_MISMATCH = "Alert verbiage doesn't match with the expected dict value";
@@ -178,7 +179,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         updateProfilePage.tapSaveButton();
         //Consent screen validation
         softAssert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_DECLINE), 50, 50);
         softAssert.assertTrue(whoIsWatching.getDynamicCellByLabel("Mickey Mouse and Friends").isPresent(), "Kids Home page is not open after login");
         softAssert.assertAll();
     }
@@ -308,7 +309,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             LOGGER.info(SCROLLING_CONSENT_SCREEN);
             parentalConsent.scrollConsentContent(4);
         }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_AGREE), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_DECLINE), 50, 50);
         //Welch Full Access
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
@@ -942,7 +943,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         createKidsProfile();
         Assert.assertTrue(parentalConsent.isConsentHeaderPresent(), CONSENT_HEADER_NOT_PRESENT);
         //Decline consent
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("DECLINE"), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_DECLINE), 50, 50);
         Assert.assertTrue(parentalConsent.getTypeButtonByLabel(
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                         DictionaryKeys.BTN_FULL_CATALOG.getText())).isPresent());
