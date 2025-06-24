@@ -23,9 +23,6 @@ import static com.disney.qa.common.constant.IConstantHelper.US;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyBaseTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
-    private static final String FIRST = "01";
-    private static final String TWENTY_EIGHTEEN = "2018";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
