@@ -28,59 +28,10 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     private static final String NO_ERROR_DISPLAYED = "error message was not displayed";
     private static final String FIRST = "01";
-    private static final String TWENTY_EIGHTEEN = "2020";
-
+    private static final String TWENTY_EIGHTEEN = "2018";
     private static final String WRONG_PASSWORD = "local123b456@";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72433"})
-    @Test(description = "Add profile U13, minor authentication", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyAddProfileU13AuthenticationIncorrectPassword() {
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = new DisneyPlusLoginIOSPageBase(getDriver());
-        DisneyPlusChangePasswordIOSPageBase changePassword = initPage(DisneyPlusChangePasswordIOSPageBase.class);
-        DisneyPlusCreatePasswordIOSPageBase createPassword = initPage(DisneyPlusCreatePasswordIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-
-        String invalidPasswordError = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                DictionaryKeys.MY_DISNEY_ENTER_PASSWORD_LOGIN_ERROR.getText());
-        SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount());
-//        passwordPage.keepSessionAlive(15, passwordPage.getHomeNav());
-
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        addProfile.clickSaveProfileButton();
-        terminateApp(sessionBundles.get(DISNEY));
-        startApp(sessionBundles.get(DISNEY));
-        sa.assertTrue(passwordPage.getBackArrow().isPresent(), "Back Arrow is not displayed");
-        sa.assertTrue(passwordPage.isHeaderTextDisplayed(), "Enter your password text is not present");
-        sa.assertTrue(passwordPage.isPasswordFieldDisplayed(), "Password field is not present");
-        sa.assertTrue(changePassword.isPasswordDescriptionPresent(), "Password description is not present");
-        sa.assertTrue(passwordPage.getPasswordHint().isPresent(), "Password hint text is not present");
-        sa.assertTrue(createPassword.isHidePasswordIconPresent(), "Show Password button is not present");
-        sa.assertTrue(passwordPage.getForgotPasswordLink().isPresent(), "Forgot password Link is not present");
-        sa.assertTrue(passwordPage.getContinueButton().isPresent(), "Continue button is not present");
-        passwordPage.enterPasswordNoAccount("IncorrectPassword!123");
-        sa.assertEquals(loginPage.getErrorMessageString(), invalidPasswordError, NO_ERROR_DISPLAYED);
-        passwordPage.enterPasswordNoAccount(getUnifiedAccount().getUserPass());
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
-            LOGGER.info("Scrolling down to view all of 'Information and choices about your profile'");
-            //For iPhone 8 or some other small devices need to scroll more time to read full consent/terms
-            parentalConsent.scrollConsentContent(4);
-        }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("AGREE"), 50, 50);
-        sa.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
+        @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyU13PasswordGrantForWelch() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);

@@ -230,12 +230,4 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.IDENTITY, NEW_PASSWORD_TAGLINE.getText()), ".");
         return getStaticTextViewValueContains(taglineText).isPresent();
     }
-
-    public ExtendedWebElement getContinueButton() {
-        return primaryButton;
-    }
-
-    public ExtendedWebElement getPasswordHint() {
-        return passwordHintText;
-    }
 }
