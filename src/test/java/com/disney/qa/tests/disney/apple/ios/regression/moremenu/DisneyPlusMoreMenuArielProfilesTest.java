@@ -277,6 +277,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whosWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
@@ -315,8 +316,8 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         }
         //Select NOT NOW on Optional PIN Creation
         passwordPage.clickSecondaryButtonByCoordinates();
-        homePage.waitForHomePageToOpen();
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(whosWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        Assert.assertTrue(whosWatching.isProfileIconPresent(U13_PROFILE), "Profile Name is not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72683"})
