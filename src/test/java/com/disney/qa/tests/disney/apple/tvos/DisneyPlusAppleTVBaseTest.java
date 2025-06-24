@@ -127,6 +127,20 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 "Home page did not launch for single profile user after logging in");
     }
 
+    public void logInWithoutHomeCheck(String email) {
+        DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVOneTimePasscodePage disneyPlusAppleTVOneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+        selectAppleUpdateLaterAndDismissAppTracking();
+        disneyPlusAppleTVWelcomeScreenPage.waitForWelcomePageToLoad();
+        Assert.assertTrue(disneyPlusAppleTVWelcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        disneyPlusAppleTVWelcomeScreenPage.clickLogInButton();
+        disneyPlusAppleTVLoginPage.proceedToLocalizedPasswordScreen(email);
+        disneyPlusAppleTVOneTimePasscodePage.clickLoginWithPassword();
+        disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized("M1ck3yM0us3#");
+    }
+
     public void getScreenshots(String filename, String directory) {
         UniversalUtils.storeScreenshot(getDriver(), filename, directory);
     }

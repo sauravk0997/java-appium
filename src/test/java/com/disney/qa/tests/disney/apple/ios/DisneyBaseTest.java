@@ -240,6 +240,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
+    public void setAppToHomeScreenHardCoded(String email) {
+        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
+        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(email);
+        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin("M1ck3yM0us3#");
+        handleSystemAlert(IOSUtils.AlertButtonCommand.DISMISS, 1);
+    }
+
     /**
      * Dismisses system alert popups
      */

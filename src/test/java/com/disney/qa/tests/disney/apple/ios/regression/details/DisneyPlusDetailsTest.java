@@ -418,10 +418,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String leagues = "Leagues";
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount());
+//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+//        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreenHardCoded("ristina.solmaz+prem4@disney.com");
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
+        swipe(homePage.getHomePageMainElement());
         homePage.clickEspnTile();
         Assert.assertTrue(espnPage.isOpened(), ESPN_PAGE_IS_NOT_DISPLAYED);
 
@@ -829,7 +831,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         int swipeCount = 10;
 
-        setAppToHomeScreen(getUnifiedAccount());
+//        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreenHardCoded("cristina.solmaz+prem4@disney.com");
+        swipe(homePage.getHomePageMainElement());
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
 
         //Swipe to the "Unlock to stream more collection" and select first Upsell title
