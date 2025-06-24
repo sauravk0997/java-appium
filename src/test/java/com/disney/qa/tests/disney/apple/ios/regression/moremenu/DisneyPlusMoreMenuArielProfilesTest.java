@@ -8,7 +8,6 @@ import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.qa.api.offer.pojos.*;
 import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.utils.IOSUtils;
-import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -279,45 +278,57 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73220"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyU13RestrictionOnWelchActionGrant() {
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyWelchAddProfileU13RestrictedProfileCreation() {
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
         DisneyPlusParentalConsentIOSPageBase parentalConsent = initPage(DisneyPlusParentalConsentIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whosWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
-        moreMenu.clickMoreTab();
-        moreMenu.tapAccountTab();
-        //Restrict Profile Creation toggle ON
-        moreMenu.clickToggleView();
-        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
-        accountPage.isOpened();
-        moreMenu.tapBackButton();
-        pause(2);
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        passwordPage.submitPasswordWhileLoggedIn(getUnifiedAccount().getUserPass());
+        homePage.waitForHomePageToOpen();
+        setAppToAccountSettings();
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
+        accountPage.toggleRestrictProfileCreation();
+        Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
 
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        addProfile.clickSaveProfileButton();
-        //Consent authentication
-        if ("Phone".equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
+        passwordPage.enterPassword(getUnifiedAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
+        //Add profile
+        accountPage.clickNavBackBtn();
+        moreMenu.clickAddProfile();
+        Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
+
+        passwordPage.enterPassword(getUnifiedAccount());
+        Assert.assertTrue(chooseAvatar.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+
+        addProfile.clickSkipBtn();
+        editProfile.enterProfileName(U13_PROFILE);
+        editProfile.enterDOB(Person.U13.getMonth(), Person.U13.getDay(), Person.U13.getYear());
+        editProfile.clickSaveBtn();
+
+        //Minor Consent authentication
+        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info(SCROLLING_CONSENT_SCREEN);
-            scrollDown();
+            parentalConsent.scrollConsentContent(4);
         }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_DECLINE), 50, 50);
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel("CONTINUE"), 50, 50);
-        //Welch Full catalog access
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
-        Assert.assertFalse(passwordPage.isConfirmWithPasswordTitleDisplayed(), "'Confirm with your password page' was displayed after selecting full catalog when profile Res was ON");
-        LOGGER.info("Selecting 'Not Now' on 'setting content rating / access to full catalog' page...");
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_AGREE), 50, 50);
+        //Welch Full Access
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
+        if(passwordPage.isOpened()){
+            passwordPage.enterPassword(getUnifiedAccount());
+        }
+        //Select NOT NOW on Optional PIN Creation
         passwordPage.clickSecondaryButtonByCoordinates();
-        Assert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
+        Assert.assertTrue(whosWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        Assert.assertTrue(whosWatching.isProfileIconPresent(U13_PROFILE), "Profile Name is not displayed");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72683"})
