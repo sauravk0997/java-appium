@@ -309,7 +309,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
             LOGGER.info(SCROLLING_CONSENT_SCREEN);
             parentalConsent.scrollConsentContent(4);
         }
-        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_DECLINE), 50, 50);
+        clickElementAtLocation(parentalConsent.getTypeButtonByLabel(MINOR_CONSENT_AGREE), 50, 50);
         //Welch Full Access
         clickElementAtLocation(parentalConsent.getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.WELCH, DictionaryKeys.BTN_FULL_CATALOG.getText())), 50, 50);
