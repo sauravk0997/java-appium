@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.tvos.regression.settings;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.disney.apple.pages.tv.*;
-import com.disney.qa.gmail.exceptions.GMailUtilsException;
 import com.disney.qa.tests.disney.apple.tvos.DisneyPlusAppleTVBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
@@ -19,12 +18,9 @@ import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.glob
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
-    private static final String HARD_BLOCK_USERNAME = "qait.disneystreaming+1799211931388caeedisneystreaming@gmail.com";
-    private static final String SOFT_BLOCK_USERNAME = "qait.disneystreaming+1767211931324cashdisneystreaming@gmail.com";
-    private static final String PASSWORD = "Test1234!";
-    private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block screen not displayed";
-    private static final String OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Hard Block screen not displayed";
-    private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen not displayed";
+    private static final String OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Soft Block screen is not displayed";
+    private static final String OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED = "OOH Hard Block screen is not displayed";
+    private static final String OOH_VERIFY_DEVICE_SCREEN_NOT_DISPLAYED = "OOH Verify Device screen is not displayed";
     private static final String OTP_PAGE_DID_NOT_OPEN = "User not navigated to OTP page";
     private static final String OTP_SUCCESS_MESSAGE_NOT_DISPLAYED =
             "Confirmation page not displayed after entering OTP";
@@ -36,8 +32,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     private static final String TRAVEL_MODE_MAXED_HEADLINE_NOT_DISPLAYED = "Travel mode maxed headline not displayed";
     private static final String LOG_OUT_CONFIRMATION_NOT_DISPLAYED = "Log out confirmation page did not open";
     private static final String OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED = "Travel mode 'Confirm you are away from home' screen not displayed";
-    private static final String UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT = "Update Household button not displayed";
+    private static final String UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT = "Update Household button is not displayed";
+    private static final String UPDATE_HOUSEHOLD_BUTTON_IS_NOT_FOCUSSED= "Update Household button is not focussed";
     private static final String UPDATE_HOUSE_SCREEN_NOT_DISPLAYED = "'Update your Disney+ Household' screen not displayed";
+    private  static final String HOUSEHOLD_CREATE_ACCOUNT_HEADLINE = "HH create account headline is not displayed";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118407"})
     @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
@@ -165,7 +163,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, true);
+        logInWithoutHomeCheck(account);
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -180,7 +179,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(HARD_BLOCK_USERNAME));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(account));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -224,11 +223,9 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
-        String email = "testtravelmaxed@disneyplustesting.com";
-        String password = "Test1234!";
-
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_MAX_TRAVEL_NO_CYOS, false);
+        logInWithoutHomeCheck(account);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
@@ -267,14 +264,11 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyAccountSharingErrorHandling() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-        String email = "testerrorhandling2@disneyplustesting.com";
-        String password = "Test1234!";
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         String invalidCode = "111111";
-        String errorMessage = "Sorry, we could not connect you to Disney+ using the passcode you provided. " +
-                "Please re-enter your passcode and try again. " +
-                "If the problem persists, visit the Disney+ Help Centre (error code 21).";
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, false);
+        logInWithoutHomeCheck(account);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
@@ -293,8 +287,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
                 OTP_PAGE_DID_NOT_OPEN);
         // Enter invalid OTP code and validate error in screen
         accountSharingPage.enterOtpOnModal(invalidCode);
-        sa.assertTrue(accountSharingPage.getStaticTextByLabelContains(errorMessage).isPresent(),
-                "Error message is not present");
+        sa.assertTrue(forgotPasswordPage.isOTPErrorMessagePresent(), "Error message is not present");
         homePage.clickDown();
         accountSharingPage.getResendEmailCopy().click();
         sa.assertTrue(accountSharingPage.getOOHErrorPageHeadline().isPresent(), "Error page headline is not present");
@@ -310,11 +303,10 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyAccountSharingSoftBlockConfirmDevice() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-        String email = "testconfirmdevice@disneyplustesting.com";
-        String password = "Test1234!";
         SoftAssert sa = new SoftAssert();
 
-        loginWithAccountSharingUser(email, password);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.SOFT_NO_CYOS, false);
+        logInWithoutHomeCheck(account);
         // Verify Soft Block screen and click in continue
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
                 OOH_SOFT_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -328,7 +320,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         // Verify OTP screen has opened
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(email), "OOH check mail subtext is not present");
+        sa.assertTrue(accountSharingPage.isOOHCheckEmailTextPresent(account.getEmail()), "OOH check mail subtext is not present");
         sa.assertAll();
     }
 
@@ -339,12 +331,13 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
 
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, false);
+        logInWithoutHomeCheck(account);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         homePage.moveDown(1, 1);
         sa.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldCTA()),
-                "Update Household button not focused");
+                UPDATE_HOUSEHOLD_BUTTON_IS_NOT_FOCUSSED);
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
                 UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
@@ -359,25 +352,24 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
     public void verifyOOHHardNoCyosHousehold() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
-        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-
-        String email = "testhardnocyos@disneyplustesting.com";
-        String password = "Test1234!";
+        DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(email, password);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_NO_CYOS, false);
+        logInWithoutHomeCheck(account);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
                 AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
         // Following steps will validate navigation between OOH screens
+        homePage.moveDown(1, 1);
         homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
-                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
         homePage.clickBack();
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
-                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
-        // Click in logout button and confirm logout in confirmation page
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        // Click in logout button and verify logout confirmation page
         homePage.moveDown(1, 1);
         homePage.moveRight(1, 1);
         sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
@@ -385,8 +377,13 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
                 LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
         homePage.clickSelect();
-        sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        homePage.clickBack();
+        sa.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+
         sa.assertAll();
     }
 
@@ -396,7 +393,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, true);
+        logInWithoutHomeCheck(account);
 
         // Validate hard block screen
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
@@ -426,7 +424,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         // Validate OTP
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(HARD_BLOCK_USERNAME));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(account));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -443,7 +441,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
 
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, true);
+        logInWithoutHomeCheck(account);
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
@@ -473,7 +472,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         // Validate OTP
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(HARD_BLOCK_USERNAME));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(account));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -492,7 +491,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        loginWithAccountSharingUser(SOFT_BLOCK_USERNAME, PASSWORD);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.SOFT, true);
+        logInWithoutHomeCheck(account);
 
         // Steps to verify the No thanks option
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),
@@ -523,7 +523,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         sa.assertTrue(accountSharingPage.isOOHEnterOtpPagePresent(),
                 OTP_PAGE_DID_NOT_OPEN);
-        accountSharingPage.enterOtpOnModal(getOTPFromApi(SOFT_BLOCK_USERNAME));
+        accountSharingPage.enterOtpOnModal(getOTPFromApi(account));
         sa.assertTrue(accountSharingPage.isOOHConfirmationHeadlinePresent(),
                 OTP_SUCCESS_MESSAGE_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHConfirmationPageCTA().isPresent(),
@@ -541,7 +541,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
         SoftAssert sa = new SoftAssert();
-        loginWithAccountSharingUser(HARD_BLOCK_USERNAME, PASSWORD);
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, false);
+        logInWithoutHomeCheck(account);
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -571,39 +572,120 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-    private void loginWithAccountSharingUser(String email, String password) {
-        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-116818"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyMaxedHHUpdates() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
-        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
-        DisneyPlusAppleTVOneTimePasscodePage passcodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        selectAppleUpdateLaterAndDismissAppTracking();
+        SoftAssert sa = new SoftAssert();
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_MAX_HH, false);
+        logInWithoutHomeCheck(account);
+
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockCreateAccLabelPresent(),
+                HOUSEHOLD_CREATE_ACCOUNT_HEADLINE);
+
+        sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopyPresent(),
+                "OOH hard block subcopy was not present");
+        sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopy2Present(),
+                "OOH hard block subcopy 2 was not present");
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
+                UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT);
+        homePage.moveDown(1, 1);
+        Assert.assertTrue(accountSharingPage.isFocused(accountSharingPage.getOOHUpdateHouseHoldCTA()),
+                UPDATE_HOUSEHOLD_BUTTON_IS_NOT_FOCUSSED);
+        homePage.clickSelect();
+
+        //Verify copies and CTA informing user they can no longer update their household
+        sa.assertTrue(accountSharingPage.isOOHUpdateHHMaxedHeadlinePresent(),
+                "OOH maxed headline is not displayed");
+        sa.assertTrue(accountSharingPage.isOOHUpdateHHMaxedSubcopyPresent(),
+                "OOH update maxed subcopy is not displayed");
+
+        //User selects OK CTA
+        Assert.assertTrue(accountSharingPage.isOOHUpdateHHMaxedButtonPresent(),
+                "OOH update maxed button is not displayed");
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHHardBlockCreateAccLabelPresent(),
+                HOUSEHOLD_CREATE_ACCOUNT_HEADLINE);
+
+        //verify Logout CTA
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        sa.assertTrue(accountSharingPage.isOOHUpdateHHMaxedHeadlinePresent(),
+                "OOH maxed headline is not displayed");
+        Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                "OOH Logout button is not present");
+        accountSharingPage.getOOHLogOutButton().click();
+        sa.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
+                LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
+        homePage.clickSelect();
         Assert.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
-        welcomeScreen.clickLogInButton();
-        loginPage.proceedToLocalizedPasswordScreen(email);
-        Assert.assertTrue(passcodePage.isOpened(), "Log In password screen did not launch");
-        passcodePage.clickLoginWithPassword();
-        passwordPage.logInWithPasswordLocalized(password);
+        sa.assertAll();
     }
 
-    //TODO Once QP-4003 and QP-4001 fixed and API available to create HouseHold account, Need to remove this method,
-    //we can use existing getOTPFromApi method from BaseTest class
-    public String getOTPFromApi(String email) {
-        int emailAPILatency = 10;
-        try {
-            String firstOTP = getEmailApi().getDisneyOTP(email);
-            pause(emailAPILatency);
-            String secondOTP = getEmailApi().getDisneyOTP(email);
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-117641"})
+    @Test(groups = {TestGroup.ACCOUNT_SHARING, US})
+    public void verifyAccountSharingHardNoCyosOverride() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_NO_CYOS, false);
+        logInWithoutHomeCheck(account);
 
-            if (!secondOTP.equals(firstOTP)) {
-                LOGGER.info("First and second OTP doesn't match, firstOTP: {}, secondOTP: {}", firstOTP, secondOTP);
-                return secondOTP;
-            } else {
-                LOGGER.info("First and second OTP match, returning first OTP: {}", firstOTP);
-                return firstOTP;
-            }
-        } catch (GMailUtilsException e) {
-            throw new RuntimeException(e.getMessage());
-        }
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        Assert.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
+                AWAY_FROM_HOME_BUTTON_NOT_DISPLAYED);
+        Assert.assertTrue(accountSharingPage.getOOHUpdateHouseHoldCTA().isPresent(),
+                UPDATE_HOUSEHOLD_BUTTON_NOT_PRESENT);
+        Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+
+        LOGGER.info("verifying I'm away from home flow");
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isOOHTravelModeScreenHeadlinePresent(),
+                OOH_CONFIRM_AWAY_SCREEN_NOT_DISPLAYED);
+        Assert.assertTrue(accountSharingPage.getOOHTravelModeOTPCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickBack();
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+
+        LOGGER.info("verifying update household flow");
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isOOHUpdateHouseHoldHeadlinePresent(),
+                UPDATE_HOUSE_SCREEN_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHUpdateHouseHoldSendCodeCTA().isPresent(),
+                SEND_CODE_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickBack();
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+
+        LOGGER.info("Verifying Logout button 'cancel' flow");
+        homePage.moveDown(1, 1);
+        homePage.moveRight(1, 1);
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isLogoutConfirmationTitlePresent(),
+                LOG_OUT_CONFIRMATION_NOT_DISPLAYED);
+        homePage.moveDown(1, 1);
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
+        
+        LOGGER.info("Verifying Logout button 'logout' flow");
+        homePage.clickSelect();
+        Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(SHORT_TIMEOUT),
+                LOG_OUT_BUTTON_NOT_PRESENT);
+        homePage.clickSelect();
+        sa.assertTrue(welcomeScreen.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        sa.assertAll();
     }
 }

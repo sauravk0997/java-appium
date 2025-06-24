@@ -55,4 +55,40 @@ public class DisneyPlusAppSettingsIOSPageBase extends DisneyPlusApplePageBase {
                 DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_DELETE_ALL_DOWNLOADS.getText()));
     }
+
+    public ExtendedWebElement getHighQualityTitle() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                        APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_HIGH_TITLE.getText()));
+    }
+
+    public ExtendedWebElement getHighQualitySubCopy() {
+        String highQualitySubCopy = getLocalizationUtils().getValuesBetweenPlaceholders(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_QUALITY_HIGH_COPY.getText())).get(0);
+        return getStaticTextByLabelContains(highQualitySubCopy);
+    }
+
+    public ExtendedWebElement getMediumQualityTitle() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_MEDIUM_TITLE.getText()));
+    }
+
+    public ExtendedWebElement getMediumQualitySubCopy() {
+        String mediumQualitySubCopy = getLocalizationUtils().getValuesBetweenPlaceholders(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_QUALITY_MEDIUM_COPY.getText())).get(0);
+        return getStaticTextByLabelContains(mediumQualitySubCopy);
+    }
+
+    public ExtendedWebElement getStandardQualityTitle() {
+        return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.
+                APPLICATION, DictionaryKeys.DOWNLOAD_QUALITY_STANDARD_TITLE.getText()));
+    }
+
+    public ExtendedWebElement getStandardQualitySubCopy() {
+        String highQualitySubCopy = getLocalizationUtils().getValuesBetweenPlaceholders(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                        DictionaryKeys.DOWNLOAD_QUALITY_STANDARD_COPY.getText())).get(0);
+        return getStaticTextByLabelContains(highQualitySubCopy);
+    }
 }

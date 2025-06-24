@@ -22,8 +22,8 @@ import org.testng.annotations.Test;
 import java.time.temporal.ValueRange;
 import java.lang.invoke.MethodHandles;
 
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
-import static com.disney.qa.common.DisneyAbstractPage.FIVE_SEC_TIMEOUT;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBaseTest {
@@ -42,7 +42,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
         Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayerTVPage.waitForVideoToStart();
+        videoPlayerTVPage.skipPromoIfPresent(FIFTEEN_SEC_TIMEOUT);
 
         // Pause video with remote button
         home.clickPlay();
@@ -72,19 +72,18 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
         int secondsSkippedPerAction = 10;
         int expectedSkippedSeconds = actionTimes * secondsSkippedPerAction;
         int uiLatencyInSeconds = 10;
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
 
         logIn(getUnifiedAccount());
-        homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_ironman_playback_deeplink"));
-        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.skipPromoIfPresent(FIFTEEN_SEC_TIMEOUT);
 
-        commonPage.clickDown(1);
         int remainingTimeBeforeForward = videoPlayer.getRemainingTimeThreeIntegers();
         commonPage.clickRight(actionTimes, 1, 1);
+        videoPlayer.waitForElementToDisappear(videoPlayer.getSeekbar(), FIVE_SEC_TIMEOUT);
         commonPage.clickDown(1);
         int remainingTimeAfterForward = videoPlayer.getRemainingTimeThreeIntegers();
         Assert.assertTrue((remainingTimeBeforeForward - remainingTimeAfterForward) > expectedSkippedSeconds,
@@ -131,6 +130,7 @@ public class DisneyPlusAppleTVVideoPlayerControlTest extends DisneyPlusAppleTVBa
 
         // Click fast-forward on the remote and get the thumbnail position in time
         commonPage.clickRight(3, 1, 1);
+        videoPlayerTVPage.waitForPresenceOfAnElement(videoPlayerTVPage.getThumbnailView());
         Assert.assertTrue(videoPlayerTVPage.getThumbnailView().isPresent(), "Thumbnail preview did not appear");
         int thumbnailTimeline = videoPlayerTVPage.getRemainingTimeThreeIntegers();
         LOGGER.info("thumbnailTimeline {}", thumbnailTimeline);

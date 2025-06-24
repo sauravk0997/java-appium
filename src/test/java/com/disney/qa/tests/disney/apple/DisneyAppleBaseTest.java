@@ -99,7 +99,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
         @Override
         protected DisneyMobileConfigApi initialize() {
-            String testFairyAppVersion = TEST_FAIRY_APP_VERSION.get();
+            String testFairyAppVersion = R.CONFIG.get("test_fairy_app_version");
             LOGGER.info("version: {}", testFairyAppVersion);
             if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
                 return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), testFairyAppVersion);
@@ -109,39 +109,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     };
 
-    private static final LazyInitializer<DisneySubscriptionApi> SUBSCRIPTION_API = new LazyInitializer<>() {
-        @Override
-        protected DisneySubscriptionApi initialize() {
-            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                    .platform(APPLE)
-                    .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                    .partner(DisneyConfiguration.getPartner())
-                    .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
-                    .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
-                    .build();
-            return new DisneySubscriptionApi(apiConfiguration);
-        }
-    };
-
-    private final ThreadLocal<DisneyAccount> DISNEY_ACCOUNT = ThreadLocal.withInitial(() -> {
-        DisneyOffer offer = getAccountApi().lookupOfferToUse(getCountry(), BUNDLE_PREMIUM);
-        return getAccountApi().createAccount(offer, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage(), SUBSCRIPTION_V2);
-    });
-
     private final ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = ThreadLocal.withInitial(() ->
             getUnifiedAccountApi().createAccount(
                     getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
-
-    private static final ThreadLocal<DisneyAccountApi> ACCOUNT_API = ThreadLocal.withInitial(() -> {
-        ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                .platform(APPLE)
-                .environment(DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).toLowerCase())
-                .partner(DisneyConfiguration.getPartner())
-                .useMultiverse(Configuration.getRequired(DisneyConfiguration.Parameter.USE_MULTIVERSE, Boolean.class))
-                .multiverseAccountsUrl(Configuration.getRequired(DisneyConfiguration.Parameter.MULTIVERSE_ACCOUNTS_URL))
-                .build();
-        return new DisneyAccountApi(apiConfiguration);
-    });
 
     private static final ThreadLocal<UnifiedAccountApi> UNIFIED_ACCOUNT_API = ThreadLocal.withInitial(() -> {
         ApiConfiguration apiConfiguration = ApiConfiguration.builder()
@@ -412,18 +382,16 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public void configureTVOSDeviceNameForJarvis(ITestContext context) {
         String xmlTVOSDeviceName = "tvOSDeviceName";
         String tvOSDeviceName = context.getCurrentXmlTest().getParameter(xmlTVOSDeviceName);
-
         if (tvOSDeviceName != null && !tvOSDeviceName.isEmpty()) {
             LOGGER.info("Disabling Jarvis Companion Config");
             R.CONFIG.put(CAPABILITIES_DEVICE_NAME, tvOSDeviceName);
+            LOGGER.info("Device in testing:{}", R.CONFIG.get(CAPABILITIES_DEVICE_NAME));
         }
     }
 
     @AfterMethod(alwaysRun = true)
     public void clearDisneyAppleBaseTest() {
         EMAIL_API.remove();
-        ACCOUNT_API.remove();
-        DISNEY_ACCOUNT.remove();
         LOCALIZATION_UTILS.clear();
         APPLE_TV_LOCALIZATION_UTILS.clear();
         UNIFIED_ACCOUNT.remove();
@@ -460,20 +428,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
-    public static DisneyAccountApi getAccountApi() {
-        return ACCOUNT_API.get();
-    }
-
     public static UnifiedAccountApi getUnifiedAccountApi() {
         return UNIFIED_ACCOUNT_API.get();
-    }
-
-    public static DisneySubscriptionApi getSubscriptionApi() {
-        try {
-            return SUBSCRIPTION_API.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
     }
 
     public static HouseholdApi getHouseholdApi() {
@@ -498,20 +454,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
-    }
-
-    /**
-     * Get account<br>
-     * <b>Unique for each test method</b>
-     *
-     * @return {@link DisneyAccount}
-     */
-    public DisneyAccount getAccount() {
-        return DISNEY_ACCOUNT.get();
-    }
-
-    public void setAccount(DisneyAccount account) {
-        DISNEY_ACCOUNT.set(account);
     }
 
     public UnifiedAccount getUnifiedAccount() {
@@ -785,5 +727,12 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         List<String> countryCodeList = Arrays.asList(FRANCE, SPAIN, SWEDEN, CA);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    public ExploreSearchRequest createUpNextRequest(String contentId) {
+        return ExploreSearchRequest.builder()
+                .contentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                .profileId(getUnifiedAccount().getProfileId())
+                .contentId(contentId).build();
     }
 }

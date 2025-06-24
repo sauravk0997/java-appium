@@ -10,6 +10,8 @@ import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.InvalidArgumentException;
 import org.openqa.selenium.WebDriver;
 
+import java.util.List;
+
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.*;
 
 
@@ -19,6 +21,9 @@ public class DisneyPlusAppleTVAddProfilePage extends DisneyPlusAddProfileIOSPage
 
     @ExtendedFindBy(accessibilityId = "skipAvatarSelectionBarButton")
     private ExtendedWebElement skipAvatarSelectionBtn;
+
+    @ExtendedFindBy(accessibilityId = "changeAvatarSelectorCell")
+    private ExtendedWebElement changeAvatarSelectorCell;
 
     ExtendedWebElement enterProfileNameTitle = getStaticTextByLabel(getAppleTVLocalizationUtils().getDictionaryItem(
             DisneyDictionaryApi.ResourceKeys.APPLICATION, ADD_PROFILE_ENTER_PROFILE_NAME_TITLE.getText()));
@@ -70,5 +75,14 @@ public class DisneyPlusAppleTVAddProfilePage extends DisneyPlusAddProfileIOSPage
         for (char number : fullDate.toCharArray()) {
             dynamicBtnFindByLabel.format(number).click();
         }
+    }
+
+    public ExtendedWebElement getChangeAvatarSelectorCell() {
+        return changeAvatarSelectorCell;
+    }
+
+    public ExtendedWebElement getBirthdateSelectorCell() {
+        List<ExtendedWebElement> addProfilePageCell = findExtendedWebElements(getTypeButtonBy());
+        return addProfilePageCell.get(1);
     }
 }

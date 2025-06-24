@@ -42,6 +42,10 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement brandTileCell;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'DETAILS'`]")
     private ExtendedWebElement continueWatchingDetailsBtn;
+    @ExtendedFindBy(iosClassChain =
+            "**/XCUIElementTypeCollectionView[`name == '43a35f2b-3788-4449-a54d-cd37263f0940'`]/" +
+                    "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+, E.+'`]")
+    private ExtendedWebElement firstCellElementFromCollectionEpisodeMetadata;
 
     public DisneyPlusHomeIOSPageBase(WebDriver driver) {
         super(driver);
@@ -234,5 +238,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
                 getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
                         DictionaryKeys.MATURITY_RATING_BANNER_HEADER.getText()),
                 Map.of("current_rating_value_text", rating))).isPresent();
+    }
+
+    public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
+        return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
     }
 }

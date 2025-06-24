@@ -100,7 +100,43 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     public boolean isOOHHardBlockScreenHeadlinePresent() {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                        DictionaryKeys.OOH_HARD_BLOCK_HEADLINE.getText())).isPresent();
+                        DictionaryKeys.OOH_HARD_BLOCK_HEADLINE.getText())).isPresent(FIVE_SEC_TIMEOUT);
+    }
+
+    public boolean isOOHHardBlockCreateAccLabelPresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_HARD_BLOCK_HEADLINE_CREATE_ACC.getText())).isPresent();
+    }
+
+    public boolean isOOHHardBlockSubcopyPresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_HARD_BLOCK_SUBCOPY_3.getText())).isPresent();
+    }
+
+    public boolean isOOHHardBlockSubcopy2Present() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_HARD_BLOCK_SUBCOPY_2.getText())).isPresent();
+    }
+
+    public boolean isOOHUpdateHHMaxedHeadlinePresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_UPDATE_HOUSEHOLD_MAXED_HEADLINE.getText())).isPresent();
+    }
+
+    public boolean isOOHUpdateHHMaxedSubcopyPresent() {
+        return getStaticTextByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_UPDATE_HOUSEHOLD_MAXED_SUBCOPY.getText())).isPresent();
+    }
+
+    public boolean isOOHUpdateHHMaxedButtonPresent() {
+        return getTypeButtonByLabel(getLocalizationUtils()
+                .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
+                        DictionaryKeys.OOH_UPDATE_HOUSEHOLD_MAXED_CTA.getText())).isPresent();
     }
 
     public ExtendedWebElement getOOHIAmAwayFromHomeCTA() {
@@ -146,10 +182,10 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     }
 
     public boolean isOOHCheckEmailTextPresent(String email) {
-       String subTextEmailLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
-                       .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                       CHECK_EMAIL_COPY.getText()),
-                Map.of("user_email", email)).replace("'", "’");
+        String subTextEmailLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils()
+                        .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                                CHECK_EMAIL_COPY.getText()),
+                        Map.of("user_email", email));
         return getTextViewByLabelContains(subTextEmailLabel).isPresent();
     }
 
@@ -198,6 +234,6 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     public boolean isLogoutConfirmationTitlePresent() {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                        DictionaryKeys.LOG_OUT_CONFIRMATION_TITLE.getText())).isPresent();
+                        DictionaryKeys.LOG_OUT_CONFIRMATION_TITLE.getText())).isPresent(FIVE_SEC_TIMEOUT);
     }
 }

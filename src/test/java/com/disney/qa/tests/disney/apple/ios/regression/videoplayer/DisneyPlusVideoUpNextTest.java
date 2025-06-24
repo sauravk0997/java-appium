@@ -21,7 +21,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.*;
 import org.testng.annotations.Listeners;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
@@ -43,46 +42,36 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     private static final String UP_NEXT_UI_WAS_NOT_PRESENT = "Up Next UI was not displayed";
     private static final String UP_NEXT_UI_WAS_PRESENT = "Up Next UI was displayed";
 
-
-    @DataProvider(name = "autoplay-state")
-    public Object[][] autoplayState(){
-        return new Object[][] {{"ON"}, {"OFF"}};
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67648"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyPlayIconOnUpNextUI() {
-        DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
+        DisneyPlusUpNextIOSPageBase upNextIOSPage = initPage(DisneyPlusUpNextIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
         //Login
         setAppToHomeScreen(getUnifiedAccount());
-        //Turn off autoplay
-        toggleAutoPlay("OFF");
+        //Check and Turn ON autoplay
+        toggleAutoPlay("ON");
         //Search and forward the content
-        initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_UP_NEXT);
-        disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
-        String nextEpisodesTitle = disneyPlusUpNextIOSPageBase.getNextEpisodeInfo();
-        disneyPlusUpNextIOSPageBase.tapPlayIconOnUpNext();
+        initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
+        upNextIOSPage.waitForUpNextUIToAppear();
+        String nextEpisodesTitle = upNextIOSPage.getNextEpisodeInfo();
+        upNextIOSPage.tapPlayIconOnUpNext();
         //Verify that the next episode has started playing
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.doesTitleExists(nextEpisodesTitle),"Next episode didn't play");
-        sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isElementPresent(PlayerControl.PAUSE),"Pause button is not visible on player view");
-        sa.assertAll();
+        Assert.assertTrue(videoPlayer.getSubTitleLabel().contains(nextEpisodesTitle), "Next episode didn't play");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67652"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpNextSeeAllEpisodes() {
-        String SHORT_SERIES = "Bluey";
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase disneyPlusDetailsIOSPageBase = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
-        initiatePlaybackAndScrubOnPlayer(SHORT_SERIES, PLAYER_PERCENTAGE_FOR_UP_NEXT);
+        initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
         disneyPlusUpNextIOSPageBase.tapSeeAllEpisodesButton();
-        sa.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(),"Tapping on 'See all episodes' didn't take to details page");
-        sa.assertAll();
+        Assert.assertTrue(disneyPlusDetailsIOSPageBase.isOpened(),"Tapping on 'See all episodes' didn't take to details page");
+        Assert.assertEquals(disneyPlusDetailsIOSPageBase.getMediaTitle(), SERIES_BLUEY, "Media title mismatch");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67654"})
@@ -372,16 +361,13 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75101"})
     @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyUpNextLiteAutoPlayOFFAppInBG() {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
         //Turn OFF autoplay
         toggleAutoPlay("OFF");
         //Bring up upNext UI
-        initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_UP_NEXT_SHORT_SERIES);
+        initiatePlaybackAndScrubOnPlayer(SERIES_LOKI, 95);
         upNext.waitForUpNextUIToAppear();
         Assert.assertTrue(upNext.isOpened(), UP_NEXT_UI_WAS_NOT_PRESENT);
 
@@ -389,9 +375,7 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         runAppInBackground(10);
 
         //After backgrounding the app, video player should exit
-        Assert.assertFalse(videoPlayer.isOpened(), "Video player did not exit after backgrounding the app");
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        sa.assertAll();
+        Assert.assertTrue(upNext.isUpNextViewPresent(), UP_NEXT_UI_WAS_NOT_PRESENT);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67678"})

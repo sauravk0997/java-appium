@@ -1,9 +1,13 @@
 package com.disney.qa.tests.disney.apple.tvos.localization;
 
-import com.disney.qa.api.client.requests.CreateDisneyProfileRequest;
 import com.disney.config.DisneyConfiguration;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountRequest;
+import com.disney.qa.api.client.requests.offer.UnifiedOfferRequest;
 import com.disney.qa.api.client.responses.profile.Profile;
-import com.disney.qa.api.pojos.DisneyAccount;
+import com.disney.qa.api.pojos.UnifiedAccount;
+import com.disney.qa.api.pojos.UnifiedEntitlement;
+import com.disney.qa.api.pojos.UnifiedOffer;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusMoreMenuIOSPageBase;
 import com.disney.qa.disney.apple.pages.tv.*;
@@ -54,8 +58,19 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
 
-        DisneyAccount user = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage(), SUB_VERSION);
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText(ENTITLEMENT_LOOKUP)
+                                .build()
+                );
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, SUB_VERSION);
+        request.addEntitlement(entitlement);
+        UnifiedAccount user = getUnifiedAccountApi().createAccount(request);
         String baseDirectory = "LoginScreenshots/";
 
         //Apple TV S1.1
@@ -137,8 +152,21 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVSearchPage disneyPlusAppleTVSearchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVWatchListPage disneyPlusAppleTVWatchListPage = new DisneyPlusAppleTVWatchListPage(getDriver());
 
-        DisneyAccount user = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage(), SUB_VERSION);
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText(ENTITLEMENT_LOOKUP)
+                                .build()
+                );
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, SUB_VERSION);
+        request.addEntitlement(entitlement);
+        UnifiedAccount user = getUnifiedAccountApi().createAccount(request);
+
         String baseDirectory = "globalNavSearch/";
 
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
@@ -191,12 +219,34 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVSettingsPage disneyPlusAppleTVSettingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusAppleTVAppLanguagePage disneyPlusAppleTVAppLanguagePage = new DisneyPlusAppleTVAppLanguagePage(getDriver());
 
-        DisneyAccount user = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage(), SUB_VERSION);
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText(ENTITLEMENT_LOOKUP)
+                                .build()
+                );
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, SUB_VERSION);
+        request.addEntitlement(entitlement);
+        UnifiedAccount user = getUnifiedAccountApi().createAccount(request);
+
         String baseDirectory = "Profile/";
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
         //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(user).profileName(ADULT_PROFILE_NAME).language(getLocalizationUtils().getUserLanguage()).avatarId(null).kidsModeEnabled(false).dateOfBirth(null).build());
+        getUnifiedAccountApi().addProfile(
+                CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(user)
+                        .profileName(ADULT_PROFILE_NAME)
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId(null)
+                        .kidsModeEnabled(false)
+                        .dateOfBirth(null)
+                        .build()
+        );
 
         pause(10); //handle initial load of app
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
@@ -206,8 +256,8 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVPasswordPage.logInWithPasswordLocalized(user.getUserPass());
         //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
 
-        user.setProfileId(getAccountApi().getProfiles(user).get(1).getProfileId());
-        getAccountApi().patchStarOnboardingStatus(user, true);
+        user.setProfileId(user.getProfiles().get(1).getProfileId());
+        getUnifiedAccountApi().patchStarOnboardingStatus(user, true);
         disneyPlusAppleTVWhoIsWatchingPage.getTypeCellLabelContains(ADULT_PROFILE_NAME).clickIfPresent();
         disneyPlusAppleTVHomePage.isOpened();
 
@@ -482,27 +532,49 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
 
         String baseDirectory = "PCONSettings/";
 
-        DisneyAccount entitledUser = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage(), SUB_VERSION);
-        getAccountApi().addProfile(CreateDisneyProfileRequest.builder().disneyAccount(entitledUser).profileName(KIDS_PROFILE_NAME).language(getLocalizationUtils().getUserLanguage()).avatarId(null).kidsModeEnabled(true).dateOfBirth(null).build());
-        List<Profile> profiles = getAccountApi().getProfiles(entitledUser);
+
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText(ENTITLEMENT_LOOKUP)
+                                .build()
+                );
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, SUB_VERSION);
+        request.addEntitlement(entitlement);
+        UnifiedAccount entitledUser = getUnifiedAccountApi().createAccount(request);
+        getUnifiedAccountApi().addProfile(
+                CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(entitledUser)
+                        .profileName(KIDS_PROFILE_NAME)
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId(null)
+                        .kidsModeEnabled(true)
+                        .dateOfBirth(null)
+                        .build()
+        );
+        List<Profile> profiles = entitledUser.getProfiles();
         entitledUser.setProfiles(profiles);
 
         //S6.5 Set the kid-proof exit in web or mobile.
-        getAccountApi().editKidProofExitSettingForKidProfile(entitledUser, KIDS_PROFILE_NAME, true);
+        getUnifiedAccountApi().editKidProofExitSettingForKidProfile(entitledUser, KIDS_PROFILE_NAME, true);
 
         //  S6.1 Set profile PIN for main profile
         try {
-            getAccountApi().updateProfilePin(entitledUser, entitledUser.getProfileId(DEFAULT_PROFILE), "1234");
+            getUnifiedAccountApi().updateProfilePin(entitledUser, entitledUser.getProfileId(DEFAULT_PROFILE), "1234");
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
 
         //S6.3 Set the Content rating to the lowest level
-        List<Profile> profileList = getAccountApi().getProfiles(entitledUser);
+        List<Profile> profileList = entitledUser.getProfiles();
         String system = profileList.get(0).getAttributes().getParentalControls().getMaturityRating().getRatingSystem();
         List<String> ratings = profileList.get(0).getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues();
-        getAccountApi().editContentRatingProfileSetting(entitledUser, system, ratings.get(0));
+        getUnifiedAccountApi().editContentRatingProfileSetting(entitledUser, system, ratings.get(0));
 
         //        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
         disneyPlusAppleTVWelcomeScreenPage.isOpened();
@@ -589,8 +661,21 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVSettingsPage disneyPlusAppleTVSettingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusAppleTVLegalPage disneyPlusAppleTVLegalPage = new DisneyPlusAppleTVLegalPage(getDriver());
 
-        DisneyAccount user = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage(), SUB_VERSION);
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText(ENTITLEMENT_LOOKUP)
+                                .build()
+                );
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, SUB_VERSION);
+        request.addEntitlement(entitlement);
+        UnifiedAccount user = getUnifiedAccountApi().createAccount(request);
+
         String baseDirectory = "SettingsScreenshots/";
         disneyPlusAppleTVLoginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
         //        disneyPlusApplePageBase.dismissUnexpectedErrorAlert();
@@ -630,7 +715,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         getScreenshots("4-SettingsLegal", baseDirectory);
 
         disneyPlusAppleTVLegalPage.isOpened();
-        disneyPlusAppleTVLegalPage.getAllLegalSectionsScreenshot("5_Settings_Legal_", baseDirectory);
+        disneyPlusAppleTVLegalPage.getAllLegalSectionsScreenshot("5_Settings_Legal_");
 
         ZipUtils.uploadZipFileToJenkinsAsArtifact(baseDirectory,
                 String.format("%s_%s_%s_%s.zip", "Sub_UI_Settings", getLanguage().toUpperCase(), getCountry(), getDate()));
@@ -651,8 +736,21 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
 
-        DisneyAccount user = getAccountApi().createAccount(ENTITLEMENT_LOOKUP, getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage(), SUB_VERSION);
+        CreateUnifiedAccountRequest request = CreateUnifiedAccountRequest.builder()
+                .country(getLocalizationUtils().getLocale())
+                .language(getLocalizationUtils().getUserLanguage())
+                .build();
+
+        UnifiedOffer offer = getUnifiedSubscriptionApi()
+                .lookupUnifiedOffer(
+                        UnifiedOfferRequest.builder()
+                                .searchText(ENTITLEMENT_LOOKUP)
+                                .build()
+                );
+        UnifiedEntitlement entitlement = new UnifiedEntitlement(offer, SUB_VERSION);
+        request.addEntitlement(entitlement);
+        UnifiedAccount user = getUnifiedAccountApi().createAccount(request);
+
         String baseDirectory = "PlayerScreenshots/";
         loginPage.pressMenuBackIfPreviouslyUsedEmailScreen();
         //        applePageBase.dismissUnexpectedErrorAlert();

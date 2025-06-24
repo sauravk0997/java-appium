@@ -14,20 +14,8 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
     @ExtendedFindBy(accessibilityId = "upNextContentFooterLabel")
     private ExtendedWebElement upNextContentFooterLabel;
 
-    @ExtendedFindBy(accessibilityId = "upNextContentDescription")
-    private ExtendedWebElement upNextContentDescription;
-
     @ExtendedFindBy(accessibilityId = "upNextContentTitleLabel")
     private ExtendedWebElement upNextContentTitleLabel;
-
-    @ExtendedFindBy(accessibilityId = "upNextSubheaderLabel")
-    private ExtendedWebElement upNextSubheaderLabel;
-
-    @ExtendedFindBy(accessibilityId = "upNextLogoImage")
-    private ExtendedWebElement upNextLogoImage;
-
-    @ExtendedFindBy(accessibilityId = "upNextHeroImage")
-    private ExtendedWebElement upNextHeroImage;
 
     @ExtendedFindBy(accessibilityId = "upNextExtraActionButton")
     public ExtendedWebElement upNextExtraActionButton;
@@ -45,7 +33,9 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
         return upNextContentTitleLabel.isElementPresent();
     }
 
-    public boolean isUpNextExtraActionButtonPresent() { return upNextExtraActionButton.isElementPresent(); }
+    public boolean isUpNextExtraActionButtonPresent() {
+        return upNextExtraActionButton.isElementPresent();
+    }
 
     public void clickUpNextExtraActionButton() { upNextExtraActionButton.clickIfPresent(); }
 
@@ -66,5 +56,9 @@ public class DisneyPlusAppleTVUpNextPage extends DisneyPlusUpNextIOSPageBase {
         return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
                 "upNext UI didn't appear on video player")
                 .until(it -> upNextPlayButton.isElementPresent(THREE_HUNDRED_SEC_TIMEOUT)));
+    }
+
+    public ExtendedWebElement getUpNextContentTitleLabel() {
+        return upNextContentTitleLabel;
     }
 }

@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios;
 
 import java.io.*;
 import java.lang.invoke.MethodHandles;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -31,7 +30,6 @@ import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
@@ -40,9 +38,7 @@ import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
-import org.testng.asserts.SoftAssert;
 
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
@@ -77,6 +73,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             Person.U18.getYear() + "-" + Person.U18.getMonth().getNum() + "-" + Person.U18.getDay(true);
     public static final String ADULT_DOB =
             Person.ADULT.getYear() + "-" + Person.ADULT.getMonth().getNum() + "-" + Person.ADULT.getDay(true);
+    public static final String P13_DOB =
+            Person.PERSON13.getYear() + "-" + Person.PERSON13.getMonth().getNum() + "-" + Person.PERSON13.getDay(true);
     public static final String PHONE = "Phone";
     public static final String TABLET = "Tablet";
     public static final String JUNIOR_MODE_HELP_CENTER = "Junior Mode on Disney+";
@@ -151,7 +149,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         U18(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 16)),
         AGE_17(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 17)),
         OLDERTHAN125(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 130)),
-        OLDERTHAN200(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 205));
+        OLDERTHAN200(DateHelper.Month.NOVEMBER, "5", Integer.toString(LocalDate.now().getYear() - 205)),
+        PERSON13(DateHelper.Month.valueOf(LocalDate.now().getMonth().name()),
+                String.valueOf(LocalDate.now().getDayOfMonth()),
+                String.valueOf(LocalDate.now().getYear() - 13));
 
         private final DateHelper.Month month;
         private final String day;
@@ -194,33 +195,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     /**
      * Logs into the app by entering the provided account's credentials and username
      *
-     * @param account - DisneyAccount generated for the test run
-     */
-    public void login(DisneyAccount account) {
-        initPage(DisneyPlusLoginIOSPageBase.class).submitEmail(account.getEmail());
-        initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(account.getUserPass());
-    }
-
-    /**
-     * Logs into the app by entering the provided account's credentials and username
-     *
-     * @param entitledUser - DisneyAccount generated for the test run
-     * @param profileName  - Profile name to select after login,this is an optional param,
-     *                     if you don't need to select a profile in your test, leave this param blank
-     */
-    public void loginToHome(DisneyAccount entitledUser, String... profileName) {
-        initPage(DisneyPlusWelcomeScreenIOSPageBase.class).clickLogInButton();
-        login(entitledUser);
-        pause(5);
-        handleSystemAlert(AlertButtonCommand.DISMISS, 1);
-        if (profileName.length > 0 && !(initPage(DisneyPlusHomeIOSPageBase.class).isOpened())) {
-            initPage(DisneyPlusWhoseWatchingIOSPageBase.class).clickProfile(String.valueOf(profileName[0]), true);
-        }
-    }
-
-    /**
-     * Logs into the app by entering the provided account's credentials and username
-     *
      * @param entitledUser - Unified Account generated for the test run
      */
     public void loginToHome(UnifiedAccount entitledUser) {
@@ -252,34 +226,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         initPage(DisneyPlusPasswordIOSPageBase.class).submitPasswordForLogin(account.getUserPass());
     }
 
-    /**
-     * Setup method intended to be used either in a @BeforeMethod annotation or manually
-     * called in a test to set the device back to the HOME/Discover page for navigation purposes.
-     * <p>
-     * IF app is on Welcome, proceed through onboarding.
-     * ELSE IF nav bar is not visible, restart driver and proceed through onboarding
-     * ELSE tap on HOME to return to Home/Discover.
-     *
-     * @param account     DisneyAccount created for the test run
-     * @param profileName Profile name to select after login,this is an optional param,
-     *                    if you don't need to select a profile in your test, leave this param blank
-     *                    call your method with just DisneyAccount param
-     */
-    public void setAppToHomeScreen(DisneyAccount account, String... profileName) {
-        DisneyPlusWelcomeScreenIOSPageBase disneyPlusWelcomeScreenIOSPageBase = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        if (disneyPlusWelcomeScreenIOSPageBase.isOpened()) {
-            loginToHome(account, profileName);
-        } else if (!homePage.isOpened()) {
-            restart();
-            handleAlert();
-            loginToHome(account, profileName);
-        } else {
-            disneyPlusWelcomeScreenIOSPageBase.clickHomeIcon();
-        }
-        pause(3);
-    }
-
     public void setAppToHomeScreen(UnifiedAccount account, String... profileName) {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         if (welcomePage.isOpened()) {
@@ -297,13 +243,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * Dismisses system alert popups
      */
     public void handleAlert() {
-        handleAlert(IOSUtils.AlertButtonCommand.DISMISS);
-    }
-
-    @Override
-    public void handleAlert(IOSUtils.AlertButtonCommand command) {
-        LOGGER.info("Checking for system alert to {}...", command);
-        handleSystemAlert(command, 10);
+        handleSystemAlert(IOSUtils.AlertButtonCommand.DISMISS, 10);
     }
 
     public void initialSetup() {
@@ -429,24 +369,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public void addHoraValidationSku(DisneyAccount accountToEntitle) {
-        if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
-            try {
-                getSubscriptionApi().addEntitlementBySku(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V2");
-            } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
-        if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
-            HoraValidator hv = new HoraValidator(accountId);
-            hv.assertValidation(softAssert);
-            hv.checkListForPQOE(softAssert, checkList);
-        }
-    }
-
     public String buildS3BucketPath(String title, String feature) {
         String deviceName = R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
@@ -473,6 +395,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         try {
             return getExploreApi().getSeries(getExploreSearchRequest(brand.toString())
                     .setEntityId(entityID)
+                    .setUnifiedAccount(getUnifiedAccount())
                     .setProfileId(getUnifiedAccount().getProfileId()));
         } catch (URISyntaxException | JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -558,21 +481,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new RuntimeException("Exception occurred..." + e);
         }
         return container;
-    }
-
-    public String getFirstContentIDForSet(String setID) {
-        ExploreSetResponse setResponse;
-        String firstContentID = null;
-        try {
-            setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
-                    .setSetId(setID)
-                    .setUnifiedAccount(getUnifiedAccount())
-                    .setProfileId(getUnifiedAccount().getProfileId()));
-            firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
-        } catch (IndexOutOfBoundsException | URISyntaxException e) {
-            Assert.fail(e.getMessage());
-        }
-        return firstContentID;
     }
 
     public String getApiSeriesRatingDetails(ExploreContent apiContent) {
@@ -772,20 +680,28 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         relaunch();
     }
 
-    private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {
-        applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
-        applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
-        applePageBase.scrollToItem(JARVIS_APP_PLATFORM_CONFIG).click();
-        applePageBase.scrollToItem(JARVIS_APP_ONE_TRUST_CONFIG).click();
-        applePageBase.scrollToItem(JARVIS_APP_IS_ENABLED).click();
-        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
-            LOGGER.info("oneTrustConfig is not enabled");
-            return true;
-        } else {
-            LOGGER.info("Disabling oneTrustConfig");
+    public void enableJarvisSoftUpdate() {
+        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
+        JarvisAppleBase jarvis = getJarvisPageFactory();
+
+        String updateNudgeConfig = "updateNudgeConfig";
+        String updateAlertIsEnabled = "updateAlertIsEnabled";
+
+        launchJarvis(true);
+        jarvis.scrollToItem(JARVIS_APP_CONFIG).click();
+        jarvis.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
+        jarvis.scrollToItem(updateNudgeConfig).click();
+        jarvis.scrollToItem(updateAlertIsEnabled).click();
+        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE_TEXT).isPresent(SHORT_TIMEOUT)) {
+            LOGGER.info("Enabling updateNudgeConfig");
             applePageBase.clickToggleView();
-            return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
+        } else {
+            LOGGER.info("updateNudgeConfig is already enabled");
         }
+
+        //Relaunch Disney app
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
     }
 
     public void jarvisEnableOfflineExpiredLicenseOverride() {
@@ -809,12 +725,12 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     }
 
     public String getFormattedDurationStringFromDurationInMs(int durationInMs) {
-        // Convert to minutes using floating point for rounding
-        long roundedMinutes = Math.round(durationInMs / 60000.0);
+        // Convert to minutes using floor rounding via integer division
+        long totalMinutes = durationInMs / 60000;
 
         // Derive hours and minutes using TimeUnit
-        long hours = TimeUnit.MINUTES.toHours(roundedMinutes);
-        long minutes = roundedMinutes - TimeUnit.HOURS.toMinutes(hours);
+        long hours = TimeUnit.MINUTES.toHours(totalMinutes);
+        long minutes = totalMinutes - TimeUnit.HOURS.toMinutes(hours);
 
         StringBuilder result = new StringBuilder();
         if (hours > 0) {
@@ -931,5 +847,16 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
 
         return account;
+    }
+
+    public Data getSearchExploreQuery(String query) {
+        ExploreSearchResponse response;
+        try {
+            response = getExploreApi().search(getDisneyExploreSearchRequest().
+                    setUnifiedAccount(getUnifiedAccount()).setQueryString(query));
+        } catch (URISyntaxException | JsonProcessingException e) {
+            throw new RuntimeException("Exception occurred...{}", e);
+        }
+        return response.getData();
     }
 }

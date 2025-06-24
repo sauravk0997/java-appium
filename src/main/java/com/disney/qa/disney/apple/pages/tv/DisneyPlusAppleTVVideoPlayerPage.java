@@ -1,6 +1,8 @@
 package com.disney.qa.disney.apple.pages.tv;
 
+import com.disney.qa.api.dictionary.*;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusVideoPlayerIOSPageBase;
+import com.disney.qa.disney.dictionarykeys.*;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
@@ -19,9 +21,6 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Restart'`]")
     private ExtendedWebElement restartBtn;
 
-    @ExtendedFindBy(accessibilityId = "seekTimeLabel")
-    private ExtendedWebElement seekTimeLabel;
-
     public DisneyPlusAppleTVVideoPlayerPage(WebDriver driver) {
         super(driver);
     }
@@ -30,21 +29,17 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         return restartBtn;
     }
 
+    @Override
+    public ExtendedWebElement getNextEpisodeButton() {
+        return getTypeButtonByLabel(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.BTN_NEXT_EPISODE.getText()));
+    }
+
     public void waitUntilDetailsPageIsLoadedFromTrailer(long timeout, int polling) {
         DisneyPlusAppleTVDetailsPage disneyPlusAppleTVDetailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         fluentWait(getDriver(), timeout, polling, "Details page did not load after " + timeout)
                 .until(it -> disneyPlusAppleTVDetailsPage.isOpened());
-    }
-
-    /**
-     * Waits for content to end in player until Up Next End Card present.
-     * Returns the object of DisneyPlusAppleTVVideoPlayerPage.
-     * @param timeout
-     * @param polling
-     */
-    public DisneyPlusAppleTVVideoPlayerPage waitForTvosContentToEnd(long timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Up Next End Card did not load after " + timeout).until(it -> isUpNextHeaderPresent());
-        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
     /**
@@ -103,18 +98,21 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         return  seekBarRightXCoordinate == thumbnailRightXCoordinate;
     }
 
+    public void tapFwdToPlaybackPercentage(int remainingTime, double playbackPercent, int maxTapCount) {
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        LOGGER.info("Setting video playback to {}% started...", playbackPercent);
+        double percentageExpectedRemainingTime = (remainingTime * (playbackPercent / 100));
+
+        do {
+            commonPage.clickRight(1, 2, 1);
+        } while (getCurrentTime() < percentageExpectedRemainingTime && maxTapCount-- > 0);
+        LOGGER.info("Setting video playback to {}% completed...", playbackPercent);
+    }
+
     @Override
-    public int getCurrentTime() {
-        String[] currentTimeTokens = seekTimeLabel.getText().split(":");
-        int currentTimeInSec;
-        if (currentTimeTokens.length > 2) {
-            currentTimeInSec = Integer.parseInt(currentTimeTokens[0]) * 3600
-                    + Integer.parseInt(currentTimeTokens[1]) * 60
-                    + (Integer.parseInt(currentTimeTokens[2]));
-        } else {
-            currentTimeInSec = (Integer.parseInt(currentTimeTokens[0]) * 60) + (Integer.parseInt(currentTimeTokens[1]));
-        }
-        LOGGER.info("Playback currently at '{}' seconds", currentTimeInSec);
-        return currentTimeInSec;
+    public boolean isServiceAttributionLabelVisibleWithControls() {
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        commonPage.clickDown(1);
+        return getServiceAttributionLabel().isPresent();
     }
 }

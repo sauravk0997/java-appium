@@ -53,6 +53,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     protected ExtendedWebElement titleLabel;
     @ExtendedFindBy(accessibilityId = "ucp.currentTimeLabel")
     private ExtendedWebElement currentTimeLabel;
+    @ExtendedFindBy(accessibilityId = "seekTimeLabel")
+    protected ExtendedWebElement seekTimeLabel;
     @ExtendedFindBy(accessibilityId = "ucp.fastRewind")
     private ExtendedWebElement rewindButton;
     @ExtendedFindBy(accessibilityId = "ucp.fastForward")
@@ -70,10 +72,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement iconPinUnlocked;
     @ExtendedFindBy(accessibilityId = "unlockPlayerControlsButton")
     private ExtendedWebElement iconPinLocked;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name CONTAINS \"%s\"`]")
-    private ExtendedWebElement currentlyPlayingTitle;
-    @ExtendedFindBy(accessibilityId = "brandImageView")
-    private ExtendedWebElement brandImageView;
     @ExtendedFindBy(accessibilityId = "skipIntroButton")
     private ExtendedWebElement skipIntroButton;
     @FindBy(name = "subtitleLabel")
@@ -91,13 +89,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label CONTAINS " +
             "'%s'$]/**/XCUIElementTypeButton")
     private ExtendedWebElement feedOptionCheckmark;
-
-
-    public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART1 = "This program includes negative " +
-          "depictions and/or mistreatment of people or cultures. These stereotypes were wrong then and are wrong now. Rather than remove this content, we want to acknowledge its harmful impact, learn from it and spark conversation to create a more inclusive future together.";
-    public static final String NEGATIVE_STEREOTYPE_INTERSTITIAL_MESSAGE_PART2 = "Disney is committed to creating " +
-            "stories with inspirational and aspirational themes that reflect the rich diversity of the human experience around the globe.";
-    private static final String NEGATIVE_STEREOTYPE_COUNTDOWN_MESSAGE = "YOUR VIDEO WILL START IN";
 
     //FUNCTIONS
 
@@ -216,6 +207,18 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             LOGGER.info(String.format("Service Attribution Label not found - %s", e.getMessage()));
             return false;
         }
+    }
+
+    public boolean waitForSkipRecapToAppear() {
+        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
+                "skip recap button didn't appear on video player")
+                .until(it -> getSkipRecapButton().isPresent(THREE_HUNDRED_SEC_TIMEOUT)));
+    }
+
+    public boolean waitForSkipIntroToAppear() {
+        return (fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 0,
+                "skip intro button didn't appear on video player")
+                .until(it -> getSkipIntroButton().isElementPresent(THREE_HUNDRED_SEC_TIMEOUT)));
     }
 
     public boolean isServiceAttributionLabelVisibleWithControls() {
@@ -379,12 +382,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return initPage(DisneyPlusDetailsIOSPageBase.class);
     }
 
-    public DisneyPlusDetailsIOSPageBase tapSubtitleOnPlayer() {
-        displayVideoController();
-        subtitleLabel.click();
-        return initPage(DisneyPlusDetailsIOSPageBase.class);
-    }
-
     /**
      * Scrubs on the seek bar to the given percentage. Returns the object of
      * DisneyPlusVideoPlayerIOSPageBase.
@@ -404,18 +401,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         scrollFromTo(currentTimeMarkerLocation.getX(), currentTimeMarkerLocation.getY(),
                 destinationX, currentTimeMarkerLocation.getY());
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
-    /**
-     * Verifies if the given episode title is playing
-     *
-     * @param episodeName
-     */
-
-    public boolean doesTitleExists(String episodeName) {
-        waitForVideoToStart();
-        displayVideoController();
-        return currentlyPlayingTitle.format(episodeName).isPresent();
     }
 
     public int getCurrentPositionOnPlayer() {
@@ -452,6 +437,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public int getRemainingTimeThreeIntegers() {
         if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE) || R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
             displayVideoController();
+        } else {
+            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(1);
         }
         String[] remainingTimeParts = timeRemainingLabel.getText().replace("-", "").split(":");
         int remainingTimeInSec;
@@ -537,18 +524,6 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isSkipIntroButtonPresent() {
         return skipIntroButton.isElementPresent();
-    }
-
-    /**
-     * Waits for content to end in player until getRemainingTime isn't greater than 0 and polling
-     * Returns the object of DisneyPlusVideoPlayerIOSPageBase.
-     *
-     * @param timeout
-     * @param polling
-     */
-    public DisneyPlusVideoPlayerIOSPageBase waitForContentToEnd(int timeout, int polling) {
-        fluentWait(getDriver(), timeout, polling, "Content did not end after " + timeout).until(it -> getRemainingTime() == 0);
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
     }
 
     /**
@@ -640,11 +615,19 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public int getCurrentTime() {
-        displayVideoController();
-        String[] currentTime = currentTimeLabel.getText().split(":");
+        String[] currentTime;
         int currentTimeInSec = 0;
+        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE) || R.CONFIG.get(DEVICE_TYPE).equals(TABLET)) {
+            displayVideoController();
+            currentTime = currentTimeLabel.getText().split(":");
+        } else {
+            new DisneyPlusAppleTVCommonPage(getDriver()).clickDown(1);
+            currentTime = seekTimeLabel.getText().split(":");
+        }
         if (currentTime.length > 2) {
-            currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) * 60 + Integer.parseInt(currentTime[1]) * 60 + (Integer.parseInt(currentTime[2]));
+            currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) * 60
+                    + Integer.parseInt(currentTime[1]) * 60
+                    + (Integer.parseInt(currentTime[2]));
         } else {
             currentTimeInSec = (Integer.parseInt(currentTime[0]) * 60) + (Integer.parseInt(currentTime[1]));
         }
@@ -659,7 +642,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getNextEpisodeButton() {
-        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.BTN_NEXT_EPISODE.getText()));
     }
 
@@ -957,12 +941,5 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getTitleVideoLabel() {
         return titleLabel;
-    }
-
-    public void clickUnlockButton() {
-        if (getElementFor(PlayerControl.UNLOCK_ICON).isElementNotPresent(ONE_SEC_TIMEOUT)) {
-            clickElementAtLocation(getPlayerView(), 10, 50);
-        }
-        longTap(iconPinLocked);
     }
 }

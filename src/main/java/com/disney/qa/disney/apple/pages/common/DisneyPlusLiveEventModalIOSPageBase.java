@@ -29,9 +29,6 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
-    @ExtendedFindBy(accessibilityId = "thumbnailImageView")
-    private ExtendedWebElement thumbnailImageView;
-
     @Override
     public boolean isOpened() {
         return watchLiveButton.isElementPresent();
@@ -55,5 +52,9 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
         double rawAspectRatio = Math.abs((double)
                 thumbnailView.getSize().getWidth() / thumbnailView.getSize().getHeight());
         return BigDecimal.valueOf(rawAspectRatio).setScale(2, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    public String getProgramTitle() {
+        return titleLabel.getText();
     }
 }

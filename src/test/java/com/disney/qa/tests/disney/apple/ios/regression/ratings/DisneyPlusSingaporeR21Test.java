@@ -19,6 +19,7 @@ import com.zebrunner.carina.utils.R;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import org.openqa.selenium.ScreenOrientation;
 
 import java.util.stream.IntStream;
 
@@ -745,6 +746,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         verifyAgeDOBPage.waitForVerifyAgeDOBCollectionPageToOpen();
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
         hideKeyboard();
+        verifyAgeDOBPage.waitForPresenceOfAnElement(verifyAgeDOBPage.getVerifyAgeButton());
         verifyAgeDOBPage.clickVerifyAgeButton();
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
@@ -784,6 +786,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
+        rotateScreen(ScreenOrientation.PORTRAIT);
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(newPauseTimeOutInSeconds);
         launchR21ContentFromContinueWatching();
@@ -819,6 +822,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         ratingsSetupWithPINNew(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        rotateScreen(ScreenOrientation.PORTRAIT);
         navigateToHomePageForPinUser();
         setR21PauseTimeOut(pauseTimeoutInSeconds);
         setPictureInPictureConfig(DISABLED);

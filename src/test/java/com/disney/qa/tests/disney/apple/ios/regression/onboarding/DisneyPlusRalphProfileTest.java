@@ -41,118 +41,53 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     public static final String DOB_PAGE_NOT_DISPLAYED = "DOB Collection Page is not displayed";
     public static final String JUNIOR_MODE_NOT_TOGGLED_OFF = "Junior Mode is not toggled OFF";
     public static final String LEARN_MORE_LINK_NOT_DISPLAYED = "Learn More Link Text is not displayed";
-    public static final String UPDATE_PROFILE_PAGE_NOT_DISPLAYED = "Update Profile page is not displayed";
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74028"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void testConditionalOneTrustInitializationAcceptAll() {
-        setupForRalph();
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
-        sa.assertTrue(oneTrustPage.isRejectAllButtonPresent(), "Reject all button is not present on one trust banner");
-        sa.assertTrue(oneTrustPage.isAllowAllButtonPresent(), "Accept all button is not present on one trust banner");
-        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(), "Customized choices button is not present on one trust banner");
-        sa.assertTrue(oneTrustPage.isListOfVendorsLinkPresent(), "List of vendors link is not present on one trust banner");
-        oneTrustPage.tapAcceptAllButton();
-        sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
-
-        welcomePage.clickLogInButton();
-        loginPage.submitEmail(getUnifiedAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        passwordPage.clickPrimaryButton();
-        pause(5);
-        homePage.isOpened();
-        pause(3);
-        sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present after login");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75154"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void testConditionalOneTrustInitializationCustomizeChoice() {
-        setupForRalph();
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
-        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(), "Customized choices button is not present on one trust banner");
-        oneTrustPage.tapCustomizedChoices();
-        sa.assertTrue(oneTrustPage.isPrivacyPreferenceCenterOpen(), "Privacy Preference page is not opened");
-        oneTrustPage.tapConfirmMyChoiceButton();
-        sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
-        welcomePage.clickLogInButton();
-        loginPage.submitEmail(getUnifiedAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        passwordPage.clickPrimaryButton();
-        homePage.waitForHomePageToOpen();
-        homePage.isOpened();
-        pause(3);
-        sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present after login");
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75153"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void testConditionalOneTrustInitializationRejectAll() {
-        setupForRalph();
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        sa.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
-        sa.assertTrue(oneTrustPage.isRejectAllButtonPresent(), "Reject all button is not present on one trust banner");
-        oneTrustPage.tapRejectAllButton();
-        sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present, reject all button was not actioned");
-        sa.assertTrue(welcomePage.isOpened(), "Welcome page is not opened");
-        welcomePage.clickLogInButton();
-        loginPage.submitEmail(getUnifiedAccount().getEmail());
-        passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        passwordPage.clickPrimaryButton();
-        pause(5);
-        homePage.waitForHomePageToOpen();
-        homePage.isOpened();
-        pause(3);
-        sa.assertFalse(oneTrustPage.isOpened(), "One trust page is present after login");
-        sa.assertAll();
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73921"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void testSuppressGenderOnEditProfileForSingleProfile() {
-        setupForRalph();
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
+    public void testSuppressGenderOnDOBCollection() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusLoginIOSPageBase loginPage = initPage(DisneyPlusLoginIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusEdnaDOBCollectionPageBase ednaDOBCollectionPage =
+                initPage(DisneyPlusEdnaDOBCollectionPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String stepper = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
+                DictionaryKeys.ONBOARDING_STEPPER.getText());
+        String description = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                DictionaryKeys.MY_DISNEY_MISSING_INFO_BODY.getText());
+        String updatedDescription = description
+                .replace("{link_1}", "Privacy Policy")
+                .replace("{link_2}", "Learn more");
 
-        oneTrustPage.tapRejectAllButton();
-        loginPage.dismissAppTrackingPopUp();
-
+        setupForRalph();
+        if (oneTrustPage.isAllowAllButtonPresent()) {
+            oneTrustPage.tapAcceptAllButton();
+        }
+        handleGenericPopup(3, 1);
         welcomePage.clickLogInButton();
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        passwordPage.clickPrimaryButton();
-        pause(5);
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-        moreMenuPage.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(DEFAULT_PROFILE);
-        // verify that Gender field is not present
-        Assert.assertFalse(editProfilePage.isGenderButtonPresent(), "Gender Field is shown on edit profile page");
+        Assert.assertTrue(ednaDOBCollectionPage.isOpened(), DOB_PAGE_NOT_DISPLAYED);
+
+        sa.assertTrue(loginPage.isDisneyLogoDisplayed(), "Disney Plus Logo is not displayed");
+        sa.assertTrue(loginPage.isMyDisneyLogoDisplayed(), "My Disney Logo is not displayed");
+        sa.assertTrue(loginPage.getStaticTextByLabel(getLocalizationUtils().formatPlaceholderString(
+                        stepper, Map.of("current_step", 3, "total_steps", 5))).isElementPresent(),
+                "Stepper text is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaDateOfBirthHeaderPresent(), "Header is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.getStaticTextByNameContains(updatedDescription).isPresent(),
+                "Description is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isEdnaBirthdateLabelDisplayed(), "Birthdate label is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.getSaveAndContinueButton().isPresent(),
+                "Save & Continue button is not displayed");
+        sa.assertTrue(ednaDOBCollectionPage.isLogOutBtnDisplayed(), "Log Out button is not displayed");
+        //Validate Gender Field is not displayed
+        sa.assertFalse(addProfilePage.isGenderFieldTitlePresent(), "Gender Field Title is present");
+        sa.assertFalse(addProfilePage.isGenderFieldPresent(), "Gender Field is displayed");
+
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74084"})
@@ -554,40 +489,31 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         sa.assertAll();
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74027"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
-    public void testCMPBannerUI() {
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
-                initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78955"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION, TR})
+    public void verifyTurkeyUserIsRequestedDOBForNewProfiles() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
-                getLocalizationUtils().getLocale(),
-                getLocalizationUtils().getUserLanguage())));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), CANADA);
-
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequest(
+                        DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                        getLocalizationUtils().getLocale(),
+                        getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
+        homePage.waitForHomePageToOpen();
 
-        Assert.assertTrue(oneTrustPage.isOpened(), "One trust page is not opened");
+        homePage.clickMoreTab();
+        moreMenu.clickAddProfile();
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        chooseAvatarPage.clickSkipButton();
+        addProfilePage.enterProfileName(SECONDARY_PROFILE);
 
-        sa.assertTrue(oneTrustPage.isBannerTitlePresent(),
-                "Banner Title is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isBannerDescriptionsPresent(),
-                "Banner Descriptions is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isBannerDPDTitlePresent(),
-                "Banner DPD Title is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isBannerDPDDescriptionsPresent(),
-                "Banner DPD Descriptions is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isListOfVendorsLinkPresent(),
-                "List of all Partners (vendors) link is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isAllowAllButtonPresent(),
-                "Accept All button is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isRejectAllButtonPresent(),
-                "Reject All button is not present on CMP OneTrust banner");
-        sa.assertTrue(oneTrustPage.isCustomizedChoicesButtonPresent(),
-                "Customize Choices button is not present on CMP OneTrust banner");
-
-        sa.assertAll();
+        Assert.assertTrue(addProfilePage.isDateOfBirthFieldPresent(), "Date of Birth field is not present");
     }
 
     private void navigateToContentRating() {

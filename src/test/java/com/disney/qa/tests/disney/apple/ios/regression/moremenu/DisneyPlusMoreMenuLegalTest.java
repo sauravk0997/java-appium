@@ -84,7 +84,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM, getLocalizationUtils().getLocale(), lang)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", lang, MobilePlatform.IOS,
@@ -97,15 +97,15 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         getLocalizationUtils().getLegalHeaders().forEach(documentHeader -> {
-            disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+            disneyPlusLegalIOSPageBase.getLegalHeader(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
             if (documentHeader.equalsIgnoreCase(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
                 sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
                 oneTrustPage.tapCloseButton();
             } else {
-                sa.assertTrue(disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).isPresent(),
+                sa.assertTrue(disneyPlusLegalIOSPageBase.getLegalHeader(documentHeader).isPresent(),
                         "Legal Page Header " + documentHeader + " is not present");
-                disneyPlusLegalIOSPageBase.getTypeButtonByLabel(documentHeader).click();
+                disneyPlusLegalIOSPageBase.getLegalHeader(documentHeader).click();
             }
         });
 
@@ -122,7 +122,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", "en", MobilePlatform.IOS,
@@ -135,7 +135,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, SUBSCRIBER_AGREEMENT, getLocalizationUtils());
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, PRIVACY_POLICY, getLocalizationUtils());
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, US_STATE_PRIVACY_RIGHTS_NOTICE, getLocalizationUtils());
-        legalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        legalIOSPageBase.getLegalHeader(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         oneTrustPage.tapCloseButton();
@@ -186,7 +186,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                     String.format("Header '%s' was not displayed", header));
         });
 
-        legalPage.getTypeButtonByLabel(imprintHeader).click();
+        legalPage.getLegalHeader(imprintHeader).click();
         String apiResponse = cleanDocument(disneyLocalizationUtils.getLegalDocumentBody(imprintHeader));
         String appDisplay = cleanDocument(legalPage.getLegalText());
         Assert.assertEquals(appDisplay, apiResponse,
@@ -214,7 +214,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
         Assert.assertTrue(disneyPlusLegalIOSPageBase.isOpened(), LEGAL_PAGE_NOT_DISPLAYED);
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getLegalHeader(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         Assert.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         sa.assertTrue(oneTrustPage.isCloseIconPresent(), "Close button was not found");
@@ -252,11 +252,11 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getLegalHeader(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Toggle switch off but do not tap confirm your choice button
@@ -266,7 +266,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.tapConsentSwitch();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"), TOGGLE_NOT_TURNED_OFF);
         oneTrustPage.tapCloseButton();
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getLegalHeader(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),
                 TOGGLE_SHOULD_NOT_SAVE_VALUE);
 
@@ -285,7 +285,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                 "Toggle on Notice of Right to Opt-Out of Sale/Sharing should reflect the value of " +
                         "Selling, Sharing, Targeted Advertising page");
         oneTrustPage.tapCloseButton();
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getLegalHeader(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"),
                 TOGGLE_SHOULD_NOT_SAVE_VALUE);
 
@@ -304,7 +304,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertTrue(disneyPlusLegalIOSPageBase.isOpened(),
                 "After selecting the choice switch user should land on legal page");
         //Verify that the choice is saved
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getLegalHeader(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("0"),
                 TOGGLE_DID_NOT_TURN_OFF);
         sa.assertAll();
@@ -320,11 +320,11 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount());
-        handleAlert(IOSUtils.AlertButtonCommand.ACCEPT);
+        handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
-        disneyPlusLegalIOSPageBase.getTypeButtonByLabel(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
+        disneyPlusLegalIOSPageBase.getLegalHeader(DO_NOT_SELL_OR_SHARE_MY_PERSONAL_INFORMATION).click();
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
         //Verify US State Privacy Rights Link

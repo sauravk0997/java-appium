@@ -5,7 +5,6 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
-import com.disney.qa.api.explore.response.ContentAdvisory;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -27,6 +26,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_LEAGUES;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
@@ -40,7 +40,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String TV_Y7 = "TV-Y7";
     private static final String SPIDERMAN_THREE = "Spider-Man™ 3";
     private static final double PLAYER_PERCENTAGE_FOR_EXTRA_UP_NEXT = 40;
-    private static final String SHOP_TAB_SERIES = "Agatha All Along";
     private static final String THE_BRAVEST_KNIGHT = "The Bravest Knight";
     private static final String BLUEY = "Bluey";
     private static final String AVAILABLE_WITH_HULU = "Available with Hulu Subscription";
@@ -62,13 +61,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     private static final String TRAILER_BUTTON_DISPLAYED = "Trailer CTA displayed";
     private static final String PLAY_BUTTON_DISPLAYED = "Play CTA found.";
     private static final String METADATA_NOT_DISPLAYED = "Metadata label is not displayed";
-
-    @DataProvider(name = "disneyPlanTypes")
-    public Object[][] disneyWebPlanTypes() {
-        return new Object[][]{{DISNEY_BUNDLE_TRIO_BASIC},
-                {DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY}
-        };
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71130"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
@@ -126,7 +118,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 "Details tab was not found on details page");
         details.clickDetailsTab();
         String contentAdvisoryUI = details.getTypeOtherContainsLabel(NEGATIVE_STEREOTYPE_ADVISORY_DESCRIPTION).getText();
-        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+        sa.assertTrue(contentAdvisoryUI.contains(details.retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory Description not as expected");
 
         //movie
@@ -138,7 +130,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(details.isContentDetailsPagePresent(),
                 "Details tab was not found on details page");
         details.clickDetailsTab();
-        sa.assertTrue(contentAdvisoryUI.contains(retrieveContentAdvisory(seriesApiContent)),
+        sa.assertTrue(contentAdvisoryUI.contains(details.retrieveContentAdvisory(seriesApiContent)),
                 "Content Advisory Description not as expected");
 
         sa.assertAll();
@@ -260,43 +252,34 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72725"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
     public void verifyShopPromoLabelInFeatureAreaOfDetailPage() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         //Verify Shop Promo for Series
-        validateShopPromoLabelHeaderAndSubHeader(sa, SHOP_TAB_SERIES);
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_win_or_lose_deeplink"));
+        validateShopPromoLabelHeaderAndSubHeader(sa);
 
         //Verify Shop Promo for Movie
-        detailsPage.getBackArrow().click();
-        validateShopPromoLabelHeaderAndSubHeader(sa, SPIDERMAN_THREE);
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_moana_2_deeplink"));
+        validateShopPromoLabelHeaderAndSubHeader(sa);
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72730"})
-    @Test(dataProvider = "disneyPlanTypes", groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyShopTabInDetailsPage(DisneyUnifiedOfferPlan planType) {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyShopTabInDetailsPage() {
         SoftAssert sa = new SoftAssert();
-
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(planType)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        homePage.clickSearchIcon();
-        Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
-
-        //verify Shop Tab button is present and after clicking it focused or not
-        validateShopTabButton(sa, SPIDERMAN_THREE);
+        //verify Shop Tab button for movies
+        launchDeeplink(R.TESTDATA.get("disney_prod_movie_moana_2_deeplink"));
+        validateShopTabButton(sa);
+        validateShopTabContainer(sa);
 
         //Verify Shop tab button for series
-        detailsPage.getBackArrow().click();
-        validateShopTabButton(sa, SHOP_TAB_SERIES);
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_win_or_lose_deeplink"));
+        validateShopTabButton(sa);
+        validateShopTabContainer(sa);
         sa.assertAll();
     }
 
@@ -360,7 +343,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount());
 
-        launchDeeplink(R.TESTDATA.get("disney_prod_dr_ks_exotic_animal_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         String contentTitle = detailsPage.getContentTitle();
         swipeInContainer(detailsPage.getContentDetailsPage(), Direction.UP, 500);
@@ -440,7 +423,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.clickEspnTile();
-        Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
+        Assert.assertTrue(espnPage.isOpened(), ESPN_PAGE_IS_NOT_DISPLAYED);
 
         String espnSportCollectionId = CollectionConstant.getCollectionName(CollectionConstant.Collection.ESPN_SPORTS);
         ExtendedWebElement sportsContainer = homePage.getCollection(espnSportCollectionId);
@@ -452,7 +435,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         String sportTitle = getContainerTitlesFromApi(espnSportCollectionId, 5).get(0);
         if(!sportTitle.isEmpty()) {
             espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_SPORTS, sportTitle).click();
-            sa.assertTrue(espnPage.isSportTitlePresent(sportTitle), "Sport title was not found");
+            sa.assertTrue(espnPage.isPageTitlePresent(sportTitle), "Sport title was not found");
             sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
             sa.assertTrue(homePage.getStaticTextByLabelContains(leagues).isPresent(), "Leagues container is not present");
         } else {
@@ -460,6 +443,50 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         }
         sa.assertAll();
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77989"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEspnHubLeaguePage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        homePage.clickEspnTile();
+        Assert.assertTrue(espnPage.isOpened(), ESPN_PAGE_IS_NOT_DISPLAYED);
+
+        String espnLeagueTitle = CollectionConstant.getCollectionTitle(ESPN_LEAGUES);
+
+        swipePageTillElementPresent(homePage.getStaticTextByLabel(espnLeagueTitle), 5,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
+        Assert.assertTrue(homePage.getStaticTextByLabel(espnLeagueTitle).isPresent(),
+                "ESPN League title is not present");
+
+        ExtendedWebElement leagueContainer =
+                homePage.getCollection(CollectionConstant.getCollectionName(ESPN_LEAGUES));
+        swipePageTillElementPresent(leagueContainer, 2,
+                homePage.getBrandLandingView(), Direction.UP, 1000);
+
+        // Get first league and validate page
+        String leagueName = getContainerTitlesFromApi(CollectionConstant.getCollectionName(ESPN_LEAGUES), 5).get(0);
+        LOGGER.info("leagueName:{}", leagueName);
+        if(!leagueName.isEmpty()) {
+            espnPage.getCellElementFromContainer(CollectionConstant.Collection.ESPN_LEAGUES, leagueName).click();
+            sa.assertTrue(espnPage.getHeroImage().isPresent(), "Hero Image is not found");
+            sa.assertTrue(espnPage.getLogoImage().isPresent(), "Logo Image is not found");
+            sa.assertTrue(espnPage.getLogoImage().getText().equals(leagueName),
+                    "Logo Image label is not as expected");
+            LOGGER.info("league text:{}", espnPage.getLogoImage().getText());
+            sa.assertTrue(homePage.getBackButton().isPresent(), "Back button is not present");
+        } else {
+            throw new SkipException("No containers titles found for league");
+        }
+        sa.assertAll();
+    }
+
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-73820"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
@@ -799,36 +826,19 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        int swipeCount = 5;
+        int swipeCount = 10;
 
         setAppToHomeScreen(getUnifiedAccount());
-
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
 
-        //Verify user can play some Hulu content
-        String titleAvailableToPlay = "Hulu Original Series, Select for details on this title.";
-        homePage.getTypeCellLabelContains(titleAvailableToPlay).click();
-        Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.clickPlayOrContinue();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.skipPromoIfPresent();
-        videoPlayer.verifyThreeIntegerVideoPlaying(sa);
-        videoPlayer.clickBackButton();
-
-        //Go back to the Hulu page
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.tapBackButton();
-
-        //Swipe to the "Unlock to stream more collection"
+        //Swipe to the "Unlock to stream more collection" and select first Upsell title
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.UNLOCK_TO_STREAM_MORE_HULU,
                 Direction.UP,
                 swipeCount);
-
         homePage.getTypeCellLabelContains(AVAILABLE_WITH_HULU).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.getUpgradeNowButton().click();
+        detailsPage.getUnlockButton().click();
 
         //Verify that user is on the ineligible interstitial screen
         sa.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Ineligible Screen Header is not present");
@@ -884,7 +894,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
 
         homePage.clickEspnTile();
 
-        Assert.assertTrue(espnPage.isOpened(), "ESPN brand page did not open");
+        Assert.assertTrue(espnPage.isOpened(), ESPN_PAGE_IS_NOT_DISPLAYED);
         collectionPage.swipeTillCollectionTappable(espnLiveAndUpcomingCollection,
                 Direction.UP, swipeCount);
         Assert.assertTrue(collectionPage.isCollectionPresent(espnLiveAndUpcomingCollection),
@@ -982,13 +992,69 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                         currentNetworkAttribution, HULU));
     }
 
-    private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa, String titleName) {
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82729"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNElementAttributionInDetailsAndPlayer() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        searchPage.searchForMedia(titleName);
-        List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
-        results.get(0).click();
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_BASIC)));
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        //Open an entitlement-gated ESPN+ content
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
+
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
+                ENTITLEMENT_ATTRIBUTION_IS_NOT_PRESENT);
+
+        detailsPage.clickPlayButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(ESPN_SUBSCRIPTION_MESSAGE).isPresent(),
+                "Element attribution is not present on video player");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77675"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyEpisodesAndSuggestedTabForESPNContent() {
+        String seasonNumber = "1";
+        String episodeNumber = "1";
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        //Go to details page for ESPN series with upsell badge and suggested content present
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_man_in_the_arena_deeplink"));
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        ExtendedWebElement firstEpisode = detailsPage.getEpisodeCell(seasonNumber, episodeNumber);
+        detailsPage.swipePageTillElementPresent(firstEpisode, 1, null, Direction.UP, 1500);
+        Assert.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isUpsellBadgeDisplayedForEpisode(seasonNumber, episodeNumber),
+                "Upsell badge is not displayed for episode");
+        Assert.assertTrue(detailsPage.getSuggestedTab().isPresent(), SUGGESTED_TAB_NOT_DISPLAYED);
+        detailsPage.clickSuggestedTab();
+        detailsPage.getFirstSuggestedContent().click();
+        detailsPage.clickPlayButton(TEN_SEC_TIMEOUT);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+
+        //Go to details page for ESPN series for which there is no suggested content
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_the_last_dance_deeplink"));
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
+        Assert.assertFalse(detailsPage.getSuggestedTab().isPresent(ONE_SEC_TIMEOUT),
+                "Suggested tab is displayed even if there is no suggested content");
+    }
+
+    private void validateShopPromoLabelHeaderAndSubHeader(SoftAssert sa) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        String titleName = detailsPage.getLogoImage().getText();
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.isShopPromoLabelHeaderPresent());
         } catch (Exception e) {
@@ -1001,12 +1067,9 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 String.format("Shop or Perks Tab was not found for: %s", titleName));
     }
 
-    private void validateShopTabButton(SoftAssert sa, String titleName){
-        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+    private void validateShopTabButton(SoftAssert sa){
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        searchPage.searchForMedia(titleName);
-        searchPage.getDynamicAccessibilityId(titleName).click();
-        sa.assertTrue(detailsPage.isOpened(), "Detail page did not open");
+        Assert.assertTrue(detailsPage.isOpened(), "DETAILS_PAGE_NOT_DISPLAYED");
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> detailsPage.getShopOrPerksBtn().isPresent());
         } catch (Exception e) {
@@ -1018,16 +1081,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 String.format("%s Tab was not found", shopOrPerksText));
     }
 
-    public String retrieveContentAdvisory(ExploreContent seriesApiContent) {
-        ContentAdvisory contentAdvisory = null;
-        try {
-            contentAdvisory = seriesApiContent.getContainers().get(2).getVisuals().getContentAdvisory();
-        } catch (Exception e) {
-            Assert.fail("Unexpected exception occurred: " + e.getClass().getSimpleName() + " - " + e.getMessage());
-        }
-        if (contentAdvisory == null || contentAdvisory.getText().isEmpty()) {
-            throw new SkipException("Unable to get Content Advisory from API");
-        }
-        return contentAdvisory.getText();
+    private void validateShopTabContainer(SoftAssert sa){
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        sa.assertTrue(detailsPage.isShopTabBackgroundImagePresent(), "Shop tab background image is not present");
+        sa.assertTrue(detailsPage.getShopTabHeadingText().isPresent(), "Shop Tab heading is not present");
+        sa.assertTrue(detailsPage.getShopTabSubHeadingText().isPresent(), "Shop Tab sub-heading is not present");
+        sa.assertTrue(detailsPage.getShopTabLink().isPresent(), "Shop Tab link is not present");
     }
 }

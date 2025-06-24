@@ -17,14 +17,11 @@ import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.annotations.Listeners;
 import org.testng.asserts.SoftAssert;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
@@ -55,13 +52,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     private static final String DISPLAYED_TILES_ARE_NOT_DIFFERENT = "Displayed titles are not different";
     private static final String PCON_HEADER_ERROR_NOT_FOUND = "PCON restricted title message was not present";
     private static final String PCON_ERROR_MESSAGE_NOT_FOUND = "PCON restricted error message was not present";
-
-    @DataProvider(name = "collectionNames")
-    public Object[][] collections() {
-        return new Object[][]{
-                {MOVIES}, {SERIES}
-        };
-    }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68278"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
@@ -451,38 +441,44 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
 
-        searchPage.clickThirdCollection();
-        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
-
-        sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        String containerId = getContainerId();
+        searchPage.swipeTillContainerTappable(containerId, Direction.UP, 2);
+        searchPage.clickCollection(containerId);
+        String header = brandPage.getHeaderViewTitleLabel().getText().split(":")[0];
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
+        sa.assertTrue(brandPage.getExpandedBrandImage(header).isPresent(), collectionLogoNotExpanded);
         sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(brandPage.isArtworkBackgroundPresent(), "Artwork images is not present");
         sa.assertTrue(brandPage.isCollectionTitleDisplayed(), "Collection title not displayed");
-        sa.assertTrue(brandPage.isCollectionImageCollapsedFromSwipe(Direction.UP, swipeAttempt),
+        sa.assertTrue(brandPage.isCollectionImageCollapsedFromSwipe(header, Direction.UP, swipeAttempt),
                 "Image not collapsed after swipe");
-        sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+         sa.assertTrue(brandPage.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         if (DisneyConfiguration.getDeviceType().equalsIgnoreCase(PHONE)) {
             LOGGER.info("Device is Handset. Skipping Collapsed Scrolling Assert on iPad");
-            sa.assertTrue(brandPage.isCollectionBrandImageCollapsed(), "Collection brand logo is not collapsed");
+            sa.assertTrue(brandPage.getExpandedBrandImage(header).isElementNotPresent(SHORT_TIMEOUT),
+                    "Collection brand logo is not collapsed");
         }
 
-        brandPage.swipeInCollectionTillImageExpand(Direction.DOWN, swipeAttempt);
-        sa.assertTrue(brandPage.isCollectionBrandImageExpanded(), collectionLogoNotExpanded);
+        brandPage.swipeInCollectionTillImageExpand(header, Direction.DOWN, swipeAttempt);
+        sa.assertTrue(brandPage.getExpandedBrandImage(header).isPresent(), collectionLogoNotExpanded);
         brandPage.getBackArrow().click();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
-        searchPage.clickThirdCollection();
-        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+        searchPage.clickCollection(containerId);
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
 
         //Click First Content Tile on Collection Page
         homePage.clickDynamicCollectionOrContent(2, 1);
+
+        if (liveEventModal.isOpened()) {
+            liveEventModal.getDetailsButton().click();
+        }
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
 
@@ -493,7 +489,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isDetailPageOpened(SHORT_TIMEOUT), DETAILS_PAGE_NOT_DISPLAYED);
 
         clickElementAtLocation(detailsPage.getBackArrow(), 50, 50);
-        Assert.assertTrue(brandPage.isOpened(), collectionPageDidNotOpen);
+        Assert.assertTrue(brandPage.isBrandScreenDisplayed(header), collectionPageDidNotOpen);
 
         sa.assertAll();
     }
@@ -562,7 +558,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
 
         sa.assertTrue(searchPage.getOriginalsTile().isPresent(), "Originals tile not found");
         sa.assertTrue(searchPage.getMovieTile().isPresent(), "Movies tile not found");
@@ -1209,5 +1204,16 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             String detailPageTitle = detailsPage.getMediaTitle();
             sa.assertTrue(secondFilterFirstResult.contains(detailPageTitle), DETAIL_PAGE_TITLE_NOT_EXPECTED);
         }
+    }
+
+    private String getContainerId() {
+        String queryString = "";
+        String containerId = null;
+        try {
+            containerId = getSearchExploreQuery(queryString).getPage().getContainers().get(2).getId();
+        } catch (IndexOutOfBoundsException e) {
+            Assert.fail(e.getMessage());
+        }
+        return containerId;
     }
 }

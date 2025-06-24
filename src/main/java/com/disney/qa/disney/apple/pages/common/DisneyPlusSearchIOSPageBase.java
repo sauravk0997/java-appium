@@ -34,8 +34,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement cancelButtonRecentSearch;
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$type = 'XCUIElementTypeButton'  AND label == 'iconNavBack24LightActive'$]/XCUIElementTypeOther/XCUIElementTypeButton[3]")
-    private ExtendedWebElement contentPageFilterDropDownAtMiddleTop;
     @ExtendedFindBy(accessibilityId = "segmentedControl")
     private ExtendedWebElement contentPageFilterHeader;
     @ExtendedFindBy(accessibilityId = "itemPickerView")
@@ -44,14 +42,15 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement thirdCollectionTitle;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS '%s'$]")
     private ExtendedWebElement searchResults;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s'`]")
-    private ExtendedWebElement searchResultCellwithTitleAndRatingValues;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS '%s' AND label CONTAINS '%s' " +
+            "AND label CONTAINS '%s'`]")
+    private ExtendedWebElement searchResultCellWithTitleAndRatingValues;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$label CONTAINS[c] 'Upcoming'$][1]")
     private ExtendedWebElement firstUpcomingEventCell;
     @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeStaticText[`name == 'airingBadgeLabel' AND label =[c] 'Upcoming'`]")
+            "**/XCUIElementTypeOther[`name == 'airingBadgeContainerView' AND label =[c] 'Upcoming'`]")
     private ExtendedWebElement upcomingBadge;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == 'Unlock'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'Unlock'`]")
     private ExtendedWebElement unlockBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == \"On the Movies screen.\"`]")
     private ExtendedWebElement contentTypeMoviesCollapsedHeader;
@@ -221,10 +220,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         contentPageFilterDropDown.click();
     }
 
-    public void clickContentPageFilterDropDownAtMiddleTop() {
-        contentPageFilterDropDownAtMiddleTop.click();
-    }
-
     public boolean isContentPageFilterHeaderPresent() {
         return contentPageFilterHeader.isPresent();
     }
@@ -232,10 +227,6 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     public void swipeContentPageFilter(Direction direction) {
         //To be used with tablet only
         swipeInContainer(contentPageFilterHeader, direction, 500);
-    }
-
-    public boolean isContentPageFilterDropDownAtMiddleTopPresent() {
-        return contentPageFilterDropDownAtMiddleTop.isPresent();
     }
 
     public void swipeItemPicker(Direction direction) {
@@ -276,11 +267,8 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.NAV_EXPLORE_TITLE.getText()))).isPresent(timeOut);
     }
 
-    public void clickThirdCollection() {
-        thirdCollectionTitle.format(
-                getLocalizationUtils().getDictionaryItem(
-                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
-                        DictionaryKeys.CONTENT_TILE_INTERACT.getText())).click();
+    public void clickCollection(String collectionId) {
+        collectionCellNoRow.format(collectionId).click();
     }
 
     public boolean isRatingPresentInSearchResults(String rating) {
@@ -288,7 +276,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return searchResults.format(rating).isPresent();
     }
 
-    public ExtendedWebElement getTitleContainer(String titleName, String titleRating) {
-        return searchResultCellwithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating);
+    public ExtendedWebElement getTitleContainer(String titleName, String titleRating, String year) {
+        return searchResultCellWithTitleAndRatingValues.format(escapeSingleQuotes(titleName), titleRating, year);
     }
 }

@@ -46,38 +46,29 @@ public class DisneyplusLegalIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isLegalHeadersPresent(String header) {
-        return dynamicBtnFindByLabel.format(header).isElementPresent();
+        return getLegalHeader(header).isElementPresent();
     }
 
     public String getLegalText() {
         return cell.getText();
     }
 
-    public boolean isHyperlinkPresent() {
-        return hyperlink.isPresent();
-    }
-
-    public void clickHyperlink() {
-        int containerDepth = cell.getLocation().getY() + cell.getSize().getHeight();
-        var maxSwipes = 20;
-        while(hyperlink.getLocation().getY() > containerDepth && maxSwipes > 0) {
-            LOGGER.info("Hyperlink is not within visible range. Swiping container up. Attempts remaining {}/20", maxSwipes);
-            swipeInContainer(cell, Direction.UP, 1, 500);
-            maxSwipes--;
-        }
-        hyperlink.click();
-    }
-
     public void clickAndCollapseLegalScreenSection(SoftAssert sa, String legalSection, DisneyLocalizationUtils localizationObj) {
         LOGGER.info("Validating functions for: {}", legalSection);
         String expandedHeader = localizationObj.getLegalDocumentBody(legalSection).split("\\n")[0];
         expandedHeader = expandedHeader.trim();
-        getTypeButtonByLabel(legalSection).click();
+        getLegalHeader(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is not visible");
-        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(EXPANDED), legalSection + " was not expanded");
+        sa.assertTrue(getLegalHeader(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute())
+                        .equals(EXPANDED), legalSection + " was not expanded");
 
-        getTypeButtonByLabel(legalSection).click();
+        getLegalHeader(legalSection).click();
         sa.assertTrue(waitUntil(ExpectedConditions.invisibilityOfElementLocated(getDynamicAccessibilityId(expandedHeader).getBy()), DEFAULT_EXPLICIT_TIMEOUT), expandedHeader + " Expanded Header is visible");
-        sa.assertTrue(getTypeButtonByLabel(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute()).equals(COLLAPSED), legalSection + " was not collapsed");
+        sa.assertTrue(getLegalHeader(legalSection).getAttribute(IOSUtils.Attributes.VALUE.getAttribute())
+                        .equals(COLLAPSED), legalSection + " was not collapsed");
+    }
+
+    public ExtendedWebElement getLegalHeader(String header) {
+        return getElementByLabel(header);
     }
 }

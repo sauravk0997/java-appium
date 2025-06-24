@@ -20,11 +20,14 @@ public class CollectionConstant {
         ENJOY_THESE_MOVIES_FROM_HULU,
         ENJOY_THESE_SERIES_FROM_HULU,
         ESPN_EXPLORE_MORE, // collection with locked live and upcoming events for non ESPN entitled user
+        ESPN_LEAGUES,
+        ESPN_SERIES,
         ESPN_PLUS_LIVE_AND_UPCOMING,// live collection for bundle user
         ESPN_SPORTS,
         HULU_FEATURED,
         HULU_ORIGINALS,
         KIDS_CAROUSEL, //Kids carousel rotating slides
+        KIDS_CAROUSEL_TV,
         KIDS_MICKEY_AND_FRIENDS,
         KIDS_PRINCESSES_AND_FAIRY_TALES,
         LIVE_AND_UPCOMING_FROM_ESPN, //live collection for D+ premium user
@@ -77,9 +80,13 @@ public class CollectionConstant {
             case ENJOY_THESE_MOVIES_FROM_HULU:
                 return "5c721a08-c7ed-4e57-86c4-d781d3727098";
             case ENJOY_THESE_SERIES_FROM_HULU:
-                return "311c4088-0a61-4055-9af0-aefa56fa1f00";
+                return "7c7c4aa2-5ba0-4090-92a0-37f4c0fd25e6";
             case ESPN_EXPLORE_MORE:
                 return "1877aec1-5ff9-447f-a779-534372c0af3c";
+            case ESPN_LEAGUES:
+                return "ec3984c5-6421-405f-91c0-bf892b538fe8";
+            case ESPN_SERIES:
+                return "4f6ba6c5-57b3-456a-9faa-11a02c48727d";
             case ESPN_PLUS_LIVE_AND_UPCOMING:
                 return "21a6e9fa-2a5c-4f77-b1b1-ec956f3038c7";
             case ESPN_SPORTS:
@@ -106,6 +113,8 @@ public class CollectionConstant {
                 return "d0c4d6a0-3e18-43e4-9db0-9e94ce587273";
             case KIDS_CAROUSEL:
                 return "aae103b8-26d4-4150-b83c-2069dc1cc441";
+            case KIDS_CAROUSEL_TV:
+                return "9ae4a140-a05e-4099-bcd9-d5c7389bc973";
             case KIDS_PRINCESSES_AND_FAIRY_TALES:
                 return "a7b1bd9d-59ef-4345-b1a6-19c208b5357e";
             case KIDS_MICKEY_AND_FRIENDS:
@@ -145,6 +154,8 @@ public class CollectionConstant {
                 return "ESPN+ Live and Upcoming";
             case LIVE_AND_UPCOMING_FROM_ESPN:
                 return "Live and Upcoming From ESPN+";
+            case ESPN_LEAGUES:
+                return "Leagues";
             case ESPN_SPORTS:
                 return "Sports";
             case REPLAYS_COLLECTION:

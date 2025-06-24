@@ -11,20 +11,8 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
         super(driver);
     }
 
-    @ExtendedFindBy(accessibilityId = "bannerTitle")
-    protected ExtendedWebElement bannerTitle;
-
-    @ExtendedFindBy(accessibilityId = "bannerDescriptions")
-    protected ExtendedWebElement bannerDescriptions;
-
-    @ExtendedFindBy(accessibilityId = "bannerDPDTitle")
-    protected ExtendedWebElement bannerDPDTitle;
-
     @ExtendedFindBy(accessibilityId = "bannerDPDDescriptions")
     protected ExtendedWebElement bannerDPDDescriptions;
-
-    @ExtendedFindBy(accessibilityId = "bannerListOfVendors")
-    protected ExtendedWebElement bannerListOfVendors;
 
     @ExtendedFindBy(accessibilityId = "bannerButtonStackFirstItem")
     protected ExtendedWebElement bannerAllowAllButton;
@@ -35,35 +23,13 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
     @ExtendedFindBy(accessibilityId = "bannerPrivacySettingsButton")
     protected ExtendedWebElement bannerPrivacySettingsButton;
 
-    @ExtendedFindBy(accessibilityId = "pcDescription")
-    protected ExtendedWebElement preferenceCenterDescription;
-
-    @ExtendedFindBy(accessibilityId = "pcConfirmMyChoiceButton")
-    protected ExtendedWebElement pcConfirmMyChoiceButton;
-
     @Override
     public boolean isOpened() {
         return bannerDPDDescriptions.isPresent();
     }
 
-    public boolean isBannerTitlePresent() {
-        return bannerTitle.isPresent();
-    }
-
-    public boolean isBannerDescriptionsPresent() {
-        return bannerDescriptions.isPresent();
-    }
-
-    public boolean isBannerDPDTitlePresent() {
-        return bannerDPDTitle.isPresent();
-    }
-
-    public boolean isBannerDPDDescriptionsPresent() {
-        return bannerDPDDescriptions.isPresent();
-    }
-
-    public boolean isListOfVendorsLinkPresent() {
-        return bannerListOfVendors.isPresent();
+    public ExtendedWebElement getAcceptAllButton() {
+        return bannerAllowAllButton;
     }
 
     public boolean isAllowAllButtonPresent() {
@@ -78,24 +44,7 @@ public class DisneyPlusOneTrustConsentBannerIOSPageBase extends DisneyPlusAppleP
         return bannerPrivacySettingsButton.isPresent();
     }
 
-    public boolean isPrivacyPreferenceCenterOpen() {
-        return preferenceCenterDescription.isPresent();
-    }
-
     public void tapAcceptAllButton() {
         bannerAllowAllButton.click();
     }
-
-    public void tapRejectAllButton() {
-        rejectAllButton.click();
-    }
-
-    public void tapCustomizedChoices() {
-        bannerPrivacySettingsButton.click();
-    }
-
-    public void tapConfirmMyChoiceButton() {
-        pcConfirmMyChoiceButton.click();
-    }
-
 }

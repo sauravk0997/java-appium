@@ -2,7 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.utils.factory.DeviceType;
 import org.openqa.selenium.WebDriver;
 
 @SuppressWarnings("squid:MaximumInheritanceDepth")
@@ -11,6 +10,11 @@ public class DisneyPlusAddProfileBannerIOSPageBase extends DisneyPlusApplePageBa
     //Functions
     public DisneyPlusAddProfileBannerIOSPageBase(WebDriver driver) {
         super(driver);
+    }
+
+    @Override
+    public boolean isOpened() {
+        return isProfileHeaderPresent();
     }
 
     public boolean isProfileHeaderPresent() {

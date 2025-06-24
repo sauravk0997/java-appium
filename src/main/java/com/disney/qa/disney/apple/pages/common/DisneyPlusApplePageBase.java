@@ -34,7 +34,6 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
@@ -62,11 +61,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public static final String SEASON_NUMBER = "seasonNumber";
     private static final String SAVE_OVERRIDE = "SAVE OVERRIDE";
     private static final String REMOVE_OVERRIDE = "REMOVE OVERRIDE";
-    private static final String NO_OVERRIDE_IN_USE = "NO override in use!";
     private static final String UPDATE_LATER = "Update Later";
     private static final String UPDATE_AVAILABLE = "An update is available";
-    private static final String SET_TO_TRUE = "Set to: true";
-    private static final String SET_TO_FALSE = "Set to: false";
     protected static final String PLACEHOLDER_E = "E";
     protected static final String DEVICE = "DEVICE";
     public static final String HULU_SERVICE_ATTRIBUTION_MESSAGE = "Included with your Hulu subscription";
@@ -75,8 +71,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public static final String DESIRED_ELEMENT_REACHED = "Reached desired element";
     public static final String CONTENT_UNAVAILABLE = "content-unavailable";
 
-    @FindBy(xpath = "%s")
-    protected ExtendedWebElement dynamicXpath;
     @FindBy(xpath = "//*[@name='%s' or @name='%s']")
     protected ExtendedWebElement xpathNameOrName;
     @FindBy(xpath = "//*[@name='%s']")
@@ -129,12 +123,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement dynamicBtnFindByLabelContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"%s\"`]")
     protected ExtendedWebElement dynamicBtnFindByName;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name CONTAINS \"%s\"`]")
-    protected ExtendedWebElement dynamicBtnFindByNameContains;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"done\"`]")
     private ExtendedWebElement keyboardDone;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"continue\"`]")
-    private ExtendedWebElement keyboardContinue;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == \"saveProfileButton\"`]")
     protected ExtendedWebElement saveBtn;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label == \"iconNavBack24Dark\"`]")
@@ -152,8 +142,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement staticTypeTextViewValue;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value CONTAINS \"%s\"`]")
     protected ExtendedWebElement staticTypeTextViewValueContains;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`value == \"%s\"`]")
-    protected ExtendedWebElement staticTypeTextViewValueDoubleQuotes;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label == \"%s\"`]")
     protected ExtendedWebElement textViewByLabel;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView[`label CONTAINS \"%s\"`]")
@@ -235,8 +223,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     protected ExtendedWebElement continueButton;
     @ExtendedFindBy(accessibilityId = "secondaryButton")
     protected ExtendedWebElement secondaryButton;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther")
-    protected ExtendedWebElement typeOtherElements;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert")
     protected ExtendedWebElement typeSystemAlerts;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeAlert[`label == \"%s\"`]")
@@ -249,25 +235,16 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement iPadKeyboardDelete;
     @ExtendedFindBy(accessibilityId = "Delete")
     private ExtendedWebElement iPhoneKeyboardDelete;
-    @ExtendedFindBy(accessibilityId = "buttonLogout")
-    protected ExtendedWebElement logoutButton;
-    @ExtendedFindBy(accessibilityId = "customButton")
-    protected ExtendedWebElement customButton;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeTextView")
     protected ExtendedWebElement typeTextView;
     @FindBy(xpath = "//*[contains(@name, \"%s\")]")
     protected ExtendedWebElement dynamicXpathContainsName;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[%s]/XCUIElementTypeCell[%s]")
     protected ExtendedWebElement dynamicRowColumnContent;
-    @ExtendedFindBy(accessibilityId = "saveProfileButton")
-    private ExtendedWebElement saveProfileButton;
     @ExtendedFindBy(accessibilityId = "viewAlert")
     protected ExtendedWebElement viewAlert;
     @ExtendedFindBy(accessibilityId = "buttonForgotPassword")
     protected ExtendedWebElement forgotPasswordBtn;
-
-    @ExtendedFindBy(accessibilityId = "airingBadgeLabel")
-    private ExtendedWebElement airingBadgeLabel;
 
     @ExtendedFindBy(accessibilityId = "headerViewTitleLabel")
     protected ExtendedWebElement headerViewTitleLabel;
@@ -286,9 +263,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`label == \"Want to stay in the loop?\"`]")
     protected ExtendedWebElement notificationPopUp;
-
-    @FindBy(xpath = "//XCUIElementTypeStaticText[@label=\"%s\"]/ancestor::XCUIElementTypeCell")
-    private ExtendedWebElement config;
 
     @ExtendedFindBy(accessibilityId = "progressBar")
     private ExtendedWebElement progressBar;
@@ -317,9 +291,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
                     "**/XCUIElementTypeOther[`name == 'progressBar'`]")
     private ExtendedWebElement firstCellElementFromCollectionProgressBar;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
-            "XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]/" +
-            "XCUIElementTypeOther[1]/XCUIElementTypeImage[1]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == " +
+            "'%s'`]/XCUIElementTypeCell[1]/**XCUIElementTypeOther[3]/**XCUIElementTypeImage[1]")
     private ExtendedWebElement firstCellElementFromCollectionAssetImage;
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
@@ -329,14 +302,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
                     "**/XCUIElementTypeStaticText[`value CONTAINS '%s'`]")
     private ExtendedWebElement firstCellElementFromCollectionDynamicStaticText;
-    @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeCollectionView[`name == '43a35f2b-3788-4449-a54d-cd37263f0940'`]/" +
-                    "XCUIElementTypeCell[1]/**/XCUIElementTypeStaticText[`value MATCHES '.*S.+:E.+'`]")
-    private ExtendedWebElement firstCellElementFromCollectionEpisodeMetadata;
-    @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[1]/" +
-                    "**/XCUIElementTypeStaticText[`name == 'airingBadgeLabel'`]")
-    private ExtendedWebElement firstCellElementFromCollectionAiringBadge;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == '%s'`]/XCUIElementTypeCell[$label " +
             "CONTAINS \"%s,\"$]")
     private ExtendedWebElement cellElementFromCollection;
@@ -365,6 +330,8 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     private ExtendedWebElement genericProfileCell;
     @ExtendedFindBy(accessibilityId = "textFieldInputCode")
     protected ExtendedWebElement otpField;
+    @ExtendedFindBy(iosPredicate = "label == \"%s\"")
+    protected ExtendedWebElement dynamicFindByLabel;
 
     public DisneyPlusApplePageBase(WebDriver driver) {
         super(driver);
@@ -413,10 +380,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return xpathName.format(name);
     }
 
-    public enum contentType {
-        MOVIE, SERIES, EXTRAS
-    }
-
     public ExtendedWebElement getDynamicAccessibilityId(String id) {
         return dynamicAccessibilityId.format(id);
     }
@@ -431,10 +394,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getDynamicCellByName(String name) {
         return dynamicCellByName.format(name);
-    }
-
-    public ExtendedWebElement getDynamicXpath(String path) {
-        return dynamicXpath.format(path);
     }
 
     public ExtendedWebElement getDynamicXpathContainsName(String name) {
@@ -493,10 +452,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return textViewByLabelContains.format(label);
     }
 
-    public ExtendedWebElement getTextViewByName(String name) {
-        return textViewByName.format(name);
-    }
-
     public ExtendedWebElement getStaticTextByLabelContains(String label) {
         return staticTextLabelContains.format(label);
     }
@@ -537,8 +492,17 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getStaticTextByLabelContains(CONTENT_UNAVAILABLE);
     }
 
+    public ExtendedWebElement getLogoutModalHeader() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_LOGOUT_MODAL_HEADER.getText()));
+    }
+
     public String getErrorMessageString() {
         return labelError.getText();
+    }
+
+    public  ExtendedWebElement getLogoImage(){
+        return logoImage;
     }
 
     public String getHourMinFormatForDuration(int duration) {
@@ -549,14 +513,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement findByAccessibilityId(DisneyDictionaryApi.ResourceKeys resourceKey, DictionaryKeys key) {
         return dynamicAccessibilityId.format(getLocalizationUtils().getDictionaryItem(resourceKey, key.getText()));
-    }
-
-    public ExtendedWebElement findByFallbackAccessibilityId(DisneyDictionaryApi.ResourceKeys resourceKey, DictionaryKeys key) {
-        return dynamicAccessibilityId.format(getLocalizationUtils().getDictionaryItem(resourceKey, key.getText(), false));
-    }
-
-    public static List<String> getEnumValues(DictionaryKeys... dictionaryValues) {
-        return Arrays.stream(dictionaryValues).map(DictionaryKeys::getText).collect(Collectors.toList());
     }
 
     public static FluentWait<WebDriver> fluentWait(WebDriver driver, long timeOut, int polling, String message) {
@@ -623,10 +579,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public void enterText(String text) {
         typeTextView.type(text);
-    }
-
-    public String getHeadlineHeaderText() {
-        return headlineHeader.getText();
     }
 
     public boolean isHeadlineHeaderTextPresent() {
@@ -851,16 +803,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         systemAlertDefaultBtn.click();
     }
 
-    public void dismissUnexpectedErrorAlert() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        List<ExtendedWebElement> listOfTypeButtons = findExtendedWebElements(typeButtons.getBy());
-        if (typeSystemAlerts.isElementPresent(15)) {
-            IntStream.range(0, listOfTypeButtons.size()).forEach(i ->
-                    moveDown(1, 1));
-            clickSelect();
-        }
-    }
-
     public String getSystemAlertText() {
         return typeSystemAlerts.getText();
     }
@@ -905,10 +847,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return typeButtons.getBy();
     }
 
-    public void enterPassword(DisneyAccount account) {
-        passwordEntryField.type(account.getUserPass());
-        clickPrimaryButton();
-    }
 
     public void enterPassword(UnifiedAccount account) {
         passwordEntryField.type(account.getUserPass());
@@ -918,10 +856,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
     public void enterPasswordNoAccount(String password) {
         passwordEntryField.type(password);
         clickPrimaryButton();
-    }
-
-    public boolean doesAttributeEqualTrue(ExtendedWebElement element, String name) {
-        return element.getAttribute(name).equalsIgnoreCase("true");
     }
 
     public boolean isUpNextHeaderPresent() {
@@ -934,11 +868,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public void dismissAppTrackingPopUp() {
-        trackingPopUp.clickIfPresent();
-    }
-
-    public void dismissATVAppTrackingPopUp(int timeout) {
+    public void dismissATVAppTrackingPopUp() {
         if (isAlertPresent()) {
             LOGGER.info("Dismissing App Track popup by clicking {}", "Ask App not to Track");
             moveDown(1, 1);
@@ -974,20 +904,15 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         systemAlertSecondaryBtn.click();
     }
 
-    public ExtendedWebElement getSystemAlertDefaultBtn() {
-        return systemAlertDefaultBtn;
-    }
-
     public boolean isGlobalNavPresent() {
         return globalNavBarView.isElementPresent();
     }
 
     public boolean isGlobalNavExpanded() {
-        if (globalNavBarView.isElementPresent(TEN_SEC_TIMEOUT)) {
+        if (homeTab.isPresent(FIFTEEN_SEC_TIMEOUT)) {
             Dimension size = globalNavBarView.getSize();
             int x = size.getWidth();
             LOGGER.info("Detecting if global nav is expanded..");
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
             return x > 200;
         }
         return false;
@@ -1016,10 +941,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             Assert.assertTrue(element.isPresent(),
                     String.format("Element was not present after %d seconds elapsed.", count.get()));
         });
-    }
-
-    public ExtendedWebElement getAiringBadgeLabel() {
-        return airingBadgeLabel;
     }
 
     public ExtendedWebElement getProgressBar() {
@@ -1051,57 +972,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             getTypeButtonByLabel(REMOVE_OVERRIDE).click();
             Assert.assertTrue(getStaticTextByLabelContains("No override set").isPresent());
         }
-    }
-
-    public void enableOneTrustConfig() {
-        pause(5);
-        if (getStaticTextByLabelContains("default value of true").isPresent() //to accommodate jarvis bug
-                || getStaticTextByLabelContains(SET_TO_TRUE).isPresent()) {
-            LOGGER.info("isEnabledV2 is already enabled to true..");
-        } else {
-            LOGGER.info("Enabling oneTrustConfig isEnableV2 config..");
-            clickToggleView();
-            Assert.assertTrue(getStaticTextByLabelContains(SET_TO_TRUE).isPresent());
-        }
-    }
-
-    public void disableOneTrustConfig() {
-        pause(5);
-        if (getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent()) {
-            LOGGER.info("oneTrustConfig isEnabledV2 config does not have any override in use..");
-        } else {
-            LOGGER.info("Disabling oneTrustConfig isEnableV2 config..");
-            getTypeButtonByLabel(REMOVE_OVERRIDE).click();
-            Assert.assertTrue(getStaticTextByLabelContains(NO_OVERRIDE_IN_USE).isPresent());
-        }
-    }
-
-    public void disableBrazeConfig() {
-        Assert.assertTrue(getTypeButtonByLabel("brazeConfig").isPresent(), "Braze config not found");
-        if (getStaticTextByLabelContains("default value of true").isPresent(THREE_SEC_TIMEOUT) //to accommodate jarvis bug
-                || getStaticTextByLabelContains(SET_TO_TRUE).isPresent(THREE_SEC_TIMEOUT)) {
-            LOGGER.info("disabling brazeConfig isEnable config..");
-            clickToggleView();
-            Assert.assertTrue(getStaticTextByLabelContains(SET_TO_FALSE).isPresent());
-        } else {
-            LOGGER.info("brazeConfig is already disabled..");
-        }
-    }
-
-    public void clickConfig(String appConfig) {
-        clickItemWhileMovingDown(config.format(appConfig));
-    }
-
-    public void clickItemWhileMovingDown(ExtendedWebElement element) {
-        fluentWait(getDriver(), 300L, 0, "Unable to find Config ").until(it -> {
-            if (element.isVisible(1L)) {
-                return true;
-            } else {
-                moveDown(5, 0);
-                return false;
-            }
-        });
-        element.click();
     }
 
     public ExtendedWebElement getElementTypeCellByLabel(String labelText) {
@@ -1463,18 +1333,16 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
     }
 
+    public boolean isFirstCellFromCollectionEpisodeMetadataPresent(
+            String collectionName, String seasonNumber, String episodeNumber) {
+        String episodeMetadata = String.format("Season %s, Episode %s", seasonNumber, episodeNumber);
+        return firstCellElementFromCollectionDynamicStaticText.format(collectionName, episodeMetadata).isPresent();
+    }
+
     public boolean isFirstCellFromCollectionStaticTextPresent(
             String collectionName, String expectedContainedText) {
         return firstCellElementFromCollectionDynamicStaticText.format(collectionName, expectedContainedText)
                 .isPresent();
-    }
-
-    public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
-        return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
-    }
-
-    public ExtendedWebElement getAiringBadgeOfFirstCellElementFromCollection(String collectionName) {
-        return firstCellElementFromCollectionAiringBadge.format(collectionName);
     }
 
     public ExtendedWebElement getFirstCellFromCollection(String collectionName) {
@@ -1529,6 +1397,20 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         throw new NoSuchElementException("Desired collection was not focused");
     }
 
+    public boolean moveDownUntilCollectionIsPresent(String collectionId, int count) {
+        LOGGER.info("Moving down until desired collection is present");
+        ExtendedWebElement desiredCollection = getCollection(collectionId);
+        while (count > 0) {
+            if (desiredCollection.isPresent(ONE_SEC_TIMEOUT)) {
+                LOGGER.info("Desired collection is present");
+                return true;
+            }
+            moveDown(1, 1);
+            count--;
+        }
+        throw new NoSuchElementException("Desired collection is not present");
+    }
+
     public void moveDownUntilElementIsFocused(ExtendedWebElement element, int count) {
         LOGGER.info("Moving down until desired element is focused");
         if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
@@ -1573,6 +1455,24 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
         while (count > 0) {
             moveRight(1, 1);
+            if (element.isPresent(ONE_SEC_TIMEOUT) &&
+                    isFocused(element)) {
+                LOGGER.info(DESIRED_ELEMENT_REACHED);
+                return;
+            }
+            count--;
+        }
+        throw new NoSuchElementException("Desired element was not focused after given retries");
+    }
+
+    public void moveLeftUntilElementIsFocused(ExtendedWebElement element, int count) {
+        LOGGER.info("Moving Left until desired element is focused");
+        if (element.isPresent(ONE_SEC_TIMEOUT) && isFocused(element)) {
+            LOGGER.info(DESIRED_ELEMENT_FOCUSED);
+            return;
+        }
+        while (count > 0) {
+            moveLeft(1, 1);
             if (element.isPresent(ONE_SEC_TIMEOUT) &&
                     isFocused(element)) {
                 LOGGER.info(DESIRED_ELEMENT_REACHED);
@@ -1645,5 +1545,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.SDK_ERRORS,
                 DictionaryKeys.DISMISS_BTN.getText()));
+    }
+
+    public ExtendedWebElement getElementByLabel(String label) {
+        return dynamicFindByLabel.format(label);
+    }
+
+    public ExtendedWebElement getHeaderViewTitleLabel() {
+        return headerViewTitleLabel;
+    }
+
+    public void swipeTillContainerTappable(String containerId, Direction direction, int count) {
+        ExtendedWebElement element = collectionCell.format(containerId);
+        swipePageTillElementTappable(element, count, null, direction, 900);
     }
 }
