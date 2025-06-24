@@ -27,8 +27,6 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
     private static final String FIRST = "01";
     private static final String TWENTY_EIGHTEEN = "2018";
 
-    private static final String WRONG_PASSWORD = "local123b456@";
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72953"})
     @Test(description = "Profiles > U13 profile, Password action grant for Welch", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
     public void verifyU13PasswordGrantForWelch() {
@@ -60,18 +58,5 @@ public class DisneyPlusMoreMenuArielProfilesKeepSessionAliveTest extends DisneyB
         passwordPage.clickSecondaryButtonByCoordinates();
         softAssert.assertTrue(passwordPage.getHomeNav().isPresent(), "Home page was not displayed after selecting not now");
         softAssert.assertAll();
-    }
-
-    private void createKidsProfile() {
-        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
-        moreMenu.clickMoreTab();
-        moreMenu.clickAddProfile();
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
-        addProfile.enterProfileName(KIDS_PROFILE);
-        addProfile.enterDOB(DateHelper.Month.JANUARY, FIRST, TWENTY_EIGHTEEN);
-        addProfile.tapJuniorModeToggle();
-        addProfile.clickSaveProfileButton();
     }
 }
