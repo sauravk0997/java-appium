@@ -47,12 +47,6 @@ public class DisneyPlusChooseAvatarIOSPageBase extends DisneyPlusApplePageBase {
                 DictionaryKeys.CHOOSE_AVATAR_TITLE.getText()));
     }
 
-    public void verifyChooseAvatarPage() {
-        backButton.isElementPresent();
-        staticTextByLabel.format("Featured").isPresent();
-        staticTextByLabel.format("Disney").isPresent();
-    }
-
     public ExtendedWebElement getSkipButton() {
         return skipButton;
     }
