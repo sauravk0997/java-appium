@@ -1780,6 +1780,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "SharePlay is not toggled ON");
     }
 
+    //Below TC failing currently due to bug https://jira.disney.com/browse/IOS-16468
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81856"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyWhosWatchingForOnlineProfileWithNoPin() {
@@ -1799,10 +1800,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoseWatching.clickProfile(DEFAULT_PROFILE);
         homePage.waitForHomePageToOpen();
-        //terminateApp(sessionBundles.get(DISNEY));
-        //relaunch();
-        terminateApp("com.disney.disneyplus.enterprise");
-        launchApp("com.disney.disneyplus.enterprise");
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
         Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
     }
 
