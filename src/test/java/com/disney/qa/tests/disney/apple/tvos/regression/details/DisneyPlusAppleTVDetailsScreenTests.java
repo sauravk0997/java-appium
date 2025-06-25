@@ -351,7 +351,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 //        logIn(getUnifiedAccount());
         logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
 
-        homePage.waitForHomePageToOpen();
+//        homePage.waitForHomePageToOpen();
+        pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
                         .isPresent(), ESPN_BRAND_TILE_NOT_PRESENT);
@@ -885,7 +886,8 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 //        logIn(getUnifiedAccount());
         logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
 
-        homePage.waitForHomePageToOpen();
+//        homePage.waitForHomePageToOpen();
+        pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
                 .isPresent(), "ESPN brand tile was not present on home page screen");
