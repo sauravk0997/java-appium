@@ -512,16 +512,24 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67981"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
+
+        String entityID = R.TESTDATA.get("disney_prod_loki_entity_id");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
         setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
         searchPage.searchForMedia(SERIES_LOKI);
         searchPage.getDisplayedTitles().get(0).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -529,37 +537,52 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         detailsPage.clickPlayButton();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.scrubToPlaybackPercentage(5);
-
+        videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        //Assert Metadata
+        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Release Date is not displayed");
+        //Verify if "Genre" value matches with api, if api has returned any value
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not present");
+        detailsPage.isDolbyVisionPresentOrNot(sa);
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not present");
+        sa.assertTrue(detailsPage.isRatingPresent(RATING_TV14), "Rating not present");
+        //season rating
+
+        //Assert Episode 1 Featured Episode Metadata
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isHeroImagePresent(), "Series image is not present");
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
 
+        //Create Bookmark on Episode 2
         detailsPage.clickContinueButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-
         videoPlayer.scrubToPlaybackPercentage(99);
+        //Up Next will display and transition to next episode
+        upNext.waitForUpNextUIToAppear();
+        upNext.tapPlayIconOnUpNext();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        //Possibly Delete These Steps
         detailsPage.tapBackButton();
         searchPage.getDisplayedTitles().get(0).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
+        //Assert Episode 2 Featured Episode Metadata
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
-                "Release date from metadata label does not match release date from details tab");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
-                "Genre Thriller from metadata label does not match Genre Thriller from details tab");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
-                "Genre Drama from metadata label does not match Genre Drama from details tab");
-        detailsPage.clickDetailsTab();
-        detailsPage.swipeTillActorsElementPresent();
+        sa.assertTrue(detailsPage.isHeroImagePresent(), "Series image is not present");
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
 
-        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
-        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
-        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertAll();
     }
 
