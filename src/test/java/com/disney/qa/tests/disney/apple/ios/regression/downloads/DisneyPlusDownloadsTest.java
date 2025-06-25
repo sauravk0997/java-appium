@@ -739,8 +739,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
 
-        sa.assertTrue(downloads.getStaticTextByLabelContains("8 Episodes").isPresent(),
-                "Expected number of downloaded episodes were not found");
         downloads.clickSeriesMoreInfoButton();
         sa.assertTrue(downloads.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(downloads.getStaticTextByLabelContains(theBear).isPresent(),
@@ -768,6 +766,10 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getEpisodeDescription("1", "1")
                         .getText().equals(seasonDetails.getDescription().getFull()),
                 "Episode description detail was not found after episode expanded");
+
+        downloads.getBackArrow().click();
+        sa.assertTrue(downloads.getStaticTextByLabelContains("8 Episodes").isPresent(),
+                "Expected number of downloaded episodes were not found");
 
         sa.assertAll();
     }
