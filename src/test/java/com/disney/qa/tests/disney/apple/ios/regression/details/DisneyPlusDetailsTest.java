@@ -991,11 +991,16 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                         currentNetworkAttribution, HULU));
     }
 
+    // Validating ESPN documentaries with hardcoded values due to QP-4303
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77679"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNUpsellDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String description = "The unforgettable tale of the most storied home run chase in baseball history";
+        String genre = "Documentaries";
+        String releaseYear = "2020";
+        String duration = "1h 44m";
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
@@ -1003,8 +1008,17 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         //Open an ESPN+ content title
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        // This step to validating ESPN documentaries
+
+        // Validate metadata
         Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
+        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(releaseYear),
+                "Release year is not present");
+        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(genre),
+                "Genre is not present");
+        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(duration),
+                "Duration year is not present");
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(description).isPresent(),
+                "Description is not present");
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
         Assert.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
         Assert.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
