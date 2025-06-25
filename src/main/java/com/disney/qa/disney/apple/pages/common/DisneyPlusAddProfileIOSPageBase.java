@@ -118,6 +118,12 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
                         DictionaryKeys.SECURE_PROFILE_PIN_DESCRIPTION.getText()));
     }
 
+    public ExtendedWebElement getUpdateMaturityRatingTitle() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.WELCH,
+                DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText()));
+    }
+
     public void enterProfileNameOnLocalizedKeyboard(String name) {
         enterText(name);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
