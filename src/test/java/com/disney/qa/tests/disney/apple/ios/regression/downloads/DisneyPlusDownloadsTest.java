@@ -768,7 +768,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Episode description detail was not found after episode expanded");
 
         downloads.getBackArrow().click();
-        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
         sa.assertTrue(downloads.getStaticTextByLabelContains("8 Episodes").isPresent(),
                 "Expected number of downloaded episodes were not found");
 
