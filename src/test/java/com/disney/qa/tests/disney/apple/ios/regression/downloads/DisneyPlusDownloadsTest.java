@@ -18,6 +18,7 @@ import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
@@ -768,9 +769,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Episode description detail was not found after episode expanded");
 
         downloads.getBackArrow().click();
-        sa.assertTrue(downloads.getStaticTextByLabelContains("13 Episodes").isPresent(),
-                "Expected number of downloaded episodes were not found");
-
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(downloads.getStaticTextByLabelContains("13 Episodes").getBy()),
+                THREE_HUNDRED_SEC_TIMEOUT);
         sa.assertAll();
     }
 
