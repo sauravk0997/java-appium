@@ -717,19 +717,19 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         String sizeIdentifierMB = "MB";
-        String theBear = "The Bear";
+        String theBravestKnight = "The Bravest Knight";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
-        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_hulu_series_the_bear_entity"),
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_hulu_series_the_bravest_knight_entity"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(theBear);
-        searchPage.getDynamicAccessibilityId(theBear).click();
+        searchPage.searchForMedia(theBravestKnight);
+        searchPage.getDynamicAccessibilityId(theBravestKnight).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         //Download Season 1
         detailsPage.downloadAllOfSeason();
@@ -741,8 +741,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         downloads.clickSeriesMoreInfoButton();
         sa.assertTrue(downloads.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(downloads.getStaticTextByLabelContains(theBear).isPresent(),
-                theBear + " title was not found on downloads screen");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(theBravestKnight).isPresent(),
+                theBravestKnight + " title was not found on downloads screen");
         sa.assertTrue(downloads.getEditButton().isPresent(), EDIT_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(downloads.getStaticTextByLabel(SEASON_ONE).isPresent(),
                 SEASON_ONE + " " + "Title is not displayed");
@@ -768,7 +768,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Episode description detail was not found after episode expanded");
 
         downloads.getBackArrow().click();
-        sa.assertTrue(downloads.getStaticTextByLabelContains("8 Episodes").isPresent(),
+        sa.assertTrue(downloads.getStaticTextByLabelContains("13 Episodes").isPresent(),
                 "Expected number of downloaded episodes were not found");
 
         sa.assertAll();
