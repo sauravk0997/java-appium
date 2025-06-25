@@ -786,13 +786,16 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.clickSelect();
         addProfilePage.clickSaveProfileButton();
 
+        Assert.assertFalse(addProfilePage.getUpdateMaturityRatingTitle().isPresent(FIVE_SEC_TIMEOUT),
+                "Update Maturity Rating screen is present");
+
         Assert.assertTrue(addProfilePage.getAddProfilePINHeader().isPresent(),
                 ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED);
         Assert.assertTrue(addProfilePage.getAddProfilePINDescription().isPresent(),
                 "Add Profile PIN description is not present");
         String addProfilePINDescription = addProfilePage.getAddProfilePINDescription().getText();
         Assert.assertTrue(addProfilePINDescription.contains(expectedSubstring),
-                String.format("Add Profile PIN description '%s' does not contains expected substring '%s'",
+                String.format("Add Profile PIN description '%s' does not contain rating '%s'",
                         addProfilePINDescription, expectedSubstring));
     }
 
