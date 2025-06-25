@@ -572,6 +572,29 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
+     * Swipe to bring element in view (To be used when element have property visible=false)
+     *
+     * @param swipes
+     * @param element
+     * @param direction
+     * @param duration
+     */
+    default void swipePageTillElementInView(ExtendedWebElement element, int swipes, Direction direction, int duration) {
+        while (!element.isPresent(2) && swipes > 0) {
+            swipeInContainer(null, direction, duration);
+            swipes--;
+        }
+        int screenHeight = getDriver().manage().window().getSize().getHeight();
+        int elementCurrentYMaxBoundary = element.getLocation().getY() + element.getSize().getHeight();
+        int minThreshold = (int) (screenHeight * .1);
+        if (elementCurrentYMaxBoundary > screenHeight) {
+            swipeUp(1000);
+        } else if (elementCurrentYMaxBoundary < minThreshold) {
+            swipeDown(1000);
+        }
+    }
+
+    /**
      * Set the following to swipe till an element is tappable
      *
      * @param swipes

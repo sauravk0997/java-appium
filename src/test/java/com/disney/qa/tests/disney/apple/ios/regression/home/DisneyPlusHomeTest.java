@@ -884,7 +884,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         //Verify ABC News channel
         ExtendedWebElement abcNewsContainer = homePage.getCollection(ABC_NEWS);
-        homePage.swipePageTillElementPresent(abcNewsContainer, swipeCount, null, Direction.UP, duration);
+        swipePageTillElementInView(abcNewsContainer, swipeCount, Direction.UP, duration);
         sa.assertTrue(abcNewsContainer.isPresent(), "ABC News channel is not displayed for Basic user");
 
         //Go to top of the page
@@ -892,7 +892,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         //Verify Disney Playtime channel
         ExtendedWebElement disneyPlaytimeContainer = homePage.getCollection(DISNEY_PLAYTIME);
-        homePage.swipePageTillElementPresent(disneyPlaytimeContainer, swipeCount, null, Direction.UP, duration);
+        swipePageTillElementInView(disneyPlaytimeContainer, swipeCount, Direction.UP, duration);
         sa.assertTrue(disneyPlaytimeContainer.isPresent(), "Disney Playtime channel is not displayed for Basic user");
         sa.assertAll();
     }
