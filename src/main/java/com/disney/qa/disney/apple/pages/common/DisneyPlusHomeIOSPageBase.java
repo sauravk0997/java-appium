@@ -34,8 +34,6 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement espnTile;
     @ExtendedFindBy(accessibilityId = "c2688902-d618-4c6a-9ea0-2dad77274303")
     private ExtendedWebElement starTile;
-    @ExtendedFindBy(accessibilityId = "TabBar/Home/active")
-    private ExtendedWebElement activeHomeIcon;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS 'Mickey Mouse and Friends'`]")
     private ExtendedWebElement mickeyAndFriends;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$name = 'brandTileContentView'$]")
@@ -57,20 +55,16 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
         return homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY));
     }
 
-    public ExtendedWebElement getActiveHomeIcon() {
-        return activeHomeIcon;
-    }
-
     @Override
     public boolean isOpened() {
         //There is no dict key available for this element
-        return getActiveHomeIcon().isPresent();
+        return getHomeNav().isPresent();
     }
 
     public void waitForHomePageToOpen() {
         LOGGER.info("Waiting for Home page to load");
         fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Home page is not opened")
-                .until(it -> getActiveHomeIcon().isPresent(THREE_SEC_TIMEOUT));
+                .until(it -> getHomeNav().isPresent(THREE_SEC_TIMEOUT));
     }
 
     public boolean isKidsHomePageOpen() {
