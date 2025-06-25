@@ -204,6 +204,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
             "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
     private ExtendedWebElement espnPlusGenericErrorText;
 
+    @ExtendedFindBy(accessibilityId = "badgeTextCircle")
+    private ExtendedWebElement badgeTextCircle;
+
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name BEGINSWITH " +
             "'content'`]/**/XCUIElementTypeStaticText[`name != 'promoLabel'`][1]")
     protected ExtendedWebElement ratingAudioVideoFormatLabel;
@@ -311,6 +314,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isContinueButtonPresent() {
         return getContinueButton().isPresent();
+    }
+
+    public boolean isBadgeTextCirclePresent() {
+        return badgeTextCircle.isPresent();
     }
 
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
@@ -972,6 +979,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
                 .until(it -> !stopOfflineDownload.isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+
+    public boolean isStopOfflineDownloadPresent() {
+        return stopOfflineDownload.isPresent();
     }
 
     /**
