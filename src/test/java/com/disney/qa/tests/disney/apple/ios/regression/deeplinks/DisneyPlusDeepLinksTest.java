@@ -205,10 +205,12 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         String abcNetwork = "ABC";
         String abcNetworkDeepLink = R.TESTDATA.get("disney_prod_hulu_abc_network_language_deeplink");
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount());
+//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+//        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreenHardCoded("cristina.solmaz+prem9@disneyplustesting.com");
 
         launchDeeplink(abcNetworkDeepLink);
         Assert.assertTrue(homePage.isNetworkLogoImageVisible(abcNetwork), NETWORK_LOGO_IMAGE_NOT_DISPLAYED);
@@ -218,6 +220,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         BufferedImage networkLogoImageSelected = getElementImage(homePage.getNetworkLogoImage(abcNetwork));
         homePage.clickHomeIcon();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
         homePage.tapHuluBrandTile();
         Assert.assertTrue(huluPage.isOpened(), HULU_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);

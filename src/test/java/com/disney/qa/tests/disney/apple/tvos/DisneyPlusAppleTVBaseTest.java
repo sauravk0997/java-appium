@@ -127,7 +127,7 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
                 "Home page did not launch for single profile user after logging in");
     }
 
-    public void logInWithoutHomeCheck(String email) {
+    public void logInWithoutHomeCheckHardCoded(String email) {
         DisneyPlusAppleTVWelcomeScreenPage disneyPlusAppleTVWelcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
         DisneyPlusAppleTVLoginPage disneyPlusAppleTVLoginPage = new DisneyPlusAppleTVLoginPage(getDriver());
         DisneyPlusAppleTVPasswordPage disneyPlusAppleTVPasswordPage = new DisneyPlusAppleTVPasswordPage(getDriver());

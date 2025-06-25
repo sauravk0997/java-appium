@@ -28,8 +28,8 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 //        setAppToHomeScreen(getUnifiedAccount());
-        setAppToHomeScreenHardCoded("cristina.solmaz+prem4@disney.com");
-        swipe(homePage.getHomePageMainElement());
+        setAppToHomeScreenHardCoded("cristina.solmaz+prem9@disneyplustesting.com");
+        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
         sa.assertTrue(homePage.getBrandCell(brandPage.getBrand(brand)).isPresent(),
                 "The following brand tile was not present: " + brandPage.getBrand(brand));
 

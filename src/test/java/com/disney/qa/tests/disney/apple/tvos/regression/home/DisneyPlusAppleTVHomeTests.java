@@ -50,8 +50,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount());
+//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+//        logIn(getUnifiedAccount());
+        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -64,8 +65,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyESPNBrandTiles() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount());
+//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+//        logIn(getUnifiedAccount());
+        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -84,8 +86,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        logIn(getUnifiedAccount());
+//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+//        logIn(getUnifiedAccount());
+        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -120,7 +123,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount());
+//        logIn(getUnifiedAccount());
+        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -178,8 +182,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount());
+//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+//        logIn(getUnifiedAccount());
+        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);

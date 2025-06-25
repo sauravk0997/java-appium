@@ -197,8 +197,9 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
         String rugby = "Rugby";
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount());
+//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+//        logIn(getUnifiedAccount());
+        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
