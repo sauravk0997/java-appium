@@ -45,7 +45,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
         logIn(getUnifiedAccount());
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
         settingsPage.clickSubscriptionsCell();
         Assert.assertTrue(settingsPage.isExtraMemberSubscriptionDetailTitlePresent(),
@@ -679,7 +679,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         homePage.clickSelect();
         Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
-        
+
         LOGGER.info("Verifying Logout button 'logout' flow");
         homePage.clickSelect();
         Assert.assertTrue(accountSharingPage.getOOHLogOutButton().isPresent(SHORT_TIMEOUT),
