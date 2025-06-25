@@ -44,7 +44,6 @@ public class CollectionConstant {
         TREEHOUSE_OF_HORROR_I_TO_V,
         TRENDING,
         UNLOCK_TO_STREAM_MORE_HULU,
-        UPGRADE_T0_WATCH_MORE_FROM_HULU,
         WATCHLIST
     }
 
@@ -79,7 +78,7 @@ public class CollectionConstant {
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
             case ENJOY_THESE_MOVIES_FROM_HULU:
-                return "5c721a08-c7ed-4e57-86c4-d781d3727098";
+                return "f4768a6a-c2f5-4400-b9d8-a8b1eb596bae";
             case ENJOY_THESE_SERIES_FROM_HULU:
                 return "7c7c4aa2-5ba0-4090-92a0-37f4c0fd25e6";
             case ESPN_EXPLORE_MORE:
@@ -130,8 +129,6 @@ public class CollectionConstant {
                 return "43a35f2b-3788-4449-a54d-cd37263f0940";
             case UNLOCK_TO_STREAM_MORE_HULU:
                 return "ab0bba56-0738-4348-b29b-ed2ae2d51130";
-            case UPGRADE_T0_WATCH_MORE_FROM_HULU:
-                return "ab0bba56-0738-4348-b29b-ed2ae2d51130";
             case WATCHLIST:
                 return "6f3e3200-ce38-4865-8500-a9f463c1971e";
             default:
@@ -169,8 +166,6 @@ public class CollectionConstant {
                 return "Studios and Networks";
             case NEWLY_ADDED:
                 return "Newly Added";
-            case UPGRADE_T0_WATCH_MORE_FROM_HULU:
-                return "Upgrade to Watch More From Hulu";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }
