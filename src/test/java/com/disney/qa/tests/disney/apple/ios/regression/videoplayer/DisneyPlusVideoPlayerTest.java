@@ -304,7 +304,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
                 "Broadcast Menu did not open on video player");
     }
 
-    public void verifyFeedOptionSelected() {
+    private void verifyFeedOptionSelected() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         String selectedMenuOption = videoPlayer.selectAndGetBroadcastFeedOption();
         LOGGER.info("Feed option selected value - " + selectedMenuOption);
@@ -317,15 +317,5 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
         } else {
             throw new SkipException("Only One target feed option available, hence skipping feed selection logic");
         }
-    }
-
-    private ArrayList<String> broadcastsExpectedFeeds() {
-        ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
-        broadcastsExpectedFeeds.add("PRIMARY");
-        broadcastsExpectedFeeds.add("NATIONAL");
-        broadcastsExpectedFeeds.add("NATIONAL FEED");
-        broadcastsExpectedFeeds.add("HOME");
-        broadcastsExpectedFeeds.add("AWAY");
-        return broadcastsExpectedFeeds;
     }
 }

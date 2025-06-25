@@ -15,17 +15,14 @@ import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.*;
-import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.household.pojos.*;
 import com.disney.qa.api.household.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.gmail.exceptions.GMailUtilsException;
-import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
@@ -859,5 +856,15 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new RuntimeException("Exception occurred...{}", e);
         }
         return response.getData();
+    }
+
+    public ArrayList<String> broadcastsExpectedFeeds() {
+        ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
+        broadcastsExpectedFeeds.add("PRIMARY");
+        broadcastsExpectedFeeds.add("NATIONAL");
+        broadcastsExpectedFeeds.add("NATIONAL FEED");
+        broadcastsExpectedFeeds.add("HOME");
+        broadcastsExpectedFeeds.add("AWAY");
+        return broadcastsExpectedFeeds;
     }
 }

@@ -588,4 +588,43 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
             });
         }
     }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121744"})
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.ESPN, US})
+    public void verifyBroadcastIcon() {
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest
+                (DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+        home.waitForHomePageToOpen();
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
+        detailsPage.waitForDetailsPageToOpen();
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+
+        videoPlayer.displayVideoController();
+        videoPlayer.getBroadcastMenu().click();
+        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
+                "Target broadcasts feeds on UI are not as expected");
+        verifyFeedOptionSelected();
+    }
+
+    public void verifyFeedOptionSelected() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        String selectedMenuOption = videoPlayer.selectAndGetBroadcastFeedOption();
+        LOGGER.info("Feed option selected value - " + selectedMenuOption);
+        if (selectedMenuOption != null) {
+            videoPlayer.waitForVideoToStart();
+            videoPlayer.displayVideoController();
+            videoPlayer.getBroadcastMenu().click();
+            Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedMenuOption),
+                    "Target feed/Language is not selected");
+        } else {
+            throw new SkipException("Only One target feed option available, hence skipping feed selection logic");
+        }
+    }
 }

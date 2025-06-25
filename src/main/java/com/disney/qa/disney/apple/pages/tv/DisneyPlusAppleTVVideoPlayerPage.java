@@ -115,4 +115,14 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         commonPage.clickDown(1);
         return getServiceAttributionLabel().isPresent();
     }
+
+    @Override
+    public ExtendedWebElement getBroadcastMenu() {
+        return dynamicBtnFindByLabel.format(broadcastMenuButton);
+    }
+
+    @Override
+    public boolean isFeedOptionSelected(String feedOption) {
+        return feedOptionCheckmark.format(feedOption).getAttribute(Attributes.VALUE.getAttribute()).equals("1");
+    }
 }
