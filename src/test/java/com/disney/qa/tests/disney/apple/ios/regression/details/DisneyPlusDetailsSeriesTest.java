@@ -561,8 +561,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getStaticTextByLabelContains(SUBTITLES_CC).isPresent(), "`Subtitles / CC` accessibility badge not present");
         sa.assertTrue(detailsPage.getStaticTextByLabelContains(AUDIO_DESCRIPTION).isPresent(), "`Audio Description` accessibility badge is not present");
         sa.assertTrue(detailsPage.isRatingPresent(RATING_TV14), SERIES_RATING_NOT_DISPLAYED);
-        //season rating
-
         //Assert Episode 1 Featured Episode Metadata
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isHeroImagePresent(), SERIES_IMAGE_NOT_DISPLAYED);
@@ -580,12 +578,6 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-
-        //Possibly Delete These Steps
-        detailsPage.tapBackButton();
-        searchPage.getDisplayedTitles().get(0).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-
         //Assert Episode 2 Featured Episode Metadata
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
