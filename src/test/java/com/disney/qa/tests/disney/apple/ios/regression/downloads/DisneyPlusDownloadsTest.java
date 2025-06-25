@@ -767,7 +767,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getEpisodeDescription("1", "1")
                         .getText().equals(seasonDetails.getDescription().getFull()),
                 "Episode description detail was not found after episode expanded");
-
+        //Validate total number of downloaded episodes is correct
         downloads.getBackArrow().click();
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
         waitUntil(ExpectedConditions.visibilityOfElementLocated(downloads.getStaticTextByLabelContains("13 Episodes").getBy()),
