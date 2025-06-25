@@ -44,6 +44,7 @@ public class CollectionConstant {
         TREEHOUSE_OF_HORROR_I_TO_V,
         TRENDING,
         UNLOCK_TO_STREAM_MORE_HULU,
+        UPGRADE_T0_WATCH_MORE_FROM_HULU,
         WATCHLIST
     }
 
@@ -129,6 +130,8 @@ public class CollectionConstant {
                 return "43a35f2b-3788-4449-a54d-cd37263f0940";
             case UNLOCK_TO_STREAM_MORE_HULU:
                 return "ab0bba56-0738-4348-b29b-ed2ae2d51130";
+            case UPGRADE_T0_WATCH_MORE_FROM_HULU:
+                return "ab0bba56-0738-4348-b29b-ed2ae2d51130";
             case WATCHLIST:
                 return "6f3e3200-ce38-4865-8500-a9f463c1971e";
             default:
@@ -166,6 +169,8 @@ public class CollectionConstant {
                 return "Studios and Networks";
             case NEWLY_ADDED:
                 return "Newly Added";
+            case UPGRADE_T0_WATCH_MORE_FROM_HULU:
+                return "Upgrade to Watch More From Hulu";
             default:
                 throw new IllegalArgumentException(String.format("'%s collection title was not found", collection));
         }
