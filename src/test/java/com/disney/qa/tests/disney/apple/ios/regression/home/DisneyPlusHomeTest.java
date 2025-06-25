@@ -871,7 +871,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77320"})
-    @Test(groups = {TestGroup.HOME, US})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDisneyChannelsForBasicUser() {
         int swipeCount = 10;
         int duration = 900;
@@ -894,6 +894,16 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         ExtendedWebElement disneyPlaytimeContainer = homePage.getCollection(DISNEY_PLAYTIME);
         swipePageTillElementTappable(disneyPlaytimeContainer, swipeCount, null, Direction.UP, duration);
         sa.assertTrue(disneyPlaytimeContainer.isPresent(), "Disney Playtime channel is not displayed for Basic user");
+
+        //Go to top of the page
+        homePage.clickHomeIcon();
+
+        //Swipe till the bottom of the home page and ensure STREAMS_NON_STOP_PLAYLISTS collection is not displayed
+        ExtendedWebElement nonStopPlaylistCollection = homePage.getCollection(CollectionConstant.getCollectionName(STREAMS_NON_STOP_PLAYLISTS));
+        while (swipeAndCompareBeforeAndAfterPlacement()) {
+            Assert.assertFalse(nonStopPlaylistCollection.isPresent(ONE_SEC_TIMEOUT),
+                    "'Streams: Non-Stop Playlists' collection is displayed");
+        }
         sa.assertAll();
     }
 
