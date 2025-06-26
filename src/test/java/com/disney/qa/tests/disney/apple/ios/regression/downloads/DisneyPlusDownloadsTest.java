@@ -7,6 +7,7 @@ import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.disney.*;
+import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.api.pojos.explore.*;
 import com.disney.qa.common.constant.RatingConstant;
 import com.disney.qa.common.utils.IOSUtils;
@@ -16,7 +17,9 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
@@ -25,6 +28,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static com.disney.qa.common.DisneyAbstractPage.*;
@@ -39,7 +43,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     //Test constants
     private static final String DETAILS_PAGE_DID_NOT_OPEN = "Details page didn't open";
     private static final String DOWNLOADS_PAGE_DID_NOT_OPEN = "Downloads page did not open";
+    private static final String EDIT_BUTTON_NOT_DISPLAYED = "Edit button is not present on downloads screen";
     private static final double SCRUB_PERCENTAGE_FIFTY = 50;
+    private static final String SEASON_ONE = "Season 1";
     private static final String SET = "set";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66668"})
@@ -181,8 +187,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Verify movie asset metadata on downloads
         sa.assertTrue(downloadsPage.isDownloadHeaderPresent(),
                 "Downloads header is not present on downloads screen");
-        sa.assertTrue(downloadsPage.getEditButton().isPresent(),
-                "Edit button is not present on downloads screen");
+        sa.assertTrue(downloadsPage.getEditButton().isPresent(), EDIT_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(downloadsPage.getDownloadedAssetImage(movieTitle).isPresent(),
                 "Downloaded movie asset image is not found");
         sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
@@ -253,8 +258,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Select All was not displayed after clicking Deselect All");
 
         downloadsPage.getCancelButton().click();
-        sa.assertTrue(downloadsPage.getEditButton().isPresent(),
-                "Edit button not displayed after exiting Edit mode");
+        sa.assertTrue(downloadsPage.getEditButton().isPresent(), EDIT_BUTTON_NOT_DISPLAYED);
         sa.assertFalse(downloadsPage.getTrashIcon().isPresent(), "Trash icon found after exiting Edit mode");
 
         downloadsPage.getEditButton().click();
@@ -654,7 +658,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String titleEpisodesDownloads = "Play";
         String theSimpsonsSeries = "The Simpsons";
-        String seasonOne = "Season 1";
         String firstSeason = "1";
         String episodeOneString = "1";
         String episodeTwoString = "2";
@@ -675,7 +678,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         // Download three episodes from season 1 and populate episodes details list
         detailsPage.getSeasonSelectorButton().click();
-        detailsPage.getStaticTextByLabel(seasonOne).click();
+        detailsPage.getStaticTextByLabel(SEASON_ONE).click();
         detailsPage.getEpisodeToDownload(firstSeason, episodeTwoString).click();
         detailsPage.getEpisodeToDownload(firstSeason, episodeOneString).click();
         detailsPage.getEpisodeToDownload(firstSeason, episodeThreeString).click();
@@ -707,51 +710,76 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         }
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75169", "XMOBQA-74449"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyHuluSeriesPremiumDownloadActions() {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75169"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyHuluSeriesDownloadSeason() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        String sizeIdentifierMB = "MB";
+        String huluSeries = "The Bravest Knight";
+        String episodesInSeason = "13 Episodes";
+        String seasonOne = "1";
+        String episodeOne = "1";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount());
 
-        //Movie download button
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        homePage.clickSearchIcon();
-        searchPage.searchForMedia(PREY);
-        searchPage.getDisplayedTitles().get(0).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(detailsPage.getMovieDownloadButton().isPresent(),
-                "Movie download button was not found.");
-
-        //Episode download buttons
-        detailsPage.clickSearchIcon();
-        searchPage.clearText();
-        searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);
-        searchPage.getDisplayedTitles().get(0).click();
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
-        if (PHONE.equalsIgnoreCase(DisneyConfiguration.getDeviceType())) {
-            swipeUp(2500);
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_hulu_series_the_bravest_knight_entity"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        Visuals seasonDetails;
+        try {
+            seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        } catch(Exception e){
+            throw new SkipException("Skipping Test, Season Details not found" + e.getMessage());
         }
-        String season1NumberOfEpisodeDownloads = String.valueOf(getEpisodeDownloadsOfSeason());
-        LOGGER.info("Season 1 Total number of episode downloads: {}", season1NumberOfEpisodeDownloads);
-        sa.assertTrue(season1NumberOfEpisodeDownloads.equalsIgnoreCase("10"),
-                "Season 1 total number of episode downloads does not equal expected total of '10'");
 
-        //Download all of season
-        swipePageTillElementTappable(detailsPage.getDownloadAllSeasonButton(), 2, null, Direction.DOWN, 900);
-        detailsPage.getDownloadAllSeasonButton().click();
-        detailsPage.clickDownloadSeasonAlertButton();
-        detailsPage.waitForTwoOrMoreHuluEpisodeDownloadsToComplete(250, 25);
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+        homePage.clickSearchIcon();
+        searchPage.searchForMedia(huluSeries);
+        searchPage.getDynamicAccessibilityId(huluSeries).click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        //Download Season 1
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
+        detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
+        //Navigate to Downloads & Validate Hulu Series Downloads UI
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
-        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
-        sa.assertTrue(downloads.getStaticTextByLabelContains("10 Episodes").isPresent(), "10 episode downloads were not found.");
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
+
         downloads.clickSeriesMoreInfoButton();
-        sa.assertTrue(downloads.getStaticTextByLabelContains("Season 1").isPresent(), "Season 1 was not downloaded.");
+        sa.assertTrue(downloads.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(downloads.getStaticTextByLabelContains(huluSeries).isPresent(),
+                huluSeries + " title was not found on downloads screen");
+        sa.assertTrue(downloads.getEditButton().isPresent(), EDIT_BUTTON_NOT_DISPLAYED);
+        sa.assertTrue(downloads.getStaticTextByLabel(SEASON_ONE).isPresent(),
+                SEASON_ONE + " " + "Title is not displayed");
+        sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(),
+                "Episode " + "Title is not displayed");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(seasonDetails.getMetastringParts().getRatingInfo().getRating().getText()).isPresent(),
+                "Episode rating detail was not found");
+        sa.assertTrue(downloads.isEpisodeNumberDisplayed(seasonDetails.getEpisodeNumber()),
+                "Episode Number was not found");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(sizeIdentifierMB).isPresent(),
+                "Size of episode was not found");
+        long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seasonDetails.getDurationMs());
+        sa.assertTrue(downloads.getStaticTextByLabelContains(String.valueOf(durationFromApi)).isPresent(),
+                "Duration of episode was not found");
+        sa.assertTrue(downloads.getDownloadCompleteButton().isPresent(),
+                "Download state button was not found");
+        sa.assertTrue(downloads.getTypeButtonContainsLabel("Play").isPresent(),
+                "Episode artwork and play button was not found");
+        downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
+        sa.assertTrue(downloads.getEpisodeDescription(seasonOne, episodeOne)
+                        .getText().equals(seasonDetails.getDescription().getFull()),
+                "Episode description detail was not found after episode expanded");
+        //Validate total number of downloaded episodes
+        downloads.getBackArrow().click();
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(downloads.getStaticTextByLabelContains(episodesInSeason).getBy()),
+                THREE_HUNDRED_SEC_TIMEOUT);
         sa.assertAll();
     }
 
