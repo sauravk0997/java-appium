@@ -528,6 +528,9 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
+        String seasonOne = "1";
+        String episodeOne = "1";
+        String episodeTwo = "2";
 
         String entityID = R.TESTDATA.get("disney_prod_loki_entity_id");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
@@ -566,7 +569,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Assert Episode 1 Featured Episode Metadata
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isHeroImagePresent(), SERIES_IMAGE_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getEpisodeTitle(seasonOne, episodeOne).isPresent(),
+                DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
 
         //Create Bookmark on Episode 2
@@ -582,7 +586,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         //Assert Episode 2 Featured Episode Metadata
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getEpisodeTitle(seasonOne, episodeTwo).isPresent(),
+                DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isHeroImagePresent(), SERIES_IMAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
 
