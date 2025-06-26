@@ -799,6 +799,45 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                         addProfilePINDescription, expectedSubstring));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106205"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyPasswordResetOnWelchFlow() {
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusAppleTVParentalConsentPage parentalConsentPage =
+                new DisneyPlusAppleTVParentalConsentPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusAppleTVChangePasswordPage changePasswordPage = new DisneyPlusAppleTVChangePasswordPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+
+        logIn(getUnifiedAccount());
+        triggerPasswordResetForCurrentUser();
+
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.U13);
+        addProfilePage.clickSaveProfileButton();
+
+        Assert.assertTrue(parentalConsentPage.isOpened(), PARENTAL_CONSENT_PAGE_NOT_DISPLAYED);
+        parentalConsentPage.getDeclineButton().click();
+
+        Assert.assertTrue(addProfilePage.getUpdateMaturityRatingTitle().isPresent(),
+                ACCESS_TO_FULL_CATALOG_PAGE_NOT_DISPLAYED);
+        addProfilePage.getFullCatalogButton().click();
+
+        Assert.assertTrue(forgotPasswordPage.getCheckEmailTitle().isPresent(),
+                CHECK_YOUR_EMAIL_INBOX_PAGE_NOT_DISPLAYED);
+        forgotPasswordPage.enterOtpOnModal(getOTPFromApi(getUnifiedAccount()));
+
+        Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_NOT_DISPLAYED);
+        changePasswordPage.clickPasswordField();
+        changePasswordPage.enterPassword("Abc12!");
+        changePasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
+        changePasswordPage.clickSelect();
+        changePasswordPage.clickSave();
+    }
+
     public void validateGenderOptions() {
         DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
         String other = "Other";
