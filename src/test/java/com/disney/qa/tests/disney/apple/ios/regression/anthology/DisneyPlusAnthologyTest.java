@@ -9,7 +9,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fl
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.disney.apple.pages.common.*;
-import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
@@ -347,22 +346,6 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
 
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
         details.compareSuggestedTitleToMediaTitle(sa);
-        sa.assertAll();
-    }
-
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72248" })
-    @Test(description = "Verify Anthology Series - Extras Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
-    public void verifyAnthologyExtrasTab() {
-        DisneyPlusAppleTVHomePage homePage = initPage(DisneyPlusAppleTVHomePage.class);
-        DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
-        SoftAssert sa = new SoftAssert();
-
-        setAppToHomeScreen(getUnifiedAccount());
-        homePage.waitForHomePageToOpen();
-        searchAndOpenDWTSDetails();
-
-        sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
-        details.compareExtrasTabToPlayerTitle(sa);
         sa.assertAll();
     }
 
