@@ -68,7 +68,7 @@ public class DisneyPlusAppleTVDeepLinksTests extends DisneyPlusAppleTVBaseTest {
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         // Navigate to another screen
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         // Verify home deeplink
