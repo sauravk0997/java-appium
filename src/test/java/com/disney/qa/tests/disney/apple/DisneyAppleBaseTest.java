@@ -402,11 +402,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         HOUSEHOLD_REQUEST_THREAD_LOCAL.remove();
     }
 
-    @AfterSuite(alwaysRun = true)
-    public final void postTestResultsToJira(ITestContext context) {
-        JiraUtils.addTestRunURLtoJiraTicketComment(context);
-    }
-
     public static String getCountry() {
         return WebDriverConfiguration.getLocale().getCountry();
     }
