@@ -201,7 +201,6 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
-        pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
                 .isPresent(), ESPN_BRAND_TILE_NOT_PRESENT);
