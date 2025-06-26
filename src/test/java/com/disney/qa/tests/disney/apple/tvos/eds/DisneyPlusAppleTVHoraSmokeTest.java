@@ -52,7 +52,7 @@ public class DisneyPlusAppleTVHoraSmokeTest extends DisneyPlusAppleTVBaseTest {
         Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         // Locate and click on the "Pixar" tile
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         pause(1);
         homePage.moveRight(1, 1);
         Assert.assertTrue(homePage.isFocused(homePage.getDynamicCellByLabel("Pixar")), "Pixar tile not focused");

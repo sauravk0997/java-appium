@@ -39,8 +39,16 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     private static final String FOUR_EVER = "4Ever";
     String TANGLED_THE_SERIES = "Tangled: The Series - Short Cuts";
     private static final String DISNEY_JUNIOR_ARIEL = "Disney Junior Ariel";
+    private static final String AUDIO_DESCRIPTION = "Audio Description";
+    private static final String FORMAT_5_1 = "5.1";
+    private static final String FORMAT_HD = "HD";
     private static final String PLAY = "Play";
+    private static final String SUBTITLES_CC = "Subtitles / CC";
     private static final String DOWNLOAD_MODAL_IS_VISIBLE = "Download Modal was still visible";
+    private static final String FEATURED_AREA_RELEASE_YEAR_NOT_DISPLAYED =
+            "Release year value is not present on details page featured area";
+    private static final String SERIES_IMAGE_NOT_DISPLAYED = "Series Image is not displayed";
+    private static final String SERIES_RATING_NOT_DISPLAYED = "Series Rating not present";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67401"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
@@ -208,7 +216,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Verify main details page UI elements
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not present");
         sa.assertTrue(detailsPage.getBackButton().isPresent(), "Close button not present");
-        sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
+        sa.assertTrue(detailsPage.isHeroImagePresent(), SERIES_IMAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
 
@@ -231,7 +239,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Verify if release year value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
             sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
-                    "Release year value is not present on details page featured area");
+                    FEATURED_AREA_RELEASE_YEAR_NOT_DISPLAYED);
         }
 
         sa.assertTrue(detailsPage.isMetaDataLabelDisplayed(), "Details page metadata label not present");
@@ -458,12 +466,12 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.getBackButton().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), SHARE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getMediaTitle().contains("Loki"), MEDIA_TITLE_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("HD").isPresent(), "`HD` video quality is not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(FORMAT_HD).isPresent(), "`HD` video quality is not present");
         detailsPage.isDolbyVisionPresentOrNot(sa);
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("5.1").isPresent(), "`5.1` audio quality is not present");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Subtitles / CC").isPresent(), "`Subtitles / CC` accessibility badge not present");
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Audio Description").isPresent(), "`Audio Description` accessibility badge is not present");
-        sa.assertTrue(detailsPage.isRatingPresent(RATING_TV14), "Rating not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(FORMAT_5_1).isPresent(), "`5.1` audio quality is not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(SUBTITLES_CC).isPresent(), "`Subtitles / CC` accessibility badge not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(AUDIO_DESCRIPTION).isPresent(), "`Audio Description` accessibility badge is not present");
+        sa.assertTrue(detailsPage.isRatingPresent(RATING_TV14), SERIES_RATING_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isProgressBarPresent(), PROGRESS_BAR_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.getRestartButton().isPresent(), RESTART_BTN_NOT_DISPLAYED);
@@ -512,54 +520,77 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67981"})
-    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySeriesDetailsPageFeaturedEpisodeMetadata() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusUpNextIOSPageBase upNext = initPage(DisneyPlusUpNextIOSPageBase.class);
+        String seasonOne = "1";
+        String episodeOne = "1";
+        String episodeTwo = "2";
+
+        String entityID = R.TESTDATA.get("disney_prod_loki_entity_id");
+        Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
         setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
         searchPage.searchForMedia(SERIES_LOKI);
         searchPage.getDisplayedTitles().get(0).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         detailsPage.clickPlayButton();
-        sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-        videoPlayer.scrubToPlaybackPercentage(5);
-
-        videoPlayer.clickBackButton();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.isHeroImagePresent(), "Series image is not present");
-        sa.assertTrue(detailsPage.getEpisodeTitle("1", "1").isPresent(), DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
-
-        detailsPage.clickContinueButton();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
-        videoPlayer.scrubToPlaybackPercentage(99);
+        videoPlayer.scrubToPlaybackPercentage(5);
+        videoPlayer.waitForVideoControlToDisappear();
         videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        detailsPage.tapBackButton();
-        searchPage.getDisplayedTitles().get(0).click();
+
+        if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
+            sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
+                    FEATURED_AREA_RELEASE_YEAR_NOT_DISPLAYED);
+        }
+        String metadataString = detailsPage.getMetaDataLabel().getText();
+        getGenreMetadataLabels(visualsResponse).forEach(value -> sa.assertTrue(metadataString.contains(value),
+                String.format("%s value was not present on Metadata label", value)));
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(FORMAT_HD).isPresent(), "`HD` video quality is not present");
+        detailsPage.isDolbyVisionPresentOrNot(sa);
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(FORMAT_5_1).isPresent(), "`5.1` audio quality is not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(SUBTITLES_CC).isPresent(), "`Subtitles / CC` accessibility badge not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(AUDIO_DESCRIPTION).isPresent(), "`Audio Description` accessibility badge is not present");
+        sa.assertTrue(detailsPage.isRatingPresent(RATING_TV14), SERIES_RATING_NOT_DISPLAYED);
+        //Assert Episode 1 Featured Episode Metadata
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isHeroImagePresent(), SERIES_IMAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getEpisodeTitle(seasonOne, episodeOne).isPresent(),
+                DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
+
+        //Create Bookmark on Episode 2
+        detailsPage.clickContinueButton();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.scrubToPlaybackPercentage(99);
+        //Up Next will display and transition to next episode
+        upNext.waitForUpNextUIToAppear();
+        upNext.tapPlayIconOnUpNext();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        videoPlayer.waitForVideoControlToDisappear();
+        videoPlayer.clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        //Assert Episode 2 Featured Episode Metadata
+        sa.assertTrue(detailsPage.isContinueButtonPresent(), CONTINUE_BTN_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.getEpisodeTitle(seasonOne, episodeTwo).isPresent(),
+                DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isHeroImagePresent(), SERIES_IMAGE_NOT_DISPLAYED);
+        sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
 
-        sa.assertTrue(detailsPage.getEpisodeTitle("1", "2").isPresent(), DETAILS_EPISODE_TITLE_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(0, detailsPage.getReleaseDate(), 1),
-                "Release date from metadata label does not match release date from details tab");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(2, detailsPage.getGenre(), 1),
-                "Genre Thriller from metadata label does not match Genre Thriller from details tab");
-        sa.assertTrue(detailsPage.metadataLabelCompareDetailsTab(3, detailsPage.getGenre(), 2),
-                "Genre Drama from metadata label does not match Genre Drama from details tab");
-        detailsPage.clickDetailsTab();
-        detailsPage.swipeTillActorsElementPresent();
-
-        sa.assertTrue(detailsPage.isReleaseDateDisplayed(), "Detail Tab rating not present");
-        sa.assertTrue(detailsPage.isCreatorDirectorDisplayed(), "Detail Tab Creator not present");
-        sa.assertTrue(detailsPage.areActorsDisplayed(), "Details Tab actors not present");
         sa.assertAll();
     }
 
@@ -938,7 +969,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals().getEpisodeTitle();
 
         //Verify main details page UI elements
-        sa.assertTrue(detailsPage.isHeroImagePresent(), "Hero banner image not present");
+        sa.assertTrue(detailsPage.isHeroImagePresent(), SERIES_IMAGE_NOT_DISPLAYED);
         sa.assertTrue(detailsPage.isLogoImageDisplayed(), "Details page logo image not present");
         sa.assertTrue(detailsPage.isKidThemeBackgroudUIDisplayed(), "UI on detail page is not in kid mode theme");
         sa.assertTrue(detailsPage.isContentDescriptionDisplayed(), DETAILS_CONTENT_DESCRIPTION_NOT_DISPLAYED);
@@ -967,7 +998,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         //Verify if release year value matches with api, if api has returned any value
         if (exploreAPIData.containsKey(RELEASE_YEAR_DETAILS)) {
             sa.assertTrue(detailsPage.getStaticTextByLabelContains(exploreAPIData.get(RELEASE_YEAR_DETAILS).toString()).isPresent(),
-                    "Release year value is not present on details page featured area");
+                    FEATURED_AREA_RELEASE_YEAR_NOT_DISPLAYED);
         }
 
         detailsPage.getEpisodesTab().click();

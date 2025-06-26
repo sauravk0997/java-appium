@@ -237,4 +237,9 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getFirstCellFromCollectionEpisodeMetadataElement(String collectionName) {
         return firstCellElementFromCollectionEpisodeMetadata.format(collectionName);
     }
+
+    public void swipeToOriginalBrandRow() {
+        swipe(getBrandCell(initPage(DisneyPlusBrandIOSPageBase.class).getBrand(
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+    }
 }
