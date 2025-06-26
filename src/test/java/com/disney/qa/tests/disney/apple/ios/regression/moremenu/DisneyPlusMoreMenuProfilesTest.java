@@ -1785,8 +1785,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyWhosWatchingForOnlineProfileWithNoPin() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = new DisneyPlusChooseAvatarIOSPageBase(getDriver());
-        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = new DisneyPlusWhoseWatchingIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                         .unifiedAccount(getUnifiedAccount())
                         .profileName(SECONDARY_PROFILE)
