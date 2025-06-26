@@ -941,7 +941,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         }
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock button not displayed");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
         detailsPage.clickSelect();
         Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
                 "Upsell roadblock screen header is not present");
@@ -998,7 +998,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         }
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        sa.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock button not displayed");
+        sa.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
         sa.assertFalse(detailsPage.getPlayButton().isPresent(THREE_SEC_TIMEOUT), "Play button is displayed");
         sa.assertFalse(detailsPage.isWatchButtonPresent(), "Watch button is displayed");
         sa.assertFalse(detailsPage.getWatchlistButton().isPresent(THREE_SEC_TIMEOUT), "Watchlist button is displayed");
