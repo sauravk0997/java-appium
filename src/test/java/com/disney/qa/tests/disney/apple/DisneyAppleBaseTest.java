@@ -30,7 +30,6 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.gmail.exceptions.GMailUtilsException;
-import com.disney.util.JiraUtils;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
