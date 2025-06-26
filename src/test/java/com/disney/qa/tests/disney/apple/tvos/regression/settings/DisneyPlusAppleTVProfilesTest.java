@@ -771,6 +771,34 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(isGenderOptionDisabled(), "Gender was enabled for a U18 Profile");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-112715"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyNewProfileWithAdultDOBDefaultsToTVMA() {
+        String expectedSubstring = "set to TV-MA";
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+
+        logIn(getUnifiedAccount());
+
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.ADULT);
+        addProfilePage.moveDown(3, 1);
+        addProfilePage.clickSelect();
+        Assert.assertTrue(addProfilePage.getSelectGenderTitle().isPresent(), SELECT_GENDER_TITLE_NOT_DISPLAYED);
+        addProfilePage.clickSelect();
+        addProfilePage.clickSaveProfileButton();
+
+        Assert.assertFalse(addProfilePage.getUpdateMaturityRatingTitle().isPresent(FIVE_SEC_TIMEOUT),
+                "Update Maturity Rating screen is present");
+
+        Assert.assertTrue(addProfilePage.getAddProfilePINHeader().isPresent(),
+                ADD_PROFILE_PIN_SCREEN_NOT_DISPLAYED);
+        Assert.assertTrue(addProfilePage.getAddProfilePINDescription().isPresent(),
+                "Add Profile PIN description is not present");
+        String addProfilePINDescription = addProfilePage.getAddProfilePINDescription().getText();
+        Assert.assertTrue(addProfilePINDescription.contains(expectedSubstring),
+                String.format("Add Profile PIN description '%s' does not contain rating '%s'",
+                        addProfilePINDescription, expectedSubstring));
+    }
+
     public void validateGenderOptions() {
         DisneyPlusEditGenderIOSPageBase editGenderIOSPageBase = initPage(DisneyPlusEditGenderIOSPageBase.class);
         String other = "Other";
