@@ -900,9 +900,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         //Swipe till the bottom of the home page and ensure STREAMS_NON_STOP_PLAYLISTS collection is not displayed
         ExtendedWebElement nonStopPlaylistCollection = homePage.getCollection(CollectionConstant.getCollectionName(STREAMS_NON_STOP_PLAYLISTS));
-        while (swipeAndCompareBeforeAndAfterPlacement()) {
+        ArrayList<Container> disneyAPIPage = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        ExtendedWebElement lastCollection = homePage.getCollection(disneyAPIPage.get(disneyAPIPage.size()-1).getId());
+        while (!lastCollection.isPresent(ONE_SEC_TIMEOUT)) {
             Assert.assertFalse(nonStopPlaylistCollection.isPresent(ONE_SEC_TIMEOUT),
                     "'Streams: Non-Stop Playlists' collection is displayed");
+            swipeUp(duration);
         }
         sa.assertAll();
     }
