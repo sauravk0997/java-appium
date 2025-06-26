@@ -1402,7 +1402,7 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         LOGGER.info("Moving down until Disney original brand is focused");
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         if (homePage.getDisneyTile().isPresent(ONE_SEC_TIMEOUT) && isFocused(homePage.getDisneyTile())) {
-            LOGGER.info("Desired Disney original brand content was already focused");
+            LOGGER.info("Desired Disney original brand was already focused");
             return;
         }
         while (count > 0) {
@@ -1412,13 +1412,13 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
                 LOGGER.info("Reached Disney original brand");
                 return;
             } else if (homePage.getDisneyTile().isPresent(THREE_SEC_TIMEOUT)) {
-                LOGGER.info("Disney original tile is present / visible on screen, " +
+                LOGGER.info("Disney original brand is present / visible on screen, " +
                         "moving down to get in focus");
                 moveDown(1, 1);
             }
             count--;
         }
-        throw new NoSuchElementException("Desired collection was not focused");
+        throw new NoSuchElementException("Disney original brand was not focused");
     }
 
     public boolean moveDownUntilCollectionIsPresent(String collectionId, int count) {
