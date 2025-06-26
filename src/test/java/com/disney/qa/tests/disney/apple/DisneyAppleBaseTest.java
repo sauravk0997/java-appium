@@ -225,6 +225,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     };
 
+    private static final LazyInitializer<IDPApi> IDP_API = new LazyInitializer<>() {
+        @Override
+        protected IDPApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(WEB)
+                    .partner(DisneyConfiguration.getPartner().toUpperCase())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new IDPApi(apiConfiguration);
+        }
+    };
+
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
         WebDriverConfiguration.addIgnoredNewSessionErrorMessages(Stream.concat(
@@ -572,6 +584,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static WatchlistApi getWatchlistApi() {
         try {
             return WATCHLIST_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
+    public static IDPApi getIDPApi() {
+        try {
+            return IDP_API.get();
         } catch (ConcurrentException e) {
             return ExceptionUtils.rethrow(e);
         }
