@@ -103,7 +103,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.waitForPresenceOfAnElement(
                 homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)));
         homePage.clickUp();
-        homePage.moveDown(1, 1);
+        homePage.moveDownFromHeroTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
         Assert.assertTrue(
                 brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
