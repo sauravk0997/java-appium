@@ -616,7 +616,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         int totalExpectedBrands = 6;
         Container brandCollection;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_SINGAPORE)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), SINGAPORE);
@@ -636,7 +635,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         }
 
         int totalBrandTile = brandCollection.getItems().size();
-        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+        homePage.swipeToOriginalBrandRow();
         Assert.assertEquals(totalBrandTile, totalExpectedBrands, "Total number of brand does not match with expected");
 
         IntStream.range(0, getExpectedBrand().size() - 1).forEach(i -> {
@@ -712,7 +711,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
 
-        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+        homePage.swipeToOriginalBrandRow();
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
                 DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
 
@@ -731,7 +730,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi()
                 .createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
-        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+        homePage.swipeToOriginalBrandRow();
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
                 DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
 
@@ -766,7 +765,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
-        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+        homePage.swipeToOriginalBrandRow();
 
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(
                 DisneyPlusBrandIOSPageBase.Brand.HULU)).isPresent(), HULU_TILE_NOT_VISIBLE_ON_HOME_PAGE);
@@ -829,13 +828,12 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyHuluCollectionPagesNetworkPageUI() throws URISyntaxException, JsonProcessingException {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusHuluIOSPageBase huluPage = initPage(DisneyPlusHuluIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
-        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+        homePage.swipeToOriginalBrandRow();
         homePage.tapHuluBrandTile();
         sa.assertTrue(huluPage.isHuluBrandImageExpanded(), "Hulu brand logo is not expanded");
         sa.assertTrue(huluPage.getBackButton().isPresent(), "Back button is not present");

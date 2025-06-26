@@ -414,7 +414,6 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEspnHubSportPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
         DisneyPlusEspnIOSPageBase espnPage = initPage(DisneyPlusEspnIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         String leagues = "Leagues";
@@ -423,7 +422,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
-        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+        homePage.swipeToOriginalBrandRow();
         homePage.clickEspnTile();
         Assert.assertTrue(espnPage.isOpened(), ESPN_PAGE_IS_NOT_DISPLAYED);
 
@@ -832,7 +831,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         int swipeCount = 10;
 
         setAppToHomeScreen(getUnifiedAccount());
-        swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+        homePage.swipeToOriginalBrandRow();
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
 
         //Swipe to the "Unlock to stream more collection" and select first Upsell title
