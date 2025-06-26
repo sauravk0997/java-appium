@@ -1837,6 +1837,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
         String toggleOff = "Off";
         String toggleOn = "On";
+
         onboard();
 
         moreMenu.clickAddProfile();
