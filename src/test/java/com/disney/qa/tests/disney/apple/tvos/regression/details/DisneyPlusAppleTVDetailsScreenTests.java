@@ -351,9 +351,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
                         .isPresent(), ESPN_BRAND_TILE_NOT_PRESENT);
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
@@ -400,7 +401,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         String liveAndUpcomingEventsCollection =
                 getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING);
                 // Navigate to a live event
@@ -883,9 +884,9 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
                 .isPresent(), "ESPN brand tile was not present on home page screen");
-        homePage.moveDownFromHeroTileToBrandTile();
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
 
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
@@ -920,7 +921,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
 
         String liveAndUpcomingEventsCollection = getCollectionName(CollectionConstant.Collection.ESPN_EXPLORE_MORE);
         // Navigate to a live or upcoming event
@@ -966,7 +967,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
 
         String liveAndUpcomingEventsCollection = getCollectionName(CollectionConstant.Collection.ESPN_EXPLORE_MORE);
         // Navigate to a live or upcoming event
@@ -1096,7 +1097,7 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
 
         Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
-        home.moveDownFromHeroTileToBrandTile();
+        home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         searchPage.waitForPresenceOfAnElement(searchPage.getSearchField());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);

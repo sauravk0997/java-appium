@@ -67,7 +67,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         logIn(getUnifiedAccount());
         home.isOpened();
-        home.moveDownFromHeroTileToBrandTile();
+        home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         search.isOpened();
         search.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());
@@ -349,7 +349,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         homePage.isOpened();
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         searchPage.isOpened();
         searchPage.typeInSearchField(DANCING_WITH_THE_STARS.getTitle());

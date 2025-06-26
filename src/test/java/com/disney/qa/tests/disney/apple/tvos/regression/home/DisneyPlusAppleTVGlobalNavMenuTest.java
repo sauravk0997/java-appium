@@ -79,7 +79,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         // move down to focus on brand tile
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
 
         homePage.openGlobalNavWithClickingMenu();
         LOGGER.info("Opening global nav by clicking Menu button");
@@ -105,7 +105,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 "Home is not focused by default -2");
 
         homePage.moveRight(1, 1);
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         LOGGER.info("Collapsing Global Nav menu by moving right");
         sa.assertFalse(homePage.isGlobalNavExpanded(),
                 "Global Nav menu is not collapsed after moving right from expanded global nav");
@@ -164,7 +164,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                 .collect(Collectors.toList());
         logIn(getUnifiedAccount());
 
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         homePage.clickRandomBrandTile();
         brandsPage.isOpened();
 
@@ -279,7 +279,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         homePage.clickProfileBtn(KIDS);
         sa.assertTrue(homePage.isKidsHomePageOpen(), "Kids Home page is not open after login");
 
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.openGlobalNavWithClickingMenu();
         IntStream.range(0, GLOBAL_NAV.get().size()).forEach(i -> {
             String menu = GLOBAL_NAV.get().get(i);
@@ -323,7 +323,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         homePage.clickProfileBtn(KIDS);
         sa.assertTrue(homePage.isKidsHomePageOpen(), "Kids Home page is not open after login");
 
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         Assert.assertFalse(homePage.isGlobalNavExpanded(),
                 "Global Nav menu is not collapsed after clicking select from expanded global nav");
 
@@ -340,7 +340,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                     "Global Nav menu is not collapsed after clicking select from expanded global nav");
 
             if (menu == DisneyPlusAppleTVHomePage.globalNavigationMenu.HOME.getText()) {
-                homePage.moveDownFromHeroTileToBrandTile();
+                homePage.moveDownFromHeroTile();
             }
             homePage.navigateToGlobalNav(menu);
         });

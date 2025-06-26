@@ -261,7 +261,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVWhoIsWatchingPage.getTypeCellLabelContains(ADULT_PROFILE_NAME).clickIfPresent();
         disneyPlusAppleTVHomePage.isOpened();
 
-        disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
+        disneyPlusAppleTVHomePage.moveDownFromHeroTile();
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         }
@@ -350,7 +350,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         pause(15); //load kid's home
         disneyPlusAppleTVHomePage.isOpened();
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
-            disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
+            disneyPlusAppleTVHomePage.moveDownFromHeroTile();
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         }
         disneyPlusAppleTVHomePage.clickSettingsTab();
@@ -607,7 +607,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         pause(5);// wait for screen to load
         //        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
 
-        disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
+        disneyPlusAppleTVHomePage.moveDownFromHeroTile();
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         }
@@ -624,7 +624,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         //        disneyPlusAppleTVHomePage.dismissUnexpectedErrorAlert();
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.isOpened();
-            disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
+            disneyPlusAppleTVHomePage.moveDownFromHeroTile();
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         }
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(SEARCH.getText());
@@ -689,7 +689,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         disneyPlusAppleTVWhoIsWatchingPage.getTypeCellLabelContains(ADULT_PROFILE_NAME).clickIfPresent();
         disneyPlusAppleTVHomePage.isOpened();
 
-        disneyPlusAppleTVHomePage.moveDownFromHeroTileToBrandTile();
+        disneyPlusAppleTVHomePage.moveDownFromHeroTile();
         if (!disneyPlusAppleTVHomePage.isGlobalNavExpanded()) {
             disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         }
@@ -763,7 +763,7 @@ public class DisneyPlusAppleTVSubscriberLocalizationCaptures extends DisneyPlusA
         //        applePageBase.dismissUnexpectedErrorAlert();
         whoIsWatchingPage.getTypeCellLabelContains(ADULT_PROFILE_NAME).clickIfPresent();
         homePage.isOpened();
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.openGlobalNavWithClickingMenu();
         homePage.clickSearchIcon();
         searchPage.isOpened();
