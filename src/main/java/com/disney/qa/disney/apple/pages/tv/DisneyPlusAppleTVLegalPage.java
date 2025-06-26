@@ -60,7 +60,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyplusLegalIOSPageBase {
     public void getAllLegalSectionsScreenshot(String filename) {
         getLegalTabs().forEach(legalTitle -> {
             String sectionName = legalTitle.getAttribute("name");
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, filename + "_" + sectionName + "_tvOS");
             moveDown(1, 1);
         });
     }

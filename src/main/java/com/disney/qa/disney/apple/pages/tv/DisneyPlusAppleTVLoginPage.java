@@ -32,7 +32,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickEnterNewBtn() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
         if (enterNewBtn.isPresent()) {
             IntStream.range(0, getNumberOfPrevUsedEmails()).forEach(i -> {
                 clickDown();
@@ -43,7 +42,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickLocalizationEnterNewBtn() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
         List<ExtendedWebElement> listOfOtherElements = findExtendedWebElements(typeCell.getBy());
         if (!listOfOtherElements.isEmpty()) {
             IntStream.range(0, getNumberOfPrevUsedEmails()).forEach(i ->
@@ -59,7 +57,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     // To enter a temp string "bcd" into the email field
     // also clicks on continue button, using select here because element.click was not working
     public void enterTempEmailTextAndClickContinue() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Enter_New_Email_Screen");
         keyboard.isPresent();
         IntStream.range(0, 3).forEach(i -> {
             clickRight();
