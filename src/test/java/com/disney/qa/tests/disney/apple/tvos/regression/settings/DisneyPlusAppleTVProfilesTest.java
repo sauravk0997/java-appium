@@ -239,7 +239,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "Forgot Password screen wasn't visible");
         forgotPasswordPage.enterOtpOnModal(getOTPFromApi(getUnifiedAccount()));
         Assert.assertTrue(changePasswordPage.isOpened(),
-                "Create New Password screen wasn't opened");
+                CHANGE_PASSWORD_PAGE_NOT_DISPLAYED);
         changePasswordPage.clickPasswordField();
         changePasswordPage.enterPassword("Abc12!");
         changePasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
@@ -499,7 +499,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.clickSaveProfileButton();
 
         Assert.assertTrue(addProfilePage.verifyHeadlineHeaderText(),
-                "Access to full catalog screen was not present");
+                ACCESS_TO_FULL_CATALOG_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(addProfilePage.isMaturityRatingNotNowInfoDisplayed(defaultRatingExpected),
                 "The content rating was not TV-14 by default");
         Assert.assertTrue(addProfilePage.isUpdateMaturityRatingActionDisplayed(ratingExpected),
