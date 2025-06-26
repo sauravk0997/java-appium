@@ -23,7 +23,6 @@ public class DisneyPlusAppleTVCompletePurchasePage extends DisneyPlusCompletePur
     @Override
     public boolean isOpened() {
         boolean isPresent = restorePurchaseBtn.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 }

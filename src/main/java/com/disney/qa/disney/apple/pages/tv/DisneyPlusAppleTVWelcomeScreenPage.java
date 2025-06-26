@@ -17,7 +17,6 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
 
     @Override
     public boolean isOpened() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return getLoginButton().isPresent();
     }
 
@@ -31,7 +30,6 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     }
 
     public boolean isLoginBtnFocused() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isFocused(getLoginButton());
     }
 
@@ -39,7 +37,6 @@ public class DisneyPlusAppleTVWelcomeScreenPage extends DisneyPlusWelcomeScreenI
     public void clickLogInButton() {
         fluentWait(getDriver(), getDefaultWaitTimeout().toSeconds(), 1, "Login Button was not focused")
                 .until(it -> isFocused(getLoginButton()));
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickSelect();
     }
 }

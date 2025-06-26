@@ -23,7 +23,6 @@ public class DisneyPlusAppleTVLiveEventModalPage extends DisneyPlusLiveEventModa
     @Override
     public boolean isOpened() {
         boolean isPresent = watchLiveButton.isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 

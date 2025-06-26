@@ -33,7 +33,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyplusLegalIOSPageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = legalTitle.isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 

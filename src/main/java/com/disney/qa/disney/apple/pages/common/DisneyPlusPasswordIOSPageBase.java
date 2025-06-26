@@ -87,7 +87,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isShowPasswordIconDisplayed() {
         boolean isPresent = showHidePasswordIndicator.isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent && showHidePasswordIndicator.getAttribute("label").equals("hidePasswordDisneyAuth");
     }
 
@@ -122,7 +121,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
         typePassword(userPassword);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         if (continueButton.isElementPresent()) {
             continueButton.click();
         } else {

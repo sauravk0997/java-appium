@@ -27,7 +27,6 @@ public class DisneyPlusAppleTVOneTimePasscodePage extends DisneyPlusOneTimePassc
         for (char otpChar : otpArray) {
             dynamicBtnFindByLabel.format(otpChar).click();
         }
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void clickLoginWithPassword() {

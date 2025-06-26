@@ -49,7 +49,6 @@ public class DisneyPlusAppleTVHoraSmokeTest extends DisneyPlusAppleTVBaseTest {
         selectAppleUpdateLaterAndDismissAppTracking();
         logIn(account);
         pause(1);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         // Locate and click on the "Pixar" tile
         homePage.moveDownFromHeroTileToBrandTile();
@@ -58,7 +57,6 @@ public class DisneyPlusAppleTVHoraSmokeTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(homePage.isFocused(homePage.getDynamicCellByLabel("Pixar")), "Pixar tile not focused");
         homePage.clickSelect();
         Assert.assertTrue(brandsPage.isOpened(), "Pixar page not displayed");
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         // Locate and click on the "Star Wars" tile
         brandsPage.clickBack();
@@ -74,7 +72,6 @@ public class DisneyPlusAppleTVHoraSmokeTest extends DisneyPlusAppleTVBaseTest {
         detailsPage.clickPlayButton().waitForVideoToStart();
         pause(playbackDuration);
         Assert.assertTrue(videoPage.isOpened(), "Video Player did not launch");
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         // Pause 1s, then resume
         videoPage.pauseAndPlayVideo();

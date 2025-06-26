@@ -42,7 +42,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     @Override
     public boolean isOpened() {
         boolean isPresent = whosWatchingTitle.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -55,7 +54,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isHeaderTextDisplayed() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return whosWatchingTitle.isPresent();
     }
 
@@ -64,7 +62,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isAddProfileBtnPresent() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return addProfile.isElementPresent();
     }
 
@@ -117,10 +114,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isAccessModeProfileIconPresent(String username) {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return dynamicAccessProfileIcon.format(
-                        getLocalizationUtils().formatPlaceholderString(
-                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
-                .isPresent();
+        return dynamicAccessProfileIcon.format(getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isPresent();
     }
 }

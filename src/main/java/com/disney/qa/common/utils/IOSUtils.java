@@ -639,7 +639,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         pickers.get(0).sendKeys(month);
         pickers.get(1).sendKeys(day);
         pickers.get(2).sendKeys(year);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     /**

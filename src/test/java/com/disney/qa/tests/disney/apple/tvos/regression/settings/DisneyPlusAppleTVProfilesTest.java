@@ -87,13 +87,11 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         disneyPlusAppleTVHomePage.clickSelect();
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), whoIsWatchingAssertMessage);
         disneyPlusAppleTVWhoIsWatchingPage.clickAddProfile();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
         disneyPlusAppleTVHomePage.clickMenuTimes(1, 1);
         sa.assertTrue(disneyPlusAppleTVWhoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         sa.assertFalse(disneyPlusAppleTVHomePage.isGlobalNavPresent(), globalNavMenuAssertMessage);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
 
         sa.assertAll();
     }

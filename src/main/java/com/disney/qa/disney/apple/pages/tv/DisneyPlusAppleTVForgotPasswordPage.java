@@ -74,7 +74,6 @@ public class DisneyPlusAppleTVForgotPasswordPage extends DisneyPlusOneTimePassco
         for (char otpChar : otpArray) {
             dynamicBtnFindByLabel.format(otpChar).click();
         }
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void enterOTPLocalized(String otp) {

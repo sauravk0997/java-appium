@@ -70,18 +70,15 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
         enterPasswordOnAuthPasswordScreen(password);
         moveToContinueOrDoneBtnKeyboardEntry();
         clickSelect();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         primaryButton.click();
     }
 
     public void enterPassword(String password) {
         typeTextView.type(password);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void enterPasswordOnAuthPasswordScreen(String password) {
         createPasswordTextField.type(password);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public ExtendedWebElement getEnterYourPasswordHeader() {
@@ -139,7 +136,6 @@ public class DisneyPlusAppleTVPasswordPage extends DisneyPlusPasswordIOSPageBase
 
     public boolean isContinueButtonPresent() {
         boolean isPresent = primaryButton.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 

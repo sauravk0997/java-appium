@@ -36,7 +36,6 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = searchField.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 

@@ -21,7 +21,6 @@ public class DisneyPlusAppleTVRestartSubscriptionPage extends DisneyPlusRestartS
     @Override
     public boolean isOpened() {
         boolean isPresent = getDynamicAccessibilityId(restartSubscription).isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 }

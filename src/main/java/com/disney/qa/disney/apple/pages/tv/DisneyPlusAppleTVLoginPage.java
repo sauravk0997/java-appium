@@ -28,7 +28,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     @Override
     public boolean isOpened() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return getTextEntryField().format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent() && getEmailHint().isPresent(THREE_SEC_TIMEOUT);
     }
 
@@ -54,7 +53,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickEmailField() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         textEntryField.click();
     }
 
@@ -83,7 +81,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public boolean isKeyboardPresent() {
         boolean isPresent = keyboard.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -103,11 +100,9 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public void enterEmail(String email) {
         typeTextView.type(email);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void clickContinueBtn() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         continueButton.click();
     }
 

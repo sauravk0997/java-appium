@@ -21,7 +21,6 @@ public class DisneyPlusAppleTVCompleteSubscriptionPage extends DisneyPlusComplet
     @Override
     public boolean isOpened() {
         boolean isPresent = completeSubscriptionBtn.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 }

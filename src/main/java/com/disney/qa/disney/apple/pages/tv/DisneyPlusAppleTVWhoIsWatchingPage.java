@@ -22,7 +22,6 @@ public class DisneyPlusAppleTVWhoIsWatchingPage extends DisneyPlusWhoseWatchingI
     @Override
     public boolean isOpened() {
         boolean isOpened = profileSelection.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isOpened;
     }
 }

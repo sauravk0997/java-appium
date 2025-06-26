@@ -19,7 +19,6 @@ public class DisneyPlusAppleTVChangePasswordPage extends DisneyPlusChangePasswor
     @Override
     public boolean isOpened() {
         boolean isPresent = passwordTextField.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 

@@ -22,7 +22,6 @@ public class DisneyPlusAppleTVAccountPage extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = changeEmailBtn.isElementPresent() && changePasswordBtn.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 

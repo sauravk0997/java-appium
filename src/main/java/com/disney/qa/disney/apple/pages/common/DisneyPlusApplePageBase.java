@@ -589,12 +589,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
 
-    public boolean isAIDElementPresentWithScreenshot(String id) {
-        boolean isPresent = dynamicAccessibilityId.format(id).isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
-    }
-
     /**
      * @return always returns false as this class does not represent an actual page in the app
      */
@@ -702,7 +696,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isStaticTextPresentWithScreenShot(String text) {
         boolean isPresent = (staticTextByLabel.format(text).isElementPresent() || textViewByLabel.format(text).isElementPresent());
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -836,7 +829,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         dynamicBtnFindByLabel.format(localizationUtils.getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText()))
                 .click();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void clickMoreTab() {

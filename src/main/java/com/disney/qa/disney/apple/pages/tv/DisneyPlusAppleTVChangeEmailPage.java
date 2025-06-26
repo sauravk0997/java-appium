@@ -19,7 +19,6 @@ public class DisneyPlusAppleTVChangeEmailPage extends DisneyPlusChangeEmailIOSPa
     @Override
     public boolean isOpened() {
         boolean isPresent = emailTextField.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 

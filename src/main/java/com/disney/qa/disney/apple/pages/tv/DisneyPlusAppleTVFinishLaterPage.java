@@ -16,7 +16,6 @@ public class DisneyPlusAppleTVFinishLaterPage extends DisneyPlusApplePageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = systemAlertDefaultBtn.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 }

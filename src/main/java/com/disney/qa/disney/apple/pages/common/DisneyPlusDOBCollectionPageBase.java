@@ -27,7 +27,6 @@ public class DisneyPlusDOBCollectionPageBase extends DisneyPlusApplePageBase {
 
     @Override
     public boolean isOpened() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return dateOfBirthHeader.isPresent();
     }
 
