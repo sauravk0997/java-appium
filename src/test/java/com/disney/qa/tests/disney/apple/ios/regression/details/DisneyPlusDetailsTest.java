@@ -991,12 +991,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                         currentNetworkAttribution, HULU));
     }
 
-    // Validating ESPN documentaries with hardcoded values due to QP-4303
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77679"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNUpsellDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        // Update to Api metadata validations when QP-4303 is resolved
         String description = "The unforgettable tale of the most storied home run chase in baseball history";
         String genre = "Documentaries";
         String releaseYear = "2020";
