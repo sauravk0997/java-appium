@@ -32,6 +32,9 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeScrollView")
     private ExtendedWebElement consentScrollView;
 
+    @ExtendedFindBy(accessibilityId = "declineButton")
+    private ExtendedWebElement declineButton;
+
     //Functions
     public DisneyPlusParentalConsentIOSPageBase(WebDriver driver) {
         super(driver);
@@ -40,6 +43,10 @@ public class DisneyPlusParentalConsentIOSPageBase extends DisneyPlusApplePageBas
     @Override
     public boolean isOpened() {
         return getStaticTextByLabel(consentHeaderText).isPresent();
+    }
+
+    public ExtendedWebElement getDeclineButton() {
+        return declineButton;
     }
 
     public boolean isConsentHeaderPresent() {
