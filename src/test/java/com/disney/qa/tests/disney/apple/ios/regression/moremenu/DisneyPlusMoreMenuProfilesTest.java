@@ -1835,7 +1835,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-
+        String toggleOff = "Off";
+        String toggleOn = "On";
         onboard();
 
         moreMenu.clickAddProfile();
@@ -1845,9 +1846,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
 
         Assert.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode toggle is not present");
-        Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), "Off", "Junior Mode toggle is not OFF");
+        Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), toggleOff, "Junior Mode toggle is not OFF");
         addProfile.tapJuniorModeToggle();
-        Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), "On", "Junior Mode toggle is not ON");
+        Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), toggleOn, "Junior Mode toggle is not ON");
         Assert.assertFalse(addProfile.isGenderFieldEnabled(), "Gender field was enabled");
     }
 
