@@ -17,7 +17,9 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
 import org.testng.SkipException;
 import org.testng.annotations.AfterMethod;
@@ -38,7 +40,6 @@ import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
-    //Test constants
     private static final String EDIT_BUTTON_NOT_DISPLAYED = "Edit button is not present on downloads screen";
     private static final double SCRUB_PERCENTAGE_FIFTY = 50;
     private static final String SEASON_ONE = "Season 1";
@@ -184,8 +185,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Verify movie asset metadata on downloads
         sa.assertTrue(downloadsPage.isDownloadHeaderPresent(),
                 "Downloads header is not present on downloads screen");
-        sa.assertTrue(downloadsPage.getEditButton().isPresent(),
-                "Edit button is not present on downloads screen");
+        sa.assertTrue(downloadsPage.getEditButton().isPresent(), EDIT_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(downloadsPage.getDownloadedAssetImage(movieTitle).isPresent(),
                 "Downloaded movie asset image is not found");
         sa.assertTrue(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
@@ -256,8 +256,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Select All was not displayed after clicking Deselect All");
 
         downloadsPage.getCancelButton().click();
-        sa.assertTrue(downloadsPage.getEditButton().isPresent(),
-                "Edit button not displayed after exiting Edit mode");
+        sa.assertTrue(downloadsPage.getEditButton().isPresent(), EDIT_BUTTON_NOT_DISPLAYED);
         sa.assertFalse(downloadsPage.getTrashIcon().isPresent(), "Trash icon found after exiting Edit mode");
 
         downloadsPage.getEditButton().click();
@@ -657,7 +656,6 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String titleEpisodesDownloads = "Play";
         String theSimpsonsSeries = "The Simpsons";
-        String seasonOne = "Season 1";
         String firstSeason = "1";
         String episodeOneString = "1";
         String episodeTwoString = "2";
@@ -678,7 +676,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         // Download three episodes from season 1 and populate episodes details list
         detailsPage.getSeasonSelectorButton().click();
-        detailsPage.getStaticTextByLabel(seasonOne).click();
+        detailsPage.getStaticTextByLabel(SEASON_ONE).click();
         detailsPage.getEpisodeToDownload(firstSeason, episodeTwoString).click();
         detailsPage.getEpisodeToDownload(firstSeason, episodeOneString).click();
         detailsPage.getEpisodeToDownload(firstSeason, episodeThreeString).click();
@@ -710,27 +708,28 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         }
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74449"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75169"})
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyHuluSeriesDownloadEpisode() {
+    public void verifyHuluSeriesDownloadSeason() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
-        String huluSeries = "Mid-Century Modern";
+        String sizeIdentifierMB = "MB";
+        String huluSeries = "The Bravest Knight";
+        String episodesInSeason = "13 Episodes";
         String seasonOne = "1";
         String episodeOne = "1";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
-        ExploreContent seriesApiContent = getSeriesApi(
-                R.TESTDATA.get("disney_prod_hulu_series_mid-century_modern_entity_id"),
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_hulu_series_the_bravest_knight_entity"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         Visuals seasonDetails;
         try {
             seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
-        } catch (Exception e) {
+        } catch(Exception e){
             throw new SkipException("Skipping Test, Season Details not found" + e.getMessage());
         }
 
@@ -740,13 +739,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         searchPage.searchForMedia(huluSeries);
         searchPage.getDynamicAccessibilityId(huluSeries).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-
-        //Download Episode 1
-        if (R.CONFIG.get(DEVICE_TYPE).equals(PHONE)) {
-            swipe(detailsPage.getEpisodeToDownload(), Direction.UP, 1, 900);
-        }
-        detailsPage.getEpisodeToDownload(seasonOne, episodeOne).click();
+        //Download Season 1
+        detailsPage.downloadAllOfSeason();
+        detailsPage.clickAlertConfirm();
         detailsPage.waitForOneEpisodeDownloadToComplete(THREE_HUNDRED_SEC_TIMEOUT, 6);
+        //Navigate to Downloads & Validate Hulu Series Downloads UI
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
 
@@ -758,16 +755,16 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getStaticTextByLabel(SEASON_ONE).isPresent(),
                 SEASON_ONE + " " + "Title is not displayed");
         sa.assertTrue(downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).isPresent(),
-                "Episode Title is not displayed");
+                "Episode " + "Title is not displayed");
         sa.assertTrue(downloads.getStaticTextByLabelContains(seasonDetails.getMetastringParts().getRatingInfo().getRating().getText()).isPresent(),
-                "Episode Rating was not found");
+                "Episode rating detail was not found");
         sa.assertTrue(downloads.isEpisodeNumberDisplayed(seasonDetails.getEpisodeNumber()),
                 "Episode Number was not found");
-        sa.assertTrue(downloads.getStaticTextByLabelContains(SIZE_IDENTIFIER_MB).isPresent(),
-                "Size of Episode was not found");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(sizeIdentifierMB).isPresent(),
+                "Size of episode was not found");
         long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(seasonDetails.getDurationMs());
         sa.assertTrue(downloads.getStaticTextByLabelContains(String.valueOf(durationFromApi)).isPresent(),
-                "Duration of Episode was not found");
+                "Duration of episode was not found");
         sa.assertTrue(downloads.getDownloadCompleteButton().isPresent(),
                 "Download state button was not found");
         sa.assertTrue(downloads.getTypeButtonContainsLabel("Play").isPresent(),
@@ -776,7 +773,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getEpisodeDescription(seasonOne, episodeOne)
                         .getText().equals(seasonDetails.getDescription().getFull()),
                 "Episode description detail was not found after episode expanded");
-
+        //Validate total number of downloaded episodes
+        downloads.getBackArrow().click();
+        Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(downloads.getStaticTextByLabelContains(episodesInSeason).getBy()),
+                THREE_HUNDRED_SEC_TIMEOUT);
         sa.assertAll();
     }
 

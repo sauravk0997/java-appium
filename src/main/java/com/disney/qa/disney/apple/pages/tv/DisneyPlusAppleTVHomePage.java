@@ -209,7 +209,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         return dynamicBtnFindByLabelContains.format(name).isElementPresent();
     }
 
-    public void moveDownFromHeroTileToBrandTile() {
+    public void moveDownFromHeroTile() {
         moveDown(1, 1);
     }
 

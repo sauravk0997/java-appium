@@ -201,11 +201,11 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
+        homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
                 .isPresent(), ESPN_BRAND_TILE_NOT_PRESENT);
-        homePage.moveDownFromHeroTileToBrandTile();
-        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
 
+        homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
                 ESPN_PAGE_DID_NOT_OPEN);
 
@@ -442,7 +442,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
                 getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING);
 
         homePage.waitForHomePageToOpen();
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 10);
 
         // Verify airing badge to validate if there is a live event occurring
@@ -473,7 +473,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN));
 
         Assert.assertTrue(brandPage.isBrandScreenDisplayed(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)),
