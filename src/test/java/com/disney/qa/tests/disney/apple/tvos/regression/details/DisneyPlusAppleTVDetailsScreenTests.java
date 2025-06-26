@@ -347,11 +347,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
         String rugby = "Rugby";
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-//        logIn(getUnifiedAccount());
-        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
 
-//        homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
         pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))
@@ -882,11 +881,10 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         DisneyPlusEspnIOSPageBase espnPage = new DisneyPlusEspnIOSPageBase(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-//        logIn(getUnifiedAccount());
-        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
 
-//        homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
         pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN))

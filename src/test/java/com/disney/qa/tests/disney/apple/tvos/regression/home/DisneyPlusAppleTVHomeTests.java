@@ -50,11 +50,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-//        logIn(getUnifiedAccount());
-        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
 
-//        homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
         pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
@@ -66,11 +65,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyESPNBrandTiles() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-//        logIn(getUnifiedAccount());
-        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
 
-//        homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
         pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.ESPN)).isPresent(),
@@ -88,11 +86,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-//        logIn(getUnifiedAccount());
-        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        logIn(getUnifiedAccount());
 
-//        homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
         pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).isPresent(),
@@ -126,10 +123,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-//        logIn(getUnifiedAccount());
-        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
+        logIn(getUnifiedAccount());
 
-//        homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
         pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
@@ -186,11 +182,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-//        logIn(getUnifiedAccount());
-        logInWithoutHomeCheckHardCoded("cristina.solmaz+prem10@disneyplustesting.com");
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
 
-//        homePage.waitForHomePageToOpen();
+        homePage.waitForHomePageToOpen();
         pause(10);
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         Assert.assertTrue(homePage.getBrandCell(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU)).isPresent(),
