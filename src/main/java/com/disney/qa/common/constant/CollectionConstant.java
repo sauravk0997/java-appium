@@ -3,6 +3,7 @@ package com.disney.qa.common.constant;
 public class CollectionConstant {
 
     public enum Collection {
+        ABC_NEWS,
         ACTION_AND_ADVENTURE,
         ANIMATED_MOVIES,
         ANIMATED_SERIES,
@@ -16,6 +17,7 @@ public class CollectionConstant {
         COMEDIES,
         CONTINUE_WATCHING,
         DISNEY_JUNIOR,
+        DISNEY_PLAYTIME,
         DOCUMENTARIES_AND_REALITY,
         ENJOY_THESE_MOVIES_FROM_HULU,
         ENJOY_THESE_SERIES_FROM_HULU,
@@ -49,6 +51,8 @@ public class CollectionConstant {
 
     public static String getCollectionName(Collection collection) {
         switch (collection) {
+            case ABC_NEWS:
+                return "350159d6-0e9e-4d6f-bb2a-9f27e97d7083";
             case ACTION_AND_ADVENTURE:
                 return "f977cd3e-9983-417d-90e7-dd40101cbda6";
             case ANIMATED_MOVIES:
@@ -77,6 +81,8 @@ public class CollectionConstant {
                 return "aaab13b2-4e15-4e71-836e-debe6d004193";
             case DISNEY_JUNIOR:
                 return "ce35f2ea-ba2c-4892-9c12-d4a4ab3bfb32";
+            case DISNEY_PLAYTIME:
+                return "591a460b-0612-44cd-ab88-c976d7d4a82f";
             case ENJOY_THESE_MOVIES_FROM_HULU:
                 return "5c721a08-c7ed-4e57-86c4-d781d3727098";
             case ENJOY_THESE_SERIES_FROM_HULU:
