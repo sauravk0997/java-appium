@@ -239,6 +239,7 @@ public class DisneyPlusHomeIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public void swipeToOriginalBrandRow() {
-        swipe(getBrandCell(initPage(DisneyPlusBrandIOSPageBase.class).getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
+        swipe(getBrandCell(initPage(DisneyPlusBrandIOSPageBase.class).getBrand(
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
     }
 }
