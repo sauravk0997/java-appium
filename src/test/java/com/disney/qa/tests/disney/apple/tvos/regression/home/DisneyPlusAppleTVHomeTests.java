@@ -157,7 +157,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         brandPage.clickSelect();
         detailsPage.waitUntilElementIsFocused(detailsPage.getUnlockButton(), FIFTEEN_SEC_TIMEOUT);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(),
-                "Unlock button was not present");
+                UNLOCK_BUTTON_NOT_DISPLAYED);
         detailsPage.clickSelect();
 
         //Verify that user is on the ineligible interstitial screen

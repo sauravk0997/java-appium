@@ -16,7 +16,6 @@ import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import org.testng.Assert;
 import org.testng.SkipException;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
@@ -368,7 +367,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(ESPN_CONTENT).click();
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
         detailsPage.getUnlockButton().click();
 
         Assert.assertTrue(detailsPage.isOnlyAvailableWithESPNHeaderPresent(),
@@ -395,7 +394,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(ESPN_CONTENT).click();
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getStaticTextByLabel(AVAILABLE_WITH_ESPN_SUBSCRIPTION).isPresent(),
                 AVAILABLE_WITH_ESPN_SUBSCRIPTION + " upsell message not displayed");
 
@@ -405,7 +404,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(ONLY_MURDERS_IN_THE_BUILDING).click();
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), "Unlock Button not displayed");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getStaticTextByLabel(UNLOCK_HULU_ON_DISNEY).isPresent(),
                 UNLOCK_HULU_ON_DISNEY + " upsell message not displayed");
     }
@@ -992,6 +991,43 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         Assert.assertTrue(currentNetworkAttribution.contains(HULU),
                 String.format("Current network attribution '%s' didn't contain '%s'",
                         currentNetworkAttribution, HULU));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77679"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNUpsellDetailsPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        // Update to Api metadata validations when QP-4303 is resolved
+        String description = "The unforgettable tale of the most storied home run chase in baseball history";
+        String genre = "Documentaries";
+        String releaseYear = "2020";
+        String duration = "1h 44m";
+
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        //Open an ESPN+ content title
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        // Validate metadata
+        Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
+        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(releaseYear),
+                "Release year is not present");
+        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(genre),
+                "Genre is not present");
+        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(duration),
+                "Duration year is not present");
+        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(description).isPresent(),
+                "Description is not present");
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
+        Assert.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
+        Assert.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
+
+        detailsPage.getUnlockButton().click();
+        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
+        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82729"})
