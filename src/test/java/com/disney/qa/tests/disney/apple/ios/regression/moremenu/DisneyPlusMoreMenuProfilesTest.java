@@ -1827,6 +1827,30 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Demographic Targeting toggle is not set to 'ON'");
     }
 
+    // Bug related IOS-14479
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75838"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, LATAM_US})
+    public void verifyAddProfileJuniorModeGenderDisabled() {
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        onboard();
+
+        moreMenu.clickAddProfile();
+        chooseAvatar.clickSkipButton();
+        Assert.assertTrue(addProfile.isOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+
+        Assert.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode toggle is not present");
+        Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), "Off", "Junior Mode toggle is not OFF");
+        addProfile.tapJuniorModeToggle();
+        Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), "On", "Junior Mode toggle is not ON");
+        Assert.assertFalse(addProfile.isGenderFieldEnabled(), "Gender field was enabled");
+    }
+
     //Below TC failing currently due to bug https://jira.disney.com/browse/IOS-16468
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81856"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
