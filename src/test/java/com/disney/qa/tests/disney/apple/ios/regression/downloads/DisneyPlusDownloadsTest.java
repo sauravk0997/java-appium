@@ -17,6 +17,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -718,19 +719,27 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloads = initPage(DisneyPlusDownloadsIOSPageBase.class);
         String sizeIdentifierMB = "MB";
-        String theBravestKnight = "The Bravest Knight";
+        String huluSeries = "The Bravest Knight";
+        String episodesInSeason = "13 Episodes";
+        String seasonOne = "1";
+        String episodeOne = "1";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
         ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_hulu_series_the_bravest_knight_entity"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        Visuals seasonDetails;
+        try {
+            seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        } catch(Exception e){
+            throw new SkipException("Skipping Test, Season Details not found" + e.getMessage());
+        }
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
-        searchPage.searchForMedia(theBravestKnight);
-        searchPage.getDynamicAccessibilityId(theBravestKnight).click();
+        searchPage.searchForMedia(huluSeries);
+        searchPage.getDynamicAccessibilityId(huluSeries).click();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         //Download Season 1
         detailsPage.downloadAllOfSeason();
@@ -742,8 +751,8 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         downloads.clickSeriesMoreInfoButton();
         sa.assertTrue(downloads.getBackArrow().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
-        sa.assertTrue(downloads.getStaticTextByLabelContains(theBravestKnight).isPresent(),
-                theBravestKnight + " title was not found on downloads screen");
+        sa.assertTrue(downloads.getStaticTextByLabelContains(huluSeries).isPresent(),
+                huluSeries + " title was not found on downloads screen");
         sa.assertTrue(downloads.getEditButton().isPresent(), EDIT_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(downloads.getStaticTextByLabel(SEASON_ONE).isPresent(),
                 SEASON_ONE + " " + "Title is not displayed");
@@ -763,14 +772,13 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         sa.assertTrue(downloads.getTypeButtonContainsLabel("Play").isPresent(),
                 "Episode artwork and play button was not found");
         downloads.getStaticTextByLabel(seasonDetails.getEpisodeTitle()).click();
-        LOGGER.info("Description:- " +seasonDetails.getDescription().getBrief());
-        sa.assertTrue(downloads.getEpisodeDescription("1", "1")
+        sa.assertTrue(downloads.getEpisodeDescription(seasonOne, episodeOne)
                         .getText().equals(seasonDetails.getDescription().getFull()),
                 "Episode description detail was not found after episode expanded");
-        //Validate total number of downloaded episodes is correct
+        //Validate total number of downloaded episodes
         downloads.getBackArrow().click();
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_DID_NOT_OPEN);
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(downloads.getStaticTextByLabelContains("13 Episodes").getBy()),
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(downloads.getStaticTextByLabelContains(episodesInSeason).getBy()),
                 THREE_HUNDRED_SEC_TIMEOUT);
         sa.assertAll();
     }
