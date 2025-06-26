@@ -723,11 +723,16 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         String episodeOne = "1";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-
+        
         ExploreContent seriesApiContent = getSeriesApi(
                 R.TESTDATA.get("disney_prod_hulu_series_mid-century_modern_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        Visuals seasonDetails;
+        try {
+            seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        } catch (Exception e) {
+            throw new SkipException("Skipping Test, Season Details not found" + e.getMessage());
+        }
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
