@@ -419,9 +419,8 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         String leagues = "Leagues";
 
-//        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-//        setAppToHomeScreen(getUnifiedAccount());
-        setAppToHomeScreenHardCoded("cristina.solmaz+prem9@disneyplustesting.com");
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
@@ -832,8 +831,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         int swipeCount = 10;
 
-//        setAppToHomeScreen(getUnifiedAccount());
-        setAppToHomeScreenHardCoded("cristina.solmaz+prem9@disneyplustesting.com");
+        setAppToHomeScreen(getUnifiedAccount());
         swipe(homePage.getBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.DISNEY)));
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
 
