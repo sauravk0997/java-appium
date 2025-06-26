@@ -1780,6 +1780,53 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "SharePlay is not toggled ON");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75782"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, LATAM})
+    public void verifyDemographicTargetingToggleForLATAM() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
+
+        // Validate Privacy & Data subsection and Demographic Targeting toggle elements are visible
+        swipe(editProfilePage.getDemographicTargetingToggleCell(), Direction.UP, 10, 500);
+        Assert.assertTrue(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(),
+                "'Privacy & Data' subsection title is not present");
+        Assert.assertTrue(editProfilePage.getDemographicTargetingToggleTitle().isPresent(),
+                "Demographic Targeting toggle title is not present");
+        Assert.assertTrue(editProfilePage.getDemographicTargetingToggleSubCopy().isPresent(),
+                "Demographic Targeting toggle sub copy is not present");
+
+        // Validate Demographic Targeting toggle is Opted In by default
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()),
+                "Demographic Targeting toggle is not 'ON' by default");
+
+        // Validate user can Opt Out and Opt In again to Demographic Targeting
+        editProfilePage.tapDemographicTargetingToggle();
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_OFF.getText()),
+                "Demographic Targeting toggle is not set to 'OFF'");
+        editProfilePage.tapDemographicTargetingToggle();
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()),
+                "Demographic Targeting toggle is not set to 'ON'");
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
