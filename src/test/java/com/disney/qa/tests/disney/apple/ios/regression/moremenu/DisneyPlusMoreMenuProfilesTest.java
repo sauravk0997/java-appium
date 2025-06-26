@@ -1827,6 +1827,30 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Demographic Targeting toggle is not set to 'ON'");
     }
 
+    //Below TC failing currently due to bug https://jira.disney.com/browse/IOS-16468
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81856"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyWhosWatchingForOnlineProfileWithNoPin() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(getUnifiedAccount())
+                        .profileName(SECONDARY_PROFILE)
+                        .dateOfBirth(ADULT_DOB)
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId(RAYA)
+                        .kidsModeEnabled(false)
+                        .isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoseWatching.clickProfile(DEFAULT_PROFILE);
+        homePage.waitForHomePageToOpen();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 

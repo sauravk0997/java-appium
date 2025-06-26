@@ -25,7 +25,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 import static com.disney.qa.api.disney.DisneyEntityIds.*;
 import static com.disney.qa.common.DisneyAbstractPage.*;
-import static com.disney.qa.common.constant.CollectionConstant.Collection.STUDIOS_AND_NETWORKS;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
@@ -867,6 +867,46 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         sa.assertTrue(homePage.getNetworkLogoImage(network).isPresent(THREE_SEC_TIMEOUT),
                 "Network image not displayed");
 
+        sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77320"})
+    @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDisneyChannelsForBasicUser() {
+        int swipeCount = 10;
+        int duration = 900;
+        SoftAssert sa = new SoftAssert();
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        //Verify ABC News channel
+        ExtendedWebElement abcNewsContainer = homePage.getCollection(ABC_NEWS);
+        swipePageTillElementTappable(abcNewsContainer, swipeCount, null, Direction.UP, duration);
+        sa.assertTrue(abcNewsContainer.isPresent(), "ABC News channel is not displayed for Basic user");
+
+        //Go to top of the page
+        homePage.clickHomeIcon();
+
+        //Verify Disney Playtime channel
+        ExtendedWebElement disneyPlaytimeContainer = homePage.getCollection(DISNEY_PLAYTIME);
+        swipePageTillElementTappable(disneyPlaytimeContainer, swipeCount, null, Direction.UP, duration);
+        sa.assertTrue(disneyPlaytimeContainer.isPresent(), "Disney Playtime channel is not displayed for Basic user");
+
+        //Go to top of the page
+        homePage.clickHomeIcon();
+
+        //Swipe till the bottom of the home page and ensure STREAMS_NON_STOP_PLAYLISTS collection is not displayed
+        ExtendedWebElement nonStopPlaylistCollection = homePage.getCollection(CollectionConstant.getCollectionName(STREAMS_NON_STOP_PLAYLISTS));
+        ArrayList<Container> disneyAPIPage = getDisneyAPIPage(HOME_PAGE.getEntityId());
+        ExtendedWebElement lastCollection = homePage.getCollection(disneyAPIPage.get(disneyAPIPage.size()-1).getId());
+        while (!lastCollection.isPresent(ONE_SEC_TIMEOUT)) {
+            Assert.assertFalse(nonStopPlaylistCollection.isPresent(ONE_SEC_TIMEOUT),
+                    "'Streams: Non-Stop Playlists' collection is displayed");
+            swipeUp(duration);
+        }
         sa.assertAll();
     }
 
