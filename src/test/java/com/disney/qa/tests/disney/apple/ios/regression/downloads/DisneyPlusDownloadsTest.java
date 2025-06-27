@@ -782,8 +782,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         //Validate total number of downloaded episodes
         downloads.getBackArrow().click();
         Assert.assertTrue(downloads.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(downloads.getStaticTextByLabelContains(episodesInSeason).getBy()),
-                THREE_HUNDRED_SEC_TIMEOUT);
+        sa.assertTrue(waitUntil(ExpectedConditions.visibilityOfElementLocated(downloads.getStaticTextByLabelContains(episodesInSeason).getBy()),
+                THREE_HUNDRED_SEC_TIMEOUT));
+
         sa.assertAll();
     }
 
@@ -804,7 +805,12 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         ExploreContent seriesApiContent = getSeriesApi(
                 R.TESTDATA.get("disney_prod_hulu_series_mid_century_modern_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
-        Visuals seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        Visuals seasonDetails;
+        try {
+            seasonDetails = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+        } catch(Exception e){
+            throw new SkipException("Skipping Test, Season Details not found" + e.getMessage());
+        }
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
