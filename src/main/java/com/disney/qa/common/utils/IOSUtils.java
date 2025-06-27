@@ -5,8 +5,6 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.messager.Messager;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.IDriverPool;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
 import io.appium.java_client.AppiumBy;
@@ -639,7 +637,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         pickers.get(0).sendKeys(month);
         pickers.get(1).sendKeys(day);
         pickers.get(2).sendKeys(year);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     /**

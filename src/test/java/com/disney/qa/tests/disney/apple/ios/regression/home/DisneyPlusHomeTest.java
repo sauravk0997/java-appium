@@ -87,7 +87,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67377"})
     @Test(groups = {TestGroup.HOME, TestGroup.PRE_CONFIGURATION, US})
     public void verifyRecommendedForYouContainer() {
-        int limit = 20;
+        int limit = 30;
         int verticalSwipeCount = 5;
         int horizontalSwipeCount = 30;
         int swipeDuration = 100;
