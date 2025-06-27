@@ -86,16 +86,6 @@ public class DisneyPlusAppleTVBaseTest extends DisneyBaseTest {
         }
     }
 
-    public void addHoraValidationSku(UnifiedAccount accountToEntitle) {
-        if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
-            try {
-                getUnifiedSubscriptionApi().addEntitlementBySku(accountToEntitle, DisneySkuParameters.DISNEY_HORA_VALIDATION, "V2");
-            } catch (URISyntaxException | MalformedURLException | InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     public void installJarvis() {
         super.installJarvis();
     }
