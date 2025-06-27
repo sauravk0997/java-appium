@@ -283,12 +283,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         TEST_FAIRY_APP_VERSION.set(appVersion);
     }
 
-    @BeforeSuite(alwaysRun = true)
-    public void disableZebrunnerReporting() {
-        LOGGER.warn("Disabling Zebrunner Reporting...");
-        System.setProperty("reporting.enabled", "false");
-    }
-
     @BeforeMethod(alwaysRun = true)
     public final void overrideLocaleConfig(ITestResult result) {
         List<String> groups = Arrays.asList(result.getMethod().getGroups());
