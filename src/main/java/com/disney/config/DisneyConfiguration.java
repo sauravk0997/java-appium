@@ -25,8 +25,6 @@ public final class DisneyConfiguration extends Configuration {
 
         USE_MULTIVERSE("useMultiverse"),
 
-        ENABLE_HORA_VALIDATION("enable_hora_validation"),
-
         ENABLE_ONE_TRUST_CONFIG("enableOneTrustConfig"),
 
         SAGEMAKER_ENDPOINT("sagemaker_endpoint"),
