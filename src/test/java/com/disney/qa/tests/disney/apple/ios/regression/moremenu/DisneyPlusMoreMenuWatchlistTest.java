@@ -34,7 +34,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page did not open";
 
     public void onboard() {
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})

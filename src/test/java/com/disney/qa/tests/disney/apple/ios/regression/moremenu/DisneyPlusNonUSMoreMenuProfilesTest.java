@@ -56,7 +56,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         .isStarOnboarded(true)
                         .build()));
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         if (homePage.isTravelAlertTitlePresent()) {
@@ -106,7 +106,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         JP,
                         getLocalizationUtils().getUserLanguage())));
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
 
         moreMenu.clickMoreTab();
@@ -155,7 +155,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         handleAlert();
         whoIsWatching.clickEditProfile();
@@ -192,7 +192,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         getLocalizationUtils().getUserLanguage())));
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
         moreMenu.clickMoreTab();
         whoseWatchingPage.clickAddProfile();

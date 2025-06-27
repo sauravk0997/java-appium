@@ -51,7 +51,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         initialSetup();
         handleAlert();
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
