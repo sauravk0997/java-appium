@@ -267,7 +267,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String highestRating = ratingSystemValues.get(ratingSystemValues.size() - 1).replace("+", ", ");
         String defaultRating = ratingSystemValues.get(ratingSystemValues.size() - 3).replace("+", ", ");
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoseWatching.clickAddProfile();
 
@@ -325,7 +325,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                         .isStarOnboarded(true).build())
         );
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoseWatching.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
@@ -360,7 +360,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String contentMaturityRating = getUnifiedAccount().getProfile(SECONDARY_PROFILE).getAttributes()
                 .getParentalControls().getMaturityRating().getContentMaturityRating();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
@@ -649,7 +649,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } catch (Exception e) {
             throw new SkipException("Failed to update Profile pin: {}", e);
         }
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Verify pin protected profile
         whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
