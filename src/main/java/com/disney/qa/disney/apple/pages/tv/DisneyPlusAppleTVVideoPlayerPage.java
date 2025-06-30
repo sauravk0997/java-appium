@@ -121,13 +121,6 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
         return dynamicBtnFindByLabel.format(broadcastMenuButton);
     }
 
-    public void clickBroadcastMenu() {
-        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        ExtendedWebElement broadcastMenu = getBroadcastMenu();
-        commonPage.clickDown(1);
-        broadcastMenu.click();
-    }
-
     @Override
     public boolean isFeedOptionSelected(String feedOption) {
         return feedOptionCheckmark.format(feedOption).getAttribute(Attributes.VALUE.getAttribute()).equals("1");
