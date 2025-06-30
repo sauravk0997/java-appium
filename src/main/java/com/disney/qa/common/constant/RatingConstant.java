@@ -21,6 +21,8 @@ public class RatingConstant {
     public static final String GUATEMALA = "GT";
     public static final String HAITI = "HT";
     public static final String HONDURAS = "HN";
+    public static final String HONGKONG = "HK";
+    public static final String ITALY = "IT";
     public static final String JAPAN = "JP";
     public static final String KOREA = "KR";
     public static final String MARSHALL_ISLANDS = "MH";
@@ -34,6 +36,7 @@ public class RatingConstant {
     public static final String PANAMA = "PA";
     public static final String PARAGUAY = "PY";
     public static final String PERU = "PE";
+    public static final String POLAND = "PL";
     public static final String PUERTO_RICO = "PR";
     public static final String REUNION = "RE";
     public static final String SINGAPORE = "SG";
