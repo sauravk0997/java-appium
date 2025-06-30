@@ -348,7 +348,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEAOrCanadaCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(REST_OF_WORLD)) {
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getRestOfWorld(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getRestOfWorldCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
@@ -727,7 +727,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
-    private String getRestOfWorld() {
+    private String getRestOfWorldCountryCode() {
         List<String> countryCodeList = Arrays.asList(KOREA, JAPAN, HONGKONG, TURKEY, GERMANY, UNITED_KINGDOM, ITALY,
                 SPAIN, POLAND, NETHERLANDS, AUSTRALIA, NEW_ZEALAND);
         LOGGER.info("Selecting random Country code");
