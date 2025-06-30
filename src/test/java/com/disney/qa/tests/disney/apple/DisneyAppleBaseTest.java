@@ -82,6 +82,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String BUNDLE_PREMIUM = "Yearly";
     public static final String SUBSCRIPTION_V2 = "V2";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
+    public static final String ANZ = "ANZ";
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
@@ -294,6 +295,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(AU)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AU, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(ANZ)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getANZCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(BR)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), BR, true);
@@ -719,6 +723,12 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     private String getEMEAOrCanadaCountryCode() {
         List<String> countryCodeList = Arrays.asList(FRANCE, SPAIN, SWEDEN, CA);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getANZCountryCode() {
+        List<String> countryCodeList = Arrays.asList(AU, NZ);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
