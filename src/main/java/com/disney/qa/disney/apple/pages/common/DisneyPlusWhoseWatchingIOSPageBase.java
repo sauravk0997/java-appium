@@ -2,8 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -42,7 +40,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     @Override
     public boolean isOpened() {
         boolean isPresent = whosWatchingTitle.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -55,7 +52,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isHeaderTextDisplayed() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return whosWatchingTitle.isPresent();
     }
 
@@ -64,7 +60,6 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isAddProfileBtnPresent() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return addProfile.isElementPresent();
     }
 
@@ -117,19 +112,8 @@ public class DisneyPlusWhoseWatchingIOSPageBase extends DisneyPlusApplePageBase 
     }
 
     public boolean isAccessModeProfileIconPresent(String username) {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return dynamicAccessProfileIcon.format(
-                        getLocalizationUtils().formatPlaceholderString(
-                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username)))
-                .isPresent();
-    }
-
-    public void waitForProfileButton(String username) {
-        LOGGER.info("Waiting for loading of profile button");
-        fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "Profile button is not present")
-                .until(it -> dynamicAccessProfileIcon.format(
-                        getLocalizationUtils().formatPlaceholderString(
-                                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isElementPresent());
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
+        return dynamicAccessProfileIcon.format(getLocalizationUtils().formatPlaceholderString(
+                getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON,
+                        DictionaryKeys.ACCESS_PROFILE.getText()), Map.of(USER_PROFILE, username))).isPresent();
     }
 }

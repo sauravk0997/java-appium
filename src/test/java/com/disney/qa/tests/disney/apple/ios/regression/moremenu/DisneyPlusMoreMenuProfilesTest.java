@@ -751,47 +751,59 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66809"})
-    @Test(description = "Profiles - Edit Profile - Saving an empty Name Error", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileSavingEmptyNameError() {
+        String emptyProfileNameError = "Empty profile name error is not displayed";
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getFirstName());
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         editProfile.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfile.enterProfileName("");
         editProfile.clickDoneBtn();
-        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), "Empty profile name error is not displayed");
-        //Keys.SPACE is not working as expected
+        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), emptyProfileNameError);
         editProfile.enterProfileName("     ");
         editProfile.clickDoneBtn();
-        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), "Empty profile name error is not displayed");
+        sa.assertTrue(editProfile.isEmptyProfileNameErrorDisplayed(), emptyProfileNameError);
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        editProfile.clickMoreTab();
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE), "Existing profile name is not displayed");
         sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-66780"})
-    @Test(description = "Edit Profile - All Characters allowed for Profile name", groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyEditProfileAllCharacters() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+
         setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.clickMoreTab();
-        whoIsWatching.clickEditProfile();
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
+        Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         String allCharacters = "\ud83d\ude3b!@\u24E912\uD83D\uDC9A3WA\ud83d\ude06"; //u codes left to right: cat heart emoji, z circle symbol, green heart emoji, laughing emoji
         editProfile.enterProfileName(allCharacters);
         editProfile.clickDoneBtn();
-        sa.assertTrue(homePage.isOpened(), "After clicking 'Done' to save new profile name, not returned to Home.");
+        Assert.assertTrue(homePage.isOpened(), "After clicking 'Done' to save new profile name, not returned to Home");
 
         homePage.clickMoreTab();
-        moreMenu.isOpened();
-        sa.assertTrue(moreMenu.getProfileCell(allCharacters, false).isPresent(), allCharacters + " profile name was not found.");
+        Assert.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
+        sa.assertTrue(moreMenu.isProfileSwitchDisplayed(allCharacters), allCharacters + " profile name was not found");
         sa.assertAll();
     }
 
@@ -1766,6 +1778,77 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfilePage.isSharePlayEnabled(), "SharePlay option is not enabled");
         Assert.assertEquals(editProfilePage.getSharePlayToggleCell().getText(), toggleON,
                 "SharePlay is not toggled ON");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75782"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, LATAM})
+    public void verifyDemographicTargetingToggleForLATAM() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
+
+        // Validate Privacy & Data subsection and Demographic Targeting toggle elements are visible
+        swipe(editProfilePage.getDemographicTargetingToggleCell(), Direction.UP, 10, 500);
+        Assert.assertTrue(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(),
+                "'Privacy & Data' subsection title is not present");
+        Assert.assertTrue(editProfilePage.getDemographicTargetingToggleTitle().isPresent(),
+                "Demographic Targeting toggle title is not present");
+        Assert.assertTrue(editProfilePage.getDemographicTargetingToggleSubCopy().isPresent(),
+                "Demographic Targeting toggle sub copy is not present");
+
+        // Validate Demographic Targeting toggle is Opted In by default
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()),
+                "Demographic Targeting toggle is not 'ON' by default");
+
+        // Validate user can Opt Out and Opt In again to Demographic Targeting
+        editProfilePage.tapDemographicTargetingToggle();
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_OFF.getText()),
+                "Demographic Targeting toggle is not set to 'OFF'");
+        editProfilePage.tapDemographicTargetingToggle();
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()),
+                "Demographic Targeting toggle is not set to 'ON'");
+    }
+
+    //Below TC failing currently due to bug https://jira.disney.com/browse/IOS-16468
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81856"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyWhosWatchingForOnlineProfileWithNoPin() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(getUnifiedAccount())
+                        .profileName(SECONDARY_PROFILE)
+                        .dateOfBirth(ADULT_DOB)
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId(RAYA)
+                        .kidsModeEnabled(false)
+                        .isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoseWatching.clickProfile(DEFAULT_PROFILE);
+        homePage.waitForHomePageToOpen();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78361"})

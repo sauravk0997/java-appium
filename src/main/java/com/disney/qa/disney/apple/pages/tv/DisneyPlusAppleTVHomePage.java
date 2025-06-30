@@ -6,8 +6,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.InvalidArgumentException;
@@ -34,32 +32,11 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     @ExtendedFindBy(accessibilityId = "profileTab")
     private ExtendedWebElement profileBtnGlobalNav;
 
-    @ExtendedFindBy(accessibilityId = "homeTab")
-    private ExtendedWebElement homeButton;
-
-    @ExtendedFindBy(accessibilityId = "homeContentView")
-    private ExtendedWebElement homeContentView;
-
     @ExtendedFindBy(accessibilityId = "watchlistCell")
     private ExtendedWebElement watchlistButton;
 
-    @ExtendedFindBy(accessibilityId = "%s")
-    private ExtendedWebElement plate;
-
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access %s's profile\"`]")
     private ExtendedWebElement profileSelectionBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"Access %s's pin protected profile\"`]")
-    private ExtendedWebElement lockedProfileSelectionBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeStaticText[`name == 'Explore'`]")
-    private ExtendedWebElement exploreText;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`name == 'Movies'`]")
-    private ExtendedWebElement moviesBtn;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[label == \"%s\"][1]")
-    private ExtendedWebElement asset;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label CONTAINS \"Disney\"`]")
     private ExtendedWebElement disneyBrandTile;
@@ -73,8 +50,6 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     //When QAE-124 is fixed remove this element and related method
     @FindBy(xpath = "//XCUIElementTypeWindow/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeCollectionView/XCUIElementTypeCell[1]/XCUIElementTypeOther/XCUIElementTypeCollectionView/XCUIElementTypeCell[2]")
     private ExtendedWebElement carouselFocusedElement;
-
-    private ExtendedWebElement travelingAlertOkBtn = getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.PCON, DictionaryKeys.BTN_TRAVEL_MESSAGE_OK.getText()));
 
     public DisneyPlusAppleTVHomePage(WebDriver driver) {
         super(driver);
@@ -97,10 +72,6 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         return getTypeCellNameContains("Disney Junior").isElementPresent();
     }
 
-    public void clickHomeBtn() {
-        homeButton.click();
-    }
-
     public void clickNavMenuSettings() { navMenuSettings.click(); }
 
     public DisneyPlusAppleTVWatchListPage clickWatchlistButton() {
@@ -108,38 +79,8 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         return new DisneyPlusAppleTVWatchListPage(getDriver());
     }
 
-    public boolean isPlatePresent(String plateName) {
-        return plate.format(plateName).isPresent(10);
-    }
-
-    public boolean isHomeBtnPresent() {
-        return homeButton.isPresent();
-    }
-
-    public boolean isExploreTextPresent() {
-        return exploreText.isPresent();
-    }
-
-    private boolean isTravelingAlertPresent() {
-        return viewAlert.isElementPresent();
-    }
-
-    public void dismissTravelingAlert() {
-        if (isTravelingAlertPresent()) {
-            travelingAlertOkBtn.click();
-        }
-    }
-
-    public void clickMoviesBtn() {
-        moviesBtn.click();
-    }
-
     public void clickProfileBtn(String profileName) {
         profileSelectionBtn.format(profileName).click();
-    }
-
-    public void clickLockedProfileBtn(String profileName) {
-        lockedProfileSelectionBtn.format(profileName).click();
     }
 
     public String whichGlobalNavMenuIsFocused() {
@@ -170,7 +111,6 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         } else {
             moveDown(Math.abs(timeToMove), 1);
         }
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         whichGlobalNavMenuIsFocused();
     }
 
@@ -248,12 +188,10 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     }
 
     public boolean isProfileBtnFocused() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isFocused(profileBtnGlobalNav);
     }
 
     public boolean isProfileBtnPresent() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return profileBtnGlobalNav.isElementPresent();
     }
 
@@ -266,15 +204,8 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         return dynamicBtnFindByLabelContains.format(name).isElementPresent();
     }
 
-    public void moveDownFromHeroTileToBrandTile() {
+    public void moveDownFromHeroTile() {
         moveDown(1, 1);
-    }
-
-    public void openAnyContentOnInnerPages(int times, int timeout) {
-        pause(timeout);
-        moveDown(times, timeout);
-        clickSelect();
-        pause(timeout);
     }
 
     public void hiddenNavStateOnInnerPages(String globalNavMenu) {
@@ -291,43 +222,12 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     public void openGlobalNavAndSelectOneMenu(String menu) {
         clickMenuTimes(1,1);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         navigateToOneGlobalNavMenu(menu);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickSelect();
         //Sometimes global nav is not dismissed, to accommodate when clicking select does not work first time
         if (new DisneyPlusApplePageBase(getDriver()).isGlobalNavExpanded()) {
             clickSelect();
         }
-    }
-
-    public DisneyPlusAppleTVHomePage checkIfElementAttributeFound(ExtendedWebElement element, String name) {
-        try {
-            LOGGER.info("Looking for {}'s {} attribute", element, name);
-            fluentWaitNoMessage(getDriver(), 250, 25).until(it -> doesAttributeEqualTrue(element, name));
-        } catch (Exception e) {
-            throw new SkipException(element + "'s " + name + " attribute not found");
-        }
-        return new DisneyPlusAppleTVHomePage(getDriver());
-    }
-
-    public boolean isCurrentCarouselAnthology(String label) {
-        return doesAttributeEqualTrue(getStaticTextByLabel(label), "enabled");
-    }
-
-    public void clickAnthologyCarousel(String label) {
-        //Sometimes current carousel slide is not still in focus, this function handles this issue
-        if (!isCurrentCarouselAnthology(label)) {
-            clickSelect();
-        } else {
-            moveLeft(1,1);
-            isCurrentCarouselAnthology(label);
-            clickSelect();
-        }
-    }
-
-    public boolean isHomeContentViewPresent() {
-        return homeContentView.isElementPresent();
     }
 
     public boolean isCarouselFocused() {

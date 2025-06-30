@@ -29,9 +29,6 @@ public class DisneyPlusLiveEventModalIOSPageBase extends DisneyPlusApplePageBase
     @ExtendedFindBy(accessibilityId = "subtitleLabel")
     private ExtendedWebElement subtitleLabel;
 
-    @ExtendedFindBy(accessibilityId = "thumbnailImageView")
-    private ExtendedWebElement thumbnailImageView;
-
     @Override
     public boolean isOpened() {
         return watchLiveButton.isElementPresent();

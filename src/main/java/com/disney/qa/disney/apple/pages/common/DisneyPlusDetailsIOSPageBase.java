@@ -7,8 +7,6 @@ import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
@@ -123,8 +121,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement secondTitleLabel;
     @ExtendedFindBy(accessibilityId = "titleLabel_%s")
     private ExtendedWebElement episodeTitleLabel;
-    @ExtendedFindBy(accessibilityId = "infoInactive24")
-    private ExtendedWebElement infoView;
     @FindBy(id = "itemPickerClose")
     private ExtendedWebElement itemPickerClose;
     @FindBy(id = "seasonSelectorButton")
@@ -205,6 +201,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain =
             "**/XCUIElementTypeStaticText[`label =[c] 'This title is available with a ESPN+ subscription.'`]")
     private ExtendedWebElement espnPlusGenericErrorText;
+
+    @ExtendedFindBy(accessibilityId = "badgeTextCircle")
+    private ExtendedWebElement badgeTextCircle;
 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[`name BEGINSWITH " +
             "'content'`]/**/XCUIElementTypeStaticText[`name != 'promoLabel'`][1]")
@@ -313,6 +312,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isContinueButtonPresent() {
         return getContinueButton().isPresent();
+    }
+
+    public boolean isBadgeTextCirclePresent() {
+        return badgeTextCircle.isPresent();
     }
 
     public DisneyPlusHomeIOSPageBase clickCloseButton() {
@@ -442,14 +445,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return downloadSeasonButton;
     }
 
-    public void clickSeasonsButton(String season) {
-        if (!isSeasonButtonDisplayed(season)) {
-            scrollDown();
-        }
-        String seasonsButton = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
-        getDynamicAccessibilityId(seasonsButton).click();
-    }
-
     public void clickExtrasTab() {
         if (!extrasTab.isPresent()) {
             swipePageTillElementTappable(extrasTab, 1, contentDetailsPage, Direction.UP, 900);
@@ -476,19 +471,16 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public boolean isAlertTitleDisplayed() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return getStaticTextByLabel(getMediaTitle()).format().isElementPresent(FIVE_SEC_TIMEOUT);
     }
 
     public boolean isTwentyDownloadsTextDisplayed() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String twentyDownloadsText = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.DOWNLOADS_SEASON_EPISODES_BATCH.getText()), Map.of("E", Integer.parseInt("20")));
         return getDynamicAccessibilityId(twentyDownloadsText).isElementPresent();
     }
 
     public boolean isSeasonButtonDisplayed(String season) {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         String seasonsButton = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.BTN_SEASON_NUMBER.getText()), Map.of(SEASON_NUMBER, season));
         return getDynamicAccessibilityId(seasonsButton).isElementPresent();
     }
@@ -657,26 +649,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         String[] detailsTabParts = element.getText().split(",");
         LOGGER.info("Verifying metadata {} is same as details tab {}", metadataLabelParts[metadataPart], detailsTabParts[detailsTabPart]);
         return detailsTabParts[detailsTabPart].contains(params.get("metadataLabelPart").trim());
-    }
-
-    public boolean compareEpisodeNum() {
-        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.UP, 2000);
-        LOGGER.info("Retrieving current episode number..");
-        String currentEpisodeNum = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
-        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.DOWN, 2000);
-        clickWatchButton();
-        videoPlayer.waitForVideoToStart();
-        videoPlayer.waitForContentToEnd(450, 15);
-        if (videoPlayer.isOpened()) {
-            videoPlayer.clickBackButton();
-        }
-        isOpened();
-        swipePageTillElementPresent(getDynamicXpathContainsName(titleLabel.toString()), 1, contentDetailsPage, Direction.UP, 2000);
-        LOGGER.info("Retrieving recently played episode number..");
-        String recentlyPlayedEpisode = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
-        LOGGER.info("Comparing current episode number with recently played episode number..");
-        return currentEpisodeNum.contains(recentlyPlayedEpisode);
     }
 
     public boolean isWatchButtonPresent() {
@@ -858,20 +830,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return seasonSelector[1];
     }
 
-    /**
-     * Below are QA env specific methods for DWTS Anthology.
-     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
-     */
-
-    public DisneyPlusVideoPlayerIOSPageBase clickQAWatchButton() {
-        if (getTypeButtonByName(WATCH).isPresent()) {
-            getTypeButtonByName(WATCH).click();
-        } else {
-            getTypeButtonByName(LOWER_CASE_WATCH).click();
-        }
-        return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-    }
-
     public boolean isContentDetailsPagePresent() {
         return getTypeOtherByName("contentDetailsPage").isPresent();
     }
@@ -1016,6 +974,10 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         fluentWait(getDriver(), timeOut, polling, "'Stop the offline download for this title' remained present.")
                 .until(it -> !stopOfflineDownload.isPresent());
         LOGGER.info(DOWNLOAD_COMPLETED);
+    }
+
+    public boolean isStopOfflineDownloadPresent() {
+        return stopOfflineDownload.isPresent();
     }
 
     /**

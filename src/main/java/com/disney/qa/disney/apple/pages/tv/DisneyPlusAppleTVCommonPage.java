@@ -23,13 +23,6 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
         super(driver);
     }
 
-    public String getDisplayedDurationFromMS(int timeInMs) {
-        long hour = Math.floorDiv(timeInMs, 3_600_000);
-        long min = Math.round((timeInMs % 3_600_000.0) / 60_000.0);
-        if (hour == 0) return min + "m";
-        return hour + "h " + min + "m";
-    }
-
     public static boolean isProd() {
         return DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()).equalsIgnoreCase("prod");
     }
@@ -91,30 +84,12 @@ public class DisneyPlusAppleTVCommonPage extends DisneyPlusApplePageBase {
         pressButtonForDuration(RemoteControlKeyword.DOWN, duration);
     }
 
-    public void clickMenu(int duration) {
-        pressButtonForDuration(RemoteControlKeyword.MENU, duration);
-    }
-
-    public void clickPlay(int duration) {
-        pressButtonForDuration(RemoteControlKeyword.PLAY, duration);
-    }
-
     public void clickSelect(int duration) {
         pressButtonForDuration(RemoteControlKeyword.SELECT, duration);
     }
 
     public void goRightTillLocalizedEndPageAppears(int attempts, int duration, int pauseNum, ExtendedWebElement element) {
         while (!element.isElementPresent() && attempts > 0) {
-            LOGGER.info("click Right for duration {} ", duration);
-            clickRight(duration);
-            LOGGER.info("pause for {} seconds since player is not respecting duration..", pauseNum);
-            pause(pauseNum);
-            attempts--;
-        }
-    }
-
-    public void goRightOnPlayerForDuration(int attempts, int duration, int pauseNum) {
-        while (attempts > 0) {
             LOGGER.info("click Right for duration {} ", duration);
             clickRight(duration);
             LOGGER.info("pause for {} seconds since player is not respecting duration..", pauseNum);

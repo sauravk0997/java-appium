@@ -4,8 +4,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusDetailsIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -48,7 +46,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = DisneyPlusAppleTVCommonPage.isProd() ? logoImage.isElementPresent() : playButton.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -60,10 +57,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     public boolean isBriefDescriptionPresent(String text) {
         ExtendedWebElement briefDesc = getDynamicAccessibilityId(text);
         return briefDesc.isElementPresent() && briefDesc.getText().chars().count() <= 120;
-    }
-
-    public boolean isAnthologyTitlePresent() {
-        return getStaticTextByLabel("Dancing with the Stars").isElementPresent();
     }
 
     @Override
@@ -102,25 +95,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     }
 
     @Override
-    public boolean compareEpisodeNum() {
-        DisneyPlusAppleTVVideoPlayerPage videoPlayerPage = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        isOpened();
-        moveDown(2,1);
-        String currentEpisodeNum = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
-        moveUp(2,2);
-        clickWatchButton();
-        new DisneyPlusAppleTVLiveEventModalPage(getDriver()).clickWatchLiveButton();
-        videoPlayerPage.waitForVideoToStart();
-        videoPlayerPage.waitForTvosContentToEnd(350, 20); //Enters playback ~5 min till end
-        clickMenuTimes(1,1);
-        isOpened();
-        moveDown(2,1);
-        String recentlyPlayedEpisode = getParsedString(getDynamicXpathContainsName(titleLabel.toString()), "0", ". ");
-        return currentEpisodeNum.contains(recentlyPlayedEpisode);
+    public boolean isHeroImagePresent() {
+        return heroImage.isPresent();
     }
-
-    @Override
-    public boolean isHeroImagePresent() {return heroImage.isPresent(); }
 
     public ExtendedWebElement getMetadataLabel() {
         return getStaticTextLabelName("metaDataLabel");
@@ -188,22 +165,6 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     @Override
     public List<String> getTabCells() {
         return getContentItems(0);
-    }
-
-    /**
-     * Below are QA env specific methods for DWTS Anthology.
-     * To be deprecated when DWTS Test Streams no longer available on QA env (QAA-12244).
-     */
-    private static final String WATCH = "WATCH";
-
-    @Override
-    public DisneyPlusAppleTVVideoPlayerPage clickQAWatchButton() {
-        if (getTypeButtonByName(WATCH).isPresent()) {
-            getTypeButtonByName(WATCH).click();
-        } else {
-            getTypeButtonByName("watch").click();
-        }
-        return new DisneyPlusAppleTVVideoPlayerPage(getDriver());
     }
 
     @Override

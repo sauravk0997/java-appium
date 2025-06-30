@@ -5,21 +5,12 @@ import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.utils.messager.Messager;
 import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.IDriverPool;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.helper.IPageActionsHelper;
 import io.appium.java_client.AppiumBy;
-import io.appium.java_client.PerformsTouchActions;
-import io.appium.java_client.SupportsLegacyAppManagement;
-import io.appium.java_client.TouchAction;
-import io.appium.java_client.touch.WaitOptions;
-import io.appium.java_client.touch.offset.PointOption;
 import lombok.Getter;
 import org.openqa.selenium.*;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.interactions.*;
-import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -45,8 +36,6 @@ import static org.openqa.selenium.interactions.PointerInput.MouseButton.LEFT;
 public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageActionsHelper {
     Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String DIRECTION = "direction";
-    String ELEMENT = "element";
-    String DURATION = "duration";
     String BUNDLE_ID = "bundleId";
     String ACTION = "action";
     String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
@@ -236,28 +225,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     /**
      * Press screen using coordinates
      *
-     * @param x x-coordinate
-     * @param y y-coordinate
-     */
-    default void press(int x, int y) {
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
-        touchAction.press(new PointOption<>().withCoordinates(x, y)).release().perform();
-    }
-
-    /**
-     * Long Press screen using coordinates
-     *
-     * @param x x-coordinate
-     * @param y y-coordinate
-     */
-    default void longPress(int x, int y) {
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
-        touchAction.longPress(new PointOption<>().withCoordinates(x, y)).release().perform();
-    }
-
-    /**
-     * Press screen using coordinates
-     *
      * @param x (distance (in integer) from left of screen to element)
      * @param y (distance (in integer) from top of screen to element)
      */
@@ -266,44 +233,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         int a = scrSize.width / x;
         int b = scrSize.height / y;
         tap(a, b, 2);
-    }
-
-    /**
-     * Press screen using coordinates
-     *
-     * @param x (distance (in double) from left of screen to element)
-     * @param y (distance (in double) from top of screen to element)
-     */
-    default void screenPress(Double x, Double y) {
-        Dimension scrSize = getDriver().manage().window().getSize();
-        int a = (int) (scrSize.width / x);
-        int b = (int) (scrSize.height / y);
-        TouchAction<? extends TouchAction> touchAction = new TouchAction<>((PerformsTouchActions) getDriver());
-        IOS_UTILS_LOGGER.info("Tapping on co-ordinates: [{}, {}]", a, b);
-        touchAction.press(new PointOption<>().withCoordinates(a, b)).release().perform();
-    }
-
-    /**
-     * Long press and hold on element for the given seconds
-     *
-     * @param element long press will be performed on this element
-     * @param seconds long press will happen for this time duration (in double)
-     */
-
-    default boolean longPressAndHoldElement(ExtendedWebElement element, long seconds) {
-        try {
-            var dimension = element.getSize();
-            Point location = element.getLocation();
-            int x = (int) Math.round(dimension.getWidth() * Double.parseDouble("." + 50));
-            int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + 50));
-            TouchAction touchActions = new TouchAction((PerformsTouchActions) getDriver());
-            touchActions.longPress(PointOption.point(location.getX() + x, location.getY() + y)).waitAction(WaitOptions.waitOptions(Duration.ofSeconds(seconds)));
-            touchActions.perform();
-            return true;
-        } catch (Exception e) {
-            IOS_UTILS_LOGGER.error("Error occurred during longPress and hold", e);
-            return false;
-        }
     }
 
     /**
@@ -396,19 +325,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
-     * Scroll down looking for iOSNsPredicateString locator
-     *
-     * @param predicateLocator
-     */
-    default void scrollUsingPredicate(String predicateLocator) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        HashMap<String, String> scrollObject = new HashMap<>();
-        IOS_UTILS_LOGGER.info("Scrolling down to predicate string: {}", predicateLocator);
-        scrollObject.put("predicateString", predicateLocator);
-        js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
-    }
-
-    /**
      * A generic scroll down once/twice
      */
     default void scrollDown() {
@@ -428,77 +344,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         IOS_UTILS_LOGGER.info("Scrolling up..");
         scrollObject.put(DIRECTION, Direction2.UP.getDirection());
         js.executeScript(Gestures.SCROLL.getGesture(), scrollObject);
-    }
-
-    /**
-     * A generic scroll down to element
-     * Parent Container must be scrollable!
-     */
-    default void scrollTo(ExtendedWebElement element) {
-        if (element.isVisible()) {
-            IOS_UTILS_LOGGER.info("Element already visible before swiping");
-        } else {
-            JavascriptExecutor js = (JavascriptExecutor) getDriver();
-            HashMap<String, Object> swipeObject = new java.util.HashMap<>();
-            IOS_UTILS_LOGGER.info("Starting to fetch ID");
-            swipeObject.put(ELEMENT, ((RemoteWebElement) getDriver().findElement(element.getBy())).getId());
-            swipeObject.put("toVisible", "scrolling till visible");
-            IOS_UTILS_LOGGER.info("Scrolling to {}, found {}", element, element.getBy());
-            js.executeScript(Gestures.SCROLL.getGesture(), swipeObject);
-            IOS_UTILS_LOGGER.info("Scroll complete");
-        }
-    }
-
-    /**
-     * Scroll for pickerwheel using predicate
-     * <p>
-     * Usage Note:
-     * order should be "next" or "previous"
-     * offset should be 0.1 or 0.15 so you don't scroll more than one item at a time
-     */
-    default void scrollPickerWheelUsingPredicate(String order, String predicateString, double offset) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        Map<String, Object> params = new HashMap<>();
-        params.put("order", order);
-        params.put("offset", offset);
-        params.put(ELEMENT, ((RemoteWebElement) getDriver().findElement(AppiumBy.iOSNsPredicateString(predicateString))).getId());
-        try {
-            js.executeScript(Gestures.SELECT_PICKER_WHEEL_VALUE.getGesture(), params);
-        } catch (WebDriverException wde) {
-            IOS_UTILS_LOGGER.error(wde.getMessage());
-        }
-    }
-
-    /**
-     * Swipe left using co-ordinates
-     */
-    default void swipeLeft(double startx, double starty, double endx, double endy, int duration) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        HashMap<String, Object> swipeObject = new java.util.HashMap<>();
-        IOS_UTILS_LOGGER.info("Swiping from ({},{}) to ({},{})", startx, starty, endx, endy);
-        swipeObject.put("startX", startx);
-        swipeObject.put("startY", starty);
-        swipeObject.put("endX", endx);
-        swipeObject.put("endY", endy);
-        swipeObject.put(DIRECTION, Direction2.LEFT.getDirection());
-        swipeObject.put(DURATION, duration);
-        js.executeScript(Gestures.SWIPE.getGesture(), swipeObject);
-    }
-
-    /**
-     * Swipe using element
-     *
-     * @param direction
-     * @param duration
-     */
-    default void swipe(Direction2 direction, int duration, WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        HashMap<String, Object> swipeObject = new HashMap<>();
-        IOS_UTILS_LOGGER.info("Scrolling {}...", direction);
-        swipeObject.put(DIRECTION, direction.getDirection());
-        swipeObject.put(DURATION, duration);
-        swipeObject.put(ELEMENT, element);
-        js.executeScript(Gestures.SWIPE.getGesture(), swipeObject);
     }
 
     /**
@@ -531,17 +376,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         int x = (int) Math.round(dimension.getWidth() * timesW);
         int y = dimension.getHeight() - subHeight;
         tap(location.getX() + x, location.getY() + y, 0);
-    }
-
-    /**
-     * Restarts currently running app
-     *
-     * @param appName
-     */
-    default void appRestart(String appName) {
-        IOS_UTILS_LOGGER.info("Restarting {} app", appName);
-        closeApp();
-        ((SupportsLegacyAppManagement)getDriver()).launchApp();
     }
 
     /**
@@ -694,135 +528,12 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     /**
-     * Checks for pre-existing app/system alerts and takes values - 'dismiss', 'accept', 'buttonLabel'
-     *
-     * @param alertButtonCommand
-     * @deprecated - Deprecated as of Jun 17 2022. Change to handleSystemAlert.
-     */
-    @Deprecated(forRemoval = true)
-    default void handleAlert(AlertButtonCommand alertButtonCommand) {
-        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5)).ignoring(WebDriverException.class).ignoring(NoSuchSessionException.class)
-                .ignoring(TimeoutException.class);
-        try {
-            do {
-                if (wait.until(ExpectedConditions.visibilityOfElementLocated
-                        (AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed()) {
-                    JavascriptExecutor js = (JavascriptExecutor) getDriver();
-                    HashMap<String, String> buttonMap = new HashMap<>();
-                    buttonMap.put(ACTION, "getButtons");
-                    List<String> buttons = (List<String>) js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    IOS_UTILS_LOGGER.info("Buttons Present: {}", buttons);
-                    buttonMap.put(ACTION, alertButtonCommand.getCommand());
-                    if (AlertButtonCommand.ACCEPT.getCommand().equalsIgnoreCase(alertButtonCommand.getCommand())) {
-                        IOS_UTILS_LOGGER.info("Clicking '{}'", buttons.get(1));
-                    } else if (AlertButtonCommand.DISMISS.getCommand().equalsIgnoreCase(alertButtonCommand.getCommand())) {
-                        IOS_UTILS_LOGGER.info("Clicking '{}'", buttons.get(0));
-                    }
-                    js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                }
-            }
-            while (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed());
-        } catch (TimeoutException | NoAlertPresentException | NoSuchElementException e) {
-            IOS_UTILS_LOGGER.info("No pre-existing Alert present");
-            IOS_UTILS_LOGGER.debug(e.getMessage());
-        }
-    }
-
-    /**
-     * handle Alerts depending on type
-     *
-     * @param systemAlertCommand
-     * @param
-     * @param timeOutInSeconds
-     * @param maxAttempts
-     * @deprecated - Deprecated as of Jun 17 2022. Change to handleSystemAlert.
-     */
-    @Deprecated(forRemoval = true)
-    default void handleAlert(AlertButtonCommand systemAlertCommand, AlertButtonCommand locationAlertCommand, AlertButtonCommand networkAlert, int timeOutInSeconds, int maxAttempts) {
-
-        Wait<WebDriver> wait = new WebDriverWait(getDriver(), Duration.ofSeconds(timeOutInSeconds))
-                .ignoring(WebDriverException.class)
-                .ignoring(NoSuchSessionException.class)
-                .ignoring(TimeoutException.class);
-        try {
-            do {
-                if (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed()) {
-                    JavascriptExecutor js = (JavascriptExecutor) getDriver();
-                    HashMap<String, String> buttonMap = new HashMap<>();
-                    buttonMap.put(ACTION, "getButtons");
-                    List<String> buttons = (List<String>) js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    IOS_UTILS_LOGGER.info("Buttons Present: {}", buttons);
-                    interactWithButton(buttons, buttonMap, systemAlertCommand, locationAlertCommand, networkAlert, maxAttempts);
-                }
-            }
-            while (wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.iOSNsPredicateString(ALERT_PREDICATE))).isDisplayed() && maxAttempts > 0);
-        } catch (TimeoutException | NoAlertPresentException | NoSuchElementException e) {
-            IOS_UTILS_LOGGER.debug("No pre-existing Alert present", e);
-        }
-    }
-
-    /**
-     * @deprecated - Deprecated as of Jun 17 2022. Change to handleSystemAlert.
-     */
-    @Deprecated(forRemoval = true)
-    private void interactWithButton(List<String> buttonList, Map<String, String> buttonMap, AlertButtonCommand systemAlertCommand, AlertButtonCommand locationAlertCommand, AlertButtonCommand networkAlertCommand, int maxAttempts) {
-        String buttonLabel;
-        JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        if (buttonList.size() == 1) {
-            buttonMap.put(ACTION, AlertButtonCommand.ACCEPT.getCommand());
-            buttonMap.put("buttonLabel", buttonList.get(0));
-            js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-            return;
-        }
-        for (String button : buttonList) {
-            if (AlertButtonCommand.DISMISS.getCommand().equalsIgnoreCase(systemAlertCommand.getCommand())
-                    || AlertButtonCommand.DISMISS.getCommand().equalsIgnoreCase(networkAlertCommand.getCommand())) {
-                if (button.contains(AlertButton.LATER.getAlertbtn())
-                        || button.contains(AlertButton.REMIND_ME_LATER.getAlertbtn())
-                        || button.contains(AlertButton.NOT_NOW.getAlertbtn())
-                        || button.contains(AlertButton.CLOSE.getAlertbtn())
-                        || button.contains(AlertButton.OK.getAlertbtn())
-                        || button.contains(AlertButton.DONT_ALLOW.getAlertbtn())) {
-                    IOS_UTILS_LOGGER.info("System Alert found! Clicking '{}'", button);
-                    buttonLabel = button;
-                    buttonMap.put(ACTION, AlertButtonCommand.ACCEPT.getCommand());
-                    buttonMap.put("buttonLabel", buttonLabel);
-                    js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    break;
-                } else if (button.contains("Allow")) {
-                    IOS_UTILS_LOGGER.info("Location Alert found! Clicking '{}'", button);
-                    buttonMap.put(ACTION, locationAlertCommand.getCommand());
-                    js.executeScript(Gestures.ALERT.getGesture(), buttonMap);
-                    break;
-                }
-                maxAttempts--;
-            }
-        }
-    }
-
-    /**
      * Launches deeplink using driver.get()
      *
      * @param url
      */
     default void launchDeeplink(String url) {
         launchWithDeeplinkAddress(url);
-    }
-
-    class JavascriptExecutorService implements IOSUtils {
-        @SuppressWarnings("squid:S3077")
-        private static volatile JavascriptExecutor js;
-
-        public JavascriptExecutor getJavascriptExecutorInstance() {
-            if (js == null) {
-                synchronized (JavascriptExecutor.class) {
-                    if (js == null) {
-                        js = (JavascriptExecutor) getDriver();
-                    }
-                }
-            }
-            return js;
-        }
     }
 
     /**
@@ -868,7 +579,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
      * @param duration
      */
     default void swipePageTillElementTappable(ExtendedWebElement element, int swipes, ExtendedWebElement container, Direction direction, int duration) {
-        while (!element.isElementPresent(5) && swipes > 0) {
+        while (!element.isPresent(5) && swipes > 0) {
             swipeInContainer(container, direction, duration);
             swipes--;
         }
@@ -886,10 +597,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
 
     default boolean detectDevice(DeviceType.Type device) {
         return IDriverPool.currentDevice.get().getDeviceType().equals(device);
-    }
-
-    default boolean detectOrientation(ScreenOrientation orientation) {
-        return getOrientation().equals(orientation);
     }
 
     default void dismissKeyboardByClicking(int x, int y) {
@@ -930,7 +637,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         pickers.get(0).sendKeys(month);
         pickers.get(1).sendKeys(day);
         pickers.get(2).sendKeys(year);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     /**

@@ -2,7 +2,6 @@ package com.disney.qa.tests.disney.apple.ios;
 
 import java.io.*;
 import java.lang.invoke.MethodHandles;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -16,22 +15,18 @@ import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.explore.response.Set;
 import com.disney.qa.api.pojos.*;
-import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.household.pojos.*;
 import com.disney.qa.api.household.response.*;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.gmail.exceptions.GMailUtilsException;
-import com.disney.qa.hora.validationservices.HoraValidator;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.json.simple.JSONArray;
 import org.openqa.selenium.ScreenOrientation;
 import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
@@ -40,9 +35,7 @@ import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeMethod;
-import org.testng.asserts.SoftAssert;
 
-import com.disney.qa.api.utils.DisneySkuParameters;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusBrandIOSPageBase.Brand;
@@ -68,6 +61,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DEFAULT_PROFILE = "Test";
     public static final String KIDS_PROFILE = "KIDS";
     public static final String JUNIOR_PROFILE = "JUNIOR";
+    public static final String U13_PROFILE = "U13";
     public static final String SECONDARY_PROFILE = "Secondary";
     public static final String TERTIARY_PROFILE = "Tertiary";
     public static final String EXTRA_MEMBER_PROFILE = "EM";
@@ -247,13 +241,7 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
      * Dismisses system alert popups
      */
     public void handleAlert() {
-        handleAlert(IOSUtils.AlertButtonCommand.DISMISS);
-    }
-
-    @Override
-    public void handleAlert(IOSUtils.AlertButtonCommand command) {
-        LOGGER.info("Checking for system alert to {}...", command);
-        handleSystemAlert(command, 10);
+        handleSystemAlert(IOSUtils.AlertButtonCommand.DISMISS, 10);
     }
 
     public void initialSetup() {
@@ -379,14 +367,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
     }
 
-    public void checkAssertions(SoftAssert softAssert, String accountId, JSONArray checkList) {
-        if (Configuration.getRequired(DisneyConfiguration.Parameter.ENABLE_HORA_VALIDATION, Boolean.class)) {
-            HoraValidator hv = new HoraValidator(accountId);
-            hv.assertValidation(softAssert);
-            hv.checkListForPQOE(softAssert, checkList);
-        }
-    }
-
     public String buildS3BucketPath(String title, String feature) {
         String deviceName = R.CONFIG.get("capabilities.deviceName").toLowerCase().replace(' ', '_');
         if ("Tablet".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
@@ -499,21 +479,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new RuntimeException("Exception occurred..." + e);
         }
         return container;
-    }
-
-    public String getFirstContentIDForSet(String setID) {
-        ExploreSetResponse setResponse;
-        String firstContentID = null;
-        try {
-            setResponse = getExploreApi().getSet(getDisneyExploreSearchRequest()
-                    .setSetId(setID)
-                    .setUnifiedAccount(getUnifiedAccount())
-                    .setProfileId(getUnifiedAccount().getProfileId()));
-            firstContentID = setResponse.getData().getSet().getItems().get(0).getActions().get(0).getDeeplinkId();
-        } catch (IndexOutOfBoundsException | URISyntaxException e) {
-            Assert.fail(e.getMessage());
-        }
-        return firstContentID;
     }
 
     public String getApiSeriesRatingDetails(ExploreContent apiContent) {
@@ -711,22 +676,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
         terminateApp(sessionBundles.get(DISNEY));
         relaunch();
-    }
-
-    private boolean isJarvisOneTrustDisabled(DisneyPlusApplePageBase applePageBase) {
-        applePageBase.scrollToItem(JARVIS_APP_CONFIG).click();
-        applePageBase.scrollToItem(JARVIS_APP_EDIT_CONFIG).click();
-        applePageBase.scrollToItem(JARVIS_APP_PLATFORM_CONFIG).click();
-        applePageBase.scrollToItem(JARVIS_APP_ONE_TRUST_CONFIG).click();
-        applePageBase.scrollToItem(JARVIS_APP_IS_ENABLED).click();
-        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT)) {
-            LOGGER.info("oneTrustConfig is not enabled");
-            return true;
-        } else {
-            LOGGER.info("Disabling oneTrustConfig");
-            applePageBase.clickToggleView();
-            return applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_IN_USE).isPresent(SHORT_TIMEOUT);
-        }
     }
 
     public void enableJarvisSoftUpdate() {

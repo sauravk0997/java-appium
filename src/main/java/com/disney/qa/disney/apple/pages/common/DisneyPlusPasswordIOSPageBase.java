@@ -2,8 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.apache.commons.lang3.StringUtils;
@@ -87,7 +85,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isShowPasswordIconDisplayed() {
         boolean isPresent = showHidePasswordIndicator.isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent && showHidePasswordIndicator.getAttribute("label").equals("hidePasswordDisneyAuth");
     }
 
@@ -122,7 +119,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
         typePassword(userPassword);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         if (continueButton.isElementPresent()) {
             continueButton.click();
         } else {
@@ -172,11 +168,18 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
         return myDisneyLogo.isPresent();
     }
 
-    public boolean isStep2LabelDisplayed() {
-        String step2Label = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
+    public boolean isStepLabelDisplayed(String step) {
+        String stepLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
                 getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
-                        DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", "2"));
-        return getStaticTextByLabel(step2Label).isPresent();
+                        DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", step));
+        return getStaticTextByLabel(stepLabel).isPresent();
+    }
+
+    public boolean isStepLabelDisplayed() {
+        String stepLabel = getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY,
+                        DictionaryKeys.MY_DISNEY_STEPPER_TEXT.getText()), Map.of("current_step", ""));
+        return getStaticTextByLabelContains(stepLabel).isPresent();
     }
 
     public boolean isEnterYourPasswordBodyPresent(String accountEmail) {

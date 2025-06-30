@@ -504,7 +504,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
 
@@ -664,7 +664,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         updateProfilePage.clickSaveBtn();
         addProfileBannerPage.clickSecondaryButton();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        homePage.moveDownFromHeroTileToBrandTile();
+        homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
         Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
         settingsPage.moveDownUntilElementIsFocused(settingsPage.getLogOutCell(), 8);
@@ -678,5 +678,33 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(getUnifiedAccount());
         Assert.assertFalse(ednaDOBCollectionPage.getEdnaDateOfBirthDescriptionForRalph().isPresent(TEN_SEC_TIMEOUT),
                 "Edna DOB page is still being displayed");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118435"})
+    @Test(groups = {TestGroup.ONBOARDING, US})
+    public void verifyStepperInfoOnUserNameAndPasswordScreen() {
+        String one = "1";
+        String two = "2";
+        DisneyPlusAppleTVWelcomeScreenPage welcomeScreenPage = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
+        DisneyPlusAppleTVLoginPage loginPage = new DisneyPlusAppleTVLoginPage(getDriver());
+        DisneyPlusAppleTVPasswordPage passwordPage = new DisneyPlusAppleTVPasswordPage(getDriver());
+        DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage = new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+
+        selectAppleUpdateLaterAndDismissAppTracking();
+        Assert.assertTrue(welcomeScreenPage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        welcomeScreenPage.clickLogInButton();
+        Assert.assertTrue(loginPage.isOpened(), EMAIL_INPUT_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
+        Assert.assertTrue(passwordPage.isStepLabelDisplayed(one),
+                "Step 1 is not displayed on email input screen");
+
+        loginPage.proceedToPasswordScreen(getUnifiedAccount().getEmail());
+        Assert.assertTrue(oneTimePasscodePage.isOpened(), LOG_IN_SCREEN_NOT_LAUNCH_ERROR_MESSAGE);
+        Assert.assertFalse(passwordPage.isStepLabelDisplayed(),
+                "Step 2 is displayed on on OTP page");
+
+        oneTimePasscodePage.clickLoginWithPassword();
+        Assert.assertTrue(passwordPage.isOpened(), ENTER_PASSWORD_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(passwordPage.isStepLabelDisplayed(two),
+                "Step 2 is not displayed on enter password screen");
     }
 }

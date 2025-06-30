@@ -4,14 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.HasCapabilities;
 import org.openqa.selenium.OutputType;
@@ -151,62 +146,6 @@ public interface MobileUtilsExtended extends UniversalUtils, IMobileUtils {
     }
 
     /**
-     * Returns installed app version based on the filename pulled from AppCenter when the test started.
-     * Similar to getInstalledAppVersionFull() except it does not include the build number
-     * @return The app version number used in config calls and other displays (ex. 1.16.0)
-     */
-    @Deprecated
-    default String getInstalledAppVersion() {
-        String fullBuild = getInstalledAppVersionFull();
-        List<String> list = new ArrayList<>(Arrays.asList(fullBuild.split("\\.")));
-        StringBuilder sb = new StringBuilder();
-
-        for(int i=0; i<list.size()-1; i++){
-            sb.append(list.get(i));
-            if(i != list.size()-2){
-                sb.append(".");
-            }
-        }
-        return sb.toString();
-    }
-
-    /**
-     * Returns the full version number of the installed APK or IPA file, depending on if the platform
-     * is Apple based or Android based
-     * @return - The full build of the installed app version (ex. 1.16.0.12345)
-     */
-    @Deprecated
-    default String getInstalledAppVersionFull() {
-        StringBuilder sb = new StringBuilder();
-
-        String build = getDevice().getCapabilities().getCapability("app").toString();
-
-        List<String> raw = new ArrayList<>(Arrays.asList(build.split("/")));
-        var deviceType = IDriverPool.currentDevice.get().getDeviceType();
-        switch (deviceType) {
-            case APPLE_TV:
-            case IOS_PHONE:
-            case IOS_TABLET:
-                raw.removeIf(entry -> !entry.contains(".ipa"));
-                break;
-            default:
-                raw.removeIf(entry -> !entry.contains(".apk"));
-        }
-
-        String buildTrim = StringUtils.substringBefore(raw.get(0), "?");
-
-        List<String> list = new ArrayList<>(Arrays.asList(buildTrim.split("\\D+")));
-        list.removeAll(Collections.singleton(""));
-
-        for(int i=0; i<list.size()-1; i++){
-            sb.append(list.get(i)).append(".");
-        }
-        sb.append(list.get(list.size()-1));
-
-        return sb.toString();
-    }
-
-    /**
      * Clicks at a specific height/width percentage location of an element. Useful for items that are not
      * visible to the driver but are contained within a parent object.
      * @param element - The element being interacted with
@@ -232,14 +171,5 @@ public interface MobileUtilsExtended extends UniversalUtils, IMobileUtils {
             tap(location.getX() + x, location.getY() + y);
             times--;
         }
-    }
-
-    default void clickElementAtAbsoluteLocation(ExtendedWebElement element, int height, double width) {
-        var dimension = element.getSize();
-        var location = element.getLocation();
-
-        double x = (dimension.getWidth() * width);
-        int y = (int) Math.round(dimension.getHeight() * Double.parseDouble("." + height));
-        tap(location.getX() + (int) x, location.getY() + y);
     }
 }

@@ -109,6 +109,24 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
         return cancelBtn;
     }
 
+    public ExtendedWebElement getAddProfilePINHeader() {
+        return staticTextByLabel.format(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                        DictionaryKeys.SECURE_PROFILE_PIN_ACTION.getText()));
+    }
+
+    public ExtendedWebElement getAddProfilePINDescription() {
+        return staticTextByLabel.format(getLocalizationUtils().
+                getDictionaryItem(DisneyDictionaryApi.ResourceKeys.WELCH,
+                        DictionaryKeys.SECURE_PROFILE_PIN_DESCRIPTION.getText()));
+    }
+
+    public ExtendedWebElement getUpdateMaturityRatingTitle() {
+        return staticTextByLabel.format(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.WELCH,
+                DictionaryKeys.ADD_PROFILE_UPDATE_MATURITY_RATING_TITLE.getText()));
+    }
+
     public void enterProfileNameOnLocalizedKeyboard(String name) {
         enterText(name);
         keyPressTimes(getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
@@ -170,10 +188,6 @@ public class DisneyPlusAddProfileIOSPageBase extends DisneyPlusApplePageBase {
             swipeInContainer(null, IMobileUtils.Direction.UP, 1200);
         }
         saveButton.click();
-    }
-
-    public ExtendedWebElement getSaveButton() {
-        return saveButton;
     }
 
     public void clickSkipBtn() {
