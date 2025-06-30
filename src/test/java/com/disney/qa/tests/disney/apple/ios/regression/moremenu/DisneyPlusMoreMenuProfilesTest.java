@@ -1622,6 +1622,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
         setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
         homePage.clickMoreTab();
