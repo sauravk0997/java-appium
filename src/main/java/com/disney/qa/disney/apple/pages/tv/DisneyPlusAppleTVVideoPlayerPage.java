@@ -118,7 +118,8 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
 
     @Override
     public ExtendedWebElement getBroadcastMenu() {
-        clickDown();
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        commonPage.clickDown(1);
         return dynamicBtnFindByLabel.format(broadcastMenuButton);
     }
 
