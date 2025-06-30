@@ -1613,6 +1613,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         int swipeCount = 3;
         int duration = 500;
 
+        if (getLocalizationUtils().getLocale().equals(TR)) {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        } else {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        }
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
@@ -1622,7 +1633,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
         setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
         homePage.clickMoreTab();
