@@ -607,10 +607,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         videoPlayer.waitForVideoToStart();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
-        commonPage.clickDown(1);
-        commonPage.clickUp(1);
-        commonPage.clickRight(2, 1, 1);
-        videoPlayer.getBroadcastMenu().click();
+        videoPlayer.clickBroadcastMenu();
         Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
                 "Target broadcasts feeds on UI are not as expected");
         verifyFeedOptionSelected();
@@ -622,8 +619,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         LOGGER.info("Feed option selected value - " + selectedMenuOption);
         if (selectedMenuOption != null) {
             videoPlayer.waitForVideoToStart();
-            videoPlayer.displayVideoController();
-            videoPlayer.getBroadcastMenu().click();
+            videoPlayer.clickBroadcastMenu();
             Assert.assertTrue(videoPlayer.isFeedOptionSelected(selectedMenuOption),
                     "Target feed/Language is not selected");
         } else {
