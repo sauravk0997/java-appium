@@ -613,7 +613,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         verifyFeedOptionSelected();
     }
 
-    public void verifyFeedOptionSelected() {
+    private void verifyFeedOptionSelected() {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         String selectedMenuOption = videoPlayer.selectAndGetBroadcastFeedOption();
         LOGGER.info("Feed option selected value - " + selectedMenuOption);
