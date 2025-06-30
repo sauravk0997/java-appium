@@ -225,10 +225,10 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
                         contentNetwork));
 
         videoPlayer.getSkipRecapButton().click();
-        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(contentNetwork),
-                String.format("Network (%s) Watermark logo is not present after skipping recap", contentNetwork));
         Assert.assertTrue(videoPlayer.getContentRatingInfoView().isPresent(),
                 "Content rating info view is not present after skipping recap");
+        Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(contentNetwork),
+                String.format("Network (%s) Watermark logo is not present after skipping recap", contentNetwork));
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77740"})
