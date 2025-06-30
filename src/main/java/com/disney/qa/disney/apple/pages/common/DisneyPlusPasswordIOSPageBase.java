@@ -2,8 +2,6 @@ package com.disney.qa.disney.apple.pages.common;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.apache.commons.lang3.StringUtils;
@@ -87,7 +85,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isShowPasswordIconDisplayed() {
         boolean isPresent = showHidePasswordIndicator.isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent && showHidePasswordIndicator.getAttribute("label").equals("hidePasswordDisneyAuth");
     }
 
@@ -122,7 +119,6 @@ public class DisneyPlusPasswordIOSPageBase extends DisneyPlusApplePageBase {
 
     public void submitPasswordWhileLoggedIn(String userPassword) {
         typePassword(userPassword);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         if (continueButton.isElementPresent()) {
             continueButton.click();
         } else {
