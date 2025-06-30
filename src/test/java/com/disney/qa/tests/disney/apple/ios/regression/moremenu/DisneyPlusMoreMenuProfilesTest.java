@@ -1601,6 +1601,69 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Live content title was present after turning off the live toggle");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78532"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, REST_OF_WORLD})
+    public void verifyLiveAndUnratedToggleEditProfileScreenForRestOfWorld() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String ON = "On";
+        String OFF = "Off";
+        int swipeCount = 3;
+        int duration = 500;
+
+        if (getLocalizationUtils().getLocale().equals(TR)) {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        } else {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        }
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
+        loginWithSecondaryProfileForRestOfWorldLocale();
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+        sa.assertTrue(editProfile.getProfileSettingLiveUnratedDesc().isPresent(),
+                "Live unrated description is not present");
+        sa.assertTrue(editProfile.getProfileSettingLiveUnratedHelpLink().isPresent(),
+                "Live unrated hyper link is not present");
+
+        //Toggle is ON by default
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
+                LIVE_TOGGLE_IS_NOT_ON_BY_DEFAULT);
+
+        // Turn Toggle OFF
+        editProfile.tapLiveAndUnratedToggle();
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle did not turn OFF after tapping on toggle");
+
+        //Turn toggle ON
+        editProfile.tapLiveAndUnratedToggle();
+        editProfile.enterPassword(getUnifiedAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
+                "Live toggle did not turn On after tapping on toggle");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78050"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExtraMemberCanNotSeeOwnersProfile() {
@@ -1938,5 +2001,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertEquals(editProfile.getAutoplayState(), state, errorMessage);
+    }
+
+    private void loginWithSecondaryProfileForRestOfWorldLocale(){
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        handleAlert();
+        Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        welcomePage.clickLogInButton();
+        login(getUnifiedAccount());
+        handleGenericPopup(5,1);
+        handleOneTrustPopUp();
+        whoseWatchingPage.clickProfile(SECONDARY_PROFILE, false);
     }
 }
