@@ -1634,7 +1634,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), SECONDARY_PROFILE);
+        loginWithSecondaryProfileForRestOfWorldLocale();
         homePage.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
@@ -1967,5 +1967,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertEquals(editProfile.getAutoplayState(), state, errorMessage);
+    }
+
+    private void loginWithSecondaryProfileForRestOfWorldLocale(){
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        handleAlert();
+        Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        welcomePage.clickLogInButton();
+        login(getUnifiedAccount());
+        handleGenericPopup(5,1);
+        handleOneTrustPopUp();
+        whoseWatchingPage.clickProfile(SECONDARY_PROFILE, false);
     }
 }
