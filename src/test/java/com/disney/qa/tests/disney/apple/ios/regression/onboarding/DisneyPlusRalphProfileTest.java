@@ -61,6 +61,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .replace("{link_1}", "Privacy Policy")
                 .replace("{link_2}", "Learn more");
 
+        handleAlert();
         setupForRalph();
         if (oneTrustPage.isAllowAllButtonPresent()) {
             oneTrustPage.tapAcceptAllButton();

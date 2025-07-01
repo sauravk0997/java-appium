@@ -402,6 +402,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         // Populate Continue Watching assets
+        homePage.waitForHomePageToOpen();
         addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
 
         homePage.waitForHomePageToOpen();
@@ -448,6 +449,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         // Populate Continue Watching assets
+        homePage.waitForHomePageToOpen();
         addContentInContinueWatching(R.TESTDATA.get("disney_prod_the_avengers_deeplink"), 10);
 
         homePage.swipeTillCollectionTappable(CollectionConstant.Collection.CONTINUE_WATCHING, Direction.UP, swipeCount);

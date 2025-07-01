@@ -172,7 +172,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, true);
         logInWithoutHomeCheck(account);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+        whoIsWatching.clickProfile(account.getProfiles().get(0).getProfileName());
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
@@ -277,10 +277,12 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVAccountSharingPage accountSharingPage = new DisneyPlusAppleTVAccountSharingPage(getDriver());
         DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatching = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         String invalidCode = "111111";
         SoftAssert sa = new SoftAssert();
         UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, false);
-        logIn(account, account.getProfiles().get(0).getProfileName());
+        logInWithoutHomeCheck(account);
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
@@ -413,7 +415,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, true);
         logInWithoutHomeCheck(account);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+        whoIsWatching.clickProfile(account.getProfiles().get(0).getProfileName());
 
         // Validate hard block screen
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
@@ -463,7 +465,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD, true);
         logInWithoutHomeCheck(account);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+        whoIsWatching.clickProfile(account.getProfiles().get(0).getProfileName());
         sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
         sa.assertTrue(accountSharingPage.getOOHIAmAwayFromHomeCTA().isPresent(),
@@ -515,7 +517,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
 
         UnifiedAccount account = setHouseholdExperience(ExperienceId.SOFT, true);
         logInWithoutHomeCheck(account);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+        whoIsWatching.clickProfile(account.getProfiles().get(0).getProfileName());
 
         // Steps to verify the No thanks option
         sa.assertTrue(accountSharingPage.isOOHSoftBlockScreenHeadlinePresent(),

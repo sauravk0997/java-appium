@@ -595,9 +595,11 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusAppleTVOneTrustConsentBannerIOSPage oneTrustConsentPage =
                 new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatching = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        logIn(getUnifiedAccount());
+        logInWithoutHomeCheck(getUnifiedAccount());
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         // Validate One Trust consent page
         sa.assertTrue(oneTrustConsentPage.isAllowAllButtonPresent(),

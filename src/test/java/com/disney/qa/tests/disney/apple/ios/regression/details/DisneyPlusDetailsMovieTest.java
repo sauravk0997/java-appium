@@ -419,7 +419,9 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
     public void verifyComingSoonMovieUI() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage =  initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
         String entityID = R.TESTDATA.get("disney_prod_movie_zombies_4_entity_id");

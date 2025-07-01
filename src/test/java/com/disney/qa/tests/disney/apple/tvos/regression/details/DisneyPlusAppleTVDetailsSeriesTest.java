@@ -855,7 +855,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String toggleValue = "Off";
 
         logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-
+        homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         toggleAutoPlay(toggleValue);
 
