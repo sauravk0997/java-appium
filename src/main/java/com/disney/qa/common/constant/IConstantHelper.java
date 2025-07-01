@@ -96,8 +96,6 @@ public interface IConstantHelper {
     String SG = "SG";
     String TR = "TR";
     String US = "US";
-    String ES = "ES";
-    String IT = "IT";
 
     //language codes
     String EN_LANG = "en";
