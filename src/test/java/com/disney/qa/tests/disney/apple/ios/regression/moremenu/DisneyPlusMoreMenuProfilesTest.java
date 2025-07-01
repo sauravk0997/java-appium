@@ -1731,7 +1731,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Live and unrated toggle Tool tip for junior mode was not present");
 
         editProfile.clickDoneBtn();
-        homePage.clickMoreTab();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
         Assert.assertTrue(homePage.isKidsHomePageOpen(), HOME_PAGE_NOT_DISPLAYED + "for kids profile");
 
