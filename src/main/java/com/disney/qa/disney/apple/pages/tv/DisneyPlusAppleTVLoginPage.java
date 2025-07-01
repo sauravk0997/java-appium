@@ -4,8 +4,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusLoginIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -28,12 +26,10 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     @Override
     public boolean isOpened() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return getTextEntryField().format(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.IDENTITY, MY_DISNEY_CONTINUE_BTN.getText())).isPresent() && getEmailHint().isPresent(THREE_SEC_TIMEOUT);
     }
 
     public void clickEnterNewBtn() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
         if (enterNewBtn.isPresent()) {
             IntStream.range(0, getNumberOfPrevUsedEmails()).forEach(i -> {
                 clickDown();
@@ -44,7 +40,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickLocalizationEnterNewBtn() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Email_Input_Screen");
         List<ExtendedWebElement> listOfOtherElements = findExtendedWebElements(typeCell.getBy());
         if (!listOfOtherElements.isEmpty()) {
             IntStream.range(0, getNumberOfPrevUsedEmails()).forEach(i ->
@@ -54,14 +49,12 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
     }
 
     public void clickEmailField() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         textEntryField.click();
     }
 
     // To enter a temp string "bcd" into the email field
     // also clicks on continue button, using select here because element.click was not working
     public void enterTempEmailTextAndClickContinue() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, "Enter_New_Email_Screen");
         keyboard.isPresent();
         IntStream.range(0, 3).forEach(i -> {
             clickRight();
@@ -83,7 +76,6 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public boolean isKeyboardPresent() {
         boolean isPresent = keyboard.isElementPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -103,11 +95,9 @@ public class DisneyPlusAppleTVLoginPage extends DisneyPlusLoginIOSPageBase {
 
     public void enterEmail(String email) {
         typeTextView.type(email);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void clickContinueBtn() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         continueButton.click();
     }
 

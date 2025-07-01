@@ -6,8 +6,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyPlusHomeIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.InvalidArgumentException;
@@ -113,7 +111,6 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         } else {
             moveDown(Math.abs(timeToMove), 1);
         }
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         whichGlobalNavMenuIsFocused();
     }
 
@@ -191,12 +188,10 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     }
 
     public boolean isProfileBtnFocused() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isFocused(profileBtnGlobalNav);
     }
 
     public boolean isProfileBtnPresent() {
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return profileBtnGlobalNav.isElementPresent();
     }
 
@@ -227,9 +222,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
 
     public void openGlobalNavAndSelectOneMenu(String menu) {
         clickMenuTimes(1,1);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         navigateToOneGlobalNavMenu(menu);
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         clickSelect();
         //Sometimes global nav is not dismissed, to accommodate when clicking select does not work first time
         if (new DisneyPlusApplePageBase(getDriver()).isGlobalNavExpanded()) {

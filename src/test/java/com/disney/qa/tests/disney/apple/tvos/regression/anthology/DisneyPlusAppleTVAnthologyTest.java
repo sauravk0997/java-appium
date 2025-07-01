@@ -45,7 +45,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
         details.addToWatchlist();
         details.clickMenuTimes(1,1);
@@ -65,7 +65,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage search = new DisneyPlusAppleTVSearchPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         home.isOpened();
         home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
@@ -79,7 +79,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologyTitleDescriptionDate() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.getLogoImage().isPresent(), DANCING_WITH_THE_STARS.getTitle() + "logo image was not found.");
@@ -94,7 +94,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
 
         try {
@@ -120,7 +120,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     public void verifyAnthologyDetailsTab() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
 
         String mediaTitle = details.getMediaTitle();
@@ -145,7 +145,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isSuggestedTabPresent(), "Suggested tab was not found.");
@@ -159,7 +159,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isExtrasTabPresent(), "Extras tab was not found.");
@@ -178,7 +178,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
 
         try {
@@ -217,7 +217,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
 
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
 
         sa.assertTrue(details.isTrailerButtonDisplayed(), "Trailer button was not found.");
@@ -235,7 +235,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
     @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.VIDEO_PLAYER, US})
     public void verifyAnthologyTabsAndOrderingUI() {
         DisneyPlusAppleTVDetailsPage details = new DisneyPlusAppleTVDetailsPage(getDriver());
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
 
         ArrayList<Container> dwtsDetailsPageContainers =
@@ -269,7 +269,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         searchAndOpenDWTSDetails();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
@@ -325,7 +325,7 @@ public class DisneyPlusAppleTVAnthologyTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_dwts_detailpage_deeplink"));
