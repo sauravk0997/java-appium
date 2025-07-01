@@ -417,6 +417,7 @@ public enum DictionaryKeys {
     SECURE_PROFILE_PIN_ACTION("secure_profile_pin_action"),
     SECURE_PROFILE_PIN_DESCRIPTION("add_profile_secure_profile_pin_description"),
     SECURE_PROFILE_PIN_REMINDER("add_profile_secure_profile_pin_anytime_reminder"),
+    SECURE_PROFILE_PIN_TITLE("secure_profile_pin_title"),
     SELECT_ALL_LABEL("select_all_label"),
     SELECT_CONTENT_REMOVE("select_content_remove"),
     SERIES_EPISODE_TITLE("video_episode_title"),
