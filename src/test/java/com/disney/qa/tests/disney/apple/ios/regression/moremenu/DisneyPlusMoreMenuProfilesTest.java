@@ -1634,7 +1634,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        loginWithSecondaryProfileForRestOfWorldLocale();
+        loginWithSecondaryProfileForRestOfWorldLocale(SECONDARY_PROFILE);
         homePage.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
@@ -1675,6 +1675,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         int duration = 500;
         String setTitle, setContentTitle;
 
+        if (getLocalizationUtils().getLocale().equals(TR)) {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        } else {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        }
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(JUNIOR_PROFILE)
@@ -1700,7 +1711,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                     "api " + e);
         }
 
-        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
+        loginWithSecondaryProfileForRestOfWorldLocale(DEFAULT_PROFILE);
         homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
@@ -2037,7 +2048,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertEquals(editProfile.getAutoplayState(), state, errorMessage);
     }
 
-    private void loginWithSecondaryProfileForRestOfWorldLocale(){
+    private void loginWithSecondaryProfileForRestOfWorldLocale(String profileName){
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         handleAlert();
@@ -2046,6 +2057,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         login(getUnifiedAccount());
         handleGenericPopup(5,1);
         handleOneTrustPopUp();
-        whoseWatchingPage.clickProfile(SECONDARY_PROFILE, false);
+        whoseWatchingPage.clickProfile(profileName, false);
     }
 }
