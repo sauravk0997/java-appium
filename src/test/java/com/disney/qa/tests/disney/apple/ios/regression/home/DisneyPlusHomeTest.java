@@ -339,7 +339,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-
+        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
         collectionPage.waitForCollectionPageToOpen(
                 CollectionConstant.getCollectionTitle(CollectionConstant.Collection.TREEHOUSE_OF_HORROR));
@@ -515,8 +515,9 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyPlaybackForEpisodesInSetsByTappingOnArtwork() {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-
+        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_collection_treehouse_of_horror"));
         collectionPage.waitForCollectionPageToOpen(
                 CollectionConstant.getCollectionTitle(CollectionConstant.Collection.TREEHOUSE_OF_HORROR));
@@ -918,6 +919,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     private void addContentInContinueWatching(String url, int scrubPercentage) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        homePage.waitForHomePageToOpen();
         launchDeeplink(url);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_DID_NOT_OPEN);
         detailsPage.clickPlayButton();

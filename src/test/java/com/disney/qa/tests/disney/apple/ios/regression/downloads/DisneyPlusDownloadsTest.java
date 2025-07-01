@@ -596,10 +596,12 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         String seriesName = "Bluey";
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         jarvisEnableOfflineExpiredLicenseOverride();
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         swipePageTillElementTappable(detailsPage.getFirstEpisodeDownloadButton(), 1, null,

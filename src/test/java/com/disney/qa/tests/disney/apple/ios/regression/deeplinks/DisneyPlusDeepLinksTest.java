@@ -1012,8 +1012,8 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         setAppToHomeScreen(getUnifiedAccount());
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleOneTrustPopUp();
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
 
         validateBrandsDeepLinks(brands);
