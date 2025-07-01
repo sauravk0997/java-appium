@@ -68,6 +68,7 @@ public interface IConstantHelper {
     String CHECK_YOUR_EMAIL_INBOX_PAGE_NOT_DISPLAYED = "Check your email inbox page is not displayed";
     String ACCESS_TO_FULL_CATALOG_PAGE_NOT_DISPLAYED = "Access to full catalog page is not present";
     String CHANGE_PASSWORD_PAGE_NOT_DISPLAYED = "Create new password page is not displayed";
+    String SECURE_PROFILE_PIN_PAGE_NOT_DISPLAYED = "Secure Profile PIN page is not displayed";
 
     //Profile Names
     String PROFILE_NAME_SECONDARY = "Secondary";
