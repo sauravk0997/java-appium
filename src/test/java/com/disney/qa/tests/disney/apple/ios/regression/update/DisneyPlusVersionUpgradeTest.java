@@ -140,6 +140,8 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         startApp(sessionBundles.get(DISNEY));
         handleGenericPopup(5, 1);
         moreMenu.clickMoreTab();
+        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(IAPIHelper.TEST_FAIRY_APP_VERSION),
+                "Current displayed version doesn't match with latest unreleased build version");
         Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE),
                 "Default profile is not displayed");
         Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE),
