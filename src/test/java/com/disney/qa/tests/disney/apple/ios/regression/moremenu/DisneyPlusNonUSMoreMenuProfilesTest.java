@@ -96,6 +96,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyEditProfileUIPrimaryProfile() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         initialSetup();
@@ -106,7 +107,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         JP,
                         getLocalizationUtils().getUserLanguage())));
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
 
         moreMenu.clickMoreTab();
@@ -155,8 +157,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-
+        setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
@@ -183,6 +185,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
         String offInJP = "オフ";
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(
@@ -192,7 +196,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         getLocalizationUtils().getUserLanguage())));
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
         moreMenu.clickMoreTab();
         whoseWatchingPage.clickAddProfile();

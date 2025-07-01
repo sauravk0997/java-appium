@@ -108,6 +108,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyDeepLinkNewURLStructureWatchlistUnauthenticatedUser() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusWatchlistIOSPageBase watchlistPage = initPage(DisneyPlusWatchlistIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
 
@@ -116,6 +117,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
         handleAlert();
         login(getUnifiedAccount());
         handleGenericPopup(5, 1);
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         watchlistPage.waitForPresenceOfAnElement(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR));
         sa.assertTrue(watchlistPage.getStaticTextByLabelContains(WATCHLIST_IS_EMPTY_ERROR).isPresent(), WATCHLIST_DEEP_LINK_ERROR);
 
@@ -1000,12 +1002,14 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 Brand.STAR
         );
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleOneTrustPopUp();
         homePage.waitForHomePageToOpen();
 

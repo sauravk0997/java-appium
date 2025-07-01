@@ -927,10 +927,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, JP})
     public void verifyESPNUnavailableDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_nfl_turning_point_deeplink"));

@@ -55,7 +55,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
                 DisneyDictionaryApi.ResourceKeys.PCON,
                 DictionaryKeys.ACCOUNT_EDIT_PROFILE.getText());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings();
 
         accountPage.waitForAccountPageToOpen();
         sa.assertTrue(accountPage.getNavBackArrow().isElementPresent(), BACK_BUTTON_NOT_DISPLAYED);

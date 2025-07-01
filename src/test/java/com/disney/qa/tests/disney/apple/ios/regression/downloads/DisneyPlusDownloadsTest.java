@@ -812,7 +812,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
             throw new SkipException("Skipping Test, Season Details not found" + e.getMessage());
         }
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(huluSeries);
@@ -970,10 +970,12 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyRenewedExpiredDownload() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         jarvisEnableOfflineExpiredLicenseOverride();
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         swipe(detailsPage.getFirstEpisodeDownloadButton(), Direction.UP, 1, 900);
