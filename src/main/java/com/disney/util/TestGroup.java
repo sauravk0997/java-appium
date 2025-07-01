@@ -7,8 +7,6 @@ public final class TestGroup {
     // Team Groups
     public static final String QAIT = "qait";
 
-    public static final String HORA_SMOKE = "hora_smoke";
-
     //Feature Groups
     public static final String SMOKE = "Smoke";
     public static final String ACCOUNT_SHARING = "AccountSharing";

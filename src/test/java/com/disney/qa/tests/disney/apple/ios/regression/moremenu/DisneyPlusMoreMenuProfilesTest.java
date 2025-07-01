@@ -1601,6 +1601,69 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Live content title was present after turning off the live toggle");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78532"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, REST_OF_WORLD})
+    public void verifyLiveAndUnratedToggleEditProfileScreenForRestOfWorld() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
+        String ON = "On";
+        String OFF = "Off";
+        int swipeCount = 3;
+        int duration = 500;
+
+        if (getLocalizationUtils().getLocale().equals(TR)) {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        } else {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        }
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true)
+                .build());
+
+        loginWithSecondaryProfileForRestOfWorldLocale();
+        homePage.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+        sa.assertTrue(editProfile.getProfileSettingLiveUnratedDesc().isPresent(),
+                "Live unrated description is not present");
+        sa.assertTrue(editProfile.getProfileSettingLiveUnratedHelpLink().isPresent(),
+                "Live unrated hyper link is not present");
+
+        //Toggle is ON by default
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
+                LIVE_TOGGLE_IS_NOT_ON_BY_DEFAULT);
+
+        // Turn Toggle OFF
+        editProfile.tapLiveAndUnratedToggle();
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle did not turn OFF after tapping on toggle");
+
+        //Turn toggle ON
+        editProfile.tapLiveAndUnratedToggle();
+        editProfile.enterPassword(getUnifiedAccount());
+        editProfile.waitForUpdatedToastToDisappear();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
+                "Live toggle did not turn On after tapping on toggle");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78050"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExtraMemberCanNotSeeOwnersProfile() {
@@ -1780,6 +1843,77 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "SharePlay is not toggled ON");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75782"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, LATAM})
+    public void verifyDemographicTargetingToggleForLATAM() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
+
+        moreMenu.clickMoreTab();
+        moreMenu.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
+
+        // Validate Privacy & Data subsection and Demographic Targeting toggle elements are visible
+        swipe(editProfilePage.getDemographicTargetingToggleCell(), Direction.UP, 10, 500);
+        Assert.assertTrue(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(),
+                "'Privacy & Data' subsection title is not present");
+        Assert.assertTrue(editProfilePage.getDemographicTargetingToggleTitle().isPresent(),
+                "Demographic Targeting toggle title is not present");
+        Assert.assertTrue(editProfilePage.getDemographicTargetingToggleSubCopy().isPresent(),
+                "Demographic Targeting toggle sub copy is not present");
+
+        // Validate Demographic Targeting toggle is Opted In by default
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()),
+                "Demographic Targeting toggle is not 'ON' by default");
+
+        // Validate user can Opt Out and Opt In again to Demographic Targeting
+        editProfilePage.tapDemographicTargetingToggle();
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_OFF.getText()),
+                "Demographic Targeting toggle is not set to 'OFF'");
+        editProfilePage.tapDemographicTargetingToggle();
+        Assert.assertEquals(editProfilePage.getDemographicTargetingToggleValue(),
+                getLocalizationUtils().getDictionaryItem(
+                        DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_ON.getText()),
+                "Demographic Targeting toggle is not set to 'ON'");
+    }
+
+    //Below TC failing currently due to bug https://jira.disney.com/browse/IOS-16468
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81856"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyWhosWatchingForOnlineProfileWithNoPin() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                        .unifiedAccount(getUnifiedAccount())
+                        .profileName(SECONDARY_PROFILE)
+                        .dateOfBirth(ADULT_DOB)
+                        .language(getLocalizationUtils().getUserLanguage())
+                        .avatarId(RAYA)
+                        .kidsModeEnabled(false)
+                        .isStarOnboarded(true).build());
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoseWatching.clickProfile(DEFAULT_PROFILE);
+        homePage.waitForHomePageToOpen();
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+    }
+
     private List<ExtendedWebElement> addNavigationBarElements() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
@@ -1833,5 +1967,17 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
         Assert.assertTrue(editProfile.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         sa.assertEquals(editProfile.getAutoplayState(), state, errorMessage);
+    }
+
+    private void loginWithSecondaryProfileForRestOfWorldLocale(){
+        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        handleAlert();
+        Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
+        welcomePage.clickLogInButton();
+        login(getUnifiedAccount());
+        handleGenericPopup(5,1);
+        handleOneTrustPopUp();
+        whoseWatchingPage.clickProfile(SECONDARY_PROFILE, false);
     }
 }

@@ -30,7 +30,6 @@ import com.disney.qa.common.utils.IOSUtils;
 import com.disney.config.DisneyConfiguration;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.gmail.exceptions.GMailUtilsException;
-import com.disney.util.JiraUtils;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.registrar.Xray;
 import com.zebrunner.carina.core.AbstractTest;
@@ -86,6 +85,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
+    public static final String REST_OF_WORLD = "REST_OF_WORLD";
     public static final String JP_ENG = "JP_ENG";
     public static final String LATAM_ANZ = "LATAM_ANZ";
     public static final String EMEA_CA = "EMEA_CA";
@@ -347,6 +347,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(EMEA_CA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEAOrCanadaCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(REST_OF_WORLD)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getRestOfWorldCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
         }
@@ -400,11 +403,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         CREATE_UNIFIED_ACCOUNT_REQUEST.remove();
         HOUSE_HOLD_API.remove();
         HOUSEHOLD_REQUEST_THREAD_LOCAL.remove();
-    }
-
-    @AfterSuite(alwaysRun = true)
-    public final void postTestResultsToJira(ITestContext context) {
-        JiraUtils.addTestRunURLtoJiraTicketComment(context);
     }
 
     public static String getCountry() {
@@ -725,6 +723,13 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
 
     private String getEMEAOrCanadaCountryCode() {
         List<String> countryCodeList = Arrays.asList(FRANCE, SPAIN, SWEDEN, CA);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getRestOfWorldCountryCode() {
+        List<String> countryCodeList = Arrays.asList(KOREA, JAPAN, HONGKONG, TURKEY, GERMANY, UNITED_KINGDOM, ITALY,
+                SPAIN, POLAND, NETHERLANDS, AUSTRALIA, NEW_ZEALAND);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }

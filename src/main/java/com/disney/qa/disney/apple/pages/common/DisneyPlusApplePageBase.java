@@ -10,11 +10,10 @@ import com.disney.qa.common.constant.CollectionConstant;
 import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.common.utils.helpers.DateHelper;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
+import com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.appletv.IRemoteControllerAppleTV;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import io.appium.java_client.AppiumBy;
@@ -589,12 +588,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.SDK_ERRORS, DictionaryKeys.ATTRIBUTE_VALIDATION.getText())).isPresent();
     }
 
-    public boolean isAIDElementPresentWithScreenshot(String id) {
-        boolean isPresent = dynamicAccessibilityId.format(id).isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
-        return isPresent;
-    }
-
     /**
      * @return always returns false as this class does not represent an actual page in the app
      */
@@ -702,7 +695,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public boolean isStaticTextPresentWithScreenShot(String text) {
         boolean isPresent = (staticTextByLabel.format(text).isElementPresent() || textViewByLabel.format(text).isElementPresent());
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -836,7 +828,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         dynamicBtnFindByLabel.format(localizationUtils.getDictionaryItem(
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, BTN_ADD_PROFILE_SAVE.getText()))
                 .click();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
     }
 
     public void clickMoreTab() {
@@ -1395,6 +1386,29 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
             count--;
         }
         throw new NoSuchElementException("Desired collection was not focused");
+    }
+
+    public void moveDownUntilDisneyOriginalBrandIsFocused(int count) {
+        LOGGER.info("Moving down until Disney original brand is focused");
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        if (homePage.getDisneyTile().isPresent(ONE_SEC_TIMEOUT) && isFocused(homePage.getDisneyTile())) {
+            LOGGER.info("Desired Disney original brand was already focused");
+            return;
+        }
+        while (count > 0) {
+            moveDown(1, 1);
+            if (homePage.getDisneyTile().isPresent(FIVE_SEC_TIMEOUT) &&
+                    isFocused(homePage.getDisneyTile())) {
+                LOGGER.info("Reached Disney original brand");
+                return;
+            } else if (homePage.getDisneyTile().isPresent(THREE_SEC_TIMEOUT)) {
+                LOGGER.info("Disney original brand is present / visible on screen, " +
+                        "moving down to get in focus");
+                moveDown(1, 1);
+            }
+            count--;
+        }
+        throw new NoSuchElementException("Disney original brand was not focused");
     }
 
     public boolean moveDownUntilCollectionIsPresent(String collectionId, int count) {

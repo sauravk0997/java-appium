@@ -5,8 +5,6 @@ import com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase;
 import com.disney.qa.disney.apple.pages.common.DisneyplusLegalIOSPageBase;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.utils.factory.DeviceType;
-import com.zebrunner.carina.webdriver.Screenshot;
-import com.zebrunner.carina.webdriver.ScreenshotType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +31,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyplusLegalIOSPageBase {
     @Override
     public boolean isOpened() {
         boolean isPresent = legalTitle.isPresent();
-        Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE);
         return isPresent;
     }
 
@@ -61,7 +58,6 @@ public class DisneyPlusAppleTVLegalPage extends DisneyplusLegalIOSPageBase {
     public void getAllLegalSectionsScreenshot(String filename) {
         getLegalTabs().forEach(legalTitle -> {
             String sectionName = legalTitle.getAttribute("name");
-            Screenshot.capture(getDriver(), ScreenshotType.EXPLICIT_VISIBLE, filename + "_" + sectionName + "_tvOS");
             moveDown(1, 1);
         });
     }
