@@ -1890,6 +1890,40 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Demographic Targeting toggle is not set to 'ON'");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81857"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyWhosWatchingForOnlinePinProfile() {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .isStarOnboarded(true)
+                .build());
+        // Active profile must have a pin
+        try {
+            getUnifiedAccountApi().updateProfilePin(getUnifiedAccount(),
+                    getUnifiedAccount().getProfileId(DEFAULT_PROFILE), PROFILE_PIN);
+        } catch (Exception e) {
+            throw new SkipException("Failed to update Profile pin: {}", e);
+        }
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+
+        whoIsWatching.clickPinProtectedProfile(DEFAULT_PROFILE);
+        pinPage.enterProfilePin(PROFILE_PIN);
+        homePage.waitForHomePageToOpen();
+
+        // Terminate app and relaunch to validate Who is watching page is opened
+        terminateApp(sessionBundles.get(DISNEY));
+        relaunch();
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+    }
+
     //Below TC failing currently due to bug https://jira.disney.com/browse/IOS-16468
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81856"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
