@@ -84,7 +84,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83154"})
     @Test(groups = {TestGroup.UPGRADE, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyDownloadANdProfilesAfterAppUpgrade() {
+    public void verifyDownloadAndProfilesAfterAppUpgrade() {
         int polling = 10;
         int timeout = 300;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
