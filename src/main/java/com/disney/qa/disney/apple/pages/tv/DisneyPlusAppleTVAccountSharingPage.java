@@ -100,7 +100,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
     public boolean isOOHHardBlockScreenHeadlinePresent() {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
-                        DictionaryKeys.OOH_HARD_BLOCK_HEADLINE.getText())).isPresent(FIVE_SEC_TIMEOUT);
+                        DictionaryKeys.OOH_HARD_BLOCK_HEADLINE.getText())).isPresent();
     }
 
     public boolean isOOHHardBlockCreateAccLabelPresent() {

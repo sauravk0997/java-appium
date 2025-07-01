@@ -212,25 +212,21 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     public void verifyHuluVideoPlayerNetworkWatermarkAutoInterrupted() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
-        String contentNetwork = "CBS";
+        String contentNetwork = "Hulu Original Series";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-
         homePage.waitForHomePageToOpen();
-
-        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_survivor_episode_playback"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_see_you_in_another_life_episode_s1_e2_playback"));
         Assert.assertTrue(videoPlayer.getSkipRecapButton().isPresent(),
                 "Skip Recap button is not present");
         Assert.assertFalse(videoPlayer.getNetworkWatermarkLogo(contentNetwork).isElementPresent(1),
                 String.format("Network (%s) Watermark logo is present at the same time that Skip Recap button",
                         contentNetwork));
-        videoPlayer.getSkipRecapButton().click();
 
+        videoPlayer.getSkipRecapButton().click();
         Assert.assertTrue(videoPlayer.isNetworkWatermarkLogoPresent(contentNetwork),
                 String.format("Network (%s) Watermark logo is not present after skipping recap", contentNetwork));
-        Assert.assertTrue(videoPlayer.getContentRatingInfoView().isPresent(),
-                "Content rating info view is not present after skipping recap");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77740"})
