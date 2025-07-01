@@ -1665,7 +1665,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78531"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, REST_OF_WORLD})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, KR})
     public void verifyLiveAndUnratedToggleAndContentJuniorModeForRestOfWorld() {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
