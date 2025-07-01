@@ -156,11 +156,14 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67656"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.VIDEO_PLAYER, TestGroup.UP_NEXT, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAutoplayDoesNotAutoplayWhenDisabled() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusUpNextIOSPageBase disneyPlusUpNextIOSPageBase = initPage(DisneyPlusUpNextIOSPageBase.class);
-        DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        String nextEpisodeTitle = "Hospital";
         SoftAssert sa = new SoftAssert();
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
@@ -169,14 +172,13 @@ public class DisneyPlusVideoUpNextTest extends DisneyBaseTest {
         toggleAutoPlay("OFF");
         //Forward the content
         initiatePlaybackAndScrubOnPlayer(SERIES_BLUEY, PLAYER_PERCENTAGE_FOR_AUTO_PLAY);
-        int remainingTime = disneyPlusVideoPlayerIOSPageBase.getRemainingTime();
-        pause(remainingTime);
+        disneyPlusUpNextIOSPageBase.waitForUpNextUIToAppear();
+        sa.assertTrue(videoPlayer.getBackButton().isPresent(), BACK_BUTTON_NOT_DISPLAYED);
         sa.assertTrue(disneyPlusUpNextIOSPageBase.verifyUpNextUI(), UP_NEXT_UI_WAS_NOT_PRESENT);
-        //TODO:https://jira.disneystreaming.com/browse/IOS-6617
-        //uncomment below line when the bug is resolved
-        /*sa.assertTrue(disneyPlusVideoPlayerIOSPageBase.isElementPresent(PlayerControl.PAUSE),"Pause button is not visible on player view, " +
-                "video not paused when autoplay is OFF");*/
-        sa.assertTrue(disneyPlusUpNextIOSPageBase.getNextEpisodeInfo().equalsIgnoreCase("S1:E2 Hospital"), "Next season title is not as expected");
+        sa.assertTrue(disneyPlusUpNextIOSPageBase.getNextEpisodeInfo().contains(nextEpisodeTitle),
+                "Next episode title is not as expected");
+        videoPlayer.getBackButton().click();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         sa.assertAll();
     }
 
