@@ -161,9 +161,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                 .createAccount(getCreateUnifiedAccountRequestForCountryWithPlan(offer, country, DE_LANG)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), country);
 
-        Assert.assertTrue(welcomePage.isOpened(), WELCOME_SCREEN_NOT_DISPLAYED);
-        welcomePage.clickLogInButton();
-        login(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         handleOneTrustPopUp();
         if (homePage.isTravelAlertTitlePresent()) {

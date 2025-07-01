@@ -315,7 +315,10 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
     public void verifyCloseButtonForDeepLinkingContentMovie() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_debug_video_player_movie_deeplink"));
         videoPlayer.waitForVideoToStart();
@@ -519,7 +522,7 @@ public class DisneyPlusDeepLinksTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), "Who is watching screen did not open");
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_brand_deeplink"));
         whoIsWatchingPage.clickProfile(JUNIOR_PROFILE);

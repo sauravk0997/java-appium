@@ -174,7 +174,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
 
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
+
         SoftAssert sa = new SoftAssert();
 
         launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
@@ -211,7 +215,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         int timeout = 300;
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
+
         SoftAssert sa = new SoftAssert();
         ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
@@ -281,7 +289,11 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     public void verifyDownloadsInProgressSubFunction() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
+
         SoftAssert sa = new SoftAssert();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_movie_detail_dr_strange_deeplink"));
@@ -413,9 +425,13 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
     public void verifyDownloadIconOnSeriesEpisode() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
         String one = "1";
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
+
         // Launch series details page
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -619,7 +635,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        loginToHome(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.clickSearchIcon();
         searchPage.searchForMedia(unnumberedSeries);
         searchPage.getDynamicAccessibilityId(unnumberedSeries).click();

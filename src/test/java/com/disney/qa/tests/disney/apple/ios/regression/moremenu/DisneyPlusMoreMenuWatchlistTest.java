@@ -92,7 +92,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
         //Create account with Disney Bundle plan
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_BASIC)));
-        loginToHome(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         //Add disney content to watchlist
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),

@@ -56,7 +56,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         .isStarOnboarded(true)
                         .build()));
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         handleAlert();
         whoIsWatching.clickProfile(DEFAULT_PROFILE);
         if (homePage.isTravelAlertTitlePresent()) {

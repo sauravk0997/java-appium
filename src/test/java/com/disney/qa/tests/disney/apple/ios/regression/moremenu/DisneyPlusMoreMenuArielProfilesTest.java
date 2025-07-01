@@ -132,7 +132,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickProfile(KIDS_PROFILE);
         Assert.assertTrue(updateProfilePage.isOpened(), UPDATE_PROFILE_PAGE_NOT_DISPLAYED);
@@ -769,7 +769,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         whoIsWatching.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);

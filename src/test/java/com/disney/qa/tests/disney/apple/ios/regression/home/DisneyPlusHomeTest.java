@@ -46,6 +46,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
         ArrayList<Container> collections;
         try {
             collections = getDisneyAPIPage(HOME_PAGE.getEntityId());
