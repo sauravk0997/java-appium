@@ -102,10 +102,13 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     public void testValidPasswordOneProfile() {
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         welcomeScreen.clickLogInButton();
         login(getUnifiedAccount());
         handleGenericPopup(5, 1);
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
 
