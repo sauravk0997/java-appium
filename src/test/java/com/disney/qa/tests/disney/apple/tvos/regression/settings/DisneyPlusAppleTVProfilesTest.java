@@ -25,8 +25,7 @@ import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
@@ -809,7 +808,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         triggerPasswordResetForCurrentUser();
 
         navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.U13);
@@ -832,6 +831,8 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         changePasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         changePasswordPage.clickSelect();
         changePasswordPage.clickSave();
+
+        Assert.assertTrue(addProfilePage.getSecureProfilePINTitle().isPresent(), SECURE_PROFILE_PIN_PAGE_NOT_DISPLAYED);
     }
 
     public void validateGenderOptions() {
