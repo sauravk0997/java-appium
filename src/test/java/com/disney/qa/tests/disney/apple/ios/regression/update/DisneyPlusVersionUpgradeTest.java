@@ -143,16 +143,13 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(IAPIHelper.TEST_FAIRY_APP_VERSION),
                 "Current displayed version doesn't match with latest unreleased build version");
         Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE),
-                "Default profile is not displayed");
+                "Default profile is not displayed after app upgrade");
         Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE),
-                "Secondary profile is not displayed");
+                "Secondary profile is not displayed after app upgrade");
         Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(KIDS_PROFILE),
-                "Kids profile is not displayed");
+                "Kids profile is not displayed after app upgrade");
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
         Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
-
-        Assert.assertTrue(downloadsPage.isOpened(),
-                DOWNLOADS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
                 String.format("Movie title '%s' is not found for downloaded asset", movieTitle));
 
