@@ -114,7 +114,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 .avatarId(RAYA)
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true).build());
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         moreMenu.clickMoreTab();
         Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE),
