@@ -1634,7 +1634,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        loginWithSecondaryProfileForRestOfWorldLocale();
+        loginWithSecondaryProfileForRestOfWorldLocale(SECONDARY_PROFILE);
         homePage.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(SECONDARY_PROFILE);
@@ -1662,6 +1662,85 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), ON,
                 "Live toggle did not turn On after tapping on toggle");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78531"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, REST_OF_WORLD})
+    public void verifyLiveAndUnratedToggleAndContentJuniorModeForRestOfWorld() {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        int swipeCount = 3;
+        int duration = 500;
+        String setTitle, setContentTitle;
+        String OFF = getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.TEXT_OFF.getText());
+
+        if (getLocalizationUtils().getLocale().equals(TR)) {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        } else {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        }
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(JUNIOR_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(DARTH_MAUL)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+
+        com.disney.qa.api.explore.response.Set espnUpcomingSet =
+                getExploreAPISet(getCollectionName(CollectionConstant.Collection.LIVE_AND_UPCOMING_FROM_ESPN), 20);
+
+        if (espnUpcomingSet == null) {
+            throw new SkipException("Skipping test, not able to get the 'Live and unrated' set data from the explore api");
+        }
+
+        try {
+            setTitle = espnUpcomingSet.getVisuals().getName();
+            setContentTitle = espnUpcomingSet.getItems().get(0).getVisuals().getTitle();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, not able to get the 'Live and unrated' content from the explore " +
+                    "api " + e);
+        }
+
+        loginWithSecondaryProfileForRestOfWorldLocale(DEFAULT_PROFILE);
+        homePage.clickMoreTab();
+        whoIsWatching.clickEditProfile();
+        editProfile.clickEditModeProfile(JUNIOR_PROFILE);
+        Assert.assertTrue(swipe(editProfile.getProfileSettingLiveUnratedHeader(), Direction.UP, swipeCount, duration),
+                LIVE_TOGGLE_WAS_NOT_DISPLAYED);
+
+        //Live toggle should be disabled
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle was not defaulted to OFF for kid's profile");
+        editProfile.tapLiveAndUnratedToggle();
+        Assert.assertEquals(editProfile.getLiveAndUnratedToggleState(), OFF,
+                "Live toggle was tappable for kids mode");
+
+        //verify tooltip
+        editProfile.getProfileSettingLiveUnratedHeader().click();
+        Assert.assertTrue(editProfile.getProfileSettingLiveUnratedTooltip().isPresent(),
+                "Live and unrated toggle Tool tip for junior mode was not present");
+
+        editProfile.clickDoneBtn();
+        whoIsWatching.clickProfile(JUNIOR_PROFILE);
+        homePage.waitForHomePageToOpen();
+
+        // Verify that live and unrated content is not shown
+        LOGGER.info("'Live and unrated' content under test -> set Name: {} and title: {}", setTitle, setContentTitle);
+        Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setTitle), Direction.UP, swipeCount, duration),
+                "'Live and unrated' collection header is found on kid's profile");
+        Assert.assertFalse(swipe(homePage.getStaticTextByLabel(setContentTitle), Direction.DOWN, swipeCount, duration),
+                "'Live and unrated' title was found on kid's profile");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78050"})
@@ -2031,7 +2110,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertEquals(editProfile.getAutoplayState(), state, errorMessage);
     }
 
-    private void loginWithSecondaryProfileForRestOfWorldLocale(){
+    private void loginWithSecondaryProfileForRestOfWorldLocale(String profileName){
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         handleAlert();
@@ -2040,6 +2119,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         login(getUnifiedAccount());
         handleGenericPopup(5,1);
         handleOneTrustPopUp();
-        whoseWatchingPage.clickProfile(SECONDARY_PROFILE, false);
+        whoseWatchingPage.clickProfile(profileName, false);
     }
 }
