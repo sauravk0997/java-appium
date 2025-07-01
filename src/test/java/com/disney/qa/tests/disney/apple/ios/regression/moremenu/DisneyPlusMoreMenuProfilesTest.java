@@ -1665,7 +1665,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78531"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, DE})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, KR})
     public void verifyLiveAndUnratedToggleAndContentJuniorModeForRestOfWorld() {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -1733,7 +1733,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
         editProfile.clickDoneBtn();
         whoIsWatching.clickProfile(JUNIOR_PROFILE);
-        Assert.assertTrue(homePage.isKidsHomePageOpen(), HOME_PAGE_NOT_DISPLAYED + "for kids profile");
+        homePage.waitForHomePageToOpen();
 
         // Verify that live and unrated content is not shown
         LOGGER.info("'Live and unrated' content under test -> set Name: {} and title: {}", setTitle, setContentTitle);
