@@ -17,6 +17,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD_YEARLY_TURKEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
@@ -991,6 +993,33 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 DOWNLOAD_COMPLETE_BTN_NOT_DISPLAYED);
         Assert.assertFalse(downloadsPage.getDownloadTitleLicenseExpiredText().isElementPresent(FIVE_SEC_TIMEOUT),
                 "Expired text under downloaded title was present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83282"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, TR})
+    public void verifyAdFreeDownloadForAdTierUserTurkey() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        ExtendedWebElement firstEpisodeDownloadButton = detailsPage.getFirstEpisodeDownloadButton();
+        Assert.assertTrue(firstEpisodeDownloadButton.isPresent(),
+                "Episode download icon is not displayed");
+        swipePageTillElementTappable(firstEpisodeDownloadButton, 2, null, Direction.UP, 1000);
+        firstEpisodeDownloadButton.click();
+        detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        Assert.assertTrue(detailsPage.getFirstEpisodeDownloadCompleteButton().isPresent(),
+                DOWNLOAD_COMPLETE_BTN_NOT_DISPLAYED);
+
     }
 
     public List<String> getListEpisodes(String element) {
