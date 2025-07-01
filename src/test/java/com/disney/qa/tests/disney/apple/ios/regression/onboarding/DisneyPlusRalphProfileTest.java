@@ -22,7 +22,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 import java.util.Map;
 
-import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
+import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.common.constant.RatingConstant.*;
@@ -524,6 +524,39 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         addProfilePage.enterProfileName(SECONDARY_PROFILE);
 
         Assert.assertTrue(addProfilePage.isDateOfBirthFieldPresent(), "Date of Birth field is not present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75785"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, LATAM})
+    public void verifyDemographicTargetingToggleIsDisabledForJuniorModeProfiles() {
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatchingPage.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+
+        // Validate Privacy & Data subsection and Demographic Targeting toggle elements are not visible
+        swipe(editProfilePage.getDeleteProfileButton(), Direction.UP, 10, 500);
+        Assert.assertFalse(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(FIVE_SEC_TIMEOUT),
+                "'Privacy & Data' subsection title is present");
+        Assert.assertFalse(editProfilePage.getDemographicTargetingToggleCell().isPresent(THREE_SEC_TIMEOUT),
+                "Demographic Targeting toggle title is present");
     }
 
     private void navigateToContentRating() {
