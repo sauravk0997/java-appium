@@ -151,17 +151,18 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
     @Test(dataProvider = "impressumCountries", groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, DE})
     public void verifyImpressumTab(String TUID, DisneyUnifiedOfferPlan offer) {
         String imprintHeader = "Impressum";
-        DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whosIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         setAccount(getUnifiedAccountApi()
                 .createAccount(getCreateUnifiedAccountRequestForCountryWithPlan(offer, country, DE_LANG)));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), country);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
+        whosIsWatchingPage.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         handleOneTrustPopUp();
         if (homePage.isTravelAlertTitlePresent()) {
