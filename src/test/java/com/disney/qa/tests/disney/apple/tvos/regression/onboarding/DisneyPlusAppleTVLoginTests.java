@@ -597,7 +597,7 @@ public class DisneyPlusAppleTVLoginTests extends DisneyPlusAppleTVBaseTest {
                 new DisneyPlusAppleTVOneTrustConsentBannerIOSPage(getDriver());
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         // Validate One Trust consent page
         sa.assertTrue(oneTrustConsentPage.isAllowAllButtonPresent(),
