@@ -443,6 +443,58 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 "DOB format is not standard for the jurisdiction");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76350"})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
+    public void testEmeaEditProfilePrivacyData() {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi()
+                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_DE,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        // Create kids profile
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .gender(null)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .isStarOnboarded(true)
+                .build());
+
+     //   if (oneTrustPage.isAllowAllButtonPresent()) {
+       //     oneTrustPage.tapAcceptAllButton();
+      //  }
+
+        setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
+
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatching.clickEditProfile();
+        // Validate Privacy & Data option is not present for a kids profile
+        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        swipe(editProfilePage.getDeleteProfileButton(), Direction.UP, 10, 500);
+        Assert.assertFalse(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(THREE_SEC_TIMEOUT),
+                "Privacy & Data section is present");
+        Assert.assertFalse(editProfilePage.getDemographicTargetingToggleCell().isPresent(THREE_SEC_TIMEOUT),
+                "Demographic Targeting toggle is present");
+        editProfilePage.clickDoneBtn();
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatching.clickEditProfile();
+        // Validate Privacy & Data option is not present for the default profile
+        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
+        swipe(editProfilePage.getPrivacyAndDataTitleLabel(), Direction.UP, 10, 500);
+        Assert.assertTrue(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(),
+                "Privacy & Data section is not present");
+        Assert.assertTrue(editProfilePage.getDemographicTargetingToggleCell().isPresent(),
+                "Demographic Targeting toggle is not present");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74085"})
     @Test(groups = {TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, CA})
     public void testRalphEditProfileAndSelectRatingDifferentFromRecommended() {
