@@ -181,7 +181,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 "Keyboard not focused");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"DPQA-126"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67380"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.SMOKE, US})
     public void verifySearchInputField() {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
@@ -201,7 +201,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 "Search inputs were not recorded correctly");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"DPQA-156"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67280"})
     @Test(groups = {TestGroup.SMOKE, TestGroup.SEARCH, TestGroup.MOVIES, US})
     public void verifySearchMoviesNavigation() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());

@@ -445,7 +445,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
                 "Video Player did not resume from bookmark");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"DPQA-126"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-71700"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, TestGroup.PRE_CONFIGURATION, TestGroup.SMOKE, US})
     public void verifyResumeStateSeries() {
         SoftAssert sa = new SoftAssert();
