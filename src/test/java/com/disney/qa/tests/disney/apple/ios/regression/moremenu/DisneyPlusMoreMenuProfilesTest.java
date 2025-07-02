@@ -1971,6 +1971,41 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Demographic Targeting toggle is not set to 'ON'");
     }
 
+    // Bug related IOS-14479
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75838"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, LATAM_US})
+    public void verifyAddProfileJuniorModeGenderDisabled() {
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        String toggleOff = "Off";
+        String toggleOn = "On";
+
+        if (!getLocalizationUtils().getLocale().equals(US)) {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                    DISNEY_PLUS_STANDARD,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+            getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        }
+
+        onboard();
+
+        moreMenu.clickAddProfile();
+        chooseAvatar.clickSkipButton();
+        Assert.assertTrue(addProfile.isOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.chooseGender();
+
+        Assert.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode toggle is not present");
+        Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), toggleOff, "Junior Mode toggle is not OFF");
+        addProfile.tapJuniorModeToggle();
+        Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), toggleOn, "Junior Mode toggle is not ON");
+        Assert.assertFalse(addProfile.isGenderFieldEnabled(), "Gender field was enabled");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81857"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifyWhosWatchingForOnlinePinProfile() {
