@@ -62,8 +62,10 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         handleOneTrustPopUp();
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
