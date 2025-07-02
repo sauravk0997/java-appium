@@ -299,7 +299,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
 
     private void clickProfile(String profileName) {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        ExtendedWebElement profileCell = whoIsWatching.getTypeCellLabelContains(String.format("%s's", profileName));
+        ExtendedWebElement profileCell = whoIsWatching.getTypeCellLabelContains(profileName);
         whoIsWatching.waitForPresenceOfAnElement(profileCell);
         profileCell.click();
     }
