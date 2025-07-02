@@ -2039,13 +2039,13 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoseWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
-                        .unifiedAccount(getUnifiedAccount())
-                        .profileName(SECONDARY_PROFILE)
-                        .dateOfBirth(ADULT_DOB)
-                        .language(getLocalizationUtils().getUserLanguage())
-                        .avatarId(RAYA)
-                        .kidsModeEnabled(false)
-                        .isStarOnboarded(true).build());
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true).build());
 
         setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
