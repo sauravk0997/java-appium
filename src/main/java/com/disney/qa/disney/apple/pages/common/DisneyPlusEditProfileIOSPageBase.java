@@ -157,10 +157,6 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return addProfileBtn;
     }
 
-    public ExtendedWebElement getGenderLabel() {
-        return staticTextByLabel.format(genderTitle);
-    }
-
     public boolean isEditProfilesTitlePresent() {
         return collectionHeadlineTitle.getText().equals(editProfileTitle);
     }
@@ -426,7 +422,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         staticTextByLabel.format(genderTitle).click();
     }
 
-    public boolean isGenderButtonPresent() {
+    public boolean isGenderButtonPresent(long... timeout) {
+        if (timeout.length > 0) {
+            return staticTextByLabel.format(genderTitle).isElementPresent(timeout[0]);
+        }
         return staticTextByLabel.format(genderTitle).isElementPresent();
     }
 
