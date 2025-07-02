@@ -614,7 +614,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
 
-        sa.assertTrue(accountSharingPage.isOOHHardBlockSubCopyPresent(),
+        sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopy3Present(),
                 "OOH hard block subcopy was not present");
         sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopy2Present(),
                 "OOH hard block subcopy 2 was not present");
