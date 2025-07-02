@@ -480,7 +480,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         editProfilePage.clickDoneBtn();
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
-        // Validate Privacy & Data option is not present for the default profile
+        // Validate Privacy & Data option is present for the default profile
         editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
         swipe(editProfilePage.getPrivacyAndDataTitleLabel(), Direction.UP, 10, 500);
         Assert.assertTrue(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(),
