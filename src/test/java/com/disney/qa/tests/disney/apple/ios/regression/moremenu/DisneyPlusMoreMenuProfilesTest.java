@@ -1982,6 +1982,13 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String toggleOff = "Off";
         String toggleOn = "On";
 
+        if (!getLocalizationUtils().getLocale().equals(US)) {
+            setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                    DISNEY_PLUS_STANDARD,
+                    getLocalizationUtils().getLocale(),
+                    getLocalizationUtils().getUserLanguage())));
+        }
+
         onboard();
 
         moreMenu.clickAddProfile();
