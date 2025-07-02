@@ -1987,6 +1987,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                     DISNEY_PLUS_STANDARD,
                     getLocalizationUtils().getLocale(),
                     getLocalizationUtils().getUserLanguage())));
+            getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         }
 
         onboard();
