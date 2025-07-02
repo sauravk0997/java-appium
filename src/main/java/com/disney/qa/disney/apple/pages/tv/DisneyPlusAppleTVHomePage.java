@@ -86,9 +86,7 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
     public String whichGlobalNavMenuIsFocused() {
         for (globalNavigationMenu menu : globalNavigationMenu.values()) {
             String currentMenu = menu.getText();
-            LOGGER.info("Waiting for elemet to be present"+getDynamicAccessibilityId(menu.getText());
             waitForPresenceOfAnElement(getDynamicAccessibilityId(menu.getText()));
-            LOGGER.info("Waiting for elemet to be focused");
             if (isFocused(getDynamicAccessibilityId(menu.getText()))) {
                 LOGGER.info(String.format("%s is focused on global nav", currentMenu));
                 return currentMenu;
