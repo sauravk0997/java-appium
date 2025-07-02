@@ -157,6 +157,10 @@ public class DisneyPlusEditProfileIOSPageBase extends DisneyPlusAddProfileIOSPag
         return addProfileBtn;
     }
 
+    public ExtendedWebElement getGenderLabel() {
+        return staticTextByLabel.format(genderTitle);
+    }
+
     public boolean isEditProfilesTitlePresent() {
         return collectionHeadlineTitle.getText().equals(editProfileTitle);
     }
