@@ -916,7 +916,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
                 getLocalizationUtils().getLocale()));
         List<String> feedOptionText = getBroadcastTargetFeedOptionText();
         LOGGER.info("Feed option without sort :- " + feedOptionText);
-        List<String> feedOptionTextSorted = getBroadcastTargetFeedOptionText();
+        List<String> feedOptionTextSorted = feedOptionText;
         feedOptionTextSorted.sort(collator);
         LOGGER.info("Feed option with sort :- " + feedOptionTextSorted);
         return feedOptionText.equals(feedOptionTextSorted);
