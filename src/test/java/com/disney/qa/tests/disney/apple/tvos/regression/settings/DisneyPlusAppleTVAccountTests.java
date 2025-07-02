@@ -609,12 +609,12 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_MAX_HH, false);
         logInWithoutHomeCheck(account);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+        whoIsWatching.clickProfile(account.getProfiles().get(0).getProfileName());
 
-        Assert.assertTrue(accountSharingPage.isOOHHardBlockCreateAccLabelPresent(),
-                HOUSEHOLD_CREATE_ACCOUNT_HEADLINE);
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
 
-        sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopyPresent(),
+        sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopyTitlePresent(),
                 "OOH hard block subcopy was not present");
         sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopy2Present(),
                 "OOH hard block subcopy 2 was not present");
@@ -635,8 +635,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(accountSharingPage.isOOHUpdateHHMaxedButtonPresent(),
                 "OOH update maxed button is not displayed");
         homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isOOHHardBlockCreateAccLabelPresent(),
-                HOUSEHOLD_CREATE_ACCOUNT_HEADLINE);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
 
         //verify Logout CTA
         homePage.moveDown(1, 1);

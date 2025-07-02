@@ -342,6 +342,7 @@ public enum DictionaryKeys {
     OOH_ERROR_PAGE_HEADLINE("ooh_error_page_headline"),
     OOH_HARD_BLOCK_HEADLINE("ooh_hard_block_headline"),
     OOH_HARD_BLOCK_HEADLINE_CREATE_ACC("ooh_hard_block_headline_create_account"),
+    OOH_HARD_BLOCK_SUBCOPY("ooh_hard_block_subcopy"),
     OOH_HARD_BLOCK_SUBCOPY_3("ooh_hard_block_subcopy_3"),
     OOH_HARD_BLOCK_SUBCOPY_2("ooh_hard_block_subcopy_2"),
     OOH_LOGOUT_CTA("ooh_logout_cta"),
