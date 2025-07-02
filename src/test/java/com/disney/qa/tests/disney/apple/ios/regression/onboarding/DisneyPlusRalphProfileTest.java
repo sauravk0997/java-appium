@@ -444,11 +444,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76350"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, DE})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION, DE})
     public void testEmeaEditProfilePrivacyData() {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi()
@@ -466,10 +465,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 .avatarId(BABY_YODA)
                 .isStarOnboarded(true)
                 .build());
-
-     //   if (oneTrustPage.isAllowAllButtonPresent()) {
-       //     oneTrustPage.tapAcceptAllButton();
-      //  }
 
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
