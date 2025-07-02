@@ -910,8 +910,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public boolean verifyFeedOptionsAreSorted() {
         List<String> feedOptionText = getBroadcastTargetFeedOptionText();
         LOGGER.info("Feed option without sort :- " + feedOptionText);
-        List<String> feedOptionTextSorted = feedOptionText;
-        Collections.sort(feedOptionTextSorted);
+        List<String> feedOptionTextSorted = getBroadcastTargetFeedOptionText();
+        Collections.sort(feedOptionTextSorted, Collections.reverseOrder());
         LOGGER.info("Feed option with sort :- " + feedOptionTextSorted);
         return feedOptionText.equals(feedOptionTextSorted);
     }
