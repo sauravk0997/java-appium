@@ -119,7 +119,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
