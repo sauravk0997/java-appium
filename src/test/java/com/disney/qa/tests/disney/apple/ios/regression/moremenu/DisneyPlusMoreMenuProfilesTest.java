@@ -1989,6 +1989,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(addProfile.isOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
         addProfile.enterProfileName(SECONDARY_PROFILE);
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
+        addProfile.chooseGender();
 
         Assert.assertTrue(addProfile.isJuniorModeTextPresent(), "Junior mode toggle is not present");
         Assert.assertEquals(editProfilePage.getJuniorModeToggleValue(), toggleOff, "Junior Mode toggle is not OFF");
