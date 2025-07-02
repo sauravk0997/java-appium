@@ -609,7 +609,7 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
         UnifiedAccount account = setHouseholdExperience(ExperienceId.HARD_MAX_HH, false);
         logInWithoutHomeCheck(account);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+        whoIsWatching.clickProfile(account.getProfiles().get(0).getProfileName());
 
         Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
                 OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
