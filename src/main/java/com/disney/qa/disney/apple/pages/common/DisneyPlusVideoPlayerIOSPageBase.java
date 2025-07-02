@@ -18,12 +18,11 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
 import static com.disney.qa.common.constant.IConstantHelper.PHONE;
 import static com.disney.qa.common.constant.IConstantHelper.TABLET;
 
@@ -88,7 +87,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement contentRatingInfoView;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[$type='XCUIElementTypeStaticText' AND label CONTAINS " +
             "'%s'$]/**/XCUIElementTypeButton")
-    private ExtendedWebElement feedOptionCheckmark;
+    protected ExtendedWebElement feedOptionCheckmark;
+    @ExtendedFindBy(accessibilityId = "broadcastsMenuButton")
+    protected ExtendedWebElement broadcastMenuButton;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == \"broadcast\"$]" +
+            "/**/XCUIElementTypeCollectionView[2]/XCUIElementTypeCell")
+    private ExtendedWebElement broadcastFeed;
 
     //FUNCTIONS
 
@@ -893,10 +897,21 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public List<String> getBroadcastTargetFeedOptionText() {
         List<String> feedOptionText = new ArrayList<>();
-        List<ExtendedWebElement> feedCell =
-                findExtendedWebElements(collectionCellNoRow.format(BROADCAST_COLLECTION).getBy());
+        List<ExtendedWebElement> feedCell;
+        if (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) {
+            feedCell = findExtendedWebElements(broadcastFeed.getBy());
+        } else {
+            feedCell = findExtendedWebElements(collectionCellNoRow.format(BROADCAST_COLLECTION).getBy());
+        }
         feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim().toUpperCase()));
         return feedOptionText;
+    }
+
+    public boolean verifyFeedOptionsAreSorted() {
+        List<String> feedOptionText = getBroadcastTargetFeedOptionText();
+        List<String> feedOptionTextSorted = getBroadcastTargetFeedOptionText();
+        Collections.sort(feedOptionTextSorted, Collections.reverseOrder());
+        return feedOptionText.equals(feedOptionTextSorted);
     }
 
     public List<String> getBroadcastLanguageOptionText() {
@@ -922,8 +937,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public String selectAndGetBroadcastFeedOption() {
         String selectedOption = null;
-        List<ExtendedWebElement> feedCell =
-                findExtendedWebElements(collectionCellNoRow.format(BROADCAST_COLLECTION).getBy());
+        List<ExtendedWebElement> feedCell;
+        if (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) {
+            feedCell = findExtendedWebElements(broadcastFeed.getBy());
+        } else {
+            feedCell = findExtendedWebElements(collectionCellNoRow.format(BROADCAST_COLLECTION).getBy());
+        }
         if (feedCell.size() > 1) {
             selectedOption = feedCell.get(1).getText().trim();
             feedCell.get(1).click();
