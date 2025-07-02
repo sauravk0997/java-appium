@@ -635,8 +635,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(accountSharingPage.isOOHUpdateHHMaxedButtonPresent(),
                 "OOH update maxed button is not displayed");
         homePage.clickSelect();
-        sa.assertTrue(accountSharingPage.isOOHHardBlockCreateAccLabelPresent(),
-                HOUSEHOLD_CREATE_ACCOUNT_HEADLINE);
+        sa.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
 
         //verify Logout CTA
         homePage.moveDown(1, 1);
