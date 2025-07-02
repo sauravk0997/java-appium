@@ -121,7 +121,7 @@ public class DisneyPlusAppleTVAccountSharingPage extends DisneyPlusApplePageBase
                         DictionaryKeys.OOH_HARD_BLOCK_SUBCOPY_2.getText())).isPresent();
     }
 
-    public boolean isOOHHardBlockSubcopy3Present() {
+    public boolean isOOHHardBlockSubcopyTitlePresent() {
         return getStaticTextByLabel(getLocalizationUtils()
                 .getDictionaryItem(DisneyDictionaryApi.ResourceKeys.UNIFIED_COMMERCE,
                         DictionaryKeys.OOH_HARD_BLOCK_SUBCOPY.getText())).isPresent();
