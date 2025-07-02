@@ -611,8 +611,8 @@ public class DisneyPlusAppleTVAccountTests extends DisneyPlusAppleTVBaseTest {
         logInWithoutHomeCheck(account);
         whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
 
-        Assert.assertTrue(accountSharingPage.isOOHHardBlockCreateAccLabelPresent(),
-                HOUSEHOLD_CREATE_ACCOUNT_HEADLINE);
+        Assert.assertTrue(accountSharingPage.isOOHHardBlockScreenHeadlinePresent(),
+                OOH_HARD_BLOCK_SCREEN_NOT_DISPLAYED);
 
         sa.assertTrue(accountSharingPage.isOOHHardBlockSubcopyPresent(),
                 "OOH hard block subcopy was not present");
