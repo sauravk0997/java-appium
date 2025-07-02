@@ -160,7 +160,7 @@ public class DisneyPlusMoreMenuSettingsTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getFirstName());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         SoftAssert sa = new SoftAssert();
         moreMenu.clickMoreTab();
         //Scenario: Verify Help hyperlink
