@@ -539,7 +539,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(KIDS_PROFILE)
-                .dateOfBirth(KIDS_DOB)
+                .dateOfBirth(null)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(true)
