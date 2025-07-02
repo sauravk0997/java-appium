@@ -242,7 +242,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         whoIsWatchingPage.clickEditProfile();
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
 
-        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
         Assert.assertFalse(editProfilePage.getGenderLabel().isPresent(THREE_SEC_TIMEOUT),
                 "Gender selection is present");
     }
