@@ -62,8 +62,9 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         getDesiredRatingContent(ratingValue, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
+        clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
@@ -85,7 +86,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
     public void ratingsSetupWithPINNew(DisneyUnifiedOfferPlan planName, String locale) {
@@ -105,7 +106,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
     public void ratingsSetupForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
@@ -293,5 +294,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
+    }
+
+    private void clickProfile(String profileName) {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        ExtendedWebElement profileCell = whoIsWatching.getTypeCellLabelContains(profileName);
+        whoIsWatching.waitForPresenceOfAnElement(profileCell);
+        profileCell.click();
     }
 }
