@@ -42,7 +42,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
             "'Want to add a Profile PIN?' screen is not visible";
     private static final String ADD_PROFILE_LABEL = "ADD PROFILE";
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-90920"})
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"DPQA-126"})
     @Test(description = "Profiles - Exit from Who's Watching view", groups = {TestGroup.PROFILES, TestGroup.SMOKE, US})
     public void exitFromWhoseWatching() {
         SoftAssert sa = new SoftAssert();
