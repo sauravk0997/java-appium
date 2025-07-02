@@ -2065,8 +2065,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoIsWatching.clickAddProfile();
         Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar page was not opened");
-        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
-        avatars[0].click();
+        chooseAvatarPage.clickSkipButton();
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
         addProfile.enterProfileName(TERTIARY_PROFILE);
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
