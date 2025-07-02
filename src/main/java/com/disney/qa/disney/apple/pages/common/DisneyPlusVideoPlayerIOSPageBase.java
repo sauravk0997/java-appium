@@ -18,8 +18,10 @@ import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -907,6 +909,17 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         }
         feedCell.forEach(targetFeed -> feedOptionText.add(targetFeed.getText().split(",")[0].trim().toUpperCase()));
         return feedOptionText;
+    }
+
+    public boolean verifyFeedOptionsAreSorted() {
+        Collator collator = Collator.getInstance(new Locale(getLocalizationUtils().getUserLanguage(),
+                getLocalizationUtils().getLocale()));
+        List<String> feedOptionText = getBroadcastTargetFeedOptionText();
+        LOGGER.info("Feed option without sort :- " + feedOptionText);
+        List<String> feedOptionTextSorted = getBroadcastTargetFeedOptionText();
+        feedOptionTextSorted.sort(collator);
+        LOGGER.info("Feed option with sort :- " + feedOptionTextSorted);
+        return feedOptionText.equals(feedOptionTextSorted);
     }
 
     public List<String> getBroadcastLanguageOptionText() {
