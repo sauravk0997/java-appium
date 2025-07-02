@@ -27,7 +27,8 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusBrandIOSPageBase brandPage = initPage(DisneyPlusBrandIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
         homePage.swipeToOriginalBrandRow();
         sa.assertTrue(homePage.getBrandCell(brandPage.getBrand(brand)).isPresent(),
                 "The following brand tile was not present: " + brandPage.getBrand(brand));
@@ -71,7 +72,7 @@ public class DisneyPlusBrandsTest extends DisneyBaseTest {
     public void verifyEspnTileOrder() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         Assert.assertTrue(homePage.getBrandListFromUI().equals(homePage.getOrderedBrandList()),
                 "Brand tiles are not in the expected order");
