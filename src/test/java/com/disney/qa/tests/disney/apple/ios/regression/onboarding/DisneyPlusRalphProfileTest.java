@@ -447,7 +447,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION, DE})
     public void testEmeaEditProfilePrivacyData() {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
-        DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi()
@@ -472,7 +471,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
         // Validate Privacy & Data option is not present for a kids profile
-        editProfile.clickEditModeProfile(SECONDARY_PROFILE);
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         swipe(editProfilePage.getDeleteProfileButton(), Direction.UP, 10, 500);
         Assert.assertFalse(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(THREE_SEC_TIMEOUT),
                 "Privacy & Data section is present");
@@ -482,7 +481,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
         // Validate Privacy & Data option is not present for the default profile
-        editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
+        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
         swipe(editProfilePage.getPrivacyAndDataTitleLabel(), Direction.UP, 10, 500);
         Assert.assertTrue(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(),
                 "Privacy & Data section is not present");
