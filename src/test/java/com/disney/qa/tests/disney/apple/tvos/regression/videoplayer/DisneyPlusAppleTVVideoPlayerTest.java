@@ -598,7 +598,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest
                 (DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         home.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_espn_nhl_replay_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
