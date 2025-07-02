@@ -1001,16 +1001,22 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(SERIES_LOKI);
+        searchPage.getDynamicAccessibilityId(SERIES_LOKI).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        String episodeTitle = detailsPage.getEpisodeContentTitle();
         ExtendedWebElement firstEpisodeDownloadButton = detailsPage.getFirstEpisodeDownloadButton();
         Assert.assertTrue(firstEpisodeDownloadButton.isPresent(),
                 "Episode download icon is not displayed");
@@ -1019,7 +1025,15 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
         Assert.assertTrue(detailsPage.getFirstEpisodeDownloadCompleteButton().isPresent(),
                 DOWNLOAD_COMPLETE_BTN_NOT_DISPLAYED);
-
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(SERIES_LOKI).isPresent(),
+                "Series title is not displayed");
+        downloadsPage.getStaticTextByLabelContains(SERIES_LOKI).click();
+        downloadsPage.getStaticTextByLabelContains(episodeTitle).click();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
+                "Ad is displayed on downloaded content for Ad-tier user");
     }
 
     public List<String> getListEpisodes(String element) {
