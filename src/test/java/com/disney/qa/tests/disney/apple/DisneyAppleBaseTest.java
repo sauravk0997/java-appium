@@ -231,7 +231,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         @Override
         protected IDPApi initialize() {
             ApiConfiguration apiConfiguration = ApiConfiguration.builder()
-                    .platform(WEB)
+                    .platform(APPLE)
                     .partner(DisneyConfiguration.getPartner().toUpperCase())
                     .environment(DisneyParameters.getEnv())
                     .build();

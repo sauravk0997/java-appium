@@ -797,6 +797,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106205"})
     @Test(groups = {TestGroup.PROFILES, US})
     public void verifyPasswordResetOnWelchFlow() {
+        String newPassword = "Abc12!";
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
         DisneyPlusAppleTVParentalConsentPage parentalConsentPage =
                 new DisneyPlusAppleTVParentalConsentPage(getDriver());
@@ -827,7 +828,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_NOT_DISPLAYED);
         changePasswordPage.clickPasswordField();
-        changePasswordPage.enterPassword("Abc12!");
+        changePasswordPage.enterPassword(newPassword);
         changePasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
         changePasswordPage.clickSelect();
         changePasswordPage.clickSave();
