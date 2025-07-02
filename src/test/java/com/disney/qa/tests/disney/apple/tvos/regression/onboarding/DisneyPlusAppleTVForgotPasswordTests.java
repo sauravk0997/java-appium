@@ -195,6 +195,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
         DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVOneTimePasscodePage oneTimePasscodePage =  new DisneyPlusAppleTVOneTimePasscodePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
                 DISNEY_PLUS_PREMIUM,
@@ -217,6 +218,7 @@ public class DisneyPlusAppleTVForgotPasswordTests extends DisneyPlusAppleTVBaseT
 
         forgotPasswordPage.enterOTP(otp);
         forgotPasswordPage.clickContinueBtnOnOTPPage();
+        whoIsWatchingPage.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         sa.assertTrue(homePage.isOpened(), "Home page is not open after resetting password");
 
         sa.assertAll();
