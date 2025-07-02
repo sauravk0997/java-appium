@@ -124,7 +124,9 @@ public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPa
     public void clickBroadcastMenu() {
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         ExtendedWebElement broadcastMenu = getBroadcastMenu();
-        commonPage.clickDown(1);
+        commonPage.clickPlay();
+        commonPage.clickUp(1);
+        commonPage.clickRight(2, 1, 1);
         broadcastMenu.click();
     }
 
