@@ -1053,7 +1053,9 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(SERIES_LOKI).isPresent(),
                 "Series title is not displayed");
-        downloadsPage.getStaticTextByLabelContains(SERIES_LOKI).click();
+        downloadsPage.clickSeriesMoreInfoButton();
+        //downloadsPage.getStaticTextByLabelContains(SERIES_LOKI).click();
+        downloadsPage.tapDownloadedAsset(episodeTitle);
         downloadsPage.getStaticTextByLabelContains(episodeTitle).click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
