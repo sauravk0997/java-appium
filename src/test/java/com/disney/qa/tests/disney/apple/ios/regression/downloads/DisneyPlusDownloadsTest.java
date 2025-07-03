@@ -17,6 +17,7 @@ import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.zebrunner.agent.core.annotation.TestLabel;
 import com.zebrunner.carina.utils.R;
+import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD_YEARLY_TURKEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
@@ -1014,6 +1016,50 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 DOWNLOAD_COMPLETE_BTN_NOT_DISPLAYED);
         Assert.assertFalse(downloadsPage.getDownloadTitleLicenseExpiredText().isElementPresent(FIVE_SEC_TIMEOUT),
                 "Expired text under downloaded title was present");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83282"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyAdFreeDownloadForAdTierUserTurkey() {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+        DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                        TR, getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), TR);
+
+        setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        searchPage.searchForMedia(SERIES_LOKI);
+        searchPage.getDynamicAccessibilityId(SERIES_LOKI).click();
+        Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
+        String episodeTitle = detailsPage.getEpisodeContentTitle();
+        ExtendedWebElement firstEpisodeDownloadButton = detailsPage.getFirstEpisodeDownloadButton();
+        Assert.assertTrue(firstEpisodeDownloadButton.isPresent(),
+                "Episode download icon is not displayed");
+        swipePageTillElementTappable(firstEpisodeDownloadButton, 2, null, Direction.UP, 1000);
+        firstEpisodeDownloadButton.click();
+        detailsPage.waitForFirstEpisodeToCompleteDownload(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        Assert.assertTrue(detailsPage.getFirstEpisodeDownloadCompleteButton().isPresent(),
+                DOWNLOAD_COMPLETE_BTN_NOT_DISPLAYED);
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(SERIES_LOKI).isPresent(),
+                "Series title is not displayed");
+        downloadsPage.clickSeriesMoreInfoButton();
+        downloadsPage.tapDownloadedAsset(episodeTitle);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
+                "Ad is displayed on downloaded content for Ad-tier user");
     }
 
     public List<String> getListEpisodes(String element) {
