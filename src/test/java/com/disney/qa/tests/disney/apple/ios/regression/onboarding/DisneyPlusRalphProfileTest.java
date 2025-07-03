@@ -444,7 +444,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76350"})
-    @Test(groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION, DE})
+    @Test(groups = {TestGroup.ONBOARDING, TestGroup.PRE_CONFIGURATION, EMEA_LATAM})
     public void testEmeaEditProfilePrivacyData() {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
@@ -457,9 +457,8 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         // Create kids profile
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(SECONDARY_PROFILE)
+                .profileName(KIDS_PROFILE)
                 .dateOfBirth(KIDS_DOB)
-                .gender(null)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .isStarOnboarded(true)
@@ -471,7 +470,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
         // Validate Privacy & Data option is not present for a kids profile
-        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         swipe(editProfilePage.getDeleteProfileButton(), Direction.UP, 10, 500);
         Assert.assertFalse(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(THREE_SEC_TIMEOUT),
                 "Privacy & Data section is present");

@@ -90,6 +90,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM_ANZ = "LATAM_ANZ";
     public static final String LATAM_US = "LATAM_US";
     public static final String EMEA_CA = "EMEA_CA";
+    public static final String EMEA_LATAM = "EMEA_LATAM";
     protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
     protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
@@ -350,6 +351,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(EMEA_CA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEAOrCanadaCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(EMEA_LATAM)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEmeaOrLatamCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(REST_OF_WORLD)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getRestOfWorldCountryCode(), true);
@@ -742,6 +746,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private String getRestOfWorldCountryCode() {
         List<String> countryCodeList = Arrays.asList(KOREA, JAPAN, HONGKONG, TURKEY, GERMANY, UNITED_KINGDOM, ITALY,
                 SPAIN, POLAND, NETHERLANDS, AUSTRALIA, NEW_ZEALAND);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getEmeaOrLatamCountryCode() {
+        List<String> countryCodeList = Arrays.asList(GERMANY, FRANCE, ARGENTINA, BOLIVIA, CHILE, COLOMBIA,
+                COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
+                HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
