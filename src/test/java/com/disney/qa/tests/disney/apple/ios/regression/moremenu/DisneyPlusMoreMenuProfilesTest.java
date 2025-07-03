@@ -2106,10 +2106,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.clickSaveProfileButton();
         //Select Yes for full catalog access
         addProfile.clickPrimaryButton();
-        addProfile.clickSecondaryButton();
-        Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
-        moreMenuPage.clickEditProfilesBtn();
-        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfile.clickSecondaryButtonByCoordinates();
+        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
+        whoIsWatching.getEditProfileButton().click();
         editProfilePage.clickEditModeProfile(TERTIARY_PROFILE);
         Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_RP18_18_R18),
                 "Rating is not as expected for Full catalog access profile");
