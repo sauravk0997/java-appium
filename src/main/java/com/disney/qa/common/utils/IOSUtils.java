@@ -37,8 +37,6 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     Logger IOS_UTILS_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     String DIRECTION = "direction";
     String BUNDLE_ID = "bundleId";
-    String ACTION = "action";
-    String ALERT_PREDICATE = "type = 'XCUIElementTypeAlert'";
     String DEVICE_TYPE = "capabilities.deviceType";
 
     String PICKER_WHEEL_PREDICATE = "type = 'XCUIElementTypePickerWheel'";
@@ -376,6 +374,16 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         int x = (int) Math.round(dimension.getWidth() * timesW);
         int y = dimension.getHeight() - subHeight;
         tap(location.getX() + x, location.getY() + y, 0);
+    }
+
+    default boolean verifyElementIsOnRightSide(ExtendedWebElement element) {
+        LOGGER.info("Verifying if the element ison the right side of the screen");
+        Dimension screenSize = getDriver().manage().window().getSize();
+        int screenWidth = screenSize.width;
+        int elementPosition = getCenterCoordinate(element).getX();
+        // Get 50 percent of the screen width size to validate if elements are on the right or left
+        double percentageToValidate = 0.5 * screenWidth;
+        return elementPosition > percentageToValidate;
     }
 
     /**
