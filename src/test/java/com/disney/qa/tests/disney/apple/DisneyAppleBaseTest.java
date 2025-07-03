@@ -88,6 +88,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String REST_OF_WORLD = "REST_OF_WORLD";
     public static final String JP_ENG = "JP_ENG";
     public static final String LATAM_ANZ = "LATAM_ANZ";
+    public static final String LATAM_US = "LATAM_US";
     public static final String EMEA_CA = "EMEA_CA";
     protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
     protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
@@ -226,6 +227,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     };
 
+    private static final LazyInitializer<IDPApi> IDP_API = new LazyInitializer<>() {
+        @Override
+        protected IDPApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(APPLE)
+                    .partner(DisneyConfiguration.getPartner().toUpperCase())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new IDPApi(apiConfiguration);
+        }
+    };
+
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
         WebDriverConfiguration.addIgnoredNewSessionErrorMessages(Stream.concat(
@@ -343,6 +356,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), FR_LANG, true);
         } else if (groups.contains(LATAM_ANZ)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMOrANZCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(LATAM_US)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMOrUSCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(EMEA_CA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEAOrCanadaCountryCode(), true);
@@ -581,6 +597,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
+    public static IDPApi getIDPApi() {
+        try {
+            return IDP_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
     public String getWatchlistInfoBlock(String entityId) {
         ExploreSearchRequest pageRequest = ExploreSearchRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -717,6 +741,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         List<String> countryCodeList = Arrays.asList(
                 ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
                 HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY, AU, NZ);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getLATAMOrUSCountryCode() {
+        List<String> countryCodeList = Arrays.asList(
+                US, ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
+                HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
