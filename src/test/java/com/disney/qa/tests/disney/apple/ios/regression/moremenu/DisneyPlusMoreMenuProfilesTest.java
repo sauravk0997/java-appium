@@ -2080,7 +2080,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickAddProfile();
-        Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar page was not opened");
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
         ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
         avatars[0].click();
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
@@ -2098,7 +2098,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfilePage.clickDoneBtn();
         Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
         whoIsWatching.clickAddProfile();
-        Assert.assertTrue(chooseAvatarPage.isOpened(), "Choose Avatar page was not opened");
+        chooseAvatarPage.waitForPresenceOfAnElement(chooseAvatarPage.getSkipButton());
         chooseAvatarPage.clickSkipButton();
         Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
         addProfile.enterProfileName(TERTIARY_PROFILE);
