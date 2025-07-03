@@ -479,7 +479,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
-        // Validate Privacy & Data option is not present for a kids profile
+        // Validate Privacy & Data option is not present
         editProfilePage.clickEditModeProfile(KIDS_PROFILE);
         swipe(editProfilePage.getDeleteProfileButton(), Direction.UP, 10, 500);
         Assert.assertFalse(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(THREE_SEC_TIMEOUT),
