@@ -456,11 +456,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                     .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_DE,
                             getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         } else {
-            setAccount(getUnifiedAccountApi().createAccount(
+            setAccount(getUnifiedAccountApi()
+                    .createAccount(
                     getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
-                            getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
-                            .setDateOfBirth(ADULT_DOB).setGender(null)));
-            getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+                            getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         }
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
