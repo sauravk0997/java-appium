@@ -298,9 +298,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(AU)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), AU, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
-        } else if (groups.contains(ANZ)) {
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getANZCountryCode(), true);
-            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(BR)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), BR, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), PT_LANG, true);
@@ -334,6 +331,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(TR)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), TR_LANG, true);
+        } else if (groups.contains(ANZ)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getANZCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(LATAM)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), ES_LANG, true);
@@ -701,6 +701,12 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         removeApp(BuildType.IAP.getJarvisBundle());
     }
 
+    private String getANZCountryCode() {
+        List<String> countryCodeList = Arrays.asList(AUSTRALIA, NEW_ZEALAND);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
     private String getLATAMCountryCode() {
         List<String> countryCodeList = Arrays.asList(ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC,
                 ECUADOR, EL_SALVADOR, GUATEMALA, HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
@@ -746,12 +752,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     private String getRestOfWorldCountryCode() {
         List<String> countryCodeList = Arrays.asList(KOREA, JAPAN, HONGKONG, TURKEY, GERMANY, UNITED_KINGDOM, ITALY,
                 SPAIN, POLAND, NETHERLANDS, AUSTRALIA, NEW_ZEALAND);
-        LOGGER.info("Selecting random Country code");
-        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
-    }
-
-    private String getANZCountryCode() {
-        List<String> countryCodeList = Arrays.asList(AU, NZ);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
