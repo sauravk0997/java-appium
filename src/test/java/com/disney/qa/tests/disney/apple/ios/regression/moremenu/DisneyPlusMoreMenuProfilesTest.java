@@ -2065,7 +2065,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78630"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, ANZ})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
     public void verifyMaturitySettingsForANZU18Profile() {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
