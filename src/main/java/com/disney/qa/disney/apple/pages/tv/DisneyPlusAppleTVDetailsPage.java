@@ -12,9 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.testng.asserts.SoftAssert;
 
 import java.lang.invoke.MethodHandles;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.IntStream;
 
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.BTN_DETAILS_RESTART;
 import static com.disney.qa.disney.dictionarykeys.DictionaryKeys.DETAILS_WATCHLIST;
@@ -38,6 +37,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     private ExtendedWebElement tabBarTitles;
     @ExtendedFindBy(accessibilityId = "title")
     private ExtendedWebElement title;
+    @ExtendedFindBy(accessibilityId = "seasonView")
+    private ExtendedWebElement seasonViewSection;
+    @ExtendedFindBy(accessibilityId = "seasonTitle")
+    private ExtendedWebElement episodeTitleSection;
 
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
@@ -193,5 +196,19 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     public List<ExtendedWebElement> getTabBarTitleInfo() {
         return findExtendedWebElements(tabBarTitles.getBy());
+    }
+
+    public ExtendedWebElement getSeasonViewSection() {
+        return seasonViewSection;
+    }
+
+    public ExtendedWebElement getEpisodeTitleSection() {
+        return episodeTitleSection;
+    }
+
+    public boolean isListOrdered(String element) {
+        List<ExtendedWebElement> titlesFromScreen = findExtendedWebElements(getStaticTextByName(element).getBy());
+        return IntStream.range(0, titlesFromScreen.size() - 1)
+                .allMatch(i -> titlesFromScreen.get(i).getText().compareTo(titlesFromScreen.get(i + 1).getText()) <= 0);
     }
 }
