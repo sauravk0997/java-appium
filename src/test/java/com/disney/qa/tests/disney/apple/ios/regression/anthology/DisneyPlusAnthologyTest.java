@@ -7,6 +7,9 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.disney.DisneyEntityIds;
+import com.disney.qa.api.explore.response.Flag;
+import com.disney.qa.api.explore.response.MetastringParts;
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -24,6 +27,7 @@ import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.zebrunner.agent.core.annotation.TestLabel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -365,15 +369,37 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
             throw new SkipException("Skipping test, play button not found, currently live content playing." + e);
         }
 
+        MetastringParts metastringParts;
+        try {
+            metastringParts = getExploreAPIPageVisuals(DisneyEntityIds.DANCING_WITH_THE_STARS.getEntityId())
+                    .getMetastringParts();
+        } catch (Exception e) {
+            throw new SkipException("Failed to fetch metastringParts for anthology series through Explore API");
+        }
+
+        ArrayList<Flag> audioVisualFlags;
+        try {
+            audioVisualFlags = metastringParts.getAudioVisual().getFlags();
+        } catch (Exception e) {
+            throw new SkipException("Failed to get audioVisual flags for anthology series through Explore API");
+        }
+
+        String rating;
+        try {
+            rating = metastringParts.getRatingInfo().getRating().getText();
+        } catch (Exception e) {
+            throw new SkipException("Failed to get rating text for anthology series through Explore API");
+        }
+
         sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
         sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
-        sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Subtitles / CC").isPresent(),
-                "Subtitles advisory was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Audio Description").isPresent(), "Audio description " +
-                "advisory was not found.");
+        for (Flag flag : audioVisualFlags) {
+            String accessibilityLabel = flag.getTts();
+            sa.assertTrue(details.getStaticTextByLabelContains(accessibilityLabel).isPresent(),
+                    String.format("%s badging was not present", accessibilityLabel));
+        }
+        sa.assertTrue(details.getStaticTextByLabelContains(rating).isPresent(),
+                String.format("%s rating was not present", rating));
         sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
         sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
         sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
