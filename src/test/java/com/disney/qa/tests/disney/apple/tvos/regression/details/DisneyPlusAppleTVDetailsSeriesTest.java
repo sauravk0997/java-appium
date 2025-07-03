@@ -1083,6 +1083,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonBriefDesc).isPresent(),
                 "First episode description is not present");
 
+        // Navigate to season's section
         commonPage.clickLeft();
         Assert.assertTrue(detailsPage.getEpisodeTitleSection().isPresent(),
                 "Episode view section does not contain expected season");
