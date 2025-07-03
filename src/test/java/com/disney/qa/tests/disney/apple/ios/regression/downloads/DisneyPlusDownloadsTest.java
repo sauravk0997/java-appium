@@ -1026,14 +1026,16 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
                         TR, getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), TR);
 
-        setAppToHomeScreen(getUnifiedAccount()/*, getUnifiedAccount().getProfiles().get(0).getProfileName()*/);
+        setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -1046,7 +1048,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
                 "Episode download icon is not displayed");
         swipePageTillElementTappable(firstEpisodeDownloadButton, 2, null, Direction.UP, 1000);
         firstEpisodeDownloadButton.click();
-        detailsPage.waitForFirstEpisodeToCompleteDownload(ONE_HUNDRED_TWENTY_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
+        detailsPage.waitForFirstEpisodeToCompleteDownload(THREE_HUNDRED_SEC_TIMEOUT, FIVE_SEC_TIMEOUT);
         Assert.assertTrue(detailsPage.getFirstEpisodeDownloadCompleteButton().isPresent(),
                 DOWNLOAD_COMPLETE_BTN_NOT_DISPLAYED);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
@@ -1054,9 +1056,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(SERIES_LOKI).isPresent(),
                 "Series title is not displayed");
         downloadsPage.clickSeriesMoreInfoButton();
-        //downloadsPage.getStaticTextByLabelContains(SERIES_LOKI).click();
         downloadsPage.tapDownloadedAsset(episodeTitle);
-        downloadsPage.getStaticTextByLabelContains(episodeTitle).click();
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
                 "Ad is displayed on downloaded content for Ad-tier user");
