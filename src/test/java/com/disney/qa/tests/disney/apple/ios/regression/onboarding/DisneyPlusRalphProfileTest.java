@@ -19,6 +19,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -449,9 +451,22 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
-        setAccount(getUnifiedAccountApi()
-                .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_DE,
-                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        if (getLocalizationUtils().getLocale().contains(GERMANY)) {
+            setAccount(getUnifiedAccountApi()
+                    .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_DE,
+                            getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        } else if (getLocalizationUtils().getLocale().contains(FRANCE)) {
+            setAccount(getUnifiedAccountApi().createAccount(
+                    getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
+                            getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        } else {
+            setAccount(getUnifiedAccountApi().createAccount(
+                    getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                            getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())
+                            .setDateOfBirth(ADULT_DOB).setGender(null)));
+            getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+        }
+
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
         // Create kids profile
