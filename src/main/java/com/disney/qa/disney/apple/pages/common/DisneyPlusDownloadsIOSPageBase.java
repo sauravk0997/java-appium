@@ -78,6 +78,9 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 			"%s]\"`]/**/XCUIElementTypeButton")
 	private ExtendedWebElement episodeDownloadButton;
 
+	@ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label LIKE \"Play *%s*\"`]")
+	protected ExtendedWebElement dynamicPlayButton;
+
 	//FUNCTIONS
 	@Override
 	public boolean isOpened() {
@@ -143,7 +146,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 	}
 
 	public void tapDownloadedAsset(String downloadedAsset) {
-		dynamicBtnFindByLabelContains.format("Play " + downloadedAsset).click();
+		dynamicPlayButton.format(downloadedAsset).click();
 	}
 
 	public boolean isDownloadHeaderPresent() {
@@ -311,7 +314,7 @@ public class DisneyPlusDownloadsIOSPageBase extends DisneyPlusApplePageBase {
 				"Download tab notification badge for multiple downloads was not present")
 				.until(it -> Integer.parseInt(getElementText(downloadsTabNotificationBadge)) > 1);
   }
-  
+
 	public boolean isAdTierDownloadTitleDisplayed() {
 		return getStaticTextByLabel(getLocalizationUtils()
 				.getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
