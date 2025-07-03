@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.disney.jarvisutils.pages.apple.*;
+import com.disney.qa.api.account.PasswordResetReasons;
 import com.disney.qa.api.explore.request.ExploreSearchRequest;
 import com.disney.qa.api.explore.response.*;
 import com.disney.qa.api.explore.response.Set;
@@ -856,5 +857,23 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new RuntimeException("Exception occurred...{}", e);
         }
         return response.getData();
+    }
+
+    public ArrayList<String> broadcastsExpectedFeeds() {
+        ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
+        broadcastsExpectedFeeds.add("PRIMARY");
+        broadcastsExpectedFeeds.add("NATIONAL");
+        broadcastsExpectedFeeds.add("NATIONAL FEED");
+        broadcastsExpectedFeeds.add("HOME");
+        broadcastsExpectedFeeds.add("AWAY");
+        return broadcastsExpectedFeeds;
+    }
+
+    public void triggerPasswordResetForCurrentUser() {
+        try {
+            getIDPApi().setPasswordResetReason(getUnifiedAccount(), PasswordResetReasons.WEAK_PASSWORD);
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("Exception occurred trying to trigger password reset for current user: {}", e);
+        }
     }
 }
