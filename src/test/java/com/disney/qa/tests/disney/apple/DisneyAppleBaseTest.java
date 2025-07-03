@@ -87,6 +87,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String MPAA = "MPAA";
     public static final String REST_OF_WORLD = "REST_OF_WORLD";
     public static final String JP_ENG = "JP_ENG";
+    public static final String KR_ENG = "KR_ENG";
     public static final String LATAM_ANZ = "LATAM_ANZ";
     public static final String LATAM_US = "LATAM_US";
     public static final String EMEA_CA = "EMEA_CA";
@@ -330,6 +331,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(KR)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), KO_LANG, true);
+        } else if (groups.contains(KR_ENG)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(NL)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NL, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
