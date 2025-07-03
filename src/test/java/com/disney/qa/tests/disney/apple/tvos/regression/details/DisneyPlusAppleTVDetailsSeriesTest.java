@@ -1102,10 +1102,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertFalse(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonTitle).isPresent(THREE_SEC_TIMEOUT),
                 "First episode from S1 was present");
         commonPage.clickSelect();
-        Assert.assertTrue(videoPlayer.isOpened(),VIDEO_PLAYER_NOT_DISPLAYED);
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().contains(firstEpisodeSecondSeasonTitle),
                 "Playback is not initiated for expected episode");
-}
+    }
 
     private void toggleAutoPlay(String toggleValue) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
