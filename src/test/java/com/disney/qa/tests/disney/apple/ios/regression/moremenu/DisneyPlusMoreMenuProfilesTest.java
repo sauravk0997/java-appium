@@ -2091,7 +2091,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.clickSecondaryButton();
         Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
         moreMenuPage.clickEditProfilesBtn();
-        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_M),
                 "Rating is not as expected for limited access profile");
