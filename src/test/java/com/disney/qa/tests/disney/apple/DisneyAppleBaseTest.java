@@ -86,8 +86,10 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
     public static final String MPAA = "MPAA";
+    public static final String REST_OF_WORLD = "REST_OF_WORLD";
     public static final String JP_ENG = "JP_ENG";
     public static final String LATAM_ANZ = "LATAM_ANZ";
+    public static final String LATAM_US = "LATAM_US";
     public static final String EMEA_CA = "EMEA_CA";
     protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
     protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
@@ -347,8 +349,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(LATAM_ANZ)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMOrANZCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(LATAM_US)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getLATAMOrUSCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(EMEA_CA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEAOrCanadaCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(REST_OF_WORLD)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getRestOfWorldCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
@@ -721,8 +729,23 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 
+    private String getLATAMOrUSCountryCode() {
+        List<String> countryCodeList = Arrays.asList(
+                US, ARGENTINA, BOLIVIA, CHILE, COLOMBIA, COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
+                HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
     private String getEMEAOrCanadaCountryCode() {
         List<String> countryCodeList = Arrays.asList(FRANCE, SPAIN, SWEDEN, CA);
+        LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getRestOfWorldCountryCode() {
+        List<String> countryCodeList = Arrays.asList(KOREA, JAPAN, HONGKONG, TURKEY, GERMANY, UNITED_KINGDOM, ITALY,
+                SPAIN, POLAND, NETHERLANDS, AUSTRALIA, NEW_ZEALAND);
         LOGGER.info("Selecting random Country code");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }

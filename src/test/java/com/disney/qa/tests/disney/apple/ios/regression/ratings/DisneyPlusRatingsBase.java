@@ -44,7 +44,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     public void ratingsSetup(DisneyUnifiedOfferPlan planName, String ratingValue, String locale, boolean... ageVerified) {
@@ -64,6 +64,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         handleAlert();
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
+        clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
@@ -117,7 +118,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {
@@ -293,5 +294,12 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         detailsPage.waitForRestartButtonToAppear();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
+    }
+
+    private void clickProfile(String profileName) {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        ExtendedWebElement profileCell = whoIsWatching.getTypeCellLabelContains(profileName);
+        whoIsWatching.waitForPresenceOfAnElement(profileCell);
+        profileCell.click();
     }
 }

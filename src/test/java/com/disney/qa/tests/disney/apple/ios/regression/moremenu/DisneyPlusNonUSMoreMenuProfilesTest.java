@@ -96,6 +96,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyEditProfileUIPrimaryProfile() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         initialSetup();
@@ -107,6 +108,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         getLocalizationUtils().getUserLanguage())));
 
         setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
 
         moreMenu.clickMoreTab();
@@ -156,7 +158,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount());
-
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
@@ -183,6 +185,8 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
         String offInJP = "オフ";
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(
@@ -193,6 +197,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
         moreMenu.clickMoreTab();
         whoseWatchingPage.clickAddProfile();
@@ -210,5 +215,35 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         sa.assertFalse(addProfile.isDateOfBirthFieldPresent(), "Date Of Birth field was found");
         sa.assertFalse(addProfile.isGenderFieldPresent(), "Gender field was found");
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-75837"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, LATAM})
+    public void verifyGenderIsNotDisplayedForJuniorModeProfiles() {
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(null)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .kidsModeEnabled(true)
+                .isStarOnboarded(true)
+                .build());
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        setAppToHomeScreen(getUnifiedAccount());
+        whoIsWatchingPage.clickEditProfile();
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertFalse(editProfilePage.isGenderButtonPresent(THREE_SEC_TIMEOUT),
+                "Gender selection is present");
     }
 }

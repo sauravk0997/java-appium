@@ -2,6 +2,7 @@ package com.disney.qa.tests.disney.apple.ios.regression.update;
 
 import com.disney.dmed.productivity.jocasta.JocastaCarinaAdapter;
 import com.disney.jarvisutils.pages.apple.JarvisAppleBase;
+import com.disney.qa.api.client.requests.CreateUnifiedAccountProfileRequest;
 import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.common.utils.helpers.IAPIHelper;
 import com.disney.qa.disney.apple.pages.common.*;
@@ -15,6 +16,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 
 import static com.disney.qa.common.constant.IConstantHelper.*;
+import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.RAYA;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
@@ -40,7 +42,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         installPreviousVersionTestFairyApp();
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         moreMenu.clickMoreTab();
         // Assert that version installed it is the latest RC build used on App Store
@@ -76,6 +78,85 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
                 "Series episode download button is not displayed");
         detailsPage.clickPlayButton(SHORT_TIMEOUT);
         Assert.assertTrue(videoPlayer.isOpened(), "Video player Page did not open");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83154"})
+    @Test(groups = {TestGroup.UPGRADE, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyDownloadAndProfilesAfterAppUpgrade() {
+        int polling = 10;
+        int timeout = 300;
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
+        DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
+
+        // Install latest RC build used on App Store and log in
+        installPreviousVersionTestFairyApp();
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(ADULT_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true).build());
+
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(RAYA)
+                .kidsModeEnabled(false)
+                .isStarOnboarded(true).build());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        moreMenu.clickMoreTab();
+        Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+                "Default profile is not displayed");
+        Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE),
+                "Secondary profile is not displayed");
+        Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(KIDS_PROFILE),
+                "Kids profile is not displayed");
+
+        launchDeeplink(DEEPLINKURL + DisneyEntityIds.MARVELS.getEntityId());
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        String movieTitle = detailsPage.getMediaTitle();
+        detailsPage.getMovieDownloadButton().click();
+        detailsPage.waitForMovieDownloadComplete(timeout, polling);
+        detailsPage.clickDownloadsIcon();
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
+                String.format("Movie title '%s' is not found for downloaded asset", movieTitle));
+
+        // Terminate app and upgrade application to latest unreleased build
+        terminateApp(sessionBundles.get(DISNEY));
+        installApp(sessionBundles.get(APP));
+        startApp(sessionBundles.get(DISNEY));
+        handleGenericPopup(5, 1);
+        moreMenu.clickMoreTab();
+        Assert.assertEquals(moreMenu.getAppVersion(), formatAppVersion(IAPIHelper.TEST_FAIRY_APP_VERSION),
+                "Current displayed version doesn't match with latest unreleased build version");
+        Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(DEFAULT_PROFILE),
+                "Default profile is not displayed after app upgrade");
+        Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(SECONDARY_PROFILE),
+                "Secondary profile is not displayed after app upgrade");
+        Assert.assertTrue(moreMenu.isProfileSwitchDisplayed(KIDS_PROFILE),
+                "Kids profile is not displayed after app upgrade");
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.DOWNLOADS);
+        Assert.assertTrue(downloadsPage.isOpened(), DOWNLOADS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(downloadsPage.getStaticTextByLabelContains(movieTitle).isPresent(),
+                String.format("Movie title '%s' is not found for downloaded asset", movieTitle));
+
+        downloadsPage.getDownloadedAssetImage(movieTitle).click();
+        videoPlayer.waitForVideoToStart();
+        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
+
+        Assert.assertTrue(videoPlayer.getTitleLabel().equals(movieTitle),
+                "Downloaded content is not playing on player");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67615"})
@@ -116,7 +197,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         AppStorePageBase appStorePageBase = initPage(AppStorePageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
 
         enableHardForceUpdateInJarvis();
@@ -151,7 +232,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         String notNow = "NOT NOW";
         enableJarvisSoftUpdate();
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(), "Soft update device banner is not present");
         Assert.assertTrue(welcomePage.isForceAppUpdateButtonPresent(), "Update button is not present");
         Assert.assertTrue(welcomePage.getTypeButtonContainsLabel(notNow).isPresent(), "Not now button is not present");

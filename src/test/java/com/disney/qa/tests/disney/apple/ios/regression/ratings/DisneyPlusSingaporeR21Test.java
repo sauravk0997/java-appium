@@ -51,7 +51,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         initialSetup();
         handleAlert();
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
@@ -396,8 +396,10 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
                 initPage(DisneyPlusVerifyAgeDOBCollectionIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusPinIOSPageBase pinPage = initPage(DisneyPlusPinIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
 
         ratingsSetup(DISNEY_PREMIUM_MONTHLY_SINGAPORE, SINGAPORE);
+        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.startDownload();
@@ -876,6 +878,8 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
     private void launchDeeplinkAndPlay() {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVerifyAgeIOSPageBase verifyAgePage = initPage(DisneyPlusVerifyAgeIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_r21_movie_out_deeplink"));
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.waitForPresenceOfAnElement(detailsPage.getPlayButton());
