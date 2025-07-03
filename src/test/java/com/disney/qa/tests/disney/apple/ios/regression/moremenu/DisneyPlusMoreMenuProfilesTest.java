@@ -2091,7 +2091,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.clickSecondaryButton();
         Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
         moreMenuPage.clickEditProfilesBtn();
-        Assert.assertTrue(editProfilePage.isOpened(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_M),
                 "Rating is not as expected for limited access profile");
@@ -2110,7 +2110,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.clickSecondaryButton();
         Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
         moreMenuPage.clickEditProfilesBtn();
-        Assert.assertTrue(editProfilePage.isOpened(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(editProfilePage.isEditTitleDisplayed(), SELECT_PROFILE_PAGE_NOT_DISPLAYED);
         editProfilePage.clickEditModeProfile(TERTIARY_PROFILE);
         Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_RP18_18_R18),
                 "Rating is not as expected for Full catalog access profile");
