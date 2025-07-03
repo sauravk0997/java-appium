@@ -1099,7 +1099,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "First episode from S2 expected title is not present in the first cell");
         Assert.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeSecondSeasonBriefDesc).isPresent(),
                 "First episode from S2 description is not present");
-        Assert.assertFalse(detailsPage.isFocused(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonTitle)),
+        Assert.assertFalse(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonTitle).isPresent(THREE_SEC_TIMEOUT),
                 "First episode from S1 was present");
         commonPage.clickSelect();
         Assert.assertTrue(videoPlayer.isOpened(),VIDEO_PLAYER_NOT_DISPLAYED);
