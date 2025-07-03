@@ -859,4 +859,14 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
         return response.getData();
     }
+
+    public ArrayList<String> broadcastsExpectedFeeds() {
+        ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
+        broadcastsExpectedFeeds.add("PRIMARY");
+        broadcastsExpectedFeeds.add("NATIONAL");
+        broadcastsExpectedFeeds.add("NATIONAL FEED");
+        broadcastsExpectedFeeds.add("HOME");
+        broadcastsExpectedFeeds.add("AWAY");
+        return broadcastsExpectedFeeds;
+    }
 }
