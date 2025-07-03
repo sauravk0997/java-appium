@@ -1083,7 +1083,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonBriefDesc).isPresent(),
                 "First episode description is not present");
 
-        // Validate presence of the first episode from first season
         commonPage.clickLeft();
         Assert.assertTrue(detailsPage.getEpisodeTitleSection().isPresent(),
                 "Episode view section does not contain expected season");
@@ -1093,8 +1092,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         // Validate if seasons and episodes are ordered
         Assert.assertTrue(detailsPage.isListOrdered(seasonTitle), "Seasons are not ordered ascending as expected");
         Assert.assertTrue(detailsPage.isListOrdered(titleLabel), "Episodes are not ordered ascending as expected");
-        
-        // Assert and validate cell focus status first episode to be no episodes from a different season are present
+
+        // Validate the first episode's cell to assert there are no episodes from a different season
         Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellNameContains(firstEpisodeSecondSeasonTitle)),
                 "First episode from S2 expected title is not present in the first cell");
         Assert.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeSecondSeasonBriefDesc).isPresent(),
