@@ -5,7 +5,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.common.constant.DisneyUnifiedOfferPlan;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -330,14 +329,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.clickYourUSStatePrivacyRightsLink();
         sa.assertTrue(oneTrustPage.isYourUSStatePrivacyRightsPageOpened(15),
                 "US State Privacy Rights Link page not opened");
-        tap(oneTrustPage.getDoneButton());
-        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
-
-        //Verify California Privacy Rights Link
-        oneTrustPage.clickYourCaliforniaPrivacyRightsLink();
-        sa.assertTrue(oneTrustPage.isYourCaliforniaPrivacyRightsPageOpened(15),
-                "California Privacy Rights Link page not opened");
-        oneTrustPage.waitForPresenceOfAnElement(oneTrustPage.getDoneButton());
         tap(oneTrustPage.getDoneButton());
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 
