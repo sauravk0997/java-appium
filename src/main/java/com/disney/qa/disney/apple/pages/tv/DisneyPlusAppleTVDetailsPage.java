@@ -208,9 +208,7 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
 
     public boolean isListOrdered(String element) {
         List<ExtendedWebElement> titlesFromScreen = findExtendedWebElements(getStaticTextByName(element).getBy());
-        ArrayList<String> titles = new ArrayList<>();
-        titlesFromScreen.forEach(item -> titles.add(item.getText()));
         return IntStream.range(0, titlesFromScreen.size() - 1)
-                .allMatch(i -> titles.get(i).compareTo(titles.get(i + 1)) <= 0);
+                .allMatch(i -> titlesFromScreen.get(i).getText().compareTo(titlesFromScreen.get(i + 1).getText()) <= 0);
     }
 }
