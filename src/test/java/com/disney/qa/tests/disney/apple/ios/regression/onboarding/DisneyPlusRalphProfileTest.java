@@ -455,10 +455,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
             setAccount(getUnifiedAccountApi()
                     .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_DE,
                             getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
-        } else if (getLocalizationUtils().getLocale().contains(FRANCE)) {
-            setAccount(getUnifiedAccountApi().createAccount(
-                    getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
-                            getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         } else {
             setAccount(getUnifiedAccountApi().createAccount(
                     getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
