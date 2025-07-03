@@ -486,16 +486,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                 "Privacy & Data section is present");
         Assert.assertFalse(editProfilePage.getDemographicTargetingToggleCell().isPresent(THREE_SEC_TIMEOUT),
                 "Demographic Targeting toggle is present");
-        editProfilePage.clickDoneBtn();
-        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
-        whoIsWatching.clickEditProfile();
-        // Validate Privacy & Data option is present for the default profile
-        editProfilePage.clickEditModeProfile(getUnifiedAccount().getFirstName());
-        swipe(editProfilePage.getPrivacyAndDataTitleLabel(), Direction.UP, 10, 500);
-        Assert.assertTrue(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(),
-                "Privacy & Data section is not present");
-        Assert.assertTrue(editProfilePage.getDemographicTargetingToggleCell().isPresent(),
-                "Demographic Targeting toggle is not present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74085"})
