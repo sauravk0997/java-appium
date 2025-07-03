@@ -1090,6 +1090,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickDown();
         commonPage.clickRight();
 
+        // Validate if seasons and episodes are ordered
+        Assert.assertTrue(detailsPage.isListOrdered(seasonTitle), "Seasons are not ordered ascending as expected");
+        Assert.assertTrue(detailsPage.isListOrdered(titleLabel), "Episodes are not ordered ascending as expected");
+        
         // Assert and validate cell focus status first episode to be no episodes from a different season are present
         Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellNameContains(firstEpisodeSecondSeasonTitle)),
                 "First episode from S2 expected title is not present in the first cell");
@@ -1099,10 +1103,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Assert.assertTrue(videoPlayer.isOpened(),VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.getTitleLabel().contains(firstEpisodeSecondSeasonTitle),
                 "Playback is not initiated for expected episode");
-
-        // Validate if seasons and episodes are ordered
-        Assert.assertTrue(detailsPage.isListOrdered(seasonTitle), "Seasons are not ordered ascending as expected");
-        Assert.assertTrue(detailsPage.isListOrdered(titleLabel), "Episodes are not ordered ascending as expected");
 }
 
     private void toggleAutoPlay(String toggleValue) {
