@@ -451,16 +451,10 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
-        if (getLocalizationUtils().getLocale().contains(GERMANY)) {
-            setAccount(getUnifiedAccountApi()
-                    .createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD_WITH_ADS_DE,
-                            getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
-        } else {
-            setAccount(getUnifiedAccountApi()
-                    .createAccount(
-                    getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
-                            getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
-        }
+        DisneyUnifiedOfferPlan plan =
+                getLocalizationUtils().getLocale().contains(GERMANY) ? DISNEY_PLUS_STANDARD_WITH_ADS_DE : DISNEY_PLUS_STANDARD;
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                plan, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
