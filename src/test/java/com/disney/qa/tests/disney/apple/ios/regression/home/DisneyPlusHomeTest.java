@@ -147,7 +147,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
     public void verifyRatingRestrictionTravelingMessage() {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                 getLocalizationUtils().getLocale(),
@@ -159,7 +158,6 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         welcomePage.clickLogInButton();
         login(getUnifiedAccount());
         handleGenericPopup(5,1);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForPresenceOfAnElement(homePage.getTravelAlertTitle());
         Assert.assertTrue(homePage.isTravelAlertTitlePresent(), "Travel alert title was not present");
         Assert.assertTrue(homePage.isTravelAlertBodyPresent(), "Travel alert body was not present");

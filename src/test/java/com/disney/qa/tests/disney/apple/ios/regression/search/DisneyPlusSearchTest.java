@@ -1023,7 +1023,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
                 initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
 
@@ -1032,7 +1031,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         if (oneTrustPage.isOpened())
             oneTrustPage.tapAcceptAllButton();
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);

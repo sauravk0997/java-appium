@@ -29,7 +29,7 @@ public class DisneyPlusAppleTVDeepLinksTests extends DisneyPlusAppleTVBaseTest {
         String networkName = "ABC";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_abc_network_language_deeplink"));
         Assert.assertTrue(collectionPage.isOpened(networkName),
@@ -53,7 +53,7 @@ public class DisneyPlusAppleTVDeepLinksTests extends DisneyPlusAppleTVBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         terminateApp(sessionBundles.get(DISNEY));
         launchDeeplink(R.TESTDATA.get("disney_prod_home_page_deeplink"));
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
@@ -65,7 +65,7 @@ public class DisneyPlusAppleTVDeepLinksTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         // Navigate to another screen
         homePage.moveDownFromHeroTile();

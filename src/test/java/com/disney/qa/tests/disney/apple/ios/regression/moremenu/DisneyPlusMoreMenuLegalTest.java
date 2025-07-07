@@ -153,7 +153,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whosIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         setAccount(getUnifiedAccountApi()
@@ -163,7 +162,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         handleOneTrustPopUp();
-        whosIsWatchingPage.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         if (homePage.isTravelAlertTitlePresent()) {
             homePage.getTravelAlertOk().click();
         }
