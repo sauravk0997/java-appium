@@ -13,7 +13,6 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     private static String usPrivacyRights = "Your US State Privacy Rights";
-    private static String californiaPrivacyRights = "Your California Privacy Rights";
     private static String pageTitleText = "Notice of Right to Opt Out of Sale/Sharing";
     private static String consentCellGroupNameTitle = "Selling, Sharing, Targeted Advertising";
 
@@ -89,21 +88,6 @@ public class DisneyPlusOneTrustIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isYourUSStatePrivacyRightsPageOpened(int timeout){
         return staticTextByLabel.format(usPrivacyRights.toUpperCase()).isPresent(timeout);
-    }
-
-    public boolean isYourCaliforniaPrivacyRightsLinkPresent() {
-        return customHyperlinkByLabel.format(californiaPrivacyRights).isPresent();
-    }
-
-    public void clickYourCaliforniaPrivacyRightsLink(){
-        ExtendedWebElement element = customHyperlinkByLabel.format(californiaPrivacyRights);
-        var dimension = element.getSize();
-        Point location = element.getLocation();
-        tap(location.getX() , location.getY() + dimension.getHeight());
-    }
-
-    public boolean isYourCaliforniaPrivacyRightsPageOpened(int timeout){
-        return dynamicBtnFindByLabelContains.format("CALIFORNIA").isPresent(timeout);
     }
 
     public boolean isSellingSharingTargatedAdvertisingConsentTitlePresent() {

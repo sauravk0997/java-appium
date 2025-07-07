@@ -30,7 +30,7 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement keyboardSearchButton;
     @ExtendedFindBy(iosPredicate = "type == 'XCUIElementTypeSearchField'")
     private ExtendedWebElement searchBar;
-    @ExtendedFindBy(accessibilityId = "iconSearchCancelLightActive")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name BEGINSWITH 'iconSearchCancelLightActive'`]")
     private ExtendedWebElement cancelButtonRecentSearch;
     @ExtendedFindBy(accessibilityId = "selectorButton")
     private ExtendedWebElement contentPageFilterDropDown;
