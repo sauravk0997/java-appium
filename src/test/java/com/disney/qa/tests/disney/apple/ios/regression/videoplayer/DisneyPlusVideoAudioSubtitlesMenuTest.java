@@ -37,7 +37,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         initiatePlaybackFor(SERIES_BLUEY);
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubtitleMenu();
@@ -66,7 +66,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase disneyPlusVideoPlayerIOSPageBase = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         initiatePlaybackFor(LOKI);
         disneyPlusVideoPlayerIOSPageBase.tapAudioSubtitleMenu();
 
@@ -160,7 +160,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
     public void verifyAudioAndSubtitlesPreferredLanguage() {
         String choctawLang = "Chahta anumpa (Choctaw)";
         String spanishLang = "Español";
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         // Open content and select Deutsch audio and language, this will be the preferred language
         changeAudioLanguage(R.TESTDATA.get("disney_prod_content_mulan_playback_deeplink"), DEUTSCH, DEUTSCH);
@@ -233,7 +233,7 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);

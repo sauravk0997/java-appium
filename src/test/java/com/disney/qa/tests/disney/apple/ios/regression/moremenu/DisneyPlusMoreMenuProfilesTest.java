@@ -68,7 +68,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
 
 
     private void onboard() {
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
     }
 
@@ -113,7 +113,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase disneyPlusEditProfileIOSPageBase = new DisneyPlusEditProfileIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -144,7 +144,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.waitForPresenceOfAnElement(moreMenu.getAddProfileBtn());
         moreMenu.clickAddProfile();
@@ -166,7 +166,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Verify default status of autoplay toggle
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -188,7 +188,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         String updatedUserName = "New Test User";
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
@@ -596,7 +596,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusPasswordIOSPageBase passwordPage = new DisneyPlusPasswordIOSPageBase(getDriver());
         DisneyPlusContentRatingIOSPageBase contentRatingPage = new DisneyPlusContentRatingIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(DEFAULT_PROFILE);
@@ -722,7 +722,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.clickMoreTab();
@@ -760,7 +760,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         editProfile.clickMoreTab();
         whoIsWatching.clickEditProfile();
@@ -788,7 +788,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.clickMoreTab();
@@ -814,7 +814,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAppLanguageIOSPageBase appLanguage = initPage(DisneyPlusAppLanguageIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
@@ -838,7 +838,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
 
         sa.assertTrue(moreMenu.isEditProfilesBtnPresent(), "Edit Profiles button is not present.");
@@ -871,7 +871,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         } catch (IndexOutOfBoundsException e) {
             Assert.fail("Index out of bounds: " + e);
         }
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         BufferedImage originalAvatar = getElementImage(moreMenu.getProfileAvatar(DEFAULT_PROFILE));
         moreMenu.clickEditProfilesBtn();
@@ -1004,7 +1004,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
@@ -1183,7 +1183,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
@@ -1211,7 +1211,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 getLocalizationUtils().getRatingSystem(), ratingSystemValues.get(0));
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
         launchDeeplink(R.TESTDATA.get("disney_prod_loki_collection_deeplink"));
         Assert.assertTrue(homePage.getStaticTextByLabel(contentUnavailableHeader).isPresent(),
@@ -1419,7 +1419,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
@@ -1513,7 +1513,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Toggle is ON by default for secondary profile
         homePage.clickMoreTab();
@@ -1551,7 +1551,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         String setTitle, setContentTitle;
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         com.disney.qa.api.explore.response.Set espnUpcomingSet =
                 getExploreAPISet(getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING), 20);
@@ -1751,7 +1751,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
 
         setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickMoreTab();
         moreMenuPage.clickEditProfilesBtn();
@@ -1782,7 +1782,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         }
 
         setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickMoreTab();
         BufferedImage originalAvatar = getElementImage(moreMenuPage.getProfileAvatar(DEFAULT_PROFILE));
@@ -1846,7 +1846,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         moreMenu.clickMoreTab();
@@ -2090,7 +2090,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
         DisneyPlusPasswordIOSPageBase passwordPage = initPage(DisneyPlusPasswordIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
