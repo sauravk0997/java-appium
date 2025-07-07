@@ -377,7 +377,7 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
     }
 
     default boolean verifyElementIsOnRightSide(ExtendedWebElement element) {
-        LOGGER.info("Verifying if the element ison the right side of the screen");
+        LOGGER.info("Verifying if the element is on the right side of the screen");
         Dimension screenSize = getDriver().manage().window().getSize();
         int screenWidth = screenSize.width;
         int elementPosition = getCenterCoordinate(element).getX();
