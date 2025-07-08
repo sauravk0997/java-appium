@@ -1107,6 +1107,72 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Playback is not initiated for expected episode");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64938"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesDetailsPageEpisodeTab() {
+        String firstEpisodeFirstSeasonTitle, firstEpisodeFirstSeasonBriefDesc,
+                secondEpisodeFirstSeasonTitle;
+        int firstEpisodeFirstSeasonDurationTime, firstSeasonSize = 0;
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        String seasonTitle = "seasonTitle";
+        String titleLabel = "titleLabel";
+        SoftAssert sa = new SoftAssert();
+        logIn(getUnifiedAccount());
+
+        ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
+                DisneyPlusBrandIOSPageBase.Brand.DISNEY);
+        try {
+            Visuals seasonVisuals = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
+            firstEpisodeFirstSeasonTitle = seasonVisuals.getEpisodeTitle();
+            firstEpisodeFirstSeasonBriefDesc = seasonVisuals.getDescription().getBrief();
+            firstEpisodeFirstSeasonDurationTime = seasonVisuals.getDurationMs();
+            secondEpisodeFirstSeasonTitle = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+            firstSeasonSize = seriesApiContent.getSeasons().get(0).getItems().size();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, Episode title and description not found" + e.getMessage());
+        }
+
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        commonPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.getEpisodesTab().isPresent(), EPISODE_TAB_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE);
+        commonPage.moveDown(1, 1);
+        sa.assertTrue(detailsPage.getSeasonViewSection().isPresent(), "Season view section is not present");
+        sa.assertTrue(detailsPage.getEpisodeViewSection().isPresent(), "Episode view section is not present");
+
+        // Validate relevant content populated from first season
+        sa.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonTitle).isPresent(),
+                "First episode title is not present");
+        sa.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonBriefDesc).isPresent(),
+                "First episode description is not present");
+        sa.assertTrue(detailsPage.getTypeCellNameContains(secondEpisodeFirstSeasonTitle).isPresent(),
+                "Second episode title is not present");
+        sa.assertTrue(detailsPage.isContentImageViewPresent(),
+                "Content Image View not found on episode container");
+        sa.assertTrue(detailsPage.isDurationTimeLabelPresent(),
+                "Duration label is not found on episode container");
+        long durationFromApi = TimeUnit.MILLISECONDS.toMinutes(firstEpisodeFirstSeasonDurationTime);
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(String.valueOf(durationFromApi)).isPresent(),
+                "Duration of episode was not found");
+        sa.assertTrue(detailsPage.getPlayIcon().isPresent(),
+                "Play Icon not found for episode on episode container");
+
+        // Navigate to season's section view
+        commonPage.clickLeft();
+        sa.assertTrue(detailsPage.getSeasonEpisodeNumber().getText().contains(Integer.toString(firstSeasonSize)),
+                "Episode number not displayed on Season view section");
+
+        // Validate if seasons and episodes are ordered
+        Assert.assertTrue(detailsPage.isListOrdered(seasonTitle), "Seasons are not ordered ascending as expected");
+        Assert.assertTrue(detailsPage.isListOrdered(titleLabel), "Episodes are not ordered ascending as expected");
+
+        validateElementPositionAlignment(detailsPage.getSeasonViewSection(), LEFT_POSITION);
+        validateElementPositionAlignment(detailsPage.getEpisodeViewSection(), RIGHT_POSITION);
+        sa.assertAll();
+    }
+
     private void toggleAutoPlay(String toggleValue) {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
