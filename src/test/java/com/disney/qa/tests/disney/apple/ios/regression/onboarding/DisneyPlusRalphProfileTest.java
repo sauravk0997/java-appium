@@ -458,7 +458,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
-        // Create kids profile
+        // Create U18 profile
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
                 .profileName(SECONDARY_PROFILE)
