@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
@@ -534,7 +535,37 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-        private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122930"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyLiveBadgeOnSetStream() {
+        String liveBadge = "LIVE";
+        int maxCount = 15;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+
+        String streamsCollection = getCollectionName(STREAMS);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
+                getCollectionName(STREAMS), maxCount);
+        Assert.assertNotNull(liveChannelsFromApi,
+                String.format("No items for '%s' collection were fetched from Explore API",
+                        STREAMS));
+
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollection, maxCount);
+
+        ExtendedWebElement airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(streamsCollection);
+        Assert.assertEquals(airingBadge.getText().trim(), liveBadge, "Live content not found on stream set");
+
+        // Validate Left position of Live badge
+        validateElementPositionAlignment(airingBadge, LEFT_POSITION);
+        // Validate top position of live badge
+        validateElementExpectedHeightPosition(airingBadge, TOP);
+    }
+
+    private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
         List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
                 getCollectionName(STREAMS_NON_STOP_PLAYLISTS), titlesLimit);
         Assert.assertNotNull(liveChannelsFromApi,
