@@ -59,6 +59,10 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         }
     }
 
+    public boolean isAllSearchResultPresent() {
+        return allSearchResultsContainers.isPresent();
+    }
+
     public List<ExtendedWebElement> getAllSearchResults() {
         fluentWait(getDriver(), TEN_SEC_TIMEOUT, ONE_SEC_TIMEOUT,
                 "No search results found")
