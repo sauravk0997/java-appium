@@ -437,7 +437,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getStaticTextByLabel(AVAILABLE_WITH_ESPN_SUBSCRIPTION).isPresent(),
-                AVAILABLE_WITH_ESPN_SUBSCRIPTION + " upsell message not displayed");
+                AVAILABLE_WITH_ESPN_SUBSCRIPTION + " upsell message is not displayed");
     }
 
     private Item getUpcomingEventFromAPI(int titlesLimit) {
