@@ -19,6 +19,8 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -441,6 +443,43 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
                         getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                                 DictionaryKeys.DATE_OF_BIRTH_PLACEHOLDER.getText())).isPresent(),
                 "DOB format is not standard for the jurisdiction");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76350"})
+    @Test(groups = {TestGroup.RALPH_LOG_IN, TestGroup.PRE_CONFIGURATION, EMEA_LATAM})
+    public void testEmeaEditProfilePrivacyData() {
+        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        DisneyUnifiedOfferPlan plan =
+                getLocalizationUtils().getLocale().contains(GERMANY) ? DISNEY_PLUS_STANDARD_WITH_ADS_DE : DISNEY_PLUS_STANDARD;
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(
+                plan, getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        // Create kids profile
+        getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                .unifiedAccount(getUnifiedAccount())
+                .profileName(KIDS_PROFILE)
+                .dateOfBirth(KIDS_DOB)
+                .language(getLocalizationUtils().getUserLanguage())
+                .avatarId(BABY_YODA)
+                .isStarOnboarded(true)
+                .build());
+
+        setAppToHomeScreen(getUnifiedAccount());
+        handleOneTrustPopUp();
+
+        Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatching.clickEditProfile();
+        // Validate Privacy & Data option is not present
+        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        swipe(editProfilePage.getDeleteProfileButton(), Direction.UP, 10, 500);
+        Assert.assertFalse(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(THREE_SEC_TIMEOUT),
+                "Privacy & Data section is present");
+        Assert.assertFalse(editProfilePage.getDemographicTargetingToggleCell().isPresent(THREE_SEC_TIMEOUT),
+                "Demographic Targeting toggle is present");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-74085"})
