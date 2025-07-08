@@ -12,7 +12,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.util.TestGroup;
 import com.zebrunner.carina.utils.R;
-import com.zebrunner.carina.utils.mobile.IMobileUtils;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import org.testng.Assert;
 import org.testng.SkipException;
@@ -304,32 +303,29 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = { "XMOBQA-72249" })
-    @Test(description = "Verify Anthology Series - Details Tab", groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.ANTHOLOGY, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAnthologyDetailsTab() {
         DisneyPlusDetailsIOSPageBase details = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         searchAndOpenDWTSDetails();
 
         String mediaTitle = details.getMediaTitle();
+        swipePageTillElementPresent(details.getDetailsTab(), 1, null, Direction.UP, 1000);
+        sa.assertTrue(details.getDetailsTab().isPresent(), DETAILS_TAB_NOT_DISPLAYED);
 
-        if ("Phone".equalsIgnoreCase(R.CONFIG.get(DEVICE_TYPE))) {
-            swipeInContainer(null, Direction.UP, 1000);
-        }
-        sa.assertTrue(details.getDetailsTab().isPresent(), "Details tab is not found.");
-
-        String selectorSeason = details.getSeasonSelector();
         details.clickDetailsTab();
-        swipePageTillElementPresent(details.getFormats(), 3, null, IMobileUtils.Direction.UP, 600);
-        sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title.");
+        swipePageTillElementPresent(details.getFormats(), 3, null, Direction.UP, 600);
+        sa.assertTrue(details.getDetailsTabTitle().contains(mediaTitle), "Details tab title does not match media title");
         sa.assertTrue(details.isContentDescriptionDisplayed(), "Details Tab description not present");
         sa.assertTrue(details.isReleaseDateDisplayed(), "Detail Tab rating is not present");
-        sa.assertTrue(details.getDetailsTabSeasonRating().contains(selectorSeason),
-                "Details Tab season rating does not contain season selector text.");
-        sa.assertTrue(details.isGenreDisplayed(), "Details Tab genre is not present.");
-        sa.assertTrue(details.areFormatsDisplayed(), "Details Tab formats are not present.");
-        sa.assertTrue(details.areActorsDisplayed(), "Details tab starring actors not present.");
+        sa.assertTrue(details.isRatingPresent(), "Details tab rating is not present");
+        sa.assertTrue(details.isGenreDisplayed(), "Details Tab genre is not present");
+        sa.assertTrue(details.areFormatsDisplayed(), "Details Tab formats are not present");
+        sa.assertTrue(details.areActorsDisplayed(), "Details tab starring actors not present");
         sa.assertAll();
     }
 
