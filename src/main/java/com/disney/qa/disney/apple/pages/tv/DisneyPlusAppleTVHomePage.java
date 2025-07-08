@@ -213,11 +213,12 @@ public class DisneyPlusAppleTVHomePage extends DisneyPlusHomeIOSPageBase {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         pause(THREE_SEC_TIMEOUT); //if no pause, selecting menu back goes to native home outside of app
         LOGGER.info("Navigating to global nav menu: {}", globalNavMenu);
-        if (globalNavMenu.equalsIgnoreCase(globalNavigationMenu.MOVIES.getText())){
-            clickLeft();
-        } else {
-            clickMenuTimes(1, 2);
-        }
+//        if (globalNavMenu.equalsIgnoreCase(globalNavigationMenu.MOVIES.getText())){
+//            clickLeft();
+//        } else {
+//            clickMenuTimes(1, 2);
+//        }
+        clickMenuTimes(1, 2);
         navigateToOneGlobalNavMenu(globalNavMenu);
         clickSelect();
     }
