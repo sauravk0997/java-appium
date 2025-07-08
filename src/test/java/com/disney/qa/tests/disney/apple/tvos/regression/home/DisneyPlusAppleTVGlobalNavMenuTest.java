@@ -143,6 +143,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVOriginalsPage originalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
 
         initDisneyPlusAppleTVGlobalNavMenuTest();
 
@@ -192,7 +193,7 @@ public class DisneyPlusAppleTVGlobalNavMenuTest extends DisneyPlusAppleTVBaseTes
                     sa.assertTrue(watchListPage.isOpened(), "Watchlist page did not launch");
                     break;
                 case "movies":
-                    homePage.clickRight();
+                    commonPage.clickRight(2,1,1);
                     sa.assertFalse(moviesPage.isGlobalNavExpanded(), GLOBAL_NAV_NOT_COLLAPSED);
                     sa.assertTrue(moviesPage.isOpened(), "Movies page did not launch");
                     break;
