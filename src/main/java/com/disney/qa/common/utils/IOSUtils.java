@@ -730,6 +730,26 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         }
     }
 
+    default void validateElementPositionAlignmentInRespectToOtherElement(ExtendedWebElement element,
+                                                                         ExtendedWebElement otherElement,
+                                                                         String alignment) {
+        int elementPosition = getCenterCoordinate(element).getX();
+        LOGGER.info("elementPosition: {} ", elementPosition);
+        int cellElementPosittion = getCenterCoordinate(otherElement).getX();
+        switch (alignment) {
+            case RIGHT_POSITION:
+                Assert.assertTrue(elementPosition > cellElementPosittion,
+                        "Element is not at the right position");
+                break;
+            case LEFT_POSITION:
+                Assert.assertTrue(elementPosition < cellElementPosittion,
+                        "Element is not at the left position");
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid alignment String");
+        }
+    }
+
     default void validateElementExpectedHeightPosition(ExtendedWebElement element, String position) {
         int elementPosition = getCenterCoordinate(element).getY();
         Dimension screenSize = getDriver().manage().window().getSize();
@@ -744,6 +764,26 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
                 break;
             case BOTTOM:
                 Assert.assertTrue(elementPosition > halfHeightScreen, "Element is not at the bottom position");
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid alignment String");
+        }
+    }
+
+    default void validateElementExpectedHeightPositionInRespectToOtherElement(ExtendedWebElement element,
+                                                                              ExtendedWebElement otherElement,
+                                                                              String position) {
+        int elementPosition = getCenterCoordinate(element).getY();
+        int cellElementPosition = getCenterCoordinate(otherElement).getY();
+
+        switch (position) {
+            case TOP:
+                Assert.assertTrue(elementPosition < cellElementPosition,
+                        "Element is not at the top position");
+                break;
+            case BOTTOM:
+                Assert.assertTrue(elementPosition > cellElementPosition,
+                        "Element is not at the bottom position");
                 break;
             default:
                 throw new IllegalArgumentException("Invalid alignment String");
