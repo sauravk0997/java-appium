@@ -561,9 +561,9 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertEquals(airingBadge.getText().trim(), liveBadge, "Live content not found on stream set");
 
         // Validate Left position of Live badge
-        validateElementPositionAlignmentInRespectToOtherElement(airingBadge, firstCellElement, LEFT_POSITION);
+        validateElementPositionAlignmentInContainer(airingBadge, firstCellElement, LEFT_POSITION);
         // Validate top position of live badge
-        validateElementExpectedHeightPositionInRespectToOtherElement(airingBadge, firstCellElement, TOP);
+        validateElementExpectedHeightPositionInContainer(airingBadge, firstCellElement, TOP);
     }
 
     private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {

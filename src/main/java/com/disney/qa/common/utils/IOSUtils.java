@@ -730,12 +730,12 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         }
     }
 
-    default void validateElementPositionAlignmentInRespectToOtherElement(ExtendedWebElement element,
-                                                                         ExtendedWebElement otherElement,
+    default void validateElementPositionAlignmentInContainer(ExtendedWebElement element,
+                                                                         ExtendedWebElement container,
                                                                          String alignment) {
         int elementPosition = getCenterCoordinate(element).getX();
         LOGGER.info("elementPosition: {} ", elementPosition);
-        int cellElementPosittion = getCenterCoordinate(otherElement).getX();
+        int cellElementPosittion = getCenterCoordinate(container).getX();
         switch (alignment) {
             case RIGHT_POSITION:
                 Assert.assertTrue(elementPosition > cellElementPosittion,
@@ -770,11 +770,11 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         }
     }
 
-    default void validateElementExpectedHeightPositionInRespectToOtherElement(ExtendedWebElement element,
-                                                                              ExtendedWebElement otherElement,
+    default void validateElementExpectedHeightPositionInContainer(ExtendedWebElement element,
+                                                                              ExtendedWebElement container,
                                                                               String position) {
         int elementPosition = getCenterCoordinate(element).getY();
-        int cellElementPosition = getCenterCoordinate(otherElement).getY();
+        int cellElementPosition = getCenterCoordinate(container).getY();
 
         switch (position) {
             case TOP:
