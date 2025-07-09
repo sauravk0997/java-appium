@@ -42,7 +42,6 @@ public class CollectionConstant {
         SPORT_REPLAYS,
         STREAMS,
         STREAMS_NON_STOP_PLAYLISTS,
-        STREAMS,
         STUDIOS_AND_NETWORKS,
         TREEHOUSE_OF_HORROR,
         TREEHOUSE_OF_HORROR_I_TO_V,
@@ -115,8 +114,6 @@ public class CollectionConstant {
                 return "005ff3cd-66b0-4545-970f-dc86386b27db";
             case STREAMS_NON_STOP_PLAYLISTS:
                 return "041c9af9-841e-428b-8e9d-0821defc90df";
-            case STREAMS:
-                return "005ff3cd-66b0-4545-970f-dc86386b27db";
             case TRENDING:
                 return "25b87551-fd19-421a-be0f-b7f2eea978b3";
             case HULU_FEATURED:
