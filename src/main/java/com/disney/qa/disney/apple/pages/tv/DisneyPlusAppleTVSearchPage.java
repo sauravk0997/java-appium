@@ -59,7 +59,7 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
         }
     }
 
-    public boolean isAllSearchResultPresent() {
+    public boolean waitForSearchResultToVisible() {
         return allSearchResultsContainers.isPresent();
     }
 
