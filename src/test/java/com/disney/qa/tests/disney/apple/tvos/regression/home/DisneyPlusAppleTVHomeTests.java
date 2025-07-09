@@ -270,9 +270,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String streamsCollectionName = getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
 
         logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
-        Item channelItemMovie = getFirstMovieChannelItem(MAX_EXPECTED_CHANNELS_SIX);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 25);
+        Item channelItemMovie = getFirstMovieChannelItem(MAX_EXPECTED_CHANNELS_SIX);
         //Swipe Horizontally to Title
         homePage.moveRightUntilElementIsFocused(
                 homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
