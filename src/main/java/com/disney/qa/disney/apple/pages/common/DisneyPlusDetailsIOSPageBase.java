@@ -817,14 +817,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return progressBar.isPresent(TEN_SEC_TIMEOUT);
     }
 
-    public String getDetailsTabSeasonRating() {
-        String[] seasonNumberRating = getTypeOtherContainsLabel("Season").getText().split(":");
-        String[] seasonNumber = seasonNumberRating[0].split(" ");
-        String number = seasonNumber[1];
-        return getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(number)));
-    }
-
     public String getSeasonSelector() {
         String[] seasonSelector = seasonSelectorButton.getText().split(" ");
         return seasonSelector[1];
