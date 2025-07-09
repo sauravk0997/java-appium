@@ -284,8 +284,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String movieGenre = "";
         String movieRating = "";
         try {
-            movieYear = channelItemMovie.getVisuals().getReleaseYearRange().getStartYear();
-            movieGenre = channelItemMovie.getVisuals().getEpisodeTitle();
+            movieYear = channelItemMovie.getVisuals().getMetastringParts().getReleaseYearRange().getStartYear();
+            movieGenre = channelItemMovie.getVisuals().getMetastringParts().getGenres().toString();
             movieRating = channelItemMovie.getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
         } catch (Exception e) {
             Assert.fail("Exception occurred: " + e.getMessage());
