@@ -64,7 +64,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         handleAlert();
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
-        clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
