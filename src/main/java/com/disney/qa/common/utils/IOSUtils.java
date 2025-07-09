@@ -735,14 +735,15 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
                                                                          String alignment) {
         int elementPosition = getCenterCoordinate(element).getX();
         LOGGER.info("elementPosition: {} ", elementPosition);
-        int cellElementPosittion = getCenterCoordinate(container).getX();
+        int cellElementPosition = getCenterCoordinate(container).getX();
+        LOGGER.info("Container center Position: {} ", cellElementPosition);
         switch (alignment) {
             case RIGHT_POSITION:
-                Assert.assertTrue(elementPosition > cellElementPosittion,
+                Assert.assertTrue(elementPosition > cellElementPosition,
                         "Element is not at the right position");
                 break;
             case LEFT_POSITION:
-                Assert.assertTrue(elementPosition < cellElementPosittion,
+                Assert.assertTrue(elementPosition < cellElementPosition,
                         "Element is not at the left position");
                 break;
             default:
@@ -774,8 +775,9 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
                                                                               ExtendedWebElement container,
                                                                               String position) {
         int elementPosition = getCenterCoordinate(element).getY();
+        LOGGER.info("elementPosition: {} ", elementPosition);
         int cellElementPosition = getCenterCoordinate(container).getY();
-
+        LOGGER.info("Container center Position: {} ", cellElementPosition);
         switch (position) {
             case TOP:
                 Assert.assertTrue(elementPosition < cellElementPosition,

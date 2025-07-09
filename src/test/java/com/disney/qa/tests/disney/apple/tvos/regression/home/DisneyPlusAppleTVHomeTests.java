@@ -550,9 +550,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.waitForHomePageToOpen();
         List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
                 getCollectionName(STREAMS), maxCount);
-        Assert.assertNotNull(liveChannelsFromApi,
-                String.format("No items for '%s' collection were fetched from Explore API",
-                        STREAMS));
+
+        if (liveChannelsFromApi.isEmpty() || liveChannelsFromApi == null) {
+            throw new SkipException(String.format("No items for 'STREAMS' collection were fetched from Explore API", STREAMS));
+        }
 
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollection, maxCount);
 
