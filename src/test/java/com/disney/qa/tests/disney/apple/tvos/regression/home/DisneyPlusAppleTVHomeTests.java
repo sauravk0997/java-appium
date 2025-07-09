@@ -53,7 +53,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -67,7 +67,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -87,7 +87,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -122,7 +122,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -181,7 +181,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -212,7 +212,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();
@@ -249,7 +249,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         String streamsCollectionName = getCollectionName(STREAMS);
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
         String firstProgramTitle = homePage.getFirstCellTitleFromContainer(STREAMS).split(",")[2]
                 .trim();
@@ -315,7 +315,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String streamsCollectionName =
                 getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
 
@@ -356,7 +356,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String streamsCollectionName =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(MAX_EXPECTED_CHANNELS_SIX);
@@ -385,7 +385,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String streamsNonStopPlaylists =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 10);
 
@@ -434,7 +434,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             throw new SkipException("Skipping test, failed to get collection details from the api " + e.getMessage());
         }
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         for (int i = 2; i < collections.size(); i++) {
@@ -469,7 +469,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Container brandCollection;
         int totalBrandTile;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         try {
@@ -508,7 +508,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_deeplink"));

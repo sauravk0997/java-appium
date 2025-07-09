@@ -27,7 +27,7 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSettingsPage settingsPage = new DisneyPlusAppleTVSettingsPage(getDriver());
         DisneyPlusAppleTVWelcomeScreenPage welcomeScreen = new DisneyPlusAppleTVWelcomeScreenPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
         Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
@@ -45,7 +45,7 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLegalPage legalPage = new DisneyPlusAppleTVLegalPage(getDriver());
         String disneyTerms = getLocalizationUtils().getLegalHeaders().iterator().next();
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SETTINGS.getText());
         Assert.assertTrue(settingsPage.isOpened(), SETTINGS_PAGE_NOT_DISPLAYED);
@@ -72,7 +72,7 @@ public class DisneyPlusAppleTVSettingsTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSeriesPage seriesPage = new DisneyPlusAppleTVSeriesPage(getDriver());
         DisneyPlusAppleTVOriginalsPage originalsPage = new DisneyPlusAppleTVOriginalsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
         Assert.assertTrue(whoseWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
