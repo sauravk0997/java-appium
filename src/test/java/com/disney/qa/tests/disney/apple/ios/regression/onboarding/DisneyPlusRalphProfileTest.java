@@ -128,7 +128,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         String toggleOnDE = "An";
         String toggleOffDE = "Aus";
@@ -142,7 +141,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
 
         // Add profile
@@ -326,7 +324,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         int age = 59;
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
@@ -340,7 +337,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         handleAlert();
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickMoreTab();
@@ -369,7 +365,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         String ratingChoose = "TV-Y";
         int age = 59;
 
@@ -393,7 +388,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         if (isAlertPresent()) {
             handleGenericPopup(5, 1);
         }
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.clickMoreTab();
         moreMenu.clickAddProfile();
         Assert.assertTrue(chooseAvatar.isOpened(), "Choose Avatar screen was not opened");
@@ -458,11 +452,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
-        // Create kids profile
+        // Create U18 profile
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
-                .dateOfBirth(KIDS_DOB)
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(U18_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .isStarOnboarded(true)
@@ -474,7 +468,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
         // Validate Privacy & Data option is not present
-        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         swipe(editProfilePage.getDeleteProfileButton(), Direction.UP, 10, 500);
         Assert.assertFalse(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(THREE_SEC_TIMEOUT),
                 "Privacy & Data section is present");
@@ -543,7 +537,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfilePage = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(
@@ -553,7 +546,6 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
 
         homePage.clickMoreTab();

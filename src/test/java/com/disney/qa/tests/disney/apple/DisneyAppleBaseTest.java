@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 
 import com.disney.qa.api.account.*;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.accountsharing.AccountSharingAccounts;
 import com.disney.qa.api.accountsharing.AccountSharingHelper;
-import com.disney.qa.api.accountsharing.AccountSharingUnifiedAccounts;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.requests.offer.*;
 import com.disney.qa.api.client.responses.graphql.campaign.CampaignType;
@@ -629,9 +629,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_HULU);
     }
 
-    public AccountSharingUnifiedAccounts createAccountSharingUnifiedAccounts() {
+    public AccountSharingAccounts<UnifiedAccount> createAccountSharingUnifiedAccounts() {
         //Create the test accounts
-        AccountSharingUnifiedAccounts accountSharingAccounts = getAccountSharingHelper().createSharingUnifiedAccounts(
+        AccountSharingAccounts<UnifiedAccount> accountSharingAccounts = getAccountSharingHelper().createSharingUnifiedAccounts(
                 CampaignType.STANDARD_CAMPAIGN,
                 getUnifiedOffer(
                         DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM,
@@ -643,7 +643,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                         CampaignType.UPSELL_CAMPAIGN));
         //Create and accept the invitation
         boolean invitationSuccess = getAccountSharingHelper().acceptExtraMemberInvite(
-                accountSharingAccounts, getAccountSharingHelper().sendExtraMemberInvite(accountSharingAccounts));
+                accountSharingAccounts,
+                getAccountSharingHelper().sendExtraMemberInvite(accountSharingAccounts).getId());
         if (!invitationSuccess) {
             throw new RuntimeException("Consumption of extra member slot should be successful");
         }
