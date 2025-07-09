@@ -20,7 +20,7 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     private ExtendedWebElement searchField;
 
     @ExtendedFindBy(iosClassChain =
-            "**/XCUIElementTypeOther[`name == 'searchResults'`]/**/XCUIElementTypeCell[`name CONTAINS \"%s\"`]")
+            "**/XCUIElementTypeOther[`name == 'searchResults'`]/**/XCUIElementTypeCell[`label CONTAINS \"%s\"`]")
     private ExtendedWebElement searchResultsContainers;
 
     @ExtendedFindBy(iosClassChain =
@@ -60,7 +60,7 @@ public class DisneyPlusAppleTVSearchPage extends DisneyPlusSearchIOSPageBase {
     }
 
     public boolean waitForSearchResultToVisible() {
-        return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "search results are not present")
+        return fluentWait(getDriver(), TWENTY_FIVE_SEC_TIMEOUT, THREE_SEC_TIMEOUT, "search results are not present")
                 .until(it -> allSearchResultsContainers.isPresent());
     }
 
