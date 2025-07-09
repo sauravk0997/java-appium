@@ -140,6 +140,8 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         audioSubtitlePage.tapCloseButton();
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.waitForPlayOrContinueButton();
         detailsPage.clickPlayOrContinue();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.tapAudioSubtitleMenu();
@@ -148,6 +150,8 @@ public class DisneyPlusVideoAudioSubtitlesMenuTest extends DisneyBaseTest {
         audioSubtitlePage.tapCloseButton();
         videoPlayer.clickBackButton();
         sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.waitForPlayOrContinueButton();
         detailsPage.clickPlayOrContinue();
         sa.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayer.tapAudioSubtitleMenu();
