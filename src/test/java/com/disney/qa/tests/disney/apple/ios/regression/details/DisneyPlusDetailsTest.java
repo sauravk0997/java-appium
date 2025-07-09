@@ -7,6 +7,7 @@ import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
+import com.disney.qa.common.utils.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import static com.disney.qa.api.disney.DisneyEntityIds.ESPN;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_LEAGUES;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
@@ -994,6 +996,37 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                         currentNetworkAttribution, HULU));
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77682"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyESPNNetworkAttributionInDetailsPage() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+        CollectionConstant.Collection espnLiveAndUpcomingCollection =
+                CollectionConstant.Collection.ESPN_EXPLORE_MORE;
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.waitForHomePageToOpen();
+
+        //verify network attribution on VOD
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_series_the_last_dance_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        verifyNetworkAttributionAndPlacement(ESPN_PLUS);
+        detailsPage.clickCloseButton();
+
+        //verify network attribution on live content
+        homePage.clickEspnTile();
+        collectionPage.swipeTillCollectionTappable(espnLiveAndUpcomingCollection,
+                Direction.UP, 5);
+        Assert.assertTrue(collectionPage.isCollectionPresent(espnLiveAndUpcomingCollection),
+                "ESPN+ More with Container not found");
+        collectionPage.getFirstCellFromCollection(CollectionConstant
+                .getCollectionName(espnLiveAndUpcomingCollection)).click();
+        //D+ basic subscription will not allow live events
+        verifyNetworkAttributionAndPlacement(ESPN_PLUS);
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77679"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.ESPN, TestGroup.PRE_CONFIGURATION, US})
     public void verifyESPNUpsellDetailsPage() {
@@ -1126,5 +1159,17 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         sa.assertTrue(detailsPage.getShopTabHeadingText().isPresent(), "Shop Tab heading is not present");
         sa.assertTrue(detailsPage.getShopTabSubHeadingText().isPresent(), "Shop Tab sub-heading is not present");
         sa.assertTrue(detailsPage.getShopTabLink().isPresent(), "Shop Tab link is not present");
+    }
+
+    private void verifyNetworkAttributionAndPlacement(String network) {
+        DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        Assert.assertTrue(detailsPage.getNetworkAttributionLogo().isPresent(),
+                "ESPN Network Attribution is not present on details page");
+        String currentNetworkAttribution = detailsPage.getNetworkAttributionValue();
+        Assert.assertTrue(currentNetworkAttribution.contains(network),
+                String.format("Current network attribution '%s' didn't contain '%s'",
+                        currentNetworkAttribution, network));
+        Assert.assertTrue(verifyElementIsOnRightSide(detailsPage.getNetworkAttributionLogo()),
+                "Network Attribution logo is not on the right side of the details page");
     }
 }
