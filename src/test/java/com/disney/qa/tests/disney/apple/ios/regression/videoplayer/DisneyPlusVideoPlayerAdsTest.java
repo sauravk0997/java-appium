@@ -230,6 +230,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(),
                 String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
 
+        detailsPage.waitForPlayOrContinueButton();
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitForAdToCompleteIfPresent(POLLING_FIVE, BUFFER_TIME_ZERO);

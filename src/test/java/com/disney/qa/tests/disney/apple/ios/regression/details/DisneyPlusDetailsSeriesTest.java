@@ -437,6 +437,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         videoPlayer.clickBackButton();
         detailsPage.waitForDetailsPageToOpen();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+
+        detailsPage.waitForPlayOrContinueButton();
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForVideoControlToDisappear();
         int resumeTime = videoPlayer.getRemainingTime();

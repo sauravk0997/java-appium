@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
@@ -246,10 +247,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyLiveModalLinearChannelTile() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-        String streamsCollectionName = getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
+        String streamsCollectionName = getCollectionName(STREAMS);
         logIn(getUnifiedAccount());
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
-        String firstProgramTitle = homePage.getFirstCellTitleFromContainer(STREAMS_NON_STOP_PLAYLISTS).split(",")[1]
+        String firstProgramTitle = homePage.getFirstCellTitleFromContainer(STREAMS).split(",")[2]
                 .trim();
         homePage.clickSelect();
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
@@ -534,7 +535,39 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-        private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122930"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyLiveBadgeOnSetStream() {
+        String liveBadge = "LIVE";
+        int maxCount = 15;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+
+        String streamsCollection = getCollectionName(STREAMS);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
+                getCollectionName(STREAMS), maxCount);
+
+        if (liveChannelsFromApi.isEmpty() || liveChannelsFromApi == null) {
+            throw new SkipException(String.format("No items for 'STREAMS' collection were fetched from Explore API", STREAMS));
+        }
+
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollection, maxCount);
+
+        ExtendedWebElement firstCellElement = collectionPage.getFirstCellFromCollection(streamsCollection);
+        ExtendedWebElement airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(streamsCollection);
+        Assert.assertEquals(airingBadge.getText().trim(), liveBadge, "Live content not found on stream set");
+
+        // Validate Left position of Live badge
+        validateElementPositionAlignmentInContainer(airingBadge, firstCellElement, LEFT_POSITION);
+        // Validate top position of live badge
+        validateElementExpectedHeightPositionInContainer(airingBadge, firstCellElement, TOP);
+    }
+
+    private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
         List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
                 getCollectionName(STREAMS_NON_STOP_PLAYLISTS), titlesLimit);
         Assert.assertNotNull(liveChannelsFromApi,

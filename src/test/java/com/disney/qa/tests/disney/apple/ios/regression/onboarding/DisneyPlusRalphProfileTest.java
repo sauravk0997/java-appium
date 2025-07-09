@@ -452,11 +452,11 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
-        // Create kids profile
+        // Create U18 profile
         getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
-                .profileName(KIDS_PROFILE)
-                .dateOfBirth(KIDS_DOB)
+                .profileName(SECONDARY_PROFILE)
+                .dateOfBirth(U18_DOB)
                 .language(getLocalizationUtils().getUserLanguage())
                 .avatarId(BABY_YODA)
                 .isStarOnboarded(true)
@@ -468,7 +468,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
         Assert.assertTrue(whoIsWatching.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
         whoIsWatching.clickEditProfile();
         // Validate Privacy & Data option is not present
-        editProfilePage.clickEditModeProfile(KIDS_PROFILE);
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         swipe(editProfilePage.getDeleteProfileButton(), Direction.UP, 10, 500);
         Assert.assertFalse(editProfilePage.getPrivacyAndDataTitleLabel().isPresent(THREE_SEC_TIMEOUT),
                 "Privacy & Data section is present");

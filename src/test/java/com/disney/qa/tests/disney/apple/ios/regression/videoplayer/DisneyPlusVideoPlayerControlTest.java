@@ -42,6 +42,7 @@ public class DisneyPlusVideoPlayerControlTest extends DisneyBaseTest {
         detailsPage.clickPlayButton().waitForVideoToStart().clickBackButton();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
+        detailsPage.waitForPlayOrContinueButton();
         detailsPage.clickPlayOrContinue().waitForVideoToStart().tapTitleOnPlayer();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
     }
