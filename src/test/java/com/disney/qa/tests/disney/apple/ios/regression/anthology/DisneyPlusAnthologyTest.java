@@ -7,6 +7,7 @@ import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.fluentWaitNoMessage;
 
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
+import com.disney.qa.api.disney.DisneyEntityIds;
 import com.disney.qa.api.explore.response.Visuals;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -358,18 +359,27 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         try {
             fluentWaitNoMessage(getDriver(), 15, 2).until(it -> details.isPlayButtonDisplayed());
         } catch (Exception e) {
-            throw new SkipException("Skipping test, play button not found, currently live content playing." + e);
+            throw new SkipException("Skipping test, play button not found, currently live content playing", e);
         }
 
-        sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present.");
-        sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present.");
-        sa.assertTrue(details.getStaticTextByLabelContains("TV-PG").isPresent(), "TV-MA rating was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("HD").isPresent(), "HD was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("5.1").isPresent(), "5.1 was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Subtitles / CC").isPresent(),
-                "Subtitles advisory was not found.");
-        sa.assertTrue(details.getStaticTextByLabelContains("Audio Description").isPresent(), "Audio description " +
-                "advisory was not found.");
+        Visuals visualsResponse = getExploreAPIPageVisuals(DisneyEntityIds.DANCING_WITH_THE_STARS.getEntityId());
+        Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
+
+        if (!exploreAPIData.containsKey(AUDIO_VIDEO_BADGE)) {
+            throw new SkipException("Failed to fetch Audio/Visual badges for anthology series through Explore API");
+        }
+
+        if (!exploreAPIData.containsKey(RATING)) {
+            throw new SkipException("Failed to fetch Rating for anthology series through Explore API");
+        }
+
+        sa.assertTrue(details.isLogoImageDisplayed(), "Logo image is not present");
+        sa.assertTrue(details.isHeroImagePresent(), "Hero image is not present");
+        ((List<String>) exploreAPIData.get(AUDIO_VIDEO_BADGE)).forEach(badge ->
+                sa.assertTrue(details.getStaticTextByLabelContains(badge).isPresent(),
+                        String.format("Audio/Visual badge '%s' is not present", badge)));
+        sa.assertTrue(details.getStaticTextByLabelContains(exploreAPIData.get(RATING).toString()).isPresent(),
+                String.format("%s rating was not present", exploreAPIData.get(RATING).toString()));
         sa.assertTrue(details.isMetaDataLabelDisplayed(), "Metadata label is not displayed.");
         sa.assertTrue(details.isWatchlistButtonDisplayed(), "Watchlist button is not displayed.");
         sa.assertTrue(details.isPlayButtonDisplayed(), "Play button is not found.");
@@ -378,12 +388,12 @@ public class DisneyPlusAnthologyTest extends DisneyBaseTest {
         details.clickPlayButton();
         videoPlayer.waitForVideoToStart();
         videoPlayer.clickBackButton();
-        sa.assertTrue(details.isContinueButtonPresent(), "Continue button is not present after exiting playback.");
-        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
+        sa.assertTrue(details.isContinueButtonPresent(), "Continue button is not present after exiting playback");
+        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback");
         sa.assertTrue(details.getTypeButtonContainsLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.
                 ResourceKeys.APPLICATION, DictionaryKeys.BTN_DETAILS_RESTART.getText())).isPresent(),
                 "Restart button is not displayed");
-        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback.");
+        sa.assertTrue(details.isProgressBarPresent(), "Progress bar is not present after exiting playback");
         sa.assertAll();
     }
 
