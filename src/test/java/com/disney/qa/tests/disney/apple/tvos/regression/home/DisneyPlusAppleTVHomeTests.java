@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
@@ -246,10 +247,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyLiveModalLinearChannelTile() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-        String streamsCollectionName = getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
+        String streamsCollectionName = getCollectionName(STREAMS);
         logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
-        String firstProgramTitle = homePage.getFirstCellTitleFromContainer(STREAMS_NON_STOP_PLAYLISTS).split(",")[1]
+        String firstProgramTitle = homePage.getFirstCellTitleFromContainer(STREAMS).split(",")[2]
                 .trim();
         homePage.clickSelect();
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
