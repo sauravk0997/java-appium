@@ -327,6 +327,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         searchPage.typeInSearchField(contentTitle);
         searchPage.isAllSearchResultPresent();
         searchPage.clickSearchResult(contentTitle);
+
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1,1);
         detailsPage.moveRightUntilElementIsFocused(detailsPage.getDetailsTab(), 6);
